@@ -3,3 +3,4 @@ An adjustable visualiser based on audio input.
 
 ADAM WORKS
 ANAND SOMETIMES WORKS
+ELLIE BAKES
