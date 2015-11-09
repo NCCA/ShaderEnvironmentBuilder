@@ -1,2 +1,4 @@
-uniform int NumberInt=0;
-uniform float NumberFloat=0.0;
+Hello
+My 
+Name Is
+Adam
