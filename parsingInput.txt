@@ -1,0 +1,6 @@
+uniform int NumberInt
+uniform float NumberFloat
+uniform  Number3
+uniform int Number4
+uniform int Number5
+uniform float Number6
