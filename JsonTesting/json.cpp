@@ -4,7 +4,43 @@
 #include <fstream>
 using namespace rapidjson;
 using namespace std;
-int main() {
+
+void saveToFile(std::string _jsonString)
+{
+    ofstream jsonFile("/home/i7685565/0Features-0BugsCVA3/JsonTesting/jsonString.json");
+
+    if (jsonFile.is_open())
+        jsonFile << _jsonString;
+        std::cout<<"Written to file!\n"<<std::endl;
+    jsonFile.close();
+}
+
+
+
+
+//std::string insertVertexShader()
+//{
+
+//    std::string phongVertex="shaders/PhongVertex.glsl";
+//    return phongVertex;
+//}
+
+//std::string funct()
+//{
+//    StringBuffer s;
+//    Writer<StringBuffer> writer(s);
+//    writer.StartObject();
+//    writer.Key("TEST");
+//    writer.String("JERONIMOOOOE!");
+//    writer.EndObject();
+//    saveToFile(s.GetString());
+//    std::cout<<s.GetString();
+//    return s.GetString();
+//}
+
+std::string buildJson()
+{
+
     StringBuffer s;
     Writer<StringBuffer> writer(s);
     writer.StartObject();
@@ -25,6 +61,7 @@ int main() {
             writer.StartArray();
                 writer.String("shaders/version.glsl");
                 writer.String("shaders/common.glsl");
+                //writer.String(insertVertexShader());
                 writer.String("shaders/PhongVertex.glsl");
                 writer.EndArray();
                 writer.EndObject();
@@ -45,16 +82,21 @@ int main() {
         writer.EndObject();
     writer.EndObject();
 
-    cout << s.GetString() << endl;   // <---write this to a file, should be read as json!
+//    funct();
+//    writer.StartObject();
+//    std::string add;
+//    std::string *stringptr1;
 
-    ofstream jsonFile;
-    jsonFile.open("example.txt");
-    jsonFile << "writing to file.\n";
-    jsonFile.close();
+//    //stringptr1 = &str1;
+//    writer.EndObject();
+    saveToFile(s.GetString());
+    //grabShaderType();
+    return s.GetString();
+}
 
-
-
-
+int main()
+{
+    std::cout<<buildJson();
 }
 
 
