@@ -1,5 +1,7 @@
 #include "rapidjson/writer.h"
 #include "rapidjson/stringbuffer.h"
+#include "string.h"
+#include "stdlib.h"
 #include <iostream>
 #include <fstream>
 using namespace rapidjson;
@@ -15,38 +17,93 @@ void saveToFile(std::string _jsonString)
     jsonFile.close();
 }
 
-
-
-
-//std::string insertVertexShader()
-//{
-
-//    std::string phongVertex="shaders/PhongVertex.glsl";
-//    return phongVertex;
-//}
-
-//std::string funct()
-//{
-//    StringBuffer s;
-//    Writer<StringBuffer> writer(s);
-//    writer.StartObject();
-//    writer.Key("TEST");
-//    writer.String("JERONIMOOOOE!");
-//    writer.EndObject();
-//    saveToFile(s.GetString());
-//    std::cout<<s.GetString();
-//    return s.GetString();
-//}
-
-std::string buildJson()
+void readFromJson()
 {
+    std::string m_hello;
+    ifstream jsonFile("/home/i7685565/0Features-0BugsCVA3/JsonTesting/jsonString.json");
+    if (jsonFile.is_open())
+        std::cout<<"\nReading from file..."<<std::endl;
+        std::string line;
+/*
+        while (getline(jsonFile, line))
+        {
+            if (line.find(":") !=string::npos)
+            {
+                std::cout<<line[20]<<std::endl;
+            }
+        }
+        */
+
+
+        char word[20];
+        int word_size = 0;
+        int array_size = 1024;
+        int position = 0;
+        char * array = new char[array_size];
+
+        while(!jsonFile.eof() && position < array_size)
+        {
+            jsonFile.get(array[position]);
+            position++;
+        }
+        for (int i=0; array[i] != '\0'; i++)
+        {
+            for(int j = 0; word[j] != '\0' && j < 20 ; j++)
+            {
+                if(array[i] != word[j])
+                {
+                    break;
+                }
+                else
+                {
+                    i++;
+                    if(word[j+1] == '\0')
+                    {
+                        std::cout<<"word found at file position: "<<(i-word_size)<<std::endl;
+
+                    }
+                }
+            }
+        }
+
+        array[position-1]= '\0';
+        //std::cout<< m_hello;
+    jsonFile.close();
+}
+
+
+std::string shaderType(int _shaderNumber)
+{
+    std::string shaderType;
+
+    if (_shaderNumber==1)
+    {
+        shaderType = "noise3D";
+    };
+    if (_shaderNumber==2)
+    {
+        shaderType = "cloud3D";
+    };
+
+    return shaderType;
+}
+
+
+std::string buildJson(int _shaderNumber)
+{
+
+    std::string shaderTypeStr = shaderType(_shaderNumber);    //---------------------------------------
+
+    std::cout<<"\nshader type: "<< shaderType(1)<<std::endl;
+    char *cstr = new char[shaderTypeStr.length() +1];
+    strcpy(cstr, shaderTypeStr.c_str());
 
     StringBuffer s;
     Writer<StringBuffer> writer(s);
     writer.StartObject();
     writer.Key("ShaderProgram");
         writer.StartObject();
-        writer.Key("name");
+        writer.Key(cstr);                     //---------------------------------------
         writer.String("Phong");
         writer.Key("debug");
         writer.Bool(true);
@@ -61,7 +118,6 @@ std::string buildJson()
             writer.StartArray();
                 writer.String("shaders/version.glsl");
                 writer.String("shaders/common.glsl");
-                //writer.String(insertVertexShader());
                 writer.String("shaders/PhongVertex.glsl");
                 writer.EndArray();
                 writer.EndObject();
@@ -82,21 +138,16 @@ std::string buildJson()
         writer.EndObject();
     writer.EndObject();
 
-//    funct();
-//    writer.StartObject();
-//    std::string add;
-//    std::string *stringptr1;
-
-//    //stringptr1 = &str1;
-//    writer.EndObject();
     saveToFile(s.GetString());
-    //grabShaderType();
+    std::cout<<s.GetString()<<std::endl;
+
     return s.GetString();
 }
 
 int main()
 {
-    std::cout<<buildJson();
+    buildJson(1);
+    readFromJson();
 }
 
 
