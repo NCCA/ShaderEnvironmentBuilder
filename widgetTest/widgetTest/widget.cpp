@@ -15,6 +15,15 @@ widget::widget(QWidget *parent) : QDialog(parent)
   setWindowTitle(tr("My Test Layout"));
 }
 
+void widget::createButtonBox()
+{
+  colourButtonBox = new QDialogButtonBox;
+
+  colourButton = colourButtonBox->addButton(tr("Change Colour"),
+                                                QDialogButtonBox::ActionRole);
+  connect(colourButton, SIGNAL(clicked()), this, SLOT(createColourPanel()));
+}
+
 void widget::colChange()
 {
   //*myColor = colourGroupBox->getColor();

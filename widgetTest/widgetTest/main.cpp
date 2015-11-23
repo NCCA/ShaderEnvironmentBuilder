@@ -9,7 +9,9 @@ int main(int argc, char *argv[])
 {
   QApplication app(argc, argv);
   widget widgey;
+  //widget widgey2;
   widgey.show();
+  //widgey2.show();
   typedef struct m_colour
   {
     qreal m_r;

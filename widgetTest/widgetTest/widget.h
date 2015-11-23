@@ -10,6 +10,7 @@ QT_BEGIN_NAMESPACE
 class QGridLayout;
 class QGroupBox;
 class QLabel;
+class QDialogButtonBox;
 QT_END_NAMESPACE
 
 class widget : public QDialog
@@ -33,6 +34,8 @@ private:
   QColorDialog *dialogBox;
   QGridLayout *colourBoxLayout;
   QGridLayout *mainLayout;
+  QDialogButtonBox *colourButtonBox;
+  QPushButton *colourButton;
 
 public:
   widget(QWidget *parent = 0);
@@ -40,6 +43,7 @@ public:
   qreal returnGreen();
   qreal returnBlue();
   void assignCol(m_colour* a);
+  void createButtonBox();
 
 private slots:
   void colChange();
