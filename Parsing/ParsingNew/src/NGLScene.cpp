@@ -9,7 +9,9 @@
 #include <ngl/VAOPrimitives.h>
 #include <ngl/ShaderLib.h>
 #include <ngl/ShaderProgram.h>
-
+#include <typeinfo>
+#include <fstream>
+#include <iostream>
 
 //----------------------------------------------------------------------------------------------------------------------
 /// @brief the increment for x/y translation with mouse movement
@@ -123,35 +125,103 @@ void NGLScene::initializeGL()
   // as re-size is not explicitly called we need to do that.
   // set the viewport for openGL we need to take into account retina display
   listUniforms();
+  exportUniforms();
 }
+
+
 void NGLScene::listUniforms()
 {
     ngl::ShaderLib *shader=ngl::ShaderLib::instance();
     shader->printRegisteredUniforms("Phong");
     GLuint id=shader->getProgramID("Phong");
+
     GLint nUniforms;
-    glGetProgramiv(id, GL_ACTIVE_UNIFORMS, &nUniforms);
-    std::cout<<"numbers:________________nUniforms:  "<<nUniforms<<std::endl;
-    num=nUniforms;
-    std::cout<<nUniforms<<std::endl;
+    // glGetProgramiv(id, GL_ACTIVE_UNIFORMS, &nUniforms);  //old
+    glGetProgramInterfaceiv(id, GL_UNIFORM, GL_ACTIVE_RESOURCES, &nUniforms);
+    m_num=nUniforms;
+    m_passToGUI.resize(m_num);
 
+    char UniformName[256];
+    GLsizei length;
+    GLint size;
+    GLenum type;
 
-        passToGUI d;
+    std::cout<<"#Adam's Uniforms#####Starts##########################################"<<std::endl;
+    std::cout<<"---------------------------------------------------------------------"<<std::endl;
+    std::cout<<"There are "<<m_num<<" Uniforms"<<std::endl;
 
+    for (GLuint i=0; i<nUniforms; i++)
+    {
+        glGetActiveUniform(id,i, 256, &length, &size , &type , UniformName);
+
+            // glGetActiveUniformName(id, i, 256, &length, UniformName);
+        m_passToGUI[i].locationUniforms= glGetUniformLocation(id,UniformName);
+        m_passToGUI[i].nameUniforms=UniformName;
+            //m_passToGUI[i].locationUniforms=i;
+           // std::type_info::name(UniformName);
+           // m_passToGUI[i].typeUniforms= typeid(UniformName).name();
+        m_passToGUI[i].typeUniforms= type;
+        std::cout << "Name: "<<UniformName;
+        std::cout << ";  Location: "<<m_passToGUI[i].locationUniforms<<" ("<<i<<")";
+        std::cout << ";  Type: "<<m_passToGUI[i].typeUniforms<<std::endl;
+    }
+
+    std::cout<<"-------------------------------------------------------------------"<<std::endl;
+    std::cout<<"#Adam's Uniforms#####Ends##########################################"<<std::endl;
+
+    /*
+    for (int i=0;i<num;i++)
+    {
+        m_passToGUI[i].nameUniforms="test";
+        m_passToGUI[i].locationUniforms=0;
+        m_passToGUI[i].typeUniforms=GL_NONE;
+
+        std::cout<<m_passToGUI[i].nameUniforms<<std::endl;
+        std::cout<<m_passToGUI[i].locationUniforms<<std::endl;
+        std::cout<<m_passToGUI[i].typeUniforms<<std::endl;
+        std::cout<<"Length: "<<m_passToGUI.size()<<std::endl;
+
+    }*/
+     /*
+    passToGUI d;
     d.nameUniforms="test";
     d.locationUniforms=0;
     d.typeUniforms=GL_NONE;
     m_passToGUI.push_back(d);
 
+
     std::cout<<d.nameUniforms<<std::endl;
     std::cout<<d.locationUniforms<<std::endl;
     std::cout<<d.typeUniforms<<std::endl;
 
-
+    std::cout<<"Length: "<<m_passToGUI.size()<<std::endl;
+     */
     //m_passToGUI.numUniforms=1;
     //m_passToGUI.numUniforms=nUniforms;
     //glGetProgramInterfaceiv (can get uniform blocks with that)
 
+
+    //std::cout<<"HELLO ADAM HERE; "<<type<<std::endl; //INSERT INTO NCCA CODE FOR DEBUGGING
+
+}
+
+void NGLScene::exportUniforms()
+{
+    std::ofstream fileOut;
+    fileOut.open("ParsingOutput.txt");
+    if(!fileOut.is_open())    ///If it can be opened
+    {
+    std::cerr<<"couldn't' open file\n";
+    exit(EXIT_FAILURE);
+    }
+    for(int i=0;i<m_num;i++)
+    {
+        fileOut<<m_passToGUI[i].nameUniforms<<"\n";
+        fileOut<<m_passToGUI[i].locationUniforms<<"\n";
+        fileOut<<m_passToGUI[i].typeUniforms<<"\n";
+    }
+    fileOut.close();
+    // close files
 }
 
 void NGLScene::loadMatricesToShader()

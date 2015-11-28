@@ -136,7 +136,10 @@ private:
     //----------------------------------------------------------------------------------------------------------------------
     void wheelEvent( QWheelEvent *_event);
 
+
     void listUniforms();
+    void exportUniforms();
+
     typedef struct
     {
         std::string nameUniforms;
@@ -144,8 +147,9 @@ private:
         GLenum typeUniforms;
     }passToGUI;
 
+
     std::vector <passToGUI> m_passToGUI;
-    int num;
+    int m_num;
 
 };
 
