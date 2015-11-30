@@ -131,40 +131,42 @@ void NGLScene::initializeGL()
 
 void NGLScene::listUniforms()
 {
-    ngl::ShaderLib *shader=ngl::ShaderLib::instance();
-    shader->printRegisteredUniforms("Phong");
-    GLuint id=shader->getProgramID("Phong");
+  ngl::ShaderLib *shader=ngl::ShaderLib::instance();
+  shader->printRegisteredUniforms("Phong");
+  GLuint id=shader->getProgramID("Phong");
 
-    GLint nUniforms;
-    // glGetProgramiv(id, GL_ACTIVE_UNIFORMS, &nUniforms);  //old
-    glGetProgramInterfaceiv(id, GL_UNIFORM, GL_ACTIVE_RESOURCES, &nUniforms);
-    m_num=nUniforms;
-    m_passToGUI.resize(m_num);
 
-    char UniformName[256];
-    GLsizei length;
-    GLint size;
-    GLenum type;
+  GLint nUniforms;
+                               // glGetProgramiv(id, GL_ACTIVE_UNIFORMS, &nUniforms);  //old
+  glGetProgramInterfaceiv(id, GL_UNIFORM, GL_ACTIVE_RESOURCES, &nUniforms);
+  m_num=nUniforms;
+  m_passToGUI.resize(m_num);
 
-    std::cout<<"#Adam's Uniforms#####Starts##########################################"<<std::endl;
-    std::cout<<"---------------------------------------------------------------------"<<std::endl;
-    std::cout<<"There are "<<m_num<<" Uniforms"<<std::endl;
+  // declare some temp variables
+  char UniformName[256];
+  GLsizei length;
+  GLint size;
+  GLenum type;
 
-    for (GLuint i=0; i<nUniforms; i++)
-    {
-        glGetActiveUniform(id,i, 256, &length, &size , &type , UniformName);
+  std::cout<<"#Adam's Uniforms#####Starts##########################################"<<std::endl;
+  std::cout<<"---------------------------------------------------------------------"<<std::endl;
+  std::cout<<"There are "<<m_num<<" Uniforms"<<std::endl;
 
-            // glGetActiveUniformName(id, i, 256, &length, UniformName);
-        m_passToGUI[i].locationUniforms= glGetUniformLocation(id,UniformName);
-        m_passToGUI[i].nameUniforms=UniformName;
-            //m_passToGUI[i].locationUniforms=i;
-           // std::type_info::name(UniformName);
-           // m_passToGUI[i].typeUniforms= typeid(UniformName).name();
-        m_passToGUI[i].typeUniforms= type;
-        std::cout << "Name: "<<UniformName;
-        std::cout << ";  Location: "<<m_passToGUI[i].locationUniforms<<" ("<<i<<")";
-        std::cout << ";  Type: "<<m_passToGUI[i].typeUniforms<<std::endl;
-    }
+  for (GLuint i=0; i<nUniforms; i++)
+  {
+    glGetActiveUniform(id,i, 256, &length, &size , &type , UniformName);
+
+        // glGetActiveUniformName(id, i, 256, &length, UniformName);
+    m_passToGUI[i].locationUniforms= glGetUniformLocation(id,UniformName);
+    m_passToGUI[i].nameUniforms=UniformName;
+        //m_passToGUI[i].locationUniforms=i;
+        // std::type_info::name(UniformName);
+        // m_passToGUI[i].typeUniforms= typeid(UniformName).name();
+    m_passToGUI[i].typeUniforms= type;
+    std::cout << "Name: "<<UniformName;
+    std::cout << ";  Location: "<<m_passToGUI[i].locationUniforms<<" ("<<i<<")";
+    std::cout << ";  Type: "<<m_passToGUI[i].typeUniforms<<std::endl;
+  }
 
     std::cout<<"-------------------------------------------------------------------"<<std::endl;
     std::cout<<"#Adam's Uniforms#####Ends##########################################"<<std::endl;
@@ -207,21 +209,22 @@ void NGLScene::listUniforms()
 
 void NGLScene::exportUniforms()
 {
-    std::ofstream fileOut;
-    fileOut.open("ParsingOutput.txt");
-    if(!fileOut.is_open())    ///If it can be opened
-    {
+  std::ofstream fileOut;
+  fileOut.open("ParsingOutput.txt");
+  if(!fileOut.is_open())    ///If it can be opened
+  {
     std::cerr<<"couldn't' open file\n";
     exit(EXIT_FAILURE);
-    }
-    for(int i=0;i<m_num;i++)
-    {
-        fileOut<<m_passToGUI[i].nameUniforms<<"\n";
-        fileOut<<m_passToGUI[i].locationUniforms<<"\n";
-        fileOut<<m_passToGUI[i].typeUniforms<<"\n";
-    }
-    fileOut.close();
-    // close files
+  }
+  for(int i=0;i<m_num;i++)
+  {
+    fileOut<<m_passToGUI[i].nameUniforms<<"\n";
+    fileOut<<m_passToGUI[i].locationUniforms<<"\n";
+    fileOut<<m_passToGUI[i].typeUniforms<<"\n";
+  }
+  fileOut.close();
+  // close files
+  std::cout<<"EXPORTED\n"<<std::endl;
 }
 
 void NGLScene::loadMatricesToShader()
