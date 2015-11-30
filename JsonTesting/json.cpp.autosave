@@ -92,7 +92,7 @@ void readFromJson()
     size_t pos;
     while (jsonFile.good())
     {
-        getline(jsonFile, line);
+        getline(jsonFile, line);                                  //gets the entire line
         pos=line.find(searchWord);
         std::cout<<my_character;
         if(pos!=string::npos)
@@ -104,7 +104,11 @@ void readFromJson()
         }
     }
 
-
+    
+    
+    
+    
+    /*
     int number_of_lines = 1;
     while (!jsonFile.eof())
     {
@@ -127,6 +131,7 @@ void readFromJson()
     std::cout<<str;
     std::string stringy = str;
     std::cout<<stringy;
+    */
 
 }
 
