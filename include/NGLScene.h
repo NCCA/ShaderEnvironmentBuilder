@@ -110,11 +110,25 @@ private :
   /// @brief this method is called every time a mouse is moved
   /// @param _event the Qt Event structure
 
+    void listUniforms();
+    void exportUniforms();
+
+    typedef struct
+    {
+        std::string nameUniforms;
+        GLuint locationUniforms;
+        GLenum typeUniforms;
+    }passToGUI;
+
+
+    std::vector <passToGUI> m_passToGUI;
+    int m_num;
+};
+
   void mouseMoveEvent (QMouseEvent * _event   );
   /// @brief this method is called everytime the mouse button is pressed
   /// inherited from QObject and overridden here.
   /// @param _event the Qt Event structure
-
   void mousePressEvent ( QMouseEvent *_event  );
 
   /// @brief this method is called everytime the mouse button is released
