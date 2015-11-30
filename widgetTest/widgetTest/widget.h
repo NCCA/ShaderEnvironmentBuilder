@@ -11,6 +11,7 @@ class QGridLayout;
 class QGroupBox;
 class QLabel;
 class QDialogButtonBox;
+class QPushButton;
 QT_END_NAMESPACE
 
 class widget : public QDialog
@@ -18,8 +19,6 @@ class widget : public QDialog
   Q_OBJECT
 
 private:
-  void createColourPanel();
-
   typedef struct m_colour
   {
     qreal m_r;
@@ -47,6 +46,7 @@ public:
 
 private slots:
   void colChange();
+  void createColourPanel();
 };
 
 #endif
