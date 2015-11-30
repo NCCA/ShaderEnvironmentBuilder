@@ -1,3 +1,4 @@
+
 #include "rapidjson/writer.h"
 #include "rapidjson/stringbuffer.h"
 
@@ -118,8 +119,8 @@ std::string buildJson()
     return s.GetString();
 }
 
-int main()
-{
-    buildJson();
-    replaceWord("Shader", "CHANGED");
-}
+//int main()
+//{
+//    buildJson();
+//    replaceWord("Shader", "CHANGED");
+//}
