@@ -115,8 +115,70 @@ void NGLScene::initializeGL()
   light.loadToShader("light");
   // as re-size is not explicitly called we need to do that.
   // set the viewport for openGL we need to take into account retina display
+  listUniforms();
+  exportUniforms();
 }
 
+
+void NGLScene::listUniforms()
+{
+  ngl::ShaderLib *shader=ngl::ShaderLib::instance();
+  shader->printRegisteredUniforms("Phong");
+  GLuint id=shader->getProgramID("Phong");
+
+
+  GLint nUniforms;
+  glGetProgramInterfaceiv(id, GL_UNIFORM, GL_ACTIVE_RESOURCES, &nUniforms);
+  m_num=nUniforms;
+  m_passToGUI.resize(m_num);
+
+  // declare some temp variables
+  char UniformName[256];
+  GLsizei length;
+  GLint size;
+  GLenum type;
+
+  std::cout<<"#Adam's Uniforms#####Starts##########################################"<<std::endl;
+  std::cout<<"---------------------------------------------------------------------"<<std::endl;
+  std::cout<<"There are "<<m_num<<" Uniforms"<<std::endl;
+
+  for (GLuint i=0; i<nUniforms; i++)
+  {
+    glGetActiveUniform(id,i, 256, &length, &size , &type , UniformName);
+
+    m_passToGUI[i].locationUniforms= glGetUniformLocation(id,UniformName);
+    m_passToGUI[i].nameUniforms=UniformName;
+    m_passToGUI[i].typeUniforms= type;
+    std::cout << "Name: "<<UniformName;
+    std::cout << ";  Location: "<<m_passToGUI[i].locationUniforms<<" ("<<i<<")";
+    std::cout << ";  Type: "<<m_passToGUI[i].typeUniforms<<std::endl;
+  }
+
+    std::cout<<"-------------------------------------------------------------------"<<std::endl;
+    std::cout<<"#Adam's Uniforms#####Ends##########################################"<<std::endl;
+
+}
+
+
+void NGLScene::exportUniforms()
+{
+  std::ofstream fileOut;
+  fileOut.open("ParsingOutput.txt");
+  if(!fileOut.is_open())    ///If it can be opened
+  {
+    std::cerr<<"couldn't' open file\n";
+    exit(EXIT_FAILURE);
+  }
+  for(int i=0;i<m_num;i++)
+  {
+    fileOut<<m_passToGUI[i].nameUniforms<<"\n";
+    fileOut<<m_passToGUI[i].locationUniforms<<"\n";
+    fileOut<<m_passToGUI[i].typeUniforms<<"\n";
+  }
+  fileOut.close();
+  // close files
+  std::cout<<"EXPORTED\n"<<std::endl;
+}
 
 void NGLScene::loadMatricesToShader()
 {

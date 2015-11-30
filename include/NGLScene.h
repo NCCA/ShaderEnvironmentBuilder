@@ -136,7 +136,19 @@ private:
     //----------------------------------------------------------------------------------------------------------------------
     void wheelEvent( QWheelEvent *_event);
 
+    void listUniforms();
+    void exportUniforms();
 
+    typedef struct
+    {
+        std::string nameUniforms;
+        GLuint locationUniforms;
+        GLenum typeUniforms;
+    }passToGUI;
+
+
+    std::vector <passToGUI> m_passToGUI;
+    int m_num;
 };
 
 
