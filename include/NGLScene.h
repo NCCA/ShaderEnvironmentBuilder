@@ -6,6 +6,8 @@
 #include <ngl/Light.h>
 #include <ngl/Text.h>
 #include <QOpenGLWindow>
+#include <unordered_map>
+
 //----------------------------------------------------------------------------------------------------------------------
 /// @file NGLScene.h
 /// @brief this class inherits from the Qt OpenGLWindow and allows us to use NGL to draw OpenGL
@@ -137,6 +139,7 @@ private:
     void wheelEvent( QWheelEvent *_event);
 
     void listUniforms();
+    void uniformDataTypes();
     void exportUniforms();
 
     typedef struct
@@ -144,10 +147,12 @@ private:
         std::string nameUniforms;
         GLuint locationUniforms;
         GLenum typeUniforms;
-    }passToGUI;
+        std::string dataType;
+    }uniformData;
 
+    std::unordered_map <std::string, uniformData> m_registeredUniforms;
 
-    std::vector <passToGUI> m_passToGUI;
+    std::vector <uniformData> m_passToGUI;
     int m_num;
 };
 
