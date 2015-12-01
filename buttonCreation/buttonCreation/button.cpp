@@ -1,6 +1,8 @@
 #include <QtWidgets>
 
 #include "button.h"
+#include <cstdlib>
+#include <iostream>
 
 Button::Button(QWidget *parent) : QDialog(parent)
 {
@@ -22,5 +24,19 @@ void Button::createButtonBox()
 
   closeButton = buttonBox->addButton(tr("Select &Colour"),QDialogButtonBox::ActionRole);
 
-  connect(closeButton, SIGNAL(clicked()), this, SLOT(close()));
+  connect(closeButton, SIGNAL(clicked()), this, SLOT(openColourBox()));
+}
+
+void Button::openColourBox()
+{
+  colourGroupBox = new QColorDialog(tr("Colour"));
+  colourBoxLabel = new QLabel(tr("Select a colour:"));
+
+  //colourBoxLayout = new QGridLayout;
+  //colourGroupBox->setLayout(colourBoxLayout);
+  colourGroupBox->getColor();
+  std::cout<<"Done"<<std::endl;
+  /*colourStruct.m_r = myColor->redF();
+  colourStruct.m_g = myColor->greenF();
+  colourStruct.m_b = myColor->blueF();*/
 }
