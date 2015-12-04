@@ -63,8 +63,7 @@ void parser::listUniforms()
 
 }
 
-//JONS CODE!  //JONS CODE!  //JONS CODE!  //JONS CODE!
-
+//Reusing Jon Macey's ngl::ShaderProgram::printRegisteredUniforms and starting to adjust it
 void parser::uniformDataTypes()
 {
   std::cout<<"Started Uniforms" <<"\n";
@@ -204,7 +203,6 @@ void parser::uniformDataTypes()
   }
   std::cout<<"End Uniforms" <<"\n";
 }
-//JONS CODE!  //JONS CODE!  //JONS CODE!  //JONS CODE!
 
 
 
