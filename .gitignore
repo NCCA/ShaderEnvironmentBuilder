@@ -37,4 +37,4 @@
 build-*/
 
 # Remove qmake cache file
-*.qmake.cache
+.qmake.cache
