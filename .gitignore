@@ -23,3 +23,12 @@
 *.exe
 *.out
 *.app
+
+# Qt pro user file
+*.pro.user*
+
+# P4 merge files
+*.BASE.*
+*.LOCAL.*
+*.REMOTE.*
+*.orig
