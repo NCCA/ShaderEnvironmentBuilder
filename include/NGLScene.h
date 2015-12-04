@@ -7,6 +7,7 @@
 #include <ngl/Text.h>
 #include <QOpenGLWindow>
 #include <unordered_map>
+#include "parser.h"
 
 //----------------------------------------------------------------------------------------------------------------------
 /// @file NGLScene.h
@@ -138,22 +139,9 @@ private:
     //----------------------------------------------------------------------------------------------------------------------
     void wheelEvent( QWheelEvent *_event);
 
-    void listUniforms();
-    void uniformDataTypes();
-    void exportUniforms();
 
-    typedef struct
-    {
-        std::string nameUniforms;
-        GLuint locationUniforms;
-        GLenum typeUniforms;
-        std::string dataType;
-    }uniformData;
+    parser *m_newParser;
 
-    std::unordered_map <std::string, uniformData> m_registeredUniforms;
-
-    std::vector <uniformData> m_passToGUI;
-    int m_num;
 };
 
 
