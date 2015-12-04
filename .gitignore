@@ -35,3 +35,6 @@
 
 # Remove build folders that are created from non-shadowbuild
 build-*/
+
+# Remove qmake cache file
+*.qmake.cache
