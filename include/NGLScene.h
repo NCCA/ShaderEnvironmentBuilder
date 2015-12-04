@@ -7,7 +7,7 @@
 #include <ngl/Text.h>
 #include <QOpenGLWindow>
 #include <unordered_map>
-
+#include "parser.h"
 //----------------------------------------------------------------------------------------------------------------------
 /// @file NGLScene.h
 /// @brief this class inherits from the Qt OpenGLWindow and allows us to use NGL to draw OpenGL
@@ -138,22 +138,12 @@ private:
     //----------------------------------------------------------------------------------------------------------------------
     void wheelEvent( QWheelEvent *_event);
 
-    void listUniforms();
-    void uniformDataTypes();
-    void exportUniforms();
+    //----------------------------------------------------------------------------------------------------------------------
+    /// @brief create a pointer to the new parser
+    //----------------------------------------------------------------------------------------------------------------------
+    parser *m_newParser;
 
-    typedef struct
-    {
-        std::string nameUniforms;
-        GLuint locationUniforms;
-        GLenum typeUniforms;
-        std::string dataType;
-    }uniformData;
 
-    std::unordered_map <std::string, uniformData> m_registeredUniforms;
-
-    std::vector <uniformData> m_passToGUI;
-    int m_num;
 };
 
 
