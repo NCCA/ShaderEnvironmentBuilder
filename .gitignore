@@ -32,3 +32,6 @@
 *.LOCAL.*
 *.REMOTE.*
 *.orig
+
+# Remove build folders that are created from non-shadowbuild
+build-*/
