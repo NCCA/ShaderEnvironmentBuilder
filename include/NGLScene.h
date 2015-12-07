@@ -34,46 +34,15 @@ public :
   //----------------------------------------------------------------------------------------------------------------------
   NGLScene(QWidget *_parent );
 
-		/// @brief dtor
-	~NGLScene();
- public slots :
-	/// @brief a slot to toggle wireframe mode
-	/// @param[in] _mode the mode passed from the toggle
-	/// button
-	void toggleWireframe( bool _mode	 );
-	/// @brief set the X rotation value
-	/// @parm[in] _x the value to set
-	void setXRotation( double _x	);
-	/// @brief set the Y rotation value
-	/// @parm[in] _y the value to set
-	void setYRotation( double _y	);
-	/// @brief set the Z rotation value
-	/// @parm[in] _z the value to set
-	void setZRotation( double _z	);
-	/// @brief set the X scale value
-	/// @parm[in] _x the value to set
-	void setXScale( double _x	);
-	/// @brief set the Y scale value
-	/// @parm[in] _y the value to set
-	void setYScale( double _y	);
-	/// @brief set the Z scale value
-	/// @parm[in] _z the value to set
-	void setZScale( double _z	);
+  bool m_rotate;
 
-	/// @brief set the X position value
-	/// @parm[in] _x the value to set
-	void setXPosition( double _x	);
-	/// @brief set the Y position value
-	/// @parm[in] _y the value to set
-	void setYPosition(double _y);
-	/// @brief set the Z position value
-	/// @parm[in] _z the value to set
-	void setZPosition(double _z	);
-	/// @brief set the draw object
-	/// @param[in] _i the index of the object
-	void setObjectMode(int _i);
-	/// @brief a slot to set the colour
-	void setColour();
+  int m_spinXFace;
+
+  int m_spinYFace;
+
+  /// @brief dtor
+	~NGLScene();
+
 private :
 	/// @brief m_wireframe mode
 	bool m_wireframe;
@@ -111,16 +80,8 @@ protected:
 private :
   /// @brief this method is called every time a mouse is moved
   /// @param _event the Qt Event structure
-
-    //----------------------------------------------------------------------------------------------------------------------
-    /// @brief create a pointer to the new parser
-    //----------------------------------------------------------------------------------------------------------------------
-    parser *m_newParser;
-
-
-};
-
   void mouseMoveEvent (QMouseEvent * _event   );
+
   /// @brief this method is called everytime the mouse button is pressed
   /// inherited from QObject and overridden here.
   /// @param _event the Qt Event structure
@@ -130,6 +91,13 @@ private :
   /// inherited from QObject and overridden here.
   /// @param _event the Qt Event structure
   void mouseReleaseEvent (QMouseEvent *_event );
+
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief create a pointer to the new parser
+  //----------------------------------------------------------------------------------------------------------------------
+  parser *m_newParser;
+
+
   void loadMatricesToShader( );
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief window width

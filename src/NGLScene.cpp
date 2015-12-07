@@ -19,9 +19,7 @@ NGLScene::NGLScene( QWidget *_parent ) : QOpenGLWidget( _parent )
   // mouse rotation values set to 0
   m_spinXFace=0.0f;
   m_spinYFace=0.0f;
-  setTitle("Qt5 Simple NGL Demo");
   m_newParser= new parser();
-}
 
   // set this widget to have the initial keyboard focus
   setFocus();
@@ -98,7 +96,8 @@ void NGLScene::initializeGL()
   // transformations
   ngl::Mat4 iv=m_cam.getViewMatrix();
   iv.transpose();
-  ngl::Light light(ngl::Vec3(-2,5,2),ngl::Colour(1,1,1,1),ngl::Colour(1,1,1,1),ngl::LightModes::POINTLIGHT );
+
+
   light.setTransform(iv);
   light.setAttenuation(1,0,0);
   light.enable();
@@ -159,7 +158,7 @@ void NGLScene::paintGL()
 		case 1 : prim->draw("sphere"); break;
 		case 2 : prim->draw("cube"); break;
 	}
-	m_text->renderText(10,10,"Qt Gui Demo");
+
 }
 
 
@@ -191,78 +190,4 @@ void NGLScene::mouseReleaseEvent (  QMouseEvent * _event  )
 
 NGLScene::~NGLScene()
 {
-}
-
-void NGLScene::toggleWireframe(bool _mode	 )
-{
-	m_wireframe=_mode;
-	update();
-}
-
-void NGLScene::setXRotation( double _x		)
-{
-	m_rotation.m_x=_x;
-	update();
-}
-
-void NGLScene::setYRotation( double _y	)
-{
-	m_rotation.m_y=_y;
-	update();
-}
-void NGLScene::setZRotation( double _z )
-{
-	m_rotation.m_z=_z;
-	update();
-}
-
-void NGLScene::setXScale( double _x	)
-{
-	m_scale.m_x=_x;
-	update();
-}
-
-void NGLScene::setYScale(	 double _y)
-{
-	m_scale.m_y=_y;
-	update();
-}
-void NGLScene::setZScale( double _z )
-{
-	m_scale.m_z=_z;
-	update();
-}
-
-void NGLScene::setXPosition( double _x	)
-{
-	m_position.m_x=_x;
-	update();
-}
-
-void NGLScene::setYPosition( double _y	)
-{
-	m_position.m_y=_y;
-	update();
-}
-void NGLScene::setZPosition( double _z	 )
-{
-	m_position.m_z=_z;
-	update();
-}
-
-void NGLScene::setObjectMode(	int _i)
-{
-	m_selectedObject=_i;
-	update();
-}
-void NGLScene::setColour()
-{
-	QColor colour = QColorDialog::getColor();
-	if( colour.isValid())
-	{
-    ngl::ShaderLib *shader=ngl::ShaderLib::instance();
-    (*shader)["Phong"]->use();
-    shader->setShaderParam4f("Colour",colour.redF(),colour.greenF(),colour.blueF(),1.0);
-    update();
-	}
 }
