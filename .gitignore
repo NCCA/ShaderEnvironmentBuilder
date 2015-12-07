@@ -25,10 +25,16 @@
 *.app
 
 # Qt pro user file
-*.pro.user
+*.pro.user*
 
 # P4 merge files
 *.BASE.*
 *.LOCAL.*
 *.REMOTE.*
 *.orig
+
+# Remove build folders that are created from non-shadowbuild
+build-*/
+
+# Remove qmake cache file
+.qmake.cache

@@ -9,8 +9,10 @@
 #include <QResizeEvent>
 #include <QOpenGLWidget>
 #include <memory>
-
-
+#include <QOpenGLWindow>
+#include <unordered_map>
+#include "parser.h"
+//----------------------------------------------------------------------------------------------------------------------
 /// @file NGLScene.h
 /// @brief a basic Qt GL window class for ngl demos
 /// @author Jonathan Macey
@@ -110,19 +112,12 @@ private :
   /// @brief this method is called every time a mouse is moved
   /// @param _event the Qt Event structure
 
-    void listUniforms();
-    void exportUniforms();
-
-    typedef struct
-    {
-        std::string nameUniforms;
-        GLuint locationUniforms;
-        GLenum typeUniforms;
-    }passToGUI;
+    //----------------------------------------------------------------------------------------------------------------------
+    /// @brief create a pointer to the new parser
+    //----------------------------------------------------------------------------------------------------------------------
+    parser *m_newParser;
 
 
-    std::vector <passToGUI> m_passToGUI;
-    int m_num;
 };
 
   void mouseMoveEvent (QMouseEvent * _event   );

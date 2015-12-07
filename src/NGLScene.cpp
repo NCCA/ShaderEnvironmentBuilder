@@ -1,6 +1,8 @@
 #include "NGLScene.h"
 #include <iostream>
 #include <ngl/Vec3.h>
+#include "parser.h"
+#include <ngl/Camera.h>
 #include <ngl/Light.h>
 #include <ngl/NGLInit.h>
 #include <ngl/VAOPrimitives.h>
@@ -12,6 +14,14 @@
 //----------------------------------------------------------------------------------------------------------------------
 NGLScene::NGLScene( QWidget *_parent ) : QOpenGLWidget( _parent )
 {
+  // re-size the widget to that of the parent (in that case the GLFrame passed in on construction)
+  m_rotate=false;
+  // mouse rotation values set to 0
+  m_spinXFace=0.0f;
+  m_spinYFace=0.0f;
+  setTitle("Qt5 Simple NGL Demo");
+  m_newParser= new parser();
+}
 
   // set this widget to have the initial keyboard focus
   setFocus();
@@ -96,88 +106,8 @@ void NGLScene::initializeGL()
   light.loadToShader("light");
   // as re-size is not explicitly called we need to do that.
   // set the viewport for openGL we need to take into account retina display
-
-  ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
-  prim->createSphere("sphere",1.0,40);
-  m_text.reset(  new  ngl::Text(QFont("Arial",18)));
-  m_text->setScreenSize(this->size().width(),this->size().height());
-  m_text->setColour(1.0,1.0,0.0);
-  update();
-}
-
-//----------------------------------------------------------------------------------------------------------------------
-//This virtual function is called whenever the widget has been resized.
-// The new size is passed in width and height.
-void NGLScene::resizeGL(QResizeEvent *_event )
-{
-  m_width=_event->size().width()*devicePixelRatio();
-  m_height=_event->size().height()*devicePixelRatio();
-  // now set the camera size values as the screen size has changed
-  m_cam.setShape(45.0f,(float)width()/height(),0.05f,350.0f);
-
-  listUniforms();
-  exportUniforms();
-}
-
-
-void NGLScene::listUniforms()
-{
-  ngl::ShaderLib *shader=ngl::ShaderLib::instance();
-  shader->printRegisteredUniforms("Phong");
-  GLuint id=shader->getProgramID("Phong");
-
-
-  GLint nUniforms;
-  glGetProgramInterfaceiv(id, GL_UNIFORM, GL_ACTIVE_RESOURCES, &nUniforms);
-  m_num=nUniforms;
-  m_passToGUI.resize(m_num);
-
-  // declare some temp variables
-  char UniformName[256];
-  GLsizei length;
-  GLint size;
-  GLenum type;
-
-  std::cout<<"#Adam's Uniforms#####Starts##########################################"<<std::endl;
-  std::cout<<"---------------------------------------------------------------------"<<std::endl;
-  std::cout<<"There are "<<m_num<<" Uniforms"<<std::endl;
-
-  for (GLuint i=0; i<nUniforms; i++)
-  {
-    glGetActiveUniform(id,i, 256, &length, &size , &type , UniformName);
-
-    m_passToGUI[i].locationUniforms= glGetUniformLocation(id,UniformName);
-    m_passToGUI[i].nameUniforms=UniformName;
-    m_passToGUI[i].typeUniforms= type;
-    std::cout << "Name: "<<UniformName;
-    std::cout << ";  Location: "<<m_passToGUI[i].locationUniforms<<" ("<<i<<")";
-    std::cout << ";  Type: "<<m_passToGUI[i].typeUniforms<<std::endl;
-  }
-
-    std::cout<<"-------------------------------------------------------------------"<<std::endl;
-    std::cout<<"#Adam's Uniforms#####Ends##########################################"<<std::endl;
-
-}
-
-
-void NGLScene::exportUniforms()
-{
-  std::ofstream fileOut;
-  fileOut.open("ParsingOutput.txt");
-  if(!fileOut.is_open())    ///If it can be opened
-  {
-    std::cerr<<"couldn't' open file\n";
-    exit(EXIT_FAILURE);
-  }
-  for(int i=0;i<m_num;i++)
-  {
-    fileOut<<m_passToGUI[i].nameUniforms<<"\n";
-    fileOut<<m_passToGUI[i].locationUniforms<<"\n";
-    fileOut<<m_passToGUI[i].typeUniforms<<"\n";
-  }
-  fileOut.close();
-  // close files
-  std::cout<<"EXPORTED\n"<<std::endl;
+  m_newParser->listUniforms();
+  m_newParser->exportUniforms();
 }
 
 void NGLScene::loadMatricesToShader()
