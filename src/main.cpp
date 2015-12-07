@@ -5,11 +5,15 @@ basic OpenGL demo modified from http://qt-project.org/doc/qt-5.0/qtgui/openglwin
 #include <iostream>
 #include "NGLScene.h"
 #include <Qsci/qsciscintilla.h>
+#include <qscilexerglsl.h>
 
 
 
 int main(int argc, char **argv)
 {
+  QsciScintilla *qsci = new QsciScintilla();
+  QsciLexer *lex = new QsciLexerGLSL(qsci);
+  std::cout<<lex->keywords(1);
   QGuiApplication app(argc, argv);
   // create an OpenGL format specifier
   QSurfaceFormat format;

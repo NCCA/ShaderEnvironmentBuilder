@@ -1,13 +1,33 @@
 #ifndef QSCILEXERGLSL_H__
 #define QSCILEXERGLSL_H__
 
-#include <Qsci/qscilexercpp.h>
+#include <Qsci/qscilexercustom.h>
 
-class QsciLexerGLSL: public QsciLexerCPP {
+class QsciLexerGLSL: public QsciLexerCustom {
 public:
-    QsciLexerGLSL(QObject *parent = 0, bool caseInsensitiveKeywords = false) : QsciLexerCPP()
-    {
-    }
+    QsciLexerGLSL(QObject *parent=0);
+    ~QsciLexerGLSL();
+
+    void styleText(int start, int end);
+
+    void highlightKeywords(const QString &source, int start);
+
+    const char *language() const;
+
+    QColor defaultColor(int style) const;
+
+    QString description(int style) const;
+
+    enum {
+        Default = 0,
+        Comment = 1,
+        Keyword = 2
+    };
+
+private:
+    QsciLexerGLSL(const QsciLexerGLSL &);
+    QsciLexerGLSL &operator=(const QsciLexerGLSL &);
+    QStringList keywordsList;
 };
 
 #endif
