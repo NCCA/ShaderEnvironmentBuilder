@@ -1,54 +1,37 @@
-/****************************************************************************
-basic OpenGL demo modified from http://qt-project.org/doc/qt-5.0/qtgui/openglwindow.html
-****************************************************************************/
-#include <QtGui/QGuiApplication>
-#include <iostream>
-#include "NGLScene.h"
-#include <Qsci/qsciscintilla.h>
-#include <qscilexerglsl.h>
-
-
+#include <QApplication>
+#include "MainWindow.h"
 
 int main(int argc, char **argv)
 {
-  QsciScintilla *qsci = new QsciScintilla();
-  QsciLexer *lex = new QsciLexerGLSL(qsci);
-  std::cout<<lex->keywords(1);
-  QGuiApplication app(argc, argv);
   // create an OpenGL format specifier
   QSurfaceFormat format;
   // set the number of samples for multisampling
   // will need to enable glEnable(GL_MULTISAMPLE); once we have a context
   format.setSamples(4);
-  #if defined( __APPLE__)
+  #if defined( DARWIN)
     // at present mac osx Mountain Lion only supports GL3.2
     // the new mavericks will have GL 4.x so can change
     format.setMajorVersion(4);
-    format.setMinorVersion(1);
+    format.setMinorVersion(2);
   #else
-    // with luck we have the latest GL version so set to that
+    // with luck we have the latest GL version so set to this
     format.setMajorVersion(4);
-    format.setMinorVersion(5);
+    format.setMinorVersion(3);
   #endif
   // now we are going to set to CoreProfile OpenGL so we can't use and old Immediate mode GL
   format.setProfile(QSurfaceFormat::CoreProfile);
   // now set the depth buffer to 24 bits
   format.setDepthBufferSize(24);
-  // set that as the default format for all windows
+
+  // this will set the format for all widgets
+
   QSurfaceFormat::setDefaultFormat(format);
-
-  // now we are going to create our scene window
-  NGLScene window;
-
-  // we can now query the version to see if it worked
-  std::cout<<"Profile is "<<format.majorVersion()<<" "<<format.minorVersion()<<"\n";
-  // set the window size
-  window.resize(1024, 720);
-  // and finally show
-  window.show();
-
-  return app.exec();
+  // make an instance of the QApplication
+  QApplication a(argc, argv);
+  // Create a new MainWindow
+  MainWindow w;
+  // show it
+  w.show();
+  // hand control over to Qt framework
+  return a.exec();
 }
-
-
-
