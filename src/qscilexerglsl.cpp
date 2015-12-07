@@ -5,6 +5,7 @@
 
 QsciLexerGLSL::QsciLexerGLSL(QObject *parent) : QsciLexerCustom(parent)
 {
+    //all GLSL keywords
     keywordsList <<"attribute"<<"const"<<"uniform"<<"varying"<<"layout"<<"centroid"<<"flat"<<"smooth"<<"noperspective"<<"patch"<<"sample"<<"break"<<"continue"<<"do"<<
                    "for"<<"while"<<"switch"<<"case"<<"default"<<"if"<<"else"<<"subroutine"<<"in"<<"out"<<"inout"<<"float"<<"double"<<"int"<<"void"<<"bool"<<"true"<<
                    "false"<<"invariant"<<"discard"<<"return"<<"mat2"<<"mat3"<<"mat4"<<"dmat2"<<"dmat3"<<"dmat4"<<"mat2x2"<<"mat2x3"<<"mat2x4"<<"dmat2x2"<<"dmat2x3"<<
@@ -25,21 +26,28 @@ QsciLexerGLSL::~QsciLexerGLSL()
 
 void QsciLexerGLSL::styleText(int start, int end)
 {
+    //return if no QsciScintilla editor
     if(!editor())
         return;
 
     char * data = new char[end - start +1];
 
+    //get text to be styled
     editor()->SendScintilla(QsciScintilla::SCI_GETTEXTRANGE, start, end, data);
     QString source(data);
     delete [] data;
+
+    //return if no text to be styled
     if(source.isEmpty())
         return;
+
+    //style keywords
     highlightKeywords(source, start);
 }
 
 void QsciLexerGLSL::highlightKeywords(const QString &source, int start)
 {
+    //check for keywords in text
     for (int i = 0; i<keywordsList.size(); i++)
     {
         QString word = keywordsList.at(i);
@@ -47,6 +55,7 @@ void QsciLexerGLSL::highlightKeywords(const QString &source, int start)
         {
             int count = source.count(word);
             int index = 0;
+            //for each instance of the keyword, set styling
             for (int j = 0; j<count; j++)
             {
                 int wordStart = source.indexOf(word, index);

@@ -15,7 +15,7 @@ CXX           = clang++
 DEFINES       = -DQT5BUILD -DQT5BUILD -DNGL_DEBUG -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -msse -msse2 -msse3 -march=native -g -std=c++11 -Wall -W -Wno-unused-parameter -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I. -Iinclude -I/home/i7241559/NGL/include -I/opt/qt/5.5/gcc_64/include -I/opt/qt/5.5/gcc_64/include/QtOpenGL -I/opt/qt/5.5/gcc_64/include/QtWidgets -I/opt/qt/5.5/gcc_64/include/QtGui -I/opt/qt/5.5/gcc_64/include/QtCore -Imoc -I. -I/opt/qt/5.5/gcc_64/mkspecs/linux-clang
+INCPATH       = -I. -Iinclude -I/home/i7219595/NGL/include -I/opt/qt/5.5/gcc_64/include -I/opt/qt/5.5/gcc_64/include/QtOpenGL -I/opt/qt/5.5/gcc_64/include/QtWidgets -I/opt/qt/5.5/gcc_64/include/QtGui -I/opt/qt/5.5/gcc_64/include/QtCore -Imoc -I. -I/opt/qt/5.5/gcc_64/mkspecs/linux-clang
 QMAKE         = /opt/qt/5.5/gcc_64/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -33,10 +33,10 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = CEB1.0.0
-DISTDIR = /home/i7241559/GitHub/0Features-0BugsCVA3/obj/CEB1.0.0
+DISTDIR = /home/i7219595/0Features-0BugsCVA3/obj/CEB1.0.0
 LINK          = clang++
 LFLAGS        = -ccc-gcc-name g++ -Wl,-rpath,/opt/qt/5.5/gcc_64 -Wl,-rpath,/opt/qt/5.5/gcc_64/lib
-LIBS          = $(SUBLIBS) -L/usr/local/lib -L/home/i7241559/NGL/lib -l NGL -ltiff /home/i7241559/GitHub/0Features-0BugsCVA3/lib/libqscintilla2.a -L/opt/qt/5.5/gcc_64/lib -lQt5OpenGL -L/usr/lib64 -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
+LIBS          = $(SUBLIBS) -L/usr/local/lib -L/home/i7219595/NGL/lib -l NGL -ltiff /home/i7219595/0Features-0BugsCVA3/lib/libqscintilla2.a -L/opt/qt/5.5/gcc_64/lib -lQt5OpenGL -L/usr/lib64 -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -52,22 +52,26 @@ SOURCES       = src/json.cpp \
 		src/main.cpp \
 		src/MainWindow.cpp \
 		src/NGLScene.cpp \
-		src/parser.cpp moc/moc_MainWindow.cpp \
+		src/parser.cpp \
+		src/qscilexerglsl.cpp moc/moc_MainWindow.cpp \
 		moc/moc_NGLScene.cpp
 OBJECTS       = obj/json.o \
 		obj/main.o \
 		obj/MainWindow.o \
 		obj/NGLScene.o \
 		obj/parser.o \
+		obj/qscilexerglsl.o \
 		obj/moc_MainWindow.o \
 		obj/moc_NGLScene.o
 DIST          = CEB.pro include/MainWindow.h \
 		include/NGLScene.h \
-		include/parser.h src/json.cpp \
+		include/parser.h \
+		include/qscilexerglsl.h src/json.cpp \
 		src/main.cpp \
 		src/MainWindow.cpp \
 		src/NGLScene.cpp \
-		src/parser.cpp
+		src/parser.cpp \
+		src/qscilexerglsl.cpp
 QMAKE_TARGET  = CEB
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = CEB
@@ -215,7 +219,7 @@ Makefile: CEB.pro .qmake.cache /opt/qt/5.5/gcc_64/mkspecs/linux-clang/qmake.conf
 		.qmake.cache \
 		/opt/qt/5.5/gcc_64/mkspecs/features/exclusive_builds.prf \
 		/opt/qt/5.5/gcc_64/mkspecs/features/default_pre.prf \
-		/home/i7241559/NGL/UseNGL.pri \
+		/home/i7219595/NGL/UseNGL.pri \
 		/opt/qt/5.5/gcc_64/mkspecs/features/resolve_config.prf \
 		/opt/qt/5.5/gcc_64/mkspecs/features/default_post.prf \
 		/opt/qt/5.5/gcc_64/mkspecs/features/c++11.prf \
@@ -353,7 +357,7 @@ Makefile: CEB.pro .qmake.cache /opt/qt/5.5/gcc_64/mkspecs/linux-clang/qmake.conf
 .qmake.cache:
 /opt/qt/5.5/gcc_64/mkspecs/features/exclusive_builds.prf:
 /opt/qt/5.5/gcc_64/mkspecs/features/default_pre.prf:
-/home/i7241559/NGL/UseNGL.pri:
+/home/i7219595/NGL/UseNGL.pri:
 /opt/qt/5.5/gcc_64/mkspecs/features/resolve_config.prf:
 /opt/qt/5.5/gcc_64/mkspecs/features/default_post.prf:
 /opt/qt/5.5/gcc_64/mkspecs/features/c++11.prf:
@@ -387,8 +391,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents include/MainWindow.h include/NGLScene.h include/parser.h $(DISTDIR)/
-	$(COPY_FILE) --parents src/json.cpp src/main.cpp src/MainWindow.cpp src/NGLScene.cpp src/parser.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents include/MainWindow.h include/NGLScene.h include/parser.h include/qscilexerglsl.h $(DISTDIR)/
+	$(COPY_FILE) --parents src/json.cpp src/main.cpp src/MainWindow.cpp src/NGLScene.cpp src/parser.cpp src/qscilexerglsl.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ui/MainWindow.ui $(DISTDIR)/
 
 
@@ -521,9 +525,9 @@ moc/moc_MainWindow.cpp: /opt/qt/5.5/gcc_64/include/QtWidgets/QMainWindow \
 		/opt/qt/5.5/gcc_64/include/QtWidgets/qtabwidget.h \
 		/opt/qt/5.5/gcc_64/include/QtGui/qicon.h \
 		include/NGLScene.h \
-		/home/i7241559/NGL/include/ngl/Camera.h \
-		/home/i7241559/NGL/include/ngl/Types.h \
-		/home/i7241559/NGL/include/ngl/glew.h \
+		/home/i7219595/NGL/include/ngl/Camera.h \
+		/home/i7219595/NGL/include/ngl/Types.h \
+		/home/i7219595/NGL/include/ngl/glew.h \
 		/opt/qt/5.5/gcc_64/include/QtOpenGL/QGLContext \
 		/opt/qt/5.5/gcc_64/include/QtOpenGL/qgl.h \
 		/opt/qt/5.5/gcc_64/include/QtGui/qopengl.h \
@@ -538,19 +542,19 @@ moc/moc_MainWindow.cpp: /opt/qt/5.5/gcc_64/include/QtWidgets/QMainWindow \
 		/opt/qt/5.5/gcc_64/include/QtOpenGL/qtopenglglobal.h \
 		/opt/qt/5.5/gcc_64/include/QtGui/QSurfaceFormat \
 		/opt/qt/5.5/gcc_64/include/QtGui/qsurfaceformat.h \
-		/home/i7241559/NGL/include/ngl/Vec4.h \
-		/home/i7241559/NGL/include/ngl/Vec2.h \
-		/home/i7241559/NGL/include/ngl/Vec3.h \
-		/home/i7241559/NGL/include/ngl/Mat4.h \
-		/home/i7241559/NGL/include/ngl/RibExport.h \
-		/home/i7241559/NGL/include/ngl/Plane.h \
-		/home/i7241559/NGL/include/ngl/AABB.h \
-		/home/i7241559/NGL/include/ngl/BBox.h \
-		/home/i7241559/NGL/include/ngl/VertexArrayObject.h \
-		/home/i7241559/NGL/include/ngl/Transformation.h \
-		/home/i7241559/NGL/include/ngl/NGLassert.h \
-		/home/i7241559/NGL/include/ngl/Text.h \
-		/home/i7241559/NGL/include/ngl/Colour.h \
+		/home/i7219595/NGL/include/ngl/Vec4.h \
+		/home/i7219595/NGL/include/ngl/Vec2.h \
+		/home/i7219595/NGL/include/ngl/Vec3.h \
+		/home/i7219595/NGL/include/ngl/Mat4.h \
+		/home/i7219595/NGL/include/ngl/RibExport.h \
+		/home/i7219595/NGL/include/ngl/Plane.h \
+		/home/i7219595/NGL/include/ngl/AABB.h \
+		/home/i7219595/NGL/include/ngl/BBox.h \
+		/home/i7219595/NGL/include/ngl/VertexArrayObject.h \
+		/home/i7219595/NGL/include/ngl/Transformation.h \
+		/home/i7219595/NGL/include/ngl/NGLassert.h \
+		/home/i7219595/NGL/include/ngl/Text.h \
+		/home/i7219595/NGL/include/ngl/Colour.h \
 		/opt/qt/5.5/gcc_64/include/QtCore/QHash \
 		/opt/qt/5.5/gcc_64/include/QtGui/QFont \
 		/opt/qt/5.5/gcc_64/include/QtCore/QEvent \
@@ -575,13 +579,13 @@ moc/moc_MainWindow.cpp: /opt/qt/5.5/gcc_64/include/QtWidgets/QMainWindow \
 		/opt/qt/5.5/gcc_64/include/QtGui/qopenglversionfunctions.h \
 		/opt/qt/5.5/gcc_64/include/QtGui/QImage \
 		include/parser.h \
-		/home/i7241559/NGL/include/ngl/ShaderLib.h \
-		/home/i7241559/NGL/include/ngl/Shader.h \
-		/home/i7241559/NGL/include/ngl/ShaderProgram.h \
-		/home/i7241559/NGL/include/ngl/Util.h \
-		/home/i7241559/NGL/include/ngl/Singleton.h \
+		/home/i7219595/NGL/include/ngl/ShaderLib.h \
+		/home/i7219595/NGL/include/ngl/Shader.h \
+		/home/i7219595/NGL/include/ngl/ShaderProgram.h \
+		/home/i7219595/NGL/include/ngl/Util.h \
+		/home/i7219595/NGL/include/ngl/Singleton.h \
 		/opt/qt/5.5/gcc_64/include/QtCore/QMutexLocker \
-		/home/i7241559/NGL/include/ngl/Mat3.h \
+		/home/i7219595/NGL/include/ngl/Mat3.h \
 		include/Qsci/qsciscintilla.h \
 		/opt/qt/5.5/gcc_64/include/QtCore/QByteArray \
 		/opt/qt/5.5/gcc_64/include/QtCore/QList \
@@ -600,11 +604,11 @@ moc/moc_MainWindow.cpp: /opt/qt/5.5/gcc_64/include/QtWidgets/QMainWindow \
 		/opt/qt/5.5/gcc_64/include/QtCore/qbasictimer.h \
 		include/Qsci/qscidocument.h \
 		include/MainWindow.h
-	/opt/qt/5.5/gcc_64/bin/moc $(DEFINES) -I/opt/qt/5.5/gcc_64/mkspecs/linux-clang -I/home/i7241559/GitHub/0Features-0BugsCVA3 -I/home/i7241559/GitHub/0Features-0BugsCVA3/include -I/home/i7241559/NGL/include -I/opt/qt/5.5/gcc_64/include -I/opt/qt/5.5/gcc_64/include/QtOpenGL -I/opt/qt/5.5/gcc_64/include/QtWidgets -I/opt/qt/5.5/gcc_64/include/QtGui -I/opt/qt/5.5/gcc_64/include/QtCore include/MainWindow.h -o moc/moc_MainWindow.cpp
+	/opt/qt/5.5/gcc_64/bin/moc $(DEFINES) -I/opt/qt/5.5/gcc_64/mkspecs/linux-clang -I/home/i7219595/0Features-0BugsCVA3 -I/home/i7219595/0Features-0BugsCVA3/include -I/home/i7219595/NGL/include -I/opt/qt/5.5/gcc_64/include -I/opt/qt/5.5/gcc_64/include/QtOpenGL -I/opt/qt/5.5/gcc_64/include/QtWidgets -I/opt/qt/5.5/gcc_64/include/QtGui -I/opt/qt/5.5/gcc_64/include/QtCore include/MainWindow.h -o moc/moc_MainWindow.cpp
 
-moc/moc_NGLScene.cpp: /home/i7241559/NGL/include/ngl/Camera.h \
-		/home/i7241559/NGL/include/ngl/Types.h \
-		/home/i7241559/NGL/include/ngl/glew.h \
+moc/moc_NGLScene.cpp: /home/i7219595/NGL/include/ngl/Camera.h \
+		/home/i7219595/NGL/include/ngl/Types.h \
+		/home/i7219595/NGL/include/ngl/glew.h \
 		/opt/qt/5.5/gcc_64/include/QtOpenGL/QGLContext \
 		/opt/qt/5.5/gcc_64/include/QtOpenGL/qgl.h \
 		/opt/qt/5.5/gcc_64/include/QtGui/qopengl.h \
@@ -720,19 +724,19 @@ moc/moc_NGLScene.cpp: /home/i7241559/NGL/include/ngl/Camera.h \
 		/opt/qt/5.5/gcc_64/include/QtOpenGL/qtopenglglobal.h \
 		/opt/qt/5.5/gcc_64/include/QtGui/QSurfaceFormat \
 		/opt/qt/5.5/gcc_64/include/QtGui/qsurfaceformat.h \
-		/home/i7241559/NGL/include/ngl/Vec4.h \
-		/home/i7241559/NGL/include/ngl/Vec2.h \
-		/home/i7241559/NGL/include/ngl/Vec3.h \
-		/home/i7241559/NGL/include/ngl/Mat4.h \
-		/home/i7241559/NGL/include/ngl/RibExport.h \
-		/home/i7241559/NGL/include/ngl/Plane.h \
-		/home/i7241559/NGL/include/ngl/AABB.h \
-		/home/i7241559/NGL/include/ngl/BBox.h \
-		/home/i7241559/NGL/include/ngl/VertexArrayObject.h \
-		/home/i7241559/NGL/include/ngl/Transformation.h \
-		/home/i7241559/NGL/include/ngl/NGLassert.h \
-		/home/i7241559/NGL/include/ngl/Text.h \
-		/home/i7241559/NGL/include/ngl/Colour.h \
+		/home/i7219595/NGL/include/ngl/Vec4.h \
+		/home/i7219595/NGL/include/ngl/Vec2.h \
+		/home/i7219595/NGL/include/ngl/Vec3.h \
+		/home/i7219595/NGL/include/ngl/Mat4.h \
+		/home/i7219595/NGL/include/ngl/RibExport.h \
+		/home/i7219595/NGL/include/ngl/Plane.h \
+		/home/i7219595/NGL/include/ngl/AABB.h \
+		/home/i7219595/NGL/include/ngl/BBox.h \
+		/home/i7219595/NGL/include/ngl/VertexArrayObject.h \
+		/home/i7219595/NGL/include/ngl/Transformation.h \
+		/home/i7219595/NGL/include/ngl/NGLassert.h \
+		/home/i7219595/NGL/include/ngl/Text.h \
+		/home/i7219595/NGL/include/ngl/Colour.h \
 		/opt/qt/5.5/gcc_64/include/QtCore/QHash \
 		/opt/qt/5.5/gcc_64/include/QtGui/QFont \
 		/opt/qt/5.5/gcc_64/include/QtCore/QEvent \
@@ -758,15 +762,15 @@ moc/moc_NGLScene.cpp: /home/i7241559/NGL/include/ngl/Camera.h \
 		/opt/qt/5.5/gcc_64/include/QtGui/qopenglversionfunctions.h \
 		/opt/qt/5.5/gcc_64/include/QtGui/QImage \
 		include/parser.h \
-		/home/i7241559/NGL/include/ngl/ShaderLib.h \
-		/home/i7241559/NGL/include/ngl/Shader.h \
-		/home/i7241559/NGL/include/ngl/ShaderProgram.h \
-		/home/i7241559/NGL/include/ngl/Util.h \
-		/home/i7241559/NGL/include/ngl/Singleton.h \
+		/home/i7219595/NGL/include/ngl/ShaderLib.h \
+		/home/i7219595/NGL/include/ngl/Shader.h \
+		/home/i7219595/NGL/include/ngl/ShaderProgram.h \
+		/home/i7219595/NGL/include/ngl/Util.h \
+		/home/i7219595/NGL/include/ngl/Singleton.h \
 		/opt/qt/5.5/gcc_64/include/QtCore/QMutexLocker \
-		/home/i7241559/NGL/include/ngl/Mat3.h \
+		/home/i7219595/NGL/include/ngl/Mat3.h \
 		include/NGLScene.h
-	/opt/qt/5.5/gcc_64/bin/moc $(DEFINES) -I/opt/qt/5.5/gcc_64/mkspecs/linux-clang -I/home/i7241559/GitHub/0Features-0BugsCVA3 -I/home/i7241559/GitHub/0Features-0BugsCVA3/include -I/home/i7241559/NGL/include -I/opt/qt/5.5/gcc_64/include -I/opt/qt/5.5/gcc_64/include/QtOpenGL -I/opt/qt/5.5/gcc_64/include/QtWidgets -I/opt/qt/5.5/gcc_64/include/QtGui -I/opt/qt/5.5/gcc_64/include/QtCore include/NGLScene.h -o moc/moc_NGLScene.cpp
+	/opt/qt/5.5/gcc_64/bin/moc $(DEFINES) -I/opt/qt/5.5/gcc_64/mkspecs/linux-clang -I/home/i7219595/0Features-0BugsCVA3 -I/home/i7219595/0Features-0BugsCVA3/include -I/home/i7219595/NGL/include -I/opt/qt/5.5/gcc_64/include -I/opt/qt/5.5/gcc_64/include/QtOpenGL -I/opt/qt/5.5/gcc_64/include/QtWidgets -I/opt/qt/5.5/gcc_64/include/QtGui -I/opt/qt/5.5/gcc_64/include/QtCore include/NGLScene.h -o moc/moc_NGLScene.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -903,9 +907,9 @@ obj/main.o: src/main.cpp /opt/qt/5.5/gcc_64/include/QtWidgets/QApplication \
 		/opt/qt/5.5/gcc_64/include/QtWidgets/qtabwidget.h \
 		/opt/qt/5.5/gcc_64/include/QtGui/qicon.h \
 		include/NGLScene.h \
-		/home/i7241559/NGL/include/ngl/Camera.h \
-		/home/i7241559/NGL/include/ngl/Types.h \
-		/home/i7241559/NGL/include/ngl/glew.h \
+		/home/i7219595/NGL/include/ngl/Camera.h \
+		/home/i7219595/NGL/include/ngl/Types.h \
+		/home/i7219595/NGL/include/ngl/glew.h \
 		/opt/qt/5.5/gcc_64/include/QtOpenGL/QGLContext \
 		/opt/qt/5.5/gcc_64/include/QtOpenGL/qgl.h \
 		/opt/qt/5.5/gcc_64/include/QtGui/qopengl.h \
@@ -920,19 +924,19 @@ obj/main.o: src/main.cpp /opt/qt/5.5/gcc_64/include/QtWidgets/QApplication \
 		/opt/qt/5.5/gcc_64/include/QtOpenGL/qtopenglglobal.h \
 		/opt/qt/5.5/gcc_64/include/QtGui/QSurfaceFormat \
 		/opt/qt/5.5/gcc_64/include/QtGui/qsurfaceformat.h \
-		/home/i7241559/NGL/include/ngl/Vec4.h \
-		/home/i7241559/NGL/include/ngl/Vec2.h \
-		/home/i7241559/NGL/include/ngl/Vec3.h \
-		/home/i7241559/NGL/include/ngl/Mat4.h \
-		/home/i7241559/NGL/include/ngl/RibExport.h \
-		/home/i7241559/NGL/include/ngl/Plane.h \
-		/home/i7241559/NGL/include/ngl/AABB.h \
-		/home/i7241559/NGL/include/ngl/BBox.h \
-		/home/i7241559/NGL/include/ngl/VertexArrayObject.h \
-		/home/i7241559/NGL/include/ngl/Transformation.h \
-		/home/i7241559/NGL/include/ngl/NGLassert.h \
-		/home/i7241559/NGL/include/ngl/Text.h \
-		/home/i7241559/NGL/include/ngl/Colour.h \
+		/home/i7219595/NGL/include/ngl/Vec4.h \
+		/home/i7219595/NGL/include/ngl/Vec2.h \
+		/home/i7219595/NGL/include/ngl/Vec3.h \
+		/home/i7219595/NGL/include/ngl/Mat4.h \
+		/home/i7219595/NGL/include/ngl/RibExport.h \
+		/home/i7219595/NGL/include/ngl/Plane.h \
+		/home/i7219595/NGL/include/ngl/AABB.h \
+		/home/i7219595/NGL/include/ngl/BBox.h \
+		/home/i7219595/NGL/include/ngl/VertexArrayObject.h \
+		/home/i7219595/NGL/include/ngl/Transformation.h \
+		/home/i7219595/NGL/include/ngl/NGLassert.h \
+		/home/i7219595/NGL/include/ngl/Text.h \
+		/home/i7219595/NGL/include/ngl/Colour.h \
 		/opt/qt/5.5/gcc_64/include/QtCore/QHash \
 		/opt/qt/5.5/gcc_64/include/QtGui/QFont \
 		/opt/qt/5.5/gcc_64/include/QtCore/QEvent \
@@ -957,13 +961,13 @@ obj/main.o: src/main.cpp /opt/qt/5.5/gcc_64/include/QtWidgets/QApplication \
 		/opt/qt/5.5/gcc_64/include/QtGui/qopenglversionfunctions.h \
 		/opt/qt/5.5/gcc_64/include/QtGui/QImage \
 		include/parser.h \
-		/home/i7241559/NGL/include/ngl/ShaderLib.h \
-		/home/i7241559/NGL/include/ngl/Shader.h \
-		/home/i7241559/NGL/include/ngl/ShaderProgram.h \
-		/home/i7241559/NGL/include/ngl/Util.h \
-		/home/i7241559/NGL/include/ngl/Singleton.h \
+		/home/i7219595/NGL/include/ngl/ShaderLib.h \
+		/home/i7219595/NGL/include/ngl/Shader.h \
+		/home/i7219595/NGL/include/ngl/ShaderProgram.h \
+		/home/i7219595/NGL/include/ngl/Util.h \
+		/home/i7219595/NGL/include/ngl/Singleton.h \
 		/opt/qt/5.5/gcc_64/include/QtCore/QMutexLocker \
-		/home/i7241559/NGL/include/ngl/Mat3.h \
+		/home/i7219595/NGL/include/ngl/Mat3.h \
 		include/Qsci/qsciscintilla.h \
 		/opt/qt/5.5/gcc_64/include/QtCore/QByteArray \
 		/opt/qt/5.5/gcc_64/include/QtCore/QList \
@@ -1090,9 +1094,9 @@ obj/MainWindow.o: src/MainWindow.cpp include/MainWindow.h \
 		/opt/qt/5.5/gcc_64/include/QtWidgets/qtabwidget.h \
 		/opt/qt/5.5/gcc_64/include/QtGui/qicon.h \
 		include/NGLScene.h \
-		/home/i7241559/NGL/include/ngl/Camera.h \
-		/home/i7241559/NGL/include/ngl/Types.h \
-		/home/i7241559/NGL/include/ngl/glew.h \
+		/home/i7219595/NGL/include/ngl/Camera.h \
+		/home/i7219595/NGL/include/ngl/Types.h \
+		/home/i7219595/NGL/include/ngl/glew.h \
 		/opt/qt/5.5/gcc_64/include/QtOpenGL/QGLContext \
 		/opt/qt/5.5/gcc_64/include/QtOpenGL/qgl.h \
 		/opt/qt/5.5/gcc_64/include/QtGui/qopengl.h \
@@ -1107,19 +1111,19 @@ obj/MainWindow.o: src/MainWindow.cpp include/MainWindow.h \
 		/opt/qt/5.5/gcc_64/include/QtOpenGL/qtopenglglobal.h \
 		/opt/qt/5.5/gcc_64/include/QtGui/QSurfaceFormat \
 		/opt/qt/5.5/gcc_64/include/QtGui/qsurfaceformat.h \
-		/home/i7241559/NGL/include/ngl/Vec4.h \
-		/home/i7241559/NGL/include/ngl/Vec2.h \
-		/home/i7241559/NGL/include/ngl/Vec3.h \
-		/home/i7241559/NGL/include/ngl/Mat4.h \
-		/home/i7241559/NGL/include/ngl/RibExport.h \
-		/home/i7241559/NGL/include/ngl/Plane.h \
-		/home/i7241559/NGL/include/ngl/AABB.h \
-		/home/i7241559/NGL/include/ngl/BBox.h \
-		/home/i7241559/NGL/include/ngl/VertexArrayObject.h \
-		/home/i7241559/NGL/include/ngl/Transformation.h \
-		/home/i7241559/NGL/include/ngl/NGLassert.h \
-		/home/i7241559/NGL/include/ngl/Text.h \
-		/home/i7241559/NGL/include/ngl/Colour.h \
+		/home/i7219595/NGL/include/ngl/Vec4.h \
+		/home/i7219595/NGL/include/ngl/Vec2.h \
+		/home/i7219595/NGL/include/ngl/Vec3.h \
+		/home/i7219595/NGL/include/ngl/Mat4.h \
+		/home/i7219595/NGL/include/ngl/RibExport.h \
+		/home/i7219595/NGL/include/ngl/Plane.h \
+		/home/i7219595/NGL/include/ngl/AABB.h \
+		/home/i7219595/NGL/include/ngl/BBox.h \
+		/home/i7219595/NGL/include/ngl/VertexArrayObject.h \
+		/home/i7219595/NGL/include/ngl/Transformation.h \
+		/home/i7219595/NGL/include/ngl/NGLassert.h \
+		/home/i7219595/NGL/include/ngl/Text.h \
+		/home/i7219595/NGL/include/ngl/Colour.h \
 		/opt/qt/5.5/gcc_64/include/QtCore/QHash \
 		/opt/qt/5.5/gcc_64/include/QtGui/QFont \
 		/opt/qt/5.5/gcc_64/include/QtCore/QEvent \
@@ -1144,13 +1148,13 @@ obj/MainWindow.o: src/MainWindow.cpp include/MainWindow.h \
 		/opt/qt/5.5/gcc_64/include/QtGui/qopenglversionfunctions.h \
 		/opt/qt/5.5/gcc_64/include/QtGui/QImage \
 		include/parser.h \
-		/home/i7241559/NGL/include/ngl/ShaderLib.h \
-		/home/i7241559/NGL/include/ngl/Shader.h \
-		/home/i7241559/NGL/include/ngl/ShaderProgram.h \
-		/home/i7241559/NGL/include/ngl/Util.h \
-		/home/i7241559/NGL/include/ngl/Singleton.h \
+		/home/i7219595/NGL/include/ngl/ShaderLib.h \
+		/home/i7219595/NGL/include/ngl/Shader.h \
+		/home/i7219595/NGL/include/ngl/ShaderProgram.h \
+		/home/i7219595/NGL/include/ngl/Util.h \
+		/home/i7219595/NGL/include/ngl/Singleton.h \
 		/opt/qt/5.5/gcc_64/include/QtCore/QMutexLocker \
-		/home/i7241559/NGL/include/ngl/Mat3.h \
+		/home/i7219595/NGL/include/ngl/Mat3.h \
 		include/Qsci/qsciscintilla.h \
 		/opt/qt/5.5/gcc_64/include/QtCore/QByteArray \
 		/opt/qt/5.5/gcc_64/include/QtCore/QList \
@@ -1168,52 +1172,13 @@ obj/MainWindow.o: src/MainWindow.cpp include/MainWindow.h \
 		/opt/qt/5.5/gcc_64/include/QtCore/qtimer.h \
 		/opt/qt/5.5/gcc_64/include/QtCore/qbasictimer.h \
 		include/Qsci/qscidocument.h \
-		ui_MainWindow.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/QVariant \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/QAction \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qaction.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qactiongroup.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/QApplication \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qapplication.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qcoreapplication.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qeventloop.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qdesktopwidget.h \
-		/opt/qt/5.5/gcc_64/include/QtGui/qguiapplication.h \
-		/opt/qt/5.5/gcc_64/include/QtGui/qinputmethod.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/QButtonGroup \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qbuttongroup.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/QGridLayout \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qgridlayout.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qlayout.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qlayoutitem.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qboxlayout.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/QHeaderView \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qheaderview.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qabstractitemview.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qabstractitemmodel.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qitemselectionmodel.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qstyleoption.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qabstractspinbox.h \
-		/opt/qt/5.5/gcc_64/include/QtGui/qvalidator.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qregularexpression.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qslider.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qabstractslider.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qstyle.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qtabbar.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qrubberband.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/QMenuBar \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qmenubar.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qmenu.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/QSpacerItem \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/QStatusBar \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qstatusbar.h
+		ui_MainWindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/MainWindow.o src/MainWindow.cpp
 
 obj/NGLScene.o: src/NGLScene.cpp include/NGLScene.h \
-		/home/i7241559/NGL/include/ngl/Camera.h \
-		/home/i7241559/NGL/include/ngl/Types.h \
-		/home/i7241559/NGL/include/ngl/glew.h \
+		/home/i7219595/NGL/include/ngl/Camera.h \
+		/home/i7219595/NGL/include/ngl/Types.h \
+		/home/i7219595/NGL/include/ngl/glew.h \
 		/opt/qt/5.5/gcc_64/include/QtOpenGL/QGLContext \
 		/opt/qt/5.5/gcc_64/include/QtOpenGL/qgl.h \
 		/opt/qt/5.5/gcc_64/include/QtGui/qopengl.h \
@@ -1329,19 +1294,19 @@ obj/NGLScene.o: src/NGLScene.cpp include/NGLScene.h \
 		/opt/qt/5.5/gcc_64/include/QtOpenGL/qtopenglglobal.h \
 		/opt/qt/5.5/gcc_64/include/QtGui/QSurfaceFormat \
 		/opt/qt/5.5/gcc_64/include/QtGui/qsurfaceformat.h \
-		/home/i7241559/NGL/include/ngl/Vec4.h \
-		/home/i7241559/NGL/include/ngl/Vec2.h \
-		/home/i7241559/NGL/include/ngl/Vec3.h \
-		/home/i7241559/NGL/include/ngl/Mat4.h \
-		/home/i7241559/NGL/include/ngl/RibExport.h \
-		/home/i7241559/NGL/include/ngl/Plane.h \
-		/home/i7241559/NGL/include/ngl/AABB.h \
-		/home/i7241559/NGL/include/ngl/BBox.h \
-		/home/i7241559/NGL/include/ngl/VertexArrayObject.h \
-		/home/i7241559/NGL/include/ngl/Transformation.h \
-		/home/i7241559/NGL/include/ngl/NGLassert.h \
-		/home/i7241559/NGL/include/ngl/Text.h \
-		/home/i7241559/NGL/include/ngl/Colour.h \
+		/home/i7219595/NGL/include/ngl/Vec4.h \
+		/home/i7219595/NGL/include/ngl/Vec2.h \
+		/home/i7219595/NGL/include/ngl/Vec3.h \
+		/home/i7219595/NGL/include/ngl/Mat4.h \
+		/home/i7219595/NGL/include/ngl/RibExport.h \
+		/home/i7219595/NGL/include/ngl/Plane.h \
+		/home/i7219595/NGL/include/ngl/AABB.h \
+		/home/i7219595/NGL/include/ngl/BBox.h \
+		/home/i7219595/NGL/include/ngl/VertexArrayObject.h \
+		/home/i7219595/NGL/include/ngl/Transformation.h \
+		/home/i7219595/NGL/include/ngl/NGLassert.h \
+		/home/i7219595/NGL/include/ngl/Text.h \
+		/home/i7219595/NGL/include/ngl/Colour.h \
 		/opt/qt/5.5/gcc_64/include/QtCore/QHash \
 		/opt/qt/5.5/gcc_64/include/QtGui/QFont \
 		/opt/qt/5.5/gcc_64/include/QtCore/QEvent \
@@ -1367,27 +1332,27 @@ obj/NGLScene.o: src/NGLScene.cpp include/NGLScene.h \
 		/opt/qt/5.5/gcc_64/include/QtGui/qopenglversionfunctions.h \
 		/opt/qt/5.5/gcc_64/include/QtGui/QImage \
 		include/parser.h \
-		/home/i7241559/NGL/include/ngl/ShaderLib.h \
-		/home/i7241559/NGL/include/ngl/Shader.h \
-		/home/i7241559/NGL/include/ngl/ShaderProgram.h \
-		/home/i7241559/NGL/include/ngl/Util.h \
-		/home/i7241559/NGL/include/ngl/Singleton.h \
+		/home/i7219595/NGL/include/ngl/ShaderLib.h \
+		/home/i7219595/NGL/include/ngl/Shader.h \
+		/home/i7219595/NGL/include/ngl/ShaderProgram.h \
+		/home/i7219595/NGL/include/ngl/Util.h \
+		/home/i7219595/NGL/include/ngl/Singleton.h \
 		/opt/qt/5.5/gcc_64/include/QtCore/QMutexLocker \
-		/home/i7241559/NGL/include/ngl/Mat3.h \
-		/home/i7241559/NGL/include/ngl/Light.h \
-		/home/i7241559/NGL/include/ngl/NGLInit.h \
-		/home/i7241559/NGL/include/ngl/VAOPrimitives.h \
-		/home/i7241559/NGL/include/ngl/Material.h \
+		/home/i7219595/NGL/include/ngl/Mat3.h \
+		/home/i7219595/NGL/include/ngl/Light.h \
+		/home/i7219595/NGL/include/ngl/NGLInit.h \
+		/home/i7219595/NGL/include/ngl/VAOPrimitives.h \
+		/home/i7219595/NGL/include/ngl/Material.h \
 		/opt/qt/5.5/gcc_64/include/QtWidgets/QColorDialog \
 		/opt/qt/5.5/gcc_64/include/QtWidgets/qcolordialog.h \
 		/opt/qt/5.5/gcc_64/include/QtWidgets/qdialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/NGLScene.o src/NGLScene.cpp
 
 obj/parser.o: src/parser.cpp include/parser.h \
-		/home/i7241559/NGL/include/ngl/ShaderLib.h \
-		/home/i7241559/NGL/include/ngl/Colour.h \
-		/home/i7241559/NGL/include/ngl/Types.h \
-		/home/i7241559/NGL/include/ngl/glew.h \
+		/home/i7219595/NGL/include/ngl/ShaderLib.h \
+		/home/i7219595/NGL/include/ngl/Colour.h \
+		/home/i7219595/NGL/include/ngl/Types.h \
+		/home/i7219595/NGL/include/ngl/glew.h \
 		/opt/qt/5.5/gcc_64/include/QtOpenGL/QGLContext \
 		/opt/qt/5.5/gcc_64/include/QtOpenGL/qgl.h \
 		/opt/qt/5.5/gcc_64/include/QtGui/qopengl.h \
@@ -1503,17 +1468,145 @@ obj/parser.o: src/parser.cpp include/parser.h \
 		/opt/qt/5.5/gcc_64/include/QtOpenGL/qtopenglglobal.h \
 		/opt/qt/5.5/gcc_64/include/QtGui/QSurfaceFormat \
 		/opt/qt/5.5/gcc_64/include/QtGui/qsurfaceformat.h \
-		/home/i7241559/NGL/include/ngl/Shader.h \
-		/home/i7241559/NGL/include/ngl/ShaderProgram.h \
-		/home/i7241559/NGL/include/ngl/Util.h \
-		/home/i7241559/NGL/include/ngl/Vec4.h \
-		/home/i7241559/NGL/include/ngl/Vec2.h \
-		/home/i7241559/NGL/include/ngl/Vec3.h \
-		/home/i7241559/NGL/include/ngl/Singleton.h \
+		/home/i7219595/NGL/include/ngl/Shader.h \
+		/home/i7219595/NGL/include/ngl/ShaderProgram.h \
+		/home/i7219595/NGL/include/ngl/Util.h \
+		/home/i7219595/NGL/include/ngl/Vec4.h \
+		/home/i7219595/NGL/include/ngl/Vec2.h \
+		/home/i7219595/NGL/include/ngl/Vec3.h \
+		/home/i7219595/NGL/include/ngl/Singleton.h \
 		/opt/qt/5.5/gcc_64/include/QtCore/QMutexLocker \
-		/home/i7241559/NGL/include/ngl/Mat3.h \
-		/home/i7241559/NGL/include/ngl/Mat4.h
+		/home/i7219595/NGL/include/ngl/Mat3.h \
+		/home/i7219595/NGL/include/ngl/Mat4.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/parser.o src/parser.cpp
+
+obj/qscilexerglsl.o: src/qscilexerglsl.cpp include/qscilexerglsl.h \
+		include/Qsci/qscilexercustom.h \
+		include/Qsci/qsciglobal.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qglobal.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qconfig.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qfeatures.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qtypetraits.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qlogging.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qflags.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qatomic.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qatomic_gcc.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qatomic_msvc.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qatomic_armv7.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qatomic_armv6.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qatomic_armv5.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qatomic_ia64.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qatomic_mips.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qatomic_x86.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qatomic_unix.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qmutex.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qnumeric.h \
+		include/Qsci/qscilexer.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/QColor \
+		/opt/qt/5.5/gcc_64/include/QtGui/qcolor.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/qrgb.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qnamespace.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qstringlist.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qlist.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qiterator.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qrefcount.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qarraydata.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qbytearraylist.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qbytearray.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qstring.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qchar.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qregexp.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/QFont \
+		/opt/qt/5.5/gcc_64/include/QtGui/qfont.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/qwindowdefs.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qsharedpointer.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qshareddata.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qhash.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qpair.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qobject.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qmetatype.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qisenum.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qobject_impl.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/QMap \
+		/opt/qt/5.5/gcc_64/include/QtCore/qmap.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qdebug.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qtextstream.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qiodevice.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qlocale.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qvariant.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qvector.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qpoint.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qset.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qcontiguouscache.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/QObject \
+		/opt/qt/5.5/gcc_64/include/QtCore/QString \
+		include/Qsci/qsciscintilla.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/QByteArray \
+		/opt/qt/5.5/gcc_64/include/QtCore/QList \
+		/opt/qt/5.5/gcc_64/include/QtCore/QPointer \
+		/opt/qt/5.5/gcc_64/include/QtCore/qpointer.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/QStringList \
+		include/Qsci/qscicommand.h \
+		include/Qsci/qsciscintillabase.h \
+		/opt/qt/5.5/gcc_64/include/QtWidgets/QAbstractScrollArea \
+		/opt/qt/5.5/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+		/opt/qt/5.5/gcc_64/include/QtWidgets/qframe.h \
+		/opt/qt/5.5/gcc_64/include/QtWidgets/qwidget.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qmargins.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/qpaintdevice.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qrect.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qsize.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/qpalette.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/qbrush.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/qmatrix.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/qpolygon.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/qregion.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qdatastream.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qline.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/qtransform.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/qpainterpath.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/qimage.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/qpixelformat.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/qpixmap.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/qfontmetrics.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/qfontinfo.h \
+		/opt/qt/5.5/gcc_64/include/QtWidgets/qsizepolicy.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/qcursor.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/qkeysequence.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/qevent.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qurl.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qurlquery.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qfile.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qfiledevice.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/qvector2d.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/qtouchdevice.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/QPoint \
+		/opt/qt/5.5/gcc_64/include/QtCore/QTimer \
+		/opt/qt/5.5/gcc_64/include/QtCore/qtimer.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qbasictimer.h \
+		include/Qsci/qscidocument.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/qscilexerglsl.o src/qscilexerglsl.cpp
 
 obj/moc_MainWindow.o: moc/moc_MainWindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/moc_MainWindow.o moc/moc_MainWindow.cpp
