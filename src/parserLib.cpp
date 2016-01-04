@@ -1,22 +1,22 @@
-#include "parser.h"
+#include "parserLib.h"
 
-parser::parser()
+parserLib::parserLib()
 {
 
 
 }
 
 
-parser::~parser()
+parserLib::~parserLib()
 {
 
 }
 
 
-void parser::listUniforms()
+void parserLib::listUniforms()
 {
   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
-  shader->printRegisteredUniforms("Phong");
+  //shader->printRegisteredUniforms("Phong");
   GLuint id=shader->getProgramID("Phong");
 
   GLint nUniforms;
@@ -39,13 +39,18 @@ void parser::listUniforms()
     glGetActiveUniform(id,i, 256, &length, &size , &type , UniformName);
 
     newData.locationUniforms= glGetUniformLocation(id,UniformName);
-    newData.nameUniforms=UniformName;
+    newData.nameUniforms=UniformName ;
     newData.typeUniforms= type;
     m_registeredUniforms[UniformName]=newData;
     m_passToGUI[i]=newData;
     //    std::cout << "Name: "<<UniformName;
     //    std::cout << ";  Location: "<<m_passToGUI[i].locationUniforms<<" ("<<i<<")";
     //    std::cout << ";  Type: "<<m_passToGUI[i].typeUniforms<<std::endl;
+    std::string str;
+    const char * c = m_passToGUI[i].nameUniforms.c_str();
+    GLenum newLoc;
+    GLint newPosition=glGetProgramResourceLocation(id, GL_LOCATION,"phong") ;
+    std::cout<<newPosition<<std::endl;
   }
   uniformDataTypes();
 
@@ -55,17 +60,21 @@ void parser::listUniforms()
     std::cout << "Name: "<<m_passToGUI[i].nameUniforms;
     std::cout << ";  Location: "<<m_passToGUI[i].locationUniforms<<" ("<<i<<")";
     std::cout << ";  Type: "<<m_passToGUI[i].typeUniforms<<"; "<<m_passToGUI[i].dataType<<std::endl;
+
+
+
   }
 
 
     std::cout<<"-------------------------------------------------------------------"<<std::endl;
     std::cout<<"#Adam's Uniforms#####Ends##########################################"<<std::endl;
 
+
 }
 
 //JONS CODE!  //JONS CODE!  //JONS CODE!  //JONS CODE!
 
-void parser::uniformDataTypes()
+void parserLib::uniformDataTypes()
 {
   std::cout<<"Started Uniforms" <<"\n";
 
@@ -210,7 +219,7 @@ void parser::uniformDataTypes()
 
 
 
-void parser::exportUniforms()
+void parserLib::exportUniforms()
 {
   std::ofstream fileOut;
   fileOut.open("ParsingOutput.txt");

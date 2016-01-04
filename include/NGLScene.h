@@ -7,7 +7,7 @@
 #include <ngl/Text.h>
 #include <QOpenGLWindow>
 #include <unordered_map>
-#include "parser.h"
+#include "parserLib.h"
 
 //----------------------------------------------------------------------------------------------------------------------
 /// @file NGLScene.h
@@ -139,8 +139,8 @@ private:
     //----------------------------------------------------------------------------------------------------------------------
     void wheelEvent( QWheelEvent *_event);
 
-
-    parser *m_newParser;
+    ngl::Vec4 a;
+    parserLib *m_newParser;
 
 };
 

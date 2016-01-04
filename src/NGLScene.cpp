@@ -2,7 +2,7 @@
 #include <QGuiApplication>
 
 #include "NGLScene.h"
-#include "parser.h"
+#include "parserLib.h"
 #include <ngl/Camera.h>
 #include <ngl/Light.h>
 #include <ngl/Material.h>
@@ -10,6 +10,8 @@
 #include <ngl/VAOPrimitives.h>
 #include <ngl/ShaderLib.h>
 #include <iostream>
+#include <uniformValues.h>
+#include <typeinfo>
 //----------------------------------------------------------------------------------------------------------------------
 /// @brief the increment for x/y translation with mouse movement
 //----------------------------------------------------------------------------------------------------------------------
@@ -27,7 +29,7 @@ NGLScene::NGLScene()
   m_spinXFace=0.0f;
   m_spinYFace=0.0f;
   setTitle("Qt5 Simple NGL Demo");
-  m_newParser= new parser();
+  m_newParser= new parserLib();
 
 }
 
@@ -119,8 +121,30 @@ void NGLScene::initializeGL()
   // as re-size is not explicitly called we need to do that.
   // set the viewport for openGL we need to take into account retina display
 
+
+  ngl::Mat4 M=shader->getUniformBlockIndex("M");
+  ngl::Mat4 MV=shader->getUniformBlockIndex("MV");
+  ngl::Mat4 MVP=shader->getUniformBlockIndex("MVP");
+  bool Normalize=shader->getUniformBlockIndex("Normalize");
+  ngl::Vec4 lightAmbient=shader->getUniformBlockIndex("light.ambient");
+  ngl::Vec4 lightDiffuse=shader->getUniformBlockIndex("light.diffuse");
+  ngl::Vec4 lightPosition=shader->getUniformBlockIndex("light.position");
+  ngl::Vec4 lightSpecular=shader->getUniformBlockIndex("light.specular");
+
+  ngl::Vec4 materialAmbient=shader->getUniformBlockIndex("material.ambient");
+  ngl::Vec4 materialDiffuse=shader->getUniformBlockIndex("material.diffuse");
+  float materialShininess=shader->getUniformBlockIndex("material.shininess");
+  ngl::Vec4 materialSpecular=shader->getUniformBlockIndex("material.specular");
+  ngl::Mat3 normalMatrix=shader->getUniformBlockIndex("normalMatrix");
+  ngl::Vec3 viewerPos=shader->getUniformBlockIndex("viewerPos");
   m_newParser->listUniforms();
 
+
+  //  std::cout<<typeid(Normalize).name()<<std::endl;
+  //  std::cout<<"ad:    "<<DAD.m_00 <<" " <<DAD.m_01<<" " <<DAD.m_02<<" " <<DAD.m_03<<" " <<std::endl;
+  //  std::cout<<"ad:    "<<DAD.m_10 <<" " <<DAD.m_11<<" " <<DAD.m_12<<" " <<DAD.m_23<<" " <<std::endl;
+  //  std::cout<<"ad:    "<<DAD.m_20 <<" " <<DAD.m_21<<" " <<DAD.m_22<<" " <<DAD.m_23<<" " <<std::endl;
+  //  std::cout<<"ad:    "<<DAD.m_30 <<" " <<DAD.m_31<<" " <<DAD.m_32<<" " <<DAD.m_33<<" " <<std::endl;
 }
 
 
@@ -133,6 +157,7 @@ void NGLScene::loadMatricesToShader()
   ngl::Mat4 MVP;
   ngl::Mat3 normalMatrix;
   ngl::Mat4 M;
+
   M=m_mouseGlobalTX;
   MV=  M*m_cam.getViewMatrix();
   MVP= M*m_cam.getVPMatrix();
@@ -142,6 +167,8 @@ void NGLScene::loadMatricesToShader()
   shader->setShaderParamFromMat4("MVP",MVP);
   shader->setShaderParamFromMat3("normalMatrix",normalMatrix);
   shader->setShaderParamFromMat4("M",M);
+  shader->setShaderParamFromVec4("material.specular",a);
+
 }
 
 void NGLScene::paintGL()
@@ -278,6 +305,8 @@ void NGLScene::keyPressEvent(QKeyEvent *_event)
   case Qt::Key_F : showFullScreen(); break;
   // show windowed
   case Qt::Key_N : showNormal(); break;
+  case Qt::Key_U : a.m_x+=1; break;
+  case Qt::Key_I : a.m_x-=1; break;
   default : break;
   }
   // finally update the GLWindow and re-draw

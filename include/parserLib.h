@@ -5,12 +5,12 @@
 #include <ngl/ShaderLib.h>
 #include <ngl/Shader.h>
 #include <fstream>
-class parser
+class parserLib
 {
 
 public:
-  parser();
-  ~parser();
+  parserLib();
+  ~parserLib();
   int m_num;
 
 
