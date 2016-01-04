@@ -142,12 +142,12 @@ set(CMAKE_MAKEFILE_PRODUCTS
   "CMakeFiles/3.3.1/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.3.1/CMakeCCompiler.cmake"
   "CMakeFiles/3.3.1/CMakeCXXCompiler.cmake"
-  "CMakeFiles/SimpleNGL_automoc.dir/AutogenInfo.cmake"
+  "CMakeFiles/CEB_automoc.dir/AutogenInfo.cmake"
   "CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/SimpleNGL_automoc.dir/DependInfo.cmake"
-  "CMakeFiles/SimpleNGL.dir/DependInfo.cmake"
+  "CMakeFiles/CEB_automoc.dir/DependInfo.cmake"
+  "CMakeFiles/CEB.dir/DependInfo.cmake"
   )

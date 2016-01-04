@@ -4,15 +4,15 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/i7219595/SimpleNGL/SimpleNGL_automoc.cpp" "/home/i7219595/SimpleNGL/CMakeFiles/SimpleNGL.dir/SimpleNGL_automoc.cpp.o"
-  "/home/i7219595/SimpleNGL/src/NGLScene.cpp" "/home/i7219595/SimpleNGL/CMakeFiles/SimpleNGL.dir/src/NGLScene.cpp.o"
-  "/home/i7219595/SimpleNGL/src/main.cpp" "/home/i7219595/SimpleNGL/CMakeFiles/SimpleNGL.dir/src/main.cpp.o"
+  "/home/i7241559/GitHub/0Features-0BugsCVA3/CEB_automoc.cpp" "/home/i7241559/GitHub/0Features-0BugsCVA3/CMakeFiles/CEB.dir/CEB_automoc.cpp.o"
+  "/home/i7241559/GitHub/0Features-0BugsCVA3/src/MainWindow.cpp" "/home/i7241559/GitHub/0Features-0BugsCVA3/CMakeFiles/CEB.dir/src/MainWindow.cpp.o"
+  "/home/i7241559/GitHub/0Features-0BugsCVA3/src/NGLScene.cpp" "/home/i7241559/GitHub/0Features-0BugsCVA3/CMakeFiles/CEB.dir/src/NGLScene.cpp.o"
+  "/home/i7241559/GitHub/0Features-0BugsCVA3/src/main.cpp" "/home/i7241559/GitHub/0Features-0BugsCVA3/CMakeFiles/CEB.dir/src/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
 # Preprocessor definitions for this target.
 set(CMAKE_TARGET_DEFINITIONS_CXX
-  "ADDLARGEMODELS"
   "LINUX"
   "QT5BUILD"
   "QT_CORE_LIB"
@@ -27,7 +27,9 @@ set(CMAKE_TARGET_DEFINITIONS_CXX
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "."
   "include"
-  "/home/i7219595/NGL/include"
+  "/home/i7241559/NGL/include"
+  "ui"
+  "src"
   "/opt/qt/5.5/gcc_64/include"
   "/opt/qt/5.5/gcc_64/include/QtOpenGL"
   "/opt/qt/5.5/gcc_64/include/QtWidgets"

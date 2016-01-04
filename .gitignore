@@ -17,9 +17,35 @@
 *.mod
 
 # Compiled Static libraries
-
+# *Need keep blank for build of QScintilla
 
 # Executables
 *.exe
 *.out
 *.app
+
+# Qt pro user file
+*.pro.user*
+
+# P4 merge files
+*.BASE.*
+*.LOCAL.*
+*.REMOTE.*
+*.orig
+
+# Remove build folders that are created from non-shadowbuild
+build-*/
+
+# temp files under linux
+*.~*
+
+# Qt creator stuff
+.qmake*
+Makefile
+
+# Cmake
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+cmake_install.cmake
+install_manifest.txt
