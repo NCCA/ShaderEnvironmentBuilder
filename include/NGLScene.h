@@ -83,7 +83,7 @@ private :
   void mouseMoveEvent (QMouseEvent * _event   );
 
     ///--------------------------------------------------------------------------------------------------------
-    json *Jsons;
+    Json *Jsons;
   /// @brief this method is called everytime the mouse button is pressed
   /// inherited from QObject and overridden here.
   /// @param _event the Qt Event structure

@@ -26,8 +26,7 @@ INCLUDEPATH +=./include
 # where our exe is going to live (root of project)
 DESTDIR=./
 # add the glsl shader files
-OTHER_FILES+= $$PWD/shaders/*.glsl /
-              README.md
+OTHER_FILES+= $$PWD/shaders/*.glsl
 # were are going to default to a console app
 CONFIG += console
 NGLPATH=$$(NGLDIR)

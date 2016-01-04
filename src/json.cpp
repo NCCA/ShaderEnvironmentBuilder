@@ -1,13 +1,12 @@
-#include "json.h"
-#include "rapidjson/writer.h"
-#include "rapidjson/stringbuffer.h"
-
-#include <iostream>
-#include <fstream>
-#include <string.h>
+#include <json.h>
 
 using namespace rapidjson;
 using namespace std;
+
+Json::Json()
+{
+
+}
 
 void Json::saveToFile(std::string _jsonString)
 {
@@ -48,7 +47,7 @@ void Json::replaceWord(std::string _oldWord, std::string _newWord)
     jsonFileNew.close();
 }
 
-//std::string shaderType(int _shaderNumber)
+//std::string Json::shaderType(int _shaderNumber)
 //{
 //    std::string shaderType;
 
@@ -117,6 +116,11 @@ std::string Json::buildJson()
     std::cout<<s.GetString()<<std::endl;
 
     return s.GetString();
+}
+
+Json::~Json()
+{
+
 }
 
 //int main()

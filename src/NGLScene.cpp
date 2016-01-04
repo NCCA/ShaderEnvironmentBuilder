@@ -110,8 +110,12 @@ void NGLScene::initializeGL()
 
   ///---------------------------------------------------------------------------------------------------------
 
-  Jsons = new json();
-  Jsons->buildJson();
+//  Jsons = new Json();
+//  Jsons->buildJson();
+
+  Json *jsonInstance = new Json();
+  jsonInstance->buildJson();
+  jsonInstance->replaceWord("Shader", "CHANGED");
 
 
 
@@ -196,12 +200,6 @@ void NGLScene::mousePressEvent (QMouseEvent * _event  )
 
 }
 
-//----------------------------------------------------------------------------------------------------------------------
-void NGLScene::mouseReleaseEvent (  QMouseEvent * _event  )
-{
-  Q_UNUSED(_event);
-
-}
 
 
 
