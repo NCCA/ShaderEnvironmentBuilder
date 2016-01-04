@@ -1,6 +1,6 @@
 #ifndef NGLSCENE_H__
 #define NGLSCENE_H__
-
+#include "json.h"
 #include <ngl/Camera.h>
 #include <ngl/Colour.h>
 #include <ngl/Light.h>
@@ -142,6 +142,10 @@ private:
     void uniformDataTypes();
     void exportUniforms();
 
+    ///--------------------------------------------------------------------------------------------------------
+    json *Jsons;
+
+    ///
     typedef struct
     {
         std::string nameUniforms;

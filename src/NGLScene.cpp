@@ -117,6 +117,23 @@ void NGLScene::initializeGL()
   // set the viewport for openGL we need to take into account retina display
   listUniforms();
   exportUniforms();
+
+  ///---------------------------------------------------------------------------------------------------------
+
+  Jsons = new json();
+  Jsons->buildJson();
+
+
+
+
+
+
+
+
+
+  ///---------------------------------------------------------------------------------------------------------
+
+
 }
 
 

@@ -1,4 +1,4 @@
-
+#include "json.h"
 #include "rapidjson/writer.h"
 #include "rapidjson/stringbuffer.h"
 
@@ -9,7 +9,7 @@
 using namespace rapidjson;
 using namespace std;
 
-void saveToFile(std::string _jsonString)
+void Json::saveToFile(std::string _jsonString)
 {
     ofstream jsonFile("/home/i7685565/0Features-0BugsCVA3/JsonTesting/jsonString.json");
 
@@ -19,7 +19,7 @@ void saveToFile(std::string _jsonString)
     jsonFile.close();
 }
 
-void replaceWord(std::string _oldWord, std::string _newWord)
+void Json::replaceWord(std::string _oldWord, std::string _newWord)
 {
     ifstream jsonFile("/home/i7685565/0Features-0BugsCVA3/JsonTesting/jsonString.json");
     if(!jsonFile)
@@ -48,23 +48,23 @@ void replaceWord(std::string _oldWord, std::string _newWord)
     jsonFileNew.close();
 }
 
-std::string shaderType(int _shaderNumber)
-{
-    std::string shaderType;
+//std::string shaderType(int _shaderNumber)
+//{
+//    std::string shaderType;
 
-    if (_shaderNumber==1)
-    {
-        shaderType = "noise3D";
-    };
-    if (_shaderNumber==2)
-    {
-        shaderType = "cloud3D";
-    };
+//    if (_shaderNumber==1)
+//    {
+//        shaderType = "noise3D";
+//    };
+//    if (_shaderNumber==2)
+//    {
+//        shaderType = "cloud3D";
+//    };
 
-    return shaderType;
-}
+//    return shaderType;
+//}
 
-std::string buildJson()
+std::string Json::buildJson()
 {
 //    NOTE: This is useful to input a string directly into the writer. Input parameter int_shaderNumber to use.
 //    std::string shaderTypeStr = shaderType(_shaderNumber);
