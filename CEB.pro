@@ -44,3 +44,9 @@ else{ # note brace must be here
 # include QSci headers and lib
 LIBS += $$PWD/lib/libqscintilla2.a
 
+# include Flex libs
+LIBS += $$PWD/lib/libfl.a
+
+# Auto include all .lex and .cc files for Flex
+OTHER_FILES+= $$PWD/src/*.lex
+SOURCES+= $$PWD/src/*.cc

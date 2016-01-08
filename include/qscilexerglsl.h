@@ -2,6 +2,7 @@
 #define QSCILEXERGLSL_H__
 
 #include <Qsci/qscilexercustom.h>
+#include <Qsci/qscistyle.h>
 
 class QsciLexerGLSL: public QsciLexerCustom {
 public:
@@ -15,8 +16,11 @@ public:
     const char *language() const;
 
     QColor defaultColor(int style) const;
+    QColor defaultPaper(int style) const;
+    QFont defaultFont(int style) const;
 
     QString description(int style) const;
+
 
     enum {
         Default = 0,
@@ -28,6 +32,7 @@ private:
     QsciLexerGLSL(const QsciLexerGLSL &);
     QsciLexerGLSL &operator=(const QsciLexerGLSL &);
     QStringList keywordsList;
+    QsciStyle m_keywordStyle;
 };
 
 #endif

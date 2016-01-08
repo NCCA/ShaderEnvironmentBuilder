@@ -36,7 +36,7 @@ DISTNAME      = CEB1.0.0
 DISTDIR = /home/i7219595/0Features-0BugsCVA3/obj/CEB1.0.0
 LINK          = clang++
 LFLAGS        = -ccc-gcc-name g++ -Wl,-rpath,/opt/qt/5.5/gcc_64 -Wl,-rpath,/opt/qt/5.5/gcc_64/lib
-LIBS          = $(SUBLIBS) -L/usr/local/lib -L/home/i7219595/NGL/lib -l NGL -ltiff /home/i7219595/0Features-0BugsCVA3/lib/libqscintilla2.a -L/opt/qt/5.5/gcc_64/lib -lQt5OpenGL -L/usr/lib64 -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
+LIBS          = $(SUBLIBS) -L/usr/local/lib -L/home/i7219595/NGL/lib -l NGL -ltiff /home/i7219595/0Features-0BugsCVA3/lib/libqscintilla2.a /home/i7219595/0Features-0BugsCVA3/lib/libfl.a -L/opt/qt/5.5/gcc_64/lib -lQt5OpenGL -L/usr/lib64 -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -53,7 +53,8 @@ SOURCES       = src/json.cpp \
 		src/MainWindow.cpp \
 		src/NGLScene.cpp \
 		src/parser.cpp \
-		src/qscilexerglsl.cpp moc/moc_MainWindow.cpp \
+		src/qscilexerglsl.cpp \
+		src/lex.yy.cc moc/moc_MainWindow.cpp \
 		moc/moc_NGLScene.cpp
 OBJECTS       = obj/json.o \
 		obj/main.o \
@@ -61,9 +62,11 @@ OBJECTS       = obj/json.o \
 		obj/NGLScene.o \
 		obj/parser.o \
 		obj/qscilexerglsl.o \
+		obj/lex.yy.o \
 		obj/moc_MainWindow.o \
 		obj/moc_NGLScene.o
-DIST          = CEB.pro include/MainWindow.h \
+DIST          = CEB.pro include/FlexLexer.h \
+		include/MainWindow.h \
 		include/NGLScene.h \
 		include/parser.h \
 		include/qscilexerglsl.h src/json.cpp \
@@ -71,7 +74,8 @@ DIST          = CEB.pro include/MainWindow.h \
 		src/MainWindow.cpp \
 		src/NGLScene.cpp \
 		src/parser.cpp \
-		src/qscilexerglsl.cpp
+		src/qscilexerglsl.cpp \
+		src/lex.yy.cc
 QMAKE_TARGET  = CEB
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = CEB
@@ -391,8 +395,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents include/MainWindow.h include/NGLScene.h include/parser.h include/qscilexerglsl.h $(DISTDIR)/
-	$(COPY_FILE) --parents src/json.cpp src/main.cpp src/MainWindow.cpp src/NGLScene.cpp src/parser.cpp src/qscilexerglsl.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents include/FlexLexer.h include/MainWindow.h include/NGLScene.h include/parser.h include/qscilexerglsl.h $(DISTDIR)/
+	$(COPY_FILE) --parents src/json.cpp src/main.cpp src/MainWindow.cpp src/NGLScene.cpp src/parser.cpp src/qscilexerglsl.cpp src/lex.yy.cc $(DISTDIR)/
 	$(COPY_FILE) --parents ui/MainWindow.ui $(DISTDIR)/
 
 
@@ -1172,7 +1176,14 @@ obj/MainWindow.o: src/MainWindow.cpp include/MainWindow.h \
 		/opt/qt/5.5/gcc_64/include/QtCore/qtimer.h \
 		/opt/qt/5.5/gcc_64/include/QtCore/qbasictimer.h \
 		include/Qsci/qscidocument.h \
-		ui_MainWindow.h
+		ui_MainWindow.h \
+		include/qscilexerglsl.h \
+		include/Qsci/qscilexercustom.h \
+		include/Qsci/qscilexer.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/QColor \
+		/opt/qt/5.5/gcc_64/include/QtCore/QMap \
+		/opt/qt/5.5/gcc_64/include/QtCore/QString \
+		include/Qsci/qscistyle.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/MainWindow.o src/MainWindow.cpp
 
 obj/NGLScene.o: src/NGLScene.cpp include/NGLScene.h \
@@ -1561,6 +1572,7 @@ obj/qscilexerglsl.o: src/qscilexerglsl.cpp include/qscilexerglsl.h \
 		/opt/qt/5.5/gcc_64/include/QtCore/qcontiguouscache.h \
 		/opt/qt/5.5/gcc_64/include/QtCore/QObject \
 		/opt/qt/5.5/gcc_64/include/QtCore/QString \
+		include/Qsci/qscistyle.h \
 		include/Qsci/qsciscintilla.h \
 		/opt/qt/5.5/gcc_64/include/QtCore/QByteArray \
 		/opt/qt/5.5/gcc_64/include/QtCore/QList \
@@ -1607,6 +1619,9 @@ obj/qscilexerglsl.o: src/qscilexerglsl.cpp include/qscilexerglsl.h \
 		/opt/qt/5.5/gcc_64/include/QtCore/qbasictimer.h \
 		include/Qsci/qscidocument.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/qscilexerglsl.o src/qscilexerglsl.cpp
+
+obj/lex.yy.o: src/lex.yy.cc include/FlexLexer.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/lex.yy.o src/lex.yy.cc
 
 obj/moc_MainWindow.o: moc/moc_MainWindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/moc_MainWindow.o moc/moc_MainWindow.cpp

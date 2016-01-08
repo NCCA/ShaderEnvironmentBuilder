@@ -21,7 +21,7 @@ QsciLexerGLSL::QsciLexerGLSL(QObject *parent) : QsciLexerCustom(parent)
 
 QsciLexerGLSL::~QsciLexerGLSL()
 {
-    ;
+    return;
 }
 
 void QsciLexerGLSL::styleText(int start, int end)
@@ -62,6 +62,7 @@ void QsciLexerGLSL::highlightKeywords(const QString &source, int start)
                 index = wordStart+1;
 
                 startStyling(start + wordStart);
+                printf("started styling\n");
                 setStyling(word.length(), Keyword);
             }
         }
@@ -73,9 +74,27 @@ QColor QsciLexerGLSL::defaultColor(int style) const
     switch(style)
     {
         case Keyword:
-            return Qt::blue;
+            return QColor(102,216,238);
     }
-    return Qt::black;
+    return QColor(247,247,241);
+}
+
+QColor QsciLexerGLSL::defaultPaper(int style) const
+{
+    return QColor(39,40,34);
+}
+
+QFont QsciLexerGLSL::defaultFont(int style) const
+{
+    int weight=50;
+    int size=12;
+    switch(style)
+    {
+        case Keyword:
+            weight = 75;
+    }
+
+    return QFont("Monospace", size,weight);
 }
 
 QString QsciLexerGLSL::description(int style) const
