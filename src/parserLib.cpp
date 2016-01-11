@@ -1,79 +1,91 @@
 #include "parserLib.h"
 
+//----------------------------------------------------------------------------------------------------------------------
+/// @brief ctor for our parserLib
+//----------------------------------------------------------------------------------------------------------------------
 parserLib::parserLib()
 {
 
-
 }
 
-
+//----------------------------------------------------------------------------------------------------------------------
+/// @brief dctor for our parserLib
+//----------------------------------------------------------------------------------------------------------------------
 parserLib::~parserLib()
 {
 
 }
 
-
+//----------------------------------------------------------------------------------------------------------------------
+/// @brief get and store uniform data
+//----------------------------------------------------------------------------------------------------------------------
 void parserLib::listUniforms()
 {
+  //create instance of a shader
   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
-  //shader->printRegisteredUniforms("Phong");
   GLuint id=shader->getProgramID("Phong");
 
+  // extract the number of uniforms active and update class data.
   GLint nUniforms;
   glGetProgramInterfaceiv(id, GL_UNIFORM, GL_ACTIVE_RESOURCES, &nUniforms);
   m_num=nUniforms;
-  m_passToGUI.resize(m_num);
+  m_uniformDataList.resize(m_num);
 
   // declare some temp variables
   char UniformName[256];
   GLsizei length;
   GLint size;
   GLenum type;
-
-  std::cout<<"#Adam's Uniforms#####Starts##########################################"<<std::endl;
-  std::cout<<"---------------------------------------------------------------------"<<std::endl;
-  std::cout<<"There are "<<m_num<<" Uniforms"<<std::endl;
   uniformData newData;
+
+
+  // Permanently assign data to the class
   for (GLuint i=0; i<nUniforms; i++)
   {
+    // get the active uniform data...
     glGetActiveUniform(id,i, 256, &length, &size , &type , UniformName);
-
+    // ... store the data
     newData.locationUniforms= glGetUniformLocation(id,UniformName);
     newData.nameUniforms=UniformName ;
     newData.typeUniforms= type;
+    // Add uniformData to the currently registeredUniforms
     m_registeredUniforms[UniformName]=newData;
-    m_passToGUI[i]=newData;
-    //    std::cout << "Name: "<<UniformName;
-    //    std::cout << ";  Location: "<<m_passToGUI[i].locationUniforms<<" ("<<i<<")";
-    //    std::cout << ";  Type: "<<m_passToGUI[i].typeUniforms<<std::endl;
-    std::string str;
-    const char * c = m_passToGUI[i].nameUniforms.c_str();
-    GLenum newLoc;
-    GLint newPosition=glGetProgramResourceLocation(id, GL_LOCATION,"phong") ;
-    std::cout<<newPosition<<std::endl;
+    m_uniformDataList[i]=newData;
+
+    //testing and learning how to getprogramresourcelocation
+//    GLenum newLoc;
+//    GLint newPosition;
+//    newPosition=glGetProgramResourceLocation(id, GL_UNIFORM,UniformName) ;
+//    std::cout<<&newPosition<<std::endl;
+
   }
+
   uniformDataTypes();
+}
 
-  for (uint i=0; i<nUniforms; i++)
+//----------------------------------------------------------------------------------------------------------------------
+/// @brief prints Uniform information
+//----------------------------------------------------------------------------------------------------------------------
+void parserLib::printUniforms()
+{
+  std::cout<<"_________________________________________Uniform Information: Starts//"<<std::endl;
+  std::cout<<"There are "<<m_num<<" Uniforms"<<std::endl;
+
+  // print information
+  for (uint i=0; i<m_num; i++)
   {
-
-    std::cout << "Name: "<<m_passToGUI[i].nameUniforms;
-    std::cout << ";  Location: "<<m_passToGUI[i].locationUniforms<<" ("<<i<<")";
-    std::cout << ";  Type: "<<m_passToGUI[i].typeUniforms<<"; "<<m_passToGUI[i].dataType<<std::endl;
-
-
-
+    std::cout << "Name: "<<m_uniformDataList[i].nameUniforms;
+    std::cout << ";  Location: "<<m_uniformDataList[i].locationUniforms<<" ("<<i<<")";
+    std::cout << ";  Type: "<<m_uniformDataList[i].typeUniforms<<"; "<<m_uniformDataList[i].dataType<<std::endl;
   }
-
-
-    std::cout<<"-------------------------------------------------------------------"<<std::endl;
-    std::cout<<"#Adam's Uniforms#####Ends##########################################"<<std::endl;
-
+  std::cout<<"___________________________________________Uniform Information: Ends//"<<std::endl;
 
 }
 
-//JONS CODE!  //JONS CODE!  //JONS CODE!  //JONS CODE!
 
+/// The following section was originally written by Jon Macey:-
+/// Jon Macey. NCCA library NGL::ShaderProgram::printRegisteredUniforms [online]. [Accessed 01/10/16].
+/// Available from: <https://nccastaff.bournemouth.ac.uk/jmacey/GraphicsLib/index.html>.
 void parserLib::uniformDataTypes()
 {
   std::cout<<"Started Uniforms" <<"\n";
@@ -209,16 +221,17 @@ void parserLib::uniformDataTypes()
     {
       type="unknown type";
     }
-    m_passToGUI[d.second.locationUniforms].dataType=type;
+    m_uniformDataList[d.second.locationUniforms].dataType=type;
   }
   std::cout<<"End Uniforms" <<"\n";
 }
-//JONS CODE!  //JONS CODE!  //JONS CODE!  //JONS CODE!
 
 
 
 
-
+//----------------------------------------------------------------------------------------------------------------------
+/// @brief exports the uniform data
+//----------------------------------------------------------------------------------------------------------------------
 void parserLib::exportUniforms()
 {
   std::ofstream fileOut;
@@ -230,9 +243,9 @@ void parserLib::exportUniforms()
   }
   for(int i=0;i<m_num;i++)
   {
-    fileOut<<m_passToGUI[i].nameUniforms<<"\n";
-    fileOut<<m_passToGUI[i].locationUniforms<<"\n";
-    fileOut<<m_passToGUI[i].dataType<<"\n";
+    fileOut<<m_uniformDataList[i].nameUniforms<<"\n";
+    fileOut<<m_uniformDataList[i].locationUniforms<<"\n";
+    fileOut<<m_uniformDataList[i].dataType<<"\n";
   }
   fileOut.close();
   // close files

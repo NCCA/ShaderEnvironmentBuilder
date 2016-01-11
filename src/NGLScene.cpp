@@ -122,15 +122,17 @@ void NGLScene::initializeGL()
   // set the viewport for openGL we need to take into account retina display
 
 
+
+
   ngl::Mat4 M=shader->getUniformBlockIndex("M");
   ngl::Mat4 MV=shader->getUniformBlockIndex("MV");
   ngl::Mat4 MVP=shader->getUniformBlockIndex("MVP");
-  bool Normalize=shader->getUniformBlockIndex("Normalize");
+  ngl::Mat4 Normalize=shader->getUniformBlockIndex("Normalize");
   ngl::Vec4 lightAmbient=shader->getUniformBlockIndex("light.ambient");
   ngl::Vec4 lightDiffuse=shader->getUniformBlockIndex("light.diffuse");
   ngl::Vec4 lightPosition=shader->getUniformBlockIndex("light.position");
   ngl::Vec4 lightSpecular=shader->getUniformBlockIndex("light.specular");
-
+// PUT THIS IN A CLASS.... or for loop.
   ngl::Vec4 materialAmbient=shader->getUniformBlockIndex("material.ambient");
   ngl::Vec4 materialDiffuse=shader->getUniformBlockIndex("material.diffuse");
   float materialShininess=shader->getUniformBlockIndex("material.shininess");
@@ -138,13 +140,18 @@ void NGLScene::initializeGL()
   ngl::Mat3 normalMatrix=shader->getUniformBlockIndex("normalMatrix");
   ngl::Vec3 viewerPos=shader->getUniformBlockIndex("viewerPos");
   m_newParser->listUniforms();
+  m_newParser->printUniforms();
 
-
+  m_matDif.m_x=materialDiffuse.m_x;
+  m_matDif.m_y=materialDiffuse.m_y;
+  m_matDif.m_z=materialDiffuse.m_z;
+  m_matDif.m_w=materialDiffuse.m_w;
+  std::cout<<materialDiffuse.m_x<<"   "<<materialDiffuse.m_y<<"   "<<materialDiffuse.m_z<<"   "<<materialDiffuse.m_w<<"   "<<std::endl;
   //  std::cout<<typeid(Normalize).name()<<std::endl;
-  //  std::cout<<"ad:    "<<DAD.m_00 <<" " <<DAD.m_01<<" " <<DAD.m_02<<" " <<DAD.m_03<<" " <<std::endl;
-  //  std::cout<<"ad:    "<<DAD.m_10 <<" " <<DAD.m_11<<" " <<DAD.m_12<<" " <<DAD.m_23<<" " <<std::endl;
-  //  std::cout<<"ad:    "<<DAD.m_20 <<" " <<DAD.m_21<<" " <<DAD.m_22<<" " <<DAD.m_23<<" " <<std::endl;
-  //  std::cout<<"ad:    "<<DAD.m_30 <<" " <<DAD.m_31<<" " <<DAD.m_32<<" " <<DAD.m_33<<" " <<std::endl;
+//    std::cout<<"ad:    "<<DAD.m_00 <<" " <<DAD.m_01<<" " <<DAD.m_02<<" " <<DAD.m_03<<" " <<std::endl;
+//    std::cout<<"ad:    "<<DAD.m_10 <<" " <<DAD.m_11<<" " <<DAD.m_12<<" " <<DAD.m_23<<" " <<std::endl;
+//    std::cout<<"ad:    "<<DAD.m_20 <<" " <<DAD.m_21<<" " <<DAD.m_22<<" " <<DAD.m_23<<" " <<std::endl;
+//    std::cout<<"ad:    "<<DAD.m_30 <<" " <<DAD.m_31<<" " <<DAD.m_32<<" " <<DAD.m_33<<" " <<std::endl;
 }
 
 
@@ -157,6 +164,12 @@ void NGLScene::loadMatricesToShader()
   ngl::Mat4 MVP;
   ngl::Mat3 normalMatrix;
   ngl::Mat4 M;
+  ngl::Vec4 newthing;
+  //
+  newthing.m_x=m_matDif.m_x;
+  newthing.m_y=m_matDif.m_y;
+  newthing.m_z=m_matDif.m_z;
+  newthing.m_w=m_matDif.m_w;
 
   M=m_mouseGlobalTX;
   MV=  M*m_cam.getViewMatrix();
@@ -167,7 +180,9 @@ void NGLScene::loadMatricesToShader()
   shader->setShaderParamFromMat4("MVP",MVP);
   shader->setShaderParamFromMat3("normalMatrix",normalMatrix);
   shader->setShaderParamFromMat4("M",M);
-  shader->setShaderParamFromVec4("material.specular",a);
+  shader->setShaderParamFromVec4("material.specular",apple);
+  shader->setShaderParamFromVec4("material.diffuse", newthing);
+  std::cout<<newthing.m_x<<"   "<<newthing.m_y<<"   "<<newthing.m_z<<"   "<<newthing.m_w<<"   "<<std::endl;
 
 }
 
@@ -305,8 +320,15 @@ void NGLScene::keyPressEvent(QKeyEvent *_event)
   case Qt::Key_F : showFullScreen(); break;
   // show windowed
   case Qt::Key_N : showNormal(); break;
-  case Qt::Key_U : a.m_x+=1; break;
-  case Qt::Key_I : a.m_x-=1; break;
+  case Qt::Key_U : apple.m_x+=1; break;
+  case Qt::Key_I : apple.m_x-=1; break;
+  case Qt::Key_M :
+  {
+  ngl::ShaderLib *shader=ngl::ShaderLib::instance();
+  ngl::Vec4 materialDiffuse=shader->getUniformBlockIndex("material.diffuse");
+  std::cout<<materialDiffuse.m_x<<"   "<<materialDiffuse.m_y<<"   "<<materialDiffuse.m_z<<"   "<<materialDiffuse.m_w<<"   "<<std::endl;
+  break;
+  }
   default : break;
   }
   // finally update the GLWindow and re-draw

@@ -139,7 +139,12 @@ private:
     //----------------------------------------------------------------------------------------------------------------------
     void wheelEvent( QWheelEvent *_event);
 
-    ngl::Vec4 a;
+    ngl::Vec4 apple;
+    ngl::Vec4 m_matDif;
+    ngl::Mat4 c;
+    ngl::Mat4 d;
+    ngl::Mat4 e;
+    ngl::Mat4 f;
     parserLib *m_newParser;
 
 };
