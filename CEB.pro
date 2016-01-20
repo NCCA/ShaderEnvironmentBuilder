@@ -11,11 +11,10 @@ LIBS += $$PWD/lib/libfl.a
 
 
 FLEXSOURCES = src/glslLexer.lex
-OTHER_FILES += $$FLEXSOURCES
 
 flexsource.input = FLEXSOURCES
-flexsource.output = ${QMAKE_FILE_BASE}.cpp
-flexsource.commands = flex -o ${QMAKE_FILE_BASE}.cpp -+ ${QMAKE_FILE_IN}
+flexsource.output = src/${QMAKE_FILE_BASE}.cpp
+flexsource.commands = flex -o src/${QMAKE_FILE_BASE}.cpp -+ ${QMAKE_FILE_IN}
 flexsource.variable_out = SOURCES
 flexsource.name = Flex Sources ${QMAKE_FILE_IN}
 flexsource.CONFIG += target_predeps
@@ -31,7 +30,7 @@ QMAKE_EXTRA_COMPILERS += flexsource
 
 #QMAKE_EXTRA_COMPILERS += flexheader
 
-HEADERS += glslLexer.h
+#HEADERS += glslLexer.h
 #SOURCES += glslLexer.cpp
 
 
@@ -47,7 +46,7 @@ MOC_DIR=moc
 # on a mac we don't create a .app bundle file ( for ease of multiplatform use)
 CONFIG-=app_bundle
 # Auto include all .cpp files in the project src directory (can specifiy individually if required)
-SOURCES+= $$PWD/src/*.cpp
+SOURCES= $$PWD/src/*.cpp
 # same for the .h files
 HEADERS+= $$PWD/include/*.h
 FORMS+= $$PWD/ui/MainWindow.ui

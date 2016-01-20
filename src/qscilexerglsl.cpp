@@ -52,16 +52,12 @@ void QsciLexerGLSL::highlightKeywords(const QString &source, int start)
     FlexLexer* lexer = new yyFlexLexer;
     int tok;
     int loc=0;
-    std::cout<<source.toStdString()<<"\n";
-    std::string input = source.toStdString();
-    std::istringstream istr (input);
-    std::cout<<input<<"\n";
+    std::istringstream istr (source.toStdString());
 
     std::vector<int> tokens;
 
     while ((tok = lexer->yylex(&istr))>0)
     {
-        printf("tok=%d yytext=%s length=%d loc=%d\n", tok, lexer->YYText(),lexer->YYLeng(),loc);
         tokens.push_back(tok);
         tokens.push_back(loc);
         tokens.push_back(lexer->YYLeng());
@@ -78,9 +74,7 @@ void QsciLexerGLSL::highlightKeywords(const QString &source, int start)
                 setStyling(tokens[i+2],StyleType::DEFAULT);
             break;
             case StyleType::KEYWORD:
-                printf("tok=%d loc=%d leng=%d\n", tokens[i], tokens[i+1], tokens[i+2]);
                 startStyling(start+tokens[i+1]);
-                printf("started styling\n");
                 setStyling(tokens[i+2],StyleType::KEYWORD);
             break;
         }
