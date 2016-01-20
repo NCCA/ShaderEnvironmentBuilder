@@ -1,5 +1,6 @@
+#line 2 "glslLexer.cpp"
 
-#line 3 "lex.yy.cc"
+#line 4 "glslLexer.cpp"
 
 #define  YY_INT_ALIGNED short int
 
@@ -616,11 +617,12 @@ static yyconst flex_int16_t yy_chk[419] =
 #define yymore() yymore_used_but_not_detected
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
-#line 1 "glslLexer.lex"
+#line 1 "src/glslLexer.lex"
 /* GLSL Flex lexr */
-#line 7 "glslLexer.lex"
+#line 7 "src/glslLexer.lex"
 	#include <vector>
 	#include <sstream>
+    #include "qscilexerglsl.h"
 	enum yytokentype {
 		NUMBER = 0,
 		KEYWORD = 1,
@@ -632,7 +634,7 @@ static yyconst flex_int16_t yy_chk[419] =
 	};
 	int yyloc=0;
 	#define YY_USER_ACTION yyloc = yyloc + yyleng;
-#line 636 "lex.yy.cc"
+#line 638 "glslLexer.cpp"
 
 #define INITIAL 0
 
@@ -732,9 +734,9 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 22 "glslLexer.lex"
+#line 23 "src/glslLexer.lex"
 
-#line 738 "lex.yy.cc"
+#line 740 "glslLexer.cpp"
 
 	if ( !(yy_init) )
 		{
@@ -748,10 +750,10 @@ YY_DECL
 			(yy_start) = 1;	/* first start state */
 
 		if ( ! yyin )
-			yyin = & std::cin;
+            yyin = & std::cin;
 
 		if ( ! yyout )
-			yyout = & std::cout;
+            yyout = & std::cout;
 
 		if ( ! YY_CURRENT_BUFFER ) {
 			yyensure_buffer_stack ();
@@ -818,201 +820,201 @@ do_action:	/* This label is used only to access EOF actions. */
 			goto yy_find_action;
 
 case 1:
-#line 24 "glslLexer.lex"
+#line 25 "src/glslLexer.lex"
 case 2:
-#line 25 "glslLexer.lex"
+#line 26 "src/glslLexer.lex"
 case 3:
-#line 26 "glslLexer.lex"
+#line 27 "src/glslLexer.lex"
 case 4:
-#line 27 "glslLexer.lex"
+#line 28 "src/glslLexer.lex"
 case 5:
-#line 28 "glslLexer.lex"
+#line 29 "src/glslLexer.lex"
 case 6:
-#line 29 "glslLexer.lex"
+#line 30 "src/glslLexer.lex"
 case 7:
-#line 30 "glslLexer.lex"
+#line 31 "src/glslLexer.lex"
 case 8:
-#line 31 "glslLexer.lex"
+#line 32 "src/glslLexer.lex"
 case 9:
-#line 32 "glslLexer.lex"
+#line 33 "src/glslLexer.lex"
 case 10:
-#line 33 "glslLexer.lex"
+#line 34 "src/glslLexer.lex"
 case 11:
-#line 34 "glslLexer.lex"
+#line 35 "src/glslLexer.lex"
 case 12:
-#line 35 "glslLexer.lex"
+#line 36 "src/glslLexer.lex"
 case 13:
-#line 36 "glslLexer.lex"
+#line 37 "src/glslLexer.lex"
 case 14:
-#line 37 "glslLexer.lex"
+#line 38 "src/glslLexer.lex"
 case 15:
-#line 38 "glslLexer.lex"
+#line 39 "src/glslLexer.lex"
 case 16:
-#line 39 "glslLexer.lex"
+#line 40 "src/glslLexer.lex"
 case 17:
-#line 40 "glslLexer.lex"
+#line 41 "src/glslLexer.lex"
 case 18:
-#line 41 "glslLexer.lex"
+#line 42 "src/glslLexer.lex"
 case 19:
-#line 42 "glslLexer.lex"
+#line 43 "src/glslLexer.lex"
 case 20:
-#line 43 "glslLexer.lex"
+#line 44 "src/glslLexer.lex"
 case 21:
-#line 44 "glslLexer.lex"
+#line 45 "src/glslLexer.lex"
 case 22:
-#line 45 "glslLexer.lex"
+#line 46 "src/glslLexer.lex"
 case 23:
-#line 46 "glslLexer.lex"
+#line 47 "src/glslLexer.lex"
 case 24:
-#line 47 "glslLexer.lex"
+#line 48 "src/glslLexer.lex"
 case 25:
-#line 48 "glslLexer.lex"
+#line 49 "src/glslLexer.lex"
 case 26:
-#line 49 "glslLexer.lex"
+#line 50 "src/glslLexer.lex"
 case 27:
-#line 50 "glslLexer.lex"
+#line 51 "src/glslLexer.lex"
 case 28:
-#line 51 "glslLexer.lex"
+#line 52 "src/glslLexer.lex"
 case 29:
-#line 52 "glslLexer.lex"
+#line 53 "src/glslLexer.lex"
 case 30:
-#line 53 "glslLexer.lex"
+#line 54 "src/glslLexer.lex"
 case 31:
-#line 54 "glslLexer.lex"
+#line 55 "src/glslLexer.lex"
 case 32:
-#line 55 "glslLexer.lex"
+#line 56 "src/glslLexer.lex"
 case 33:
-#line 56 "glslLexer.lex"
+#line 57 "src/glslLexer.lex"
 case 34:
-#line 57 "glslLexer.lex"
+#line 58 "src/glslLexer.lex"
 case 35:
-#line 58 "glslLexer.lex"
+#line 59 "src/glslLexer.lex"
 case 36:
-#line 59 "glslLexer.lex"
+#line 60 "src/glslLexer.lex"
 case 37:
-#line 60 "glslLexer.lex"
+#line 61 "src/glslLexer.lex"
 case 38:
-#line 61 "glslLexer.lex"
+#line 62 "src/glslLexer.lex"
 case 39:
-#line 62 "glslLexer.lex"
+#line 63 "src/glslLexer.lex"
 case 40:
-#line 63 "glslLexer.lex"
+#line 64 "src/glslLexer.lex"
 case 41:
-#line 64 "glslLexer.lex"
+#line 65 "src/glslLexer.lex"
 case 42:
-#line 65 "glslLexer.lex"
+#line 66 "src/glslLexer.lex"
 case 43:
-#line 66 "glslLexer.lex"
+#line 67 "src/glslLexer.lex"
 case 44:
-#line 67 "glslLexer.lex"
+#line 68 "src/glslLexer.lex"
 case 45:
-#line 68 "glslLexer.lex"
+#line 69 "src/glslLexer.lex"
 case 46:
-#line 69 "glslLexer.lex"
+#line 70 "src/glslLexer.lex"
 case 47:
-#line 70 "glslLexer.lex"
+#line 71 "src/glslLexer.lex"
 case 48:
-#line 71 "glslLexer.lex"
+#line 72 "src/glslLexer.lex"
 case 49:
-#line 72 "glslLexer.lex"
+#line 73 "src/glslLexer.lex"
 case 50:
-#line 73 "glslLexer.lex"
+#line 74 "src/glslLexer.lex"
 case 51:
-#line 74 "glslLexer.lex"
+#line 75 "src/glslLexer.lex"
 case 52:
-#line 75 "glslLexer.lex"
+#line 76 "src/glslLexer.lex"
 case 53:
-#line 76 "glslLexer.lex"
+#line 77 "src/glslLexer.lex"
 case 54:
-#line 77 "glslLexer.lex"
+#line 78 "src/glslLexer.lex"
 case 55:
-#line 78 "glslLexer.lex"
+#line 79 "src/glslLexer.lex"
 case 56:
-#line 79 "glslLexer.lex"
+#line 80 "src/glslLexer.lex"
 case 57:
-#line 80 "glslLexer.lex"
+#line 81 "src/glslLexer.lex"
 case 58:
-#line 81 "glslLexer.lex"
+#line 82 "src/glslLexer.lex"
 case 59:
-#line 82 "glslLexer.lex"
+#line 83 "src/glslLexer.lex"
 case 60:
-#line 83 "glslLexer.lex"
+#line 84 "src/glslLexer.lex"
 case 61:
-#line 84 "glslLexer.lex"
+#line 85 "src/glslLexer.lex"
 case 62:
-#line 85 "glslLexer.lex"
+#line 86 "src/glslLexer.lex"
 case 63:
-#line 86 "glslLexer.lex"
+#line 87 "src/glslLexer.lex"
 case 64:
-#line 87 "glslLexer.lex"
+#line 88 "src/glslLexer.lex"
 case 65:
-#line 88 "glslLexer.lex"
+#line 89 "src/glslLexer.lex"
 case 66:
-#line 89 "glslLexer.lex"
+#line 90 "src/glslLexer.lex"
 case 67:
-#line 90 "glslLexer.lex"
+#line 91 "src/glslLexer.lex"
 case 68:
-#line 91 "glslLexer.lex"
+#line 92 "src/glslLexer.lex"
 case 69:
-#line 92 "glslLexer.lex"
+#line 93 "src/glslLexer.lex"
 case 70:
-#line 93 "glslLexer.lex"
+#line 94 "src/glslLexer.lex"
 case 71:
-#line 94 "glslLexer.lex"
+#line 95 "src/glslLexer.lex"
 case 72:
-#line 95 "glslLexer.lex"
+#line 96 "src/glslLexer.lex"
 case 73:
-#line 96 "glslLexer.lex"
+#line 97 "src/glslLexer.lex"
 case 74:
-#line 97 "glslLexer.lex"
+#line 98 "src/glslLexer.lex"
 case 75:
-#line 98 "glslLexer.lex"
+#line 99 "src/glslLexer.lex"
 case 76:
-#line 99 "glslLexer.lex"
+#line 100 "src/glslLexer.lex"
 case 77:
-#line 100 "glslLexer.lex"
+#line 101 "src/glslLexer.lex"
 case 78:
-#line 101 "glslLexer.lex"
+#line 102 "src/glslLexer.lex"
 case 79:
-#line 102 "glslLexer.lex"
+#line 103 "src/glslLexer.lex"
 case 80:
-#line 103 "glslLexer.lex"
+#line 104 "src/glslLexer.lex"
 case 81:
-#line 104 "glslLexer.lex"
+#line 105 "src/glslLexer.lex"
 case 82:
-#line 105 "glslLexer.lex"
+#line 106 "src/glslLexer.lex"
 case 83:
-#line 106 "glslLexer.lex"
+#line 107 "src/glslLexer.lex"
 case 84:
-#line 107 "glslLexer.lex"
+#line 108 "src/glslLexer.lex"
 case 85:
-#line 108 "glslLexer.lex"
+#line 109 "src/glslLexer.lex"
 case 86:
-#line 109 "glslLexer.lex"
+#line 110 "src/glslLexer.lex"
 case 87:
-#line 110 "glslLexer.lex"
+#line 111 "src/glslLexer.lex"
 case 88:
-#line 111 "glslLexer.lex"
+#line 112 "src/glslLexer.lex"
 case 89:
-#line 112 "glslLexer.lex"
+#line 113 "src/glslLexer.lex"
 case 90:
-#line 113 "glslLexer.lex"
+#line 114 "src/glslLexer.lex"
 case 91:
 YY_RULE_SETUP
-#line 113 "glslLexer.lex"
+#line 114 "src/glslLexer.lex"
 { return KEYWORD; }
 	YY_BREAK
 case 92:
 YY_RULE_SETUP
-#line 114 "glslLexer.lex"
+#line 115 "src/glslLexer.lex"
 { printf(""); }
 	YY_BREAK
 case 93:
 YY_RULE_SETUP
-#line 116 "glslLexer.lex"
+#line 117 "src/glslLexer.lex"
 ECHO;
 	YY_BREAK
-#line 1016 "lex.yy.cc"
+#line 1018 "glslLexer.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1037,7 +1039,7 @@ case YY_STATE_EOF(INITIAL):
 			 * back-up) that will match for the new input source.
 			 */
 			(yy_n_chars) = YY_CURRENT_BUFFER_LVALUE->yy_n_chars;
-			YY_CURRENT_BUFFER_LVALUE->yy_input_file = yyin;
+            YY_CURRENT_BUFFER_LVALUE->yy_input_file = yyin;
 			YY_CURRENT_BUFFER_LVALUE->yy_buffer_status = YY_BUFFER_NORMAL;
 			}
 
@@ -1149,8 +1151,8 @@ case YY_STATE_EOF(INITIAL):
  */
 yyFlexLexer::yyFlexLexer( std::istream* arg_yyin, std::ostream* arg_yyout )
 {
-	yyin = arg_yyin;
-	yyout = arg_yyout;
+    yyin = arg_yyin;
+    yyout = arg_yyout;
 	yy_c_buf_p = 0;
 	yy_init = 0;
 	yy_start = 0;
@@ -1548,7 +1550,7 @@ int yyFlexLexer::yy_get_next_buffer()
             yy_create_buffer( yyin, YY_BUF_SIZE );
 	}
 
-    yy_init_buffer( YY_CURRENT_BUFFER, *input_file );
+	yy_init_buffer( YY_CURRENT_BUFFER, input_file );
 	yy_load_buffer_state(  );
 }
 
@@ -1620,7 +1622,7 @@ int yyFlexLexer::yy_get_next_buffer()
 
 	b->yy_is_our_buffer = 1;
 
-    yy_init_buffer( b, *file );
+	yy_init_buffer( b, file );
 
 	return b;
 }
@@ -1648,14 +1650,14 @@ int yyFlexLexer::yy_get_next_buffer()
  * This function is sometimes called more than once on the same buffer,
  * such as during a yyrestart() or at EOF.
  */
-    void yyFlexLexer::yy_init_buffer( YY_BUFFER_STATE b, std::istream &file )
+    void yyFlexLexer::yy_init_buffer( YY_BUFFER_STATE b, std::istream* file )
 
 {
 	int oerrno = errno;
     
 	yy_flush_buffer( b );
 
-    b->yy_input_file = &file;
+	b->yy_input_file = file;
 	b->yy_fill_buffer = 1;
 
     /* If b is the current buffer, then yy_init_buffer was _probably_
@@ -1748,6 +1750,11 @@ void yyFlexLexer::yypop_buffer_state (void)
 		yy_load_buffer_state(  );
 		(yy_did_buffer_switch_on_eof) = 1;
 	}
+}
+
+void yyFlexLexer::switch_streams(std::istream &new_in, std::ostream &new_out)
+{
+
 }
 
 /* Allocates the stack if it does not exist.
@@ -1910,12 +1917,12 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 116 "glslLexer.lex"
+#line 117 "src/glslLexer.lex"
 
 
 
 
-std::vector<int> lexThis(const char *input)
+std::vector<int> FlexLexer::lexThis(const char *input)
 {	
 	FlexLexer* lexer = new yyFlexLexer;
 	int tok;
@@ -1932,3 +1939,4 @@ std::vector<int> lexThis(const char *input)
 	}
 	return result;
 }
+

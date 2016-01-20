@@ -2,6 +2,8 @@
 #include <Qsci/qsciscintilla.h>
 
 #include <iostream>
+#include <sstream>
+#include "glslLexer.h"
 
 QsciLexerGLSL::QsciLexerGLSL(QObject *parent) : QsciLexerCustom(parent)
 {
@@ -47,33 +49,72 @@ void QsciLexerGLSL::styleText(int start, int end)
 
 void QsciLexerGLSL::highlightKeywords(const QString &source, int start)
 {
-    //check for keywords in text
-    for (int i = 0; i<keywordsList.size(); i++)
-    {
-        QString word = keywordsList.at(i);
-        if (source.contains(word))
-        {
-            int count = source.count(word);
-            int index = 0;
-            //for each instance of the keyword, set styling
-            for (int j = 0; j<count; j++)
-            {
-                int wordStart = source.indexOf(word, index);
-                index = wordStart+1;
+    FlexLexer* lexer = new yyFlexLexer;
+    int tok;
+    int loc=0;
+    std::cout<<source.toStdString()<<"\n";
+    std::string input = source.toStdString();
+    std::istringstream istr (input);
+    std::cout<<input<<"\n";
 
-                startStyling(start + wordStart);
+    std::vector<int> tokens;
+
+    while ((tok = lexer->yylex(&istr))>0)
+    {
+        printf("tok=%d yytext=%s length=%d loc=%d\n", tok, lexer->YYText(),lexer->YYLeng(),loc);
+        tokens.push_back(tok);
+        tokens.push_back(loc);
+        tokens.push_back(lexer->YYLeng());
+        loc = loc + lexer->YYLeng();
+        if (tok!=StyleType::WHITESPACE) loc++;
+    }
+
+    for (int i = 0; i<tokens.size(); i=i+3)
+    {
+        switch(tokens[i])
+        {
+            case StyleType::DEFAULT:
+                startStyling(start+tokens[i+1]);
+                setStyling(tokens[i+2],StyleType::DEFAULT);
+            break;
+            case StyleType::KEYWORD:
+                printf("tok=%d loc=%d leng=%d\n", tokens[i], tokens[i+1], tokens[i+2]);
+                startStyling(start+tokens[i+1]);
                 printf("started styling\n");
-                setStyling(word.length(), Keyword);
-            }
+                setStyling(tokens[i+2],StyleType::KEYWORD);
+            break;
         }
     }
+
+    //check for keywords in text
+//    for (int i = 0; i<keywordsList.size(); i++)
+//    {
+//        QString word = keywordsList.at(i);
+//        if (source.contains(word))
+//        {
+//            int count = source.count(word);
+//            int index = 0;
+//            //for each instance of the keyword, set styling
+//            for (int j = 0; j<count; j++)
+//            {
+//                int wordStart = source.indexOf(word, index);
+//                index = wordStart+1;
+
+//                startStyling(start + wordStart);
+//                printf("started styling\n");
+//                setStyling(word.length(), StyleType::KEYWORD);
+//            }
+//        }
+//    }
 }
 
 QColor QsciLexerGLSL::defaultColor(int style) const
 {
     switch(style)
     {
-        case Keyword:
+        case StyleType::DEFAULT:
+            return QColor(247,247,241);
+        case StyleType::KEYWORD:
             return QColor(102,216,238);
     }
     return QColor(247,247,241);
@@ -90,8 +131,13 @@ QFont QsciLexerGLSL::defaultFont(int style) const
     int size=12;
     switch(style)
     {
-        case Keyword:
+        case StyleType::DEFAULT:
+            weight = 50;
+            size = 12;
+        break;
+        case StyleType::KEYWORD:
             weight = 75;
+        break;
     }
 
     return QFont("Monospace", size,weight);
@@ -101,9 +147,9 @@ QString QsciLexerGLSL::description(int style) const
 {
     switch(style)
     {
-        case Default:
+        case StyleType::DEFAULT:
             return "Default";
-        case Keyword:
+        case StyleType::KEYWORD:
             return "Keyword";
     }
     return QString(style);

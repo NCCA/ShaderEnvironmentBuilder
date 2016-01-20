@@ -6,7 +6,17 @@
 %{
 	#include <vector>
 	#include <sstream>
-    #include "qscilexerglsl.h"
+	enum yytokentype {
+		NUMBER = 0,
+		KEYWORD = 1,
+		FUNCTION = 2,
+		STRING = 3,
+		COMMENT = 4,
+		DISABLED = 5,
+		OPERATOR = 6
+	};
+	int yyloc=0;
+	#define YY_USER_ACTION yyloc = yyloc + yyleng;
 %}
 
 %%
@@ -100,8 +110,31 @@
 "samplerBuffer" |
 "isamplerBuffer" |
 "usamplerBuffer" |
-"struct"			{ return QsciLexerGLSL::StyleType::KEYWORD; }
-" "+           { return QsciLexerGLSL::StyleType::WHITESPACE;}
-[a-zA-Z0-9]+					{ return QsciLexerGLSL::StyleType::DEFAULT; }
+"struct"			{ return KEYWORD; }
+.					{ printf(""); }
 
 %%
+
+
+std::vector<int> lexThis(const char *input)
+{	
+	FlexLexer* lexer = new yyFlexLexer;
+	int tok;
+	std::istringstream istr (input);
+
+	std::vector<int> result;
+
+    while ((tok = lexer->yylex(&istr))>0)
+	{
+		printf("tok=%d yytext=%s position = %d\n", tok, lexer->YYText(),yyloc-lexer->YYLeng());
+		result.push_back(tok);
+		result.push_back(yyloc-lexer->YYLeng());
+		result.push_back(lexer->YYLeng());
+	}
+	return result;
+}
+
+int main()
+{
+	return EXIT_SUCCESS;
+}

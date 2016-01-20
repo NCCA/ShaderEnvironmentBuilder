@@ -5,6 +5,36 @@ OBJECTS_DIR=obj
 # core Qt Libs to use add more here if needed.
 QT+=gui opengl core
 
+
+# include Flex libs
+LIBS += $$PWD/lib/libfl.a
+
+
+FLEXSOURCES = src/glslLexer.lex
+OTHER_FILES += $$FLEXSOURCES
+
+flexsource.input = FLEXSOURCES
+flexsource.output = ${QMAKE_FILE_BASE}.cpp
+flexsource.commands = flex -o ${QMAKE_FILE_BASE}.cpp -+ ${QMAKE_FILE_IN}
+flexsource.variable_out = SOURCES
+flexsource.name = Flex Sources ${QMAKE_FILE_IN}
+flexsource.CONFIG += target_predeps
+
+QMAKE_EXTRA_COMPILERS += flexsource
+
+#flexheader.input = FLEXSOURCES
+#flexheader.output = ${QMAKE_FILE_BASE}.h
+#flexheader.commands = @true
+#flexheader.variable_out = HEADERS
+#flexheader.name = Flex Headers ${QMAKE_FILE_IN}
+#flexheader.CONFIG += target_predeps no_link
+
+#QMAKE_EXTRA_COMPILERS += flexheader
+
+HEADERS += glslLexer.h
+#SOURCES += glslLexer.cpp
+
+
 # as I want to support 4.8 and 5 this will set a flag for some of the mac stuff
 # mainly in the types.h file for the setMacVisual which is native in Qt5
 isEqual(QT_MAJOR_VERSION, 5) {
@@ -43,10 +73,3 @@ else{ # note brace must be here
 
 # include QSci headers and lib
 LIBS += $$PWD/lib/libqscintilla2.a
-
-# include Flex libs
-LIBS += $$PWD/lib/libfl.a
-
-# Auto include all .lex and .cc files for Flex
-OTHER_FILES+= $$PWD/src/*.lex
-SOURCES+= $$PWD/src/*.cc

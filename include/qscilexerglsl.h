@@ -22,10 +22,17 @@ public:
     QString description(int style) const;
 
 
-    enum {
-        Default = 0,
-        Comment = 1,
-        Keyword = 2
+    enum StyleType{
+        NONE,
+        DEFAULT,
+        NUMBER,
+        KEYWORD,
+        FUNCTION,
+        STRING,
+        COMMENT,
+        DISABLED,
+        OPERATOR,
+        WHITESPACE
     };
 
 private:

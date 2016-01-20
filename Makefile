@@ -36,7 +36,7 @@ DISTNAME      = CEB1.0.0
 DISTDIR = /home/i7219595/0Features-0BugsCVA3/obj/CEB1.0.0
 LINK          = clang++
 LFLAGS        = -ccc-gcc-name g++ -Wl,-rpath,/opt/qt/5.5/gcc_64 -Wl,-rpath,/opt/qt/5.5/gcc_64/lib
-LIBS          = $(SUBLIBS) -L/usr/local/lib -L/home/i7219595/NGL/lib -l NGL -ltiff /home/i7219595/0Features-0BugsCVA3/lib/libqscintilla2.a /home/i7219595/0Features-0BugsCVA3/lib/libfl.a -L/opt/qt/5.5/gcc_64/lib -lQt5OpenGL -L/usr/lib64 -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
+LIBS          = $(SUBLIBS) /home/i7219595/0Features-0BugsCVA3/lib/libfl.a -L/usr/local/lib -L/home/i7219595/NGL/lib -l NGL -ltiff /home/i7219595/0Features-0BugsCVA3/lib/libqscintilla2.a -L/opt/qt/5.5/gcc_64/lib -lQt5OpenGL -L/usr/lib64 -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -53,8 +53,8 @@ SOURCES       = src/json.cpp \
 		src/MainWindow.cpp \
 		src/NGLScene.cpp \
 		src/parser.cpp \
-		src/qscilexerglsl.cpp \
-		src/lex.yy.cc moc/moc_MainWindow.cpp \
+		src/qscilexerglsl.cpp glslLexer.cpp \
+		moc/moc_MainWindow.cpp \
 		moc/moc_NGLScene.cpp
 OBJECTS       = obj/json.o \
 		obj/main.o \
@@ -62,10 +62,11 @@ OBJECTS       = obj/json.o \
 		obj/NGLScene.o \
 		obj/parser.o \
 		obj/qscilexerglsl.o \
-		obj/lex.yy.o \
+		obj/glslLexer.o \
 		obj/moc_MainWindow.o \
 		obj/moc_NGLScene.o
-DIST          = CEB.pro include/FlexLexer.h \
+DIST          = CEB.pro glslLexer.h \
+		include/FlexLexer.h \
 		include/MainWindow.h \
 		include/NGLScene.h \
 		include/parser.h \
@@ -74,8 +75,7 @@ DIST          = CEB.pro include/FlexLexer.h \
 		src/MainWindow.cpp \
 		src/NGLScene.cpp \
 		src/parser.cpp \
-		src/qscilexerglsl.cpp \
-		src/lex.yy.cc
+		src/qscilexerglsl.cpp
 QMAKE_TARGET  = CEB
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = CEB
@@ -103,7 +103,7 @@ first: all
 
 ####### Build rules
 
-$(TARGET): ui_MainWindow.h $(OBJECTS)  
+$(TARGET): glslLexer.cpp ui_MainWindow.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: CEB.pro .qmake.cache /opt/qt/5.5/gcc_64/mkspecs/linux-clang/qmake.conf /opt/qt/5.5/gcc_64/mkspecs/features/spec_pre.prf \
@@ -395,8 +395,9 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents include/FlexLexer.h include/MainWindow.h include/NGLScene.h include/parser.h include/qscilexerglsl.h $(DISTDIR)/
-	$(COPY_FILE) --parents src/json.cpp src/main.cpp src/MainWindow.cpp src/NGLScene.cpp src/parser.cpp src/qscilexerglsl.cpp src/lex.yy.cc $(DISTDIR)/
+	$(COPY_FILE) --parents src/glslLexer.lex $(DISTDIR)/
+	$(COPY_FILE) --parents glslLexer.h include/FlexLexer.h include/MainWindow.h include/NGLScene.h include/parser.h include/qscilexerglsl.h $(DISTDIR)/
+	$(COPY_FILE) --parents src/json.cpp src/main.cpp src/MainWindow.cpp src/NGLScene.cpp src/parser.cpp src/qscilexerglsl.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ui/MainWindow.ui $(DISTDIR)/
 
 
@@ -417,6 +418,12 @@ mocclean: compiler_moc_header_clean compiler_moc_source_clean
 mocables: compiler_moc_header_make_all compiler_moc_source_make_all
 
 check: first
+
+compiler_flexsource_make_all: glslLexer.cpp
+compiler_flexsource_clean:
+	-$(DEL_FILE) glslLexer.cpp
+glslLexer.cpp: src/glslLexer.lex
+	flex -o glslLexer.cpp -+ src/glslLexer.lex
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
@@ -790,7 +797,7 @@ compiler_yacc_impl_make_all:
 compiler_yacc_impl_clean:
 compiler_lex_make_all:
 compiler_lex_clean:
-compiler_clean: compiler_moc_header_clean compiler_uic_clean 
+compiler_clean: compiler_flexsource_clean compiler_moc_header_clean compiler_uic_clean 
 
 ####### Compile
 
@@ -1617,11 +1624,13 @@ obj/qscilexerglsl.o: src/qscilexerglsl.cpp include/qscilexerglsl.h \
 		/opt/qt/5.5/gcc_64/include/QtCore/QTimer \
 		/opt/qt/5.5/gcc_64/include/QtCore/qtimer.h \
 		/opt/qt/5.5/gcc_64/include/QtCore/qbasictimer.h \
-		include/Qsci/qscidocument.h
+		include/Qsci/qscidocument.h \
+		glslLexer.h \
+		include/FlexLexer.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/qscilexerglsl.o src/qscilexerglsl.cpp
 
-obj/lex.yy.o: src/lex.yy.cc include/FlexLexer.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/lex.yy.o src/lex.yy.cc
+obj/glslLexer.o: glslLexer.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/glslLexer.o glslLexer.cpp
 
 obj/moc_MainWindow.o: moc/moc_MainWindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/moc_MainWindow.o moc/moc_MainWindow.cpp

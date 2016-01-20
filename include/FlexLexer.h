@@ -49,6 +49,7 @@
 #define __FLEX_LEXER_H
 
 #include <iostream>
+#include <vector>
 #  ifndef FLEX_STD
 #    define FLEX_STD std::
 #  endif
@@ -64,26 +65,15 @@ public:
 
 	const char* YYText() const	{ return yytext; }
 	int YYLeng()	const	{ return yyleng; }
+    int YYLoc()     const   { return yyloc; }
 
 	virtual void
-		yy_switch_to_buffer( struct yy_buffer_state* new_buffer ) = 0;
-	virtual struct yy_buffer_state*
-		yy_create_buffer( FLEX_STD istream* s, int size ) = 0;
-	virtual struct yy_buffer_state*
-		yy_create_buffer( FLEX_STD istream& s, int size ) = 0;
-	virtual void yy_delete_buffer( struct yy_buffer_state* b ) = 0;
-	virtual void yyrestart( FLEX_STD istream* s ) = 0;	
-	virtual void yyrestart( FLEX_STD istream& s ) = 0;
+        yy_switch_to_buffer( struct yy_buffer_state* new_buffer ) = 0;
+    virtual void yy_delete_buffer( struct yy_buffer_state* b ) = 0;
 
 	virtual int yylex() = 0;
 
-	// Call yylex with new input/output sources.
-	int yylex( FLEX_STD istream& new_in, FLEX_STD ostream& new_out )
-	{
-		switch_streams( new_in, new_out );
-		return yylex();
-	}
-	
+    // Call yylex with new input/output sources.
 	int yylex( FLEX_STD istream* new_in, FLEX_STD ostream* new_out = 0)
 	{
 		switch_streams( new_in, new_out );
@@ -93,18 +83,16 @@ public:
 	// Switch to new input/output streams.  A nil stream pointer
 	// indicates "keep the current one".
 	virtual void switch_streams( FLEX_STD istream* new_in,
-					FLEX_STD ostream* new_out ) = 0;
-	virtual void switch_streams( FLEX_STD istream& new_in,
-					FLEX_STD ostream& new_out ) = 0;
-
+                    FLEX_STD ostream* new_out ) = 0;
 	int lineno() const		{ return yylineno; }
 
 	int debug() const		{ return yy_flex_debug; }
-	void set_debug( int flag )	{ yy_flex_debug = flag; }
+    void set_debug( int flag )	{ yy_flex_debug = flag; }
 
 protected:
-	char* yytext;
+    char* yytext;
 	int yyleng;
+    int yyloc;
 	int yylineno;		// only maintained if you use %option yylineno
 	int yy_flex_debug;	// only has effect with -d or "%option debug"
 };
@@ -143,9 +131,8 @@ public:
 	void yypush_buffer_state( struct yy_buffer_state* new_buffer );
 	void yypop_buffer_state();
 
-	virtual int yylex();
-	virtual void switch_streams( FLEX_STD istream& new_in, FLEX_STD ostream& new_out );
-	virtual void switch_streams( FLEX_STD istream* new_in = 0, FLEX_STD ostream* new_out = 0 );
+    virtual int yylex();
+    virtual void switch_streams( FLEX_STD istream* new_in = 0, FLEX_STD ostream* new_out = 0 );
 	virtual int yywrap();
 
 protected:
@@ -157,7 +144,7 @@ protected:
 	int yyinput();
 
 	void yy_load_buffer_state();
-	void yy_init_buffer( struct yy_buffer_state* b, FLEX_STD istream& s );
+    void yy_init_buffer( struct yy_buffer_state* b, FLEX_STD istream* s );
 	void yy_flush_buffer( struct yy_buffer_state* b );
 
 	int yy_start_stack_ptr;
@@ -172,8 +159,8 @@ protected:
 	yy_state_type yy_try_NUL_trans( yy_state_type current_state );
 	int yy_get_next_buffer();
 
-    FLEX_STD istream *yyin;	// input source for default LexerInput
-    FLEX_STD ostream *yyout;	// output sink for default LexerOutput
+    FLEX_STD istream* yyin;	// input source for default LexerInput
+    FLEX_STD ostream* yyout;	// output sink for default LexerOutput
 
 	// yy_hold_char holds the character lost when yytext is formed.
 	char yy_hold_char;
