@@ -139,13 +139,17 @@ private:
     //----------------------------------------------------------------------------------------------------------------------
     void wheelEvent( QWheelEvent *_event);
 
-    ngl::Vec4 apple;
     ngl::Vec4 m_matDif;
-    ngl::Mat4 c;
-    ngl::Mat4 d;
-    ngl::Mat4 e;
-    ngl::Mat4 f;
+    ngl::Vec4 m_matSpec;
+    ngl::Vec4 m_matAmb;
+    float m_matShiny;
+    ngl::Vec4 m_lightDif;
+    ngl::Vec4 m_lightSpec;
+    ngl::Vec4 m_lightAmb;
+    ngl::Vec4 m_lightPos;
+    bool m_norm;
     parserLib *m_newParser;
+
 
 };
 

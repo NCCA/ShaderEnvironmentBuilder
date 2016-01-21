@@ -44,14 +44,15 @@ public:
   /// @brief used to store the uniform Data
   //----------------------------------------------------------------------------------------------------------------------
   typedef struct
-
   {
       std::string nameUniforms;
       GLuint locationUniforms;
       GLenum typeUniforms;
       std::string dataType;
+///#Lets make a template class and see if that works
 
   }uniformData;
+
 
 
   //----------------------------------------------------------------------------------------------------------------------
