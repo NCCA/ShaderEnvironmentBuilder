@@ -113,9 +113,9 @@ void NGLScene::initializeGL()
 //  Jsons = new Json();
 //  Jsons->buildJson();
 
-  Json *jsonInstance = new Json();
-  jsonInstance->buildJson();
-  jsonInstance->replaceWord("Shader", "CHANGED");
+//  Json *jsonInstance = new Json();
+//  jsonInstance->buildJson();
+//  jsonInstance->replaceWord("Shader", "CHANGED");
 
 
 
