@@ -49,3 +49,13 @@ CMakeFiles
 CMakeScripts
 cmake_install.cmake
 install_manifest.txt
+
+# Generated moc and UI files
+moc_*.cpp
+ui_*.h
+
+# Flex generated lexer
+src/glslLexer.cpp
+
+# Testing files that shouldn't be here anyway
+ParsingOutput.txt
