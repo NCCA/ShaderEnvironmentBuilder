@@ -9,17 +9,25 @@ QT+=gui opengl core
 # include Flex libs
 LIBS += $$PWD/lib/libfl.a
 
+#Test if Flex is installed
+FLEX_BIN = $$system(which flex)
+isEmpty(FLEX_BIN) {
+    error("Flex not found")
+} else {
+    message("Found Flex")
 
-FLEXSOURCES = src/glslLexer.lex
+    #run Flex on .lex file to generate lexer
+    FLEXSOURCES = src/glslLexer.lex
 
-flexsource.input = FLEXSOURCES
-flexsource.output = src/${QMAKE_FILE_BASE}.cpp
-flexsource.commands = flex -o src/${QMAKE_FILE_BASE}.cpp -+ ${QMAKE_FILE_IN}
-flexsource.variable_out = SOURCES
-flexsource.name = Flex Sources ${QMAKE_FILE_IN}
-flexsource.CONFIG += target_predeps
+    flexsource.input = FLEXSOURCES
+    flexsource.output = src/${QMAKE_FILE_BASE}.cpp
+    flexsource.commands = flex -o src/${QMAKE_FILE_BASE}.cpp -+ ${QMAKE_FILE_IN}
+    flexsource.variable_out = SOURCES
+    flexsource.name = Flex Sources ${QMAKE_FILE_IN}
+    flexsource.CONFIG += target_predeps
 
-QMAKE_EXTRA_COMPILERS += flexsource
+    QMAKE_EXTRA_COMPILERS += flexsource
+}
 
 #flexheader.input = FLEXSOURCES
 #flexheader.output = ${QMAKE_FILE_BASE}.h
