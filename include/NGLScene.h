@@ -1,6 +1,6 @@
 #ifndef NGLSCENE_H__
 #define NGLSCENE_H__
-
+#include "json.h"
 #include <ngl/Camera.h>
 #include <ngl/Transformation.h>
 #include <ngl/Vec3.h>
@@ -82,15 +82,21 @@ private :
   /// @param _event the Qt Event structure
   void mouseMoveEvent (QMouseEvent * _event   );
 
+    ///--------------------------------------------------------------------------------------------------------
+    Json *Jsons;
   /// @brief this method is called everytime the mouse button is pressed
   /// inherited from QObject and overridden here.
   /// @param _event the Qt Event structure
   void mousePressEvent ( QMouseEvent *_event  );
 
-  /// @brief this method is called everytime the mouse button is released
-  /// inherited from QObject and overridden here.
-  /// @param _event the Qt Event structure
-  void mouseReleaseEvent (QMouseEvent *_event );
+    ///
+    typedef struct
+    {
+        std::string nameUniforms;
+        GLuint locationUniforms;
+        GLenum typeUniforms;
+        std::string dataType;
+    }uniformData;
 
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief create a pointer to the new parser

@@ -107,6 +107,27 @@ void NGLScene::initializeGL()
   // set the viewport for openGL we need to take into account retina display
   m_newParser->listUniforms();
   m_newParser->exportUniforms();
+
+  ///---------------------------------------------------------------------------------------------------------
+
+//  Jsons = new Json();
+//  Jsons->buildJson();
+
+  Json *jsonInstance = new Json();
+  jsonInstance->buildJson();
+  jsonInstance->replaceWord("Shader", "CHANGED");
+
+
+
+
+
+
+
+
+
+  ///---------------------------------------------------------------------------------------------------------
+
+
 }
 
 void NGLScene::loadMatricesToShader()
@@ -179,12 +200,6 @@ void NGLScene::mousePressEvent (QMouseEvent * _event  )
 
 }
 
-//----------------------------------------------------------------------------------------------------------------------
-void NGLScene::mouseReleaseEvent (  QMouseEvent * _event  )
-{
-  Q_UNUSED(_event);
-
-}
 
 
 
