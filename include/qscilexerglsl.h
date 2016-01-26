@@ -32,7 +32,8 @@ public:
         COMMENT,
         DISABLED,
         OPERATOR,
-        WHITESPACE
+        WHITESPACE,
+        NEWLINE
     };
 
 private:

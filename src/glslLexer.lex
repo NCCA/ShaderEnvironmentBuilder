@@ -100,8 +100,23 @@
 "samplerBuffer" |
 "isamplerBuffer" |
 "usamplerBuffer" |
-"struct"			{ return QsciLexerGLSL::StyleType::KEYWORD; }
-" "+           { return QsciLexerGLSL::StyleType::WHITESPACE;}
-[a-zA-Z0-9]+					{ return QsciLexerGLSL::StyleType::DEFAULT; }
+"struct"                            { return QsciLexerGLSL::StyleType::KEYWORD; }
+"\n"                                { return QsciLexerGLSL::StyleType::NEWLINE; }
+[" ""\t"]                           { return QsciLexerGLSL::StyleType::WHITESPACE; }
+"*" |
+"/" |
+"+" |
+"-" |
+"=" |
+"*=" |
+"/=" |
+"+=" |
+"-="   { return QsciLexerGLSL::StyleType::OPERATOR; }
+-?+?[0-9]+"."?[0-9]*f?l?u?          { return QsciLexerGLSL::StyleType::NUMBER; }
+[a-zA-Z0-9]+                        { return QsciLexerGLSL::StyleType::DEFAULT; }
 
 %%
+
+void test(){
+    std::cout<<"test\n";
+}

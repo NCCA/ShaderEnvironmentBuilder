@@ -69,14 +69,22 @@ void QsciLexerGLSL::highlightKeywords(const QString &source, int start)
     {
         switch(tokens[i])
         {
-            case StyleType::DEFAULT:
-                startStyling(start+tokens[i+1]);
-                setStyling(tokens[i+2],StyleType::DEFAULT);
-            break;
-            case StyleType::KEYWORD:
-                startStyling(start+tokens[i+1]);
-                setStyling(tokens[i+2],StyleType::KEYWORD);
-            break;
+        case StyleType::DEFAULT:
+            startStyling(start+tokens[i+1]);
+            setStyling(tokens[i+2],StyleType::DEFAULT);
+        break;
+        case StyleType::KEYWORD:
+            startStyling(start+tokens[i+1]);
+            setStyling(tokens[i+2],StyleType::KEYWORD);
+        break;
+        case StyleType::NUMBER:
+            startStyling(start+tokens[i+1]);
+            setStyling(tokens[i+2],StyleType::NUMBER);
+        break;
+        case StyleType::OPERATOR:
+            startStyling(start+tokens[i+1]);
+            setStyling(tokens[i+2],StyleType::OPERATOR);
+        break;
         }
     }
 
@@ -106,10 +114,14 @@ QColor QsciLexerGLSL::defaultColor(int style) const
 {
     switch(style)
     {
-        case StyleType::DEFAULT:
-            return QColor(247,247,241);
-        case StyleType::KEYWORD:
-            return QColor(102,216,238);
+    case StyleType::DEFAULT:
+        return QColor(247,247,241);
+    case StyleType::KEYWORD:
+        return QColor(102,216,238);
+    case StyleType::NUMBER:
+        return QColor(174, 129, 255);
+    case StyleType::OPERATOR:
+        return QColor(249, 38, 114);
     }
     return QColor(247,247,241);
 }
@@ -125,13 +137,13 @@ QFont QsciLexerGLSL::defaultFont(int style) const
     int size=12;
     switch(style)
     {
-        case StyleType::DEFAULT:
-            weight = 50;
-            size = 12;
-        break;
-        case StyleType::KEYWORD:
-            weight = 75;
-        break;
+    case StyleType::DEFAULT:
+        weight = 50;
+        size = 12;
+    break;
+    case StyleType::KEYWORD:
+        weight = 75;
+    break;
     }
 
     return QFont("Monospace", size,weight);
@@ -141,10 +153,10 @@ QString QsciLexerGLSL::description(int style) const
 {
     switch(style)
     {
-        case StyleType::DEFAULT:
-            return "Default";
-        case StyleType::KEYWORD:
-            return "Keyword";
+    case StyleType::DEFAULT:
+        return "Default";
+    case StyleType::KEYWORD:
+        return "Keyword";
     }
     return QString(style);
 }
