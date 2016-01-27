@@ -1,1 +1,0 @@
-{"CHANGEDProgram":{"noise3D":"Phong","debug":true,"Shaders":[{"type":"Vertex","name":"PhongVertex","path":["shaders/version.glsl","shaders/common.glsl","shaders/PhongVertex.glsl"]},{"type":"Fragment","name":"PhongFragment","path":["shaders/version.glsl","shaders/common.glsl","shaders/noise3D.glsl","shaders/PhongFragment.glsl"]}]}}
