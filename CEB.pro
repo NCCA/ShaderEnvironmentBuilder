@@ -43,3 +43,7 @@ else{ # note brace must be here
 # include QSci headers and lib
 LIBS += $$PWD/lib/libqscintilla2.a
 
+# include boost headers and libs. Used for creating a directory
+# for temp output files json
+INCLUDEPATH+=/usr/local/include
+LIBS+= -lboost_system -lboost_filesystem
