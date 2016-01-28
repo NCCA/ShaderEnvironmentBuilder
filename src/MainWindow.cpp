@@ -4,8 +4,7 @@
 
 #include <Qsci/qsciscintilla.h>
 
-MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent),
-  m_ui(new Ui::MainWindow)
+MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent), m_ui(new Ui::MainWindow)
 {
   // Setup ui from form creator (MainWindow.ui)
   m_ui->setupUi(this);
@@ -21,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent),
   // to appear we would need to implement a line length checking
   m_qsci->SendScintilla(QsciScintillaBase::SCI_SETSCROLLWIDTHTRACKING, 1);
   m_qsci->SendScintilla(QsciScintillaBase::SCI_SETSCROLLWIDTH, 5);
+  m_qsci->setMarginWidth(1," 012");
 
 
   // add the qscintilla and openGl window to the interface
