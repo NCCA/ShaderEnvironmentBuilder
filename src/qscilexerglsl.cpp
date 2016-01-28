@@ -55,18 +55,24 @@ void QsciLexerGLSL::highlightKeywords(const QString &source, int start)
     std::istringstream istr (source.toStdString());
 
     std::vector<int> tokens;
-
-    while ((tok = lexer->yylex(&istr))>0)
+    //lexer->set_debug(1);
+    tok = lexer->yylex(&istr);
+    while (tok>0)
     {
         tokens.push_back(tok);
         tokens.push_back(loc);
         tokens.push_back(lexer->YYLeng());
         loc = loc + lexer->YYLeng();
-        if (tok!=StyleType::WHITESPACE) loc++;
+        QString s(lexer->YYText());
+        //std::cout<<s.toStdString();
+        tok = lexer->yylex();
     }
+    //std::cout<<"\n"<<source.toStdString()<<"\n";
+    //std::cout<<"end = "<<loc<<"\nsource = "<<source.length()<<"\n";
 
     for (int i = 0; i<tokens.size(); i=i+3)
     {
+        //std::cout<<tokens[i]<<"\n";
         switch(tokens[i])
         {
         case StyleType::DEFAULT:
@@ -84,6 +90,10 @@ void QsciLexerGLSL::highlightKeywords(const QString &source, int start)
         case StyleType::OPERATOR:
             startStyling(start+tokens[i+1]);
             setStyling(tokens[i+2],StyleType::OPERATOR);
+        break;
+        case StyleType::FUNCTION:
+            startStyling(start+tokens[i+1]);
+            setStyling(tokens[i+2]-1,StyleType::FUNCTION);
         break;
         }
     }
@@ -122,6 +132,8 @@ QColor QsciLexerGLSL::defaultColor(int style) const
         return QColor(174, 129, 255);
     case StyleType::OPERATOR:
         return QColor(249, 38, 114);
+    case StyleType::FUNCTION:
+        return QColor(166, 226, 46);
     }
     return QColor(247,247,241);
 }

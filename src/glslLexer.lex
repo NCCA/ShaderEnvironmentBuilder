@@ -9,6 +9,7 @@
     #include "qscilexerglsl.h"
 %}
 
+
 %%
 "attribute" |
 "const" |
@@ -101,8 +102,9 @@
 "isamplerBuffer" |
 "usamplerBuffer" |
 "struct"                            { return QsciLexerGLSL::StyleType::KEYWORD; }
-"\n"                                { return QsciLexerGLSL::StyleType::NEWLINE; }
-[" ""\t"]                           { return QsciLexerGLSL::StyleType::WHITESPACE; }
+[ \t\n\r]                           { return QsciLexerGLSL::StyleType::WHITESPACE; }
+">" |
+"<" |
 "*" |
 "/" |
 "+" |
@@ -111,9 +113,13 @@
 "*=" |
 "/=" |
 "+=" |
-"-="   { return QsciLexerGLSL::StyleType::OPERATOR; }
+"-="                                { return QsciLexerGLSL::StyleType::OPERATOR; }
+[\(\)\{\}\[\]]                      { return QsciLexerGLSL::StyleType::DEFAULT; }
+[#@;,]                              { return QsciLexerGLSL::StyleType::DEFAULT; }
 -?+?[0-9]+"."?[0-9]*f?l?u?          { return QsciLexerGLSL::StyleType::NUMBER; }
+[a-zA-Z0-9]+"("                     { return QsciLexerGLSL::StyleType::FUNCTION; }
 [a-zA-Z0-9]+                        { return QsciLexerGLSL::StyleType::DEFAULT; }
+"."                                 { return QsciLexerGLSL::StyleType::DEFAULT; }
 
 %%
 
