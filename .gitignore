@@ -57,5 +57,8 @@ ui_*.h
 # Flex generated lexer
 src/glslLexer.cpp
 
-# Testing files that shouldn't be here anyway
-ParsingOutput.txt
+# Testing files all go in ./tempFiles
+tempFiles/*
+
+# Wiki files
+*.wiki/*
