@@ -55,7 +55,6 @@ void QsciLexerGLSL::highlightKeywords(const QString &source, int start)
     std::istringstream istr (source.toStdString());
 
     std::vector<int> tokens;
-    //lexer->set_debug(1);
     tok = lexer->yylex(&istr);
     while (tok>0)
     {
@@ -64,15 +63,11 @@ void QsciLexerGLSL::highlightKeywords(const QString &source, int start)
         tokens.push_back(lexer->YYLeng());
         loc = loc + lexer->YYLeng();
         QString s(lexer->YYText());
-        //std::cout<<s.toStdString();
         tok = lexer->yylex();
     }
-    //std::cout<<"\n"<<source.toStdString()<<"\n";
-    //std::cout<<"end = "<<loc<<"\nsource = "<<source.length()<<"\n";
 
     for (int i = 0; i<tokens.size(); i=i+3)
     {
-        //std::cout<<tokens[i]<<"\n";
         switch(tokens[i])
         {
         case StyleType::DEFAULT:
@@ -82,6 +77,10 @@ void QsciLexerGLSL::highlightKeywords(const QString &source, int start)
         case StyleType::KEYWORD:
             startStyling(start+tokens[i+1]);
             setStyling(tokens[i+2],StyleType::KEYWORD);
+        break;
+        case StyleType::DATATYPE:
+            startStyling(start+tokens[i+1]);
+            setStyling(tokens[i+2],StyleType::DATATYPE);
         break;
         case StyleType::NUMBER:
             startStyling(start+tokens[i+1]);
@@ -95,29 +94,12 @@ void QsciLexerGLSL::highlightKeywords(const QString &source, int start)
             startStyling(start+tokens[i+1]);
             setStyling(tokens[i+2]-1,StyleType::FUNCTION);
         break;
+        case StyleType::COMMENT:
+            startStyling(start+tokens[i+1]);
+            setStyling(tokens[i+2],StyleType::COMMENT);
+        break;
         }
     }
-
-    //check for keywords in text
-//    for (int i = 0; i<keywordsList.size(); i++)
-//    {
-//        QString word = keywordsList.at(i);
-//        if (source.contains(word))
-//        {
-//            int count = source.count(word);
-//            int index = 0;
-//            //for each instance of the keyword, set styling
-//            for (int j = 0; j<count; j++)
-//            {
-//                int wordStart = source.indexOf(word, index);
-//                index = wordStart+1;
-
-//                startStyling(start + wordStart);
-//                printf("started styling\n");
-//                setStyling(word.length(), StyleType::KEYWORD);
-//            }
-//        }
-//    }
 }
 
 QColor QsciLexerGLSL::defaultColor(int style) const
@@ -125,15 +107,19 @@ QColor QsciLexerGLSL::defaultColor(int style) const
     switch(style)
     {
     case StyleType::DEFAULT:
-        return QColor(247,247,241);
+        return QColor(247, 247, 241);
     case StyleType::KEYWORD:
-        return QColor(102,216,238);
+        return QColor(249, 38, 114);
+    case StyleType::DATATYPE:
+        return QColor(102, 216, 238);
     case StyleType::NUMBER:
         return QColor(174, 129, 255);
     case StyleType::OPERATOR:
         return QColor(249, 38, 114);
     case StyleType::FUNCTION:
         return QColor(166, 226, 46);
+    case StyleType::COMMENT:
+        return QColor(117, 113, 94);
     }
     return QColor(247,247,241);
 }
@@ -145,20 +131,21 @@ QColor QsciLexerGLSL::defaultPaper(int style) const
 
 QFont QsciLexerGLSL::defaultFont(int style) const
 {
-    int weight=50;
-    int size=12;
+    int weight = 50;
+    int size = 12;
+    bool italic = 0;
     switch(style)
     {
     case StyleType::DEFAULT:
         weight = 50;
         size = 12;
     break;
-    case StyleType::KEYWORD:
-        weight = 75;
+    case StyleType::DATATYPE:
+        italic = true;
     break;
     }
 
-    return QFont("Monospace", size,weight);
+    return QFont("Monospace", size,weight,italic);
 }
 
 QString QsciLexerGLSL::description(int style) const

@@ -33,7 +33,7 @@ public:
         DISABLED,
         OPERATOR,
         WHITESPACE,
-        NEWLINE
+        DATATYPE
     };
 
 private:
