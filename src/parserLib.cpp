@@ -1,4 +1,5 @@
 #include "parserLib.h"
+#include <ngl/ShaderLib.h>
 
 //----------------------------------------------------------------------------------------------------------------------
 /// @brief ctor for our parserLib
@@ -45,9 +46,9 @@ void parserLib::listUniforms()
     // get the active uniform data...
     glGetActiveUniform(id,i, 256, &length, &size , &type , UniformName);
     // ... store the data
-    newData.locationUniforms= glGetUniformLocation(id,UniformName);
-    newData.nameUniforms=UniformName ;
-    newData.typeUniforms= type;
+    newData.m_loc= glGetUniformLocation(id,UniformName);
+    newData.m_name=UniformName ;
+    newData.m_type= type;
     // Add uniformData to the currently registeredUniforms
     m_registeredUniforms[UniformName]=newData;
     m_uniformDataList[i]=newData;
@@ -74,9 +75,9 @@ void parserLib::printUniforms()
   // print information
   for (uint i=0; i<m_num; i++)
   {
-    std::cout << "Name: "<<m_uniformDataList[i].nameUniforms;
-    std::cout << ";  Location: "<<m_uniformDataList[i].locationUniforms<<" ("<<i<<")";
-    std::cout << ";  Type: "<<m_uniformDataList[i].typeUniforms<<"; "<<m_uniformDataList[i].dataType<<std::endl;
+    std::cout << "Name: "<<m_uniformDataList[i].m_name;
+    std::cout << ";  Location: "<<m_uniformDataList[i].m_loc<<" ("<<i<<")";
+    std::cout << ";  Type: "<<m_uniformDataList[i].m_type<<"; "<<m_uniformDataList[i].m_typeName<<std::endl;
   }
   std::cout<<"___________________________________________Uniform Information: Ends//"<<std::endl;
 
@@ -212,7 +213,7 @@ void parserLib::uniformDataTypes()
   for(auto d : m_registeredUniforms)
   {
     std::string type;
-    auto value=types.find(d.second.typeUniforms);
+    auto value=types.find(d.second.m_type);
     if(value !=types.end())
     {
       type=value->second;
@@ -221,7 +222,7 @@ void parserLib::uniformDataTypes()
     {
       type="unknown type";
     }
-    m_uniformDataList[d.second.locationUniforms].dataType=type;
+    m_uniformDataList[d.second.m_loc].m_typeName=type;
   }
   std::cout<<"End Uniforms" <<"\n";
 }
@@ -243,12 +244,137 @@ void parserLib::exportUniforms()
   }
   for(int i=0;i<m_num;i++)
   {
-    fileOut<<m_uniformDataList[i].nameUniforms<<"\n";
-    fileOut<<m_uniformDataList[i].locationUniforms<<"\n";
-    fileOut<<m_uniformDataList[i].dataType<<"\n";
+    fileOut<<m_uniformDataList[i].m_name<<"\n";
+    fileOut<<m_uniformDataList[i].m_loc<<"\n";
+    fileOut<<m_uniformDataList[i].m_typeName<<"\n";
   }
   fileOut.close();
   // close files
   std::cout<<"EXPORTED\n"<<std::endl;
 }
 
+bool parserLib::returnBool(int loc)
+{
+
+    return m_uniformDataList[loc].m_bool;
+}
+int parserLib::returnInt(int loc)
+{
+
+    return m_uniformDataList[loc].m_int;
+}
+float parserLib::returnFloat(int loc)
+{
+
+    return m_uniformDataList[loc].m_float;
+}
+ngl::Mat3 parserLib::returnMat3(int loc)
+{
+
+    return m_uniformDataList[loc].m_mat3;
+}
+ngl::Mat4 parserLib::returnMat4(int loc)
+{
+
+    return m_uniformDataList[loc].m_mat4;
+}
+ngl::Vec3 parserLib::returnVec3(int loc)
+{
+
+    return m_uniformDataList[loc].m_vec3;
+}
+ngl::Vec4 parserLib::returnVec4(int loc)
+{
+
+    return m_uniformDataList[loc].m_vec4;
+}
+
+void parserLib::assignUniforms()
+{
+  ngl::ShaderLib *shader=ngl::ShaderLib::instance();
+//  std::string b="bool";
+//  std::string f="float";
+//  std::string i="int";
+//  std::string m3="mat3";
+//  std::string m4="mat4";
+//  std::string v3="vec3";
+//  std::string v4="vec4";
+  for (int i=0;i<m_num;i++)
+  {
+    if (m_uniformDataList[i].m_typeName=="bool")
+    {
+      m_uniformDataList[i].m_bool = shader->getUniformBlockIndex(m_uniformDataList[i].m_name);
+    }
+    if (m_uniformDataList[i].m_typeName=="float")
+    {
+      m_uniformDataList[i].m_float = shader->getUniformBlockIndex(m_uniformDataList[i].m_name);
+    }
+    if (m_uniformDataList[i].m_typeName=="int")
+    {
+      m_uniformDataList[i].m_int = shader->getUniformBlockIndex(m_uniformDataList[i].m_name);
+    }
+    if (m_uniformDataList[i].m_typeName=="vec3")
+    {
+      m_uniformDataList[i].m_vec3 = shader->getUniformBlockIndex(m_uniformDataList[i].m_name);
+    }
+    if (m_uniformDataList[i].m_typeName=="vec4")
+    {
+      m_uniformDataList[i].m_vec4 = shader->getUniformBlockIndex(m_uniformDataList[i].m_name);
+    }
+    if (m_uniformDataList[i].m_typeName=="mat3")
+    {
+      m_uniformDataList[i].m_mat3 = shader->getUniformBlockIndex(m_uniformDataList[i].m_name);
+    }
+    if (m_uniformDataList[i].m_typeName=="mat4")
+    {
+      m_uniformDataList[i].m_mat4 = shader->getUniformBlockIndex(m_uniformDataList[i].m_name);
+    }
+
+
+  }
+}
+
+
+void parserLib::setUniformsToShader(ngl::ShaderLib *shader)
+{
+
+  for (int i=0;i<m_num;i++)
+  {
+    if (m_uniformDataList[i].m_typeName=="bool"||"int")
+    {
+      shader->setShaderParam1i(m_uniformDataList[i].m_name,m_uniformDataList[i].m_bool);
+      shader->setShaderParam1i(m_uniformDataList[i].m_name,m_uniformDataList[i].m_int);
+    }
+    if (m_uniformDataList[i].m_typeName=="float")
+    {
+      shader->setShaderParam1f(m_uniformDataList[i].m_name,m_uniformDataList[i].m_float);
+    }
+
+
+    if (m_uniformDataList[i].m_typeName=="vec3")
+    {
+      ngl::Vec4 newVec3;
+      newVec3.m_x=m_uniformDataList[i].m_vec3.m_x;
+      newVec3.m_y=m_uniformDataList[i].m_vec3.m_y;
+      newVec3.m_z=m_uniformDataList[i].m_vec3.m_z;
+      newVec3.m_w=0;
+
+      shader->setShaderParamFromVec4(m_uniformDataList[i].m_name, newVec3);
+    }
+    if (m_uniformDataList[i].m_typeName=="vec4")
+    {
+      shader->setShaderParamFromVec4(m_uniformDataList[i].m_name, m_uniformDataList[i].m_vec4);
+    }
+
+    if (m_uniformDataList[i].m_typeName=="mat3")
+    {
+      shader->setShaderParamFromMat3(m_uniformDataList[i].m_name, m_uniformDataList[i].m_mat3);
+    }
+    if (m_uniformDataList[i].m_typeName=="mat4")
+    {
+      shader->setShaderParamFromMat4(m_uniformDataList[i].m_name, m_uniformDataList[i].m_mat4);
+    }
+
+
+  }
+}

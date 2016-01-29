@@ -45,10 +45,19 @@ public:
   //----------------------------------------------------------------------------------------------------------------------
   typedef struct
   {
-      std::string nameUniforms;
-      GLuint locationUniforms;
-      GLenum typeUniforms;
-      std::string dataType;
+      std::string m_name;
+      GLuint m_loc;
+      GLenum m_type;
+      std::string m_typeName;
+
+      bool m_bool=NULL;
+      int m_int=NULL;
+      float m_float=NULL;
+      ngl::Vec3 m_vec3=NULL;
+      ngl::Vec4 m_vec4=NULL;
+      ngl::Mat3 m_mat3=NULL;
+      ngl::Mat4 m_mat4=0.0;
+
 ///#Lets make a template class and see if that works
 
   }uniformData;
@@ -68,6 +77,15 @@ public:
   //-----------------------------------------------------------------------------------------------
   /// @brief
   //----------------------------------------------------------------------------------------------
+  bool returnBool(int loc);
+  int returnInt(int loc);
+  float returnFloat(int loc);
+  ngl::Vec3 returnVec3(int loc);
+  ngl::Vec4 returnVec4(int loc);
+  ngl::Mat3 returnMat3(int loc);
+  ngl::Mat4 returnMat4(int loc);
+  void assignUniforms();
+  void setUniformsToShader(ngl::ShaderLib *shader);
 };
 
 #endif // PARSER_H

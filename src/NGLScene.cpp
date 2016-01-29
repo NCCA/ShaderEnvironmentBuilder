@@ -100,8 +100,8 @@ void NGLScene::initializeGL()
   // Now we will create a basic Camera from the graphics library
   // This is a static camera so it only needs to be set once
   // First create Values for the camera position
-  ngl::Vec3 from(0,25,25);
-  ngl::Vec3 to(0,5,0);
+  ngl::Vec3 from(0,1,1);
+  ngl::Vec3 to(0,0,0);
   ngl::Vec3 up(0,1,0);
   // now load to our new camera
   m_cam.set(from,to,up);
@@ -126,98 +126,31 @@ void NGLScene::initializeGL()
 
 
 
-  ngl::Mat4 M=shader->getUniformBlockIndex("M");
-  ngl::Mat4 MV=shader->getUniformBlockIndex("MV");
-  ngl::Mat4 MVP=shader->getUniformBlockIndex("MVP");
-  m_norm=shader->getUniformBlockIndex("Normalize");
-  m_lightAmb=shader->getUniformBlockIndex("light.ambient");
-  m_lightDif=shader->getUniformBlockIndex("light.diffuse");
-  m_lightPos=shader->getUniformBlockIndex("light.position");
-  m_lightSpec=shader->getUniformBlockIndex("light.specular");
-// PUT THIS IN A CLASS.... or for loop.
-  m_matAmb=shader->getUniformBlockIndex("material.ambient");
-  m_matDif=shader->getUniformBlockIndex("material.diffuse");
-  m_matShiny=shader->getUniformBlockIndex("material.shininess");
-  m_matSpec=shader->getUniformBlockIndex("material.specular");
+//  ngl::Mat4 M=shader->getUniformBlockIndex("M");
+//  ngl::Mat4 MV=shader->getUniformBlockIndex("MV");
+//  ngl::Mat4  MVP=shader->getUniformBlockIndex("MVP");
+//  m_norm=shader->getUniformBlockIndex("Normalize");
+//  m_lightAmb=shader->getUniformBlockIndex("light.ambient");
+//  m_lightDif=shader->getUniformBlockIndex("light.diffuse");
+//  m_lightPos=shader->getUniformBlockIndex("light.position");
+//  m_lightSpec=shader->getUniformBlockIndex("light.specular");
 
-  ngl::Mat3 normalMatrix=shader->getUniformBlockIndex("normalMatrix");
-  ngl::Vec3 viewerPos=shader->getUniformBlockIndex("viewerPos");
+//  // PUT THIS IN A CLASS.... or for loop.
+
+//  m_matAmb=shader->getUniformBlockIndex("material.ambient");
+//  m_matDif=shader->getUniformBlockIndex("material.diffuse");
+//  m_matShiny=shader->getUniformBlockIndex("material.shininess");
+//  m_matSpec=shader->getUniformBlockIndex("material.specular");
+
+//  ngl::Mat3 normalMatrix=shader->getUniformBlockIndex("normalMatrix");
+//  ngl::Vec3 viewerPos=shader->getUniformBlockIndex("viewerPos");
 
   m_newParser->listUniforms();
   m_newParser->printUniforms();
-
-  for (int token=0; token<m_newParser->m_num;token++)
-  {
-
-    std::string b="bool";
-    std::string f="float";
-    std::string i="int";
-    std::string m3="mat3";
-    std::string m4="mat4";
-    std::string v3="vec3";
-    std::string v4="vec4";
-
-    std::cout<<m_newParser->m_uniformDataList[token].dataType  <<std::endl;
-    std::cout<<"dataType:  "<<typeid(b).name()<<std::endl;
-
-    if(m_newParser->m_uniformDataList[token].dataType==b)
-    {
-      std::cout<<m_newParser->m_uniformDataList[token].nameUniforms<<std::endl;
-    }
-    if(m_newParser->m_uniformDataList[token].dataType==f)
-    {
-    }
-    if(m_newParser->m_uniformDataList[token].dataType==i)
-    {
-    }
-    if(m_newParser->m_uniformDataList[token].dataType==m3)
-    {
-    }
-    if(m_newParser->m_uniformDataList[token].dataType==m4)
-    {
-    }
-    if(m_newParser->m_uniformDataList[token].dataType==v3)
-    {
-    }
-    if(m_newParser->m_uniformDataList[token].dataType==v4)
-    {
-    }
+  m_newParser->assignUniforms();
 
 
 
-
-
-  }
-
-
-
-//  m_matDif=materialDiffuse;
-//  m_matAmb=materialAmbient;
-//  m_matShiny=materialShininess;
-//  m_matSpec=materialSpecular;
-
-//  m_lightDif=lightDiffuse;
-//  m_lightAmb=lightAmbient;
-//  m_lightPos=lightPosition;
-//  m_lightSpec=lightSpecular;
-
- // m_norm=Normalize;
-
-  //  std::cout<<typeid(Normalize).name()<<std::endl;
-//    std::cout<<"ad:    "<<DAD.m_00 <<" " <<DAD.m_01<<" " <<DAD.m_02<<" " <<DAD.m_03<<" " <<std::endl;
-//    std::cout<<"ad:    "<<DAD.m_10 <<" " <<DAD.m_11<<" " <<DAD.m_12<<" " <<DAD.m_23<<" " <<std::endl;
-//    std::cout<<"ad:    "<<DAD.m_20 <<" " <<DAD.m_21<<" " <<DAD.m_22<<" " <<DAD.m_23<<" " <<std::endl;
-//    std::cout<<"ad:    "<<DAD.m_30 <<" " <<DAD.m_31<<" " <<DAD.m_32<<" " <<DAD.m_33<<" " <<std::endl;
-
-//  std::cout<<"m_matDif:    "<<m_matDif.m_x <<" " <<m_matDif.m_y<<" " <<m_matDif.m_z<<" " <<m_matDif.m_w<<" " <<std::endl;
-//  std::cout<<"m_matAmb:    "<<m_matAmb.m_x <<" " <<m_matAmb.m_y<<" " <<m_matAmb.m_z<<" " <<m_matAmb.m_w<<" " <<std::endl;
-//  std::cout<<"m_matSpec:    "<<m_matSpec.m_x <<" " <<m_matSpec.m_y<<" " <<m_matSpec.m_z<<" " <<m_matSpec.m_w<<" " <<std::endl;
-//  std::cout<<"m_matShiny:    "<<m_matShiny<<std::endl;
-
-//  std::cout<<"m_lightDif:    "<<m_lightDif.m_x <<" " <<m_lightDif.m_y<<" " <<m_lightDif.m_z<<" " <<m_lightDif.m_w<<" " <<std::endl;
-//  std::cout<<"m_lightAmb:    "<<m_lightAmb.m_x <<" " <<m_lightAmb.m_y<<" " <<m_lightAmb.m_z<<" " <<m_lightAmb.m_w<<" " <<std::endl;
-//  std::cout<<"m_lightPos:    "<<m_lightPos.m_x <<" " <<m_lightPos.m_y<<" " <<m_lightPos.m_z<<" " <<m_lightPos.m_w<<" " <<std::endl;
-//  std::cout<<"m_lightSpec:    "<<m_lightSpec.m_x <<" " <<m_lightSpec.m_y<<" " <<m_lightSpec.m_z<<" " <<m_lightSpec.m_w<<" " <<std::endl;
 
 }
 
@@ -239,10 +172,7 @@ void NGLScene::loadMatricesToShader()
   MVP= M*m_cam.getVPMatrix();
   normalMatrix=MV;
   normalMatrix.inverse();
-  shader->setShaderParamFromMat4("MV",MV);
-  shader->setShaderParamFromMat4("MVP",MVP);
-  shader->setShaderParamFromMat3("normalMatrix",normalMatrix);
-  shader->setShaderParamFromMat4("M",M);
+
 
   //added stuff
   shader->setShaderParamFromMat4("Normalize",m_norm);
@@ -251,12 +181,17 @@ void NGLScene::loadMatricesToShader()
   shader->setShaderParamFromVec4("material.diffuse", m_matDif);
   shader->setShaderParamFromVec4("material.ambient", m_matAmb);
   shader->setShaderParam1f("material.shininess", m_matShiny);
-
   shader->setShaderParamFromVec4("light.specular",m_lightSpec);
   shader->setShaderParamFromVec4("light.diffuse", m_lightDif);
   shader->setShaderParamFromVec4("light.ambient", m_lightAmb);
   shader->setShaderParamFromVec4("light.position", m_lightPos);
 
+
+  m_newParser->setUniformsToShader(shader);
+  shader->setShaderParamFromMat4("MV",MV);
+  shader->setShaderParamFromMat4("MVP",MVP);
+  shader->setShaderParamFromMat3("normalMatrix",normalMatrix);
+  shader->setShaderParamFromMat4("M",M);
 }
 
 void NGLScene::paintGL()
@@ -286,7 +221,7 @@ void NGLScene::paintGL()
   ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
   // draw
   loadMatricesToShader();
-  prim->draw("dragon");
+  prim->draw("teapot");
 
 
 }
