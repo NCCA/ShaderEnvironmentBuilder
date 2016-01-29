@@ -11,6 +11,7 @@
 #include <QColorDialog>
 
 
+
 //----------------------------------------------------------------------------------------------------------------------
 NGLScene::NGLScene( QWidget *_parent ) : QOpenGLWidget( _parent )
 {
@@ -107,6 +108,9 @@ void NGLScene::initializeGL()
   // set the viewport for openGL we need to take into account retina display
   m_newParser->listUniforms();
   m_newParser->exportUniforms();
+
+
+  m_readFromXML->readXML("Normalize");
 
   ///---------------------------------------------------------------------------------------------------------
 

@@ -1,6 +1,7 @@
 #ifndef NGLSCENE_H__
 #define NGLSCENE_H__
 #include "json.h"
+#include "io_xml.h"
 #include <ngl/Camera.h>
 #include <ngl/Transformation.h>
 #include <ngl/Vec3.h>
@@ -102,6 +103,7 @@ private :
   /// @brief create a pointer to the new parser
   //----------------------------------------------------------------------------------------------------------------------
   parser *m_newParser;
+  IO_XML *m_readFromXML;
 
 
   void loadMatricesToShader( );

@@ -3,9 +3,10 @@
 #include "qscilexerglsl.h"
 
 #include <Qsci/qsciscintilla.h>
-
 MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent), m_ui(new Ui::MainWindow)
 {
+
+
   // Setup ui from form creator (MainWindow.ui)
   m_ui->setupUi(this);
 
