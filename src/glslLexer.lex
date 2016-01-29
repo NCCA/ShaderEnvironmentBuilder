@@ -9,8 +9,14 @@
     #include "qscilexerglsl.h"
 %}
 
+%s LEXSTRING
 
 %%
+<LEXSTRING>[^"]*    { return QsciLexerGLSL::StyleType::STRING; }
+<LEXSTRING>[\"\n]   {
+                        BEGIN(INITIAL);
+                        return QsciLexerGLSL::StyleType::STRING;
+                    }
 "attribute" |
 "const" |
 "uniform" |
@@ -40,16 +46,21 @@
 "precision" |
 "struct"            { return QsciLexerGLSL::StyleType::KEYWORD; }
 
-[iu]?sampler(([123]D)|Cube)|([12]DArray)|2DRect|Buffer          |
-sampler(([123]D)|Cube)|([12]DArray)|((2DRect)Shadow)            |
-[ibu]?vec[234]                                                  |
-mat[234](x[234])?                                               |
-(u?int)|"float"|"bool"|"void"        { return QsciLexerGLSL::StyleType::DATATYPE; }
+[iu]?sampler(([123]D)|Cube)|([12]DArray)|2DRect|Buffer  |
+sampler(([123]D)|Cube)|([12]DArray)|((2DRect)Shadow)    |
+[ibu]?vec[234]                                          |
+mat[234](x[234])?                                       |
+(u?int)|"float"|"bool"|"void"       { return QsciLexerGLSL::StyleType::DATATYPE; }
 
 "//".*[\n]                          { return QsciLexerGLSL::StyleType::COMMENT; }
 [ \t\n\r]                           { return QsciLexerGLSL::StyleType::WHITESPACE; }
 
 [\*\+\-\/\>\<]?"="?                 { return QsciLexerGLSL::StyleType::OPERATOR; }
+
+\"                                  {
+                                        BEGIN(LEXSTRING);
+                                        return QsciLexerGLSL::StyleType::STRING;
+                                    }
 
 [Tt]rue |
 [Ff]alse |

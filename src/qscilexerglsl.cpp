@@ -90,6 +90,10 @@ void QsciLexerGLSL::highlightKeywords(const QString &source, int start)
             startStyling(start+tokens[i+1]);
             setStyling(tokens[i+2],StyleType::OPERATOR);
         break;
+        case StyleType::STRING:
+            startStyling(start+tokens[i+1]);
+            setStyling(tokens[i+2],StyleType::STRING);
+        break;
         case StyleType::FUNCTION:
             startStyling(start+tokens[i+1]);
             setStyling(tokens[i+2]-1,StyleType::FUNCTION);
@@ -116,6 +120,8 @@ QColor QsciLexerGLSL::defaultColor(int style) const
         return QColor(174, 129, 255);
     case StyleType::OPERATOR:
         return QColor(249, 38, 114);
+    case StyleType::STRING:
+        return QColor(230, 219, 116);
     case StyleType::FUNCTION:
         return QColor(166, 226, 46);
     case StyleType::COMMENT:
