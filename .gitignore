@@ -17,7 +17,7 @@
 *.mod
 
 # Compiled Static libraries
-
+# *Need keep blank for build of QScintilla
 
 # Executables
 *.exe
@@ -36,5 +36,29 @@
 # Remove build folders that are created from non-shadowbuild
 build-*/
 
-# Remove qmake cache file
-.qmake.cache
+# temp files under linux
+*.~*
+
+# Qt creator stuff
+.qmake*
+Makefile
+
+# Cmake
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+cmake_install.cmake
+install_manifest.txt
+
+# Generated moc and UI files
+moc_*.cpp
+ui_*.h
+
+# Flex generated lexer
+src/glslLexer.cpp
+
+# Testing files all go in ./tempFiles
+tempFiles/*
+
+# Wiki files
+*.wiki/*

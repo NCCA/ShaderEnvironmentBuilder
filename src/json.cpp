@@ -1,27 +1,30 @@
-
-#include "rapidjson/writer.h"
-#include "rapidjson/stringbuffer.h"
-
-#include <iostream>
-#include <fstream>
-#include <string.h>
+#include <json.h>
+// Only need boost for creating directories
+#include <boost/filesystem.hpp>
 
 using namespace rapidjson;
 using namespace std;
 
-void saveToFile(std::string _jsonString)
+Json::Json()
 {
-    ofstream jsonFile("/home/i7685565/0Features-0BugsCVA3/JsonTesting/jsonString.json");
+  // Ensure the location of files for temp output. REMOVE IN FINAL VERSION
+  boost::filesystem::path dir("./tempFiles/json");
+  boost::filesystem::create_directories(dir);
+}
+
+void Json::saveToFile(std::string _jsonString)
+{
+    ofstream jsonFile("./tempFiles/json/jsonString.json");
 
     if (jsonFile.is_open())
-        jsonFile << _jsonString;
+        jsonFile << _jsonString << std::endl;
         std::cout<<"Written to file: "<<std::endl;
     jsonFile.close();
 }
 
-void replaceWord(std::string _oldWord, std::string _newWord)
+void Json::replaceWord(std::string _oldWord, std::string _newWord)
 {
-    ifstream jsonFile("/home/i7685565/0Features-0BugsCVA3/JsonTesting/jsonString.json");
+    ifstream jsonFile("./tempFiles/json/jsonString.json");
     if(!jsonFile)
     {
         std::cout<<"Unable to open file."<<std::endl;
@@ -41,30 +44,30 @@ void replaceWord(std::string _oldWord, std::string _newWord)
         }
     }
     jsonFile.close();
-    ofstream jsonFileNew("/home/i7685565/0Features-0BugsCVA3/JsonTesting/jsonString.json");
-    std::cout<<"\nNew file: \n"<<lineRead;
+    ofstream jsonFileNew("./tempFiles/json/jsonString.json");
+    std::cout<<"\nNew file: \n"<<lineRead << std::endl;
     if (jsonFileNew.is_open())
-        jsonFileNew << lineRead;
+        jsonFileNew << lineRead << std::endl;
     jsonFileNew.close();
 }
 
-std::string shaderType(int _shaderNumber)
-{
-    std::string shaderType;
+//std::string Json::shaderType(int _shaderNumber)
+//{
+//    std::string shaderType;
 
-    if (_shaderNumber==1)
-    {
-        shaderType = "noise3D";
-    };
-    if (_shaderNumber==2)
-    {
-        shaderType = "cloud3D";
-    };
+//    if (_shaderNumber==1)
+//    {
+//        shaderType = "noise3D";
+//    };
+//    if (_shaderNumber==2)
+//    {
+//        shaderType = "cloud3D";
+//    };
 
-    return shaderType;
-}
+//    return shaderType;
+//}
 
-std::string buildJson()
+std::string Json::buildJson()
 {
 //    NOTE: This is useful to input a string directly into the writer. Input parameter int_shaderNumber to use.
 //    std::string shaderTypeStr = shaderType(_shaderNumber);
@@ -117,6 +120,11 @@ std::string buildJson()
     std::cout<<s.GetString()<<std::endl;
 
     return s.GetString();
+}
+
+Json::~Json()
+{
+
 }
 
 //int main()

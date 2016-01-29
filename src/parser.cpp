@@ -1,8 +1,12 @@
 #include "parser.h"
+// Only need boost for creating directories
+#include <boost/filesystem.hpp>
 
 parser::parser()
 {
-
+  // Ensure the location of files for temp output. REMOVE IN FINAL VERSION
+  boost::filesystem::path dir("./tempFiles/parser");
+  boost::filesystem::create_directories(dir);
 
 }
 
@@ -211,7 +215,7 @@ void parser::uniformDataTypes()
 void parser::exportUniforms()
 {
   std::ofstream fileOut;
-  fileOut.open("ParsingOutput.txt");
+  fileOut.open("./tempFiles/parser/ParsingOutput.txt");
   if(!fileOut.is_open())    ///If it can be opened
   {
     std::cerr<<"couldn't' open file\n";
