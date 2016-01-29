@@ -111,6 +111,7 @@ void NGLScene::initializeGL()
 
 
   m_readFromXML->readXML("Normalize");
+  m_readFromXML->writeXML("light.diffuse", "vec3", 9001);
 
   ///---------------------------------------------------------------------------------------------------------
 

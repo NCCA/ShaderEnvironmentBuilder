@@ -15,7 +15,7 @@ public:
     ~IO_XML();
 
     void readXML(std::string _type);
-    void writeXML();
+    void writeXML(std::string _name, std::string _type, int _value);
     rapidxml::xml_document<> m_doc;
     rapidxml::xml_node<> * root_node;
 
