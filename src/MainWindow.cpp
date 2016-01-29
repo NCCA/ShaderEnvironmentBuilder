@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent), m_ui(new Ui::MainW
   // Create openGl and qsci widgets
   m_gl=new  NGLScene(this);
   m_qsci = new QsciScintilla(this);
-  QsciLexer* lex = new QsciLexerGLSL;
+  QsciLexer* lex = new QsciLexerGLSL(m_qsci);
   m_qsci->setLexer(lex);
   m_qsci->setMarginType(1,QsciScintilla::MarginType::NumberMargin);
   m_qsci->setMarginWidth(1," 012");
