@@ -12,7 +12,14 @@
 #include <typeinfo>
 #include <QColorDialog>
 
-
+//----------------------------------------------------------------------------------------------------------------------
+/// @brief the increment for x/y translation with mouse movement
+//----------------------------------------------------------------------------------------------------------------------
+const static float INCREMENT=0.01f;
+//----------------------------------------------------------------------------------------------------------------------
+/// @brief the increment for the wheel zoom
+//----------------------------------------------------------------------------------------------------------------------
+const static float ZOOM=0.1f;
 
 //----------------------------------------------------------------------------------------------------------------------
 NGLScene::NGLScene( QWidget *_parent ) : QOpenGLWidget( _parent )
@@ -23,24 +30,21 @@ NGLScene::NGLScene( QWidget *_parent ) : QOpenGLWidget( _parent )
   m_spinXFace=0.0f;
   m_spinYFace=0.0f;
   m_parser= new parserLib();
-
+  // re-size the widget to that of the parent (in this case the GLFrame passed in on construction)
+  this->resize(_parent->size());
+  m_wireframe=false;
+  m_fov=65.0;
   m_newJson= new Json();
   // set this widget to have the initial keyboard focus
   setFocus();
-  // re-size the widget to that of the parent (in this case the GLFrame passed in on construction)
-  this->resize(_parent->size());
-	m_wireframe=false;
-	m_rotation=0.0;
-	m_scale=1.0;
-	m_position=0.0;
-
-	m_selectedObject=0;
 }
-
+//----------------------------------------------------------------------------------------------------------------------
+NGLScene::~NGLScene()
+{;}
+//----------------------------------------------------------------------------------------------------------------------
 // This virtual function is called once before the first call to paintGL() or resizeGL(),
-//and then once whenever the widget has been assigned a new QGLContext.
+// and then once whenever the widget has been assigned a new QGLContext.
 // This function should set up any required OpenGL context rendering flags, defining display lists, etc.
-
 //----------------------------------------------------------------------------------------------------------------------
 void NGLScene::initializeGL()
 {
@@ -49,13 +53,15 @@ void NGLScene::initializeGL()
   glClearColor(0.4f, 0.4f, 0.4f, 1.0f);			   // Grey Background
   // enable depth testing for drawing
   glEnable(GL_DEPTH_TEST);
-  /// create our camera
-  ngl::Vec3 eye(2,2,2);
+  // enable multisampling for smoother drawing
+  glEnable(GL_MULTISAMPLE);
+
+  // create our camera
+  ngl::Vec3 eye(0,1,1);
   ngl::Vec3 look(0,0,0);
   ngl::Vec3 up(0,1,0);
-
   m_cam.set(eye,look,up);
-  m_cam.setShape(45,float(1024/720),0.1,300);
+  setCamShape();
   // now to load the shader and set the values
   // grab an instance of shader manager
   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
@@ -123,9 +129,62 @@ void NGLScene::initializeGL()
 //  jsonInstance->buildJson();
 //  jsonInstance->replaceWord("Shader", "CHANGED");
 
-
 }
 
+
+//----------------------------------------------------------------------------------------------------------------------
+//This virtual function is called whenever the widget needs to be painted.
+// this is our main drawing routine
+void NGLScene::paintGL()
+{
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+  if(m_wireframe == true)
+  {
+    glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
+  }
+  else
+  {
+    glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
+  }
+
+  ngl::ShaderLib *shader=ngl::ShaderLib::instance();
+  (*shader)["Phong"]->use();
+
+  // Rotation based on the mouse position for our global transform
+  ngl::Mat4 rotX;
+  ngl::Mat4 rotY;
+  // create the rotation matrices
+  rotX.rotateX(m_spinXFace);
+  rotY.rotateY(m_spinYFace);
+  // multiply the rotations
+  m_mouseGlobalTX=rotY*rotX;
+  // add the translations
+  m_mouseGlobalTX.m_m[3][0] = m_modelPos.m_x;
+  m_mouseGlobalTX.m_m[3][1] = m_modelPos.m_y;
+  m_mouseGlobalTX.m_m[3][2] = m_modelPos.m_z;
+
+  m_cam.setShape(m_fov, m_aspect, 0.5f, 150.0f);
+
+  loadMatricesToShader();
+
+  ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
+  prim->draw("teapot");
+
+}
+//----------------------------------------------------------------------------------------------------------------------
+void NGLScene::resizeGL(QResizeEvent *_event)
+{
+  setCamShape();
+}
+
+//----------------------------------------------------------------------------------------------------------------------
+void NGLScene::resizeGL(int _w, int _h)
+{
+  setCamShape();
+}
+
+//----------------------------------------------------------------------------------------------------------------------
 void NGLScene::loadMatricesToShader()
 {
   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
@@ -135,8 +194,6 @@ void NGLScene::loadMatricesToShader()
   ngl::Mat4 MVP;
   ngl::Mat3 normalMatrix;
   ngl::Mat4 M;
-  //
-
 
   M=m_mouseGlobalTX;
   MV=  M*m_cam.getViewMatrix();
@@ -153,48 +210,11 @@ void NGLScene::loadMatricesToShader()
   shader->setShaderParamFromMat4("M",M);
 }
 
-//----------------------------------------------------------------------------------------------------------------------
-//This virtual function is called whenever the widget needs to be painted.
-// this is our main drawing routine
-void NGLScene::paintGL()
+void NGLScene::setCamShape()
 {
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  glViewport(0,0,m_width,m_height);
-  ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
-  if(m_wireframe == true)
-  {
-    glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
-  }
-  else
-  {
-    glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
-  }
-  ngl::ShaderLib *shader=ngl::ShaderLib::instance();
-  (*shader)["Phong"]->use();
-
-	m_transform.setPosition(m_position);
-	m_transform.setScale(m_scale);
-	m_transform.setRotation(m_rotation);
-	loadMatricesToShader();
-	switch(m_selectedObject)
-	{
-		case 0 : prim->draw("teapot"); break;
-		case 1 : prim->draw("sphere"); break;
-		case 2 : prim->draw("cube"); break;
-	}
-
+  m_aspect=(float)width()/height();
+  m_cam.setShape(m_fov, m_aspect, 0.5f, 150.0f);
 }
-
-
-
-
-
-//----------------------------------------------------------------------------------------------------------------------
-void NGLScene::mouseMoveEvent ( QMouseEvent * _event )
-{
-  Q_UNUSED(_event);
-}
-
 
 //----------------------------------------------------------------------------------------------------------------------
 void NGLScene::keyPressEvent(QKeyEvent *_event)
@@ -245,15 +265,86 @@ void NGLScene::keyPressEvent(QKeyEvent *_event)
   case Qt::Key_Down : m_parser->m_uniformDataList[11].m_vec3.m_x-=0.05;std::cout<<m_parser->m_uniformDataList[11].m_vec3.m_z<<std::endl; break;
   default : break;
   }
-  // finally update the GLWindow and re-draw
-  //if (isExposed())
     update();
 }
 
+//----------------------------------------------------------------------------------------------------------------------
+void NGLScene::mouseMoveEvent ( QMouseEvent * _event )
+{
+  if(m_rotate && _event->buttons() == Qt::LeftButton)
+  {
+    int diffx=_event->x()-m_origX;
+    int diffy=_event->y()-m_origY;
+    m_spinXFace += (float) 0.5f * diffy;
+    m_spinYFace += (float) 0.5f * diffx;
+    m_origX = _event->x();
+    m_origY = _event->y();
+    update();
 
+  }
+        // right mouse translate code
+  else if(m_translate && _event->buttons() == Qt::RightButton)
+  {
+    int diffX = (int)(_event->x() - m_origXPos);
+    int diffY = (int)(_event->y() - m_origYPos);
+    m_origXPos=_event->x();
+    m_origYPos=_event->y();
+    m_modelPos.m_x += INCREMENT * diffX;
+    m_modelPos.m_y -= INCREMENT * diffY;
+    update();
 
-
-NGLScene::~NGLScene()
-{;
+   }
 }
 
+
+//----------------------------------------------------------------------------------------------------------------------
+void NGLScene::mousePressEvent ( QMouseEvent * _event )
+{
+  // that method is called when the mouse button is pressed in this case we
+  // store the value where the maouse was clicked (x,y) and set the Rotate flag to true
+  if(_event->button() == Qt::LeftButton)
+  {
+    m_origX = _event->x();
+    m_origY = _event->y();
+    m_rotate =true;
+  }
+  // right mouse translate mode
+  else if(_event->button() == Qt::RightButton)
+  {
+    m_origXPos = _event->x();
+    m_origYPos = _event->y();
+    m_translate=true;
+  }
+}
+
+//----------------------------------------------------------------------------------------------------------------------
+void NGLScene::mouseReleaseEvent ( QMouseEvent * _event )
+{
+  // that event is called when the mouse button is released
+  // we then set Rotate to false
+  if (_event->button() == Qt::LeftButton)
+  {
+    m_rotate=false;
+  }
+        // right mouse translate mode
+  if (_event->button() == Qt::RightButton)
+  {
+    m_translate=false;
+  }
+}
+
+//----------------------------------------------------------------------------------------------------------------------
+void NGLScene::wheelEvent ( QWheelEvent * _event )
+{
+
+  // check the diff of the wheel position (0 means no change)
+  if(_event->delta() > 0)
+  {
+    m_modelPos.m_z+=ZOOM;
+  }
+  else if(_event->delta() <0 )
+  {
+    m_modelPos.m_z-=ZOOM;
+  }
+  update();
+}
