@@ -1,2 +1,0 @@
-/home/i7219595/SimpleNGL/CMakeFiles/SimpleNGL_automoc.dir
-/home/i7219595/SimpleNGL/CMakeFiles/SimpleNGL.dir
