@@ -12,7 +12,8 @@
 #include <memory>
 #include <QOpenGLWindow>
 #include <unordered_map>
-#include "parser.h"
+#include "parserLib.h"
+
 //----------------------------------------------------------------------------------------------------------------------
 /// @file NGLScene.h
 /// @brief a basic Qt GL window class for ngl demos
@@ -78,6 +79,7 @@ protected:
 	ngl::Camera m_cam;
 	/// @brief our transform for objects
 	ngl::Transformation m_transform;
+  ngl::Mat4 m_mouseGlobalTX;
 private :
   /// @brief this method is called every time a mouse is moved
   /// @param _event the Qt Event structure
@@ -88,21 +90,10 @@ private :
   /// @brief this method is called everytime the mouse button is pressed
   /// inherited from QObject and overridden here.
   /// @param _event the Qt Event structure
-  void mousePressEvent ( QMouseEvent *_event  );
+  void keyPressEvent ( QKeyEvent *_event  );
 
-    ///
-    typedef struct
-    {
-        std::string nameUniforms;
-        GLuint locationUniforms;
-        GLenum typeUniforms;
-        std::string dataType;
-    }uniformData;
+    parserLib *m_parser;
 
-  //----------------------------------------------------------------------------------------------------------------------
-  /// @brief create a pointer to the new parser
-  //----------------------------------------------------------------------------------------------------------------------
-  parser *m_newParser;
   IO_XML *m_readFromXML;
   Json *m_newJson;
 
