@@ -19,9 +19,13 @@ public:
   ~parserLib();
 
   //----------------------------------------------------------------------------------------------------------------------
-  /// @brief get and store uniform data
+  /// @brief get and store uniform data(non-values)
   //----------------------------------------------------------------------------------------------------------------------
-  void listUniforms();
+  void assignUniformInformation();
+  void assignUniformValues();
+  void assignAllData();
+
+  void sendUniformsToShader(ngl::ShaderLib *shader);
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief prints the uniform location, data type and names
   //----------------------------------------------------------------------------------------------------------------------
@@ -40,16 +44,19 @@ public:
   //----------------------------------------------------------------------------------------------------------------------
   int m_num;
 
+
+
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief used to store the uniform Data
   //----------------------------------------------------------------------------------------------------------------------
   typedef struct
   {
-      std::string m_name;
-      GLuint m_loc;
-      GLenum m_type;
-      std::string m_typeName;
+      std::string m_name;     // Name of the Uniform
+      GLuint m_loc;           // Location of the Uniform (you don't need this, Jonny)
+      GLenum m_type;          // Data Type in GLenum form  e.g. "35676"
+      std::string m_typeName; // Data Type string, easier to read e.g. "mat4"
 
+      // Value types
       bool m_bool=NULL;
       int m_int=NULL;
       float m_float=NULL;
@@ -58,7 +65,8 @@ public:
       ngl::Mat3 m_mat3=NULL;
       ngl::Mat4 m_mat4=0.0;
 
-///#Lets make a template class and see if that works
+  /// #Lets make a template class and see if that works....or uses switches(make sure to break) using Enums to activate different values
+  ///
 
   }uniformData;
 
@@ -84,8 +92,17 @@ public:
   ngl::Vec4 returnVec4(int loc);
   ngl::Mat3 returnMat3(int loc);
   ngl::Mat4 returnMat4(int loc);
-  void assignUniforms();
-  void setUniformsToShader(ngl::ShaderLib *shader);
+
+  void setBool(int loc, bool newValue);
+  void setInt(int loc, int newValue);
+  void setFloat(int loc, float newValue);
+  void setVec3(int loc, ngl::Vec3 newValue);
+  void setVec4(int loc, ngl::Vec4 newValue);
+  void setMat3(int loc, ngl::Mat3 newValue);
+  void setMat4(int loc, ngl::Mat4 newValue);
+
+
+
 };
 
 #endif // PARSER_H

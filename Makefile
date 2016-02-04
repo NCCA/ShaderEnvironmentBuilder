@@ -50,19 +50,15 @@ OBJECTS_DIR   = obj/
 
 SOURCES       = src/main.cpp \
 		src/NGLScene.cpp \
-		src/parserLib.cpp \
-		src/uniformValues.cpp moc/moc_NGLScene.cpp
+		src/parserLib.cpp moc/moc_NGLScene.cpp
 OBJECTS       = obj/main.o \
 		obj/NGLScene.o \
 		obj/parserLib.o \
-		obj/uniformValues.o \
 		obj/moc_NGLScene.o
 DIST          = CEB.pro include/NGLScene.h \
-		include/parserLib.h \
-		include/uniformValues.h src/main.cpp \
+		include/parserLib.h src/main.cpp \
 		src/NGLScene.cpp \
-		src/parserLib.cpp \
-		src/uniformValues.cpp
+		src/parserLib.cpp
 QMAKE_TARGET  = SimpleNGL
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = SimpleNGL
@@ -384,8 +380,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents include/NGLScene.h include/parserLib.h include/uniformValues.h $(DISTDIR)/
-	$(COPY_FILE) --parents src/main.cpp src/NGLScene.cpp src/parserLib.cpp src/uniformValues.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents include/NGLScene.h include/parserLib.h $(DISTDIR)/
+	$(COPY_FILE) --parents src/main.cpp src/NGLScene.cpp src/parserLib.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -1070,9 +1066,6 @@ obj/parserLib.o: src/parserLib.cpp include/parserLib.h \
 		/home/i7247470/NGL/include/ngl/Mat3.h \
 		/home/i7247470/NGL/include/ngl/Mat4.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/parserLib.o src/parserLib.cpp
-
-obj/uniformValues.o: src/uniformValues.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/uniformValues.o src/uniformValues.cpp
 
 obj/moc_NGLScene.o: moc/moc_NGLScene.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/moc_NGLScene.o moc/moc_NGLScene.cpp

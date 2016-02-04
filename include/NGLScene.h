@@ -139,16 +139,8 @@ private:
     //----------------------------------------------------------------------------------------------------------------------
     void wheelEvent( QWheelEvent *_event);
 
-    ngl::Vec4 m_matDif;
-    ngl::Vec4 m_matSpec;
-    ngl::Vec4 m_matAmb;
-    float m_matShiny;
-    ngl::Vec4 m_lightDif;
-    ngl::Vec4 m_lightSpec;
-    ngl::Vec4 m_lightAmb;
-    ngl::Vec4 m_lightPos;
-    bool m_norm;
-    parserLib *m_newParser;
+
+    parserLib *m_parser;
 
 
 };

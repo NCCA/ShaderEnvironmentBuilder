@@ -10,7 +10,6 @@
 #include <ngl/VAOPrimitives.h>
 #include <ngl/ShaderLib.h>
 #include <iostream>
-#include <uniformValues.h>
 #include <typeinfo>
 //----------------------------------------------------------------------------------------------------------------------
 /// @brief the increment for x/y translation with mouse movement
@@ -29,7 +28,7 @@ NGLScene::NGLScene()
   m_spinXFace=0.0f;
   m_spinYFace=0.0f;
   setTitle("Qt5 Simple NGL Demo");
-  m_newParser= new parserLib();
+  m_parser= new parserLib();
 
 }
 
@@ -94,9 +93,9 @@ void NGLScene::initializeGL()
   // and make it active ready to load values
   (*shader)["Phong"]->use();
   // the shader will use the currently active material and light0 so set them
-////  ngl::Material m(ngl::STDMAT::POLISHEDSILVER );
+  ngl::Material m(ngl::STDMAT::GOLD );
   // load our material values to the shader into the structure material (see Vertex shader)
-////  m.loadToShader("material");
+  m.loadToShader("material");
   // Now we will create a basic Camera from the graphics library
   // This is a static camera so it only needs to be set once
   // First create Values for the camera position
@@ -121,34 +120,8 @@ void NGLScene::initializeGL()
   // as re-size is not explicitly called we need to do that.
   // set the viewport for openGL we need to take into account retina display
 
-  //shader->setUniform(
 
-
-
-
-//  ngl::Mat4 M=shader->getUniformBlockIndex("M");
-//  ngl::Mat4 MV=shader->getUniformBlockIndex("MV");
-//  ngl::Mat4  MVP=shader->getUniformBlockIndex("MVP");
-//  m_norm=shader->getUniformBlockIndex("Normalize");
-//  m_lightAmb=shader->getUniformBlockIndex("light.ambient");
-//  m_lightDif=shader->getUniformBlockIndex("light.diffuse");
-//  m_lightPos=shader->getUniformBlockIndex("light.position");
-//  m_lightSpec=shader->getUniformBlockIndex("light.specular");
-
-//  // PUT THIS IN A CLASS.... or for loop.
-
-//  m_matAmb=shader->getUniformBlockIndex("material.ambient");
-//  m_matDif=shader->getUniformBlockIndex("material.diffuse");
-//  m_matShiny=shader->getUniformBlockIndex("material.shininess");
-//  m_matSpec=shader->getUniformBlockIndex("material.specular");
-
-//  ngl::Mat3 normalMatrix=shader->getUniformBlockIndex("normalMatrix");
-//  ngl::Vec3 viewerPos=shader->getUniformBlockIndex("viewerPos");
-
-  m_newParser->listUniforms();
-  m_newParser->printUniforms();
-  m_newParser->assignUniforms();
-
+  m_parser->assignAllData();
 
 
 
@@ -174,24 +147,73 @@ void NGLScene::loadMatricesToShader()
   normalMatrix.inverse();
 
 
-  //added stuff
-  shader->setShaderParamFromMat4("Normalize",m_norm);
+  m_parser->sendUniformsToShader(shader);
 
-  shader->setShaderParamFromVec4("material.specular",m_matSpec);
-  shader->setShaderParamFromVec4("material.diffuse", m_matDif);
-  shader->setShaderParamFromVec4("material.ambient", m_matAmb);
-  shader->setShaderParam1f("material.shininess", m_matShiny);
-  shader->setShaderParamFromVec4("light.specular",m_lightSpec);
-  shader->setShaderParamFromVec4("light.diffuse", m_lightDif);
-  shader->setShaderParamFromVec4("light.ambient", m_lightAmb);
-  shader->setShaderParamFromVec4("light.position", m_lightPos);
-
-
-  m_newParser->setUniformsToShader(shader);
   shader->setShaderParamFromMat4("MV",MV);
   shader->setShaderParamFromMat4("MVP",MVP);
   shader->setShaderParamFromMat3("normalMatrix",normalMatrix);
   shader->setShaderParamFromMat4("M",M);
+
+//  shader->setShaderParam1i("Normalize",m_parser->m_uniformDataList[3].m_bool);
+//  ngl::Vec4 m_newVec4;
+//  m_newVec4.m_x=m_parser->m_uniformDataList[4].m_vec3.m_x;
+//  m_newVec4.m_y=m_parser->m_uniformDataList[4].m_vec3.m_y;
+//  m_newVec4.m_z=m_parser->m_uniformDataList[4].m_vec3.m_z;
+//  m_newVec4.m_w=1;
+//  shader->setShaderParamFromVec4("light.ambient",m_newVec4);
+
+//  ngl::Vec4 m_newVec5;
+//  m_newVec5.m_x=m_parser->m_uniformDataList[5].m_vec3.m_x;
+//  m_newVec5.m_y=m_parser->m_uniformDataList[5].m_vec3.m_y;
+//  m_newVec5.m_z=m_parser->m_uniformDataList[5].m_vec3.m_z;
+//  m_newVec5.m_w=1;
+//  std::cout<<m_newVec5.m_x<<"  "<<m_newVec5.m_y<<"  "<<m_newVec5.m_z<<"  "<<std::endl;
+//  shader->setShaderParamFromVec4("light.diffuse",m_newVec5);
+
+//  ngl::Vec4 m_newVec6;
+//  m_newVec6.m_x=m_parser->m_uniformDataList[6].m_vec3.m_x;
+//  m_newVec6.m_y=m_parser->m_uniformDataList[6].m_vec3.m_y;
+//  m_newVec6.m_z=m_parser->m_uniformDataList[6].m_vec3.m_z;
+//  m_newVec6.m_w=1;
+//  shader->setShaderParamFromVec4("light.position",m_newVec6);
+
+//  ngl::Vec4 m_newVec7;
+//  m_newVec7.m_x=m_parser->m_uniformDataList[7].m_vec3.m_x;
+//  m_newVec7.m_y=m_parser->m_uniformDataList[7].m_vec3.m_y;
+//  m_newVec7.m_z=m_parser->m_uniformDataList[7].m_vec3.m_z;
+//  m_newVec7.m_w=1;
+//  shader->setShaderParamFromVec4("light.specular",m_newVec7);
+
+//  ngl::Vec4 m_newVec8;
+//  m_newVec8.m_x=m_parser->m_uniformDataList[8].m_vec3.m_x;
+//  m_newVec8.m_y=m_parser->m_uniformDataList[8].m_vec3.m_y;
+//  m_newVec8.m_z=m_parser->m_uniformDataList[8].m_vec3.m_z;
+//  m_newVec8.m_w=1;
+//  shader->setShaderParamFromVec4("material.ambient",m_newVec8);
+
+//  ngl::Vec4 m_newVec9;
+//  m_newVec9.m_x=m_parser->m_uniformDataList[9].m_vec3.m_x;
+//  m_newVec9.m_y=m_parser->m_uniformDataList[9].m_vec3.m_y;
+//  m_newVec9.m_z=m_parser->m_uniformDataList[9].m_vec3.m_z;
+//  m_newVec9.m_w=1;
+//  shader->setShaderParamFromVec4("material.diffuse",m_newVec9);
+//  shader->setShaderParam1f("material.shininess",m_parser->m_uniformDataList[10].m_float);
+
+//  ngl::Vec4 m_newVec11;
+//  m_newVec11.m_x=m_parser->m_uniformDataList[11].m_vec3.m_x;
+//  m_newVec11.m_y=m_parser->m_uniformDataList[11].m_vec3.m_y;
+//  m_newVec11.m_z=m_parser->m_uniformDataList[11].m_vec3.m_z;
+//  m_newVec11.m_w=1;
+//  shader->setShaderParamFromVec4("material.specular",m_newVec11);
+
+//  ngl::Vec4 m_newVec13;
+//  m_newVec13.m_x=m_parser->m_uniformDataList[13].m_vec3.m_x;
+//  m_newVec13.m_y=m_parser->m_uniformDataList[13].m_vec3.m_y;
+//  m_newVec13.m_z=m_parser->m_uniformDataList[13].m_vec3.m_z;
+//  m_newVec13.m_w=1;
+//  shader->setShaderParamFromVec4("viewerPos",m_newVec13);
+
+
 }
 
 void NGLScene::paintGL()
@@ -328,13 +350,36 @@ void NGLScene::keyPressEvent(QKeyEvent *_event)
   case Qt::Key_F : showFullScreen(); break;
   // show windowed
   case Qt::Key_N : showNormal(); break;
-  case Qt::Key_M :
-  {
-  ngl::ShaderLib *shader=ngl::ShaderLib::instance();
-  ngl::Vec4 materialDiffuse=shader->getUniformBlockIndex("material.diffuse");
-  std::cout<<materialDiffuse.m_x<<"   "<<materialDiffuse.m_y<<"   "<<materialDiffuse.m_z<<"   "<<materialDiffuse.m_w<<"   "<<std::endl;
-  break;
-  }
+//  case Qt::Key_1 : m_parser->m_uniformDataList[12].m_mat3.m_00+=0.1;std::cout<<m_parser->m_uniformDataList[12].m_mat3.m_00<<std::endl; break;
+//  case Qt::Key_2 : m_parser->m_uniformDataList[12].m_mat3.m_01+=0.1;std::cout<<m_parser->m_uniformDataList[12].m_mat3.m_01<<std::endl; break;
+//  case Qt::Key_3 : m_parser->m_uniformDataList[12].m_mat3.m_02+=0.1;std::cout<<m_parser->m_uniformDataList[12].m_mat3.m_02<<std::endl; break;
+//  case Qt::Key_4 : m_parser->m_uniformDataList[12].m_mat3.m_10+=0.1;std::cout<<m_parser->m_uniformDataList[12].m_mat3.m_10<<std::endl; break;
+//  case Qt::Key_5 : m_parser->m_uniformDataList[12].m_mat3.m_11+=0.1;std::cout<<m_parser->m_uniformDataList[12].m_mat3.m_11<<std::endl; break;
+//  case Qt::Key_6 : m_parser->m_uniformDataList[12].m_mat3.m_12+=0.1;std::cout<<m_parser->m_uniformDataList[12].m_mat3.m_12<<std::endl; break;
+//  case Qt::Key_7 : m_parser->m_uniformDataList[12].m_mat3.m_20+=0.1;std::cout<<m_parser->m_uniformDataList[12].m_mat3.m_20<<std::endl; break;
+//  case Qt::Key_8 : m_parser->m_uniformDataList[12].m_mat3.m_21+=0.1;std::cout<<m_parser->m_uniformDataList[12].m_mat3.m_21<<std::endl; break;
+//  case Qt::Key_9 : m_parser->m_uniformDataList[12].m_mat3.m_22+=0.1;std::cout<<m_parser->m_uniformDataList[12].m_mat3.m_22<<std::endl; break;
+  case Qt::Key_1 : m_parser->m_uniformDataList[4].m_vec3.m_x+=0.1;std::cout<<m_parser->m_uniformDataList[4].m_vec3.m_x<<std::endl; break;
+  case Qt::Key_2 : m_parser->m_uniformDataList[4].m_vec3.m_y+=0.1;std::cout<<m_parser->m_uniformDataList[4].m_vec3.m_y<<std::endl; break;
+  case Qt::Key_3 : m_parser->m_uniformDataList[4].m_vec3.m_z+=0.1;std::cout<<m_parser->m_uniformDataList[4].m_vec3.m_z<<std::endl; break;
+  case Qt::Key_4 : m_parser->m_uniformDataList[5].m_vec3.m_x+=0.1;std::cout<<m_parser->m_uniformDataList[5].m_vec3.m_x<<std::endl; break;
+  case Qt::Key_5 : m_parser->m_uniformDataList[5].m_vec3.m_y+=0.05;std::cout<<m_parser->m_uniformDataList[5].m_vec3.m_y<<std::endl; break;
+  case Qt::Key_6 : m_parser->m_uniformDataList[5].m_vec3.m_z+=0.05;std::cout<<m_parser->m_uniformDataList[5].m_vec3.m_z<<std::endl; break;
+  case Qt::Key_7 : m_parser->m_uniformDataList[6].m_vec3.m_x+=0.1;std::cout<<m_parser->m_uniformDataList[6].m_vec3.m_x<<std::endl; break;
+  case Qt::Key_8 : m_parser->m_uniformDataList[6].m_vec3.m_y+=0.1;std::cout<<m_parser->m_uniformDataList[6].m_vec3.m_y<<std::endl; break;
+  case Qt::Key_9 : m_parser->m_uniformDataList[6].m_vec3.m_z+=0.1;std::cout<<m_parser->m_uniformDataList[6].m_vec3.m_z<<std::endl; break;
+  case Qt::Key_K : m_parser->m_uniformDataList[7].m_vec3.m_x+=0.1;std::cout<<m_parser->m_uniformDataList[7].m_vec3.m_x<<std::endl; break;
+  case Qt::Key_L : m_parser->m_uniformDataList[7].m_vec3.m_y+=0.1;std::cout<<m_parser->m_uniformDataList[7].m_vec3.m_y<<std::endl; break;
+  case Qt::Key_O : m_parser->m_uniformDataList[7].m_vec3.m_z+=0.1;std::cout<<m_parser->m_uniformDataList[7].m_vec3.m_z<<std::endl; break;
+  case Qt::Key_M : m_parser->m_uniformDataList[8].m_vec3.m_x+=0.1;std::cout<<m_parser->m_uniformDataList[8].m_vec3.m_x<<std::endl; break;
+  case Qt::Key_H : m_parser->m_uniformDataList[8].m_vec3.m_y+=0.1;std::cout<<m_parser->m_uniformDataList[8].m_vec3.m_y<<std::endl; break;
+  case Qt::Key_T : m_parser->m_uniformDataList[8].m_vec3.m_z+=0.1;std::cout<<m_parser->m_uniformDataList[8].m_vec3.m_z<<std::endl; break;
+  case Qt::Key_R : m_parser->m_uniformDataList[9].m_vec3.m_x+=0.1;std::cout<<m_parser->m_uniformDataList[9].m_vec3.m_x<<std::endl; break;
+  case Qt::Key_Y : m_parser->m_uniformDataList[9].m_vec3.m_y+=0.1;std::cout<<m_parser->m_uniformDataList[9].m_vec3.m_y<<std::endl; break;
+  case Qt::Key_J : m_parser->m_uniformDataList[9].m_vec3.m_z+=0.1;std::cout<<m_parser->m_uniformDataList[9].m_vec3.m_z<<std::endl; break;
+  case Qt::Key_C : m_parser->m_uniformDataList[5].m_vec3.m_y-=0.05;std::cout<<m_parser->m_uniformDataList[5].m_vec3.m_y<<std::endl; break;
+  case Qt::Key_V : m_parser->m_uniformDataList[5].m_vec3.m_z-=0.05;std::cout<<m_parser->m_uniformDataList[5].m_vec3.m_z<<std::endl; break;
+  case Qt::Key_Down : m_parser->m_uniformDataList[11].m_vec3.m_x-=0.05;std::cout<<m_parser->m_uniformDataList[11].m_vec3.m_z<<std::endl; break;
   default : break;
   }
   // finally update the GLWindow and re-draw
