@@ -18,7 +18,7 @@ void IO_XML::writeXML(std::string _name, std::string _type, int _value)
 
         cout<<"Input name = "<<_name<<"\tInput value = "<<_type<<"\tInput value = "<<_value<<std::endl;
         xml_document<> doc;
-        ifstream file("./tempFiles/readFrom.xml");
+        ifstream file("./XMLfiles/readFrom.xml");
         vector<char> buffer((istreambuf_iterator<char>(file)), istreambuf_iterator<char>( ));
         buffer.push_back('\0');
         //cout<<&buffer[0]<<endl;  //prints xml buffer
@@ -28,7 +28,7 @@ void IO_XML::writeXML(std::string _name, std::string _type, int _value)
         current_node->append_attribute(doc.allocate_attribute("NewName", "Henry"));
         current_node->append_attribute(doc.allocate_attribute("Version", "5000"));
         ofstream newfile;
-        newfile.open("./tempFiles/writtenTo.xml");
+        newfile.open("./XMLfiles/writtenTo.xml");
         newfile << doc;
 }
 
@@ -63,7 +63,7 @@ void IO_XML::shaderData(const char* _shaderProgramName, const char* _vertexShade
 void IO_XML::readXML(std::string _type)
 {
         xml_document<> doc;
-        ifstream file("./tempFiles/readFrom.xml");
+        ifstream file("./XMLfiles/readFrom.xml");
         vector<char> buffer((istreambuf_iterator<char>(file)), istreambuf_iterator<char>( ));
         buffer.push_back('\0');
         //cout<<&buffer[0]<<endl;  //prints xml buffer
