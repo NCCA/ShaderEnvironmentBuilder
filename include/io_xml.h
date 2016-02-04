@@ -7,8 +7,6 @@
 #include "ngl/XMLSerializer.h"
 #include "ngl/rapidxml/rapidxml_print.hpp"
 
-
-
 class IO_XML
 {
 public:
@@ -22,8 +20,6 @@ public:
     rapidxml::xml_node<> * root_node;
 
     IO_XML *XMLInstance;
-
-
 
 };
 

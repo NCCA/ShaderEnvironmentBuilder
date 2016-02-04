@@ -109,32 +109,10 @@ void NGLScene::initializeGL()
   m_newParser->listUniforms();
   m_newParser->exportUniforms();
 
+  m_readFromXML->writeXML("light.diffuse", "vec3", 9001);            //Reading Jonny.L's organised file with name, type, value. Need to dynamically write to XMl.
+  m_readFromXML->shaderData("Phong", "PhongVertex", "shaders/PhongVertex.glsl", "PhongFragment", "shaders/PhongFragment.glsl");
 
-  m_readFromXML->readXML("Normalize");
-  m_readFromXML->writeXML("light.diffuse", "vec3", 9001);
-  m_readFromXML->shaderData("shaderProgramName", "vertexShaderName", "PhongVertex.glsl", "fragmentShaderName", "PhongFragment.glsl");
   m_newJson->buildJson();
-  m_newJson->replaceWord("ShaderProgram", "KABOOM");
-  ///---------------------------------------------------------------------------------------------------------
-
-//  Jsons = new Json();
-//  Jsons->buildJson();
-
-//  Json *jsonInstance = new Json();
-//  jsonInstance->buildJson();
-//  jsonInstance->replaceWord("Shader", "CHANGED");
-
-
-
-
-
-
-
-
-
-  ///---------------------------------------------------------------------------------------------------------
-
-
 }
 
 void NGLScene::loadMatricesToShader()
