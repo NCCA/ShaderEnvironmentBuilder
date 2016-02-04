@@ -9,7 +9,7 @@ Button::Button(QWidget *parent) : QDialog(parent)
   createButtonBox();
 
   mainLayout = new QGridLayout;
-  mainLayout->addWidget(buttonBox, 0, 0);
+  mainLayout->addWidget(buttonBox, 0, 1);
   setLayout(mainLayout);
 
   mainLayout->setSizeConstraint(QLayout::SetMinimumSize);
@@ -34,9 +34,12 @@ void Button::openColourBox()
 
   //colourBoxLayout = new QGridLayout;
   //colourGroupBox->setLayout(colourBoxLayout);
-  colourGroupBox->getColor();
-  std::cout<<"Done"<<std::endl;
-  /*colourStruct.m_r = myColor->redF();
-  colourStruct.m_g = myColor->greenF();
-  colourStruct.m_b = myColor->blueF();*/
+  myColor=colourGroupBox->getColor();
+  //std::cout<<"Done"<<std::endl;
+  colourStruct.m_r = myColor.redF();
+  colourStruct.m_g = myColor.greenF();
+  colourStruct.m_b = myColor.blueF();
+
+  std::cout<<"R: "<<colourStruct.m_r<<"\nG: "<<colourStruct.m_g<<"\nB: "<<colourStruct.m_b<<std::endl;
+
 }

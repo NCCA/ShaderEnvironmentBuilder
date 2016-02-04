@@ -14,6 +14,7 @@ CONFIG   -= app_bundle
 
 TEMPLATE = app
 
+SOURCES += $$PWD/src/*.cpp
+HEADERS += $$PWD/include/*.h
 
-SOURCES += main.cpp button.cpp
-HEADERS += button.h
+INCLUDEPATH += ./include

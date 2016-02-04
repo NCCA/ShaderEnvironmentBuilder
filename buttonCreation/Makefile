@@ -15,7 +15,7 @@ CXX           = clang++
 DEFINES       = -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I. -I/opt/qt/5.5/gcc_64/include -I/opt/qt/5.5/gcc_64/include/QtWidgets -I/opt/qt/5.5/gcc_64/include/QtGui -I/opt/qt/5.5/gcc_64/include/QtCore -I. -I/opt/qt/5.5/gcc_64/mkspecs/linux-clang
+INCPATH       = -I. -Iinclude -I/opt/qt/5.5/gcc_64/include -I/opt/qt/5.5/gcc_64/include/QtWidgets -I/opt/qt/5.5/gcc_64/include/QtGui -I/opt/qt/5.5/gcc_64/include/QtCore -I. -I/opt/qt/5.5/gcc_64/mkspecs/linux-clang
 QMAKE         = /opt/qt/5.5/gcc_64/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -33,7 +33,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = buttonCreation1.0.0
-DISTDIR = /home/i7241541/groupProgramming/Tests/buttonCreation/buttonCreation/.tmp/buttonCreation1.0.0
+DISTDIR = /home/i7241541/groupProgramming/0Features-0BugsCVA3/buttonCreation/.tmp/buttonCreation1.0.0
 LINK          = clang++
 LFLAGS        = -ccc-gcc-name g++ -Wl,-rpath,/opt/qt/5.5/gcc_64 -Wl,-rpath,/opt/qt/5.5/gcc_64/lib
 LIBS          = $(SUBLIBS) -L/opt/qt/5.5/gcc_64/lib -lQt5Widgets -L/usr/lib64 -lQt5Gui -lQt5Core -lGL -lpthread 
@@ -48,142 +48,16 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = main.cpp \
-		button.cpp moc_button.cpp
-OBJECTS       = main.o \
-		button.o \
+SOURCES       = src/button.cpp \
+		src/main.cpp \
+		src/read.cpp moc_button.cpp
+OBJECTS       = button.o \
+		main.o \
+		read.o \
 		moc_button.o
-DIST          = /opt/qt/5.5/gcc_64/mkspecs/features/spec_pre.prf \
-		/opt/qt/5.5/gcc_64/mkspecs/common/unix.conf \
-		/opt/qt/5.5/gcc_64/mkspecs/common/linux.conf \
-		/opt/qt/5.5/gcc_64/mkspecs/common/sanitize.conf \
-		/opt/qt/5.5/gcc_64/mkspecs/common/gcc-base.conf \
-		/opt/qt/5.5/gcc_64/mkspecs/common/gcc-base-unix.conf \
-		/opt/qt/5.5/gcc_64/mkspecs/common/clang.conf \
-		/opt/qt/5.5/gcc_64/mkspecs/qconfig.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_3dcore.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_3dcore_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_3dinput.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_3dinput_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_3dquick.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_3dquick_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_3dquickrenderer.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_3dquickrenderer_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_3drenderer.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_3drenderer_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_bluetooth.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_bluetooth_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_bootstrap_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_clucene_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_concurrent.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_concurrent_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_core.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_core_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_dbus.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_dbus_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_declarative.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_declarative_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_designer.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_designer_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_designercomponents_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_enginio.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_enginio_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_gui.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_gui_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_help.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_help_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_location.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_location_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_multimedia.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_multimedia_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_multimediawidgets.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_multimediawidgets_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_network.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_network_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_nfc.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_nfc_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_opengl.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_opengl_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_openglextensions.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_openglextensions_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_platformsupport_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_positioning.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_positioning_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_printsupport.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_printsupport_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_qml.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_qml_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_qmldevtools_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_qmltest.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_qmltest_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_qtmultimediaquicktools_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_quick.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_quick_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_quickparticles_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_quickwidgets.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_quickwidgets_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_script.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_script_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_scripttools.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_scripttools_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_sensors.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_sensors_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_serialport.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_serialport_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_sql.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_sql_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_svg.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_svg_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_testlib.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_testlib_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_uiplugin.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_uitools.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_uitools_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_webchannel.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_webchannel_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_webengine.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_webengine_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_webenginecore.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_webenginecore_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_webenginewidgets.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_webenginewidgets_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_webkit.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_webkit_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_webkitwidgets.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_webkitwidgets_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_websockets.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_websockets_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_webview_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_widgets.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_widgets_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_x11extras.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_x11extras_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_xcb_qpa_lib_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_xml.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_xml_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_xmlpatterns.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/modules/qt_lib_xmlpatterns_private.pri \
-		/opt/qt/5.5/gcc_64/mkspecs/features/qt_functions.prf \
-		/opt/qt/5.5/gcc_64/mkspecs/features/qt_config.prf \
-		/opt/qt/5.5/gcc_64/mkspecs/linux-clang/qmake.conf \
-		/opt/qt/5.5/gcc_64/mkspecs/features/spec_post.prf \
-		/opt/qt/5.5/gcc_64/mkspecs/features/exclusive_builds.prf \
-		/opt/qt/5.5/gcc_64/mkspecs/features/default_pre.prf \
-		/opt/qt/5.5/gcc_64/mkspecs/features/resolve_config.prf \
-		/opt/qt/5.5/gcc_64/mkspecs/features/default_post.prf \
-		/opt/qt/5.5/gcc_64/mkspecs/features/warn_on.prf \
-		/opt/qt/5.5/gcc_64/mkspecs/features/qt.prf \
-		/opt/qt/5.5/gcc_64/mkspecs/features/resources.prf \
-		/opt/qt/5.5/gcc_64/mkspecs/features/moc.prf \
-		/opt/qt/5.5/gcc_64/mkspecs/features/unix/opengl.prf \
-		/opt/qt/5.5/gcc_64/mkspecs/features/uic.prf \
-		/opt/qt/5.5/gcc_64/mkspecs/features/unix/thread.prf \
-		/opt/qt/5.5/gcc_64/mkspecs/features/testcase_targets.prf \
-		/opt/qt/5.5/gcc_64/mkspecs/features/exceptions.prf \
-		/opt/qt/5.5/gcc_64/mkspecs/features/yacc.prf \
-		/opt/qt/5.5/gcc_64/mkspecs/features/lex.prf \
-		buttonCreation.pro button.h main.cpp \
-		button.cpp
+DIST          = buttonCreation.pro include/button.h src/button.cpp \
+		src/main.cpp \
+		src/read.cpp
 QMAKE_TARGET  = buttonCreation
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = buttonCreation
@@ -214,7 +88,7 @@ first: all
 $(TARGET):  $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
-Makefile: buttonCreation.pro /opt/qt/5.5/gcc_64/mkspecs/linux-clang/qmake.conf /opt/qt/5.5/gcc_64/mkspecs/features/spec_pre.prf \
+Makefile: buttonCreation.pro ../.qmake.cache /opt/qt/5.5/gcc_64/mkspecs/linux-clang/qmake.conf /opt/qt/5.5/gcc_64/mkspecs/features/spec_pre.prf \
 		/opt/qt/5.5/gcc_64/mkspecs/common/unix.conf \
 		/opt/qt/5.5/gcc_64/mkspecs/common/linux.conf \
 		/opt/qt/5.5/gcc_64/mkspecs/common/sanitize.conf \
@@ -328,6 +202,7 @@ Makefile: buttonCreation.pro /opt/qt/5.5/gcc_64/mkspecs/linux-clang/qmake.conf /
 		/opt/qt/5.5/gcc_64/mkspecs/features/qt_config.prf \
 		/opt/qt/5.5/gcc_64/mkspecs/linux-clang/qmake.conf \
 		/opt/qt/5.5/gcc_64/mkspecs/features/spec_post.prf \
+		../.qmake.cache \
 		/opt/qt/5.5/gcc_64/mkspecs/features/exclusive_builds.prf \
 		/opt/qt/5.5/gcc_64/mkspecs/features/default_pre.prf \
 		/opt/qt/5.5/gcc_64/mkspecs/features/resolve_config.prf \
@@ -462,6 +337,7 @@ Makefile: buttonCreation.pro /opt/qt/5.5/gcc_64/mkspecs/linux-clang/qmake.conf /
 /opt/qt/5.5/gcc_64/mkspecs/features/qt_config.prf:
 /opt/qt/5.5/gcc_64/mkspecs/linux-clang/qmake.conf:
 /opt/qt/5.5/gcc_64/mkspecs/features/spec_post.prf:
+../.qmake.cache:
 /opt/qt/5.5/gcc_64/mkspecs/features/exclusive_builds.prf:
 /opt/qt/5.5/gcc_64/mkspecs/features/default_pre.prf:
 /opt/qt/5.5/gcc_64/mkspecs/features/resolve_config.prf:
@@ -495,8 +371,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents button.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp button.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents include/button.h $(DISTDIR)/
+	$(COPY_FILE) --parents src/button.cpp src/main.cpp src/read.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -627,8 +503,8 @@ moc_button.cpp: /opt/qt/5.5/gcc_64/include/QtWidgets/QDialog \
 		/opt/qt/5.5/gcc_64/include/QtGui/qtouchdevice.h \
 		/opt/qt/5.5/gcc_64/include/QtCore/QQueue \
 		/opt/qt/5.5/gcc_64/include/QtCore/qqueue.h \
-		button.h
-	/opt/qt/5.5/gcc_64/bin/moc $(DEFINES) -I/opt/qt/5.5/gcc_64/mkspecs/linux-clang -I/home/i7241541/groupProgramming/Tests/buttonCreation/buttonCreation -I/opt/qt/5.5/gcc_64/include -I/opt/qt/5.5/gcc_64/include/QtWidgets -I/opt/qt/5.5/gcc_64/include/QtGui -I/opt/qt/5.5/gcc_64/include/QtCore button.h -o moc_button.cpp
+		include/button.h
+	/opt/qt/5.5/gcc_64/bin/moc $(DEFINES) -I/opt/qt/5.5/gcc_64/mkspecs/linux-clang -I/home/i7241541/groupProgramming/0Features-0BugsCVA3/buttonCreation -I/home/i7241541/groupProgramming/0Features-0BugsCVA3/buttonCreation/include -I/opt/qt/5.5/gcc_64/include -I/opt/qt/5.5/gcc_64/include/QtWidgets -I/opt/qt/5.5/gcc_64/include/QtGui -I/opt/qt/5.5/gcc_64/include/QtCore include/button.h -o moc_button.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -644,115 +520,7 @@ compiler_clean: compiler_moc_header_clean
 
 ####### Compile
 
-main.o: main.cpp button.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/QDialog \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qdialog.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qwidget.h \
-		/opt/qt/5.5/gcc_64/include/QtGui/qwindowdefs.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qglobal.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qconfig.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qfeatures.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qsystemdetection.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qprocessordetection.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qcompilerdetection.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qtypeinfo.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qtypetraits.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qsysinfo.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qlogging.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qflags.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qatomic.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qbasicatomic.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qatomic_bootstrap.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qgenericatomic.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qatomic_cxx11.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qatomic_gcc.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qatomic_msvc.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qatomic_armv7.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qatomic_armv6.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qatomic_armv5.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qatomic_ia64.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qatomic_mips.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qatomic_x86.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qatomic_unix.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qglobalstatic.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qmutex.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qnumeric.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qobjectdefs.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qnamespace.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
-		/opt/qt/5.5/gcc_64/include/QtGui/qwindowdefs_win.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qobject.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qstring.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qchar.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qbytearray.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qrefcount.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qarraydata.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qstringbuilder.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qlist.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qalgorithms.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qiterator.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qbytearraylist.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qstringlist.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qregexp.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qstringmatcher.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qcoreevent.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qscopedpointer.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qmetatype.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qvarlengtharray.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qcontainerfwd.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qisenum.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qobject_impl.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qmargins.h \
-		/opt/qt/5.5/gcc_64/include/QtGui/qpaintdevice.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qrect.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qsize.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qpoint.h \
-		/opt/qt/5.5/gcc_64/include/QtGui/qpalette.h \
-		/opt/qt/5.5/gcc_64/include/QtGui/qcolor.h \
-		/opt/qt/5.5/gcc_64/include/QtGui/qrgb.h \
-		/opt/qt/5.5/gcc_64/include/QtGui/qbrush.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qpair.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qvector.h \
-		/opt/qt/5.5/gcc_64/include/QtGui/qmatrix.h \
-		/opt/qt/5.5/gcc_64/include/QtGui/qpolygon.h \
-		/opt/qt/5.5/gcc_64/include/QtGui/qregion.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qdatastream.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qiodevice.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qline.h \
-		/opt/qt/5.5/gcc_64/include/QtGui/qtransform.h \
-		/opt/qt/5.5/gcc_64/include/QtGui/qpainterpath.h \
-		/opt/qt/5.5/gcc_64/include/QtGui/qimage.h \
-		/opt/qt/5.5/gcc_64/include/QtGui/qpixelformat.h \
-		/opt/qt/5.5/gcc_64/include/QtGui/qpixmap.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qsharedpointer.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qshareddata.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qhash.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qsharedpointer_impl.h \
-		/opt/qt/5.5/gcc_64/include/QtGui/qfont.h \
-		/opt/qt/5.5/gcc_64/include/QtGui/qfontmetrics.h \
-		/opt/qt/5.5/gcc_64/include/QtGui/qfontinfo.h \
-		/opt/qt/5.5/gcc_64/include/QtWidgets/qsizepolicy.h \
-		/opt/qt/5.5/gcc_64/include/QtGui/qcursor.h \
-		/opt/qt/5.5/gcc_64/include/QtGui/qkeysequence.h \
-		/opt/qt/5.5/gcc_64/include/QtGui/qevent.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qvariant.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qmap.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qdebug.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qtextstream.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qlocale.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qset.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qcontiguouscache.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qurl.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qurlquery.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qfile.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/qfiledevice.h \
-		/opt/qt/5.5/gcc_64/include/QtGui/qvector2d.h \
-		/opt/qt/5.5/gcc_64/include/QtGui/qtouchdevice.h \
-		/opt/qt/5.5/gcc_64/include/QtCore/QQueue \
-		/opt/qt/5.5/gcc_64/include/QtCore/qqueue.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
-
-button.o: button.cpp /opt/qt/5.5/gcc_64/include/QtWidgets/QtWidgets \
+button.o: src/button.cpp /opt/qt/5.5/gcc_64/include/QtWidgets/QtWidgets \
 		/opt/qt/5.5/gcc_64/include/QtWidgets/QtWidgetsDepends \
 		/opt/qt/5.5/gcc_64/include/QtCore/QtCore \
 		/opt/qt/5.5/gcc_64/include/QtCore/QtCoreDepends \
@@ -1202,10 +970,121 @@ button.o: button.cpp /opt/qt/5.5/gcc_64/include/QtWidgets/QtWidgets \
 		/opt/qt/5.5/gcc_64/include/QtWidgets/qtoolbox.h \
 		/opt/qt/5.5/gcc_64/include/QtWidgets/qtoolbutton.h \
 		/opt/qt/5.5/gcc_64/include/QtWidgets/qtwidgetsversion.h \
-		button.h \
+		include/button.h \
 		/opt/qt/5.5/gcc_64/include/QtWidgets/QDialog \
 		/opt/qt/5.5/gcc_64/include/QtCore/QQueue
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o button.o button.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o button.o src/button.cpp
+
+main.o: src/main.cpp include/button.h \
+		/opt/qt/5.5/gcc_64/include/QtWidgets/QDialog \
+		/opt/qt/5.5/gcc_64/include/QtWidgets/qdialog.h \
+		/opt/qt/5.5/gcc_64/include/QtWidgets/qwidget.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/qwindowdefs.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qglobal.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qconfig.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qfeatures.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qtypetraits.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qlogging.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qflags.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qatomic.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qatomic_gcc.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qatomic_msvc.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qatomic_armv7.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qatomic_armv6.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qatomic_armv5.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qatomic_ia64.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qatomic_mips.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qatomic_x86.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qatomic_unix.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qmutex.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qnumeric.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qnamespace.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qobject.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qstring.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qchar.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qbytearray.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qrefcount.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qarraydata.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qlist.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qiterator.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qbytearraylist.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qstringlist.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qregexp.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qmetatype.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qisenum.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qobject_impl.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qmargins.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/qpaintdevice.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qrect.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qsize.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qpoint.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/qpalette.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/qcolor.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/qrgb.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/qbrush.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qpair.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qvector.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/qmatrix.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/qpolygon.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/qregion.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qdatastream.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qiodevice.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qline.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/qtransform.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/qpainterpath.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/qimage.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/qpixelformat.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/qpixmap.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qsharedpointer.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qshareddata.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qhash.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/qfont.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/qfontmetrics.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/qfontinfo.h \
+		/opt/qt/5.5/gcc_64/include/QtWidgets/qsizepolicy.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/qcursor.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/qkeysequence.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/qevent.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qvariant.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qmap.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qdebug.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qtextstream.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qlocale.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qset.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qcontiguouscache.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qurl.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qurlquery.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qfile.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/qfiledevice.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/qvector2d.h \
+		/opt/qt/5.5/gcc_64/include/QtGui/qtouchdevice.h \
+		/opt/qt/5.5/gcc_64/include/QtCore/QQueue \
+		/opt/qt/5.5/gcc_64/include/QtCore/qqueue.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o src/main.cpp
+
+read.o: src/read.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o read.o src/read.cpp
 
 moc_button.o: moc_button.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_button.o moc_button.cpp

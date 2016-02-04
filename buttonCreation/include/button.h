@@ -12,6 +12,7 @@ class QGridLayout;
 class QGroupBox;
 class QLabel;
 class QPushButton;
+class QColor;
 QT_END_NAMESPACE
 
 class Button : public QDialog
@@ -36,7 +37,7 @@ private:
 
   QDialogButtonBox *buttonBox;
 
-  QColor *myColor;
+  QColor myColor;
   QColorDialog *colourGroupBox;
   QGridLayout *colourBoxLayout;
 
