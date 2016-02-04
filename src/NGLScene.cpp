@@ -21,7 +21,6 @@ NGLScene::NGLScene( QWidget *_parent ) : QOpenGLWidget( _parent )
   // mouse rotation values set to 0
   m_spinXFace=0.0f;
   m_spinYFace=0.0f;
-  setTitle("Qt5 Simple NGL Demo");
   m_parser= new parserLib();
 
 
@@ -195,14 +194,14 @@ void NGLScene::mouseMoveEvent ( QMouseEvent * _event )
 
 
 //----------------------------------------------------------------------------------------------------------------------
-void NGLScene::mousePressEvent (QMouseEvent * _event  )
+void NGLScene::keyPressEvent(QKeyEvent *_event)
 {
   // that method is called every time the main window recives a key event.
   // we then switch on the key value and set the camera in the GLWindow
   switch (_event->key())
   {
   // escape key to quit
-  case Qt::Key_Escape : QGuiApplication::exit(EXIT_SUCCESS); break;
+  //case Qt::Key_Escape : QGuiApplication::exit(EXIT_SUCCESS); break;
   // turn on wirframe rendering
   case Qt::Key_W : glPolygonMode(GL_FRONT_AND_BACK,GL_LINE); break;
   // turn off wire frame

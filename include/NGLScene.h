@@ -78,6 +78,7 @@ protected:
 	ngl::Camera m_cam;
 	/// @brief our transform for objects
 	ngl::Transformation m_transform;
+  ngl::Mat4 m_mouseGlobalTX;
 private :
   /// @brief this method is called every time a mouse is moved
   /// @param _event the Qt Event structure
@@ -88,7 +89,7 @@ private :
   /// @brief this method is called everytime the mouse button is pressed
   /// inherited from QObject and overridden here.
   /// @param _event the Qt Event structure
-  void mousePressEvent ( QMouseEvent *_event  );
+  void keyPressEvent ( QKeyEvent *_event  );
 
     parserLib *m_parser;
 
