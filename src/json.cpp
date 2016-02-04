@@ -17,7 +17,7 @@ Json::Json()
 // Writes the output Json to a file.
 void Json::saveToFile(std::string _jsonString)
 {
-    ofstream jsonFile("./jsonString.json");
+    ofstream jsonFile("./tempFiles/jsonString.json");
 
     if (jsonFile.is_open())
         jsonFile << _jsonString << std::endl;
@@ -29,7 +29,7 @@ void Json::saveToFile(std::string _jsonString)
 // (may be redundant) Reads through the Json string, finds a word and replaces with a new word.
 void Json::replaceWord(std::string _oldWord, std::string _newWord)
 {
-    ifstream jsonFile("./jsonString.json");
+    ifstream jsonFile("./tempFiles/jsonString.json");
     if(!jsonFile)
     {
         std::cout<<"Unable to open file."<<std::endl;
@@ -49,7 +49,7 @@ void Json::replaceWord(std::string _oldWord, std::string _newWord)
         }
     }
     jsonFile.close();
-    ofstream jsonFileNew("./jsonString.json");
+    ofstream jsonFileNew("./tempFiles/jsonString.json");
     std::cout<<"\nNew file: \n"<<lineRead << std::endl;
     if (jsonFileNew.is_open())
         jsonFileNew << lineRead << std::endl;
@@ -63,7 +63,7 @@ std::string Json::buildJson()
 //  Reading shaderData file.
 
     xml_document<> doc;
-    ifstream file("./shaderData.xml");
+    ifstream file("./shaders/shaderData.xml");
     vector<char> buffer((istreambuf_iterator<char>(file)), istreambuf_iterator<char>( ));
     buffer.push_back('\0');
     //cout<<&buffer[0]<<endl;  //prints xml buffer
