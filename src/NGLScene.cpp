@@ -9,6 +9,7 @@
 #include <ngl/Material.h>
 #include <ngl/ShaderLib.h>
 #include <QColorDialog>
+#include <QString>
 
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -56,16 +57,17 @@ void NGLScene::initializeGL()
   // grab an instance of shader manager
   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
   // we are creating a shader called Phong
-  shader->createShaderProgram("Phong");
+  shader->createShaderProgram("Phong"); //RENAME TO INPUT SHADER
   // now we are going to create empty shaders for Frag and Vert
-  shader->attachShader("PhongVertex",ngl::ShaderType::VERTEX);
-  shader->attachShader("PhongFragment",ngl::ShaderType::FRAGMENT);
+  shader->attachShader("PhongVertex",ngl::ShaderType::VERTEX); //INPUTVERTEX
+  shader->attachShader("PhongFragment",ngl::ShaderType::FRAGMENT); //INPUTSHADER
   // attach the source
-  shader->loadShaderSource("PhongVertex","shaders/PhongVertex.glsl");
-  shader->loadShaderSource("PhongFragment","shaders/PhongFragment.glsl");
+  shader->loadShaderSource("PhongVertex","shaders/PhongVertex.glsl"); //NEEDS TO BE SHADERFROMTSTRING
+  shader->loadShaderSource("PhongFragment","shaders/PhongFragment.glsl"); //NEEDS TO BE SHADERFROMSTRING
   // compile the shaders
   shader->compileShader("PhongVertex");
   shader->compileShader("PhongFragment");
+
   // add them to the program
   shader->attachShaderToProgram("Phong","PhongVertex");
   shader->attachShaderToProgram("Phong","PhongFragment");
@@ -205,4 +207,31 @@ void NGLScene::mousePressEvent (QMouseEvent * _event  )
 
 NGLScene::~NGLScene()
 {
+}
+
+
+
+
+NGLScene::loadShader(QString _text, ngl::ShaderType _type){
+
+    ngl::ShaderLib *shader=ngl::ShaderLib::instance();
+    switch (_type)
+
+    {
+      case ngl::ShaderType::VERTEX:
+        shader->loadShaderSourceFromString("PhongVertex", _text);
+        break;
+      case ngl::ShaderType::FRAGMENT:
+        shader->loadShaderSourceFromString("PhongFragment", _text);
+        break;
+      default:
+        std::cout << "Shader type not compatible\n";
+
+    }
+}
+
+NGLScene::compileShader()
+{
+  shader->compileShader("PhongVertex");
+  shader->compileShader("PhongFragment");
 }

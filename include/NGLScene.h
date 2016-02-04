@@ -12,6 +12,7 @@
 #include <QOpenGLWindow>
 #include <unordered_map>
 #include "parser.h"
+#include <QString>
 //----------------------------------------------------------------------------------------------------------------------
 /// @file NGLScene.h
 /// @brief a basic Qt GL window class for ngl demos
@@ -42,6 +43,11 @@ public :
 
   /// @brief dtor
 	~NGLScene();
+
+public slots:
+
+    void loadShader(QString _text, ngl::ShaderType _type);
+    void compileShader();
 
 private :
 	/// @brief m_wireframe mode
