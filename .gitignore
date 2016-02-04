@@ -25,6 +25,7 @@
 *.app
 
 # Qt pro user file
+*.pro.user
 *.pro.user*
 
 # P4 merge files
