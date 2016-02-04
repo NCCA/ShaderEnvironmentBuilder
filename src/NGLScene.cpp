@@ -21,7 +21,7 @@ NGLScene::NGLScene( QWidget *_parent ) : QOpenGLWidget( _parent )
   m_spinXFace=0.0f;
   m_spinYFace=0.0f;
   m_newParser= new parser();
-
+  m_newJson= new Json();
   // set this widget to have the initial keyboard focus
   setFocus();
   // re-size the widget to that of the parent (in this case the GLFrame passed in on construction)
@@ -112,7 +112,9 @@ void NGLScene::initializeGL()
 
   m_readFromXML->readXML("Normalize");
   m_readFromXML->writeXML("light.diffuse", "vec3", 9001);
-
+  m_readFromXML->shaderData("shaderProgramName", "vertexShaderName", "PhongVertex.glsl", "fragmentShaderName", "PhongFragment.glsl");
+  m_newJson->buildJson();
+  m_newJson->replaceWord("ShaderProgram", "KABOOM");
   ///---------------------------------------------------------------------------------------------------------
 
 //  Jsons = new Json();

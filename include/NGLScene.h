@@ -104,6 +104,7 @@ private :
   //----------------------------------------------------------------------------------------------------------------------
   parser *m_newParser;
   IO_XML *m_readFromXML;
+  Json *m_newJson;
 
 
   void loadMatricesToShader( );

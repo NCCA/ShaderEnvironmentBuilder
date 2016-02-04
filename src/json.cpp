@@ -2,6 +2,7 @@
 // Only need boost for creating directories
 #include <boost/filesystem.hpp>
 
+using namespace rapidxml;
 using namespace rapidjson;
 using namespace std;
 
@@ -76,10 +77,30 @@ std::string Json::buildJson()
 //    char *cstr = new char[shaderTypeStr.length() +1];
 //    strcpy(cstr, shaderTypeStr.c_str());
 
+    //----------------------------------------------------  Read shaderData file.
+
+    xml_document<> doc;
+    ifstream file("/home/i7685565/0Features-0BugsCVA3/tempFiles/shaderData.xml");
+    vector<char> buffer((istreambuf_iterator<char>(file)), istreambuf_iterator<char>( ));
+    buffer.push_back('\0');
+    //cout<<&buffer[0]<<endl;  //prints xml buffer
+    doc.parse<0>(&buffer[0]);
+
+    xml_node<> *current_node = doc.first_node("ShaderProgram");
+    xml_node<> *vertex_node = doc.first_node("ShaderProgram")->first_node("FragmentData");
+    xml_node<> *fragment_node = doc.first_node("ShaderProgram")->first_node("FragmentData");
+
+    const char* vertexShaderName = vertex_node->first_attribute("name")->value();
+    const char* vertexShaderGlsl = vertex_node->first_attribute("vertexPath")->value();
+
+    const char* fragmentShaderName = fragment_node->first_attribute("name")->value();
+    const char* fragmentShaderGLSL = fragment_node->first_attribute("customPath")->value();    //these chars can be edited later.
+
+    const char* ShaderProgramName = current_node->first_attribute("name")->value();
     StringBuffer s;
     Writer<StringBuffer> writer(s);
     writer.StartObject();
-    writer.Key("ShaderProgram");
+    writer.Key(ShaderProgramName);
         writer.StartObject();
         writer.Key("noise3D");
         writer.String("Phong");
@@ -103,13 +124,13 @@ std::string Json::buildJson()
                 writer.Key("type");
                 writer.String("Fragment");
                 writer.Key("name");
-                writer.String("PhongFragment");
+                writer.String(fragmentShaderName);
                 writer.Key("path");
                 writer.StartArray();
                     writer.String("shaders/version.glsl");
                     writer.String("shaders/common.glsl");
                     writer.String("shaders/noise3D.glsl");
-                    writer.String("shaders/PhongFragment.glsl");
+                    writer.String(fragmentShaderGLSL);
                     writer.EndArray();
                 writer.EndObject();
             writer.EndArray();
