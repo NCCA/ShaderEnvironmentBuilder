@@ -9,13 +9,13 @@ QsciLexerGLSL::QsciLexerGLSL(QsciScintilla *parent) : QsciLexerCustom(parent)
 {
     m_parent = parent;
     m_API = new QsciAPIs(this);
-    QString apiPath("./tempFiles/apis/glext.api");
+    QString apiPath("./src/glsl.api");
     const QString a(" ");
     setAPIs(m_API);
     m_API->load(apiPath);
     m_API->prepare();
-    m_parent->setAutoCompletionThreshold(5);
-    m_parent->setAutoCompletionWordSeparators(QStringList(a));
+    m_parent->setAutoCompletionThreshold(2);
+    m_parent->setAutoCompletionFillupsEnabled(true);
     m_parent->setAutoCompletionSource(QsciScintilla::AcsAPIs);
 }
 
