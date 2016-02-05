@@ -26,6 +26,7 @@
 
 # Qt pro user file
 *.pro.user*
+*.pro.user
 
 # P4 merge files
 *.BASE.*
@@ -62,3 +63,6 @@ tempFiles/*
 
 # Wiki files
 *.wiki/*
+
+# Temp files created on linux
+.nfs*
