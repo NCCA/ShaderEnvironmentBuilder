@@ -28,6 +28,7 @@ DESTDIR=./
 # add the glsl shader files
 OTHER_FILES+= $$PWD/shaders/*.glsl
 OTHER_FILES+= $$PWD/src/*.api
+OTHER_FILES+= $$PWD/ui_MainWindow.h
 # were are going to default to a console app
 CONFIG += console
 NGLPATH=$$(NGLDIR)
