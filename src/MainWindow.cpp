@@ -18,6 +18,8 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent), m_ui(new Ui::MainW
   m_qsci->setMarginType(1,QsciScintilla::MarginType::NumberMargin);
   m_qsci->setMarginWidth(1," 012");
   m_qsci->setMarginsForegroundColor(QColor(128, 128, 128));
+  m_qsci->setCaretForegroundColor(QColor(247, 247, 241));
+  m_qsci->setCaretWidth(2);
   // Enable scroll width tracking and set the scroll width to a low number
   // Scintilla doesn't track line length, so if we wanted automated scrollbar
   // to appear we would need to implement a line length checking
