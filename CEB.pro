@@ -64,9 +64,10 @@ isEmpty(FLEX_BIN) {
     FLEXSOURCES = src/glslLexer.lex
 
     flexsource.input = FLEXSOURCES
-    flexsource.output = src/${QMAKE_FILE_BASE}.cpp
-    flexsource.commands = flex -o src/${QMAKE_FILE_BASE}.cpp -+ ${QMAKE_FILE_IN}
+    flexsource.output = src/generated/${QMAKE_FILE_BASE}.cpp
+    flexsource.commands = flex -o src/generated/${QMAKE_FILE_BASE}.cpp -+ ${QMAKE_FILE_IN}
     flexsource.variable_out = SOURCES
+    flexsource.clean = src/generated/${QMAKE_FILE_BASE}.cpp
     flexsource.name = Flex Sources ${QMAKE_FILE_IN}
     flexsource.CONFIG += target_predeps
 
@@ -75,4 +76,3 @@ isEmpty(FLEX_BIN) {
 
 # Supress yield warning
 QMAKE_CXXFLAGS_WARN_ON += -Wno-deprecated-register
-
