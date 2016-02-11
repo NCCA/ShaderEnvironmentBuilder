@@ -3,24 +3,26 @@
 #include "qscilexerglsl.h"
 
 #include <Qsci/qsciscintilla.h>
-
 MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent), m_ui(new Ui::MainWindow)
 {
+
+
   // Setup ui from form creator (MainWindow.ui)
   m_ui->setupUi(this);
 
   // Create openGl and qsci widgets
   m_gl=new  NGLScene(this);
   m_qsci = new QsciScintilla(this);
-  QsciLexer* lex = new QsciLexerGLSL;
+  QsciLexer* lex = new QsciLexerGLSL(m_qsci);
   m_qsci->setLexer(lex);
   m_qsci->setMarginType(1,QsciScintilla::MarginType::NumberMargin);
+  m_qsci->setMarginWidth(1," 012");
+  m_qsci->setMarginsForegroundColor(QColor(128, 128, 128));
   // Enable scroll width tracking and set the scroll width to a low number
   // Scintilla doesn't track line length, so if we wanted automated scrollbar
   // to appear we would need to implement a line length checking
   m_qsci->SendScintilla(QsciScintillaBase::SCI_SETSCROLLWIDTHTRACKING, 1);
   m_qsci->SendScintilla(QsciScintillaBase::SCI_SETSCROLLWIDTH, 5);
-  m_qsci->setMarginWidth(1," 012");
 
 
   // add the qscintilla and openGl window to the interface
@@ -41,22 +43,11 @@ MainWindow::~MainWindow()
 void MainWindow::on_btn_loadShader_clicked()
 {
     ngl::ShaderType shdrChoiceId = static_cast<ngl::ShaderType>(m_ui->cb_shaderType->currentIndex());
-    if (shdrChoiceId == ngl::ShaderType::VERTEX)
-    {
-      std::cout << "We got ourselves a VERTEX" << std::endl;
-    }
-    else if (shdrChoiceId == ngl::ShaderType::FRAGMENT)
-    {
-      std::cout << "We got ourselve a FRAGMENT" << std::endl;
-    }
-    else
-    {
-      std::cout << "Ooops, that's not implemented yet!" << std::endl;
-    }
-
+    QString text = m_qsci->text();
+    m_gl->loadShader(text, shdrChoiceId);
 }
 
 void MainWindow::on_btn_compileShader_clicked()
 {
-
+  m_gl->compileShader();
 }

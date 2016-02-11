@@ -6,6 +6,8 @@
 #include <string.h>
 #include "rapidjson/writer.h"
 #include "rapidjson/stringbuffer.h"
+#include "ngl/XMLSerializer.h"
+#include "ngl/rapidxml/rapidxml_print.hpp"
 
 
 class Json
@@ -18,12 +20,11 @@ public:
 
     void replaceWord(std::string _oldWord, std::string _newWord);
 
-    //std::string shaderType(int _shaderNumber)
     std::string buildJson();
-
-    Json *jsonInstance;
+    rapidxml::xml_document<> m_doc;
+    rapidxml::xml_node<> * root_node;
 
 };
 
-#endif // JSON
+#endif
 

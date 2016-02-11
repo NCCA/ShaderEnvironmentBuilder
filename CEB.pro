@@ -1,5 +1,5 @@
 # This specifies the exe name
-TARGET=CEB
+TARGET=CEB.out
 # where to put the .o files
 OBJECTS_DIR=obj
 # core Qt Libs to use add more here if needed.
@@ -27,6 +27,7 @@ INCLUDEPATH +=./include
 DESTDIR=./
 # add the glsl shader files
 OTHER_FILES+= $$PWD/shaders/*.glsl
+OTHER_FILES+= $$PWD/src/*.api
 # were are going to default to a console app
 CONFIG += console
 NGLPATH=$$(NGLDIR)
@@ -71,3 +72,7 @@ isEmpty(FLEX_BIN) {
 
     QMAKE_EXTRA_COMPILERS += flexsource
 }
+
+# Supress yield warning
+QMAKE_CXXFLAGS_WARN_ON += -Wno-deprecated-register
+
