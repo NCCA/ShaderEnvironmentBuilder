@@ -125,7 +125,7 @@ void NGLScene::initializeGL()
   m_newJson->buildJson();
 
   m_parser->assignAllData();
-  m_parser->exportUniforms();
+//  m_parser->exportUniforms();
 //  Jsons = new Json();
 //  Jsons->buildJson();
 
@@ -139,7 +139,7 @@ void NGLScene::initializeGL()
 void NGLScene::exportUniforms()
 {
   std::ofstream fileOut;
-  fileOut.open("ParsingOutput.txt");
+  fileOut.open("./tempFiles/ParsingOutput.txt");
   if(!fileOut.is_open())    ///If it can be opened
   {
     std::cerr<<"couldn't' open file\n";
