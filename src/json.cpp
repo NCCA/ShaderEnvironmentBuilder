@@ -5,6 +5,7 @@
 using namespace rapidxml;
 using namespace rapidjson;
 using namespace std;
+using json = nlohmann::json;
 
 Json::Json()
 {
@@ -15,16 +16,23 @@ Json::Json()
 
 // ----------------------------------------------------------------------------------------------------------------------
 // Writes the output Json to a file.
-void Json::saveToFile(std::string _jsonString)
+void Json::saveShaderToJson(std::string _jsonString)
 {
-    ofstream jsonFile("./tempFiles/jsonString.json");
+    ofstream jsonFile("./tempFiles/shader.json");
 
     if (jsonFile.is_open())
         jsonFile << _jsonString << std::endl;
-        std::cout<<"Written to file: "<<std::endl;
     jsonFile.close();
 }
 
+void Json::saveShaderDataToJson(std::string _jsonString)
+{
+    ofstream jsonFile("./tempFiles/shaderData.json");
+
+    if (jsonFile.is_open())
+        jsonFile << _jsonString << std::endl;
+    jsonFile.close();
+}
 // ----------------------------------------------------------------------------------------------------------------------
 // (may be redundant) Reads through the Json string, finds a word and replaces with a new word.
 void Json::replaceWord(std::string _oldWord, std::string _newWord)
@@ -58,7 +66,7 @@ void Json::replaceWord(std::string _oldWord, std::string _newWord)
 
 // ----------------------------------------------------------------------------------------------------------------------
 // This function builds the Json string by grabbing data from the XML ShaderData file.
-std::string Json::buildJson()
+void Json::buildJson()
 {
 //  Reading shaderData file.
 
@@ -83,56 +91,171 @@ std::string Json::buildJson()
 
 
 // Building Json file
-    StringBuffer s;
-    Writer<StringBuffer> writer(s);
-    writer.StartObject();
-    writer.Key("Shader Program");
-        writer.StartObject();
-        writer.Key("noise3D");
-        writer.String(ShaderProgramName);
-        writer.Key("debug");
-        writer.Bool(true);
-        writer.Key("Shaders");
-        writer.StartArray();
-            writer.StartObject();
-            writer.Key("type");
-            writer.String("Vertex");
-            writer.Key(vertexShaderName);
-            writer.String("PhongVertex");
-            writer.Key("path");
-            writer.StartArray();
-                writer.String("shaders/version.glsl");
-                writer.String("shaders/common.glsl");
-                writer.String(vertexShaderGlsl);
-                writer.EndArray();
-                writer.EndObject();
-            writer.StartObject();
-                writer.Key("type");
-                writer.String("Fragment");
-                writer.Key("name");
-                writer.String(fragmentShaderName);
-                writer.Key("path");
-                writer.StartArray();
-                    writer.String("shaders/version.glsl");
-                    writer.String("shaders/common.glsl");
-                    writer.String("shaders/noise3D.glsl");
-                    writer.String(fragmentShaderGLSL);
-                    writer.EndArray();
-                writer.EndObject();
-            writer.EndArray();
-        writer.EndObject();
-    writer.EndObject();
+    auto shaderProgramJson = R"(
+    {
+      "ShaderProgram": {
+        "name": "Phong",
+        "debug" : true,
+      "Shaders"  : [
+        {
+          "type": "Vertex",
+          "name": "PhongVertex",
+          "path" : ["shaders/version.glsl",
+                    "shaders/common.glsl",
+                    "shaders/PhongVertex.glsl"]
 
-    saveToFile(s.GetString());
-    std::cout<<s.GetString()<<std::endl;
+        },
+        {
+          "type": "Fragment",
+          "name": "PhongFragment",
+          "path" : ["shaders/version.glsl",
+                    "shaders/common.glsl",
+                    "shaders/noise3D2.glsl",
+                    "shaders/PhongFragment.glsl"]
+        }
 
-    return s.GetString();
+      ]
+     }
+    }
+    )"_json;
+
+    saveShaderToJson(shaderProgramJson.dump(1));
+}
+
+void Json::writeShaderData(string _name, string _type, int _value)
+{
+   // json shaderDataJson;
+
+
+//    auto shaderDataJson = R"(
+//        {
+//            "Data sets": {
+//                "name": _name,
+//                "Type":"type",
+//                "value":"value"}
+//    }
+//    )"_json;
+//   // std::vector <int> listy = {1,2,3};
+//    json shaderDataJson;
+//    std::map <string, string> s_data { {"name", _name}, {"type", _type} };
+//    std::multimap <string, int> i_data {{"value", _value}};
+
+//    shaderDataJson["name"] = _name;
+
+    json shaderDataJson = {json::array({"name", _name}), json::array({"type", _type}), json::array({"value", _value})};
+
+
+    //map <string, int> imamapimamap;
+    //list <map<string, int>> listOfMaps;
+//    imamapimamap["name"] = _name;
+//    imamapimamap["type"] = _type;
+//  //  imamapimamap["value"] = _name;
+   // listOfMaps.push_back(imamapimamap);
+   // auto shaderDataJson::parse(listOfMaps)
+    //shaderDataJson.push_back(listOfMaps);
+
+    //shaderDataJson.push_back((shaderDataJson["name"] = "Jon"));
+    //shaderDataJson.push_back(<string> {json::array({"name2", _name})}    );
+//    shaderDataJson.push_back(s_data);
+//    shaderDataJson.push_back(i_data);
+    //shaderDataJson.push_back("hello", _phongVertex);
+    //shaderDataJson.push_back("hello");
+    saveShaderDataToJson(shaderDataJson.dump(1));
 }
 
 Json::~Json()
 {
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//void Json::newBuildJson()
+//{
+//    auto shaderProgramJson = R"(
+//    {
+//      "ShaderProgram": {
+//        "name": "Phong",
+//        "debug" : true,
+//      "Shaders"  : [
+//        {
+//          "type": "Vertex",
+//          "name": "PhongVertex",
+//          "path" : ["shaders/version.glsl",
+//                    "shaders/common.glsl",
+//                    "shaders/PhongVertex.glsl"]
+
+//        },
+//        {
+//          "type": "Fragment",
+//          "name": "PhongFragment",
+//          "path" : ["shaders/version.glsl",
+//                    "shaders/common.glsl",
+//                    "shaders/noise3D2.glsl",
+//                    "shaders/PhongFragment.glsl"]
+//        }
+
+//      ]
+//     }
+//    }
+//        )"_json;
+
+//    saveToFile(shaderProgramJson.dump(2));
+//}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -162,3 +285,52 @@ Json::~Json()
 //    std::cout<<"\nshader type: "<< shaderType(1)<<std::endl;
 //    char *cstr = new char[shaderTypeStr.length() +1];
 //    strcpy(cstr, shaderTypeStr.c_str());
+
+
+
+///writing to json OLD:
+// Building Json file
+//    StringBuffer s;
+//    Writer<StringBuffer> writer(s);
+//    writer.StartObject();
+//    writer.Key("Shader Program");
+//        writer.StartObject();
+//        writer.Key("noise3D");
+//        writer.String(ShaderProgramName);
+//        writer.Key("debug");
+//        writer.Bool(true);
+//        writer.Key("Shaders");
+//        writer.StartArray();
+//            writer.StartObject();
+//            writer.Key("type");
+//            writer.String("Vertex");
+//            writer.Key(vertexShaderName);
+//            writer.String("PhongVertex");
+//            writer.Key("path");
+//            writer.StartArray();
+//                writer.String("shaders/version.glsl");
+//                writer.String("shaders/common.glsl");
+//                writer.String(vertexShaderGlsl);
+//                writer.EndArray();
+//                writer.EndObject();
+//            writer.StartObject();
+//                writer.Key("type");
+//                writer.String("Fragment");
+//                writer.Key("name");
+//                writer.String(fragmentShaderName);
+//                writer.Key("path");
+//                writer.StartArray();
+//                    writer.String("shaders/version.glsl");
+//                    writer.String("shaders/common.glsl");
+//                    writer.String("shaders/noise3D.glsl");
+//                    writer.String(fragmentShaderGLSL);
+//                    writer.EndArray();
+//                writer.EndObject();
+//            writer.EndArray();
+//        writer.EndObject();
+//    writer.EndObject();
+
+//    saveToFile(s.GetString());
+//    std::cout<<s.GetString()<<std::endl;
+
+//    return s.GetString();

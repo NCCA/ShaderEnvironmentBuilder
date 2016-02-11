@@ -121,14 +121,11 @@ void NGLScene::initializeGL()
   m_readFromXML->shaderData("WhyHelloThere", "PhongVertex", "shaders/PhongVertex.glsl", "PhongFragment", "shaders/PhongFragment.glsl");
 
   m_newJson->buildJson();
+  string name = "M example";
+  string type = "mat 4 example";
+  int value = 5;
+  m_newJson->writeShaderData(name, type, value);
   m_parser->assignAllData();
-//  Jsons = new Json();
-//  Jsons->buildJson();
-
-//  Json *jsonInstance = new Json();
-//  jsonInstance->buildJson();
-//  jsonInstance->replaceWord("Shader", "CHANGED");
-
 }
 
 
