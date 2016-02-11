@@ -82,6 +82,47 @@ void parserLib::printUniforms()
     std::cout << "Name: "<<m_uniformDataList[i].m_name;
     std::cout << ";  Location: "<<m_uniformDataList[i].m_loc<<" ("<<i<<")";
     std::cout << ";  Type: "<<m_uniformDataList[i].m_type<<"; "<<m_uniformDataList[i].m_typeName<<std::endl;
+
+
+//    if (m_uniformDataList[i].m_typeName=="bool")
+//    {
+//    std::cout<<"m_bool: "<<m_uniformDataList[0].m_bool<<std::endl;
+//    }
+//    if (m_uniformDataList[i].m_typeName=="float")
+//    {
+//      std::cout<<"m_float: "<<m_uniformDataList[0].m_float<<std::endl;
+//    }
+//    if (m_uniformDataList[i].m_typeName=="int")
+//    {
+//      std::cout<<"m_int: "<<m_uniformDataList[0].m_int<<std::endl;
+//    }
+//    if (m_uniformDataList[i].m_typeName=="vec3")
+//    {
+//      std::cout<<"m_vec3:(x) "<<m_uniformDataList[0].m_vec3.m_x<<std::endl;
+//      std::cout<<"m_vec3:(y) "<<m_uniformDataList[0].m_vec3.m_y<<std::endl;
+//      std::cout<<"m_vec3:(z) "<<m_uniformDataList[0].m_vec3.m_z<<std::endl;
+//    }
+//    if (m_uniformDataList[i].m_typeName=="vec4")
+//    {
+//      std::cout<<"m_vec4:(x) "<<m_uniformDataList[0].m_vec4.m_x<<std::endl;
+//      std::cout<<"m_vec4:(y) "<<m_uniformDataList[0].m_vec4.m_y<<std::endl;
+//      std::cout<<"m_vec4:(z) "<<m_uniformDataList[0].m_vec4.m_z<<std::endl;
+//    }
+//    if (m_uniformDataList[i].m_typeName=="mat3")
+//    {
+//      std::cout<<"m_mat3:(x) "<<m_uniformDataList[0].m_mat3.m_00<<m_uniformDataList[0].m_mat3.m_01<<m_uniformDataList[0].m_mat3.m_02<<std::endl;
+//      std::cout<<"m_mat3:(y) "<<m_uniformDataList[0].m_mat3.m_10<<m_uniformDataList[0].m_mat3.m_11<<m_uniformDataList[0].m_mat3.m_12<<std::endl;
+//      std::cout<<"m_mat3:(z) "<<m_uniformDataList[0].m_mat3.m_20<<m_uniformDataList[0].m_mat3.m_21<<m_uniformDataList[0].m_mat3.m_22<<std::endl;
+//    }
+//    if (m_uniformDataList[i].m_typeName=="mat4")
+//    {
+//      std::cout<<"m_mat3:(x) "<<m_uniformDataList[0].m_mat4.m_00<<m_uniformDataList[0].m_mat4.m_01<<m_uniformDataList[0].m_mat4.m_02<<m_uniformDataList[0].m_mat4.m_03<<std::endl;
+//      std::cout<<"m_mat3:(y) "<<m_uniformDataList[0].m_mat4.m_10<<m_uniformDataList[0].m_mat4.m_11<<m_uniformDataList[0].m_mat4.m_12<<m_uniformDataList[0].m_mat4.m_13<<std::endl;
+//      std::cout<<"m_mat3:(z) "<<m_uniformDataList[0].m_mat4.m_20<<m_uniformDataList[0].m_mat4.m_21<<m_uniformDataList[0].m_mat4.m_22<<m_uniformDataList[0].m_mat4.m_23<<std::endl;
+//      std::cout<<"m_mat3:(w) "<<m_uniformDataList[0].m_mat4.m_30<<m_uniformDataList[0].m_mat4.m_31<<m_uniformDataList[0].m_mat4.m_32<<m_uniformDataList[0].m_mat4.m_33<<std::endl;
+//    }
+
+
   }
   std::cout<<"___________________________________________Uniform Information: Ends//"<<std::endl;
 
@@ -262,38 +303,32 @@ void parserLib::exportUniforms()
 /// \param loc : location in the std::vector
 /// \param newValue :input the new data type              //Going to look into making this neater and overriding functions.
 //----------------------------------------------------------
-bool parserLib::returnBool(int loc)
+bool parserLib::getBool(int loc)
 {
     return m_uniformDataList[loc].m_bool;
 }
-int parserLib::returnInt(int loc)
+int parserLib::getInt(int loc)
 {
-
     return m_uniformDataList[loc].m_int;
 }
-float parserLib::returnFloat(int loc)
+float parserLib::getFloat(int loc)
 {
-
     return m_uniformDataList[loc].m_float;
 }
-ngl::Mat3 parserLib::returnMat3(int loc)
+ngl::Mat3 parserLib::getMat3(int loc)
 {
-
     return m_uniformDataList[loc].m_mat3;
 }
-ngl::Mat4 parserLib::returnMat4(int loc)
+ngl::Mat4 parserLib::getMat4(int loc)
 {
-
     return m_uniformDataList[loc].m_mat4;
 }
-ngl::Vec3 parserLib::returnVec3(int loc)
+ngl::Vec3 parserLib::getVec3(int loc)
 {
-
     return m_uniformDataList[loc].m_vec3;
 }
-ngl::Vec4 parserLib::returnVec4(int loc)
+ngl::Vec4 parserLib::getVec4(int loc)
 {
-
     return m_uniformDataList[loc].m_vec4;
 }
 
@@ -351,23 +386,24 @@ void parserLib::assignUniformValues()
   {
     if (m_uniformDataList[i].m_typeName=="bool")
     {
-      m_uniformDataList[i].m_bool = shader->getUniformBlockIndex(m_uniformDataList[i].m_name);
+      m_uniformDataList[i].m_bool = 0;
     }
     if (m_uniformDataList[i].m_typeName=="float")
     {
-      m_uniformDataList[i].m_float = shader->getUniformBlockIndex(m_uniformDataList[i].m_name);
+      m_uniformDataList[i].m_float = 0.5;
     }
     if (m_uniformDataList[i].m_typeName=="int")
     {
-      m_uniformDataList[i].m_int = shader->getUniformBlockIndex(m_uniformDataList[i].m_name);
+      m_uniformDataList[i].m_int = 0;
     }
     if (m_uniformDataList[i].m_typeName=="vec3")
     {
-      m_uniformDataList[i].m_vec3 = shader->getUniformBlockIndex(m_uniformDataList[i].m_name);
+      m_uniformDataList[i].m_vec3 = 0;
     }
     if (m_uniformDataList[i].m_typeName=="vec4")
     {
-      m_uniformDataList[i].m_vec4 = shader->getUniformBlockIndex(m_uniformDataList[i].m_name);
+      m_uniformDataList[i].m_vec4 = 0;
+      m_uniformDataList[i].m_vec4.m_w = 1;
     }
     if (m_uniformDataList[i].m_typeName=="mat3")
     {
@@ -377,7 +413,6 @@ void parserLib::assignUniformValues()
     {
       m_uniformDataList[i].m_mat4 = shader->getUniformBlockIndex(m_uniformDataList[i].m_name);
     }
-
 
   }
 }
@@ -413,10 +448,13 @@ void parserLib::sendUniformsToShader(ngl::ShaderLib *shader)
         newVec3.m_z=m_uniformDataList[i].m_vec3.m_z;
         newVec3.m_w=1;
         shader->setShaderParamFromVec4(m_uniformDataList[i].m_name, newVec3);
+
       }
       if (m_uniformDataList[i].m_typeName=="vec4")
       {
         shader->setShaderParamFromVec4(m_uniformDataList[i].m_name, m_uniformDataList[i].m_vec4);
+       // std::cout<<"Name: "<<m_uniformDataList[i].m_name<<"  value: "<<m_uniformDataList[i].m_vec4.m_x<<", "<<m_uniformDataList[i].m_vec4.m_y<<", "<<m_uniformDataList[i].m_vec4.m_z<<"; "<<std::endl;
+
       }
 
       if (m_uniformDataList[i].m_typeName=="mat3")
@@ -427,7 +465,6 @@ void parserLib::sendUniformsToShader(ngl::ShaderLib *shader)
       {
         shader->setShaderParamFromMat4(m_uniformDataList[i].m_name, m_uniformDataList[i].m_mat4);
       }
-   // std::cout<<"is this working?"<<std::endl;
     }
 
 
