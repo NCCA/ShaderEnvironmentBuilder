@@ -43,22 +43,11 @@ MainWindow::~MainWindow()
 void MainWindow::on_btn_loadShader_clicked()
 {
     ngl::ShaderType shdrChoiceId = static_cast<ngl::ShaderType>(m_ui->cb_shaderType->currentIndex());
-    if (shdrChoiceId == ngl::ShaderType::VERTEX)
-    {
-      std::cout << "We got ourselves a VERTEX" << std::endl;
-    }
-    else if (shdrChoiceId == ngl::ShaderType::FRAGMENT)
-    {
-      std::cout << "We got ourselve a FRAGMENT" << std::endl;
-    }
-    else
-    {
-      std::cout << "Ooops, that's not implemented yet!" << std::endl;
-    }
-
+    QString text = m_qsci->text();
+    m_gl->loadShader(text, shdrChoiceId);
 }
 
 void MainWindow::on_btn_compileShader_clicked()
 {
-
+  m_gl->compileShader();
 }

@@ -11,6 +11,7 @@
 #include <iostream>
 #include <typeinfo>
 #include <QColorDialog>
+#include <QString>
 
 //----------------------------------------------------------------------------------------------------------------------
 /// @brief the increment for x/y translation with mouse movement
@@ -66,16 +67,17 @@ void NGLScene::initializeGL()
   // grab an instance of shader manager
   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
   // we are creating a shader called Phong
-  shader->createShaderProgram("Phong");
+  shader->createShaderProgram("Phong"); //RENAME TO INPUT SHADER
   // now we are going to create empty shaders for Frag and Vert
-  shader->attachShader("PhongVertex",ngl::ShaderType::VERTEX);
-  shader->attachShader("PhongFragment",ngl::ShaderType::FRAGMENT);
+  shader->attachShader("PhongVertex",ngl::ShaderType::VERTEX); //INPUTVERTEX
+  shader->attachShader("PhongFragment",ngl::ShaderType::FRAGMENT); //INPUTSHADER
   // attach the source
-  shader->loadShaderSource("PhongVertex","shaders/PhongVertex.glsl");
-  shader->loadShaderSource("PhongFragment","shaders/PhongFragment.glsl");
+  shader->loadShaderSource("PhongVertex","shaders/PhongVertex.glsl"); //NEEDS TO BE SHADERFROMTSTRING
+  shader->loadShaderSource("PhongFragment","shaders/PhongFragment.glsl"); //NEEDS TO BE SHADERFROMSTRING
   // compile the shaders
   shader->compileShader("PhongVertex");
   shader->compileShader("PhongFragment");
+
   // add them to the program
   shader->attachShaderToProgram("Phong","PhongVertex");
   shader->attachShaderToProgram("Phong","PhongFragment");
@@ -199,14 +201,14 @@ void NGLScene::loadMatricesToShader()
   normalMatrix.inverse();
 
 
-  m_parser->sendUniformsToShader(shader);
+//  m_parser->sendUniformsToShader(shader);
 
   shader->setShaderParamFromMat4("MV",MV);
   shader->setShaderParamFromMat4("MVP",MVP);
   shader->setShaderParamFromMat3("normalMatrix",normalMatrix);
   shader->setShaderParamFromMat4("M",M);
 }
-
+//----------------------------------------------------------------------------------------------------------------------
 void NGLScene::setCamShape()
 {
   m_aspect=(float)width()/height();
@@ -343,5 +345,77 @@ void NGLScene::wheelEvent ( QWheelEvent * _event )
   {
     m_modelPos.m_z-=ZOOM;
   }
+  update();
+}
+
+//----------------------------------------------------------------------------------------------------------------------
+void NGLScene::loadShader(QString _text, ngl::ShaderType _type)
+{
+    ngl::ShaderLib *shader=ngl::ShaderLib::instance();
+    switch (_type)
+
+    {
+      case ngl::ShaderType::VERTEX:
+        shader->loadShaderSourceFromString("PhongVertex", _text.toUtf8().constData());
+        break;
+      case ngl::ShaderType::FRAGMENT:
+        shader->loadShaderSourceFromString("PhongFragment", _text.toUtf8().constData());
+        break;
+      default:
+        std::cout << "Shader type not compatible\n";
+
+    }
+}
+
+//----------------------------------------------------------------------------------------------------------------------
+void NGLScene::compileShader()
+{
+  ngl::ShaderLib *shader=ngl::ShaderLib::instance();
+  shader->compileShader("PhongVertex");
+  shader->compileShader("PhongFragment");
+
+  // add them to the program
+  shader->attachShaderToProgram("Phong","PhongVertex");
+  shader->attachShaderToProgram("Phong","PhongFragment");
+
+  // now we have associated this data we can link the shader
+  shader->linkProgramObject("Phong");
+
+//  // now bind the shader attributes for most NGL primitives we use the following
+//  // layout attribute 0 is the vertex data (x,y,z)
+//  shader->bindAttribute("Phong",0,"inVert");
+//  // attribute 1 is the UV data u,v (if present)
+//  shader->bindAttribute("Phong",1,"inUV");
+//  // attribute 2 are the normals x,y,z
+//  shader->bindAttribute("Phong",2,"inNormal");
+
+
+  // Load stuff. Need to remove this stuff in the next build, just used to set
+  // inital values
+  (*shader)["Phong"]->use();
+  shader->setShaderParam1i("Normalize",1);
+  shader->setShaderParam3f("viewerPos",m_cam.getEye().m_x,m_cam.getEye().m_y,m_cam.getEye().m_z);
+  // now pass the modelView and projection values to the shader
+  // the shader will use the currently active material and light0 so set them
+  ngl::Material m(ngl::STDMAT::GOLD );
+  // load our material values to the shader into the structure material (see Vertex shader)
+  m.loadToShader("material");
+  // we need to set a base colour as the material isn't being used for all the params
+  shader->setShaderParam4f("Colour",0.23125f,0.23125f,0.23125f,1);
+
+  ngl::Light light(ngl::Vec3(2,2,2),ngl::Colour(1,1,1,1),ngl::Colour(1,1,1,1),ngl::LightModes::POINTLIGHT);
+  // now create our light this is done after the camera so we can pass the
+  // transpose of the projection matrix to the light to do correct eye space
+  // transformations
+  ngl::Mat4 iv=m_cam.getViewMatrix();
+  iv.transpose();
+
+
+  light.setTransform(iv);
+  light.setAttenuation(1,0,0);
+  light.enable();
+  // load these values to the shader as well
+  light.loadToShader("light");
+
   update();
 }
