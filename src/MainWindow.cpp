@@ -65,7 +65,8 @@ void MainWindow::createButtons()
   {
     if(m_parForButton->m_uniformDataList[i].m_name=="vec3")
     {
-      m_buttonList.push_back(Button myNew);
+      Button temp;
+      //m_buttonList.push_back(Button myNew);
     }
   }
 }
