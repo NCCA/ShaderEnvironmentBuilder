@@ -1,6 +1,7 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 #include "qscilexerglsl.h"
+#include "button.h"
 
 #include <Qsci/qsciscintilla.h>
 MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent), m_ui(new Ui::MainWindow)
@@ -11,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent), m_ui(new Ui::MainW
   m_ui->setupUi(this);
 
   // Create openGl and qsci widgets
-  m_gl=new  NGLScene(this);
+  m_gl=new  NGLScene(this, parForButton);
   m_qsci = new QsciScintilla(this);
   QsciLexer* lex = new QsciLexerGLSL(m_qsci);
   m_qsci->setLexer(lex);

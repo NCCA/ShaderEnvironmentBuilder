@@ -23,14 +23,14 @@ const static float INCREMENT=0.01f;
 const static float ZOOM=0.1f;
 
 //----------------------------------------------------------------------------------------------------------------------
-NGLScene::NGLScene( QWidget *_parent ) : QOpenGLWidget( _parent )
+NGLScene::NGLScene( QWidget *_parent, parserLib *_libParent  ) : QOpenGLWidget( _parent )
 {
   // re-size the widget to that of the parent (in that case the GLFrame passed in on construction)
   m_rotate=false;
   // mouse rotation values set to 0
   m_spinXFace=0.0f;
   m_spinYFace=0.0f;
-  m_parser= new parserLib();
+  m_parser= _libParent;
   // re-size the widget to that of the parent (in this case the GLFrame passed in on construction)
   this->resize(_parent->size());
   m_wireframe=false;
