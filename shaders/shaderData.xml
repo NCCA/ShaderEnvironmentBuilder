@@ -1,0 +1,5 @@
+<ShaderProgram name="shaderProgramName">
+	<VertexData type="Vertex" name="PhongVertex" versionPath="shaders/version.glsl" commonPath="shaders/common.glsl" vertexPath="shaders/PhongVertex.glsl"/>
+	<FragmentData type="Fragment" name="PhongFragment" versionPath="shaders/version.glsl" commonPath="shaders/common.glsl" customPath="shaders/PhongFragment.glsl" vertexPath="shaders/PhongVertex.glsl"/>
+</ShaderProgram>
+

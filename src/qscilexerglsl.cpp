@@ -5,20 +5,18 @@
 #include <sstream>
 #include "glslLexer.h"
 
-QsciLexerGLSL::QsciLexerGLSL(QObject *parent) : QsciLexerCustom(parent)
+QsciLexerGLSL::QsciLexerGLSL(QsciScintilla *parent) : QsciLexerCustom(parent)
 {
-    //all GLSL keywords
-    keywordsList <<"attribute"<<"const"<<"uniform"<<"varying"<<"layout"<<"centroid"<<"flat"<<"smooth"<<"noperspective"<<"patch"<<"sample"<<"break"<<"continue"<<"do"<<
-                   "for"<<"while"<<"switch"<<"case"<<"default"<<"if"<<"else"<<"subroutine"<<"in"<<"out"<<"inout"<<"float"<<"double"<<"int"<<"void"<<"bool"<<"true"<<
-                   "false"<<"invariant"<<"discard"<<"return"<<"mat2"<<"mat3"<<"mat4"<<"dmat2"<<"dmat3"<<"dmat4"<<"mat2x2"<<"mat2x3"<<"mat2x4"<<"dmat2x2"<<"dmat2x3"<<
-                   "dmat2x4"<<"mat3x2"<<"mat3x3"<<"mat3x4"<<"dmat3x2"<<"dmat3x3"<<"dmat3x4"<<"mat4x2"<<"mat4x3"<<"mat4x4"<<"dmat4x2"<<"dmat4x3"<<"dmat4x4"<<"vec2"<<"vec3"<<
-                   "vec4"<<"ivec2"<<"ivec3"<<"ivec4"<<"bvec2"<<"bvec3"<<"bvec4"<<"dvec2"<<"dvec3"<<"dvec4"<<"uint"<<"uvec2"<<"uvec3"<<"uvec4"<<"lowp"<<"mediump"<<"highp"<<
-                   "precision"<<"sampler1D" << "sampler2D" << "sampler3D" << "samplerCube" << "sampler1DShadow" << "sampler2DShadow" << "samplerCubeShadow" << "sampler1DArray" <<
-                   "sampler2DArray" << "sampler1DArrayShadow" << "sampler2DArrayShadow" << "isampler1D" << "isampler2D" << "isampler3D" << "isamplerCube" << "isampler1DArray" <<
-                   "isampler2DArray" << "usampler1D" << "usampler2D" << "usampler3D" << "usamplerCube" << "usampler1DArray" << "usampler2DArray" << "sampler2DRect" <<
-                   "sampler2DRectShadow" << "isampler2DRect" << "usampler2DRect" << "samplerBuffer" << "isamplerBuffer" << "usamplerBuffer" << "sampler2DMS" << "isampler2DMS" <<
-                   "usampler2DMS" << "sampler2DMSArray" << "isampler2DMSArray" << "usampler2DMSArray" << "samplerCubeArray" << "samplerCubeArrayShadow" << "isamplerCubeArray" <<
-                   "usamplerCubeArray" << "struct";
+    m_parent = parent;
+    m_API = new QsciAPIs(this);
+    QString apiPath("./src/glsl.api");
+    const QString a(" ");
+    setAPIs(m_API);
+    m_API->load(apiPath);
+    m_API->prepare();
+    m_parent->setAutoCompletionThreshold(2);
+    m_parent->setAutoCompletionFillupsEnabled(true);
+    m_parent->setAutoCompletionSource(QsciScintilla::AcsAPIs);
 }
 
 QsciLexerGLSL::~QsciLexerGLSL()
@@ -28,6 +26,7 @@ QsciLexerGLSL::~QsciLexerGLSL()
 
 void QsciLexerGLSL::styleText(int start, int end)
 {
+    m_parent->autoCompleteFromAPIs();
     //return if no QsciScintilla editor
     if(!editor())
         return;
@@ -55,7 +54,6 @@ void QsciLexerGLSL::highlightKeywords(const QString &source, int start)
     std::istringstream istr (source.toStdString());
 
     std::vector<int> tokens;
-    //lexer->set_debug(1);
     tok = lexer->yylex(&istr);
     while (tok>0)
     {
@@ -64,15 +62,11 @@ void QsciLexerGLSL::highlightKeywords(const QString &source, int start)
         tokens.push_back(lexer->YYLeng());
         loc = loc + lexer->YYLeng();
         QString s(lexer->YYText());
-        //std::cout<<s.toStdString();
         tok = lexer->yylex();
     }
-    //std::cout<<"\n"<<source.toStdString()<<"\n";
-    //std::cout<<"end = "<<loc<<"\nsource = "<<source.length()<<"\n";
 
     for (int i = 0; i<tokens.size(); i=i+3)
     {
-        //std::cout<<tokens[i]<<"\n";
         switch(tokens[i])
         {
         case StyleType::DEFAULT:
@@ -83,6 +77,10 @@ void QsciLexerGLSL::highlightKeywords(const QString &source, int start)
             startStyling(start+tokens[i+1]);
             setStyling(tokens[i+2],StyleType::KEYWORD);
         break;
+        case StyleType::DATATYPE:
+            startStyling(start+tokens[i+1]);
+            setStyling(tokens[i+2],StyleType::DATATYPE);
+        break;
         case StyleType::NUMBER:
             startStyling(start+tokens[i+1]);
             setStyling(tokens[i+2],StyleType::NUMBER);
@@ -91,33 +89,20 @@ void QsciLexerGLSL::highlightKeywords(const QString &source, int start)
             startStyling(start+tokens[i+1]);
             setStyling(tokens[i+2],StyleType::OPERATOR);
         break;
+        case StyleType::STRING:
+            startStyling(start+tokens[i+1]);
+            setStyling(tokens[i+2],StyleType::STRING);
+        break;
         case StyleType::FUNCTION:
             startStyling(start+tokens[i+1]);
             setStyling(tokens[i+2]-1,StyleType::FUNCTION);
         break;
+        case StyleType::COMMENT:
+            startStyling(start+tokens[i+1]);
+            setStyling(tokens[i+2],StyleType::COMMENT);
+        break;
         }
     }
-
-    //check for keywords in text
-//    for (int i = 0; i<keywordsList.size(); i++)
-//    {
-//        QString word = keywordsList.at(i);
-//        if (source.contains(word))
-//        {
-//            int count = source.count(word);
-//            int index = 0;
-//            //for each instance of the keyword, set styling
-//            for (int j = 0; j<count; j++)
-//            {
-//                int wordStart = source.indexOf(word, index);
-//                index = wordStart+1;
-
-//                startStyling(start + wordStart);
-//                printf("started styling\n");
-//                setStyling(word.length(), StyleType::KEYWORD);
-//            }
-//        }
-//    }
 }
 
 QColor QsciLexerGLSL::defaultColor(int style) const
@@ -125,15 +110,21 @@ QColor QsciLexerGLSL::defaultColor(int style) const
     switch(style)
     {
     case StyleType::DEFAULT:
-        return QColor(247,247,241);
+        return QColor(247, 247, 241);
     case StyleType::KEYWORD:
-        return QColor(102,216,238);
+        return QColor(249, 38, 114);
+    case StyleType::DATATYPE:
+        return QColor(102, 216, 238);
     case StyleType::NUMBER:
         return QColor(174, 129, 255);
     case StyleType::OPERATOR:
         return QColor(249, 38, 114);
+    case StyleType::STRING:
+        return QColor(230, 219, 116);
     case StyleType::FUNCTION:
         return QColor(166, 226, 46);
+    case StyleType::COMMENT:
+        return QColor(117, 113, 94);
     }
     return QColor(247,247,241);
 }
@@ -145,20 +136,21 @@ QColor QsciLexerGLSL::defaultPaper(int style) const
 
 QFont QsciLexerGLSL::defaultFont(int style) const
 {
-    int weight=50;
-    int size=12;
+    int weight = 50;
+    int size = 12;
+    bool italic = 0;
     switch(style)
     {
     case StyleType::DEFAULT:
         weight = 50;
         size = 12;
     break;
-    case StyleType::KEYWORD:
-        weight = 75;
+    case StyleType::DATATYPE:
+        italic = true;
     break;
     }
 
-    return QFont("Monospace", size,weight);
+    return QFont("Monospace", size,weight,italic);
 }
 
 QString QsciLexerGLSL::description(int style) const

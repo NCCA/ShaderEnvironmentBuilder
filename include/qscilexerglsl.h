@@ -3,10 +3,11 @@
 
 #include <Qsci/qscilexercustom.h>
 #include <Qsci/qscistyle.h>
+#include <Qsci/qsciapis.h>
 
 class QsciLexerGLSL: public QsciLexerCustom {
 public:
-    QsciLexerGLSL(QObject *parent=0);
+    QsciLexerGLSL(QsciScintilla *parent=0);
     ~QsciLexerGLSL();
 
     void styleText(int start, int end);
@@ -33,13 +34,14 @@ public:
         DISABLED,
         OPERATOR,
         WHITESPACE,
-        NEWLINE
+        DATATYPE
     };
 
 private:
+    QsciScintilla *m_parent;
+    QsciAPIs *m_API;
     QsciLexerGLSL(const QsciLexerGLSL &);
     QsciLexerGLSL &operator=(const QsciLexerGLSL &);
-    QStringList keywordsList;
     QsciStyle m_keywordStyle;
 };
 
