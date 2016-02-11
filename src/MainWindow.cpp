@@ -10,9 +10,9 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent), m_ui(new Ui::MainW
 
   // Setup ui from form creator (MainWindow.ui)
   m_ui->setupUi(this);
-
+  m_parForButton = new parserLib;
   // Create openGl and qsci widgets
-  m_gl=new  NGLScene(this, parForButton);
+  m_gl=new  NGLScene(this, m_parForButton);
   m_qsci = new QsciScintilla(this);
   QsciLexer* lex = new QsciLexerGLSL(m_qsci);
   m_qsci->setLexer(lex);
@@ -51,4 +51,10 @@ void MainWindow::on_btn_loadShader_clicked()
 void MainWindow::on_btn_compileShader_clicked()
 {
   m_gl->compileShader();
+  m_parForButton->printUniforms();
+}
+
+void MainWindow::printUniforms()
+{
+  m_parForButton->printUniforms();
 }
