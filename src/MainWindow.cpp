@@ -58,3 +58,14 @@ void MainWindow::printUniforms()
 {
   m_parForButton->printUniforms();
 }
+
+void MainWindow::createButtons()
+{
+  for(int i=0;i<m_parForButton->m_uniformDataList.size(); ++i)
+  {
+    if(m_parForButton->m_uniformDataList[i].m_name=="vec3")
+    {
+      m_buttonList.push_back(Button myNew);
+    }
+  }
+}
