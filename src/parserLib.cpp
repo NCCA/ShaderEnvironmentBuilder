@@ -398,11 +398,11 @@ void parserLib::assignUniformValues()
     }
     if (m_uniformDataList[i].m_typeName=="vec3")
     {
-      m_uniformDataList[i].m_vec3 = 0;
+      m_uniformDataList[i].m_vec3 = 0.5;
     }
     if (m_uniformDataList[i].m_typeName=="vec4")
     {
-      m_uniformDataList[i].m_vec4 = 0;
+      m_uniformDataList[i].m_vec4 = 0.5;
       m_uniformDataList[i].m_vec4.m_w = 1;
     }
     if (m_uniformDataList[i].m_typeName=="mat3")

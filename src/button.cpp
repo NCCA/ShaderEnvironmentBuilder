@@ -18,11 +18,16 @@ Button::Button(QWidget *parent) : QDialog(parent)
 
 }
 
-void Button::createButtonBox()
+/*Button(QWidget *parent=0, QString _buttonName, ngl::Vec4 _defaultVal) : QDialog(parent)
+{
+
+}*/
+
+void Button::createButtonBox(QString _buttonName)
 {
   m_buttonBox = new QDialogButtonBox;
 
-  m_closeButton = m_buttonBox->addButton(tr("Select &Colour"),QDialogButtonBox::ActionRole);
+  m_closeButton = m_buttonBox->addButton(_buttonName,QDialogButtonBox::ActionRole);
 
   connect(m_closeButton, SIGNAL(clicked()), this, SLOT(openColourBox()));
 }

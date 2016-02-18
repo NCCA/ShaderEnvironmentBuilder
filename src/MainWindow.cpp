@@ -149,7 +149,7 @@ void MainWindow::createButtons()
   {
     if(m_parForButton->m_uniformDataList[i].m_typeName=="vec4")
     {
-      ngl::Vec4 _tempVec=m_parForButton->returnVec4(i);
+      ngl::Vec4 _tempVec=m_parForButton->getVec4(i);
       //Button temp;
       std::cout<<"HERE: "<<i<<std::endl;
       std::cout<<"\nVal:\nx: "<<_tempVec.m_x<<"\ny: "<<_tempVec.m_y<<"\nz:"<<_tempVec.m_z<<std::endl;
