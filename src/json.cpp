@@ -16,23 +16,25 @@ Json::Json()
 
 // ----------------------------------------------------------------------------------------------------------------------
 // Writes the output Json to a file.
-void Json::saveShaderToJson(std::string _jsonString)
-{
-    ofstream jsonFile("./tempFiles/shader.json");
-
-    if (jsonFile.is_open())
-        jsonFile << _jsonString << std::endl;
-    jsonFile.close();
+void Json::writeFile(std::string _fileName, std::string _stringData)
+{              
+    ofstream fileName("./tempFiles/"+_fileName);   // ofstream jsonFile("./tempFiles/shader.json");
+    if (fileName.is_open())
+        fileName << _stringData << std::endl;
+    fileName.close();
 }
 
-void Json::saveShaderDataToJson(std::string _jsonString)
+void Json::readFile(std::string _fileName)
 {
-    ofstream jsonFile("./tempFiles/shaderData.json");
-
-    if (jsonFile.is_open())
-        jsonFile << _jsonString << std::endl;
-    jsonFile.close();
+    ifstream jsonFile("./tempFiles/"+_fileName+".json");
+    if(!jsonFile)
+    {
+        std::cout<<"Unable to open file."<<std::endl;
+        exit(1);
+    }
+    std::cout << jsonFile;
 }
+
 // ----------------------------------------------------------------------------------------------------------------------
 // (may be redundant) Reads through the Json string, finds a word and replaces with a new word.
 void Json::replaceWord(std::string _oldWord, std::string _newWord)
@@ -68,29 +70,6 @@ void Json::replaceWord(std::string _oldWord, std::string _newWord)
 // This function builds the Json string by grabbing data from the XML ShaderData file.
 void Json::buildJson()
 {
-//  Reading shaderData file.
-
-    xml_document<> doc;
-    ifstream file("./shaders/shaderData.xml");
-    vector<char> buffer((istreambuf_iterator<char>(file)), istreambuf_iterator<char>( ));
-    buffer.push_back('\0');
-    //cout<<&buffer[0]<<endl;  //prints xml buffer
-    doc.parse<0>(&buffer[0]);
-
-    xml_node<> *current_node = doc.first_node("ShaderProgram");
-    xml_node<> *vertex_node = doc.first_node("ShaderProgram")->first_node("FragmentData");
-    xml_node<> *fragment_node = doc.first_node("ShaderProgram")->first_node("FragmentData");
-
-    const char* ShaderProgramName = current_node->first_attribute("name")->value();
-
-    const char* vertexShaderName = vertex_node->first_attribute("name")->value();
-    const char* vertexShaderGlsl = vertex_node->first_attribute("vertexPath")->value();
-
-    const char* fragmentShaderName = fragment_node->first_attribute("name")->value();
-    const char* fragmentShaderGLSL = fragment_node->first_attribute("customPath")->value();    //these chars can be edited later.
-
-
-// Building Json file
     auto shaderProgramJson = R"(
     {
       "ShaderProgram": {
@@ -113,60 +92,23 @@ void Json::buildJson()
                     "shaders/noise3D2.glsl",
                     "shaders/PhongFragment.glsl"]
         }
-
       ]
      }
     }
     )"_json;
-
-    saveShaderToJson(shaderProgramJson.dump(1));
+    writeFile("jsonString.json", shaderProgramJson.dump(1));
 }
 
-void Json::writeShaderData(string _name, string _type, int _value)
+void Json::addShaderData(string _name, string _type, double _value)
 {
-   // json shaderDataJson;
+    json shaderDataJson;
 
-
-//    auto shaderDataJson = R"(
-//        {
-//            "Data sets": {
-//                "name": _name,
-//                "Type":"type",
-//                "value":"value"}
-//    }
-//    )"_json;
-//   // std::vector <int> listy = {1,2,3};
-//    json shaderDataJson;
-//    std::map <string, string> s_data { {"name", _name}, {"type", _type} };
-//    std::multimap <string, int> i_data {{"value", _value}};
-
-//    shaderDataJson["name"] = _name;
-
-    json shaderDataJson = {json::array({"name", _name}), json::array({"type", _type}), json::array({"value", _value})};
-
-
-    //map <string, int> imamapimamap;
-    //list <map<string, int>> listOfMaps;
-//    imamapimamap["name"] = _name;
-//    imamapimamap["type"] = _type;
-//  //  imamapimamap["value"] = _name;
-   // listOfMaps.push_back(imamapimamap);
-   // auto shaderDataJson::parse(listOfMaps)
-    //shaderDataJson.push_back(listOfMaps);
-
-    //shaderDataJson.push_back((shaderDataJson["name"] = "Jon"));
-    //shaderDataJson.push_back(<string> {json::array({"name2", _name})}    );
-//    shaderDataJson.push_back(s_data);
-//    shaderDataJson.push_back(i_data);
-    //shaderDataJson.push_back("hello", _phongVertex);
-    //shaderDataJson.push_back("hello");
-    saveShaderDataToJson(shaderDataJson.dump(1));
+    shaderDataJson[_name]={{"Name", _name}, {"Type", _value}, {"Value", _value}};
+    writeFile("shaderData.json", shaderDataJson.dump(1));
 }
 
 Json::~Json()
-{
-
-}
+{}
 
 
 

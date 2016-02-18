@@ -126,7 +126,7 @@ void NGLScene::initializeGL()
   string name = "M example";
   string type = "mat 4 example";
   int value = 5;
-  m_newJson->writeShaderData(name, type, value);
+  m_newJson->addShaderData(name, type, value);
   m_parser->assignAllData();
 }
 

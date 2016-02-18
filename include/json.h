@@ -1,5 +1,5 @@
-#ifndef JSON
-#define JSON
+#ifndef JSON_H_
+#define JSON_H_
 
 #include <iostream>
 #include <fstream>
@@ -18,21 +18,19 @@ public:
     Json();
     ~Json();
 
-    void saveShaderToJson(std::string _jsonString);
+    void writeFile(string _fileName, string _stringData);
+    void readFile(std::string _fileName);
 
-    void saveShaderDataToJson(std::string _jsonString);
-
-
-    void replaceWord(std::string _oldWord, std::string _newWord);
+    void replaceWord(string _oldWord, string _newWord);
 
     void buildJson();
 
-    void writeShaderData(string _name, string _type, int _value);
+    void addShaderData(string _name, string _type, double _value);
     //void newBuildJson();
     rapidxml::xml_document<> m_doc;
     rapidxml::xml_node<> * root_node;
 
 };
 
-#endif
+#endif //_JSON_H_
 
