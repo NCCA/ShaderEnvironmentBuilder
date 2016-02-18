@@ -1,4 +1,4 @@
-#include "parserLib.h"
+#include "ParserLib.h"
 #include <ngl/ShaderLib.h>
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -10,17 +10,13 @@ parserLib::parserLib()
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-/// @brief dctor for our parserLib
-//----------------------------------------------------------------------------------------------------------------------
 parserLib::~parserLib()
 {
 
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-/// @brief get and store uniform data
-//----------------------------------------------------------------------------------------------------------------------
-void parserLib::assignUniformInformation()
+void parserLib::initializeUniformData()
 {
   //create instance of a shader
   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
@@ -30,7 +26,7 @@ void parserLib::assignUniformInformation()
   GLint nUniforms;
   glGetProgramInterfaceiv(id, GL_UNIFORM, GL_ACTIVE_RESOURCES, &nUniforms);
   m_num=nUniforms;
-  m_uniformDataList.resize(m_num);
+  m_uniformList.resize(m_num);
 
   // declare some temp variables
   char UniformName[256];
@@ -51,10 +47,9 @@ void parserLib::assignUniformInformation()
     newData.m_type= type;
     // Add uniformData to the currently registeredUniforms
     m_registeredUniforms[UniformName]=newData;
-    m_uniformDataList[i]=newData;
+    m_uniformList[i]=newData;
 
   }
-
   uniformDataTypes();
 }
 
@@ -62,16 +57,14 @@ void parserLib::assignUniformInformation()
 
 void parserLib::assignAllData()
 {
-  assignUniformInformation();
+  initializeUniformData();
   assignUniformValues();
-  printUniforms();
+  printUniforms(true);
 }
 
 
 //----------------------------------------------------------------------------------------------------------------------
-/// @brief prints Uniform information
-//----------------------------------------------------------------------------------------------------------------------
-void parserLib::printUniforms()
+void parserLib::printUniforms(bool _printValues)
 {
   std::cout<<"_________________________________________Uniform Information: Starts//"<<std::endl;
   std::cout<<"There are "<<m_num<<" Uniforms"<<std::endl;
@@ -79,49 +72,49 @@ void parserLib::printUniforms()
   // print information
   for (uint i=0; i<m_num; i++)
   {
-    std::cout << "Name: "<<m_uniformDataList[i].m_name;
-    std::cout << ";  Location: "<<m_uniformDataList[i].m_loc<<" ("<<i<<")";
-    std::cout << ";  Type: "<<m_uniformDataList[i].m_type<<"; "<<m_uniformDataList[i].m_typeName<<std::endl;
+    std::cout << "Name: "<<m_uniformList[i].m_name;
+    std::cout << ";  Location: "<<m_uniformList[i].m_loc<<" ("<<i<<")";
+    std::cout << ";  Type: "<<m_uniformList[i].m_type<<"; "<<m_uniformList[i].m_typeName<<std::endl;
 
-
-//    if (m_uniformDataList[i].m_typeName=="bool")
-//    {
-//    std::cout<<"m_bool: "<<m_uniformDataList[0].m_bool<<std::endl;
-//    }
-//    if (m_uniformDataList[i].m_typeName=="float")
-//    {
-//      std::cout<<"m_float: "<<m_uniformDataList[0].m_float<<std::endl;
-//    }
-//    if (m_uniformDataList[i].m_typeName=="int")
-//    {
-//      std::cout<<"m_int: "<<m_uniformDataList[0].m_int<<std::endl;
-//    }
-//    if (m_uniformDataList[i].m_typeName=="vec3")
-//    {
-//      std::cout<<"m_vec3:(x) "<<m_uniformDataList[0].m_vec3.m_x<<std::endl;
-//      std::cout<<"m_vec3:(y) "<<m_uniformDataList[0].m_vec3.m_y<<std::endl;
-//      std::cout<<"m_vec3:(z) "<<m_uniformDataList[0].m_vec3.m_z<<std::endl;
-//    }
-//    if (m_uniformDataList[i].m_typeName=="vec4")
-//    {
-//      std::cout<<"m_vec4:(x) "<<m_uniformDataList[0].m_vec4.m_x<<std::endl;
-//      std::cout<<"m_vec4:(y) "<<m_uniformDataList[0].m_vec4.m_y<<std::endl;
-//      std::cout<<"m_vec4:(z) "<<m_uniformDataList[0].m_vec4.m_z<<std::endl;
-//    }
-//    if (m_uniformDataList[i].m_typeName=="mat3")
-//    {
-//      std::cout<<"m_mat3:(x) "<<m_uniformDataList[0].m_mat3.m_00<<m_uniformDataList[0].m_mat3.m_01<<m_uniformDataList[0].m_mat3.m_02<<std::endl;
-//      std::cout<<"m_mat3:(y) "<<m_uniformDataList[0].m_mat3.m_10<<m_uniformDataList[0].m_mat3.m_11<<m_uniformDataList[0].m_mat3.m_12<<std::endl;
-//      std::cout<<"m_mat3:(z) "<<m_uniformDataList[0].m_mat3.m_20<<m_uniformDataList[0].m_mat3.m_21<<m_uniformDataList[0].m_mat3.m_22<<std::endl;
-//    }
-//    if (m_uniformDataList[i].m_typeName=="mat4")
-//    {
-//      std::cout<<"m_mat3:(x) "<<m_uniformDataList[0].m_mat4.m_00<<m_uniformDataList[0].m_mat4.m_01<<m_uniformDataList[0].m_mat4.m_02<<m_uniformDataList[0].m_mat4.m_03<<std::endl;
-//      std::cout<<"m_mat3:(y) "<<m_uniformDataList[0].m_mat4.m_10<<m_uniformDataList[0].m_mat4.m_11<<m_uniformDataList[0].m_mat4.m_12<<m_uniformDataList[0].m_mat4.m_13<<std::endl;
-//      std::cout<<"m_mat3:(z) "<<m_uniformDataList[0].m_mat4.m_20<<m_uniformDataList[0].m_mat4.m_21<<m_uniformDataList[0].m_mat4.m_22<<m_uniformDataList[0].m_mat4.m_23<<std::endl;
-//      std::cout<<"m_mat3:(w) "<<m_uniformDataList[0].m_mat4.m_30<<m_uniformDataList[0].m_mat4.m_31<<m_uniformDataList[0].m_mat4.m_32<<m_uniformDataList[0].m_mat4.m_33<<std::endl;
-//    }
-
+    if (_printValues==true)
+    {
+      if (m_uniformList[i].m_typeName=="bool")
+      {
+      std::cout<<"m_bool: "<<m_uniformList[0].m_bool<<std::endl;
+      }
+      if (m_uniformList[i].m_typeName=="float")
+      {
+        std::cout<<"m_float: "<<m_uniformList[0].m_float<<std::endl;
+      }
+      if (m_uniformList[i].m_typeName=="int")
+      {//      std::cout<<"m_int: "<<m_uniformList[0].m_int<<std::endl;
+      }
+      if (m_uniformList[i].m_typeName=="vec3")
+      {
+        std::cout<<"m_vec3:(x) "<<m_uniformList[0].m_vec3.m_x<<std::endl;
+        std::cout<<"m_vec3:(y) "<<m_uniformList[0].m_vec3.m_y<<std::endl;
+        std::cout<<"m_vec3:(z) "<<m_uniformList[0].m_vec3.m_z<<std::endl;
+      }
+      if (m_uniformList[i].m_typeName=="vec4")
+      {
+        std::cout<<"m_vec4:(x) "<<m_uniformList[0].m_vec4.m_x<<std::endl;
+        std::cout<<"m_vec4:(y) "<<m_uniformList[0].m_vec4.m_y<<std::endl;
+        std::cout<<"m_vec4:(z) "<<m_uniformList[0].m_vec4.m_z<<std::endl;
+      }
+      if (m_uniformList[i].m_typeName=="mat3")
+      {
+        std::cout<<"m_mat3:(x) "<<m_uniformList[0].m_mat3.m_00<<m_uniformList[0].m_mat3.m_01<<m_uniformList[0].m_mat3.m_02<<std::endl;
+        std::cout<<"m_mat3:(y) "<<m_uniformList[0].m_mat3.m_10<<m_uniformList[0].m_mat3.m_11<<m_uniformList[0].m_mat3.m_12<<std::endl;
+        std::cout<<"m_mat3:(z) "<<m_uniformList[0].m_mat3.m_20<<m_uniformList[0].m_mat3.m_21<<m_uniformList[0].m_mat3.m_22<<std::endl;
+      }
+      if (m_uniformList[i].m_typeName=="mat4")
+      {
+        std::cout<<"m_mat3:(x) "<<m_uniformList[0].m_mat4.m_00<<m_uniformList[0].m_mat4.m_01<<m_uniformList[0].m_mat4.m_02<<m_uniformList[0].m_mat4.m_03<<std::endl;
+        std::cout<<"m_mat3:(y) "<<m_uniformList[0].m_mat4.m_10<<m_uniformList[0].m_mat4.m_11<<m_uniformList[0].m_mat4.m_12<<m_uniformList[0].m_mat4.m_13<<std::endl;
+        std::cout<<"m_mat3:(z) "<<m_uniformList[0].m_mat4.m_20<<m_uniformList[0].m_mat4.m_21<<m_uniformList[0].m_mat4.m_22<<m_uniformList[0].m_mat4.m_23<<std::endl;
+        std::cout<<"m_mat3:(w) "<<m_uniformList[0].m_mat4.m_30<<m_uniformList[0].m_mat4.m_31<<m_uniformList[0].m_mat4.m_32<<m_uniformList[0].m_mat4.m_33<<std::endl;
+      }
+    }
 
   }
   std::cout<<"___________________________________________Uniform Information: Ends//"<<std::endl;
@@ -267,16 +260,13 @@ void parserLib::uniformDataTypes()
     {
       type="unknown type";
     }
-    m_uniformDataList[d.second.m_loc].m_typeName=type;
+    /// end of Citation
+    m_uniformList[d.second.m_loc].m_typeName=type;
   }
   std::cout<<"End Uniforms" <<"\n";
 }
 
 
-
-
-//----------------------------------------------------------------------------------------------------------------------
-/// @brief exports the uniform data
 //----------------------------------------------------------------------------------------------------------------------
 void parserLib::exportUniforms()
 {
@@ -289,184 +279,179 @@ void parserLib::exportUniforms()
   }
   for(int i=0;i<m_num;i++)
   {
-    fileOut<<m_uniformDataList[i].m_name<<"\n";
-    fileOut<<m_uniformDataList[i].m_loc<<"\n";
-    fileOut<<m_uniformDataList[i].m_typeName<<"\n";
+    fileOut<<m_uniformList[i].m_name<<"\n";
+    fileOut<<m_uniformList[i].m_loc<<"\n";
+    fileOut<<m_uniformList[i].m_typeName<<"\n";
   }
   fileOut.close();
   // close files
   std::cout<<"EXPORTED\n"<<std::endl;
 }
 
-//----------------------------------------------------------
-/// \brief Gets the value of the current dataTypes
-/// \param loc : location in the std::vector
-/// \param newValue :input the new data type              //Going to look into making this neater and overriding functions.
-//----------------------------------------------------------
-bool parserLib::getBool(int loc)
+//----------------------------------------------------------------------------------------------------------------------
+bool parserLib::getBool(int _loc)
 {
-    return m_uniformDataList[loc].m_bool;
+    return m_uniformList[_loc].m_bool;
 }
-int parserLib::getInt(int loc)
+//----------------------------------------------------------------------------------------------------------------------
+int parserLib::getInt(int _loc)
 {
-    return m_uniformDataList[loc].m_int;
+    return m_uniformList[_loc].m_int;
 }
-float parserLib::getFloat(int loc)
+//----------------------------------------------------------------------------------------------------------------------
+float parserLib::getFloat(int _loc)
 {
-    return m_uniformDataList[loc].m_float;
+    return m_uniformList[_loc].m_float;
 }
-ngl::Mat3 parserLib::getMat3(int loc)
+//----------------------------------------------------------------------------------------------------------------------
+ngl::Mat3 parserLib::getMat3(int _loc)
 {
-    return m_uniformDataList[loc].m_mat3;
+    return m_uniformList[_loc].m_mat3;
 }
-ngl::Mat4 parserLib::getMat4(int loc)
+//----------------------------------------------------------------------------------------------------------------------
+ngl::Mat4 parserLib::getMat4(int _loc)
 {
-    return m_uniformDataList[loc].m_mat4;
+    return m_uniformList[_loc].m_mat4;
 }
-ngl::Vec3 parserLib::getVec3(int loc)
+//----------------------------------------------------------------------------------------------------------------------
+ngl::Vec3 parserLib::getVec3(int _loc)
 {
-    return m_uniformDataList[loc].m_vec3;
+    return m_uniformList[_loc].m_vec3;
 }
-ngl::Vec4 parserLib::getVec4(int loc)
+//----------------------------------------------------------------------------------------------------------------------
+ngl::Vec4 parserLib::getVec4(int _loc)
 {
-    return m_uniformDataList[loc].m_vec4;
+    return m_uniformList[_loc].m_vec4;
 }
-
-//----------------------------------------------------------
-/// \brief Sets the value of the current dataTypes
-/// \param loc : location in the std::vector
-/// \param newValue :input the new data type              //Going to look into making this neater and overriding functions.
-//----------------------------------------------------------
-void parserLib::setBool(int loc, bool newValue)
+//----------------------------------------------------------------------------------------------------------------------
+void parserLib::setBool(int _loc, bool _value)
 {
-    m_uniformDataList[loc].m_bool=newValue;
+    m_uniformList[_loc].m_bool=_value;
 }
-void parserLib::setInt(int loc, int newValue)
+//----------------------------------------------------------------------------------------------------------------------
+void parserLib::setInt(int _loc, int _value)
 {
-
-    m_uniformDataList[loc].m_int=newValue;
+    m_uniformList[_loc].m_int=_value;
 }
-void parserLib::setFloat(int loc, float newValue)
+//----------------------------------------------------------------------------------------------------------------------
+void parserLib::setFloat(int _loc, float _value)
 {
-
-    m_uniformDataList[loc].m_float=newValue;
+    m_uniformList[_loc].m_float=_value;
 }
-void parserLib::setMat3(int loc, ngl::Mat3 newValue)
+//----------------------------------------------------------------------------------------------------------------------
+void parserLib::setMat3(int _loc, ngl::Mat3 _value)
 {
-
-    m_uniformDataList[loc].m_mat3=newValue;
+    m_uniformList[_loc].m_mat3=_value;
 }
-void parserLib::setMat4(int loc, ngl::Mat4 newValue)
+//----------------------------------------------------------------------------------------------------------------------
+void parserLib::setMat4(int _loc, ngl::Mat4 _value)
 {
-
-    m_uniformDataList[loc].m_mat4=newValue;
+    m_uniformList[_loc].m_mat4=_value;
 }
-void parserLib::setVec3(int loc, ngl::Vec3 newValue)
+//----------------------------------------------------------------------------------------------------------------------
+void parserLib::setVec3(int _loc, ngl::Vec3 _value)
 {
-
-    m_uniformDataList[loc].m_vec3=newValue;
+    m_uniformList[_loc].m_vec3=_value;
 }
-void parserLib::setVec4(int loc, ngl::Vec4 newValue)
+//----------------------------------------------------------------------------------------------------------------------
+void parserLib::setVec4(int _loc, ngl::Vec4 _value)
 {
-
-    m_uniformDataList[loc].m_vec4=newValue;
+    m_uniformList[_loc].m_vec4=_value;
 }
 
 
-
-
-///
-/// \brief parserLib::assignUniformsValues : Gets the value of the uniforms and stores the values
-///
+//----------------------------------------------------------------------------------------------------------------------
 void parserLib::assignUniformValues()
 {
   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
 
+  // sets default values depending on it's data type
   for (int i=0;i<m_num;i++)
   {
-    if (m_uniformDataList[i].m_typeName=="bool")
+    switch(m_uniformList[i].m_type)
     {
-      m_uniformDataList[i].m_bool = 0;
+      case GL_BOOL:
+      {
+        m_uniformList[i].m_bool = 0;
+        break;
+      }
+      case GL_FLOAT:
+      {
+        m_uniformList[i].m_float = 0.5;
+        break;
+      }
+      case GL_INT:
+      {
+        m_uniformList[i].m_int = 0;
+        break;
+      }
+      case GL_FLOAT_VEC3:
+      {
+        m_uniformList[i].m_vec3 = 0.5;
+        break;
+      }
+      case GL_FLOAT_VEC4:
+      {
+        m_uniformList[i].m_vec4 = 0.5;
+        m_uniformList[i].m_vec4.m_w = 1;
+        break;
+      }
+      case GL_FLOAT_MAT3:
+      {
+        m_uniformList[i].m_mat3 = shader->getUniformBlockIndex(m_uniformList[i].m_name);
+        break;
+      }
+      case GL_FLOAT_MAT4:
+      {
+        m_uniformList[i].m_mat4 = shader->getUniformBlockIndex(m_uniformList[i].m_name);
+        break;
+      }
+    default:
+      std::cout<<"unrecognised data type name"<<std::endl;
     }
-    if (m_uniformDataList[i].m_typeName=="float")
-    {
-      m_uniformDataList[i].m_float = 0.5;
-    }
-    if (m_uniformDataList[i].m_typeName=="int")
-    {
-      m_uniformDataList[i].m_int = 0;
-    }
-    if (m_uniformDataList[i].m_typeName=="vec3")
-    {
-      m_uniformDataList[i].m_vec3 = 0;
-    }
-    if (m_uniformDataList[i].m_typeName=="vec4")
-    {
-      m_uniformDataList[i].m_vec4 = 0;
-      m_uniformDataList[i].m_vec4.m_w = 1;
-    }
-    if (m_uniformDataList[i].m_typeName=="mat3")
-    {
-      m_uniformDataList[i].m_mat3 = shader->getUniformBlockIndex(m_uniformDataList[i].m_name);
-    }
-    if (m_uniformDataList[i].m_typeName=="mat4")
-    {
-      m_uniformDataList[i].m_mat4 = shader->getUniformBlockIndex(m_uniformDataList[i].m_name);
-    }
-
   }
 }
 
-///
-/// \brief parserLib::setUniformsToShader : Takes the list of Uniforms and updates them onto the shader, depending on the data type.
-/// \param shader
-///
+//----------------------------------------------------------------------------------------------------------------------
 void parserLib::sendUniformsToShader(ngl::ShaderLib *shader)
 {
-
   for (int i=0;i<m_num;i++)
   {
     {
-      if (m_uniformDataList[i].m_typeName=="bool")
+      if (m_uniformList[i].m_typeName=="bool")
       {
-        shader->setShaderParam1i(m_uniformDataList[i].m_name,m_uniformDataList[i].m_bool);
+        shader->setShaderParam1i(m_uniformList[i].m_name,m_uniformList[i].m_bool);
       }
-      if (m_uniformDataList[i].m_typeName=="int")
+      if (m_uniformList[i].m_typeName=="int")
       {
-        shader->setShaderParam1i(m_uniformDataList[i].m_name,m_uniformDataList[i].m_int);
+        shader->setShaderParam1i(m_uniformList[i].m_name,m_uniformList[i].m_int);
       }
-      if (m_uniformDataList[i].m_typeName=="float")
+      if (m_uniformList[i].m_typeName=="float")
       {
-        shader->setShaderParam1f(m_uniformDataList[i].m_name,m_uniformDataList[i].m_float);
+        shader->setShaderParam1f(m_uniformList[i].m_name,m_uniformList[i].m_float);
       }
-
-      if (m_uniformDataList[i].m_typeName=="vec3")
+      if (m_uniformList[i].m_typeName=="vec3")
       {
         ngl::Vec4 newVec3;
-        newVec3.m_x=m_uniformDataList[i].m_vec3.m_x;
-        newVec3.m_y=m_uniformDataList[i].m_vec3.m_y;
-        newVec3.m_z=m_uniformDataList[i].m_vec3.m_z;
+        newVec3.m_x=m_uniformList[i].m_vec3.m_x;
+        newVec3.m_y=m_uniformList[i].m_vec3.m_y;
+        newVec3.m_z=m_uniformList[i].m_vec3.m_z;
         newVec3.m_w=1;
-        shader->setShaderParamFromVec4(m_uniformDataList[i].m_name, newVec3);
-
+        shader->setShaderParamFromVec4(m_uniformList[i].m_name, newVec3);
       }
-      if (m_uniformDataList[i].m_typeName=="vec4")
+      if (m_uniformList[i].m_typeName=="vec4")
       {
-        shader->setShaderParamFromVec4(m_uniformDataList[i].m_name, m_uniformDataList[i].m_vec4);
-       // std::cout<<"Name: "<<m_uniformDataList[i].m_name<<"  value: "<<m_uniformDataList[i].m_vec4.m_x<<", "<<m_uniformDataList[i].m_vec4.m_y<<", "<<m_uniformDataList[i].m_vec4.m_z<<"; "<<std::endl;
-
+        shader->setShaderParamFromVec4(m_uniformList[i].m_name, m_uniformList[i].m_vec4);
+       // std::cout<<"Name: "<<m_uniformList[i].m_name<<"  value: "<<m_uniformList[i].m_vec4.m_x<<", "<<m_uniformList[i].m_vec4.m_y<<", "<<m_uniformList[i].m_vec4.m_z<<"; "<<std::endl;
       }
-
-      if (m_uniformDataList[i].m_typeName=="mat3")
+      if (m_uniformList[i].m_typeName=="mat3")
       {
-        shader->setShaderParamFromMat3(m_uniformDataList[i].m_name, m_uniformDataList[i].m_mat3);
+        shader->setShaderParamFromMat3(m_uniformList[i].m_name, m_uniformList[i].m_mat3);
       }
-      if (m_uniformDataList[i].m_typeName=="mat4")
+      if (m_uniformList[i].m_typeName=="mat4")
       {
-        shader->setShaderParamFromMat4(m_uniformDataList[i].m_name, m_uniformDataList[i].m_mat4);
+        shader->setShaderParamFromMat4(m_uniformList[i].m_name, m_uniformList[i].m_mat4);
       }
     }
-
-
   }
 }

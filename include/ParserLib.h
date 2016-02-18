@@ -19,23 +19,39 @@ public:
   ~parserLib();
 
   //----------------------------------------------------------------------------------------------------------------------
-  /// @brief get and store uniform data(non-values)
+  /// @brief finds number of active uniforms and stores the data in blocks called uniformData.
+  ///  This then stores it in a list m_uniformList
   //----------------------------------------------------------------------------------------------------------------------
-  void assignUniformInformation();
+  void initializeUniformData();
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief sets default values for the active uniforms
+  //----------------------------------------------------------------------------------------------------------------------
   void assignUniformValues();
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief assigns all appropriate values, locations, data types, names
+  //----------------------------------------------------------------------------------------------------------------------
   void assignAllData();
-
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief takes the list of uniforms and updates them onto the shader, depending on the data type.
+  /// @param[in] _shader an instance of the current shader
+  //----------------------------------------------------------------------------------------------------------------------
   void sendUniformsToShader(ngl::ShaderLib *shader);
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief prints the uniform location, data type and names
+  /// @param[in] _printValues is whether or not you want to print out values.
   //----------------------------------------------------------------------------------------------------------------------
-  void printUniforms();
+  void printUniforms(bool _printValues);
+
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief used to translate the data type name from a number into a name. e.g. 35676 -> mat4
+  /// The following section was originally written by Jon Macey:-
+  /// Jon Macey. NCCA library NGL::ShaderProgram::printRegisteredUniforms [online]. [Accessed 01/10/16].
+  /// Available from: <https://nccastaff.bournemouth.ac.uk/jmacey/GraphicsLib/index.html>.
   //----------------------------------------------------------------------------------------------------------------------
   void uniformDataTypes();
+
   //----------------------------------------------------------------------------------------------------------------------
-  /// @brief exports the uniformData into a .txt file ...UPDATE: is this needed or can we just extract the information via the class?
+  /// @brief exports the uniformData into a .txt file
   //----------------------------------------------------------------------------------------------------------------------
   void exportUniforms();
 
@@ -57,17 +73,13 @@ public:
       std::string m_typeName; // Data Type string, easier to read e.g. "mat4"
 
       // Value types
-      bool m_bool=NULL;
-      int m_int=NULL;
-      float m_float=NULL;
-      ngl::Vec3 m_vec3=NULL;
-      ngl::Vec4 m_vec4=NULL;
-      ngl::Mat3 m_mat3=NULL;
+      bool m_bool=0;
+      int m_int=0;
+      float m_float=0;
+      ngl::Vec3 m_vec3=0;
+      ngl::Vec4 m_vec4=0;
+      ngl::Mat3 m_mat3=0;
       ngl::Mat4 m_mat4=0.0;
-
-  /// #Lets make a template class and see if that works....or uses switches(make sure to break) using Enums to activate different values
-  ///
-
   }uniformData;
 
 
@@ -80,28 +92,93 @@ public:
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief used to store a list of uniformData
   //----------------------------------------------------------------------------------------------------------------------
-  std::vector <uniformData> m_uniformDataList;
+  std::vector <uniformData> m_uniformList;
 
-  //-----------------------------------------------------------------------------------------------
-  /// @brief
-  //----------------------------------------------------------------------------------------------
-  bool getBool(int loc);
-  int getInt(int loc);
-  float getFloat(int loc);
-  ngl::Vec3 getVec3(int loc);
-  ngl::Vec4 getVec4(int loc);
-  ngl::Mat3 getMat3(int loc);
-  ngl::Mat4 getMat4(int loc);
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief this returns the m_bool value of uniformData in the m_uniformList
+  /// @param[in] _loc the location of the uniform in the m_uniformList
+  /// @return m_uniformList[i].uniformData.m_bool
+  //----------------------------------------------------------------------------------------------------------------------
+  bool getBool(int _loc);
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief this returns the m_int value of uniformData in the m_uniformList
+  /// @param[in] _loc the location of the uniform in the m_uniformList
+  /// @return m_uniformList[i].uniformData.m_int
+  //----------------------------------------------------------------------------------------------------------------------
+  int getInt(int _loc);
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief this returns the m_float value of uniformData in the m_uniformList
+  /// @param[in] _loc the location of the uniform in the m_uniformList
+  /// @return m_uniformList[i].uniformData.m_float
+  //----------------------------------------------------------------------------------------------------------------------
+  float getFloat(int _loc);
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief this returns the m_vec3 value of uniformData in the m_uniformList
+  /// @param[in] _loc the location of the uniform in the m_uniformList
+  /// @return m_uniformList[i].uniformData.m_vec3
+  //----------------------------------------------------------------------------------------------------------------------
+  ngl::Vec3 getVec3(int _loc);
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief this returns the m_vec4 value of uniformData in the m_uniformList
+  /// @param[in] _loc the location of the uniform in the m_uniformList
+  /// @return m_uniformList[i].uniformData.m_vec4
+  //----------------------------------------------------------------------------------------------------------------------
+  ngl::Vec4 getVec4(int _loc);
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief this returns the m_mat3 value of uniformData in the m_uniformList
+  /// @param[in] _loc the location of the uniform in the m_uniformList
+  /// @return m_uniformList[i].uniformData.m_mat3
+  //----------------------------------------------------------------------------------------------------------------------
+  ngl::Mat3 getMat3(int _loc);
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief this returns the m_mat4 value of uniformData in the m_uniformList
+  /// @param[in] _loc the location of the uniform in the m_uniformList
+  /// @return m_uniformList[i].uniformData.m_mat4
+  //----------------------------------------------------------------------------------------------------------------------
+  ngl::Mat4 getMat4(int _loc);
 
-  void setBool(int loc, bool newValue);
-  void setInt(int loc, int newValue);
-  void setFloat(int loc, float newValue);
-  void setVec3(int loc, ngl::Vec3 newValue);
-  void setVec4(int loc, ngl::Vec4 newValue);
-  void setMat3(int loc, ngl::Mat3 newValue);
-  void setMat4(int loc, ngl::Mat4 newValue);
-
-
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief this assigns the _value to the uniformData m_bool
+  /// @param[in] _loc is the location of the uniform in the list
+  /// @param[in] _value is the value to change m_bool to
+  //----------------------------------------------------------------------------------------------------------------------
+  void setBool(int _loc, bool _value);
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief this assigns the _value to the uniformData m_int
+  /// @param[in] _loc is the location of the uniform in the list
+  /// @param[in] _value is the value to change m_int to
+  //----------------------------------------------------------------------------------------------------------------------
+  void setInt(int _loc, int _value);
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief this assigns the _value to the uniformData m_float
+  /// @param[in] _loc is the location of the uniform in the list
+  /// @param[in] _value is the value to change m_float to
+  //----------------------------------------------------------------------------------------------------------------------
+  void setFloat(int _loc, float _value);
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief this assigns the _value to the uniformData m_vec3
+  /// @param[in] _loc is the location of the uniform in the list
+  /// @param[in] _value is the value to change m_vec3 to
+  //----------------------------------------------------------------------------------------------------------------------
+  void setVec3(int _loc, ngl::Vec3 _value);
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief this assigns the _value to the uniformData m_vec4
+  /// @param[in] _loc is the location of the uniform in the list
+  /// @param[in] _value is the value to change m_vec4 to
+  //----------------------------------------------------------------------------------------------------------------------
+  void setVec4(int _loc, ngl::Vec4 _value);
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief this assigns the _value to the uniformData m_mat3
+  /// @param[in] _loc is the location of the uniform in the list
+  /// @param[in] _value is the value to change m_mat3 to
+  //----------------------------------------------------------------------------------------------------------------------
+  void setMat3(int _loc, ngl::Mat3 _value);
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief this assigns the _value to the uniformData m_mat4
+  /// @param[in] _loc is the location of the uniform in the list
+  /// @param[in] _value is the value to change m_mat4 to
+  //----------------------------------------------------------------------------------------------------------------------
+  void setMat4(int _loc, ngl::Mat4 _value);
 
 };
 
