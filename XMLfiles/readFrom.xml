@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root name="Root node says hi">
+	<dataSets name="data sets!">
+		<a name = "M" type="mat4" value="5"></a>
+		<b name = "MV" type="mat4" value="3"></b>
+		<c name = "Normalize" type="mat4" value="2"></c>
+	</dataSets>
+</root>

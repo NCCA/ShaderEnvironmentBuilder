@@ -1,5 +1,5 @@
 # This specifies the exe name
-TARGET=CEB
+TARGET=CEB.out
 # where to put the .o files
 OBJECTS_DIR=obj
 # core Qt Libs to use add more here if needed.
@@ -27,6 +27,8 @@ INCLUDEPATH +=./include
 DESTDIR=./
 # add the glsl shader files
 OTHER_FILES+= $$PWD/shaders/*.glsl
+OTHER_FILES+= $$PWD/src/*.api
+OTHER_FILES+= $$PWD/ui_MainWindow.h
 # were are going to default to a console app
 CONFIG += console
 NGLPATH=$$(NGLDIR)
@@ -70,6 +72,7 @@ isEmpty(FLEX_BIN) {
     flexsource.output = src/generated/${QMAKE_FILE_BASE}.cpp
     flexsource.commands = flex --header-file=include/generated/${QMAKE_FILE_BASE}.h -o src/generated/${QMAKE_FILE_BASE}.cpp -+ ${QMAKE_FILE_IN}
     flexsource.variable_out = SOURCES
+    flexsource.clean = src/generated/${QMAKE_FILE_BASE}.cpp
     flexsource.name = Flex Sources ${QMAKE_FILE_IN}
     flexsource.CONFIG += target_predeps
 
@@ -86,3 +89,6 @@ isEmpty(FLEX_BIN) {
     QMAKE_EXTRA_COMPILERS += flexheader
     # end of Citation
 }
+
+# Supress yield warning
+QMAKE_CXXFLAGS_WARN_ON += -Wno-deprecated-register
