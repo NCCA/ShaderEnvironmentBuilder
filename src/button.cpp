@@ -20,26 +20,26 @@ Button::Button(QWidget *parent) : QDialog(parent)
 
 void Button::createButtonBox()
 {
-  buttonBox = new QDialogButtonBox;
+  m_buttonBox = new QDialogButtonBox;
 
-  closeButton = buttonBox->addButton(tr("Select &Colour"),QDialogButtonBox::ActionRole);
+  m_closeButton = m_buttonBox->addButton(tr("Select &Colour"),QDialogButtonBox::ActionRole);
 
-  connect(closeButton, SIGNAL(clicked()), this, SLOT(openColourBox()));
+  connect(m_closeButton, SIGNAL(clicked()), this, SLOT(openColourBox()));
 }
 
 void Button::openColourBox()
 {
-  colourGroupBox = new QColorDialog(tr("Colour"));
-  colourBoxLabel = new QLabel(tr("Select a colour:"));
+  m_colourGroupBox = new QColorDialog(tr("Colour"));
+  m_colourBoxLabel = new QLabel(tr("Select a colour:"));
 
   //colourBoxLayout = new QGridLayout;
   //colourGroupBox->setLayout(colourBoxLayout);
-  myColor=colourGroupBox->getColor();
+  m_myColor=m_colourGroupBox->getColor();
   //std::cout<<"Done"<<std::endl;
-  colourStruct.m_r = myColor.redF();
-  colourStruct.m_g = myColor.greenF();
-  colourStruct.m_b = myColor.blueF();
+  m_colourStruct.m_r = m_myColor.redF();
+  m_colourStruct.m_g = m_myColor.greenF();
+  m_colourStruct.m_b = m_myColor.blueF();
 
-  std::cout<<"R: "<<colourStruct.m_r<<"\nG: "<<colourStruct.m_g<<"\nB: "<<colourStruct.m_b<<std::endl;
+  std::cout<<"R: "<<m_colourStruct.m_r<<"\nG: "<<m_colourStruct.m_g<<"\nB: "<<m_colourStruct.m_b<<std::endl;
 
 }

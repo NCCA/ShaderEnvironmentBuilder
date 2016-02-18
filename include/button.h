@@ -55,33 +55,33 @@ private:
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief colour structure to store colour attributes for easy accessibility
   //----------------------------------------------------------------------------------------------------------------------
-  m_colour colourStruct;
+  m_colour m_colourStruct;
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief button box to open colour picker
   //----------------------------------------------------------------------------------------------------------------------
-  QDialogButtonBox *buttonBox;
-  QDialogButtonBox *buttonBox2;
+  QDialogButtonBox *m_buttonBox;
+  QDialogButtonBox *m_buttonBox2;
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief colour used to store attributes coming out from colour picker
   //----------------------------------------------------------------------------------------------------------------------
-  QColor myColor;
+  QColor m_myColor;
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief colour box to select colours
   //----------------------------------------------------------------------------------------------------------------------
-  QColorDialog *colourGroupBox;
+  QColorDialog *m_colourGroupBox;
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief layout for colour box to be stored within
   //----------------------------------------------------------------------------------------------------------------------
-  QGridLayout *colourBoxLayout;
+  QGridLayout *m_colourBoxLayout;
   //----------------------------------------------------------------------------------------------------------------------
   //ignore these for now
   //----------------------------------------------------------------------------------------------------------------------
-  QPushButton *closeButton;
-  QPushButton *helpButton;
+  QPushButton *m_closeButton;
+  QPushButton *m_helpButton;
 
-  QLabel *colourBoxLabel;
+  QLabel *m_colourBoxLabel;
 
-  QGridLayout *mainLayout;
+  QGridLayout *m_mainLayout;
 
 
 };
