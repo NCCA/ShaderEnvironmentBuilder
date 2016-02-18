@@ -11,16 +11,94 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>ngl Qt Demo</string>
+   <string>CEB -- Chader Envionment Builder</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="s_mainWindowGridLayout">
-    <item row="2" column="1">
+    <item row="1" column="2">
+     <widget class="QComboBox" name="cb_shaderType"/>
+    </item>
+    <item row="0" column="2">
+     <widget class="QTabWidget" name="tabs_qsci">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <property name="documentMode">
+       <bool>false</bool>
+      </property>
+      <property name="tabsClosable">
+       <bool>false</bool>
+      </property>
+      <property name="movable">
+       <bool>false</bool>
+      </property>
+      <widget class="QWidget" name="tab_qsci_1">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <attribute name="title">
+        <string>Vertex</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="tab_qsci_2">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <attribute name="title">
+        <string>Fragment</string>
+       </attribute>
+      </widget>
+     </widget>
+    </item>
+    <item row="2" column="2">
      <widget class="QPushButton" name="btn_loadShader">
       <property name="text">
        <string>Load Shader</string>
       </property>
      </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QLabel" name="lbl_shaderType">
+      <property name="text">
+       <string>Shader type:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QPushButton" name="btn_compileShader">
+      <property name="text">
+       <string>Compile Shader</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <layout class="QVBoxLayout" name="vl_uniforms">
+      <item>
+       <widget class="QFrame" name="uniform_placeHolder">
+        <property name="minimumSize">
+         <size>
+          <width>150</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
     <item row="0" column="0">
      <spacer name="spacer_openGl">
@@ -35,39 +113,6 @@
       </property>
      </spacer>
     </item>
-    <item row="0" column="1">
-     <spacer name="spacer_qsci">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="2" column="0">
-     <widget class="QPushButton" name="btn_compileShader">
-      <property name="text">
-       <string>Compile Shader</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="1">
-     <widget class="QComboBox" name="cb_shaderType"/>
-    </item>
-    <item row="1" column="0">
-     <widget class="QLabel" name="lbl_shaderType">
-      <property name="text">
-       <string>Shader type:</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-      </property>
-     </widget>
-    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -76,7 +121,7 @@
      <x>0</x>
      <y>0</y>
      <width>972</width>
-     <height>26</height>
+     <height>19</height>
     </rect>
    </property>
   </widget>
