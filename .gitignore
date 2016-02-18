@@ -26,6 +26,7 @@
 
 # Qt pro user file
 *.pro.user*
+*.pro.user
 
 # P4 merge files
 *.BASE.*
@@ -54,11 +55,15 @@ install_manifest.txt
 moc_*.cpp
 ui_*.h
 
-# Flex generated lexer
-src/glslLexer.cpp
+# Flex generated source and headers
+src/generated/*
+include/generated/*
 
 # Testing files all go in ./tempFiles
 tempFiles/*
 
 # Wiki files
 *.wiki/*
+
+# Temp files created on linux
+.nfs*

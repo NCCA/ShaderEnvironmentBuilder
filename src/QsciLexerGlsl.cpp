@@ -1,9 +1,9 @@
-#include <qscilexerglsl.h>
+#include <QsciLexerGlsl.h>
 #include <Qsci/qsciscintilla.h>
 
 #include <iostream>
 #include <sstream>
-#include "glslLexer.h"
+#include "generated/GlslLexer.h"
 
 QsciLexerGLSL::QsciLexerGLSL(QObject *parent) : QsciLexerCustom(parent)
 {
