@@ -122,7 +122,7 @@ void NGLScene::initializeGL()
   //m_readFromXML->writeXML("light.diffuse", "vec3", 9001);            //Reading Jonny.L's organised file with name, type, value. Need to dynamically write to XMl.
   m_readFromXML->shaderData("WhyHelloThere", "PhongVertex", "shaders/PhongVertex.glsl", "PhongFragment", "shaders/PhongFragment.glsl");
 
-  m_newJson->buildJson();
+  m_newJson->defaultShader();
   string name = "M example";
   string type = "mat 4 example";
   int value = 5;
