@@ -10,8 +10,9 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent), m_ui(new Ui::MainW
 
   // Setup ui from form creator (MainWindow.ui)
   m_ui->setupUi(this);
+  // create parser in main window
   m_parForButton = new parserLib;
-  // Create openGl and qsci widgets
+  // Create openGl and qsci widgets, pass in the parser
   m_gl=new  NGLScene(this, m_parForButton);
   m_qsci = new QsciScintilla(this);
   QsciLexer* lex = new QsciLexerGLSL(m_qsci);
@@ -52,6 +53,7 @@ void MainWindow::on_btn_compileShader_clicked()
 {
   m_gl->compileShader();
   m_parForButton->printUniforms();
+  createButtons();
 }
 
 void MainWindow::printUniforms()
@@ -63,9 +65,12 @@ void MainWindow::createButtons()
 {
   for(int i=0;i<m_parForButton->m_uniformDataList.size(); ++i)
   {
-    if(m_parForButton->m_uniformDataList[i].m_name=="vec3")
+    if(m_parForButton->m_uniformDataList[i].m_typeName=="vec4")
     {
-      Button temp;
+      ngl::Vec4 _tempVec=m_parForButton->returnVec4(i);
+      //Button temp;
+      std::cout<<"HERE: "<<i<<std::endl;
+      std::cout<<"\nVal:\nx: "<<_tempVec.m_x<<"\ny: "<<_tempVec.m_y<<"\nz:"<<_tempVec.m_z<<std::endl;
       //m_buttonList.push_back(Button myNew);
     }
   }
