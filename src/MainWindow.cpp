@@ -12,6 +12,8 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent), m_ui(new Ui::MainW
   // Setup ui from form creator (MainWindow.ui)
   m_ui->setupUi(this);
 
+  delete(m_ui->f_gl);
+
   // Create openGl and qsci widgets
   m_gl=new  NGLScene(this);
 
@@ -61,8 +63,7 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent), m_ui(new Ui::MainW
 
   // add the qscintilla and openGl window to the interface
   //m_ui->s_mainWindowGridLayout->addWidget(m_qsci,0, 2, 1, 1);
-  m_ui->s_mainWindowGridLayout->addWidget(m_gl, 0, 0, 1, 1);
-
+  m_ui->split_mainContext->insertWidget(0, m_gl);
 
   // Set the combo box values for the shader type
   m_ui->cb_shaderType->insertItem(static_cast<int>(ngl::ShaderType::VERTEX),
