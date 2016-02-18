@@ -75,12 +75,26 @@ void NGLScene::initializeGL()
   shader->loadShaderSource("PhongVertex","shaders/PhongVertex.glsl"); //NEEDS TO BE SHADERFROMTSTRING
   shader->loadShaderSource("PhongFragment","shaders/PhongFragment.glsl"); //NEEDS TO BE SHADERFROMSTRING
   // compile the shaders
-  shader->compileShader("PhongVertex");
+
+  GLuint shaderTest= shader->getProgramID("PhongFragment");
+
+  std::cout<<shaderTest<<std::endl;
+
+  GLint success=0;
+
+  glGetShaderiv(shaderTest,GL_COMPILE_STATUS, &success);
+
+
   shader->compileShader("PhongFragment");
 
-  // add them to the program
+
+  shader->compileShader("PhongVertex");
+
   shader->attachShaderToProgram("Phong","PhongVertex");
   shader->attachShaderToProgram("Phong","PhongFragment");
+
+  // add them to the program
+
   // now bind the shader attributes for most NGL primitives we use the following
   // layout attribute 0 is the vertex data (x,y,z)
   shader->bindAttribute("Phong",0,"inVert");
@@ -385,7 +399,13 @@ void NGLScene::loadShader(QString _text, ngl::ShaderType _type)
         shader->loadShaderSourceFromString("PhongVertex", _text.toUtf8().constData());
         break;
       case ngl::ShaderType::FRAGMENT:
+        GLuint shaderTest=shader->getProgramID("PhongFragment");
+        GLint success = 0;
+        glGetShaderiv(shaderTest, GL_COMPILE_STATUS, success);
+        if (success ==1)
+        {
         shader->loadShaderSourceFromString("PhongFragment", _text.toUtf8().constData());
+        }
         break;
       default:
         std::cout << "Shader type not compatible\n";
