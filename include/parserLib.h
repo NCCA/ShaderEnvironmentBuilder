@@ -85,13 +85,13 @@ public:
   //-----------------------------------------------------------------------------------------------
   /// @brief
   //----------------------------------------------------------------------------------------------
-  bool returnBool(int loc);
-  int returnInt(int loc);
-  float returnFloat(int loc);
-  ngl::Vec3 returnVec3(int loc);
-  ngl::Vec4 returnVec4(int loc);
-  ngl::Mat3 returnMat3(int loc);
-  ngl::Mat4 returnMat4(int loc);
+  bool getBool(int loc);
+  int getInt(int loc);
+  float getFloat(int loc);
+  ngl::Vec3 getVec3(int loc);
+  ngl::Vec4 getVec4(int loc);
+  ngl::Mat3 getMat3(int loc);
+  ngl::Mat4 getMat4(int loc);
 
   void setBool(int loc, bool newValue);
   void setInt(int loc, int newValue);

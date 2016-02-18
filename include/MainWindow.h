@@ -17,8 +17,10 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    /// @brief our QScintilla widget
-    QsciScintilla *m_qsci;
+    /// @brief our QScintilla widget1 (vertex)
+    QsciScintilla *m_qsci1;
+    /// @brief our QScintilla widget2 (fragment)
+    QsciScintilla *m_qsci2;
 
     explicit MainWindow(QWidget *parent = 0);
     void createButtons();
@@ -30,6 +32,8 @@ private slots:
     void on_btn_loadShader_clicked();
 
     void on_btn_compileShader_clicked();
+
+    void on_tabs_qsci_currentChanged(int index);
 
 private:
     Ui::MainWindow *m_ui;

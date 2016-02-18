@@ -3,7 +3,7 @@ TARGET=CEB.out
 # where to put the .o files
 OBJECTS_DIR=obj
 # core Qt Libs to use add more here if needed.
-QT+=gui opengl core
+QT+=gui opengl core widgets
 
 # as I want to support 4.8 and 5 this will set a flag for some of the mac stuff
 # mainly in the types.h file for the setMacVisual which is native in Qt5
@@ -28,6 +28,7 @@ DESTDIR=./
 # add the glsl shader files
 OTHER_FILES+= $$PWD/shaders/*.glsl
 OTHER_FILES+= $$PWD/src/*.api
+OTHER_FILES+= $$PWD/ui_MainWindow.h
 # were are going to default to a console app
 CONFIG += console
 NGLPATH=$$(NGLDIR)
@@ -64,9 +65,10 @@ isEmpty(FLEX_BIN) {
     FLEXSOURCES = src/glslLexer.lex
 
     flexsource.input = FLEXSOURCES
-    flexsource.output = src/${QMAKE_FILE_BASE}.cpp
-    flexsource.commands = flex -o src/${QMAKE_FILE_BASE}.cpp -+ ${QMAKE_FILE_IN}
+    flexsource.output = src/generated/${QMAKE_FILE_BASE}.cpp
+    flexsource.commands = flex -o src/generated/${QMAKE_FILE_BASE}.cpp -+ ${QMAKE_FILE_IN}
     flexsource.variable_out = SOURCES
+    flexsource.clean = src/generated/${QMAKE_FILE_BASE}.cpp
     flexsource.name = Flex Sources ${QMAKE_FILE_IN}
     flexsource.CONFIG += target_predeps
 
@@ -75,4 +77,3 @@ isEmpty(FLEX_BIN) {
 
 # Supress yield warning
 QMAKE_CXXFLAGS_WARN_ON += -Wno-deprecated-register
-
