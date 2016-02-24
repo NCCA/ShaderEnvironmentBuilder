@@ -1,5 +1,5 @@
 #include "NGLScene.h"
-#include "parserLib.h"
+#include "ParserLib.h"
 #include <iostream>
 #include <ngl/Vec3.h>
 #include <ngl/Camera.h>
@@ -147,9 +147,9 @@ void NGLScene::exportUniforms()
   }
   for(int i=0;i<m_parser->m_num;i++)
   {
-    fileOut<<m_parser->m_uniformDataList[i].m_name<<"\n";
-    fileOut<<m_parser->m_uniformDataList[i].m_loc<<"\n";
-    fileOut<<m_parser->m_uniformDataList[i].m_typeName<<"\n";
+    fileOut<<m_parser->m_uniformList[i].m_name<<"\n";
+    fileOut<<m_parser->m_uniformList[i].m_loc<<"\n";
+    fileOut<<m_parser->m_uniformList[i].m_typeName<<"\n";
   }
   fileOut.close();
   // close files
