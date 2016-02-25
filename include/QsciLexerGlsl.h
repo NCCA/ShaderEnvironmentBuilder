@@ -12,8 +12,6 @@ public:
 
     void styleText(int start, int end);
 
-    void highlightKeywords(const QString &source, int start);
-
     const char *language() const;
 
     QColor defaultColor(int style) const;
