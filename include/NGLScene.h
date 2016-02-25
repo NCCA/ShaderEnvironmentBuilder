@@ -12,7 +12,7 @@
 #include <memory>
 #include <QOpenGLWindow>
 #include <unordered_map>
-#include "parserLib.h"
+#include "ParserLib.h"
 
 //------------------------------------------------------------------------------
 /// @file NGLScene.h
