@@ -13,7 +13,9 @@ public:
     IO_XML();
     ~IO_XML();
 
-    void shaderData(const char *_shaderProgramName, const char *_vertexShaderName, const char *_vertexShaderGlsl, const char *_fragmentShaderName, const char *_fragmentShaderGlsl);
+    void shaderData(const char *_shaderProgramName,
+                    const char *_vertexShaderName, const char *_vertexShaderGlsl,
+                    const char *_fragmentShaderName, const char *_fragmentShaderGlsl);
     void readXML(std::string _type);
     void writeXML(std::string _name, std::string _type, int _value);
     rapidxml::xml_document<> m_doc;
