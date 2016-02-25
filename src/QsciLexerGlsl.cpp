@@ -69,7 +69,8 @@ void QsciLexerGLSL::styleText(int start, int end)
     tok = lexer->yylex();
   }
 
-  for (int i = 0; i<tokens.size(); i=i+3)
+  int tokensCount = tokens.size();
+  for (int i = 0; i<tokensCount; i=i+3)
   {
     switch(tokens[i])
     {
