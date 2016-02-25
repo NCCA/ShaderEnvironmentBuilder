@@ -133,7 +133,6 @@ void Json::replaceWord(std::string _oldWord, std::string _newWord)
      }
     }
     )";
-
     _oldWord = "Phong";
     _newWord = "NEW WORD";
     size_t pos;
