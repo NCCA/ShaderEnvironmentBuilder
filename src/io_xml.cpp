@@ -10,7 +10,6 @@ using namespace std;
 IO_XML::IO_XML()
 {
 }
-
 // ----------------------------------------------------------------------------------------------------------------------
 // Organises name, type and value for shader data into an XML file. E.g. Name: light.diffuse, Type: mat4, value: 1
 void IO_XML::writeXML(std::string _name, std::string _type, int _value)
