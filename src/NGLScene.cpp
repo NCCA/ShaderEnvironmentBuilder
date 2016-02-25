@@ -120,12 +120,7 @@ void NGLScene::initializeGL()
   // set the viewport for openGL we need to take into account retina display
 
   m_readFromXML->shaderData("WhyHelloThere", "PhongVertex", "shaders/PhongVertex.glsl", "PhongFragment", "shaders/PhongFragment.glsl");
-
-  m_newJson->buildJson();
-
   m_parser->assignAllData();
-
-
 }
 
 

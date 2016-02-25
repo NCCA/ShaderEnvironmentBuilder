@@ -24,11 +24,11 @@ public:
 
 
 private slots:
-    void on_btn_loadShader_clicked();
+    void on_m_btn_loadShader_clicked();
 
-    void on_btn_compileShader_clicked();
+    void on_m_btn_compileShader_clicked();
 
-    void on_tabs_qsci_currentChanged(int index);
+    void on_m_tabs_qsci_currentChanged(int index);
 
 private:
     Ui::MainWindow *m_ui;

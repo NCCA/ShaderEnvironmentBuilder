@@ -1,19 +1,25 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
-#include "qscilexerglsl.h"
+#include "QsciLexerGlsl.h"
 
 #include <Qsci/qsciscintilla.h>
 #include <QTextStream>
 
-MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent), m_ui(new Ui::MainWindow)
+MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent),
+                                         m_ui(new Ui::MainWindow)
 {
 
 
   // Setup ui from form creator (MainWindow.ui)
   m_ui->setupUi(this);
 
-  // Create openGl and qsci widgets
+  // Create openGl from template frame
   m_gl=new  NGLScene(this);
+  m_gl->setSizePolicy(m_ui->m_f_gl_temp->sizePolicy());
+  m_gl->setMinimumSize(m_ui->m_f_gl_temp->minimumSize());
+
+  // Delete the template frame
+  delete(m_ui->m_f_gl_temp);
 
   // Widget 1 (vertex)
   m_qsci1 = new QsciScintilla(this);
@@ -29,12 +35,12 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent), m_ui(new Ui::MainW
   // to appear we would need to implement a line length checking
   m_qsci1->SendScintilla(QsciScintillaBase::SCI_SETSCROLLWIDTHTRACKING, 1);
   m_qsci1->SendScintilla(QsciScintillaBase::SCI_SETSCROLLWIDTH, 5);
-  m_ui->tab_qsci_1->layout();
+  m_ui->m_tab_qsci_1->layout();
 
   // Create a layout to enable filling of the widget
   QBoxLayout *layout = new QVBoxLayout;
   layout->addWidget(m_qsci1);
-  m_ui->tab_qsci_1->setLayout(layout);
+  m_ui->m_tab_qsci_1->setLayout(layout);
 
 
   // Widget 2 (fragment)
@@ -56,23 +62,22 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent), m_ui(new Ui::MainW
   // Create a layout to enable filling of the widget
   layout = new QVBoxLayout;
   layout->addWidget(m_qsci2);
-  m_ui->tab_qsci_2->setLayout(layout);
+  m_ui->m_tab_qsci_2->setLayout(layout);
 
 
   // add the qscintilla and openGl window to the interface
   //m_ui->s_mainWindowGridLayout->addWidget(m_qsci,0, 2, 1, 1);
-  m_ui->s_mainWindowGridLayout->addWidget(m_gl, 0, 0, 1, 1);
-
+  m_ui->m_split_mainContext->insertWidget(0, m_gl);
 
   // Set the combo box values for the shader type
-  m_ui->cb_shaderType->insertItem(static_cast<int>(ngl::ShaderType::VERTEX),
+  m_ui->m_cb_shaderType->insertItem(static_cast<int>(ngl::ShaderType::VERTEX),
                                   "Vertex Shader");
-  m_ui->cb_shaderType->insertItem(static_cast<int>(ngl::ShaderType::FRAGMENT),
+  m_ui->m_cb_shaderType->insertItem(static_cast<int>(ngl::ShaderType::FRAGMENT),
                                   "Fragment Shader");
-  m_ui->cb_shaderType->insertItem(static_cast<int>(ngl::ShaderType::COMPUTE),
+  m_ui->m_cb_shaderType->insertItem(static_cast<int>(ngl::ShaderType::COMPUTE),
                                   "Compute Shader");
   // Set the combo box initially to VERTEX
-  m_ui->cb_shaderType->setCurrentIndex(static_cast<int>(
+  m_ui->m_cb_shaderType->setCurrentIndex(static_cast<int>(
                                          ngl::ShaderType::VERTEX));
 
 
@@ -102,12 +107,12 @@ MainWindow::~MainWindow()
     delete m_ui;
 }
 
-void MainWindow::on_btn_loadShader_clicked()
+void MainWindow::on_m_btn_loadShader_clicked()
 {
-    int cb_id = m_ui->cb_shaderType->currentIndex();
+    int cb_id = m_ui->m_cb_shaderType->currentIndex();
     ngl::ShaderType shdrChoiceId = static_cast<ngl::ShaderType>(cb_id);
 
-    int tabId = m_ui->tabs_qsci->currentIndex();
+    int tabId = m_ui->m_tabs_qsci->currentIndex();
     std::cout<< "TABID: " << tabId << std::endl;
     QString text;
 
@@ -129,21 +134,23 @@ void MainWindow::on_btn_loadShader_clicked()
 
 }
 
-void MainWindow::on_btn_compileShader_clicked()
+void MainWindow::on_m_btn_compileShader_clicked()
 {
   m_gl->compileShader();
 }
 
-void MainWindow::on_tabs_qsci_currentChanged(int index)
+void MainWindow::on_m_tabs_qsci_currentChanged(int index)
 {
   switch (index)
   {
     case 0:
-      m_ui->cb_shaderType->setCurrentIndex(static_cast<int>(ngl::ShaderType::VERTEX));
+      m_ui->m_cb_shaderType->setCurrentIndex(static_cast<int>(
+                                               ngl::ShaderType::VERTEX));
     break;
 
     case 1:
-      m_ui->cb_shaderType->setCurrentIndex(static_cast<int>(ngl::ShaderType::FRAGMENT));
+      m_ui->m_cb_shaderType->setCurrentIndex(static_cast<int>(
+                                               ngl::ShaderType::FRAGMENT));
     break;
 
     default:
