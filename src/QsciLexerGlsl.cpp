@@ -90,8 +90,8 @@ QColor QsciLexerGLSL::defaultColor(int style) const
     case StyleType::STRING:   { return QColor(230, 219, 116); }
     case StyleType::FUNCTION: { return QColor(166, 226, 46); }
     case StyleType::COMMENT:  { return QColor(117, 113, 94); }
+    default:                  { return QColor(247,247,241); }
   }
-  return QColor(247,247,241);
 }
 
 //----------------------------------------------------------------------------------------------------------------------
