@@ -1,6 +1,6 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
-#include "qscilexerglsl.h"
+#include "QsciLexerGlsl.h"
 
 #include <Qsci/qsciscintilla.h>
 #include <QTextStream>

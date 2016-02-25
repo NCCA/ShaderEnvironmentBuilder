@@ -1,12 +1,12 @@
 /* GLSL Flex lexr */
 
-%option noyywrap
+
 %option c++
 
 %{
 	#include <vector>
 	#include <sstream>
-    #include "qscilexerglsl.h"
+    #include "QsciLexerGlsl.h"
 %}
 
 %s LEXSTRING
@@ -81,6 +81,4 @@ mat[234](x[234])?                                       |
 
 %%
 
-void test(){
-    std::cout<<"test\n";
-}
+int yyFlexLexer::yywrap()   { return 1;}
