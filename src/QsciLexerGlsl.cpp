@@ -72,21 +72,8 @@ void QsciLexerGLSL::styleText(int start, int end)
   int tokensCount = tokens.size();
   for (int i = 0; i<tokensCount; i=i+3)
   {
-    switch(tokens[i])
-    {
-      case StyleType::FUNCTION:
-      {
-        startStyling(start+tokens[i+1]);
-        setStyling(tokens[i+2]-1,StyleType::FUNCTION);
-        break;
-      }
-      default:
-      {
-        startStyling(start+tokens[i+1]);
-        setStyling(tokens[i+2],tokens[i]);
-        break;
-      }
-    }
+    startStyling(start+tokens[i+1]);
+    setStyling(tokens[i+2],tokens[i]);
   }
 }
 
