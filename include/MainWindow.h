@@ -1,10 +1,11 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
+#include <ngl/Vec4.h>
 #include "NGLScene.h"
+#include <QMainWindow>
+#include "ParserLib.h"
 #include "button.h"
-#include "parserLib.h"
 #include <Qsci/qsciscintilla.h>
 #include <vector>
 
@@ -40,7 +41,7 @@ private:
         /// @brief our openGL widget
         NGLScene *m_gl;
     parserLib *m_parForButton;
-    std::vector<Button> m_buttonList;
+    //std::vector<Button> m_buttonList;
 
 };
 

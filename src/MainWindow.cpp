@@ -1,7 +1,6 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 #include "qscilexerglsl.h"
-#include "button.h"
 
 #include <Qsci/qsciscintilla.h>
 #include <QTextStream>
@@ -134,20 +133,20 @@ void MainWindow::on_btn_loadShader_clicked()
 void MainWindow::on_btn_compileShader_clicked()
 {
   m_gl->compileShader();
-  m_parForButton->printUniforms();
+  m_parForButton->printUniforms(1);
   createButtons();
 }
 
 void MainWindow::printUniforms()
 {
-  m_parForButton->printUniforms();
+  m_parForButton->printUniforms(1);
 }
 
 void MainWindow::createButtons()
 {
-  for(int i=0;i<m_parForButton->m_uniformDataList.size(); ++i)
+  for(int i=0;i<m_parForButton->m_uniformList.size(); ++i)
   {
-    if(m_parForButton->m_uniformDataList[i].m_typeName=="vec4")
+    if(m_parForButton->m_uniformList[i].m_typeName=="vec4")
     {
       ngl::Vec4 _tempVec=m_parForButton->getVec4(i);
       //Button temp;

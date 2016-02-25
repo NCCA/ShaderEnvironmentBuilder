@@ -1,5 +1,3 @@
-#include <QtWidgets>
-
 #include "button.h"
 #include <cstdlib>
 #include <iostream>

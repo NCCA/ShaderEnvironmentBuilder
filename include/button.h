@@ -1,6 +1,8 @@
 #ifndef BUTTON_H_
 #define BUTTON_H_
 
+#include <ngl/Vec4.h>
+#include <QtWidgets>
 #include <QDialog>
 #include <QQueue>
 #include <QtGui/QColorDialog>
@@ -14,6 +16,7 @@ class QLabel;
 class QPushButton;
 class QColor;
 QT_END_NAMESPACE
+
 //----------------------------------------------------------------------------------------------------------------------
 /// @file button.h
 /// @brief this class creates a button with a pop up widget that can create modifiable
@@ -33,7 +36,7 @@ public:
   /// @param [in] the parent window is defaulted to nothing
   //----------------------------------------------------------------------------------------------------------------------
   Button(QWidget *parent=0);
-  //Button(QWidget *parent=0, QString _buttonName, ngl::Vec4 _defaultVal);
+  Button(QString _buttonName, ngl::Vec4 _defaultVal, QWidget *parent=0);
 private slots:
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief a slot to open a colour box upon event
