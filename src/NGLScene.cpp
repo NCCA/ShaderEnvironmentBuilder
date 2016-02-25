@@ -1,5 +1,5 @@
 #include "NGLScene.h"
-#include "parserLib.h"
+#include "ParserLib.h"
 #include <iostream>
 #include <ngl/Vec3.h>
 #include <ngl/Camera.h>
@@ -119,19 +119,12 @@ void NGLScene::initializeGL()
   // as re-size is not explicitly called we need to do that.
   // set the viewport for openGL we need to take into account retina display
 
-  //m_readFromXML->writeXML("light.diffuse", "vec3", 9001);            //Reading Jonny.L's organised file with name, type, value. Need to dynamically write to XMl.
   m_readFromXML->shaderData("WhyHelloThere", "PhongVertex", "shaders/PhongVertex.glsl", "PhongFragment", "shaders/PhongFragment.glsl");
 
   m_newJson->buildJson();
 
   m_parser->assignAllData();
-//  m_parser->exportUniforms();
-//  Jsons = new Json();
-//  Jsons->buildJson();
 
-//  Json *jsonInstance = new Json();
-//  jsonInstance->buildJson();
-//  jsonInstance->replaceWord("Shader", "CHANGED");
 
 }
 
@@ -147,9 +140,9 @@ void NGLScene::exportUniforms()
   }
   for(int i=0;i<m_parser->m_num;i++)
   {
-    fileOut<<m_parser->m_uniformDataList[i].m_name<<"\n";
-    fileOut<<m_parser->m_uniformDataList[i].m_loc<<"\n";
-    fileOut<<m_parser->m_uniformDataList[i].m_typeName<<"\n";
+    fileOut<<m_parser->m_uniformList[i]->getName()<<"\n";
+    fileOut<<m_parser->m_uniformList[i]->getLocation()<<"\n";
+    fileOut<<m_parser->m_uniformList[i]->getTypeName()<<"\n";
   }
   fileOut.close();
   // close files
@@ -227,7 +220,6 @@ void NGLScene::loadMatricesToShader()
 
 
   m_parser->sendUniformsToShader(shader);
-
   shader->setShaderParamFromMat4("MV",MV);
   shader->setShaderParamFromMat4("MVP",MVP);
   shader->setShaderParamFromMat3("normalMatrix",normalMatrix);
@@ -257,6 +249,7 @@ void NGLScene::keyPressEvent(QKeyEvent *_event)
   case Qt::Key_F : showFullScreen(); break;
   // show windowed
   case Qt::Key_N : showNormal(); break;
+  case Qt::Key_Space: m_parser->assignUniformValues();
 
   default : break;
   }
@@ -277,7 +270,7 @@ void NGLScene::mouseMoveEvent ( QMouseEvent * _event )
     update();
 
   }
-        // right mouse translate code
+  // right mouse translate code
   else if(m_translate && _event->buttons() == Qt::RightButton)
   {
     int diffX = (int)(_event->x() - m_origXPos);
@@ -310,8 +303,7 @@ void NGLScene::mousePressEvent ( QMouseEvent * _event )
     m_origYPos = _event->y();
     m_translate=true;
   }
-
-  setFocus();
+      setFocus();
 }
 
 //----------------------------------------------------------------------------------------------------------------------
