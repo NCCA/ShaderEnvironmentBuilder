@@ -30,6 +30,9 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent),
   m_qsci1->setMarginsForegroundColor(QColor(128, 128, 128));
   m_qsci1->setCaretForegroundColor(QColor(247, 247, 241));
   m_qsci1->setCaretWidth(2);
+  m_qsci1->setBraceMatching(QsciScintilla::BraceMatch::SloppyBraceMatch);
+  m_qsci1->setMatchedBraceBackgroundColor(QColor(62, 61, 50));
+  m_qsci1->setUnmatchedBraceBackgroundColor(QColor(249, 38, 114));
   // Enable scroll width tracking and set the scroll width to a low number
   // Scintilla doesn't track line length, so if we wanted automated scrollbar
   // to appear we would need to implement a line length checking
@@ -52,6 +55,9 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent),
   m_qsci2->setMarginsForegroundColor(QColor(128, 128, 128));
   m_qsci2->setCaretForegroundColor(QColor(247, 247, 241));
   m_qsci2->setCaretWidth(2);
+  m_qsci2->setBraceMatching(QsciScintilla::BraceMatch::SloppyBraceMatch);
+  m_qsci2->setMatchedBraceBackgroundColor(QColor(62, 61, 50));
+  m_qsci2->setUnmatchedBraceBackgroundColor(QColor(249, 38, 114));
   // Enable scroll width tracking and set the scroll width to a low number
   // Scintilla doesn't track line length, so if we wanted automated scrollbar
   // to appear we would need to implement a line length checking
