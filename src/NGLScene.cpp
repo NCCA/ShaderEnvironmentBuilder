@@ -119,20 +119,8 @@ void NGLScene::initializeGL()
   // as re-size is not explicitly called we need to do that.
   // set the viewport for openGL we need to take into account retina display
 
-  //m_readFromXML->writeXML("light.diffuse", "vec3", 9001);            //Reading Jonny.L's organised file with name, type, value. Need to dynamically write to XMl.
   m_readFromXML->shaderData("WhyHelloThere", "PhongVertex", "shaders/PhongVertex.glsl", "PhongFragment", "shaders/PhongFragment.glsl");
-
-  m_newJson->buildJson();
-
   m_parser->assignAllData();
-//  m_parser->exportUniforms();
-//  Jsons = new Json();
-//  Jsons->buildJson();
-
-//  Json *jsonInstance = new Json();
-//  jsonInstance->buildJson();
-//  jsonInstance->replaceWord("Shader", "CHANGED");
-
 }
 
 
