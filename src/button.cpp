@@ -16,10 +16,10 @@ Button::Button(QWidget *parent) : QDialog(parent)
 
 }
 
-/*Button(QWidget *parent=0, QString _buttonName, ngl::Vec4 _defaultVal) : QDialog(parent)
+Button::Button(QString _buttonName, ngl::Vec4 _defaultVal, QWidget *parent) : QDialog(parent)
 {
-
-}*/
+  createButtonBox(_buttonName);
+}
 
 void Button::createButtonBox(QString _buttonName)
 {
