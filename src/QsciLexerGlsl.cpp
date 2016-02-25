@@ -72,21 +72,8 @@ void QsciLexerGLSL::styleText(int start, int end)
   int tokensCount = tokens.size();
   for (int i = 0; i<tokensCount; i=i+3)
   {
-    switch(tokens[i])
-    {
-      case StyleType::FUNCTION:
-      {
-        startStyling(start+tokens[i+1]);
-        setStyling(tokens[i+2]-1,StyleType::FUNCTION);
-        break;
-      }
-      default:
-      {
-        startStyling(start+tokens[i+1]);
-        setStyling(tokens[i+2],tokens[i]);
-        break;
-      }
-    }
+    startStyling(start+tokens[i+1]);
+    setStyling(tokens[i+2],tokens[i]);
   }
 }
 
@@ -103,8 +90,8 @@ QColor QsciLexerGLSL::defaultColor(int style) const
     case StyleType::STRING:   { return QColor(230, 219, 116); }
     case StyleType::FUNCTION: { return QColor(166, 226, 46); }
     case StyleType::COMMENT:  { return QColor(117, 113, 94); }
+    default:                  { return QColor(247,247,241); }
   }
-  return QColor(247,247,241);
 }
 
 //----------------------------------------------------------------------------------------------------------------------
