@@ -21,6 +21,7 @@ const static float INCREMENT=0.01f;
 /// @brief the increment for the wheel zoom
 //----------------------------------------------------------------------------------------------------------------------
 const static float ZOOM=0.1f;
+//----------------------------------------------------------------------------------------------------------------------
 
 //----------------------------------------------------------------------------------------------------------------------
 NGLScene::NGLScene( QWidget *_parent ) : QOpenGLWidget( _parent )
@@ -39,9 +40,15 @@ NGLScene::NGLScene( QWidget *_parent ) : QOpenGLWidget( _parent )
   // set this widget to have the initial keyboard focus
   setFocus();
 }
+
 //----------------------------------------------------------------------------------------------------------------------
 NGLScene::~NGLScene()
-{;}
+{
+  delete m_newJson;
+  //delete m_readFromXML;
+  delete m_parser;
+}
+
 //----------------------------------------------------------------------------------------------------------------------
 // This virtual function is called once before the first call to paintGL() or resizeGL(),
 // and then once whenever the widget has been assigned a new QGLContext.
@@ -116,14 +123,11 @@ void NGLScene::initializeGL()
   light.enable();
   // load these values to the shader as well
   light.loadToShader("light");
-  // as re-size is not explicitly called we need to do that.
-  // set the viewport for openGL we need to take into account retina display
 
   m_readFromXML->shaderData("WhyHelloThere", "PhongVertex", "shaders/PhongVertex.glsl", "PhongFragment", "shaders/PhongFragment.glsl");
   m_parser->assignAllData();
 }
-
-
+//----------------------------------------------------------------------------------------------------------------------
 void NGLScene::exportUniforms()
 {
   std::ofstream fileOut;
@@ -133,7 +137,7 @@ void NGLScene::exportUniforms()
     std::cerr<<"couldn't' open file\n";
     exit(EXIT_FAILURE);
   }
-  for(int i=0;i<m_parser->m_num;i++)
+  for(uint i=0;i<m_parser->m_num;i++)
   {
     fileOut<<m_parser->m_uniformList[i]->getName()<<"\n";
     fileOut<<m_parser->m_uniformList[i]->getLocation()<<"\n";
@@ -149,6 +153,7 @@ void NGLScene::exportUniforms()
 //----------------------------------------------------------------------------------------------------------------------
 //This virtual function is called whenever the widget needs to be painted.
 // this is our main drawing routine
+//----------------------------------------------------------------------------------------------------------------------
 void NGLScene::paintGL()
 {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -184,6 +189,7 @@ void NGLScene::paintGL()
   ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
   prim->draw("teapot");
 }
+
 //----------------------------------------------------------------------------------------------------------------------
 void NGLScene::resizeGL(QResizeEvent *_event)
 {
@@ -220,6 +226,7 @@ void NGLScene::loadMatricesToShader()
   shader->setShaderParamFromMat3("normalMatrix",normalMatrix);
   shader->setShaderParamFromMat4("M",M);
 }
+
 //----------------------------------------------------------------------------------------------------------------------
 void NGLScene::setCamShape()
 {
@@ -237,9 +244,9 @@ void NGLScene::keyPressEvent(QKeyEvent *_event)
   // escape key to quit
   //case Qt::Key_Escape : QGuiApplication::exit(EXIT_SUCCESS); break;
   // turn on wirframe rendering
-  case Qt::Key_W : glPolygonMode(GL_FRONT_AND_BACK,GL_LINE); break;
+  case Qt::Key_W : m_wireframe=true; break;
   // turn off wire frame
-  case Qt::Key_S : glPolygonMode(GL_FRONT_AND_BACK,GL_FILL); break;
+  case Qt::Key_S : m_wireframe=false; break;
   // show full screen
   case Qt::Key_F : showFullScreen(); break;
   // show windowed
@@ -278,7 +285,6 @@ void NGLScene::mouseMoveEvent ( QMouseEvent * _event )
 
    }
 }
-
 
 //----------------------------------------------------------------------------------------------------------------------
 void NGLScene::mousePressEvent ( QMouseEvent * _event )
@@ -326,7 +332,7 @@ void NGLScene::wheelEvent ( QWheelEvent * _event )
   {
     m_modelPos.m_z+=ZOOM;
   }
-  else if(_event->delta() <0 )
+  else if(_event->delta() < 0)
   {
     m_modelPos.m_z-=ZOOM;
   }
@@ -365,15 +371,6 @@ void NGLScene::compileShader()
 
   // now we have associated this data we can link the shader
   shader->linkProgramObject("Phong");
-
-//  // now bind the shader attributes for most NGL primitives we use the following
-//  // layout attribute 0 is the vertex data (x,y,z)
-//  shader->bindAttribute("Phong",0,"inVert");
-//  // attribute 1 is the UV data u,v (if present)
-//  shader->bindAttribute("Phong",1,"inUV");
-//  // attribute 2 are the normals x,y,z
-//  shader->bindAttribute("Phong",2,"inNormal");
-
 
   // Load stuff. Need to remove this stuff in the next build, just used to set
   // inital values

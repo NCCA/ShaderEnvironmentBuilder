@@ -78,8 +78,6 @@ public:
   /// @return m_typeName
   //----------------------------------------------------------------------------------------------------------------------
   std::string getTypeName()       {return m_typeName;}
-
-
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief this pre declares the setBool() function for uniformDataBool
   /// @param[in] _value is the value to change m_bool into, from uniformDataBool
@@ -141,7 +139,6 @@ public:
   /// @return m_vec4 from uniformDataV4
   //----------------------------------------------------------------------------------------------------------------------
   virtual ngl::Vec4 getVec4() {return ngl::Vec4();}
-
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief this pre declares the setMat3() function for uniformDataM3
   /// @param[in] _value is the value to change m_mat3 into, from uniformDataM3
@@ -152,7 +149,6 @@ public:
   /// @return m_mat3 from uniformDataM3
   //----------------------------------------------------------------------------------------------------------------------
   virtual ngl::Mat3 getMat3() {return ngl::Mat3();}
-
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief this pre declares the setMat4() function for uniformDataM4
   /// @param[in] _value is the value to change m_mat4 into, from uniformDataM4

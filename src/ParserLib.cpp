@@ -35,10 +35,10 @@ void parserLib::initializeUniformData()
   GLenum type;
 
   // Permanently assign data to the class
-  for (GLuint i=0; i<nUniforms; i++)
+  for (GLint i=0; i<nUniforms; i++)
   {
     // craete local variables to store temp values.
-    GLuint tempLoc;
+    GLint tempLoc;
     // get the active uniform data...
     glGetActiveUniform(id,i, 256, &length, &size , &type , uniformName);
     // ... store the temp data
@@ -363,7 +363,7 @@ void parserLib::exportUniforms()
     std::cerr<<"couldn't' open file\n";
     exit(EXIT_FAILURE);
   }
-  for(int i=0;i<m_num;i++)
+  for(uint i=0;i<m_num;i++)
   {
     fileOut<<m_uniformList[i]->getName()<<"\n";
     fileOut<<m_uniformList[i]->getLocation()<<"\n";
@@ -452,7 +452,7 @@ void parserLib::assignUniformValues()
   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
 
   // sets default values depending on it's data type
-  for (int i=0;i<m_num;i++)
+  for (uint i=0;i<m_num;i++)
   {
     std::cout<<"assignUniforms "<< i<<std::endl;
     switch(m_uniformList[i]->getTypeEnum())
@@ -501,7 +501,7 @@ void parserLib::assignUniformValues()
 //----------------------------------------------------------------------------------------------------------------------
 void parserLib::sendUniformsToShader(ngl::ShaderLib *shader)
 {
-  for (int i=0;i<m_num;i++)
+  for (uint i=0;i<m_num;i++)
   {
     switch(m_uniformList[i]->getTypeEnum())
     {
