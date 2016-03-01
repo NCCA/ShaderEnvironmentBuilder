@@ -41,7 +41,7 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   m_ui->m_cb_shaderType->setCurrentIndex(static_cast<int>(
                                          ngl::ShaderType::VERTEX));
 
-
+  // Load the text files into the corresponding tabs
   loadTextFileToTab("shaders/PhongVertex.glsl", *m_qsci1);
   loadTextFileToTab("shaders/PhongFragment.glsl", *m_qsci2);
 
@@ -56,13 +56,15 @@ MainWindow::~MainWindow()
 //----------------------------------------------------------------------------------------------------------------------
 void MainWindow::on_m_btn_loadShader_clicked()
 {
+  // Get and cast the shader type combo box value
   int cb_id = m_ui->m_cb_shaderType->currentIndex();
   ngl::ShaderType shdrChoiceId = static_cast<ngl::ShaderType>(cb_id);
 
+  // Get the current tabid
   int tabId = m_ui->m_tabs_qsci->currentIndex();
-  std::cout<< "TABID: " << tabId << std::endl;
-  QString text;
 
+  // Get the text from the currently selected tab
+  QString text;
   switch (tabId)
   {
   case 0:
@@ -74,11 +76,10 @@ void MainWindow::on_m_btn_loadShader_clicked()
     break;
 
   default:
-    std::cout<< "ERROR: Tab id is not recognised\n";
+    std::cerr<< "ERROR: Tab id is not recognised\n";
   }
-
+  // Load the text into the shader with the shader type
   m_gl->loadShader(text, shdrChoiceId);
-  throw ceb_error::file_read_error("test");
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -90,6 +91,7 @@ void MainWindow::on_m_btn_compileShader_clicked()
 //----------------------------------------------------------------------------------------------------------------------
 void MainWindow::on_m_tabs_qsci_currentChanged(int _index)
 {
+  // On switch of tab, change the combo box value to the corresponding tab type
   switch (_index)
   {
     case 0:
@@ -103,7 +105,7 @@ void MainWindow::on_m_tabs_qsci_currentChanged(int _index)
     break;
 
     default:
-      std::cout<< "ERROR: Tab id is not recognised\n";
+      std::cerr<< "ERROR: Tab id is not recognised\n";
   }
 
 }
@@ -143,21 +145,25 @@ QsciScintilla *MainWindow::createQsciWidget(QWidget *_parent)
 
   return qsci;
 }
-
+//----------------------------------------------------------------------------------------------------------------------
 bool MainWindow::loadTextFileToTab(QString _path, QsciScintilla &_qsci)
 {
   QString text;
   QFile file(_path);
 
+  // Open the file as readonly and text and ensure it loaded correctly
   if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
   {
+    // Raise an error if failed
     ceb_raise::QtFileError(file.error(), _path);
     return false;
   }
 
+  // Fead the text into the tab if successful
   QTextStream in(&file);
   text = in.readAll();
   _qsci.setText(text);
+
   return true;
 }
 

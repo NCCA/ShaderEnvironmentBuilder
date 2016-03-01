@@ -110,17 +110,18 @@ void NGLScene::initializeGL()
   // we need to set a base colour as the material isn't being used for all the params
   shader->setShaderParam4f("Colour",0.23125f,0.23125f,0.23125f,1);
 
-  ngl::Light light(ngl::Vec3(2,2,2),ngl::Colour(1,1,1,1),ngl::Colour(1,1,1,1),ngl::LightModes::POINTLIGHT);
   // now create our light this is done after the camera so we can pass the
   // transpose of the projection matrix to the light to do correct eye space
   // transformations
+  ngl::Light light(ngl::Vec3(2,2,2),ngl::Colour(1,1,1,1),ngl::Colour(1,1,1,1),ngl::LightModes::POINTLIGHT);
+
   ngl::Mat4 iv=m_cam.getViewMatrix();
   iv.transpose();
-
 
   light.setTransform(iv);
   light.setAttenuation(1,0,0);
   light.enable();
+
   // load these values to the shader as well
   light.loadToShader("light");
 
@@ -304,7 +305,7 @@ void NGLScene::mousePressEvent ( QMouseEvent * _event )
     m_origYPos = _event->y();
     m_translate=true;
   }
-      setFocus();
+  setFocus();
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -344,7 +345,6 @@ void NGLScene::loadShader(QString _text, ngl::ShaderType _type)
 {
     ngl::ShaderLib *shader=ngl::ShaderLib::instance();
     switch (_type)
-
     {
       case ngl::ShaderType::VERTEX:
         shader->loadShaderSourceFromString("PhongVertex", _text.toUtf8().constData());
@@ -354,7 +354,6 @@ void NGLScene::loadShader(QString _text, ngl::ShaderType _type)
         break;
       default:
         std::cout << "Shader type not compatible\n";
-
     }
 }
 
@@ -362,6 +361,8 @@ void NGLScene::loadShader(QString _text, ngl::ShaderType _type)
 void NGLScene::compileShader()
 {
   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
+
+  // compile shaders
   shader->compileShader("PhongVertex");
   shader->compileShader("PhongFragment");
 
@@ -391,7 +392,6 @@ void NGLScene::compileShader()
   // transformations
   ngl::Mat4 iv=m_cam.getViewMatrix();
   iv.transpose();
-
 
   light.setTransform(iv);
   light.setAttenuation(1,0,0);

@@ -13,7 +13,7 @@ const static std::array<QString, 5> ERROR_LEVEL_STR {{"Message", "Information",
 //----------------------------------------------------------------------------------------------------------------------
 bool CebApplication::notify(QObject *_reciever, QEvent *_event)
 {
-  try // Try to notify but will catch an error if it fails
+  try // Try to notify but will catch an exception if it fails
   {
     return QApplication::notify(_reciever, _event);
   }
