@@ -1,10 +1,13 @@
 #include "Cebitor.h"
 
-#include <iostream>
+//----------------------------------------------------------------------------------------------------------------------
+/// @file Cebitor.cpp
+/// @brief implementation of Cebitor class
+//----------------------------------------------------------------------------------------------------------------------
 
-void Cebitor::loadSettings()
+//----------------------------------------------------------------------------------------------------------------------
+Cebitor::Cebitor(QWidget *_parent) : QsciScintilla(_parent)
 {
-  std::cout<<"cebitor constructor \n";
   // Create and assign the lexer
   QsciLexer* lex = new QsciLexerGLSL(this);
   this->setLexer(lex);

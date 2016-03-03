@@ -10,7 +10,7 @@ class Cebitor : public QsciScintilla
   Q_OBJECT;
 
 public:
-  Cebitor(QWidget *_parent) : QsciScintilla(_parent) {loadSettings();}
+  Cebitor(QWidget *_parent);
 
 private:
   void loadSettings();
