@@ -32,6 +32,8 @@ NGLScene::NGLScene( QWidget *_parent ) : QOpenGLWidget( _parent )
   m_spinXFace=0.0f;
   m_spinYFace=0.0f;
   m_parser= new parserLib();
+  m_meshLoc= "/home/i7247470/0Features-0BugsCVA3/tempFiles/BULBASAUR_lowPoly.obj";
+  m_meshActive=false;
   // re-size the widget to that of the parent (in this case the GLFrame passed in on construction)
   this->resize(_parent->size());
   m_wireframe=false;
@@ -50,6 +52,25 @@ NGLScene::~NGLScene()
 }
 
 //----------------------------------------------------------------------------------------------------------------------
+void NGLScene::setMeshLocation(std::string _meshDirectory)
+{
+  m_meshLoc=_meshDirectory;
+  std::cout<<"input location: "<<_meshDirectory<<std::endl;
+  std::cout<<"new location: "<<m_meshLoc<<std::endl;
+
+}
+
+//----------------------------------------------------------------------------------------------------------------------
+void NGLScene::meshImport()
+{
+  m_mesh = new ngl::Obj(m_meshLoc);
+  std::cout<<m_meshLoc<<std::endl;
+  m_mesh->createVAO();
+  m_mesh->draw();
+  paintGL();
+}
+
+//----------------------------------------------------------------------------------------------------------------------
 // This virtual function is called once before the first call to paintGL() or resizeGL(),
 // and then once whenever the widget has been assigned a new QGLContext.
 // This function should set up any required OpenGL context rendering flags, defining display lists, etc.
@@ -65,7 +86,7 @@ void NGLScene::initializeGL()
   glEnable(GL_MULTISAMPLE);
 
   // create our camera
-  ngl::Vec3 eye(0,1,1);
+  ngl::Vec3 eye(2,0.5,2);
   ngl::Vec3 look(0,0,0);
   ngl::Vec3 up(0,1,0);
   m_cam.set(eye,look,up);
@@ -127,6 +148,9 @@ void NGLScene::initializeGL()
 
   m_readFromXML->shaderData("WhyHelloThere", "PhongVertex", "shaders/PhongVertex.glsl", "PhongFragment", "shaders/PhongFragment.glsl");
   m_parser->assignAllData();
+  m_mesh = new ngl::Obj(m_meshLoc);
+  m_mesh->createVAO();
+
 }
 //----------------------------------------------------------------------------------------------------------------------
 void NGLScene::exportUniforms()
@@ -189,8 +213,14 @@ void NGLScene::paintGL()
   loadMatricesToShader();
   ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
   prim->draw("teapot");
-}
+  if (m_meshActive==true)
+  {
+    m_mesh->draw();
+  }
 
+
+
+}
 //----------------------------------------------------------------------------------------------------------------------
 void NGLScene::resizeGL(QResizeEvent *_event)
 {

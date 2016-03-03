@@ -5,6 +5,7 @@
 
 #include <Qsci/qsciscintilla.h>
 #include <QTextStream>
+#include <QFileDialog>
 
 MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
                                            m_ui(new Ui::MainWindow)
@@ -167,3 +168,15 @@ bool MainWindow::loadTextFileToTab(QString _path, QsciScintilla &_qsci)
   return true;
 }
 
+
+//----------------------------------------------------------------------------------------------------------------------
+void MainWindow::on_actionLoad_obj_triggered()
+{
+  QString fileName = QFileDialog::getOpenFileName(this,
+      tr("Open Mesh"), "tempFiles/", tr("Image Files (*.obj)"));
+
+  std::string importName=fileName.toStdString();
+  std::cout<<"IMPORT NAME :  "<<importName<<std::endl;
+  m_gl->setMeshLocation(importName);
+  m_gl->meshImport();
+}
