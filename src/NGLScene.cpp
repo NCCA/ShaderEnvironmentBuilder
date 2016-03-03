@@ -1,5 +1,5 @@
 #include "NGLScene.h"
-#include "parserLib.h"
+#include "ParserLib.h"
 #include <iostream>
 #include <ngl/Vec3.h>
 #include <ngl/Camera.h>
@@ -21,6 +21,7 @@ const static float INCREMENT=0.01f;
 /// @brief the increment for the wheel zoom
 //----------------------------------------------------------------------------------------------------------------------
 const static float ZOOM=0.1f;
+//----------------------------------------------------------------------------------------------------------------------
 
 //----------------------------------------------------------------------------------------------------------------------
 NGLScene::NGLScene( QWidget *_parent ) : QOpenGLWidget( _parent )
@@ -39,9 +40,15 @@ NGLScene::NGLScene( QWidget *_parent ) : QOpenGLWidget( _parent )
   // set this widget to have the initial keyboard focus
   setFocus();
 }
+
 //----------------------------------------------------------------------------------------------------------------------
 NGLScene::~NGLScene()
-{;}
+{
+  delete m_newJson;
+  //delete m_readFromXML;
+  delete m_parser;
+}
+
 //----------------------------------------------------------------------------------------------------------------------
 // This virtual function is called once before the first call to paintGL() or resizeGL(),
 // and then once whenever the widget has been assigned a new QGLContext.
@@ -117,53 +124,39 @@ void NGLScene::initializeGL()
   // we need to set a base colour as the material isn't being used for all the params
   shader->setShaderParam4f("Colour",0.23125f,0.23125f,0.23125f,1);
 
-  ngl::Light light(ngl::Vec3(2,2,2),ngl::Colour(1,1,1,1),ngl::Colour(1,1,1,1),ngl::LightModes::POINTLIGHT);
   // now create our light this is done after the camera so we can pass the
   // transpose of the projection matrix to the light to do correct eye space
   // transformations
+  ngl::Light light(ngl::Vec3(2,2,2),ngl::Colour(1,1,1,1),ngl::Colour(1,1,1,1),ngl::LightModes::POINTLIGHT);
+
   ngl::Mat4 iv=m_cam.getViewMatrix();
   iv.transpose();
-
 
   light.setTransform(iv);
   light.setAttenuation(1,0,0);
   light.enable();
+
   // load these values to the shader as well
   light.loadToShader("light");
-  // as re-size is not explicitly called we need to do that.
-  // set the viewport for openGL we need to take into account retina display
 
-  //m_readFromXML->writeXML("light.diffuse", "vec3", 9001);            //Reading Jonny.L's organised file with name, type, value. Need to dynamically write to XMl.
   m_readFromXML->shaderData("WhyHelloThere", "PhongVertex", "shaders/PhongVertex.glsl", "PhongFragment", "shaders/PhongFragment.glsl");
-
-  m_newJson->buildJson();
-
   m_parser->assignAllData();
-  m_parser->exportUniforms();
-//  Jsons = new Json();
-//  Jsons->buildJson();
-
-//  Json *jsonInstance = new Json();
-//  jsonInstance->buildJson();
-//  jsonInstance->replaceWord("Shader", "CHANGED");
-
 }
-
-
+//----------------------------------------------------------------------------------------------------------------------
 void NGLScene::exportUniforms()
 {
   std::ofstream fileOut;
-  fileOut.open("ParsingOutput.txt");
+  fileOut.open("./tempFiles/ParsingOutput.txt");
   if(!fileOut.is_open())    ///If it can be opened
   {
     std::cerr<<"couldn't' open file\n";
     exit(EXIT_FAILURE);
   }
-  for(int i=0;i<m_parser->m_num;i++)
+  for(uint i=0;i<m_parser->m_num;i++)
   {
-    fileOut<<m_parser->m_uniformDataList[i].m_name<<"\n";
-    fileOut<<m_parser->m_uniformDataList[i].m_loc<<"\n";
-    fileOut<<m_parser->m_uniformDataList[i].m_typeName<<"\n";
+    fileOut<<m_parser->m_uniformList[i]->getName()<<"\n";
+    fileOut<<m_parser->m_uniformList[i]->getLocation()<<"\n";
+    fileOut<<m_parser->m_uniformList[i]->getTypeName()<<"\n";
   }
   fileOut.close();
   // close files
@@ -175,6 +168,7 @@ void NGLScene::exportUniforms()
 //----------------------------------------------------------------------------------------------------------------------
 //This virtual function is called whenever the widget needs to be painted.
 // this is our main drawing routine
+//----------------------------------------------------------------------------------------------------------------------
 void NGLScene::paintGL()
 {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -207,7 +201,6 @@ void NGLScene::paintGL()
   m_cam.setShape(m_fov, m_aspect, 0.5f, 150.0f);
 
   loadMatricesToShader();
-
   ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
   prim->draw("teapot");
 
@@ -219,6 +212,7 @@ void NGLScene::paintGL()
 
   m_text->renderText(10,18,"Error!");
 }
+
 //----------------------------------------------------------------------------------------------------------------------
 void NGLScene::resizeGL(QResizeEvent *_event)
 {
@@ -249,13 +243,13 @@ void NGLScene::loadMatricesToShader()
   normalMatrix.inverse();
 
 
-//  m_parser->sendUniformsToShader(shader);
-
+  m_parser->sendUniformsToShader(shader);
   shader->setShaderParamFromMat4("MV",MV);
   shader->setShaderParamFromMat4("MVP",MVP);
   shader->setShaderParamFromMat3("normalMatrix",normalMatrix);
   shader->setShaderParamFromMat4("M",M);
 }
+
 //----------------------------------------------------------------------------------------------------------------------
 void NGLScene::setCamShape()
 {
@@ -273,43 +267,15 @@ void NGLScene::keyPressEvent(QKeyEvent *_event)
   // escape key to quit
   //case Qt::Key_Escape : QGuiApplication::exit(EXIT_SUCCESS); break;
   // turn on wirframe rendering
-  case Qt::Key_W : glPolygonMode(GL_FRONT_AND_BACK,GL_LINE); break;
+  case Qt::Key_W : m_wireframe=true; break;
   // turn off wire frame
-  case Qt::Key_S : glPolygonMode(GL_FRONT_AND_BACK,GL_FILL); break;
+  case Qt::Key_S : m_wireframe=false; break;
   // show full screen
   case Qt::Key_F : showFullScreen(); break;
   // show windowed
   case Qt::Key_N : showNormal(); break;
-//  case Qt::Key_1 : m_parser->m_uniformDataList[12].m_mat3.m_00+=0.1;std::cout<<m_parser->m_uniformDataList[12].m_mat3.m_00<<std::endl; break;
-//  case Qt::Key_2 : m_parser->m_uniformDataList[12].m_mat3.m_01+=0.1;std::cout<<m_parser->m_uniformDataList[12].m_mat3.m_01<<std::endl; break;
-//  case Qt::Key_3 : m_parser->m_uniformDataList[12].m_mat3.m_02+=0.1;std::cout<<m_parser->m_uniformDataList[12].m_mat3.m_02<<std::endl; break;
-//  case Qt::Key_4 : m_parser->m_uniformDataList[12].m_mat3.m_10+=0.1;std::cout<<m_parser->m_uniformDataList[12].m_mat3.m_10<<std::endl; break;
-//  case Qt::Key_5 : m_parser->m_uniformDataList[12].m_mat3.m_11+=0.1;std::cout<<m_parser->m_uniformDataList[12].m_mat3.m_11<<std::endl; break;
-//  case Qt::Key_6 : m_parser->m_uniformDataList[12].m_mat3.m_12+=0.1;std::cout<<m_parser->m_uniformDataList[12].m_mat3.m_12<<std::endl; break;
-//  case Qt::Key_7 : m_parser->m_uniformDataList[12].m_mat3.m_20+=0.1;std::cout<<m_parser->m_uniformDataList[12].m_mat3.m_20<<std::endl; break;
-//  case Qt::Key_8 : m_parser->m_uniformDataList[12].m_mat3.m_21+=0.1;std::cout<<m_parser->m_uniformDataList[12].m_mat3.m_21<<std::endl; break;
-//  case Qt::Key_9 : m_parser->m_uniformDataList[12].m_mat3.m_22+=0.1;std::cout<<m_parser->m_uniformDataList[12].m_mat3.m_22<<std::endl; break;
-  case Qt::Key_1 : m_parser->m_uniformDataList[0].m_vec3.m_x+=0.1;std::cout<<m_parser->m_uniformDataList[0].m_vec3.m_x<<std::endl; break;
-  case Qt::Key_2 : m_parser->m_uniformDataList[0].m_vec3.m_y+=0.1;std::cout<<m_parser->m_uniformDataList[0].m_vec3.m_y<<std::endl; break;
-  case Qt::Key_3 : m_parser->m_uniformDataList[0].m_vec3.m_z+=0.1;std::cout<<m_parser->m_uniformDataList[0].m_vec3.m_z<<std::endl; break;
-//  case Qt::Key_4 : m_parser->m_uniformDataList[5].m_vec3.m_x+=0.1;std::cout<<m_parser->m_uniformDataList[5].m_vec3.m_x<<std::endl; break;
-//  case Qt::Key_5 : m_parser->m_uniformDataList[5].m_vec3.m_y+=0.05;std::cout<<m_parser->m_uniformDataList[5].m_vec3.m_y<<std::endl; break;
-//  case Qt::Key_6 : m_parser->m_uniformDataList[5].m_vec3.m_z+=0.05;std::cout<<m_parser->m_uniformDataList[5].m_vec3.m_z<<std::endl; break;
-//  case Qt::Key_7 : m_parser->m_uniformDataList[6].m_vec3.m_x+=0.1;std::cout<<m_parser->m_uniformDataList[6].m_vec3.m_x<<std::endl; break;
-//  case Qt::Key_8 : m_parser->m_uniformDataList[6].m_vec3.m_y+=0.1;std::cout<<m_parser->m_uniformDataList[6].m_vec3.m_y<<std::endl; break;
-//  case Qt::Key_9 : m_parser->m_uniformDataList[6].m_vec3.m_z+=0.1;std::cout<<m_parser->m_uniformDataList[6].m_vec3.m_z<<std::endl; break;
-//  case Qt::Key_K : m_parser->m_uniformDataList[7].m_vec3.m_x+=0.1;std::cout<<m_parser->m_uniformDataList[7].m_vec3.m_x<<std::endl; break;
-//  case Qt::Key_L : m_parser->m_uniformDataList[7].m_vec3.m_y+=0.1;std::cout<<m_parser->m_uniformDataList[7].m_vec3.m_y<<std::endl; break;
-//  case Qt::Key_O : m_parser->m_uniformDataList[7].m_vec3.m_z+=0.1;std::cout<<m_parser->m_uniformDataList[7].m_vec3.m_z<<std::endl; break;
-//  case Qt::Key_M : m_parser->m_uniformDataList[8].m_vec3.m_x+=0.1;std::cout<<m_parser->m_uniformDataList[8].m_vec3.m_x<<std::endl; break;
-//  case Qt::Key_H : m_parser->m_uniformDataList[8].m_vec3.m_y+=0.1;std::cout<<m_parser->m_uniformDataList[8].m_vec3.m_y<<std::endl; break;
-//  case Qt::Key_T : m_parser->m_uniformDataList[8].m_vec3.m_z+=0.1;std::cout<<m_parser->m_uniformDataList[8].m_vec3.m_z<<std::endl; break;
-//  case Qt::Key_R : m_parser->m_uniformDataList[9].m_vec3.m_x+=0.1;std::cout<<m_parser->m_uniformDataList[9].m_vec3.m_x<<std::endl; break;
-//  case Qt::Key_Y : m_parser->m_uniformDataList[9].m_vec3.m_y+=0.1;std::cout<<m_parser->m_uniformDataList[9].m_vec3.m_y<<std::endl; break;
-//  case Qt::Key_J : m_parser->m_uniformDataList[9].m_vec3.m_z+=0.1;std::cout<<m_parser->m_uniformDataList[9].m_vec3.m_z<<std::endl; break;
-//  case Qt::Key_C : m_parser->m_uniformDataList[5].m_vec3.m_y-=0.05;std::cout<<m_parser->m_uniformDataList[5].m_vec3.m_y<<std::endl; break;
-//  case Qt::Key_V : m_parser->m_uniformDataList[5].m_vec3.m_z-=0.05;std::cout<<m_parser->m_uniformDataList[5].m_vec3.m_z<<std::endl; break;
-//  case Qt::Key_Down : m_parser->m_uniformDataList[11].m_vec3.m_x-=0.05;std::cout<<m_parser->m_uniformDataList[11].m_vec3.m_z<<std::endl; break;
+  case Qt::Key_Space: m_parser->assignUniformValues();
+
   default : break;
   }
     update();
@@ -329,7 +295,7 @@ void NGLScene::mouseMoveEvent ( QMouseEvent * _event )
     update();
 
   }
-        // right mouse translate code
+  // right mouse translate code
   else if(m_translate && _event->buttons() == Qt::RightButton)
   {
     int diffX = (int)(_event->x() - m_origXPos);
@@ -342,7 +308,6 @@ void NGLScene::mouseMoveEvent ( QMouseEvent * _event )
 
    }
 }
-
 
 //----------------------------------------------------------------------------------------------------------------------
 void NGLScene::mousePressEvent ( QMouseEvent * _event )
@@ -362,6 +327,7 @@ void NGLScene::mousePressEvent ( QMouseEvent * _event )
     m_origYPos = _event->y();
     m_translate=true;
   }
+  setFocus();
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -389,7 +355,7 @@ void NGLScene::wheelEvent ( QWheelEvent * _event )
   {
     m_modelPos.m_z+=ZOOM;
   }
-  else if(_event->delta() <0 )
+  else if(_event->delta() < 0)
   {
     m_modelPos.m_z-=ZOOM;
   }
@@ -412,7 +378,6 @@ void NGLScene::loadShader(QString _text, ngl::ShaderType _type)
         break;
       default:
         std::cout << "Shader type not compatible\n";
-
     }
 }
 
@@ -420,6 +385,8 @@ void NGLScene::loadShader(QString _text, ngl::ShaderType _type)
 void NGLScene::compileShader()
 {
   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
+
+  // compile shaders
   shader->compileShader("PhongVertex");
   shader->compileShader("PhongFragment");
 
@@ -429,15 +396,6 @@ void NGLScene::compileShader()
 
   // now we have associated this data we can link the shader
   shader->linkProgramObject("Phong");
-
-//  // now bind the shader attributes for most NGL primitives we use the following
-//  // layout attribute 0 is the vertex data (x,y,z)
-//  shader->bindAttribute("Phong",0,"inVert");
-//  // attribute 1 is the UV data u,v (if present)
-//  shader->bindAttribute("Phong",1,"inUV");
-//  // attribute 2 are the normals x,y,z
-//  shader->bindAttribute("Phong",2,"inNormal");
-
 
   // Load stuff. Need to remove this stuff in the next build, just used to set
   // inital values
@@ -458,7 +416,6 @@ void NGLScene::compileShader()
   // transformations
   ngl::Mat4 iv=m_cam.getViewMatrix();
   iv.transpose();
-
 
   light.setTransform(iv);
   light.setAttenuation(1,0,0);

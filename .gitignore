@@ -55,8 +55,9 @@ install_manifest.txt
 moc_*.cpp
 ui_*.h
 
-# Flex generated lexer
-src/glslLexer.cpp
+# Flex generated source and headers
+src/generated/*
+include/generated/*
 
 # Testing files all go in ./tempFiles
 tempFiles/*

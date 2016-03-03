@@ -1,4 +1,5 @@
 #include <QApplication>
+#include "CebApplication.h"
 #include "MainWindow.h"
 
 int main(int argc, char **argv)
@@ -27,7 +28,7 @@ int main(int argc, char **argv)
 
   QSurfaceFormat::setDefaultFormat(format);
   // make an instance of the QApplication
-  QApplication a(argc, argv);
+  CebApplication a(argc, argv);
   // Create a new MainWindow
   MainWindow w;
   // show it

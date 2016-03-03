@@ -28,6 +28,7 @@ DESTDIR=./
 # add the glsl shader files
 OTHER_FILES+= $$PWD/shaders/*.glsl
 OTHER_FILES+= $$PWD/src/*.api
+OTHER_FILES+= $$PWD/ui_MainWindow.h
 # were are going to default to a console app
 CONFIG += console
 NGLPATH=$$(NGLDIR)
@@ -61,18 +62,33 @@ isEmpty(FLEX_BIN) {
     message("Found Flex")
 
     # run Flex on .lex file to generate lexer
-    FLEXSOURCES = src/glslLexer.lex
+
+    # The following section is from :-
+    # hipersayan_x (March 1, 2013)  The Samurai Code: Using Flex and Bison with Qt. [online]
+    # [Accessed 18 Feb. 2016] Available at: <http://hipersayanx.blogspot.co.uk/2013/03/using-flex-and-bison-with-qt.html>.
+    FLEXSOURCES = src/GlslLexer.lex
 
     flexsource.input = FLEXSOURCES
-    flexsource.output = src/${QMAKE_FILE_BASE}.cpp
-    flexsource.commands = flex -o src/${QMAKE_FILE_BASE}.cpp -+ ${QMAKE_FILE_IN}
+    flexsource.output = src/generated/${QMAKE_FILE_BASE}.cpp
+    flexsource.commands = flex --header-file=include/generated/${QMAKE_FILE_BASE}.h -o src/generated/${QMAKE_FILE_BASE}.cpp -+ ${QMAKE_FILE_IN}
     flexsource.variable_out = SOURCES
+    flexsource.clean = src/generated/${QMAKE_FILE_BASE}.cpp
     flexsource.name = Flex Sources ${QMAKE_FILE_IN}
     flexsource.CONFIG += target_predeps
 
     QMAKE_EXTRA_COMPILERS += flexsource
+
+    flexheader.input = FLEXSOURCES
+    flexheader.output = include/generated/${QMAKE_FILE_BASE}.h
+    fleakheader.commands = @true
+    flexheader.variable_out = HEADERS
+    flexheader.clean = include/generated/${QMAKE_FILE_BASE}.h
+    flexheader.name = Flex Headers ${QMAKE_FILE_IN}
+    flexheader.CONFIG += target_predeps no_link
+
+    QMAKE_EXTRA_COMPILERS += flexheader
+    # end of Citation
 }
 
 # Supress yield warning
 QMAKE_CXXFLAGS_WARN_ON += -Wno-deprecated-register
-
