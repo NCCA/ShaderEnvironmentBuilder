@@ -3,7 +3,6 @@
 #include "QsciLexerGlsl.h"
 #include "CebErrors.h"
 
-#include <Qsci/qsciscintilla.h>
 #include <QTextStream>
 
 MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
@@ -111,34 +110,10 @@ void MainWindow::on_m_tabs_qsci_currentChanged(int _index)
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-QsciScintilla *MainWindow::createQsciWidget(QWidget *_parent)
+Cebitor *MainWindow::createQsciWidget(QWidget *_parent)
 {
   // Create the QsciScintilla widget
-  QsciScintilla* qsci = new QsciScintilla(_parent);
-
-  // Create and assign the lexer
-  QsciLexer* lex = new QsciLexerGLSL(qsci);
-  qsci->setLexer(lex);
-
-  // Set the margin defaults
-  qsci->setMarginType(1,QsciScintilla::MarginType::NumberMargin);
-  qsci->setMarginWidth(1," 012");
-  qsci->setMarginsForegroundColor(QColor(128, 128, 128));
-  // Set the caret defaults
-  qsci->setCaretForegroundColor(QColor(247, 247, 241));
-  qsci->setCaretWidth(2);
-  // Set the brace defaults
-  qsci->setBraceMatching(QsciScintilla::BraceMatch::SloppyBraceMatch);
-  qsci->setMatchedBraceBackgroundColor(QColor(62, 61, 50));
-  qsci->setUnmatchedBraceBackgroundColor(QColor(249, 38, 114));
-
-  // Enable scroll width tracking and set the scroll width to a low number
-  // Scintilla doesn't track line length, so if we wanted automated scrollbar
-  // to appear we would need to implement a line length checking
-  qsci->SendScintilla(QsciScintillaBase::SCI_SETSCROLLWIDTHTRACKING, 1);
-  qsci->SendScintilla(QsciScintillaBase::SCI_SETSCROLLWIDTH, 5);
-
-  // Create a layout to enable filling of the widget
+  Cebitor* qsci = new Cebitor(_parent);
   QBoxLayout *layout = new QVBoxLayout;
   layout->addWidget(qsci);
   _parent->setLayout(layout);
@@ -146,7 +121,7 @@ QsciScintilla *MainWindow::createQsciWidget(QWidget *_parent)
   return qsci;
 }
 //----------------------------------------------------------------------------------------------------------------------
-bool MainWindow::loadTextFileToTab(QString _path, QsciScintilla &_qsci)
+bool MainWindow::loadTextFileToTab(QString _path, Cebitor &_qsci)
 {
   QString text;
   QFile file(_path);
