@@ -1,9 +1,13 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
+#include <ngl/Vec4.h>
 #include "NGLScene.h"
+#include <QMainWindow>
+#include "ParserLib.h"
+#include "button.h"
 #include "Cebitor.h"
+#include <vector>
 
 //------------------------------------------------------------------------------------------------------------------------
 /// @file NGLScene.h
@@ -30,6 +34,9 @@ Q_OBJECT      // must include this if you use Qt signals/slots
   //----------------------------------------------------------------------------------------------------------------------
   //----------------------------------------------------------------------------------------------------------------------
 public:
+    void createButtons();
+    void printUniforms();
+
   //----------------------------------------------------------------------------------------------------------------------
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief Constructor for the MainWindow
@@ -91,6 +98,8 @@ private:
   //----------------------------------------------------------------------------------------------------------------------
   bool loadTextFileToTab(QString _path, Cebitor &_qsci);
 
+  parserLib *m_parForButton;
+  std::vector<Button*> m_buttonList;
 
 };
 

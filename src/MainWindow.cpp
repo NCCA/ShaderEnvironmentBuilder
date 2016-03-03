@@ -10,9 +10,11 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
 {
   // Setup ui from form creator (MainWindow.ui)
   m_ui->setupUi(this);
+  // create parser in main window
+  m_parForButton = new parserLib;
+  // Create openGl and qsci widgets, pass in the parser
+  m_gl=new  NGLScene(this, m_parForButton);
 
-  // Create openGl from template frame
-  m_gl=new  NGLScene(this);
   m_gl->setSizePolicy(m_ui->m_f_gl_temp->sizePolicy());
   m_gl->setMinimumSize(m_ui->m_f_gl_temp->minimumSize());
 
@@ -43,6 +45,8 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   // Load the text files into the corresponding tabs
   loadTextFileToTab("shaders/PhongVertex.glsl", *m_qsci1);
   loadTextFileToTab("shaders/PhongFragment.glsl", *m_qsci2);
+
+  //std::cerr<<"Find number of active uniforms: "<<m_parForButton->m_num<<std::endl;
 
 }
 
@@ -85,8 +89,30 @@ void MainWindow::on_m_btn_loadShader_clicked()
 void MainWindow::on_m_btn_compileShader_clicked()
 {
   m_gl->compileShader();
+  m_parForButton->printUniforms(1);
+  createButtons();
 }
 
+void MainWindow::printUniforms()
+{
+  m_parForButton->printUniforms(1);
+}
+void MainWindow::createButtons()
+{
+  for(int i=0;i<m_parForButton->m_num; ++i)
+  {
+    if(m_parForButton->m_uniformList[i]->getTypeName()=="vec4")
+    {
+      QString _tempName = QString::fromStdString(m_parForButton->m_uniformList[i]->getName());
+      ngl::Vec4 _tempVec=m_parForButton->m_uniformList[i]->getVec4();
+      Button *tempButton = new Button(_tempName, _tempVec);
+      m_buttonList.push_back(tempButton);
+
+      //m_buttonList.push_back(Button myNew);
+    }
+  }
+  std::cerr<<"THIS IS THE BUTTON LIST LENGTH: "<<m_buttonList.size()<<std::endl;
+}
 //----------------------------------------------------------------------------------------------------------------------
 void MainWindow::on_m_tabs_qsci_currentChanged(int _index)
 {

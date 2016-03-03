@@ -37,7 +37,7 @@ public :
   /// @brief Constructor for GLWindow
   /// @param [in] _parent the parent window to create the GL context in
   //----------------------------------------------------------------------------------------------------------------------
-  NGLScene(QWidget *_parent );
+  NGLScene(QWidget *_parent, parserLib *_libParent );
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief dtor must close down ngl and release OpenGL resources
   //----------------------------------------------------------------------------------------------------------------------

@@ -24,14 +24,14 @@ const static float ZOOM=0.1f;
 //----------------------------------------------------------------------------------------------------------------------
 
 //----------------------------------------------------------------------------------------------------------------------
-NGLScene::NGLScene( QWidget *_parent ) : QOpenGLWidget( _parent )
+NGLScene::NGLScene( QWidget *_parent, parserLib *_libParent  ) : QOpenGLWidget( _parent )
 {
   // re-size the widget to that of the parent (in that case the GLFrame passed in on construction)
   m_rotate=false;
   // mouse rotation values set to 0
   m_spinXFace=0.0f;
   m_spinYFace=0.0f;
-  m_parser= new parserLib();
+  m_parser= _libParent;
   // re-size the widget to that of the parent (in this case the GLFrame passed in on construction)
   this->resize(_parent->size());
   m_wireframe=false;
@@ -127,6 +127,7 @@ void NGLScene::initializeGL()
 
   m_readFromXML->shaderData("WhyHelloThere", "PhongVertex", "shaders/PhongVertex.glsl", "PhongFragment", "shaders/PhongFragment.glsl");
   m_parser->assignAllData();
+  std::cerr<<"Find number of active uniforms: "<<m_parser->m_num<<std::endl;
 }
 //----------------------------------------------------------------------------------------------------------------------
 void NGLScene::exportUniforms()
@@ -254,7 +255,42 @@ void NGLScene::keyPressEvent(QKeyEvent *_event)
   case Qt::Key_N : showNormal(); break;
   case Qt::Key_Space: m_parser->assignUniformValues();
 
-  default : break;
+  /*case Qt::Key_1 : m_parser->m_uniformList[0].m_vec4.m_x+=0.1;
+  std::cout<<m_parser->m_uniformList[0].m_name<<":(x)  "<<m_parser->m_uniformList[0].m_vec4.m_x<<std::endl; break;
+
+  case Qt::Key_2 : m_parser->m_uniformList[0].m_vec4.m_y+=0.1;
+  std::cout<<m_parser->m_uniformList[0].m_name<<":(y)  "<<m_parser->m_uniformList[0].m_vec4.m_y<<std::endl; break;
+
+  case Qt::Key_3 : m_parser->m_uniformList[0].m_vec4.m_z+=0.1;
+  std::cout<<m_parser->m_uniformList[0].m_name<<":(z)  "<<m_parser->m_uniformList[0].m_vec4.m_z<<std::endl; break;
+
+  case Qt::Key_4 : m_parser->m_uniformList[0].m_vec4.m_x-=0.1;
+  std::cout<<m_parser->m_uniformList[0].m_name<<":(x)  "<<m_parser->m_uniformList[0].m_vec4.m_x<<std::endl; break;
+
+  case Qt::Key_5 : m_parser->m_uniformList[0].m_vec4.m_y-=0.1;
+  std::cout<<m_parser->m_uniformList[0].m_name<<":(y)  "<<m_parser->m_uniformList[0].m_vec4.m_y<<std::endl; break;
+
+  case Qt::Key_6 : m_parser->m_uniformList[0].m_vec4.m_z-=0.1;
+  std::cout<<m_parser->m_uniformList[0].m_name<<":(z)  "<<m_parser->m_uniformList[0].m_vec4.m_z<<std::endl; break;
+
+  case Qt::Key_G : m_parser->m_uniformList[5].m_vec4.m_x+=0.1;
+  std::cout<<m_parser->m_uniformList[5].m_name<<":(z)  "<<m_parser->m_uniformList[5].m_vec4.m_x<<std::endl; break;
+
+  case Qt::Key_B : m_parser->m_uniformList[7].m_vec4.m_x+=0.1;
+  std::cout<<m_parser->m_uniformList[7].m_name<<":(x)  "<<m_parser->m_uniformList[7].m_vec4.m_x<<std::endl; break;
+
+  case Qt::Key_H : m_parser->m_uniformList[12].m_vec4.m_x+=0.1;
+  std::cout<<m_parser->m_uniformList[12].m_name<<":(x)  "<<m_parser->m_uniformList[12].m_vec4.m_x<<std::endl; break;
+
+  case Qt::Key_J : m_parser->m_uniformList[5].m_vec4.m_y+=0.1;
+  std::cout<<m_parser->m_uniformList[5].m_name<<":(y)  "<<m_parser->m_uniformList[5].m_vec4.m_y<<std::endl; break;
+
+  case Qt::Key_K : m_parser->m_uniformList[7].m_vec4.m_y+=0.1;
+  std::cout<<m_parser->m_uniformList[7].m_name<<":(y)  "<<m_parser->m_uniformList[7].m_vec4.m_y<<std::endl; break;
+
+  case Qt::Key_L : m_parser->m_uniformList[12].m_vec4.m_y+=0.1;
+  std::cout<<m_parser->m_uniformList[12].m_name<<":(y)  "<<m_parser->m_uniformList[12].m_vec4.m_y<<std::endl; break;
+  default : break;*/
   }
     update();
 }
@@ -294,6 +330,8 @@ void NGLScene::mousePressEvent ( QMouseEvent * _event )
   // store the value where the maouse was clicked (x,y) and set the Rotate flag to true
   if(_event->button() == Qt::LeftButton)
   {
+    ngl::Vec4 _tempVec=m_parser->m_uniformList[12]->getVec4();
+    std::cout<<"\nVal:\nx: "<<_tempVec.m_x<<"\ny: "<<_tempVec.m_y<<"\nz:"<<_tempVec.m_z<<std::endl;
     m_origX = _event->x();
     m_origY = _event->y();
     m_rotate =true;
