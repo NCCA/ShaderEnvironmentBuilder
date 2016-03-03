@@ -193,6 +193,10 @@ private:
   void wheelEvent( QWheelEvent *_event);
   void exportUniforms();
 
+  std::unique_ptr<ngl::Text> m_text; //Text for errors etc
+
+  bool m_shaderError;
+
 };
 
 #endif

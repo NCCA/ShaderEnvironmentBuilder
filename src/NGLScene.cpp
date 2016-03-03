@@ -210,6 +210,14 @@ void NGLScene::paintGL()
 
   ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
   prim->draw("teapot");
+
+
+  m_text.reset(new ngl::Text(QFont ("Arial",18)));
+  m_text->setScreenSize(width(),height());
+  m_text->setColour(ngl::Colour (0.82,0.2,0.2));
+
+
+  m_text->renderText(10,18,"Error!");
 }
 //----------------------------------------------------------------------------------------------------------------------
 void NGLScene::resizeGL(QResizeEvent *_event)
@@ -392,20 +400,15 @@ void NGLScene::wheelEvent ( QWheelEvent * _event )
 void NGLScene::loadShader(QString _text, ngl::ShaderType _type)
 {
     ngl::ShaderLib *shader=ngl::ShaderLib::instance();
+    GLuint shaderTest=shader->getProgramID("PhongFragment");
+    GLint* success = new int;
     switch (_type)
-
     {
       case ngl::ShaderType::VERTEX:
         shader->loadShaderSourceFromString("PhongVertex", _text.toUtf8().constData());
         break;
       case ngl::ShaderType::FRAGMENT:
-        GLuint shaderTest=shader->getProgramID("PhongFragment");
-        GLint success = 0;
-        glGetShaderiv(shaderTest, GL_COMPILE_STATUS, success);
-        if (success ==1)
-        {
         shader->loadShaderSourceFromString("PhongFragment", _text.toUtf8().constData());
-        }
         break;
       default:
         std::cout << "Shader type not compatible\n";
