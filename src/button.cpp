@@ -16,7 +16,7 @@ Button::Button(QWidget *parent) : QDialog(parent)
 
 }
 
-Button::Button(QString _buttonName, ngl::Vec4 _defaultVal, QWidget *parent) : QDialog(parent)
+Button::Button(QString _buttonName, QGridLayout *_layout, ngl::Vec4 _defaultVal, QWidget *parent) : QDialog(parent)
 {
   createButtonBox(_buttonName);
 }
@@ -39,10 +39,10 @@ void Button::openColourBox()
   //colourGroupBox->setLayout(colourBoxLayout);
   m_myColor=m_colourGroupBox->getColor();
   //std::cout<<"Done"<<std::endl;
-  m_colourStruct.m_r = m_myColor.redF();
-  m_colourStruct.m_g = m_myColor.greenF();
-  m_colourStruct.m_b = m_myColor.blueF();
+  m_colour.m_r = m_myColor.redF();
+  m_colour.m_g = m_myColor.greenF();
+  m_colour.m_b = m_myColor.blueF();
 
-  std::cout<<"R: "<<m_colourStruct.m_r<<"\nG: "<<m_colourStruct.m_g<<"\nB: "<<m_colourStruct.m_b<<std::endl;
+  std::cout<<"R: "<<m_colour.m_r<<"\nG: "<<m_colour.m_g<<"\nB: "<<m_colour.m_b<<std::endl;
 
 }
