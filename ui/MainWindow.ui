@@ -149,7 +149,6 @@
               <attribute name="title">
                <string>Vertex</string>
               </attribute>
-              <zorder>m_f_textOptions</zorder>
              </widget>
              <widget class="QWidget" name="m_tab_qsci_2">
               <attribute name="title">
@@ -291,6 +290,13 @@
     </property>
     <addaction name="separator"/>
     <addaction name="actionLoad_obj"/>
+    <addaction name="actionLoad_Sphere"/>
+    <addaction name="actionLoad_Cube"/>
+    <addaction name="actionLoad_Cone"/>
+    <addaction name="actionLoad_Torus"/>
+    <addaction name="actionLoad_Teapot"/>
+    <addaction name="actionLoad_Dragon"/>
+    <addaction name="actionLoad_Troll"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuDebug"/>
@@ -319,6 +325,46 @@
   <action name="actionLoad_obj">
    <property name="text">
     <string>Load obj</string>
+   </property>
+  </action>
+  <action name="actionLoad_Sphere">
+   <property name="text">
+    <string>Load Sphere</string>
+   </property>
+  </action>
+  <action name="actionLoad_Cube">
+   <property name="text">
+    <string>Load Cube</string>
+   </property>
+  </action>
+  <action name="actionLoad_Teapot">
+   <property name="text">
+    <string>Load Teapot</string>
+   </property>
+  </action>
+  <action name="actionLoad_Dragon">
+   <property name="text">
+    <string>Load Dragon</string>
+   </property>
+  </action>
+  <action name="actionLoad_Troll">
+   <property name="text">
+    <string>Load Troll</string>
+   </property>
+  </action>
+  <action name="actionLoad_Cone">
+   <property name="text">
+    <string>Load Cone</string>
+   </property>
+  </action>
+  <action name="actionLoad_Torus">
+   <property name="text">
+    <string>Load Torus</string>
+   </property>
+  </action>
+  <action name="actionLoad_Shape">
+   <property name="text">
+    <string>Load Shape</string>
    </property>
   </action>
  </widget>

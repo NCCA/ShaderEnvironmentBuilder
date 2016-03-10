@@ -32,8 +32,9 @@ NGLScene::NGLScene( QWidget *_parent ) : QOpenGLWidget( _parent )
   m_spinXFace=0.0f;
   m_spinYFace=0.0f;
   m_parser= new parserLib();
+  m_shapeType=1;
   m_meshLoc= "/home/i7247470/0Features-0BugsCVA3/tempFiles/BULBASAUR_lowPoly.obj";
-  m_meshActive=false;
+
   // re-size the widget to that of the parent (in this case the GLFrame passed in on construction)
   this->resize(_parent->size());
   m_wireframe=false;
@@ -55,19 +56,21 @@ NGLScene::~NGLScene()
 void NGLScene::setMeshLocation(std::string _meshDirectory)
 {
   m_meshLoc=_meshDirectory;
-  std::cout<<"input location: "<<_meshDirectory<<std::endl;
-  std::cout<<"new location: "<<m_meshLoc<<std::endl;
-
+  std::cout<<"input location  :          "<<_meshDirectory<<std::endl;
+  std::cout<<"new location    :          "<<m_meshLoc<<std::endl;
 }
 
 //----------------------------------------------------------------------------------------------------------------------
 void NGLScene::meshImport()
 {
+  if (m_mesh!=nullptr)
+  {
+    delete m_mesh;
+  }
   m_mesh = new ngl::Obj(m_meshLoc);
   std::cout<<m_meshLoc<<std::endl;
   m_mesh->createVAO();
-  m_mesh->draw();
-  paintGL();
+  update();
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -150,6 +153,9 @@ void NGLScene::initializeGL()
   m_parser->assignAllData();
   m_mesh = new ngl::Obj(m_meshLoc);
   m_mesh->createVAO();
+  ngl::VAOPrimitives::instance()->createSphere("sphere", 1,20);
+  ngl::VAOPrimitives::instance()->createCone("cone",0.5,1,20,1);
+  ngl::VAOPrimitives::instance()->createTorus("torus",0.3,1,20,20);
 
 }
 //----------------------------------------------------------------------------------------------------------------------
@@ -173,7 +179,10 @@ void NGLScene::exportUniforms()
   std::cout<<"EXPORTED\n"<<std::endl;
 }
 
-
+void NGLScene::setShapeType(int _type)
+{
+  m_shapeType=_type;
+}
 
 //----------------------------------------------------------------------------------------------------------------------
 //This virtual function is called whenever the widget needs to be painted.
@@ -212,15 +221,28 @@ void NGLScene::paintGL()
 
   loadMatricesToShader();
   ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
-  prim->draw("teapot");
-  if (m_meshActive==true)
-  {
-    m_mesh->draw();
-  }
 
-
-
+  drawObject(0);
 }
+
+void NGLScene::drawObject(int _type)
+{
+  ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
+  switch(_type)
+  {
+    case 0: m_mesh->draw(); break;
+    case 1: prim->draw("sphere");break;
+    case 2: prim->draw("cube");break;
+    case 3: prim->draw("torus");break;
+    case 4: prim->draw("cone");break;
+    case 5: prim->draw("teapot");break;
+    case 6: prim->draw("troll");break;
+    case 7: prim->draw("dragon");break;
+    default: std::cout<<"unrecognised shape type value"<<std::endl;
+
+  }
+}
+
 //----------------------------------------------------------------------------------------------------------------------
 void NGLScene::resizeGL(QResizeEvent *_event)
 {

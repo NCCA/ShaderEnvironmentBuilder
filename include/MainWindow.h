@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "NGLScene.h"
 #include <Qsci/qsciscintilla.h>
+#include <QSignalMapper>
 
 //------------------------------------------------------------------------------------------------------------------------
 /// @file NGLScene.h
@@ -61,6 +62,12 @@ private slots:
   /// @brief activated when the "load obj" button is clicked
   //----------------------------------------------------------------------------------------------------------------------
   void on_actionLoad_obj_triggered();
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief activated when the "load shape" button is clicked
+  //----------------------------------------------------------------------------------------------------------------------
+  void on_actionLoad_shape_triggered(int _value);
+
+
 
 private:
   //----------------------------------------------------------------------------------------------------------------------
@@ -94,7 +101,7 @@ private:
   //----------------------------------------------------------------------------------------------------------------------
   bool loadTextFileToTab(QString _path, QsciScintilla &_qsci);
 
-
+  QSignalMapper *signalMapper;
 };
 
 #endif // MAINWINDOW_H

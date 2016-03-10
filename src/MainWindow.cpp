@@ -45,7 +45,26 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   // Load the text files into the corresponding tabs
   loadTextFileToTab("shaders/PhongVertex.glsl", *m_qsci1);
   loadTextFileToTab("shaders/PhongFragment.glsl", *m_qsci2);
+//  connect(m_ui->actionLoad_obj,SIGNAL(clicked()),m_gl,SLOT(on_actionLoad_obj_triggered()));
+//  connect(m_ui->actionLoad_Sphere,SIGNAL(clicked()),m_gl,SLOT(on_actionLoad_shape_triggered(1)));
+//  connect(m_ui->actionLoad_Sphere,SIGNAL(clicked()),m_gl,SLOT(on_actionLoad_shape_triggered(1)));
+//  connect(m_ui->actionLoad_Cube,SIGNAL(clicked()),m_gl,SLOT(on_actionLoad_shape_triggered(2)));
+//  connect(m_ui->actionLoad_Torus,SIGNAL(clicked()),m_gl,SLOT(on_actionLoad_shape_triggered(3)));
+//  connect(m_ui->actionLoad_Cone,SIGNAL(clicked()),m_gl,SLOT(on_actionLoad_shape_triggered(4)));
+//  connect(m_ui->actionLoad_Teapot ,SIGNAL(clicked()),m_gl,SLOT(on_actionLoad_shape_triggered(5)));
+//  connect(m_ui->actionLoad_Troll,SIGNAL(clicked()),m_gl,SLOT(on_actionLoad_shape_triggered(6)));
+//  connect(m_ui->actionLoad_Dragon,SIGNAL(clicked()),m_gl,SLOT(on_actionLoad_shape_triggered(7) ));
 
+  signalMapper= new QSignalMapper(this);
+  connect(signalMapper, SIGNAL(mapped(int)), this, SIGNAL(on_actionLoad_shape_triggered(int)));
+  signalMapper->setMapping(m_ui->actionLoad_Sphere,1);
+  signalMapper->setMapping(m_ui->actionLoad_Cube,2);
+  signalMapper->setMapping(m_ui->actionLoad_Torus,3);
+  signalMapper->setMapping(m_ui->actionLoad_Cone,4);
+  signalMapper->setMapping(m_ui->actionLoad_Teapot,5);
+  signalMapper->setMapping(m_ui->actionLoad_Troll,6);
+  signalMapper->setMapping(m_ui->actionLoad_Dragon,7);
+  connect(m_ui->actionLoad_Sphere, SIGNAL(clicked()), signalMapper, SLOT(map()));
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -176,7 +195,13 @@ void MainWindow::on_actionLoad_obj_triggered()
       tr("Open Mesh"), "tempFiles/", tr("Image Files (*.obj)"));
 
   std::string importName=fileName.toStdString();
-  std::cout<<"IMPORT NAME :  "<<importName<<std::endl;
+  std::cout<<"IMPORT NAME :              "<<importName<<std::endl;
   m_gl->setMeshLocation(importName);
   m_gl->meshImport();
+  m_gl->setShapeType(0);
+}
+
+void MainWindow::on_actionLoad_shape_triggered(int _value)
+{
+  m_gl->setShapeType(_value);
 }
