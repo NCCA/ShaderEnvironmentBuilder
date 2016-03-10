@@ -36,9 +36,7 @@ public:
   /// @param [in] the parent window is defaulted to nothing
   //----------------------------------------------------------------------------------------------------------------------
   Button(QWidget *parent=0);
-  Button(QString _buttonName, QGridLayout *_layout, ngl::Vec4 _defaultVal=ngl::Vec4(0.0f,0.0f,0.0f,1.0f), QWidget *parent=0);
-  void getCol();
-
+  Button(QString _buttonName, QLayout *_layout, ngl::Vec4 _defaultVal=ngl::Vec4(0.0f,0.0f,0.0f,1.0f), QWidget *parent=0);
 private slots:
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief a slot to open a colour box upon event

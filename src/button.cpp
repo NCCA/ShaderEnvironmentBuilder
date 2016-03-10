@@ -6,6 +6,7 @@ Button::Button(QWidget *parent) : QDialog(parent)
 {
   createButtonBox();
 
+
   /*mainLayout = new QGridLayout;
   mainLayout->addWidget(buttonBox, 0, 1);
   setLayout(mainLayout);
@@ -16,9 +17,10 @@ Button::Button(QWidget *parent) : QDialog(parent)
 
 }
 
-Button::Button(QString _buttonName, QGridLayout *_layout, ngl::Vec4 _defaultVal, QWidget *parent) : QDialog(parent)
+Button::Button(QString _buttonName, QLayout *_layout, ngl::Vec4 _defaultVal, QWidget *parent) : QDialog(parent)
 {
   createButtonBox(_buttonName);
+  _layout->addWidget(m_buttonBox);
 }
 
 void Button::createButtonBox(QString _buttonName)
