@@ -7,16 +7,15 @@
 
 //----------------------------------------------------------------------------------------------------------------------
 /// @file QsciLexerGlsl.cpp
-/// @brief implementation files for GLSL Lexer class
+/// @brief implementation for GLSL Lexer class
 //----------------------------------------------------------------------------------------------------------------------
 
 //----------------------------------------------------------------------------------------------------------------------
-QsciLexerGLSL::QsciLexerGLSL(QsciScintilla *parent) : QsciLexerCustom(parent)
+QsciLexerGLSL::QsciLexerGLSL(QsciScintilla *_parent) : QsciLexerCustom(_parent)
 {
-  m_parent = parent;
+  m_parent = _parent;
   m_API = new QsciAPIs(this);
   QString apiPath("./src/glsl.api");
-  const QString a(" ");
   setAPIs(m_API);
   m_API->load(apiPath);
   m_API->prepare();
