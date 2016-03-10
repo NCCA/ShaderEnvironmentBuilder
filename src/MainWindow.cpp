@@ -100,7 +100,7 @@ void MainWindow::printUniforms()
 
 void MainWindow::createButtons()
 {
-  for(int i=0;i<m_parForButton->m_num; ++i)
+  for(unsigned int i=0;i<m_parForButton->m_num; ++i)
   {
     if(m_parForButton->m_uniformList[i]->getTypeName()=="vec4")
     {

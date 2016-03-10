@@ -2,16 +2,18 @@
 #define BUTTON_H_
 
 #include <ngl/Vec4.h>
-#include <QtWidgets>
+#include <QDialogButtonBox>
+
 #include <QDialog>
-#include <QQueue>
-#include <QtGui/QColorDialog>
+#include <QGridLayout>
+#include <QLabel>
+#include <QPushButton>
+#include <QColor>
+#include <QColorDialog>
 
 QT_BEGIN_NAMESPACE
-class QComboBox;
 class QDialogButtonBox;
 class QGridLayout;
-class QGroupBox;
 class QLabel;
 class QPushButton;
 class QColor;
