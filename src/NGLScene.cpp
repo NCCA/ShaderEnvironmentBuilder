@@ -94,8 +94,52 @@ void NGLScene::initializeGL()
 
   shader->compileShader("PhongFragment");
 
+  //need to pass in the ID for the shader, so GLuint m_shaderID = shader->getShaderID();
+
+  GLint fragInfologLength = 0;
+  GLint fragCharsWritten  = 0;
+  char *fragInfoLog;
+
+  GLuint m_fragShaderID =0;
+  m_fragShaderID = shader->getShaderID("PhongFragment");
+
+
+
+  glGetShaderiv(m_fragShaderID, GL_INFO_LOG_LENGTH,&fragInfologLength);
+
+  std::cerr<<"info log length "<<fragInfologLength<<"\n";
+  if(fragInfologLength > 0)
+  {
+    fragInfoLog = new char[fragInfologLength];
+    glGetShaderInfoLog(m_fragShaderID, fragInfologLength, &fragCharsWritten, fragInfoLog);
+
+    std::cerr<<fragInfoLog<<std::endl;
+    delete [] fragInfoLog;
+
+  }
 
   shader->compileShader("PhongVertex");
+
+  GLint vertInfologLength = 0;
+  GLint vertCharsWritten  = 0;
+  char *vertInfoLog;
+
+  GLuint m_vertShaderID = 0;
+  m_vertShaderID = shader->getShaderID("PhongVertex");
+
+
+  glGetShaderiv(m_vertShaderID, GL_INFO_LOG_LENGTH,&vertInfologLength);
+    std::cerr<<"info log length "<<vertInfologLength<<"\n";
+  if(vertInfologLength > 0)
+  {
+    vertInfoLog = new char[vertInfologLength];
+    glGetShaderInfoLog(m_vertShaderID, vertInfologLength, &vertCharsWritten, vertInfoLog);
+
+    std::cerr<<vertInfoLog<<std::endl;
+    delete [] vertInfoLog;
+
+  }
+
 
   shader->attachShaderToProgram("Phong","PhongVertex");
   shader->attachShaderToProgram("Phong","PhongFragment");
@@ -210,7 +254,7 @@ void NGLScene::paintGL()
   m_text->setColour(ngl::Colour (0.82,0.2,0.2));
 
 
-  m_text->renderText(10,18,"Error!");
+  //m_text->renderText(10,18,"Error!");
 }
 
 //----------------------------------------------------------------------------------------------------------------------
