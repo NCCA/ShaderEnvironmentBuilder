@@ -46,6 +46,9 @@ Cebitor::Cebitor(QWidget *_parent) : QsciScintilla(_parent)
 
   connect(commentAction, SIGNAL(triggered()), this, SLOT(comment()));
   this->addAction(commentAction);
+
+  // connect signals and slots
+  connect(this, SIGNAL(SCN_CHARADDED(int)), this, SLOT(charAdded(int)));
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -111,4 +114,32 @@ void Cebitor::comment()
 
   // reselect to match original selection
   this->setSelection(lineFrom,indexFrom,lineTo,indexTo);
+}
+
+void Cebitor::autoClose(QString _close)
+{
+  int cursorIndex;
+  int cursorLine;
+  int length;
+  getCursorPosition(&cursorLine, &cursorIndex);
+  length = lineLength(cursorLine);
+  if(cursorIndex == length-1)
+  {
+    insert(_close);
+  }
+  else if(text(cursorLine).at(cursorIndex).toLatin1() == ' ')
+  {
+    insert(_close);
+  }
+}
+
+void Cebitor::charAdded(int _c)
+{
+  switch(_c)
+  {
+    case (int) '(': { autoClose(QString(')')); break; }
+    case (int) '{': { autoClose(QString('}')); break; }
+    case (int) '[': { autoClose(QString(']')); break; }
+    case (int) '"': { autoClose(QString('"')); break; }
+  }
 }
