@@ -45,26 +45,23 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   // Load the text files into the corresponding tabs
   loadTextFileToTab("shaders/PhongVertex.glsl", *m_qsci1);
   loadTextFileToTab("shaders/PhongFragment.glsl", *m_qsci2);
-//  connect(m_ui->actionLoad_obj,SIGNAL(clicked()),m_gl,SLOT(on_actionLoad_obj_triggered()));
-//  connect(m_ui->actionLoad_Sphere,SIGNAL(clicked()),m_gl,SLOT(on_actionLoad_shape_triggered(1)));
-//  connect(m_ui->actionLoad_Sphere,SIGNAL(clicked()),m_gl,SLOT(on_actionLoad_shape_triggered(1)));
-//  connect(m_ui->actionLoad_Cube,SIGNAL(clicked()),m_gl,SLOT(on_actionLoad_shape_triggered(2)));
-//  connect(m_ui->actionLoad_Torus,SIGNAL(clicked()),m_gl,SLOT(on_actionLoad_shape_triggered(3)));
-//  connect(m_ui->actionLoad_Cone,SIGNAL(clicked()),m_gl,SLOT(on_actionLoad_shape_triggered(4)));
-//  connect(m_ui->actionLoad_Teapot ,SIGNAL(clicked()),m_gl,SLOT(on_actionLoad_shape_triggered(5)));
-//  connect(m_ui->actionLoad_Troll,SIGNAL(clicked()),m_gl,SLOT(on_actionLoad_shape_triggered(6)));
-//  connect(m_ui->actionLoad_Dragon,SIGNAL(clicked()),m_gl,SLOT(on_actionLoad_shape_triggered(7) ));
 
-  signalMapper= new QSignalMapper(this);
-  connect(signalMapper, SIGNAL(mapped(int)), this, SIGNAL(on_actionLoad_shape_triggered(int)));
-  signalMapper->setMapping(m_ui->actionLoad_Sphere,1);
-  signalMapper->setMapping(m_ui->actionLoad_Cube,2);
-  signalMapper->setMapping(m_ui->actionLoad_Torus,3);
-  signalMapper->setMapping(m_ui->actionLoad_Cone,4);
-  signalMapper->setMapping(m_ui->actionLoad_Teapot,5);
-  signalMapper->setMapping(m_ui->actionLoad_Troll,6);
-  signalMapper->setMapping(m_ui->actionLoad_Dragon,7);
-  connect(m_ui->actionLoad_Sphere, SIGNAL(clicked()), signalMapper, SLOT(map()));
+  //testing buttttons
+  connect(m_ui->pushButtonR,SIGNAL(clicked()),this,SLOT(on_pushButton_clicked2()));
+  connect(m_ui->pushButtonG,SIGNAL(clicked()),this,SLOT(on_pushButton_clicked2()));
+  connect(m_ui->pushButtonB,SIGNAL(clicked()),this,SLOT(on_pushButton_clicked2()));
+
+  // switching between shapes
+  connect(m_ui->actionLoad_Sphere,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
+  connect(m_ui->actionLoad_Cube,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
+  connect(m_ui->actionLoad_Torus,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
+  connect(m_ui->actionLoad_Cone,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
+  connect(m_ui->actionLoad_Teapot ,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
+  connect(m_ui->actionLoad_Troll,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
+  connect(m_ui->actionLoad_Dragon,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
+
+  connect(m_ui->actionLoad_obj,SIGNAL(triggered()),this,SLOT(on_actionLoad_obj_triggered222()));
+
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -103,7 +100,7 @@ void MainWindow::on_m_btn_loadShader_clicked()
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-void MainWindow::on_m_btn_compileShader_clicked()
+void MainWindow::on_m_btn_compileShader_clicked2()
 {
   m_gl->compileShader();
 }
@@ -187,21 +184,46 @@ bool MainWindow::loadTextFileToTab(QString _path, QsciScintilla &_qsci)
   return true;
 }
 
-
 //----------------------------------------------------------------------------------------------------------------------
-void MainWindow::on_actionLoad_obj_triggered()
+void MainWindow::on_actionLoad_obj_triggered222()
 {
   QString fileName = QFileDialog::getOpenFileName(this,
       tr("Open Mesh"), "tempFiles/", tr("Image Files (*.obj)"));
 
   std::string importName=fileName.toStdString();
   std::cout<<"IMPORT NAME :              "<<importName<<std::endl;
-  m_gl->setMeshLocation(importName);
+  m_gl->setMeshLocation(fileName);
   m_gl->meshImport();
   m_gl->setShapeType(0);
 }
 
-void MainWindow::on_actionLoad_shape_triggered(int _value)
+void MainWindow::on_actionLoad_shape_triggered()
 {
-  m_gl->setShapeType(_value);
+  QAction *action = static_cast<QAction*>(sender());
+  int a=666;
+
+  if (action==m_ui->actionLoad_Sphere)  {   a=1;  }
+  if (action==m_ui->actionLoad_Cube)    {   a=2;  }
+  if (action==m_ui->actionLoad_Torus)   {   a=3;  }
+  if (action==m_ui->actionLoad_Cone)    {   a=4;  }
+  if (action==m_ui->actionLoad_Teapot)  {   a=5;  }
+  if (action==m_ui->actionLoad_Troll)   {   a=6;  }
+  if (action==m_ui->actionLoad_Dragon)  {   a=7;  }
+
+  std::cout<<"Print >> " <<action<<"  "<<a<<std::endl;
+  m_gl->setShapeType(a);
+}
+
+void MainWindow::on_pushButton_clicked2()
+{
+  QPushButton *button = static_cast<QPushButton*>(sender());
+  float a=0.0;
+  float b=0.0;
+  float c=0.0;
+  if (button==m_ui->pushButtonR)    {   a=1.0;b=0.0;c=0.0;  }
+  if (button==m_ui->pushButtonG)    {   a=0.0;b=1.0;c=0.0;  }
+  if (button==m_ui->pushButtonB)    {   a=0.0;b=0.0;c=1.0;  }
+  std::cout<<"Print >> " <<button<<"  "<<a<<std::endl;
+  ngl::Vec4 abc(a,b,c,1.0);
+  m_gl->m_parser->m_uniformList[0]->setVec4(abc);
 }

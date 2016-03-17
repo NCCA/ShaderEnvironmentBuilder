@@ -128,7 +128,7 @@
               </size>
              </property>
              <property name="currentIndex">
-              <number>0</number>
+              <number>1</number>
              </property>
              <property name="documentMode">
               <bool>false</bool>
@@ -264,6 +264,27 @@
       </property>
      </widget>
     </item>
+    <item>
+     <widget class="QPushButton" name="pushButtonR">
+      <property name="text">
+       <string>Colour it red!</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButtonG">
+      <property name="text">
+       <string>Colour it green!</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButtonB">
+      <property name="text">
+       <string>Sacre bleu!</string>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -286,17 +307,17 @@
    </widget>
    <widget class="QMenu" name="menuDebug">
     <property name="title">
-     <string>Debug</string>
+     <string>Load Shapes</string>
     </property>
     <addaction name="separator"/>
     <addaction name="actionLoad_obj"/>
     <addaction name="actionLoad_Sphere"/>
     <addaction name="actionLoad_Cube"/>
-    <addaction name="actionLoad_Cone"/>
     <addaction name="actionLoad_Torus"/>
+    <addaction name="actionLoad_Cone"/>
     <addaction name="actionLoad_Teapot"/>
-    <addaction name="actionLoad_Dragon"/>
     <addaction name="actionLoad_Troll"/>
+    <addaction name="actionLoad_Dragon"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuDebug"/>

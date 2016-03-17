@@ -32,8 +32,9 @@ NGLScene::NGLScene( QWidget *_parent ) : QOpenGLWidget( _parent )
   m_spinXFace=0.0f;
   m_spinYFace=0.0f;
   m_parser= new parserLib();
-  m_shapeType=1;
-  m_meshLoc= "/home/i7247470/0Features-0BugsCVA3/tempFiles/BULBASAUR_lowPoly.obj";
+  m_shapeType=2;
+  m_meshLoc= "/home/i7247470/0Features-0BugsCVA3/tempFiles/strawberry.obj";
+  m_meshLocOLD= "/home/i7247470/0Features-0BugsCVA3/tempFiles/strawberry.obj";
 
   // re-size the widget to that of the parent (in this case the GLFrame passed in on construction)
   this->resize(_parent->size());
@@ -53,11 +54,12 @@ NGLScene::~NGLScene()
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-void NGLScene::setMeshLocation(std::string _meshDirectory)
+void NGLScene::setMeshLocation(QString _meshDirectory)
 {
   m_meshLoc=_meshDirectory;
-  std::cout<<"input location  :          "<<_meshDirectory<<std::endl;
-  std::cout<<"new location    :          "<<m_meshLoc<<std::endl;
+  std::cout<<"input location  :"<<_meshDirectory.toStdString()<<std::endl;
+  std::cout<<"new location    :"<<m_meshLoc.toStdString()<<std::endl;
+  std::cout<<"                :"<<m_meshLocOLD.toStdString()<<std::endl;
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -67,8 +69,8 @@ void NGLScene::meshImport()
   {
     delete m_mesh;
   }
-  m_mesh = new ngl::Obj(m_meshLoc);
-  std::cout<<m_meshLoc<<std::endl;
+  m_mesh = new ngl::Obj(m_meshLoc.toStdString());
+  std::cout<<m_meshLoc.toStdString()<<std::endl;
   m_mesh->createVAO();
   update();
 }
@@ -151,7 +153,7 @@ void NGLScene::initializeGL()
 
   m_readFromXML->shaderData("WhyHelloThere", "PhongVertex", "shaders/PhongVertex.glsl", "PhongFragment", "shaders/PhongFragment.glsl");
   m_parser->assignAllData();
-  m_mesh = new ngl::Obj(m_meshLoc);
+  m_mesh = new ngl::Obj(m_meshLoc.toStdString());
   m_mesh->createVAO();
   ngl::VAOPrimitives::instance()->createSphere("sphere", 1,20);
   ngl::VAOPrimitives::instance()->createCone("cone",0.5,1,20,1);
@@ -181,7 +183,15 @@ void NGLScene::exportUniforms()
 
 void NGLScene::setShapeType(int _type)
 {
-  m_shapeType=_type;
+  if (_type<=7)
+  {
+    m_shapeType=_type;
+    std::cout<<"new shape type is :"<<_type<<std::endl;
+  }
+  else
+  {
+    std::cout<<"Invalid shape type"<<std::endl;
+  }
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -222,7 +232,7 @@ void NGLScene::paintGL()
   loadMatricesToShader();
   ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
 
-  drawObject(0);
+  drawObject(m_shapeType);
 }
 
 void NGLScene::drawObject(int _type)
