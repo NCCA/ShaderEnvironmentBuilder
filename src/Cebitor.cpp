@@ -52,6 +52,48 @@ Cebitor::Cebitor(QWidget *_parent) : QsciScintilla(_parent)
 }
 
 //----------------------------------------------------------------------------------------------------------------------
+bool Cebitor::autoClose(const QString _close)
+{
+  int cursorIndex;
+  int cursorLine;
+  int length;
+  getCursorPosition(&cursorLine, &cursorIndex);
+  length = lineLength(cursorLine);
+
+  // insert closing character if cursor is at EOL or the next character is a space
+  if(cursorIndex == length-1)
+  {
+    insert(_close);
+    return true;
+  }
+  else if(text(cursorLine).at(cursorIndex).toLatin1() == ' ')
+  {
+    insert(_close);
+    return true;
+  }
+  return false;
+}
+
+//----------------------------------------------------------------------------------------------------------------------
+bool Cebitor::closing(const QString _close)
+{
+  int cursorIndex;
+  int cursorLine;
+  int length;
+  getCursorPosition(&cursorLine, &cursorIndex);
+  length = lineLength(cursorLine);
+
+  // remove duplicate if next character is the same as _close
+  if(text(cursorLine).at(cursorIndex) == _close.at(0))
+  {
+    setSelection(cursorLine, cursorIndex, cursorLine, cursorIndex+1);
+    removeSelectedText();
+    return true;
+  }
+  return false;
+}
+
+//----------------------------------------------------------------------------------------------------------------------
 void Cebitor::comment()
 {
   int lineFrom;
@@ -116,23 +158,7 @@ void Cebitor::comment()
   this->setSelection(lineFrom,indexFrom,lineTo,indexTo);
 }
 
-void Cebitor::autoClose(QString _close)
-{
-  int cursorIndex;
-  int cursorLine;
-  int length;
-  getCursorPosition(&cursorLine, &cursorIndex);
-  length = lineLength(cursorLine);
-  if(cursorIndex == length-1)
-  {
-    insert(_close);
-  }
-  else if(text(cursorLine).at(cursorIndex).toLatin1() == ' ')
-  {
-    insert(_close);
-  }
-}
-
+//----------------------------------------------------------------------------------------------------------------------
 void Cebitor::charAdded(int _c)
 {
   switch(_c)
@@ -140,6 +166,19 @@ void Cebitor::charAdded(int _c)
     case (int) '(': { autoClose(QString(')')); break; }
     case (int) '{': { autoClose(QString('}')); break; }
     case (int) '[': { autoClose(QString(']')); break; }
-    case (int) '"': { autoClose(QString('"')); break; }
+
+    case (int) ')': { closing(QString(')')); break; }
+    case (int) '}': { closing(QString('}')); break; }
+    case (int) ']': { closing(QString(']')); break; }
+
+    // special case since " opens and closes
+    case (int) '"':
+    {
+      if(!closing(QString('"')))
+      {
+        autoClose(QString('"'));
+      }
+      break;
+    }
   }
 }
