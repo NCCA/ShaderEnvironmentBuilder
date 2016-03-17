@@ -97,18 +97,18 @@ void MainWindow::printUniforms()
 {
   m_parForButton->printUniforms(1);
 }
+
 void MainWindow::createButtons()
 {
-  for(int i=0;i<m_parForButton->m_num; ++i)
+  for(unsigned int i=0;i<m_parForButton->m_num; ++i)
   {
     if(m_parForButton->m_uniformList[i]->getTypeName()=="vec4")
     {
       QString _tempName = QString::fromStdString(m_parForButton->m_uniformList[i]->getName());
       ngl::Vec4 _tempVec=m_parForButton->m_uniformList[i]->getVec4();
-      Button *tempButton = new Button(_tempName, _tempVec);
-      m_buttonList.push_back(tempButton);
+      Button *tempButton = new Button(_tempName, m_ui->vl_uniforms, _tempVec, m_ui->m_w_uniforms);
 
-      //m_buttonList.push_back(Button myNew);
+      m_buttonList.push_back(tempButton);
     }
   }
   std::cerr<<"THIS IS THE BUTTON LIST LENGTH: "<<m_buttonList.size()<<std::endl;
