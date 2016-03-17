@@ -82,12 +82,70 @@ void NGLScene::initializeGL()
   shader->loadShaderSource("PhongVertex","shaders/PhongVertex.glsl"); //NEEDS TO BE SHADERFROMTSTRING
   shader->loadShaderSource("PhongFragment","shaders/PhongFragment.glsl"); //NEEDS TO BE SHADERFROMSTRING
   // compile the shaders
-  shader->compileShader("PhongVertex");
+
+  GLuint shaderTest= shader->getProgramID("PhongFragment");
+
+  std::cout<<shaderTest<<std::endl;
+
+  GLint success=0;
+
+  glGetShaderiv(shaderTest,GL_COMPILE_STATUS, &success);
+
+
   shader->compileShader("PhongFragment");
 
-  // add them to the program
+  //need to pass in the ID for the shader, so GLuint m_shaderID = shader->getShaderID();
+
+  GLint fragInfologLength = 0;
+  GLint fragCharsWritten  = 0;
+  char *fragInfoLog;
+
+  GLuint m_fragShaderID =0;
+  m_fragShaderID = shader->getShaderID("PhongFragment");
+
+
+
+  glGetShaderiv(m_fragShaderID, GL_INFO_LOG_LENGTH,&fragInfologLength);
+
+  std::cerr<<"info log length "<<fragInfologLength<<"\n";
+  if(fragInfologLength > 0)
+  {
+    fragInfoLog = new char[fragInfologLength];
+    glGetShaderInfoLog(m_fragShaderID, fragInfologLength, &fragCharsWritten, fragInfoLog);
+
+    std::cerr<<fragInfoLog<<std::endl;
+    delete [] fragInfoLog;
+
+  }
+
+  shader->compileShader("PhongVertex");
+
+  GLint vertInfologLength = 0;
+  GLint vertCharsWritten  = 0;
+  char *vertInfoLog;
+
+  GLuint m_vertShaderID = 0;
+  m_vertShaderID = shader->getShaderID("PhongVertex");
+
+
+  glGetShaderiv(m_vertShaderID, GL_INFO_LOG_LENGTH,&vertInfologLength);
+    std::cerr<<"info log length "<<vertInfologLength<<"\n";
+  if(vertInfologLength > 0)
+  {
+    vertInfoLog = new char[vertInfologLength];
+    glGetShaderInfoLog(m_vertShaderID, vertInfologLength, &vertCharsWritten, vertInfoLog);
+
+    std::cerr<<vertInfoLog<<std::endl;
+    delete [] vertInfoLog;
+
+  }
+
+
   shader->attachShaderToProgram("Phong","PhongVertex");
   shader->attachShaderToProgram("Phong","PhongFragment");
+
+  // add them to the program
+
   // now bind the shader attributes for most NGL primitives we use the following
   // layout attribute 0 is the vertex data (x,y,z)
   shader->bindAttribute("Phong",0,"inVert");
@@ -190,6 +248,14 @@ void NGLScene::paintGL()
   loadMatricesToShader();
   ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
   prim->draw("teapot");
+
+
+  m_text.reset(new ngl::Text(QFont ("Arial",18)));
+  m_text->setScreenSize(width(),height());
+  m_text->setColour(ngl::Colour (0.82,0.2,0.2));
+
+
+  //m_text->renderText(10,18,"Error!");
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -382,6 +448,8 @@ void NGLScene::wheelEvent ( QWheelEvent * _event )
 void NGLScene::loadShader(QString _text, ngl::ShaderType _type)
 {
     ngl::ShaderLib *shader=ngl::ShaderLib::instance();
+    GLuint shaderTest=shader->getProgramID("PhongFragment");
+    GLint* success = new int;
     switch (_type)
     {
       case ngl::ShaderType::VERTEX:
