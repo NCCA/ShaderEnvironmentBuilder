@@ -4,6 +4,8 @@
 #include "QsciLexerGlsl.h"
 
 #include <Qsci/qsciscintilla.h>
+#include <QEvent>
+#include <QWidget>
 
 //------------------------------------------------------------------------------------------------------------------------
 /// @file Cebitor.h
@@ -26,6 +28,8 @@ public:
   /// @brief Cebitor constructor, initialises default values
   //------------------------------------------------------------------------------------------------------------------------
   Cebitor(QWidget *_parent);
+protected slots:
+  void comment();
 };
 
 #endif

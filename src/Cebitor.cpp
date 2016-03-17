@@ -1,4 +1,11 @@
-#include "Cebitor.h"
+﻿#include "Cebitor.h"
+
+#include <iostream>
+#include <QAction>
+#include <QSettings>
+#include <QStringList>
+#include <Qsci/qscicommand.h>
+#include <Qsci/qscicommandset.h>
 
 //----------------------------------------------------------------------------------------------------------------------
 /// @file Cebitor.cpp
@@ -29,4 +36,66 @@ Cebitor::Cebitor(QWidget *_parent) : QsciScintilla(_parent)
   // to appear we would need to implement a line length checking
   this->SendScintilla(QsciScintillaBase::SCI_SETSCROLLWIDTHTRACKING, 1);
   this->SendScintilla(QsciScintillaBase::SCI_SETSCROLLWIDTH, 5);
+
+
+  this->standardCommands()->find(QsciCommand::Command::WordPartLeft)->setKey(0);
+
+  QAction *commentAction = new QAction(this);
+  commentAction->setShortcut(Qt::Key_Slash | Qt::CTRL);
+
+  connect(commentAction, SIGNAL(triggered()), this, SLOT(comment()));
+  this->addAction(commentAction);
+}
+
+void Cebitor::comment()
+{
+  int lineFrom;
+  int indexFrom;
+  int lineTo;
+  int indexTo;
+  if(this->hasSelectedText())
+  {
+    this->getSelection(&lineFrom, &indexFrom, &lineTo, &indexTo);
+  }
+  else
+  {
+    this->getCursorPosition(&lineFrom, &indexFrom);
+    lineTo = lineFrom;
+    indexTo = indexFrom;
+  }
+  bool alreadyCommented = true;
+  for(int i=lineFrom; i<=lineTo; i++)
+  {
+    QString lineText = this->text(i);
+    if(!lineText.startsWith("//"))
+    {
+      alreadyCommented = false;
+    }
+  }
+  if(alreadyCommented)
+  {
+    for(int i=lineFrom; i<=lineTo; i++)
+    {
+      this->setSelection(i,0,i,2);
+      this->removeSelectedText();
+    }
+    indexTo -= 2;
+    if(indexFrom > 1)
+    {
+      indexFrom -= 2;
+    }
+  }
+  else
+  {
+    for(int i=lineFrom; i<=lineTo; i++)
+    {
+      this->insertAt(QString("//"),i,0);
+    }
+    indexTo += 2;
+    if(indexFrom != 0)
+    {
+      indexFrom += 2;
+    }
+  }
+  this->setSelection(lineFrom,indexFrom,lineTo,indexTo);
 }
