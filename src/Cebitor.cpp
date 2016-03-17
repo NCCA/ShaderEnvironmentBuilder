@@ -37,9 +37,10 @@ Cebitor::Cebitor(QWidget *_parent) : QsciScintilla(_parent)
   this->SendScintilla(QsciScintillaBase::SCI_SETSCROLLWIDTHTRACKING, 1);
   this->SendScintilla(QsciScintillaBase::SCI_SETSCROLLWIDTH, 5);
 
+  // unbind CTRL-/ keyboard shortcut
+  this->standardCommands()->boundTo(Qt::Key_Slash | Qt::CTRL)->setKey(0);
 
-  this->standardCommands()->find(QsciCommand::Command::WordPartLeft)->setKey(0);
-
+  // rebind CTRL-/ to comment function
   QAction *commentAction = new QAction(this);
   commentAction->setShortcut(Qt::Key_Slash | Qt::CTRL);
 
@@ -47,12 +48,14 @@ Cebitor::Cebitor(QWidget *_parent) : QsciScintilla(_parent)
   this->addAction(commentAction);
 }
 
+//----------------------------------------------------------------------------------------------------------------------
 void Cebitor::comment()
 {
   int lineFrom;
   int indexFrom;
   int lineTo;
   int indexTo;
+  // get selected lines or current line if no text is selected
   if(this->hasSelectedText())
   {
     this->getSelection(&lineFrom, &indexFrom, &lineTo, &indexTo);
@@ -63,6 +66,8 @@ void Cebitor::comment()
     lineTo = lineFrom;
     indexTo = indexFrom;
   }
+
+  // check if selected lines are already commented
   bool alreadyCommented = true;
   for(int i=lineFrom; i<=lineTo; i++)
   {
@@ -72,6 +77,8 @@ void Cebitor::comment()
       alreadyCommented = false;
     }
   }
+
+  // remove "//" from each line if they are already commented
   if(alreadyCommented)
   {
     for(int i=lineFrom; i<=lineTo; i++)
@@ -79,23 +86,29 @@ void Cebitor::comment()
       this->setSelection(i,0,i,2);
       this->removeSelectedText();
     }
+    //offset original selection for reselecting text
     indexTo -= 2;
     if(indexFrom > 1)
     {
       indexFrom -= 2;
     }
   }
+
+  // insert "//" at the start of each line
   else
   {
     for(int i=lineFrom; i<=lineTo; i++)
     {
       this->insertAt(QString("//"),i,0);
     }
+    //offset original selection for reselecting text
     indexTo += 2;
     if(indexFrom != 0)
     {
       indexFrom += 2;
     }
   }
+
+  // reselect to match original selection
   this->setSelection(lineFrom,indexFrom,lineTo,indexTo);
 }
