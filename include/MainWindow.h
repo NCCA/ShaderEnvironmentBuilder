@@ -6,7 +6,7 @@
 #include "button.h"
 #include "Cebitor.h"
 #include <vector>
-
+#include "NGLScene.h"
 //------------------------------------------------------------------------------------------------------------------------
 /// @file NGLScene.h
 /// @brief the MainWindow class for our program
@@ -56,7 +56,7 @@ private slots:
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief activated when Compile Shader button is clicked
   //----------------------------------------------------------------------------------------------------------------------
-  void on_m_btn_compileShader_clicked2();
+  void on_m_btn_compileShader_clicked();
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief activated when the current tab is changed
   /// @param [in] _index the index of the now current tab
@@ -65,10 +65,13 @@ private slots:
   //----------------------------------------------------------------------------------------------------------------------
   //----------------------------------------------------------------------------------------------------------------------
   void on_actionLoad_shape_triggered();
+  void on_actionLoad_obj_triggered2();
 
 
 
-  void on_pushButton_clicked2();
+  void on_pushButton_colour();
+
+  void on_test_clickedA();
 
 private:
   //----------------------------------------------------------------------------------------------------------------------

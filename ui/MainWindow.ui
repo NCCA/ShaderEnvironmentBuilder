@@ -299,6 +299,16 @@
       </property>
      </widget>
     </item>
+    <item>
+     <widget class="QPushButton" name="test">
+      <property name="text">
+       <string>PushButton</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="lineEdit"/>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">

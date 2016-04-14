@@ -55,8 +55,13 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   connect(m_ui->actionLoad_Teapot ,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
   connect(m_ui->actionLoad_Troll,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
   connect(m_ui->actionLoad_Dragon,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
-
-  connect(m_ui->actionLoad_obj,SIGNAL(triggered()),this,SLOT(on_actionLoad_obj_triggered222()));
+  // switching to .obj files
+  connect(m_ui->actionLoad_obj,SIGNAL(triggered()),this,SLOT(on_actionLoad_obj_triggered2()));
+  // temporary buttons
+  connect(m_ui->pushButtonR,SIGNAL(clicked()),this,SLOT(on_pushButton_colour()));
+  connect(m_ui->pushButtonG,SIGNAL(clicked()),this,SLOT(on_pushButton_colour()));
+  connect(m_ui->pushButtonB,SIGNAL(clicked()),this,SLOT(on_pushButton_colour()));
+  connect(m_ui->test ,SIGNAL(clicked()),this,SLOT(on_test_clickedA()));
 
 }
 
@@ -96,7 +101,7 @@ void MainWindow::on_m_btn_loadShader_clicked()
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-void MainWindow::on_m_btn_compileShader_clicked2()
+void MainWindow::on_m_btn_compileShader_clicked()
 {
   m_gl->compileShader();
   m_parForButton->printUniforms(1);
@@ -179,14 +184,14 @@ bool MainWindow::loadTextFileToTab(QString _path, Cebitor &_qsci)
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-void MainWindow::on_actionLoad_obj_triggered222()
+void MainWindow::on_actionLoad_obj_triggered2()
 {
   QString fileName = QFileDialog::getOpenFileName(this,
       tr("Open Mesh"), "tempFiles/", tr("Image Files (*.obj)"));
 
   std::string importName=fileName.toStdString();
   std::cout<<"IMPORT NAME :              "<<importName<<std::endl;
-  m_gl->setMeshLocation(fileName);
+  m_gl->setMeshLocation(importName);
   m_gl->meshImport();
   m_gl->setShapeType(0);
 }
@@ -194,7 +199,7 @@ void MainWindow::on_actionLoad_obj_triggered222()
 void MainWindow::on_actionLoad_shape_triggered()
 {
   QAction *action = static_cast<QAction*>(sender());
-  int a=666;
+  int a=0;
 
   if (action==m_ui->actionLoad_Sphere)  {   a=1;  }
   if (action==m_ui->actionLoad_Cube)    {   a=2;  }
@@ -204,20 +209,25 @@ void MainWindow::on_actionLoad_shape_triggered()
   if (action==m_ui->actionLoad_Troll)   {   a=6;  }
   if (action==m_ui->actionLoad_Dragon)  {   a=7;  }
 
-  std::cout<<"Print >> " <<action<<"  "<<a<<std::endl;
+  //std::cout<<"Print >> " <<action<<"  "<<a<<std::endl;
   m_gl->setShapeType(a);
 }
 
-void MainWindow::on_pushButton_clicked2()
+void MainWindow::on_pushButton_colour()
 {
   QPushButton *button = static_cast<QPushButton*>(sender());
   float a=0.0;
   float b=0.0;
   float c=0.0;
-  if (button==m_ui->pushButtonR)    {   a=1.0;b=0.0;c=0.0;  }
-  if (button==m_ui->pushButtonG)    {   a=0.0;b=1.0;c=0.0;  }
-  if (button==m_ui->pushButtonB)    {   a=0.0;b=0.0;c=1.0;  }
+  if (button==m_ui->pushButtonR)    {   a=1.0;b=0.0;c=0.0; }
+  if (button==m_ui->pushButtonG)    {   a=0.0;b=1.0;c=0.0; }
+  if (button==m_ui->pushButtonB)    {   a=0.0;b=0.0;c=1.0; }
   std::cout<<"Print >> " <<button<<"  "<<a<<std::endl;
   ngl::Vec4 abc(a,b,c,1.0);
   m_gl->m_parser->m_uniformList[0]->setVec4(abc);
+}
+
+void MainWindow::on_test_clickedA()
+{
+  m_gl->importMeshName(m_ui->lineEdit->text().toStdString());
 }

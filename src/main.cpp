@@ -1,6 +1,7 @@
 #include <QApplication>
 #include "CebApplication.h"
 #include "MainWindow.h"
+#include <qsurfaceformat.h>
 
 int main(int argc, char **argv)
 {

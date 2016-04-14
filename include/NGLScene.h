@@ -79,7 +79,7 @@ public :
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief sets the file location you of a mesh
   //----------------------------------------------------------------------------------------------------------------------
-  void setMeshLocation(QString _meshDirectory);
+  void setMeshLocation(std::string _meshDirectory);
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief imports the .obj mesh currently located
   //----------------------------------------------------------------------------------------------------------------------
@@ -89,6 +89,10 @@ public :
   //----------------------------------------------------------------------------------------------------------------------
   parserLib *m_parser;
   //----------------------------------------------------------------------------------------------------------------------
+
+
+  void importMeshName(const std::string &);
+
 
 public slots:
   void setShapeType(int _type);
@@ -212,10 +216,11 @@ private:
   //----------------------------------------------------------------------------------------------------------------------
 
   int m_shapeType;
-  ngl::Obj *m_mesh;
-  QString m_meshLoc;
-  QString m_meshLocOLD;
-  void drawObject(int _type);
+  std::string m_meshLoc;
+  std::string m_meshLocOrig;
+  ngl::Obj *tmp_importObj;
+  std::unique_ptr<ngl::Obj> m_mesh;
+  void drawObject(int _type, std::unique_ptr<ngl::Obj> &);
 };
 
 #endif
