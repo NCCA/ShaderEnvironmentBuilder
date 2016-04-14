@@ -2,17 +2,21 @@
 #define BUTTON_H_
 
 #include <ngl/Vec4.h>
+#include <QtWidgets>
 #include <ngl/Colour.h>
 #include <QtWidgets>
+#include <QDialogButtonBox>
+
 #include <QDialog>
-#include <QQueue>
-#include <QtGui/QColorDialog>
+#include <QGridLayout>
+#include <QLabel>
+#include <QPushButton>
+#include <QColor>
+#include <QColorDialog>
 
 QT_BEGIN_NAMESPACE
-class QComboBox;
 class QDialogButtonBox;
 class QGridLayout;
-class QGroupBox;
 class QLabel;
 class QPushButton;
 class QColor;
@@ -38,7 +42,10 @@ public:
   //----------------------------------------------------------------------------------------------------------------------
   Button(QWidget *parent=0);
   Button(QString _buttonName, QLayout *_layout, unsigned int _id, ngl::Vec4 _defaultVal=ngl::Vec4(0.0f,0.0f,0.0f,1.0f), QWidget *parent=0);
-  QString getName();
+  QString getName(){return m_buttonName;}
+  void setColour(QColor _col){m_colourPicked=_col;}
+  void setID(unsigned int _id){m_id=_id;}
+  unsigned int getID() {return m_id;}
   ngl::Colour getColour();
   void printValues();
 
@@ -53,25 +60,33 @@ private:
   //----------------------------------------------------------------------------------------------------------------------
   void createButtonBox(QString _buttonName="Select &Colour");
   //----------------------------------------------------------------------------------------------------------------------
-  /// @brief string to hold button's name
-  //----------------------------------------------------------------------------------------------------------------------
-  QString m_buttonName;
-  //----------------------------------------------------------------------------------------------------------------------
-  /// @brief id for each button
+  /// @brief id to access specific buttons
   //----------------------------------------------------------------------------------------------------------------------
   unsigned int m_id;
   //----------------------------------------------------------------------------------------------------------------------
+  /// @brief colour struct used to access colour attributes
+  /// @brief string to hold button's name
+  //----------------------------------------------------------------------------------------------------------------------
+  typedef struct m_colour
+  {
+    qreal m_r;
+    qreal m_g;
+    qreal m_b;
+  } m_colour;
+  QString m_buttonName;
+  //----------------------------------------------------------------------------------------------------------------------
   /// @brief colour structure to store colour attributes for easy accessibility
   //----------------------------------------------------------------------------------------------------------------------
-  ngl::Colour m_colour;
-  //----------------------------------------------------------------------------------------------------------------------
-  /// @brief colour used to store attributes coming out from colour picker
-  //----------------------------------------------------------------------------------------------------------------------
-  QColor m_colourPicker;
+  m_colour m_colourStruct;
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief button box to open colour picker
   //----------------------------------------------------------------------------------------------------------------------
   QDialogButtonBox *m_buttonBox;
+  QDialogButtonBox *m_buttonBox2;
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief colour used to store attributes coming out from colour picker
+  //----------------------------------------------------------------------------------------------------------------------
+  QColor m_colourPicked;
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief colour box to select colours
   //----------------------------------------------------------------------------------------------------------------------
@@ -87,7 +102,6 @@ private:
   QPushButton *m_helpButton;
 
   QLabel *m_colourBoxLabel;
-
   QGridLayout *m_mainLayout;
 
 

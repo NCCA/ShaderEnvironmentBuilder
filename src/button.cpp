@@ -23,9 +23,9 @@ Button::Button(QString _buttonName, QLayout *_layout, unsigned int _id, ngl::Vec
   m_id=_id;
   createButtonBox(_buttonName);
   _layout->addWidget(m_buttonBox);
-  m_colour.m_r = _defaultVal.m_x;
-  m_colour.m_g = _defaultVal.m_y;
-  m_colour.m_b = _defaultVal.m_z;
+  m_colourStruct.m_r= _defaultVal.m_x;
+  m_colourStruct.m_g = _defaultVal.m_y;
+  m_colourStruct.m_b = _defaultVal.m_z;
 }
 
 void Button::createButtonBox(QString _buttonName)
@@ -40,7 +40,7 @@ void Button::createButtonBox(QString _buttonName)
 void Button::printValues()
 {
   qDebug()<<"Name:"<<m_buttonName<<"\nID: "<<m_id;
-  std::cout<<"R: "<<m_colour.m_r<<"\nG: "<<m_colour.m_g<<"\nB: "<<m_colour.m_b<<std::endl;
+  std::cout<<"R: "<<m_colourStruct.m_r<<"\nG: "<<m_colourStruct.m_g<<"\nB: "<<m_colourStruct.m_b<<std::endl;
 }
 
 void Button::openColourBox()
@@ -50,10 +50,10 @@ void Button::openColourBox()
 
   //colourBoxLayout = new QGridLayout;
   //colourGroupBox->setLayout(colourBoxLayout);
-  m_colourPicker=m_colourGroupBox->getColor();
+  m_colourPicked=m_colourGroupBox->getColor();
 
-  m_colour.m_r = m_colourPicker.redF();
-  m_colour.m_g = m_colourPicker.greenF();
-  m_colour.m_b = m_colourPicker.blueF();
+  m_colourStruct.m_r = m_colourPicked.redF();
+  m_colourStruct.m_g = m_colourPicked.greenF();
+  m_colourStruct.m_b = m_colourPicked.blueF();
   printValues();
 }
