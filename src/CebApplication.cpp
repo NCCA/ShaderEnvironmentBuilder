@@ -3,6 +3,7 @@
 #include <QAction>
 #include "CebApplication.h"
 #include "CebErrors.h"
+#include <typeinfo>
 
 //----------------------------------------------------------------------------------------------------------------------
 /// @brief easy to read error level values for message box

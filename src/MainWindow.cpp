@@ -56,7 +56,7 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   connect(m_ui->actionLoad_Troll,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
   connect(m_ui->actionLoad_Dragon,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
   // switching to .obj files
-  connect(m_ui->actionLoad_obj,SIGNAL(triggered()),this,SLOT(on_actionLoad_obj_triggered2()));
+  connect(m_ui->actionLoad_obj,SIGNAL(triggered()),this,SLOT(on_actionLoad_obj_triggered()));
   // temporary buttons
   connect(m_ui->pushButtonR,SIGNAL(clicked()),this,SLOT(on_pushButton_colour()));
   connect(m_ui->pushButtonG,SIGNAL(clicked()),this,SLOT(on_pushButton_colour()));
@@ -184,16 +184,15 @@ bool MainWindow::loadTextFileToTab(QString _path, Cebitor &_qsci)
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-void MainWindow::on_actionLoad_obj_triggered2()
+void MainWindow::on_actionLoad_obj_triggered()
 {
   QString fileName = QFileDialog::getOpenFileName(this,
       tr("Open Mesh"), "tempFiles/", tr("Image Files (*.obj)"));
 
   std::string importName=fileName.toStdString();
   std::cout<<"IMPORT NAME :              "<<importName<<std::endl;
-  m_gl->setMeshLocation(importName);
-  m_gl->meshImport();
-  m_gl->setShapeType(0);
+  m_gl->importMeshName(importName);
+
 }
 
 void MainWindow::on_actionLoad_shape_triggered()
@@ -231,3 +230,5 @@ void MainWindow::on_test_clickedA()
 {
   m_gl->importMeshName(m_ui->lineEdit->text().toStdString());
 }
+
+

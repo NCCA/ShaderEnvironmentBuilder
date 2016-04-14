@@ -33,9 +33,9 @@ NGLScene::NGLScene( QWidget *_parent, parserLib *_libParent  ) : QOpenGLWidget( 
   m_spinYFace=0.0f;
   m_parser= new parserLib();
   m_shapeType=0;
-  m_meshLoc= "/home/i7247470/0Features-0BugsCVA3/tempFiles/strawberry.obj";
-  m_meshLocOrig= "/home/i7247470/0Features-0BugsCVA3/tempFiles/strawberry.obj";
-
+  toggle=false;
+//  m_meshLoc= "/home/i7247470/0Features-0BugsCVA3/tempFiles/strawberry.obj";
+//  m_meshLocOrig= "/home/i7247470/0Features-0BugsCVA3/tempFiles/strawberry.obj";
   // re-size the widget to that of the parent (in this case the GLFrame passed in on construction)
   this->resize(_parent->size());
   m_wireframe=false;
@@ -61,28 +61,15 @@ void NGLScene::setMeshLocation(std::string _meshDirectory)
 //  std::cout<<"new location    :"<<m_meshLoc<<std::endl;
   //std::cout<<"                :"<<m_meshLocOrig<<std::endl;
 }
+
 void NGLScene::importMeshName(const std::string &name)
 {
-  setMeshLocation(name);
-  m_mesh.release();
+    setMeshLocation(name);
 
-//  tmp_importObj = new ngl::Obj("/home/i7247470/0Features-0BugsCVA3/tempFiles/Frog.obj");
-//  tmp_importObj->createVAO();
+    setShapeType(0);
+    toggle=true;
+    update();
 
-  m_mesh = std::unique_ptr<ngl::Obj>(new ngl::Obj(*tmp_importObj));
-  drawObject(0, m_mesh);
-}
-//----------------------------------------------------------------------------------------------------------------------
-void NGLScene::meshImport()
-{
-////  if (m_mesh!=nullptr)
-////  {
-////    delete m_mesh;
-////  }
-//  m_mesh.reset( new ngl::Obj(m_meshLoc));
-//  std::cout<<m_meshLoc<<std::endl;
-//  m_mesh->createVAO();
-//  update();
 }
 
 
@@ -164,15 +151,16 @@ void NGLScene::initializeGL()
 
   m_readFromXML->shaderData("WhyHelloThere", "PhongVertex", "shaders/PhongVertex.glsl", "PhongFragment", "shaders/PhongFragment.glsl");
   m_parser->assignAllData();
-  m_mesh = std::unique_ptr<ngl::Obj>(new ngl::Obj(m_meshLoc));
-  m_mesh->createVAO();
+//  m_mesh = std::unique_ptr<ngl::Obj>(new ngl::Obj(m_meshLoc));
+//  m_mesh->createVAO();
 
-  tmp_importObj = new ngl::Obj("/home/i7247470/0Features-0BugsCVA3/tempFiles/Frog.obj");
-  tmp_importObj->createVAO();
+  tmp = ngl::Obj("/home/i7247470/0Features-0BugsCVA3/tempFiles/strawberry.obj");
+  tmp.createVAO();
 
   ngl::VAOPrimitives::instance()->createSphere("sphere", 1,20);
   ngl::VAOPrimitives::instance()->createCone("cone",0.5,1,20,1);
   ngl::VAOPrimitives::instance()->createTorus("torus",0.3,1,20,20);
+  m_timer=startTimer(100);
 
 }
 //----------------------------------------------------------------------------------------------------------------------
@@ -243,25 +231,36 @@ void NGLScene::paintGL()
   m_mouseGlobalTX.m_m[3][2] = m_modelPos.m_z;
 
   m_cam.setShape(m_fov, m_aspect, 0.5f, 150.0f);
+  if(m_timer==100)
+  {
+    if(toggle==true)
+    {
+      tmp = ngl::Obj(m_meshLoc);
+      tmp.createVAO();
+      toggle=false;
+    }
+    m_timer=1;
+  }
+  m_timer++;
 
   loadMatricesToShader();
-  drawObject(m_shapeType,m_mesh);
+  drawObject(m_shapeType);
 }
 
-void NGLScene::drawObject(int _type, std::unique_ptr<ngl::Obj> &mesh_)
+void NGLScene::drawObject(int _type)
 {
   ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
-  setShapeType(_type);
+
   switch(_type)
   {
-    case 0: mesh_->draw(); break;
-    case 1: std::cout<<"1"<<std::endl; prim->draw("sphere");break;
-    case 2: std::cout<<"2"<<std::endl; prim->draw("cube");break;
-    case 3: std::cout<<"3"<<std::endl; prim->draw("torus");break;
-    case 4: std::cout<<"4"<<std::endl; prim->draw("cone");break;
-    case 5: std::cout<<"5"<<std::endl; prim->draw("teapot");break;
-    case 6: std::cout<<"6"<<std::endl; prim->draw("troll");break;
-    case 7: std::cout<<"7"<<std::endl; prim->draw("dragon");break;
+    case 0: tmp.draw(); break;
+    case 1: prim->draw("sphere");break;
+    case 2: prim->draw("cube");break;
+    case 3: prim->draw("torus");break;
+    case 4: prim->draw("cone");break;
+    case 5: prim->draw("teapot");break;
+    case 6: prim->draw("troll");break;
+    case 7: prim->draw("dragon");break;
     default: std::cout<<"unrecognised shape type value"<<std::endl; break;
   }
   update();
@@ -514,3 +513,15 @@ void NGLScene::compileShader()
 
   update();
 }
+void NGLScene::timerEvent(QTimerEvent *_event)
+{
+//  if(m_timer==100)
+//  {
+//    m_timer=1;
+//  }
+//  else
+//  {
+//    m_timer++;
+//  }
+}
+

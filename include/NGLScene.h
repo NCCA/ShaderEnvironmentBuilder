@@ -81,19 +81,15 @@ public :
   //----------------------------------------------------------------------------------------------------------------------
   void setMeshLocation(std::string _meshDirectory);
   //----------------------------------------------------------------------------------------------------------------------
-  /// @brief imports the .obj mesh currently located
-  //----------------------------------------------------------------------------------------------------------------------
-  void meshImport();
-  //----------------------------------------------------------------------------------------------------------------------
   /// @brief the parser to deal with all the uniform values stored in the shader
   //----------------------------------------------------------------------------------------------------------------------
   parserLib *m_parser;
   //----------------------------------------------------------------------------------------------------------------------
 
-
   void importMeshName(const std::string &);
-
-
+  void timerEvent(QTimerEvent *);
+  int m_timer;
+  bool toggle;
 public slots:
   void setShapeType(int _type);
 private:
@@ -218,9 +214,11 @@ private:
   int m_shapeType;
   std::string m_meshLoc;
   std::string m_meshLocOrig;
-  ngl::Obj *tmp_importObj;
+  ngl::Obj tmp;
   std::unique_ptr<ngl::Obj> m_mesh;
-  void drawObject(int _type, std::unique_ptr<ngl::Obj> &);
+  void drawObject(int _type);
+
+
 };
 
 #endif
