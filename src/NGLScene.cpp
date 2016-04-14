@@ -83,6 +83,8 @@ void NGLScene::initializeGL()
   shader->loadShaderSource("PhongFragment","shaders/PhongFragment.glsl"); //NEEDS TO BE SHADERFROMSTRING
   // compile the shaders
 
+
+  //error checking the fragment shader
   GLuint shaderTest= shader->getProgramID("PhongFragment");
 
   std::cout<<shaderTest<<std::endl;
@@ -101,9 +103,9 @@ void NGLScene::initializeGL()
   char *fragInfoLog;
 
   GLuint m_fragShaderID =0;
+
+  //getShaderID function implemented in edited NGL
   m_fragShaderID = shader->getShaderID("PhongFragment");
-
-
 
   glGetShaderiv(m_fragShaderID, GL_INFO_LOG_LENGTH,&fragInfologLength);
 
@@ -112,14 +114,18 @@ void NGLScene::initializeGL()
   {
     fragInfoLog = new char[fragInfologLength];
     glGetShaderInfoLog(m_fragShaderID, fragInfologLength, &fragCharsWritten, fragInfoLog);
-
+    //return errors with fragment shader, if any
     std::cerr<<fragInfoLog<<std::endl;
     delete [] fragInfoLog;
 
   }
 
+
+
   shader->compileShader("PhongVertex");
 
+
+  //error checking vertex shader
   GLint vertInfologLength = 0;
   GLint vertCharsWritten  = 0;
   char *vertInfoLog;
@@ -300,6 +306,8 @@ void NGLScene::setCamShape()
 {
   m_aspect=(float)width()/height();
   m_cam.setShape(m_fov, m_aspect, 0.5f, 150.0f);
+
+
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -320,6 +328,7 @@ void NGLScene::keyPressEvent(QKeyEvent *_event)
   // show windowed
   case Qt::Key_N : showNormal(); break;
   case Qt::Key_Space: m_parser->assignUniformValues();
+  case Qt::Key_R : resetObjPos(); break;
 
   /*case Qt::Key_1 : m_parser->m_uniformList[0].m_vec4.m_x+=0.1;
   std::cout<<m_parser->m_uniformList[0].m_name<<":(x)  "<<m_parser->m_uniformList[0].m_vec4.m_x<<std::endl; break;
@@ -506,4 +515,15 @@ void NGLScene::compileShader()
   light.loadToShader("light");
 
   update();
+}
+
+
+void NGLScene::resetObjPos()
+{
+  //reset object position back to default
+  m_modelPos.m_x = 0;
+  m_modelPos.m_y = 0;
+  m_modelPos.m_z = 0;
+  m_spinXFace = 0;
+  m_spinYFace = 0;
 }
