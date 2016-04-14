@@ -46,16 +46,15 @@ QMessageBox* CebApplication::createErrorMsgBox(std::exception *_e,
                                               QMessageBox::Icon _errLvl)
 {
   // Create text and window title message
-  QString msg = QString("%1 Error: %2").arg(
-                                    ERROR_LEVEL_STR[static_cast<int>(_errLvl)],
-                                    _e->what());
+  QString msg = QString("%1 Error").arg(
+                                    ERROR_LEVEL_STR[static_cast<int>(_errLvl)]);
   // Create informative text message
-  QString iMsg = QString("Error '%1' sending event "
-                         "'%2' to object '%3' (%4)").arg(
-                                          _e->what(),
-                                          typeid(*_event).name(),
-                                          qPrintable(_reciever->objectName()),
-                                          typeid(*_reciever).name());
+  QString iMsg = QString(_e->what());
+
+  QString dMsg = QString("Sending event "
+                         "'%1' to object '%2' (%3)").arg(typeid(*_event).name(),
+                               qPrintable(_reciever->objectName()),
+                               typeid(*_reciever).name());
   // Output to console for extra logging
   std::cerr << msg.toUtf8().constData() << std::endl
             << iMsg.toUtf8().constData() << std::endl;
@@ -67,6 +66,7 @@ QMessageBox* CebApplication::createErrorMsgBox(std::exception *_e,
   msgBox->setText(msg);
   msgBox->setWindowTitle(msg);
   msgBox->setInformativeText(iMsg);
+  msgBox->setDetailedText(dMsg);
 
   return msgBox;
 }

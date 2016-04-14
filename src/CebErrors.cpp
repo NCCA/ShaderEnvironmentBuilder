@@ -1,4 +1,31 @@
 #include "CebErrors.h"
+
+void clearAllGlErrors()
+{
+  GLenum errNo = glGetError();
+  while (errNo != GL_NO_ERROR)
+  {
+    errNo = glGetError();
+  }
+}
+
+const char *glErrorCodeToText(glErrorCodes _e)
+{
+  switch(_e)
+  {
+    case glErrorCodes::NoError: return "No Memory"; break;
+    case glErrorCodes::OutOfMemory: return "Out of Memory"; break;
+    case glErrorCodes::InvalidEnum: return "Invalid Enum"; break;
+    case glErrorCodes::InvalidValue: return "Invalid Value"; break;
+    case glErrorCodes::InvalidOperation: return "Invalid Operation"; break;
+    case glErrorCodes::InvalidFramebufferOperation: return "Invalid Framebuffer Operation"; break;
+    case glErrorCodes::StackOverflow: return "Stack Overflow"; break;
+    case glErrorCodes::StackUnderflow: return "Stack Underflow"; break;
+    case glErrorCodes::TableTooLarge: return "Table Too Large"; break;
+    case glErrorCodes::ContextLost: return "Context Lost"; break;
+  }
+}
+
 //----------------------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------------------------------
 namespace ceb_raise
@@ -26,4 +53,6 @@ namespace ceb_raise
     }
   }
 }
+
+
 //----------------------------------------------------------------------------------------------------------------------
