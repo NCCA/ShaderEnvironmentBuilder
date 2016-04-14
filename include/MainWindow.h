@@ -2,9 +2,10 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "NGLScene.h"
-#include <Qsci/qsciscintilla.h>
-#include <QSignalMapper>
+#include "ParserLib.h"
+#include "button.h"
+#include "Cebitor.h"
+#include <vector>
 
 //------------------------------------------------------------------------------------------------------------------------
 /// @file NGLScene.h
@@ -31,6 +32,9 @@ Q_OBJECT      // must include this if you use Qt signals/slots
   //----------------------------------------------------------------------------------------------------------------------
   //----------------------------------------------------------------------------------------------------------------------
 public:
+    void createButtons();
+    void printUniforms();
+
   //----------------------------------------------------------------------------------------------------------------------
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief Constructor for the MainWindow
@@ -59,11 +63,6 @@ private slots:
   //----------------------------------------------------------------------------------------------------------------------
   void on_m_tabs_qsci_currentChanged(int _index);
   //----------------------------------------------------------------------------------------------------------------------
-  /// @brief activated when the "load obj" button is clicked
-  //----------------------------------------------------------------------------------------------------------------------
-  void on_actionLoad_obj_triggered222();
-  //----------------------------------------------------------------------------------------------------------------------
-  /// @brief activated when the "load shape" button is clicked
   //----------------------------------------------------------------------------------------------------------------------
   void on_actionLoad_shape_triggered();
 
@@ -76,11 +75,11 @@ private:
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief our QScintilla widget1 (vertex)
   //----------------------------------------------------------------------------------------------------------------------
-  QsciScintilla *m_qsci1;
+  Cebitor *m_qsci1;
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief our QScintilla widget2 (fragment)
   //----------------------------------------------------------------------------------------------------------------------
-  QsciScintilla *m_qsci2;
+  Cebitor *m_qsci2;
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief the generated widgets created from the form using ui_MainWindow.h
   //----------------------------------------------------------------------------------------------------------------------
@@ -95,15 +94,17 @@ private:
   /// @brief create QsciScintilla widget in the style of sublime defaults
   /// @param [in] _parent the parent widget to fill with the new Qsci Widget
   //----------------------------------------------------------------------------------------------------------------------
-  QsciScintilla *createQsciWidget(QWidget *_parent = 0);
+  Cebitor *createQsciWidget(QWidget *_parent = 0);
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief loads a text file from a path to a tab
   /// @param [in] _path the location of the file
   /// @param [in] _qsci the QsciScintilla tab to be filled with the file
   //----------------------------------------------------------------------------------------------------------------------
-  bool loadTextFileToTab(QString _path, QsciScintilla &_qsci);
+  bool loadTextFileToTab(QString _path, Cebitor &_qsci);
 
-  QSignalMapper *signalMapper;
+  parserLib *m_parForButton;
+  std::vector<Button*> m_buttonList;
+
 };
 
 #endif // MAINWINDOW_H

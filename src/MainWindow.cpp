@@ -3,7 +3,6 @@
 #include "QsciLexerGlsl.h"
 #include "CebErrors.h"
 
-#include <Qsci/qsciscintilla.h>
 #include <QTextStream>
 #include <QFileDialog>
 
@@ -12,9 +11,11 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
 {
   // Setup ui from form creator (MainWindow.ui)
   m_ui->setupUi(this);
+  // create parser in main window
+  m_parForButton = new parserLib;
+  // Create openGl and qsci widgets, pass in the parser
+  m_gl=new  NGLScene(this, m_parForButton);
 
-  // Create openGl from template frame
-  m_gl=new  NGLScene(this);
   m_gl->setSizePolicy(m_ui->m_f_gl_temp->sizePolicy());
   m_gl->setMinimumSize(m_ui->m_f_gl_temp->minimumSize());
 
@@ -45,11 +46,6 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   // Load the text files into the corresponding tabs
   loadTextFileToTab("shaders/PhongVertex.glsl", *m_qsci1);
   loadTextFileToTab("shaders/PhongFragment.glsl", *m_qsci2);
-
-  //testing buttttons
-  connect(m_ui->pushButtonR,SIGNAL(clicked()),this,SLOT(on_pushButton_clicked2()));
-  connect(m_ui->pushButtonG,SIGNAL(clicked()),this,SLOT(on_pushButton_clicked2()));
-  connect(m_ui->pushButtonB,SIGNAL(clicked()),this,SLOT(on_pushButton_clicked2()));
 
   // switching between shapes
   connect(m_ui->actionLoad_Sphere,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
@@ -103,8 +99,30 @@ void MainWindow::on_m_btn_loadShader_clicked()
 void MainWindow::on_m_btn_compileShader_clicked2()
 {
   m_gl->compileShader();
+  m_parForButton->printUniforms(1);
+  createButtons();
 }
 
+void MainWindow::printUniforms()
+{
+  m_parForButton->printUniforms(1);
+}
+
+void MainWindow::createButtons()
+{
+  for(unsigned int i=0;i<m_parForButton->m_num; ++i)
+  {
+    if(m_parForButton->m_uniformList[i]->getTypeName()=="vec4")
+    {
+      QString _tempName = QString::fromStdString(m_parForButton->m_uniformList[i]->getName());
+      ngl::Vec4 _tempVec=m_parForButton->m_uniformList[i]->getVec4();
+      Button *tempButton = new Button(_tempName, m_ui->vl_uniforms, _tempVec, m_ui->m_w_uniforms);
+
+      m_buttonList.push_back(tempButton);
+    }
+  }
+  std::cerr<<"THIS IS THE BUTTON LIST LENGTH: "<<m_buttonList.size()<<std::endl;
+}
 //----------------------------------------------------------------------------------------------------------------------
 void MainWindow::on_m_tabs_qsci_currentChanged(int _index)
 {
@@ -128,34 +146,10 @@ void MainWindow::on_m_tabs_qsci_currentChanged(int _index)
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-QsciScintilla *MainWindow::createQsciWidget(QWidget *_parent)
+Cebitor *MainWindow::createQsciWidget(QWidget *_parent)
 {
   // Create the QsciScintilla widget
-  QsciScintilla* qsci = new QsciScintilla(_parent);
-
-  // Create and assign the lexer
-  QsciLexer* lex = new QsciLexerGLSL(qsci);
-  qsci->setLexer(lex);
-
-  // Set the margin defaults
-  qsci->setMarginType(1,QsciScintilla::MarginType::NumberMargin);
-  qsci->setMarginWidth(1," 012");
-  qsci->setMarginsForegroundColor(QColor(128, 128, 128));
-  // Set the caret defaults
-  qsci->setCaretForegroundColor(QColor(247, 247, 241));
-  qsci->setCaretWidth(2);
-  // Set the brace defaults
-  qsci->setBraceMatching(QsciScintilla::BraceMatch::SloppyBraceMatch);
-  qsci->setMatchedBraceBackgroundColor(QColor(62, 61, 50));
-  qsci->setUnmatchedBraceBackgroundColor(QColor(249, 38, 114));
-
-  // Enable scroll width tracking and set the scroll width to a low number
-  // Scintilla doesn't track line length, so if we wanted automated scrollbar
-  // to appear we would need to implement a line length checking
-  qsci->SendScintilla(QsciScintillaBase::SCI_SETSCROLLWIDTHTRACKING, 1);
-  qsci->SendScintilla(QsciScintillaBase::SCI_SETSCROLLWIDTH, 5);
-
-  // Create a layout to enable filling of the widget
+  Cebitor* qsci = new Cebitor(_parent);
   QBoxLayout *layout = new QVBoxLayout;
   layout->addWidget(qsci);
   _parent->setLayout(layout);
@@ -163,7 +157,7 @@ QsciScintilla *MainWindow::createQsciWidget(QWidget *_parent)
   return qsci;
 }
 //----------------------------------------------------------------------------------------------------------------------
-bool MainWindow::loadTextFileToTab(QString _path, QsciScintilla &_qsci)
+bool MainWindow::loadTextFileToTab(QString _path, Cebitor &_qsci)
 {
   QString text;
   QFile file(_path);
