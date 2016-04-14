@@ -17,10 +17,15 @@ Button::Button(QWidget *parent) : QDialog(parent)
 
 }
 
-Button::Button(QString _buttonName, QLayout *_layout, ngl::Vec4 _defaultVal, QWidget *parent) : QDialog(parent)
+Button::Button(QString _buttonName, QLayout *_layout, unsigned int _id, ngl::Vec4 _defaultVal, QWidget *parent) : QDialog(parent)
 {
+  m_buttonName = _buttonName;
+  m_id=_id;
   createButtonBox(_buttonName);
   _layout->addWidget(m_buttonBox);
+  m_colour.m_r = _defaultVal.m_x;
+  m_colour.m_g = _defaultVal.m_y;
+  m_colour.m_b = _defaultVal.m_z;
 }
 
 void Button::createButtonBox(QString _buttonName)
@@ -32,19 +37,23 @@ void Button::createButtonBox(QString _buttonName)
   connect(m_closeButton, SIGNAL(clicked()), this, SLOT(openColourBox()));
 }
 
+void Button::printValues()
+{
+  qDebug()<<"Name:"<<m_buttonName<<"\nID: "<<m_id;
+  std::cout<<"R: "<<m_colour.m_r<<"\nG: "<<m_colour.m_g<<"\nB: "<<m_colour.m_b<<std::endl;
+}
+
 void Button::openColourBox()
 {
-  m_colourGroupBox = new QColorDialog(tr("Colour"));
-  m_colourBoxLabel = new QLabel(tr("Select a colour:"));
+  /*m_colourGroupBox = new QColorDialog(tr("Colour"));
+  m_colourBoxLabel = new QLabel(tr("Select a colour:"));*/
 
   //colourBoxLayout = new QGridLayout;
   //colourGroupBox->setLayout(colourBoxLayout);
-  m_myColor=m_colourGroupBox->getColor();
-  //std::cout<<"Done"<<std::endl;
-  m_colour.m_r = m_myColor.redF();
-  m_colour.m_g = m_myColor.greenF();
-  m_colour.m_b = m_myColor.blueF();
+  m_colourPicker=m_colourGroupBox->getColor();
 
-  std::cout<<"R: "<<m_colour.m_r<<"\nG: "<<m_colour.m_g<<"\nB: "<<m_colour.m_b<<std::endl;
-
+  m_colour.m_r = m_colourPicker.redF();
+  m_colour.m_g = m_colourPicker.greenF();
+  m_colour.m_b = m_colourPicker.blueF();
+  printValues();
 }

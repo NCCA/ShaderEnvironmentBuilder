@@ -2,6 +2,7 @@
 #define BUTTON_H_
 
 #include <ngl/Vec4.h>
+#include <ngl/Colour.h>
 #include <QtWidgets>
 #include <QDialog>
 #include <QQueue>
@@ -36,7 +37,11 @@ public:
   /// @param [in] the parent window is defaulted to nothing
   //----------------------------------------------------------------------------------------------------------------------
   Button(QWidget *parent=0);
-  Button(QString _buttonName, QLayout *_layout, ngl::Vec4 _defaultVal=ngl::Vec4(0.0f,0.0f,0.0f,1.0f), QWidget *parent=0);
+  Button(QString _buttonName, QLayout *_layout, unsigned int _id, ngl::Vec4 _defaultVal=ngl::Vec4(0.0f,0.0f,0.0f,1.0f), QWidget *parent=0);
+  QString getName();
+  ngl::Colour getColour();
+  void printValues();
+
 private slots:
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief a slot to open a colour box upon event
@@ -52,27 +57,21 @@ private:
   //----------------------------------------------------------------------------------------------------------------------
   QString m_buttonName;
   //----------------------------------------------------------------------------------------------------------------------
-  /// @brief colour struct used to access colour attributes
+  /// @brief id for each button
   //----------------------------------------------------------------------------------------------------------------------
-  typedef struct m_colourStruct
-  {
-    qreal m_r;
-    qreal m_g;
-    qreal m_b;
-  } m_colourStruct;
+  unsigned int m_id;
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief colour structure to store colour attributes for easy accessibility
   //----------------------------------------------------------------------------------------------------------------------
-  m_colourStruct m_colour;
+  ngl::Colour m_colour;
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief colour used to store attributes coming out from colour picker
+  //----------------------------------------------------------------------------------------------------------------------
+  QColor m_colourPicker;
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief button box to open colour picker
   //----------------------------------------------------------------------------------------------------------------------
   QDialogButtonBox *m_buttonBox;
-  QDialogButtonBox *m_buttonBox2;
-  //----------------------------------------------------------------------------------------------------------------------
-  /// @brief colour used to store attributes coming out from colour picker
-  //----------------------------------------------------------------------------------------------------------------------
-  QColor m_myColor;
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief colour box to select colours
   //----------------------------------------------------------------------------------------------------------------------
