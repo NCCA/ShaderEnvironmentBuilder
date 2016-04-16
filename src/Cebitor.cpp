@@ -15,6 +15,8 @@
 //----------------------------------------------------------------------------------------------------------------------
 Cebitor::Cebitor(QWidget *_parent) : QsciScintilla(_parent)
 {
+  this->setMinimumHeight(300);
+
   // Create and assign the lexer
   QsciLexer* lex = new QsciLexerGLSL(this);
   this->setLexer(lex);
@@ -79,9 +81,9 @@ bool Cebitor::closing(const QString _close)
 {
   int cursorIndex;
   int cursorLine;
-  int length;
+  //int length;
   getCursorPosition(&cursorLine, &cursorIndex);
-  length = lineLength(cursorLine);
+  //length = lineLength(cursorLine);
 
   // remove duplicate if next character is the same as _close
   if(text(cursorLine).at(cursorIndex) == _close.at(0))
