@@ -142,12 +142,13 @@ void NGLScene::initializeGL()
   if (!checkAllCompileError(programs, &log))
   {
     std::cout << log.toUtf8().constData();
-
   }
   else
   {
     shader->attachShaderToProgram("Phong","PhongVertex");
     shader->attachShaderToProgram("Phong","PhongFragment");
+
+
 
     // now bind the shader attributes for most NGL primitives we use the following
     // layout attribute 0 is the vertex data (x,y,z)
@@ -157,6 +158,8 @@ void NGLScene::initializeGL()
     // attribute 2 are the normals x,y,z
     shader->bindAttribute("Phong",2,"inNormal");
 
+
+  //error checking vertex shader
     // now we have associated this data we can link the shader
     shader->linkProgramObject("Phong");
     // and make it active ready to load values
@@ -304,6 +307,8 @@ void NGLScene::setCamShape()
 {
   m_aspect=(float)width()/height();
   m_cam.setShape(m_fov, m_aspect, 0.5f, 150.0f);
+
+
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -324,6 +329,7 @@ void NGLScene::keyPressEvent(QKeyEvent *_event)
   // show windowed
   case Qt::Key_N : showNormal(); break;
   case Qt::Key_Space: m_parser->assignUniformValues();
+  case Qt::Key_R : resetObjPos(); break;
 
   /*case Qt::Key_1 : m_parser->m_uniformList[0].m_vec4.m_x+=0.1;
   std::cout<<m_parser->m_uniformList[0].m_name<<":(x)  "<<m_parser->m_uniformList[0].m_vec4.m_x<<std::endl; break;
@@ -519,4 +525,15 @@ void NGLScene::compileShader()
     light.loadToShader("light");
   }
   update();
+}
+
+
+void NGLScene::resetObjPos()
+{
+  //reset object position back to default
+  m_modelPos.m_x = 0;
+  m_modelPos.m_y = 0;
+  m_modelPos.m_z = 0;
+  m_spinXFace = 0;
+  m_spinYFace = 0;
 }
