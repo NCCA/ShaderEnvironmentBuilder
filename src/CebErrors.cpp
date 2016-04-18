@@ -23,6 +23,7 @@ const char *glErrorCodeToText(glErrorCodes _e)
     case glErrorCodes::StackUnderflow: return "Stack Underflow"; break;
     case glErrorCodes::TableTooLarge: return "Table Too Large"; break;
     case glErrorCodes::ContextLost: return "Context Lost"; break;
+  default: return "Unknown Gl Error Code"; break;
   }
 }
 

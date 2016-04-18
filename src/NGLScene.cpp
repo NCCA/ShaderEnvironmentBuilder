@@ -60,14 +60,17 @@ bool checkAllCompileError(std::vector<std::string> _shaderProgNames, QString *o_
   {
     isCompiled &= checkCompileError(shaderProg, &temp_log);
     if (!isCompiled)
+    {
+      o_log->append(QString("%1:\n").arg(shaderProg.c_str()));
       o_log->append(temp_log);
+    }
   }
   return isCompiled;
 }
 
 
 //----------------------------------------------------------------------------------------------------------------------
-NGLScene::NGLScene( QWidget *_parent, parserLib *_libParent  ) : QOpenGLWidget( _parent )
+NGLScene::NGLScene( QWidget *_parent, parserLib *_libParent ) : QOpenGLWidget( _parent )
 {
   // re-size the widget to that of the parent (in that case the GLFrame passed in on construction)
   m_rotate=false;
@@ -75,6 +78,8 @@ NGLScene::NGLScene( QWidget *_parent, parserLib *_libParent  ) : QOpenGLWidget( 
   m_spinXFace=0.0f;
   m_spinYFace=0.0f;
   m_parser= _libParent;
+  // Store main window to send data from compile errors
+  m_window = dynamic_cast<MainWindow*>(_parent);
   // re-size the widget to that of the parent (in this case the GLFrame passed in on construction)
   this->resize(_parent->size());
   m_wireframe=false;
@@ -135,7 +140,10 @@ void NGLScene::initializeGL()
   QString log;
 
   if (!checkAllCompileError(programs, &log))
+  {
     std::cout << log.toUtf8().constData();
+
+  }
   else
   {
     shader->attachShaderToProgram("Phong","PhongVertex");
@@ -471,7 +479,10 @@ void NGLScene::compileShader()
   QString log;
 
   if (!checkAllCompileError(programs, &log))
+  {
     std::cout << log.toUtf8().constData();
+    m_window->updateTerminalText(log);
+  }
   else
   {
     // add them to the program
