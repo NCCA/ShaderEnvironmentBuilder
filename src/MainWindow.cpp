@@ -2,6 +2,7 @@
 #include "ui_MainWindow.h"
 #include "QsciLexerGlsl.h"
 #include "CebErrors.h"
+#include "StartupDialog.h"
 
 #include <QTextStream>
 
@@ -47,7 +48,8 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   loadTextFileToTab("shaders/PhongFragment.glsl", *m_qsci2);
 
   //std::cerr<<"Find number of active uniforms: "<<m_parForButton->m_num<<std::endl;
-
+  StartupDialog m_startupDialog;
+  m_startupDialog.show();
 }
 
 //----------------------------------------------------------------------------------------------------------------------
