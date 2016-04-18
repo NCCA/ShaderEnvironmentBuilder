@@ -38,7 +38,6 @@ Cebitor::Cebitor(QWidget *_parent) : QsciScintilla(_parent)
   setIndentationsUseTabs(false);
   setIndentationWidth(2);
 
-
   // Enable scroll width tracking and set the scroll width to a low number
   // Scintilla doesn't track line length, so if we wanted automated scrollbar
   // to appear we would need to implement a line length checking
@@ -181,7 +180,6 @@ void Cebitor::comment()
 
 void Cebitor::braceIndent()
 {
-  std::cout<<"braceIndentCheck\n";
   int cursorIndex;
   int cursorLine;
   QString currentLine;
@@ -189,7 +187,8 @@ void Cebitor::braceIndent()
   getCursorPosition(&cursorLine, &cursorIndex);
   currentLine = text(cursorLine);
   previousLine = text(cursorLine-1);
-  std::cout<<previousLine.toStdString()<<"\n";
+
+  // indent if previous line ends with "{"
   if(previousLine.endsWith("{\n"))
   {
     int indentSize;
@@ -198,11 +197,14 @@ void Cebitor::braceIndent()
     cursorIndex = cursorIndex+indentationWidth();
     setCursorPosition(cursorLine, cursorIndex);
     currentLine = text(cursorLine);
+    // extra newline to separate "{}"
     if(currentLine.indexOf("}") == cursorIndex)
     {
       insert(QString("\n"));
     }
   }
+
+  // unindent if "}" after cursor
   else if(currentLine.indexOf("}") == cursorIndex)
   {
     int indentSize;
@@ -230,6 +232,8 @@ void Cebitor::charAdded(int _c)
 
     // special case since " opens and closes
     case (int) '"':
+
+    // auto indent for braces
     case (int) '\n': { braceIndent(); break; }
     {
       if(!closing(QString('"')))
