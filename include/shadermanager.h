@@ -14,11 +14,11 @@ public:
     void updateShaderProgram(std::string _name, QString _sourceVert, QString _sourceFrag);
     void use(std::string _name);
     void initialize();
-    void loadShader(QString _text, ngl::ShaderType _type);
-    void compileShader(ngl::Camera _cam);
+    void loadShader(QString vertSource, QString fragSource);
+    void compileShader(ngl::Camera _cam, QString vertSource, QString fragSource);
 
 private:
-    ngl::ShaderLib *shader = ngl::ShaderLib::instance();
+    ngl::ShaderLib *m_shaderLib = ngl::ShaderLib::instance();
 
 
 };

@@ -88,7 +88,10 @@ void MainWindow::on_m_btn_loadShader_clicked()
 //----------------------------------------------------------------------------------------------------------------------
 void MainWindow::on_m_btn_compileShader_clicked()
 {
-  m_gl->compileShader();
+  QString vertSource, fragSource;
+  vertSource = m_qsci1->text();
+  fragSource = m_qsci2->text();
+  m_gl->compileShader(vertSource, fragSource);
   m_parForButton->printUniforms(1);
   createButtons();
 }

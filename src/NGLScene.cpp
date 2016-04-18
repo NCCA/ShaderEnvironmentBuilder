@@ -464,7 +464,7 @@ void NGLScene::loadShader(QString _text, ngl::ShaderType _type)
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-void NGLScene::compileShader()
+void NGLScene::compileShader(QString vertSource, QString fragSource)
 {
 //  ngl::ShaderLib *shader=ngl::ShaderLib::instance();
 
@@ -504,7 +504,8 @@ void NGLScene::compileShader()
 //  light.enable();
 //  // load these values to the shader as well
 //  light.loadToShader("light");
-  m_shaderManager->compileShader(m_cam);
+
+  m_shaderManager->compileShader(m_cam, vertSource, fragSource);
 
   update();
 }
