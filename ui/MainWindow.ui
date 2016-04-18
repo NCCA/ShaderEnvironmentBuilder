@@ -313,6 +313,13 @@
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>
+            <widget class="QLabel" name="m_l_terminal">
+             <property name="text">
+              <string>Error Log</string>
+             </property>
+            </widget>
+           </item>
+           <item>
             <widget class="QPlainTextEdit" name="m_pte_terminal">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -370,6 +377,8 @@
     <addaction name="actionOpen"/>
     <addaction name="actionSaveFile"/>
     <addaction name="actionSaveAll"/>
+    <addaction name="separator"/>
+    <addaction name="actionStartup_Window"/>
    </widget>
    <widget class="QMenu" name="menuDebug">
     <property name="title">
@@ -398,6 +407,14 @@
   <action name="actionSaveAll">
    <property name="text">
     <string>Save All</string>
+   </property>
+  </action>
+  <action name="actionStartup_Window">
+   <property name="text">
+    <string>Startup Window</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
    </property>
   </action>
  </widget>

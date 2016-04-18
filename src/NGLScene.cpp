@@ -257,9 +257,9 @@ void NGLScene::paintGL()
   prim->draw("teapot");
 
 
-  m_text.reset(new ngl::Text(QFont ("Arial",18)));
-  m_text->setScreenSize(width(),height());
-  m_text->setColour(ngl::Colour (0.82,0.2,0.2));
+  //m_text.reset(new ngl::Text(QFont ("Arial",18)));
+  //m_text->setScreenSize(width(),height());
+  //m_text->setColour(ngl::Colour (0.82,0.2,0.2));
 
 
   //m_text->renderText(10,18,"Error!");
@@ -487,10 +487,11 @@ void NGLScene::compileShader()
   if (!checkAllCompileError(programs, &log))
   {
     std::cout << log.toUtf8().constData();
-    m_window->updateTerminalText(log);
+    m_window->setTerminalText(log);
   }
   else
   {
+    m_window->clearTerminalText();
     // add them to the program
     shader->attachShaderToProgram("Phong","PhongVertex");
     shader->attachShaderToProgram("Phong","PhongFragment");

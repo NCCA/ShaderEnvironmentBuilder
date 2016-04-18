@@ -2,9 +2,9 @@
 #include "ui_MainWindow.h"
 #include "QsciLexerGlsl.h"
 #include "CebErrors.h"
-#include "StartupDialog.h"
 
 #include <QTextStream>
+#include <QDesktopWidget>
 
 MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
                                            m_ui(new Ui::MainWindow)
@@ -48,8 +48,17 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   loadTextFileToTab("shaders/PhongFragment.glsl", *m_qsci2);
 
   //std::cerr<<"Find number of active uniforms: "<<m_parForButton->m_num<<std::endl;
-  StartupDialog m_startupDialog;
-  m_startupDialog.show();
+
+  this->setGeometry(
+      QStyle::alignedRect(
+          Qt::LeftToRight,
+          Qt::AlignCenter,
+          this->size(),
+          qApp->desktop()->availableGeometry()
+      )
+  );
+
+  m_startDialog = new StartupDialog(this);
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -170,7 +179,22 @@ bool MainWindow::loadTextFileToTab(QString _path, Cebitor &_qsci)
   return true;
 }
 
-void MainWindow::updateTerminalText(QString _txt)
+void MainWindow::setTerminalText(QString _txt)
 {
   m_ui->m_pte_terminal->setPlainText(_txt);
+}
+
+void MainWindow::clearTerminalText()
+{
+  m_ui->m_pte_terminal->clear();
+}
+
+void MainWindow::on_actionStartup_Window_triggered()
+{
+  m_startDialog->show();
+}
+
+void MainWindow::showStartDialog()
+{
+  m_startDialog->show();
 }
