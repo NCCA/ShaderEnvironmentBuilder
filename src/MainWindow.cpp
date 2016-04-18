@@ -19,7 +19,7 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   m_gl->setMinimumSize(m_ui->m_f_gl_temp->minimumSize());
 
   // add the openGl window to the interface
-  m_ui->m_split_mainContext->insertWidget(0, m_gl);
+  m_ui->m_splitH_editContext->insertWidget(0, m_gl);
 
   // Delete the template frame from the form designer
   delete(m_ui->m_f_gl_temp);
@@ -171,3 +171,7 @@ bool MainWindow::loadTextFileToTab(QString _path, Cebitor &_qsci)
   return true;
 }
 
+void MainWindow::updateTerminalText(QString _txt)
+{
+  m_ui->m_pte_terminal->setPlainText(_txt);
+}

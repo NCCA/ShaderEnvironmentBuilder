@@ -1,5 +1,6 @@
 #include "NGLScene.h"
 #include "ParserLib.h"
+#include "CebErrors.h"
 #include <iostream>
 #include <ngl/Vec3.h>
 #include <ngl/Camera.h>
@@ -23,8 +24,53 @@ const static float INCREMENT=0.01f;
 const static float ZOOM=0.1f;
 //----------------------------------------------------------------------------------------------------------------------
 
+bool checkCompileError(std::string _shaderProgName, QString *o_log)
+{
+  GLint isCompiled = 0;
+  ngl::ShaderLib *shader=ngl::ShaderLib::instance();
+  GLuint shaderId = shader->getShaderID(_shaderProgName);
+
+  glGetShaderiv(shaderId, GL_COMPILE_STATUS, &isCompiled);
+  if(isCompiled == GL_FALSE)
+  {
+    GLint maxLength = 0;
+    glGetShaderiv(shaderId, GL_INFO_LOG_LENGTH, &maxLength);
+
+    // The maxLength includes the NULL character
+    std::vector<GLchar> errorLog(maxLength);
+    glGetShaderInfoLog(shaderId, maxLength, &maxLength, &errorLog[0]);
+
+    std::string s(errorLog.begin(), errorLog.end());
+
+    QString errLog = QString(s.c_str());
+
+    *o_log = errLog;
+
+    // Provide the infolog in whatever manor you deem best.
+    //throw ceb_error::openGL_list_error(_shaderProgName, errLog);
+  }
+  return isCompiled;
+}
+
+bool checkAllCompileError(std::vector<std::string> _shaderProgNames, QString *o_log)
+{
+  GLint isCompiled = GL_TRUE;
+  QString temp_log;
+  for (auto shaderProg: _shaderProgNames)
+  {
+    isCompiled &= checkCompileError(shaderProg, &temp_log);
+    if (!isCompiled)
+    {
+      o_log->append(QString("%1:\n").arg(shaderProg.c_str()));
+      o_log->append(temp_log);
+    }
+  }
+  return isCompiled;
+}
+
+
 //----------------------------------------------------------------------------------------------------------------------
-NGLScene::NGLScene( QWidget *_parent, parserLib *_libParent  ) : QOpenGLWidget( _parent )
+NGLScene::NGLScene( QWidget *_parent, parserLib *_libParent ) : QOpenGLWidget( _parent )
 {
   // re-size the widget to that of the parent (in that case the GLFrame passed in on construction)
   m_rotate=false;
@@ -32,6 +78,8 @@ NGLScene::NGLScene( QWidget *_parent, parserLib *_libParent  ) : QOpenGLWidget( 
   m_spinXFace=0.0f;
   m_spinYFace=0.0f;
   m_parser= _libParent;
+  // Store main window to send data from compile errors
+  m_window = dynamic_cast<MainWindow*>(_parent);
   // re-size the widget to that of the parent (in this case the GLFrame passed in on construction)
   this->resize(_parent->size());
   m_wireframe=false;
@@ -56,8 +104,10 @@ NGLScene::~NGLScene()
 //----------------------------------------------------------------------------------------------------------------------
 void NGLScene::initializeGL()
 {
-
   ngl::NGLInit::instance();
+
+  clearAllGlErrors();
+
   glClearColor(0.4f, 0.4f, 0.4f, 1.0f);			   // Grey Background
   // enable depth testing for drawing
   glEnable(GL_DEPTH_TEST);
@@ -82,110 +132,67 @@ void NGLScene::initializeGL()
   shader->loadShaderSource("PhongVertex","shaders/PhongVertex.glsl"); //NEEDS TO BE SHADERFROMTSTRING
   shader->loadShaderSource("PhongFragment","shaders/PhongFragment.glsl"); //NEEDS TO BE SHADERFROMSTRING
   // compile the shaders
-
-  GLuint shaderTest= shader->getProgramID("PhongFragment");
-
-  std::cout<<shaderTest<<std::endl;
-
-  GLint success=0;
-
-  glGetShaderiv(shaderTest,GL_COMPILE_STATUS, &success);
-
-
   shader->compileShader("PhongFragment");
-
-  //need to pass in the ID for the shader, so GLuint m_shaderID = shader->getShaderID();
-
-  GLint fragInfologLength = 0;
-  GLint fragCharsWritten  = 0;
-  char *fragInfoLog;
-
-  GLuint m_fragShaderID =0;
-  m_fragShaderID = shader->getShaderID("PhongFragment");
-
-
-
-  glGetShaderiv(m_fragShaderID, GL_INFO_LOG_LENGTH,&fragInfologLength);
-
-  std::cerr<<"info log length "<<fragInfologLength<<"\n";
-  if(fragInfologLength > 0)
-  {
-    fragInfoLog = new char[fragInfologLength];
-    glGetShaderInfoLog(m_fragShaderID, fragInfologLength, &fragCharsWritten, fragInfoLog);
-
-    std::cerr<<fragInfoLog<<std::endl;
-    delete [] fragInfoLog;
-
-  }
-
   shader->compileShader("PhongVertex");
 
-  GLint vertInfologLength = 0;
-  GLint vertCharsWritten  = 0;
-  char *vertInfoLog;
+  std::vector<std::string> programs = {"PhongFragment", "PhongVertex"};
 
-  GLuint m_vertShaderID = 0;
-  m_vertShaderID = shader->getShaderID("PhongVertex");
+  QString log;
 
-
-  glGetShaderiv(m_vertShaderID, GL_INFO_LOG_LENGTH,&vertInfologLength);
-    std::cerr<<"info log length "<<vertInfologLength<<"\n";
-  if(vertInfologLength > 0)
+  if (!checkAllCompileError(programs, &log))
   {
-    vertInfoLog = new char[vertInfologLength];
-    glGetShaderInfoLog(m_vertShaderID, vertInfologLength, &vertCharsWritten, vertInfoLog);
-
-    std::cerr<<vertInfoLog<<std::endl;
-    delete [] vertInfoLog;
-
+    std::cout << log.toUtf8().constData();
   }
+  else
+  {
+    shader->attachShaderToProgram("Phong","PhongVertex");
+    shader->attachShaderToProgram("Phong","PhongFragment");
 
 
-  shader->attachShaderToProgram("Phong","PhongVertex");
-  shader->attachShaderToProgram("Phong","PhongFragment");
 
-  // add them to the program
+    // now bind the shader attributes for most NGL primitives we use the following
+    // layout attribute 0 is the vertex data (x,y,z)
+    shader->bindAttribute("Phong",0,"inVert");
+    // attribute 1 is the UV data u,v (if present)
+    shader->bindAttribute("Phong",1,"inUV");
+    // attribute 2 are the normals x,y,z
+    shader->bindAttribute("Phong",2,"inNormal");
 
-  // now bind the shader attributes for most NGL primitives we use the following
-  // layout attribute 0 is the vertex data (x,y,z)
-  shader->bindAttribute("Phong",0,"inVert");
-  // attribute 1 is the UV data u,v (if present)
-  shader->bindAttribute("Phong",1,"inUV");
-  // attribute 2 are the normals x,y,z
-  shader->bindAttribute("Phong",2,"inNormal");
 
-  // now we have associated this data we can link the shader
-  shader->linkProgramObject("Phong");
-  // and make it active ready to load values
-  (*shader)["Phong"]->use();
-  shader->setShaderParam1i("Normalize",1);
-  shader->setShaderParam3f("viewerPos",m_cam.getEye().m_x,m_cam.getEye().m_y,m_cam.getEye().m_z);
-  // now pass the modelView and projection values to the shader
-  // the shader will use the currently active material and light0 so set them
-  ngl::Material m(ngl::STDMAT::GOLD );
-  // load our material values to the shader into the structure material (see Vertex shader)
-  m.loadToShader("material");
-  // we need to set a base colour as the material isn't being used for all the params
-  shader->setShaderParam4f("Colour",0.23125f,0.23125f,0.23125f,1);
+  //error checking vertex shader
+    // now we have associated this data we can link the shader
+    shader->linkProgramObject("Phong");
+    // and make it active ready to load values
+    (*shader)["Phong"]->use();
+    shader->setShaderParam1i("Normalize",1);
+    shader->setShaderParam3f("viewerPos",m_cam.getEye().m_x,m_cam.getEye().m_y,m_cam.getEye().m_z);
+    // now pass the modelView and projection values to the shader
+    // the shader will use the currently active material and light0 so set them
+    ngl::Material m(ngl::STDMAT::GOLD );
+    // load our material values to the shader into the structure material (see Vertex shader)
+    m.loadToShader("material");
+    // we need to set a base colour as the material isn't being used for all the params
+    shader->setShaderParam4f("Colour",0.23125f,0.23125f,0.23125f,1);
 
-  // now create our light this is done after the camera so we can pass the
-  // transpose of the projection matrix to the light to do correct eye space
-  // transformations
-  ngl::Light light(ngl::Vec3(2,2,2),ngl::Colour(1,1,1,1),ngl::Colour(1,1,1,1),ngl::LightModes::POINTLIGHT);
+    // now create our light this is done after the camera so we can pass the
+    // transpose of the projection matrix to the light to do correct eye space
+    // transformations
+    ngl::Light light(ngl::Vec3(2,2,2),ngl::Colour(1,1,1,1),ngl::Colour(1,1,1,1),ngl::LightModes::POINTLIGHT);
 
-  ngl::Mat4 iv=m_cam.getViewMatrix();
-  iv.transpose();
+    ngl::Mat4 iv=m_cam.getViewMatrix();
+    iv.transpose();
 
-  light.setTransform(iv);
-  light.setAttenuation(1,0,0);
-  light.enable();
+    light.setTransform(iv);
+    light.setAttenuation(1,0,0);
+    light.enable();
 
-  // load these values to the shader as well
-  light.loadToShader("light");
+    // load these values to the shader as well
+    light.loadToShader("light");
 
-  m_readFromXML->shaderData("WhyHelloThere", "PhongVertex", "shaders/PhongVertex.glsl", "PhongFragment", "shaders/PhongFragment.glsl");
-  m_parser->assignAllData();
-  std::cerr<<"Find number of active uniforms: "<<m_parser->m_num<<std::endl;
+    m_readFromXML->shaderData("WhyHelloThere", "PhongVertex", "shaders/PhongVertex.glsl", "PhongFragment", "shaders/PhongFragment.glsl");
+    m_parser->assignAllData();
+    std::cerr<<"Find number of active uniforms: "<<m_parser->m_num<<std::endl;
+  }
 }
 //----------------------------------------------------------------------------------------------------------------------
 void NGLScene::exportUniforms()
@@ -300,6 +307,8 @@ void NGLScene::setCamShape()
 {
   m_aspect=(float)width()/height();
   m_cam.setShape(m_fov, m_aspect, 0.5f, 150.0f);
+
+
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -320,6 +329,7 @@ void NGLScene::keyPressEvent(QKeyEvent *_event)
   // show windowed
   case Qt::Key_N : showNormal(); break;
   case Qt::Key_Space: m_parser->assignUniformValues();
+  case Qt::Key_R : resetObjPos(); break;
 
   /*case Qt::Key_1 : m_parser->m_uniformList[0].m_vec4.m_x+=0.1;
   std::cout<<m_parser->m_uniformList[0].m_name<<":(x)  "<<m_parser->m_uniformList[0].m_vec4.m_x<<std::endl; break;
@@ -448,8 +458,6 @@ void NGLScene::wheelEvent ( QWheelEvent * _event )
 void NGLScene::loadShader(QString _text, ngl::ShaderType _type)
 {
     ngl::ShaderLib *shader=ngl::ShaderLib::instance();
-    GLuint shaderTest=shader->getProgramID("PhongFragment");
-    GLint* success = new int;
     switch (_type)
     {
       case ngl::ShaderType::VERTEX:
@@ -475,9 +483,11 @@ void NGLScene::compileShader(QString vertSource, QString fragSource)
 //  // add them to the program
 //  shader->attachShaderToProgram("Phong","PhongVertex");
 //  shader->attachShaderToProgram("Phong","PhongFragment");
+  std::vector<std::string> programs = {"PhongFragment", "PhongVertex"};
 
 //  // now we have associated this data we can link the shader
 //  shader->linkProgramObject("Phong");
+  QString log;
 
 //  // Load stuff. Need to remove this stuff in the next build, just used to set
 //  // inital values
@@ -508,4 +518,15 @@ void NGLScene::compileShader(QString vertSource, QString fragSource)
   m_shaderManager->compileShader(m_cam, vertSource, fragSource);
 
   update();
+}
+
+
+void NGLScene::resetObjPos()
+{
+  //reset object position back to default
+  m_modelPos.m_x = 0;
+  m_modelPos.m_y = 0;
+  m_modelPos.m_z = 0;
+  m_spinXFace = 0;
+  m_spinYFace = 0;
 }

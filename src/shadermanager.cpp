@@ -25,11 +25,11 @@ void ShaderManager::createShaderProgram(std::string _name, QString _sourceVert, 
 
   // now bind the shader attributes for most NGL primitives we use the following
   // layout attribute 0 is the vertex data (x,y,z)
-  shader->bindAttribute(_name,0,"inVert");
+  shaderLib->bindAttribute(_name,0,"inVert");
   // attribute 1 is the UV data u,v (if present)
-  shader->bindAttribute(_name,1,"inUV");
+  shaderLib->bindAttribute(_name,1,"inUV");
   // attribute 2 are the normals x,y,z
-  shader->bindAttribute(_name,2,"inNormal");
+  shaderLib->bindAttribute(_name,2,"inNormal");
 
   shaderLib->linkProgramObject(_name);
 
@@ -63,7 +63,7 @@ void ShaderManager::use(std::string _name)
   (*shader)[_name]->use();
 }
 
-void ShaderManager::initialize(ngl::ShaderLib *shaderLib)
+void ShaderManager::initialize()
 {
   ngl::ShaderLib *shader = ngl::ShaderLib::instance();
 
