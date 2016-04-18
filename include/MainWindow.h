@@ -104,6 +104,8 @@ private:
   //----------------------------------------------------------------------------------------------------------------------
   bool loadTextFileToTab(QString _path, Cebitor &_qsci);
 
+  bool loadTextFilesToTab(std::vector<QString> _paths, Cebitor &_qsci);
+
   parserLib *m_parForButton;
   std::vector<Button*> m_buttonList;
 

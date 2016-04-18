@@ -28,7 +28,7 @@ Cebitor::Cebitor(QWidget *_parent) : QsciScintilla(_parent)
   // Set the margin defaults
   setMarginType(1,MarginType::SymbolMargin);
   setMarginWidth(1,12);
-  setMarginMarkerMask(1, 1 << 0 | 1 << 1 );
+  setMarginMarkerMask(1, 1 << 0 | 1 << 1 | 1 << 2);
 
   // Set the caret defaults
   setCaretForegroundColor(QColor(247, 247, 241));
@@ -55,6 +55,7 @@ Cebitor::Cebitor(QWidget *_parent) : QsciScintilla(_parent)
 
   markerDefine(errorIcon.pixmap(10,10), 0);
   markerDefine(warnIcon.pixmap(10,10), 1);
+  markerDefine(warnIcon.pixmap(10,10), 2);
 
   // unbind CTRL-/ keyboard shortcut
   standardCommands()->boundTo(Qt::Key_Slash | Qt::CTRL)->setKey(0);

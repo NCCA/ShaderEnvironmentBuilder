@@ -58,6 +58,7 @@ mat[234](x[234])?/.                                       { return QsciLexerGLSL
 (u?int)|"float"|"bool"|"void"/.                           { return QsciLexerGLSL::StyleType::DATATYPE; }
 
 "//".*                              { return QsciLexerGLSL::StyleType::COMMENT; }
+^#.*                                { return QsciLexerGLSL::StyleType::HASHCOMMENT; }
 [ \t\n\r]                           { return QsciLexerGLSL::StyleType::WHITESPACE; }
 
 [\*\+\-\/\>\<\%\^\|\&\!\=]?\=? |
