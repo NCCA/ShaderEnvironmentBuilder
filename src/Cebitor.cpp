@@ -15,21 +15,26 @@
 //----------------------------------------------------------------------------------------------------------------------
 Cebitor::Cebitor(QWidget *_parent) : QsciScintilla(_parent)
 {
-  this->setMinimumHeight(300);
+  setMinimumHeight(300);
 
   // Create and assign the lexer
   QsciLexer* lex = new QsciLexerGLSL(this);
   setLexer(lex);
 
   // Set the margin defaults
-  setMarginType(1,QsciScintilla::MarginType::NumberMargin);
-  setMarginWidth(1," 012");
+  setMarginType(0,MarginType::NumberMargin);
+  setMarginWidth(0," 012");
   setMarginsForegroundColor(QColor(128, 128, 128));
+  // Set the margin defaults
+  setMarginType(1,MarginType::SymbolMargin);
+  setMarginWidth(1,12);
+  setMarginMarkerMask(1, 1 << 0 | 1 << 1 );
+
   // Set the caret defaults
   setCaretForegroundColor(QColor(247, 247, 241));
   setCaretWidth(2);
   // Set the brace defaults
-  setBraceMatching(QsciScintilla::BraceMatch::SloppyBraceMatch);
+  setBraceMatching(BraceMatch::SloppyBraceMatch);
   setMatchedBraceBackgroundColor(QColor(62, 61, 50));
   setUnmatchedBraceBackgroundColor(QColor(249, 38, 114));
 
@@ -43,6 +48,13 @@ Cebitor::Cebitor(QWidget *_parent) : QsciScintilla(_parent)
   // to appear we would need to implement a line length checking
   SendScintilla(QsciScintillaBase::SCI_SETSCROLLWIDTHTRACKING, 1);
   SendScintilla(QsciScintillaBase::SCI_SETSCROLLWIDTH, 5);
+
+  // set up line markers
+  QIcon errorIcon = QIcon::fromTheme(QString("dialog-error"));
+  QIcon warnIcon = QIcon::fromTheme(QString("dialog-warning"));
+
+  markerDefine(errorIcon.pixmap(10,10), 0);
+  markerDefine(warnIcon.pixmap(10,10), 1);
 
   // unbind CTRL-/ keyboard shortcut
   standardCommands()->boundTo(Qt::Key_Slash | Qt::CTRL)->setKey(0);
