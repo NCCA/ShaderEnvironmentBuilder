@@ -59,30 +59,7 @@ MainWindow::~MainWindow()
 //----------------------------------------------------------------------------------------------------------------------
 void MainWindow::on_m_btn_loadShader_clicked()
 {
-  // Get and cast the shader type combo box value
-  int cb_id = m_ui->m_cb_shaderType->currentIndex();
-  ngl::ShaderType shdrChoiceId = static_cast<ngl::ShaderType>(cb_id);
 
-  // Get the current tabid
-  int tabId = m_ui->m_tabs_qsci->currentIndex();
-
-  // Get the text from the currently selected tab
-  QString text;
-  switch (tabId)
-  {
-  case 0:
-    text = m_qsci1->text();
-    break;
-
-  case 1:
-    text = m_qsci2->text();
-    break;
-
-  default:
-    std::cerr<< "ERROR: Tab id is not recognised\n";
-  }
-  // Load the text into the shader with the shader type
-  m_gl->loadShader(text, shdrChoiceId);
 }
 
 //----------------------------------------------------------------------------------------------------------------------
