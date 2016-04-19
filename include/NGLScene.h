@@ -70,13 +70,9 @@ public :
   //----------------------------------------------------------------------------------------------------------------------
   void resizeGL(int _w, int _h);
   //----------------------------------------------------------------------------------------------------------------------
-  /// @brief load a shader from a text string
-  /// @param [in] _text the string that contains the glsl shader
-  /// @param [in] _type the shader type to be stored
-  //----------------------------------------------------------------------------------------------------------------------
-  void loadShader(QString _text, ngl::ShaderType _type);
-  //----------------------------------------------------------------------------------------------------------------------
-  /// @brief compiles the shader
+  /// @brief loads and compiles a shader from Qstrings passed from the text editor
+  /// @param vertSource the Qstring containing the vertex shader source code
+  /// @param fragSource the Qstring containing the fragment shader source code
   //----------------------------------------------------------------------------------------------------------------------
   void compileShader(QString vertSource, QString fragSource);
   //----------------------------------------------------------------------------------------------------------------------
