@@ -88,8 +88,9 @@ void MainWindow::on_m_btn_loadShader_clicked()
 //----------------------------------------------------------------------------------------------------------------------
 void MainWindow::on_m_btn_compileShader_clicked()
 {
+  loadShaderValues();
   m_gl->compileShader();
-  m_parForButton->printUniforms(1);
+  //m_parForButton->printUniforms(1);
   createButtons();
   //TEST VAR m_parForButton->m_uniformList[12]->setVec4(ngl::Vec4(0.2f,0.8f,0.1f,1.0f));
 }
@@ -119,7 +120,7 @@ void MainWindow::createButtons()
   for(auto uniform: m_parForButton->m_uniformList)
   {
     bool _exists=0;
-    std::cout<<uniform->getName()<<std::endl;
+    //std::cout<<uniform->getName()<<std::endl;
     for (auto button: m_buttonList)
     {
       QString _tempName = button->getName();
@@ -127,14 +128,14 @@ void MainWindow::createButtons()
       if(uniform->getName()==_temp)
       {
         button->setID(uniform->getLocation());
-        qDebug()<<button->getName()<<"\n"<<button->getID()<<"\n";
+        //qDebug()<<button->getName()<<"\n"<<button->getID()<<"\n";
         _exists=1;
         break;
       }
     }
     if(_exists==0)
     {
-      std::cout<<"CREATING"<<std::endl;
+      //std::cout<<"CREATING"<<std::endl;
       //qDebug()<<uniform->getName()<<"\n"<<uniform->getLocation()<<"\n";
       QString _tempName = QString::fromStdString(uniform->getName());
       Button *tempButton = new Button(_tempName,
@@ -151,6 +152,20 @@ void MainWindow::createButtons()
   }
 }
   //std::cerr<<"THIS IS THE BUTTON LIST LENGTH: "<<m_buttonList.size()<<std::endl;
+
+
+void MainWindow::updateShaderValues()
+{
+  for(auto uniform: m_parForButton->m_uniformList)
+  {
+    if(uniform->getTypeName()=="vec4")
+    {
+
+    }
+  }
+}
+
+
 
 //----------------------------------------------------------------------------------------------------------------------
 void MainWindow::on_m_tabs_qsci_currentChanged(int _index)
