@@ -88,11 +88,11 @@ void MainWindow::on_m_btn_loadShader_clicked()
 //----------------------------------------------------------------------------------------------------------------------
 void MainWindow::on_m_btn_compileShader_clicked()
 {
-  loadShaderValues();
   m_gl->compileShader();
   //m_parForButton->printUniforms(1);
   createButtons();
   //TEST VAR m_parForButton->m_uniformList[12]->setVec4(ngl::Vec4(0.2f,0.8f,0.1f,1.0f));
+  updateShaderValues();
 }
 
 void MainWindow::printUniforms()
@@ -160,6 +160,16 @@ void MainWindow::updateShaderValues()
   {
     if(uniform->getTypeName()=="vec4")
     {
+      for(auto button: m_buttonList)
+      {
+        if(uniform->getLocation()==button->getID())
+        {
+          ngl::Vec4 temp = button->getColour();
+          qDebug()<<temp.m_x<<", "<<temp.m_y<<", "<<temp.m_z<<"\n";
+          uniform->setVec4(temp);
+          break;
+        }
+      }
 
     }
   }

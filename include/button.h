@@ -41,7 +41,7 @@ public:
   /// @param [in] the parent window is defaulted to nothing
   //----------------------------------------------------------------------------------------------------------------------
   Button(QWidget *parent=0);
-  Button(QString _buttonName, QLayout *_layout, unsigned int _id, ngl::Vec4 _defaultVal=ngl::Vec4(0.0f,0.0f,0.0f,1.0f), QWidget *parent=0);
+  Button(QString _buttonName, QLayout *_layout, unsigned int _id, ngl::Vec4 _defaultVal=ngl::Vec4(0.5f,0.5f,0.5f,1.0f), QWidget *parent=0);
   QString getName(){return m_buttonName;}
   void setColour(QColor _col){m_colourPicked=_col;}
   void setID(unsigned int _id){m_id=_id;}
