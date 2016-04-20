@@ -46,7 +46,7 @@ public:
   void setColour(QColor _col){m_colourPicked=_col;}
   void setID(unsigned int _id){m_id=_id;}
   unsigned int getID() {return m_id;}
-  ngl::Colour getColour();
+  ngl::Vec4 getColour(){return m_colour;}
   void printValues();
 
 private slots:
@@ -67,17 +67,11 @@ private:
   /// @brief colour struct used to access colour attributes
   /// @brief string to hold button's name
   //----------------------------------------------------------------------------------------------------------------------
-  typedef struct m_colour
-  {
-    qreal m_r;
-    qreal m_g;
-    qreal m_b;
-  } m_colour;
   QString m_buttonName;
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief colour structure to store colour attributes for easy accessibility
   //----------------------------------------------------------------------------------------------------------------------
-  m_colour m_colourStruct;
+  ngl::Vec4 m_colour;
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief button box to open colour picker
   //----------------------------------------------------------------------------------------------------------------------
