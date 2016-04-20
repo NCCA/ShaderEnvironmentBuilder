@@ -116,6 +116,7 @@ void MainWindow::createButtons()
       }
     }
   }
+  }/*
   std::vector<Button*> _uniformsToAdd;
   for(auto uniform: m_parForButton->m_uniformList)
   {
@@ -133,7 +134,7 @@ void MainWindow::createButtons()
         break;
       }
     }
-    if(_exists==0)
+    if(_exists==0 && (uniform->getName()==_temp))
     {
       //std::cout<<"CREATING"<<std::endl;
       //qDebug()<<uniform->getName()<<"\n"<<uniform->getLocation()<<"\n";
@@ -153,7 +154,7 @@ void MainWindow::createButtons()
 }
   //std::cerr<<"THIS IS THE BUTTON LIST LENGTH: "<<m_buttonList.size()<<std::endl;
 
-
+*/
 void MainWindow::updateShaderValues()
 {
   for(auto uniform: m_parForButton->m_uniformList)

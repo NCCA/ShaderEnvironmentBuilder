@@ -30,9 +30,9 @@ void Button::createButtonBox(QString _buttonName)
 {
   m_buttonBox = new QDialogButtonBox;
 
-  m_closeButton = m_buttonBox->addButton(_buttonName,QDialogButtonBox::ActionRole);
+  m_button = m_buttonBox->addButton(_buttonName,QDialogButtonBox::ActionRole);
 
-  connect(m_closeButton, SIGNAL(clicked()), this, SLOT(openColourBox()));
+  connect(m_button, SIGNAL(clicked()), this, SLOT(openColourBox()));
 }
 
 void Button::printValues()

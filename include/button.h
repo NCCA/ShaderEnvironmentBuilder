@@ -27,8 +27,8 @@ QT_END_NAMESPACE
 /// @brief this class creates a button with a pop up widget that can create modifiable
 /// attributes
 /// @author Jonny Lyddon
-/// @version 1.0
-/// @date 04/02/16
+/// @version 1.1
+/// @date 20/04/16
 //----------------------------------------------------------------------------------------------------------------------
 
 class Button : public QDialog
@@ -37,16 +37,38 @@ class Button : public QDialog
 
 public:
   //----------------------------------------------------------------------------------------------------------------------
-  /// @brief constructor to create the button
+  /// @brief constructor to create the button, custom variables can also be assigned
   /// @param [in] the parent window is defaulted to nothing
   //----------------------------------------------------------------------------------------------------------------------
   Button(QWidget *parent=0);
-  Button(QString _buttonName, QLayout *_layout, unsigned int _id, ngl::Vec4 _defaultVal=ngl::Vec4(0.5f,0.5f,0.5f,1.0f), QWidget *parent=0);
-  QString getName(){return m_buttonName;}
-  void setColour(QColor _col){m_colourPicked=_col;}
-  void setID(unsigned int _id){m_id=_id;}
+  Button(QString _buttonName,
+         QLayout *_layout,
+         unsigned int _id,
+         ngl::Vec4 _defaultVal=ngl::Vec4(0.5f,0.5f,0.5f,1.0f),
+         QWidget *parent=0);
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief returns the current button name
+  /// @return m_buttonName
+  //----------------------------------------------------------------------------------------------------------------------
+  QString getName() {return m_buttonName;}
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief sets the current ID for the button, based on its' shader location
+  //----------------------------------------------------------------------------------------------------------------------
+  void setID(unsigned int _id) {m_id=_id;}
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief returns the button ID, this will change based on shader location
+  /// @return m_id
+  //----------------------------------------------------------------------------------------------------------------------
   unsigned int getID() {return m_id;}
-  ngl::Vec4 getColour(){return m_colour;}
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief sets the colour to be used by colour buttons
+  //----------------------------------------------------------------------------------------------------------------------
+  virtual void setColour(QColor _col) {m_colourPicked=_col;}
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief returns the colour, stored by the button
+  /// @return m_colour
+  //----------------------------------------------------------------------------------------------------------------------
+  virtual ngl::Vec4 getColour() {return m_colour;}
   void printValues();
 
 private slots:
@@ -76,7 +98,6 @@ private:
   /// @brief button box to open colour picker
   //----------------------------------------------------------------------------------------------------------------------
   QDialogButtonBox *m_buttonBox;
-  QDialogButtonBox *m_buttonBox2;
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief colour used to store attributes coming out from colour picker
   //----------------------------------------------------------------------------------------------------------------------
@@ -92,8 +113,8 @@ private:
   //----------------------------------------------------------------------------------------------------------------------
   //ignore these for now
   //----------------------------------------------------------------------------------------------------------------------
-  QPushButton *m_closeButton;
-  QPushButton *m_helpButton;
+  QPushButton *m_button;
+  //QPushButton *m_helpButton;
 
   QLabel *m_colourBoxLabel;
   QGridLayout *m_mainLayout;
