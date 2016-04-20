@@ -59,7 +59,7 @@ bool checkAllCompileError(std::vector<std::string> _shaderProgNames, QString *o_
   for (auto shaderProg: _shaderProgNames)
   {
     isCompiled &= checkCompileError(shaderProg, &temp_log);
-    if (!isCompiled)
+    if (!isCompiled) 
     {
       o_log->append(QString("%1:\n").arg(shaderProg.c_str()));
       o_log->append(temp_log);

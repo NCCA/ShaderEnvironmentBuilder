@@ -12,6 +12,9 @@ class QRadioButton;
 class QPushButton;
 class QTreeView;
 class QFileSystemModel;
+class QItemSelectionModel;
+class QItemSelection;
+class QComboBox;
 QT_END_NAMESPACE
 
 
@@ -22,6 +25,9 @@ public:
   NewProjectWizard(QWidget *parent = 0);
   void accept() Q_DECL_OVERRIDE;
 
+  QItemSelectionModel *m_vertexSelectModel;
+  QItemSelectionModel *m_fragmentSelectModel;
+  QFileSystemModel *m_fileModel;
 };
 
 class IntroPage : public QWizardPage
@@ -46,6 +52,11 @@ private:
   QLineEdit *m_le_projectName;
   QPushButton *m_b_browseDirectory;
   QLineEdit *m_le_projectDirectory;
+  QLabel *m_l_glslVersion;
+  QLabel *m_l_glslProfile;
+  QComboBox *m_cb_glslVersion;
+  QComboBox *m_cb_glslProfile;
+
 private slots:
   void setProjectDirectory();
 };
@@ -63,10 +74,19 @@ private:
   QLineEdit *m_le_vertexName;
   QLineEdit *m_le_fragmentName;
   QGroupBox *m_gb_glslFiles;
-  QTreeView *m_tv_selectFiles;
-  QFileSystemModel *m_fileModel;
+  QTreeView *m_tv_vertexSelectFiles;
+  QLabel *m_l_vertexSelectFiles;
+  QLabel *m_l_fragmentSelectFiles;
+  QTreeView *m_tv_fragmentSelectFiles;
+  NewProjectWizard *m_wizard;
+
+  void deselectDirs(const QItemSelection &_selected, QItemSelectionModel *_selectModel);
 
 private slots:
+  void vertexSelectionChanged(const QItemSelection &_selected,
+                              const QItemSelection &_deselected);
+  void fragmentSelectionChanged(const QItemSelection &_selected,
+                                const QItemSelection &_deselected);
 };
 
 class ConclusionPage : public QWizardPage
