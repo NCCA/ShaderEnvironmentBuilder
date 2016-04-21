@@ -84,7 +84,6 @@ NGLScene::NGLScene( QWidget *_parent, parserLib *_libParent ) : QOpenGLWidget( _
   this->resize(_parent->size());
   m_wireframe=false;
   m_fov=65.0;
-  m_newJson= new Json();
   m_shaderManager = new ShaderManager();
   // set this widget to have the initial keyboard focus
   setFocus();
@@ -93,9 +92,9 @@ NGLScene::NGLScene( QWidget *_parent, parserLib *_libParent ) : QOpenGLWidget( _
 //----------------------------------------------------------------------------------------------------------------------
 NGLScene::~NGLScene()
 {
-  delete m_newJson;
   //delete m_readFromXML;
   delete m_parser;
+  delete m_shaderManager;
 }
 
 //----------------------------------------------------------------------------------------------------------------------

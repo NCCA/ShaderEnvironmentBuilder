@@ -8,6 +8,7 @@
 #include "button.h"
 #include "Cebitor.h"
 #include <vector>
+#include "project.h"
 
 class NGLScene;
 
@@ -91,7 +92,8 @@ private:
   //----------------------------------------------------------------------------------------------------------------------
   NGLScene *m_gl;
   //----------------------------------------------------------------------------------------------------------------------
-
+  /// @brief the project
+  Project *m_project;
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief create QsciScintilla widget in the style of sublime defaults
   /// @param [in] _parent the parent widget to fill with the new Qsci Widget

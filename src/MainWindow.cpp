@@ -14,6 +14,7 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   m_parForButton = new parserLib;
   // Create openGl and qsci widgets, pass in the parser
   m_gl=new  NGLScene(this, m_parForButton);
+  m_project = new Project;
 
   m_gl->setSizePolicy(m_ui->m_f_gl_temp->sizePolicy());
   m_gl->setMinimumSize(m_ui->m_f_gl_temp->minimumSize());
@@ -59,7 +60,11 @@ MainWindow::~MainWindow()
 //----------------------------------------------------------------------------------------------------------------------
 void MainWindow::on_m_btn_loadShader_clicked()
 {
-
+  QString vertSource, fragSource;
+  vertSource = m_qsci1->text();
+  fragSource = m_qsci2->text();
+  std::string target = "./testDIR/";
+  m_project->exportProject(target, vertSource, fragSource);
 }
 
 //----------------------------------------------------------------------------------------------------------------------

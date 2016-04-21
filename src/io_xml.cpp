@@ -84,3 +84,10 @@ void IO_XML::readXML(std::string _type)
             };
         }
 }
+
+//------------------------------------------------------------------------------------------------------------------------
+// write project proxy function
+void IO_XML::writeProject(std::string _name, std::string _dir)
+{
+
+}
