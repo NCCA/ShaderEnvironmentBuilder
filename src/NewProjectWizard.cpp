@@ -4,16 +4,26 @@
 #include <QModelIndex>
 #include <algorithm>
 
+QStringList GLSL_PROFILE_OUTPUT_TEXT = {"core", "compatibility"};
+
 NewProjectWizard::NewProjectWizard(QWidget *parent): QWizard(parent)
 {
   m_fileModel = new QFileSystemModel;
   QString shadersPath = QDir::currentPath() + "/shaders/files";
   m_fileModel->setRootPath(shadersPath);
+  m_fileModel->removeColumns(1,3);
+
+  m_projectOutput = new NewProjectOutput;
+
+  //setDefaultProperty("QComboBox", "currentText", "currentIndexChanged");
 
   addPage(new IntroPage);
   addPage(new ProjectInfoPage);
   addPage(new GlslFilesPage(this));
+  addPage(new GlslOrderPage(this));
   addPage(new ConclusionPage);
+
+
 
   setWindowTitle(tr("New Project Wizard"));
 
@@ -21,20 +31,48 @@ NewProjectWizard::NewProjectWizard(QWidget *parent): QWizard(parent)
 
 void NewProjectWizard::accept()
 {
-  QByteArray projectName = field("projectName").toByteArray();
-  int glslVersion = field("glslVersion").toInt();
-  int glslProfile = field("glslProfile").toInt();
-  QByteArray vertexName = field("vertexFileName").toByteArray();
-  QByteArray fragmentName = field("fragmentFileName").toByteArray();
+  m_projectOutput->m_projectName = field("projectName").toByteArray();
+  m_projectOutput->m_glslVersion = field("glslVersion").toByteArray();
+  m_projectOutput->m_glslProfile = QByteArray(GLSL_PROFILE_OUTPUT_TEXT[field("glslProfile").toInt()].toUtf8());
+  m_projectOutput->m_vertexName = field("vertexFileName").toByteArray();
+  m_projectOutput->m_fragmentName = field("fragmentFileName").toByteArray();
 
-  QString projectDir = field("projectDirectory").toString();
+  m_projectOutput->m_projectDir = field("projectDirectory").toString();
 
-  QModelIndexList vertexFiles = m_vertexSelectModel->selectedIndexes();
-  QModelIndexList fragmentFiles = m_fragmentSelectModel->selectedIndexes();
+  QModelIndexList vertexFiles = m_vertexSelectModel->selectedRows();
+  QModelIndexList fragmentFiles = m_fragmentSelectModel->selectedRows();
 
-  qDebug() << projectName << "\n" << glslVersion << "\n" << glslProfile << "\n"
-           << vertexName << "\n" << fragmentName << "\n" << projectDir << "\n"
-           << vertexFiles;
+  GlslOrderPage* glslOrderPg = static_cast<GlslOrderPage*>(page(3));
+
+  QStringList vertexOrderFileNames, fragmentOrderFileNames;
+  QStringList vertexFileNames, fragmentFileNames;
+
+  for (int i=0; i<glslOrderPg->m_ls_vertexFilesOrder->count(); ++i)
+  {
+    vertexFileNames.append(m_fileModel->fileInfo(vertexFiles.at(i)).fileName());
+    vertexOrderFileNames.append(glslOrderPg->m_ls_vertexFilesOrder->item(i)->text());
+  }
+
+  for (int i=0; i<glslOrderPg->m_ls_fragmentFilesOrder->count(); ++i)
+  {
+    fragmentFileNames.append(m_fileModel->fileInfo(fragmentFiles.at(i)).fileName());
+    fragmentOrderFileNames.append(glslOrderPg->m_ls_fragmentFilesOrder->item(i)->text());
+  }
+
+  m_projectOutput->m_vertexFiles = QList<QDir>();
+  m_projectOutput->m_fragmentFiles = QList<QDir>();
+
+  for (int i=0; i<vertexFileNames.length(); ++i)
+  {
+    int index = vertexFileNames.indexOf(vertexOrderFileNames[i]);
+    m_projectOutput->m_vertexFiles.push_back(m_fileModel->fileInfo(vertexFiles.at(index)).absoluteFilePath());
+  }
+
+  for (int i=0; i<fragmentFileNames.length(); ++i)
+  {
+    int index = fragmentFileNames.indexOf(fragmentOrderFileNames[i]);
+    m_projectOutput->m_fragmentFiles.push_back(m_fileModel->fileInfo(fragmentFiles.at(index)).absoluteFilePath());
+  }
 
   QDialog::accept();
 }
@@ -80,8 +118,8 @@ ProjectInfoPage::ProjectInfoPage(QWidget *parent)
 
   m_l_glslVersion = new QLabel(tr("GLSL Version:"));
   m_cb_glslVersion = new QComboBox();
-  QStringList glslVer = {"1.10", "1.20", "1.30", "1.40", "1.50", "3.30", "4.00",
-                         "4.10", "4.20", "4.30", "4.30", "4.40", "4.50"};
+  QStringList glslVer = {"110", "120", "130", "140", "150", "330", "400",
+                         "410", "420", "430", "430", "440", "450"};
   std::reverse(glslVer.begin(), glslVer.end());
   m_cb_glslVersion->addItems(glslVer);
   m_cb_glslVersion->setEditable(true);
@@ -89,11 +127,11 @@ ProjectInfoPage::ProjectInfoPage(QWidget *parent)
 
   m_l_glslProfile = new QLabel(tr("GLSL Profile:"));
   m_cb_glslProfile = new QComboBox();
-  m_cb_glslProfile->addItems({"Core", "Compatibility"});
+  m_cb_glslProfile->addItems(GLSL_PROFILE_OUTPUT_TEXT);
 
   registerField("projectName*", m_le_projectName);
   registerField("projectDirectory*", m_le_projectDirectory);
-  registerField("glslVersion", m_cb_glslVersion);
+  registerField("glslVersion", m_cb_glslVersion, "currentText", "currentIndexChanged");
   registerField("glslProfile", m_cb_glslProfile);
 
   QGridLayout *layout = new QGridLayout;
@@ -235,6 +273,50 @@ void GlslFilesPage::deselectDirs(const QItemSelection &_selected,
   }
 }
 
+GlslOrderPage::GlslOrderPage(QWidget *parent)
+  : QWizardPage(parent)
+{
+  m_wizard = static_cast<NewProjectWizard*>(parent);
+  setTitle(tr("GLSL File Order"));
+  setSubTitle(tr("Specify the order in which the GLSL files will be loaded "
+                 "into the shader program."));
+
+  m_l_vertexOrder = new QLabel(tr("Vertex File Order:"));
+  m_l_fragmentOrder = new QLabel(tr("Fragment File Order:"));
+
+  m_ls_vertexFilesOrder = new QListWidget();
+  m_ls_vertexFilesOrder->setDragDropMode(QAbstractItemView::InternalMove);
+  m_ls_fragmentFilesOrder = new QListWidget();
+  m_ls_fragmentFilesOrder->setDragDropMode(QAbstractItemView::InternalMove);
+
+  QGridLayout *layout = new QGridLayout();
+  layout->addWidget(m_l_vertexOrder, 0,0);
+  layout->addWidget(m_l_fragmentOrder, 0,1);
+  layout->addWidget(m_ls_vertexFilesOrder, 1,0);
+  layout->addWidget(m_ls_fragmentFilesOrder, 1,1);
+  setLayout(layout);
+}
+
+void GlslOrderPage::initializePage()
+{
+  m_ls_vertexFilesOrder->clear();
+
+  QModelIndexList indexes = m_wizard->m_vertexSelectModel->selectedRows();
+  QStringList vertexNames, fragmentNames;
+  for (auto i: indexes)
+  {
+    vertexNames.append(m_wizard->m_fileModel->fileInfo(i).fileName());
+  }
+  m_ls_vertexFilesOrder->addItems(vertexNames);
+
+  indexes = m_wizard->m_fragmentSelectModel->selectedRows();
+  for (auto i: indexes)
+  {
+    fragmentNames.append(m_wizard->m_fileModel->fileInfo(i).fileName());
+  }
+  m_ls_fragmentFilesOrder->addItems(fragmentNames);
+}
+
 ConclusionPage::ConclusionPage(QWidget *parent)
     : QWizardPage(parent)
 {
@@ -252,6 +334,6 @@ void ConclusionPage::initializePage()
 {
     QString finishText = wizard()->buttonText(QWizard::FinishButton);
     finishText.remove('&');
-    label->setText(tr("Click %1 to generate the class skeleton.")
+    label->setText(tr("Click %1 to generate the project.")
                    .arg(finishText));
 }
