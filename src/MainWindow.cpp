@@ -70,38 +70,20 @@ MainWindow::~MainWindow()
 //----------------------------------------------------------------------------------------------------------------------
 void MainWindow::on_m_btn_loadShader_clicked()
 {
-  // Get and cast the shader type combo box value
-  int cb_id = m_ui->m_cb_shaderType->currentIndex();
-  ngl::ShaderType shdrChoiceId = static_cast<ngl::ShaderType>(cb_id);
 
-  // Get the current tabid
-  int tabId = m_ui->m_tabs_qsci->currentIndex();
-
-  // Get the text from the currently selected tab
-  QString text;
-  switch (tabId)
-  {
-  case 0:
-    text = m_qsci1->text();
-    break;
-
-  case 1:
-    text = m_qsci2->text();
-    break;
-
-  default:
-    std::cerr<< "ERROR: Tab id is not recognised\n";
-  }
-  // Load the text into the shader with the shader type
-  m_gl->loadShader(text, shdrChoiceId);
 }
 
 //----------------------------------------------------------------------------------------------------------------------
 void MainWindow::on_m_btn_compileShader_clicked()
 {
-  m_gl->compileShader();
-  m_parForButton->printUniforms(1);
+  QString vertSource, fragSource;
+  vertSource = m_qsci1->text();
+  fragSource = m_qsci2->text();
+  m_gl->compileShader(vertSource, fragSource);
+  //m_parForButton->printUniforms(1);
   createButtons();
+  //TEST VAR m_parForButton->m_uniformList[12]->setVec4(ngl::Vec4(0.2f,0.8f,0.1f,1.0f));
+  updateShaderValues();
 }
 
 void MainWindow::printUniforms()
@@ -111,19 +93,105 @@ void MainWindow::printUniforms()
 
 void MainWindow::createButtons()
 {
-  for(unsigned int i=0;i<m_parForButton->m_num; ++i)
+  if(m_buttonList.size()==0)
   {
-    if(m_parForButton->m_uniformList[i]->getTypeName()=="vec4")
+    for(unsigned int i=0;i<m_parForButton->m_num; ++i)
     {
-      QString _tempName = QString::fromStdString(m_parForButton->m_uniformList[i]->getName());
-      ngl::Vec4 _tempVec=m_parForButton->m_uniformList[i]->getVec4();
-      Button *tempButton = new Button(_tempName, m_ui->vl_uniforms, _tempVec, m_ui->m_w_uniforms);
+      if(m_parForButton->m_uniformList[i]->getTypeName()=="vec4")
+      {
+        QString _tempName = QString::fromStdString(m_parForButton->m_uniformList[i]->getName());
+        ngl::Vec4 _tempVec=m_parForButton->m_uniformList[i]->getVec4();
+        colourButton *tempButton = new colourButton(_tempName, m_ui->vl_uniforms, i, m_ui->m_w_uniforms);
+        tempButton->setColour(_tempVec);
 
-      m_buttonList.push_back(tempButton);
+        m_buttonList.push_back(tempButton);
+      }
+      if(m_parForButton->m_uniformList[i]->getTypeName()=="float")
+      {
+        QString _tempName = QString::fromStdString(m_parForButton->m_uniformList[i]->getName());
+        float _tempFloat=m_parForButton->m_uniformList[i]->getFloat();
+        floatButton *tempButton = new floatButton(_tempName, m_ui->vl_uniforms, i, m_ui->m_w_uniforms);
+        tempButton->setValue(_tempFloat);
+
+        m_buttonList.push_back(tempButton);
+      }
     }
   }
-  std::cerr<<"THIS IS THE BUTTON LIST LENGTH: "<<m_buttonList.size()<<std::endl;
+  }/*
+  std::vector<Button*> _uniformsToAdd;
+  for(auto uniform: m_parForButton->m_uniformList)
+  {
+    bool _exists=0;
+    //std::cout<<uniform->getName()<<std::endl;
+    for (auto button: m_buttonList)
+    {
+      QString _tempName = button->getName();
+      std::string _temp = _tempName.toUtf8().constData();
+      if(uniform->getName()==_temp)
+      {
+        button->setID(uniform->getLocation());
+        //qDebug()<<button->getName()<<"\n"<<button->getID()<<"\n";
+        _exists=1;
+        break;
+      }
+    }
+    if(_exists==0 && (uniform->getName()==_temp))
+    {
+      //std::cout<<"CREATING"<<std::endl;
+      //qDebug()<<uniform->getName()<<"\n"<<uniform->getLocation()<<"\n";
+      QString _tempName = QString::fromStdString(uniform->getName());
+      Button *tempButton = new Button(_tempName,
+                                      m_ui->vl_uniforms,
+                                      uniform->getLocation(),
+                                      uniform->getVec4(),
+                                      m_ui->m_w_uniforms);
+      _uniformsToAdd.push_back(tempButton);
+    }
+  }
+  for(auto button: _uniformsToAdd)
+  {
+    m_buttonList.push_back(button);
+  }
 }
+  //std::cerr<<"THIS IS THE BUTTON LIST LENGTH: "<<m_buttonList.size()<<std::endl;
+
+*/
+void MainWindow::updateShaderValues()
+{
+  for(auto uniform: m_parForButton->m_uniformList)
+  {
+    if(uniform->getTypeName()=="vec4")
+    {
+      for(auto button: m_buttonList)
+      {
+        if(uniform->getLocation()==button->getID())
+        {
+          ngl::Vec4 temp = button->getColour();
+          qDebug()<<temp.m_x<<", "<<temp.m_y<<", "<<temp.m_z<<"\n";
+          uniform->setVec4(temp);
+          break;
+        }
+      }
+
+    }
+    if(uniform->getTypeName()=="float")
+    {
+      for(auto button: m_buttonList)
+      {
+        if(uniform->getLocation()==button->getID())
+        {
+          float temp = button->getValue();
+          uniform->setFloat(temp);
+          break;
+        }
+      }
+
+    }
+  }
+}
+
+
+
 //----------------------------------------------------------------------------------------------------------------------
 void MainWindow::on_m_tabs_qsci_currentChanged(int _index)
 {

@@ -12,6 +12,7 @@
 #include "io_xml.h"
 #include "json.h"
 #include "ParserLib.h"
+#include "shadermanager.h"
 #include "MainWindow.h"
 
 class MainWindow;
@@ -69,15 +70,11 @@ public :
   //----------------------------------------------------------------------------------------------------------------------
   void resizeGL(int _w, int _h);
   //----------------------------------------------------------------------------------------------------------------------
-  /// @brief load a shader from a text string
-  /// @param [in] _text the string that contains the glsl shader
-  /// @param [in] _type the shader type to be stored
+  /// @brief loads and compiles a shader from Qstrings passed from the text editor
+  /// @param vertSource the Qstring containing the vertex shader source code
+  /// @param fragSource the Qstring containing the fragment shader source code
   //----------------------------------------------------------------------------------------------------------------------
-  void loadShader(QString _text, ngl::ShaderType _type);
-  //----------------------------------------------------------------------------------------------------------------------
-  /// @brief compiles the shader
-  //----------------------------------------------------------------------------------------------------------------------
-  void compileShader();
+  void compileShader(QString vertSource, QString fragSource);
   //----------------------------------------------------------------------------------------------------------------------
   //----------------------------------------------------------------------------------------------------------------------
   void resetObjPos();
@@ -211,6 +208,8 @@ private:
   std::unique_ptr<ngl::Text> m_text; //Text for errors etc
 
   bool m_shaderError;
+
+  ShaderManager *m_shaderManager;
 
 };
 
