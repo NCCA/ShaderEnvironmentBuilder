@@ -17,12 +17,53 @@
 *.mod
 
 # Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
+# *Need keep blank for build of QScintilla
 
 # Executables
 *.exe
 *.out
 *.app
+
+# Qt pro user file
+*.pro.user*
+*.pro.user
+
+# P4 merge files
+*.BASE.*
+*.LOCAL.*
+*.REMOTE.*
+*.orig
+
+# Remove build folders that are created from non-shadowbuild
+build-*/
+
+# temp files under linux
+*.~*
+
+# Qt creator stuff
+.qmake*
+Makefile
+
+# Cmake
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+cmake_install.cmake
+install_manifest.txt
+
+# Generated moc and UI files
+moc_*.cpp
+ui_*.h
+
+# Flex generated source and headers
+src/generated/*
+include/generated/*
+
+# Testing files all go in ./tempFiles
+tempFiles/*
+
+# Wiki files
+*.wiki*
+
+# Temp files created on linux
+.nfs*
