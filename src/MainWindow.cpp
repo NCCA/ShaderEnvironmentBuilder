@@ -183,6 +183,19 @@ void MainWindow::updateShaderValues()
       }
 
     }
+    if(uniform->getTypeName()=="float")
+    {
+      for(auto button: m_buttonList)
+      {
+        if(uniform->getLocation()==button->getID())
+        {
+          float temp = button->getValue();
+          uniform->setFloat(temp);
+          break;
+        }
+      }
+
+    }
   }
 }
 

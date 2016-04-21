@@ -83,9 +83,14 @@ void floatButton::openBox()
 
   //colourBoxLayout = new QGridLayout;
   //colourGroupBox->setLayout(colourBoxLayout);
-  m_sliderLayout = new QGridLayout;
-  m_sliderGroupBox=new QGroupBox(tr("Float slider"));
-  QWidget *floatSlider = new QSlider;
-  m_sliderLayout->addWidget(floatSlider);
+  m_window = new QDialog;
+  double val = QInputDialog::getDouble(this, tr("Input"), tr("Input"));
+  m_value=val;
+//  m_sliderLayout = new QGridLayout;
+//  m_sliderGroupBox=new QGroupBox(tr("Float slider"));
+//  QWidget *floatSlider = new QSlider;
+//  m_sliderLayout->addWidget(floatSlider, 0, 1);
+//  m_window->show();
+
   //printValues();
 }
