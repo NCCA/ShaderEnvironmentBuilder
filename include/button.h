@@ -2,14 +2,18 @@
 #define BUTTON_H_
 
 #include <ngl/Vec4.h>
-#include <QDialogButtonBox>
+#include <ngl/Colour.h>
 
 #include <QDialog>
+#include <QDialogButtonBox>
 #include <QGridLayout>
 #include <QLabel>
 #include <QPushButton>
 #include <QColor>
 #include <QColorDialog>
+#include <QGroupBox>
+#include <QDebug>
+#include <QInputDialog>
 
 QT_BEGIN_NAMESPACE
 class QDialogButtonBox;
@@ -17,6 +21,8 @@ class QGridLayout;
 class QLabel;
 class QPushButton;
 class QColor;
+class QDialog;
+class QColorDialog;
 QT_END_NAMESPACE
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -24,8 +30,8 @@ QT_END_NAMESPACE
 /// @brief this class creates a button with a pop up widget that can create modifiable
 /// attributes
 /// @author Jonny Lyddon
-/// @version 1.0
-/// @date 04/02/16
+/// @version 1.1
+/// @date 20/04/16
 //----------------------------------------------------------------------------------------------------------------------
 
 class Button : public QDialog
@@ -34,62 +40,149 @@ class Button : public QDialog
 
 public:
   //----------------------------------------------------------------------------------------------------------------------
-  /// @brief constructor to create the button
+  /// @brief constructor to create the button, custom variables can also be assigned
   /// @param [in] the parent window is defaulted to nothing
   //----------------------------------------------------------------------------------------------------------------------
   Button(QWidget *parent=0);
-  Button(QString _buttonName, QLayout *_layout, ngl::Vec4 _defaultVal=ngl::Vec4(0.0f,0.0f,0.0f,1.0f), QWidget *parent=0);
+  Button(QString _buttonName,
+         QLayout *_layout,
+         unsigned int _id,
+         QWidget *parent=0);
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief returns the current button name
+  /// @return m_buttonName
+  //----------------------------------------------------------------------------------------------------------------------
+  QString getName() {return m_buttonName;}
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief sets the current ID for the button, based on its' shader location
+  //----------------------------------------------------------------------------------------------------------------------
+  void setID(unsigned int _id) {m_id=_id;}
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief returns the button ID, this will change based on shader location
+  /// @return m_id
+  //----------------------------------------------------------------------------------------------------------------------
+  unsigned int getID() {return m_id;}
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief sets the colour to be used by colour buttons
+  //----------------------------------------------------------------------------------------------------------------------
+  virtual void setColour(QColor _col) {return;}
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief returns the colour, stored by the button
+  /// @return m_colour
+  //----------------------------------------------------------------------------------------------------------------------
+  virtual ngl::Vec4 getColour() {return ngl::Vec4();}
+
+  virtual void setValue(float _val) {return;}
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief returns the value, stored by the button
+  /// @return m_value
+  //----------------------------------------------------------------------------------------------------------------------
+  virtual float getValue() {return float();}
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief prints the button attribute values
+  //----------------------------------------------------------------------------------------------------------------------
+  void printValues();
+
 private slots:
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief a slot to open a colour box upon event
   //----------------------------------------------------------------------------------------------------------------------
-  void openColourBox();
+  virtual void openBox() {return;}
 private:
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief colour struct used to access colour attributes
+  /// @brief string to hold button's name
+  //----------------------------------------------------------------------------------------------------------------------
+  QString m_buttonName;
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief id to access specific buttons
+  //----------------------------------------------------------------------------------------------------------------------
+  unsigned int m_id;
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief button object to be pressed
+  //----------------------------------------------------------------------------------------------------------------------
+  QPushButton *m_button;
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief function to create the button box for the colour picker
   //----------------------------------------------------------------------------------------------------------------------
   void createButtonBox(QString _buttonName="Select &Colour");
   //----------------------------------------------------------------------------------------------------------------------
-  /// @brief colour struct used to access colour attributes
-  //----------------------------------------------------------------------------------------------------------------------
-  typedef struct m_colour
-  {
-    qreal m_r;
-    qreal m_g;
-    qreal m_b;
-  } m_colour;
-  //----------------------------------------------------------------------------------------------------------------------
-  /// @brief colour structure to store colour attributes for easy accessibility
-  //----------------------------------------------------------------------------------------------------------------------
-  m_colour m_colourStruct;
-  //----------------------------------------------------------------------------------------------------------------------
   /// @brief button box to open colour picker
   //----------------------------------------------------------------------------------------------------------------------
   QDialogButtonBox *m_buttonBox;
-  QDialogButtonBox *m_buttonBox2;
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief layout for colour box to be stored within
+  //----------------------------------------------------------------------------------------------------------------------
+  QGridLayout *m_gridLayout;
+};
+
+class colourButton : public Button
+{
+    Q_OBJECT
+
+private:
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief colour structure to store colour attributes for easy accessibility
+  //----------------------------------------------------------------------------------------------------------------------
+  ngl::Vec4 m_colour;
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief colour used to store attributes coming out from colour picker
   //----------------------------------------------------------------------------------------------------------------------
-  QColor m_myColor;
+  QColor m_colourPicked;
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief colour box to select colours
   //----------------------------------------------------------------------------------------------------------------------
   QColorDialog *m_colourGroupBox;
+private slots:
+    void openBox();
+public:
+  using Button::Button;
   //----------------------------------------------------------------------------------------------------------------------
-  /// @brief layout for colour box to be stored within
+  /// @brief sets the colour to be used by colour buttons
   //----------------------------------------------------------------------------------------------------------------------
-  QGridLayout *m_colourBoxLayout;
+  void setColour(QColor _col) {m_colourPicked=_col;}
+  void setColour(ngl::Vec4 _col) {m_colour=_col;}
   //----------------------------------------------------------------------------------------------------------------------
-  //ignore these for now
+  /// @brief returns the colour, stored by the button
+  /// @return m_colour
   //----------------------------------------------------------------------------------------------------------------------
-  QPushButton *m_closeButton;
-  QPushButton *m_helpButton;
+  ngl::Vec4 getColour() {return m_colour;}
+  void printAttributes();
+};
 
-  QLabel *m_colourBoxLabel;
+class floatButton : public Button
+{
+    Q_OBJECT
 
-  QGridLayout *m_mainLayout;
-
-
+private:
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief colour structure to store colour attributes for easy accessibility
+  //----------------------------------------------------------------------------------------------------------------------
+  float m_value;
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief colour used to store attributes coming out from colour picker
+  //----------------------------------------------------------------------------------------------------------------------
+  //float m_valueSelected;
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief colour box to select colours
+  //----------------------------------------------------------------------------------------------------------------------
+  QDialog *m_window;
+  QGroupBox *m_sliderGroupBox;
+  QGridLayout *m_sliderLayout;
+private slots:
+    void openBox();
+public:
+  using Button::Button;
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief sets the value to be used by colour buttons
+  //----------------------------------------------------------------------------------------------------------------------
+  void setValue(float _val) {m_value=_val;}
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief returns the value, stored by the button
+  /// @return m_value
+  //----------------------------------------------------------------------------------------------------------------------
+  float getValue() {return m_value;}
+  void printAttributes();
 };
 
 #endif

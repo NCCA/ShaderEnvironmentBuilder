@@ -38,7 +38,7 @@ Q_OBJECT      // must include this if you use Qt signals/slots
 public:
     void createButtons();
     void printUniforms();
-
+    void updateShaderValues();
   //----------------------------------------------------------------------------------------------------------------------
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief Constructor for the MainWindow

@@ -218,14 +218,6 @@ void NGLScene::paintGL()
   loadMatricesToShader();
   ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
   prim->draw("teapot");
-
-
-  m_text.reset(new ngl::Text(QFont ("Arial",18)));
-  m_text->setScreenSize(width(),height());
-  m_text->setColour(ngl::Colour (0.82,0.2,0.2));
-
-
-  //m_text->renderText(10,18,"Error!");
 }
 
 //----------------------------------------------------------------------------------------------------------------------
