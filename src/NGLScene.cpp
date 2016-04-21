@@ -64,7 +64,7 @@ bool checkAllCompileError(std::vector<std::string> _shaderProgNames, QString *o_
   for (auto shaderProg: _shaderProgNames)
   {
     isCompiled &= checkCompileError(shaderProg, &temp_log);
-    if (!isCompiled)
+    if (!isCompiled) 
     {
       o_log->append(QString("%1:\n").arg(shaderProg.c_str()));
       o_log->append(temp_log);
@@ -159,7 +159,7 @@ void NGLScene::initializeGL()
   m_shaderManager->initialize(m_cam);
   if(!m_shaderManager->compileStatus())
   {
-    m_window->updateTerminalText(m_shaderManager->getErrorLog());
+    m_window->setTerminalText(m_shaderManager->getErrorLog());
   }
   if(m_shaderManager->isInit())
   {
@@ -451,7 +451,7 @@ void NGLScene::compileShader(QString vertSource, QString fragSource)
   m_shaderManager->compileShader(m_cam, vertSource, fragSource);
   if(!m_shaderManager->compileStatus())
   {
-    m_window->updateTerminalText(m_shaderManager->getErrorLog());
+    m_window->setTerminalText(m_shaderManager->getErrorLog());
   }
   ngl::Light light(ngl::Vec3(2,2,2),ngl::Colour(1,1,1,1),ngl::Colour(1,1,1,1),ngl::LightModes::POINTLIGHT);
   // now create our light this is done after the camera so we can pass the

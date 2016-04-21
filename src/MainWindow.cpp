@@ -5,6 +5,7 @@
 
 #include <QTextStream>
 #include <QFileDialog>
+#include <QDesktopWidget>
 
 MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
                                            m_ui(new Ui::MainWindow)
@@ -58,6 +59,18 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   // switching to .obj files
   connect(m_ui->actionLoad_obj,SIGNAL(triggered()),this,SLOT(on_actionLoad_obj_opened()));
   update();
+  //std::cerr<<"Find number of active uniforms: "<<m_parForButton->m_num<<std::endl;
+
+  this->setGeometry(
+      QStyle::alignedRect(
+          Qt::LeftToRight,
+          Qt::AlignCenter,
+          this->size(),
+          qApp->desktop()->availableGeometry()
+      )
+  );
+
+  m_startDialog = new StartupDialog(this);
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -248,6 +261,7 @@ bool MainWindow::loadTextFileToTab(QString _path, Cebitor &_qsci)
 
 //----------------------------------------------------------------------------------------------------------------------
 void MainWindow::on_actionLoad_obj_opened()
+void MainWindow::setTerminalText(QString _txt)
 {
   QString fileName=QFileDialog::getOpenFileName(this,
   tr("Open Mesh"),"0Features-0BugsCVA3/",tr("Image Files (*.obj)"));
@@ -272,7 +286,21 @@ void MainWindow::on_actionLoad_shape_triggered()
   m_gl->setShapeType(a);
 }
 
-void MainWindow::updateTerminalText(QString _txt)
 {
   m_ui->m_pte_terminal->setPlainText(_txt);
+}
+
+void MainWindow::clearTerminalText()
+{
+  m_ui->m_pte_terminal->clear();
+}
+
+void MainWindow::on_actionStartup_Window_triggered()
+{
+  m_startDialog->show();
+}
+
+void MainWindow::showStartDialog()
+{
+  m_startDialog->show();
 }

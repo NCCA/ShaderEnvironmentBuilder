@@ -34,6 +34,7 @@ int main(int argc, char **argv)
   MainWindow w;
   // show it
   w.show();
+  w.showStartDialog();
   // hand control over to Qt framework
   return a.exec();
 }
