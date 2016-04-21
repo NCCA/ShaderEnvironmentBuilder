@@ -28,13 +28,17 @@ bool checkCompileError(std::string _shaderProgName, QString *o_log)
 {
   GLint isCompiled = 0;
   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
+
   GLuint shaderId = shader->getShaderID(_shaderProgName);
+  //Using modified NGL to query ID of given shader
+
 
   glGetShaderiv(shaderId, GL_COMPILE_STATUS, &isCompiled);
   if(isCompiled == GL_FALSE)
   {
     GLint maxLength = 0;
     glGetShaderiv(shaderId, GL_INFO_LOG_LENGTH, &maxLength);
+    //Compile failed, accessing information of error
 
     // The maxLength includes the NULL character
     std::vector<GLchar> errorLog(maxLength);
@@ -43,7 +47,7 @@ bool checkCompileError(std::string _shaderProgName, QString *o_log)
     std::string s(errorLog.begin(), errorLog.end());
 
     QString errLog = QString(s.c_str());
-
+    //Convert to QString to output in IDE
     *o_log = errLog;
 
     // Provide the infolog in whatever manor you deem best.
@@ -54,6 +58,7 @@ bool checkCompileError(std::string _shaderProgName, QString *o_log)
 
 bool checkAllCompileError(std::vector<std::string> _shaderProgNames, QString *o_log)
 {
+  //Traverses std::vector to check compilation
   GLint isCompiled = GL_TRUE;
   QString temp_log;
   for (auto shaderProg: _shaderProgNames)
