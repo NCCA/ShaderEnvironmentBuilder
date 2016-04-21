@@ -1,12 +1,16 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <ngl/Vec4.h>
+#include "NGLScene.h"
 #include <QMainWindow>
 #include "ParserLib.h"
 #include "button.h"
 #include "Cebitor.h"
 #include <vector>
-#include "NGLScene.h"
+
+class NGLScene;
+
 //------------------------------------------------------------------------------------------------------------------------
 /// @file NGLScene.h
 /// @brief the MainWindow class for our program
@@ -34,7 +38,7 @@ Q_OBJECT      // must include this if you use Qt signals/slots
 public:
     void createButtons();
     void printUniforms();
-
+    void updateShaderValues();
   //----------------------------------------------------------------------------------------------------------------------
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief Constructor for the MainWindow
@@ -45,6 +49,10 @@ public:
   /// @brief dtor must close down ngl and release OpenGL resources
   //----------------------------------------------------------------------------------------------------------------------
   ~MainWindow();
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief dtor must close down ngl and release OpenGL resources
+  //----------------------------------------------------------------------------------------------------------------------
+  void updateTerminalText(QString _txt);
   //----------------------------------------------------------------------------------------------------------------------
   //----------------------------------------------------------------------------------------------------------------------
 private slots:

@@ -14,6 +14,11 @@
 #include "json.h"
 #include "ParserLib.h"
 #include "ngl/Obj.h"
+#include "shadermanager.h"
+#include "MainWindow.h"
+
+class MainWindow;
+
 //------------------------------------------------------------------------------------------------------------------------
 /// @file NGLScene.h
 /// @brief a basic Qt GL widget class for ngl demos
@@ -67,15 +72,14 @@ public :
   //----------------------------------------------------------------------------------------------------------------------
   void resizeGL(int _w, int _h);
   //----------------------------------------------------------------------------------------------------------------------
-  /// @brief load a shader from a text string
-  /// @param [in] _text the string that contains the glsl shader
-  /// @param [in] _type the shader type to be stored
+  /// @brief loads and compiles a shader from Qstrings passed from the text editor
+  /// @param vertSource the Qstring containing the vertex shader source code
+  /// @param fragSource the Qstring containing the fragment shader source code
   //----------------------------------------------------------------------------------------------------------------------
-  void loadShader(QString _text, ngl::ShaderType _type);
+  void compileShader(QString vertSource, QString fragSource);
   //----------------------------------------------------------------------------------------------------------------------
-  /// @brief compiles the shader
   //----------------------------------------------------------------------------------------------------------------------
-  void compileShader();
+  void resetObjPos();
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief sets the file location you of a mesh
   //----------------------------------------------------------------------------------------------------------------------
@@ -164,6 +168,10 @@ private:
   /// @brief read from xml file
   //----------------------------------------------------------------------------------------------------------------------
   IO_XML *m_readFromXML;
+  /// @brief the main window that is the GUI
+  //----------------------------------------------------------------------------------------------------------------------
+  MainWindow *m_window;
+  //----------------------------------------------------------------------------------------------------------------------
 
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief method to load transform matrices to the shader
@@ -229,6 +237,12 @@ private:
   /// @brief Activate the m_mesh .obj
   //----------------------------------------------------------------------------------------------------------------------
   void toggleFunc();
+
+  std::unique_ptr<ngl::Text> m_text; //Text for errors etc
+
+  bool m_shaderError;
+
+  ShaderManager *m_shaderManager;
 
 };
 

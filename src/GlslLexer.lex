@@ -57,7 +57,8 @@ sampler(([123]D)|Cube)|([12]DArray)|((2DRect)Shadow)/.    { return QsciLexerGLSL
 mat[234](x[234])?/.                                       { return QsciLexerGLSL::StyleType::DATATYPE; }
 (u?int)|"float"|"bool"|"void"/.                           { return QsciLexerGLSL::StyleType::DATATYPE; }
 
-"//".*[\n]                          { return QsciLexerGLSL::StyleType::COMMENT; }
+"//".*                              { return QsciLexerGLSL::StyleType::COMMENT; }
+^#.*                                { return QsciLexerGLSL::StyleType::HASHCOMMENT; }
 [ \t\n\r]                           { return QsciLexerGLSL::StyleType::WHITESPACE; }
 
 [\*\+\-\/\>\<\%\^\|\&\!\=]?\=? |
