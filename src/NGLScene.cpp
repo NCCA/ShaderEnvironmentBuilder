@@ -28,13 +28,17 @@ bool checkCompileError(std::string _shaderProgName, QString *o_log)
 {
   GLint isCompiled = 0;
   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
+
   GLuint shaderId = shader->getShaderID(_shaderProgName);
+  //Using modified NGL to query ID of given shader
+
 
   glGetShaderiv(shaderId, GL_COMPILE_STATUS, &isCompiled);
   if(isCompiled == GL_FALSE)
   {
     GLint maxLength = 0;
     glGetShaderiv(shaderId, GL_INFO_LOG_LENGTH, &maxLength);
+    //Compile failed, accessing information of error
 
     // The maxLength includes the NULL character
     std::vector<GLchar> errorLog(maxLength);
@@ -43,7 +47,7 @@ bool checkCompileError(std::string _shaderProgName, QString *o_log)
     std::string s(errorLog.begin(), errorLog.end());
 
     QString errLog = QString(s.c_str());
-
+    //Convert to QString to output in IDE
     *o_log = errLog;
 
     // Provide the infolog in whatever manor you deem best.
@@ -54,12 +58,13 @@ bool checkCompileError(std::string _shaderProgName, QString *o_log)
 
 bool checkAllCompileError(std::vector<std::string> _shaderProgNames, QString *o_log)
 {
+  //Traverses std::vector to check compilation
   GLint isCompiled = GL_TRUE;
   QString temp_log;
   for (auto shaderProg: _shaderProgNames)
   {
     isCompiled &= checkCompileError(shaderProg, &temp_log);
-    if (!isCompiled)
+    if (!isCompiled) 
     {
       o_log->append(QString("%1:\n").arg(shaderProg.c_str()));
       o_log->append(temp_log);
@@ -125,7 +130,7 @@ void NGLScene::initializeGL()
   m_shaderManager->initialize(m_cam);
   if(!m_shaderManager->compileStatus())
   {
-    m_window->updateTerminalText(m_shaderManager->getErrorLog());
+    m_window->setTerminalText(m_shaderManager->getErrorLog());
   }
   if(m_shaderManager->isInit())
   {
@@ -210,14 +215,6 @@ void NGLScene::paintGL()
   loadMatricesToShader();
   ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
   prim->draw("teapot");
-
-
-  m_text.reset(new ngl::Text(QFont ("Arial",18)));
-  m_text->setScreenSize(width(),height());
-  m_text->setColour(ngl::Colour (0.82,0.2,0.2));
-
-
-  //m_text->renderText(10,18,"Error!");
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -414,7 +411,7 @@ void NGLScene::compileShader(QString vertSource, QString fragSource)
   m_shaderManager->compileShader(m_cam, vertSource, fragSource);
   if(!m_shaderManager->compileStatus())
   {
-    m_window->updateTerminalText(m_shaderManager->getErrorLog());
+    m_window->setTerminalText(m_shaderManager->getErrorLog());
   }
   ngl::Light light(ngl::Vec3(2,2,2),ngl::Colour(1,1,1,1),ngl::Colour(1,1,1,1),ngl::LightModes::POINTLIGHT);
   // now create our light this is done after the camera so we can pass the

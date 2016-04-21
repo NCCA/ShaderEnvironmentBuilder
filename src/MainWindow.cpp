@@ -4,6 +4,7 @@
 #include "CebErrors.h"
 
 #include <QTextStream>
+#include <QDesktopWidget>
 
 MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
                                            m_ui(new Ui::MainWindow)
@@ -49,6 +50,16 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
 
   //std::cerr<<"Find number of active uniforms: "<<m_parForButton->m_num<<std::endl;
 
+  this->setGeometry(
+      QStyle::alignedRect(
+          Qt::LeftToRight,
+          Qt::AlignCenter,
+          this->size(),
+          qApp->desktop()->availableGeometry()
+      )
+  );
+
+  m_startDialog = new StartupDialog(this);
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -74,8 +85,10 @@ void MainWindow::on_m_btn_compileShader_clicked()
   vertSource = m_qsci1->text();
   fragSource = m_qsci2->text();
   //m_project->save("testproj", "./testDIR/");
-  m_parForButton->printUniforms(1);
+  //m_parForButton->printUniforms(1);
   createButtons();
+  //TEST VAR m_parForButton->m_uniformList[12]->setVec4(ngl::Vec4(0.2f,0.8f,0.1f,1.0f));
+  updateShaderValues();
 }
 
 void MainWindow::printUniforms()
@@ -85,19 +98,105 @@ void MainWindow::printUniforms()
 
 void MainWindow::createButtons()
 {
-  for(unsigned int i=0;i<m_parForButton->m_num; ++i)
+  if(m_buttonList.size()==0)
   {
-    if(m_parForButton->m_uniformList[i]->getTypeName()=="vec4")
+    for(unsigned int i=0;i<m_parForButton->m_num; ++i)
     {
-      QString _tempName = QString::fromStdString(m_parForButton->m_uniformList[i]->getName());
-      ngl::Vec4 _tempVec=m_parForButton->m_uniformList[i]->getVec4();
-      Button *tempButton = new Button(_tempName, m_ui->vl_uniforms, _tempVec, m_ui->m_w_uniforms);
+      if(m_parForButton->m_uniformList[i]->getTypeName()=="vec4")
+      {
+        QString _tempName = QString::fromStdString(m_parForButton->m_uniformList[i]->getName());
+        ngl::Vec4 _tempVec=m_parForButton->m_uniformList[i]->getVec4();
+        colourButton *tempButton = new colourButton(_tempName, m_ui->vl_uniforms, i, m_ui->m_w_uniforms);
+        tempButton->setColour(_tempVec);
 
-      m_buttonList.push_back(tempButton);
+        m_buttonList.push_back(tempButton);
+      }
+      if(m_parForButton->m_uniformList[i]->getTypeName()=="float")
+      {
+        QString _tempName = QString::fromStdString(m_parForButton->m_uniformList[i]->getName());
+        float _tempFloat=m_parForButton->m_uniformList[i]->getFloat();
+        floatButton *tempButton = new floatButton(_tempName, m_ui->vl_uniforms, i, m_ui->m_w_uniforms);
+        tempButton->setValue(_tempFloat);
+
+        m_buttonList.push_back(tempButton);
+      }
     }
   }
-  std::cerr<<"THIS IS THE BUTTON LIST LENGTH: "<<m_buttonList.size()<<std::endl;
+  }/*
+  std::vector<Button*> _uniformsToAdd;
+  for(auto uniform: m_parForButton->m_uniformList)
+  {
+    bool _exists=0;
+    //std::cout<<uniform->getName()<<std::endl;
+    for (auto button: m_buttonList)
+    {
+      QString _tempName = button->getName();
+      std::string _temp = _tempName.toUtf8().constData();
+      if(uniform->getName()==_temp)
+      {
+        button->setID(uniform->getLocation());
+        //qDebug()<<button->getName()<<"\n"<<button->getID()<<"\n";
+        _exists=1;
+        break;
+      }
+    }
+    if(_exists==0 && (uniform->getName()==_temp))
+    {
+      //std::cout<<"CREATING"<<std::endl;
+      //qDebug()<<uniform->getName()<<"\n"<<uniform->getLocation()<<"\n";
+      QString _tempName = QString::fromStdString(uniform->getName());
+      Button *tempButton = new Button(_tempName,
+                                      m_ui->vl_uniforms,
+                                      uniform->getLocation(),
+                                      uniform->getVec4(),
+                                      m_ui->m_w_uniforms);
+      _uniformsToAdd.push_back(tempButton);
+    }
+  }
+  for(auto button: _uniformsToAdd)
+  {
+    m_buttonList.push_back(button);
+  }
 }
+  //std::cerr<<"THIS IS THE BUTTON LIST LENGTH: "<<m_buttonList.size()<<std::endl;
+
+*/
+void MainWindow::updateShaderValues()
+{
+  for(auto uniform: m_parForButton->m_uniformList)
+  {
+    if(uniform->getTypeName()=="vec4")
+    {
+      for(auto button: m_buttonList)
+      {
+        if(uniform->getLocation()==button->getID())
+        {
+          ngl::Vec4 temp = button->getColour();
+          qDebug()<<temp.m_x<<", "<<temp.m_y<<", "<<temp.m_z<<"\n";
+          uniform->setVec4(temp);
+          break;
+        }
+      }
+
+    }
+    if(uniform->getTypeName()=="float")
+    {
+      for(auto button: m_buttonList)
+      {
+        if(uniform->getLocation()==button->getID())
+        {
+          float temp = button->getValue();
+          uniform->setFloat(temp);
+          break;
+        }
+      }
+
+    }
+  }
+}
+
+
+
 //----------------------------------------------------------------------------------------------------------------------
 void MainWindow::on_m_tabs_qsci_currentChanged(int _index)
 {
@@ -153,7 +252,22 @@ bool MainWindow::loadTextFileToTab(QString _path, Cebitor &_qsci)
   return true;
 }
 
-void MainWindow::updateTerminalText(QString _txt)
+void MainWindow::setTerminalText(QString _txt)
 {
   m_ui->m_pte_terminal->setPlainText(_txt);
+}
+
+void MainWindow::clearTerminalText()
+{
+  m_ui->m_pte_terminal->clear();
+}
+
+void MainWindow::on_actionStartup_Window_triggered()
+{
+  m_startDialog->show();
+}
+
+void MainWindow::showStartDialog()
+{
+  m_startDialog->show();
 }
