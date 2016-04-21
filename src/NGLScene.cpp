@@ -122,7 +122,6 @@ void NGLScene::initializeGL()
   setCamShape();
   // now to load the shader and set the values
   // grab an instance of shader manager
-  ngl::ShaderLib *shader=ngl::ShaderLib::instance();
   m_shaderManager->initialize(m_cam);
   if(!m_shaderManager->compileStatus())
   {
