@@ -83,7 +83,7 @@ NGLScene::NGLScene( QWidget *_parent, parserLib *_libParent ) : QOpenGLWidget( _
   m_spinXFace=0.0f;
   m_spinYFace=0.0f;
   m_parser= new parserLib();
-  m_shapeType=0;
+  m_shapeType=5;
   toggle=false;
   m_meshLoc="./tempFiles/strawberry.obj";
 
@@ -190,7 +190,7 @@ void NGLScene::initializeGL()
   m_readFromXML->shaderData("WhyHelloThere", "PhongVertex", "shaders/PhongVertex.glsl", "PhongFragment", "shaders/PhongFragment.glsl");
   m_parser->assignAllData();
 
-  m_mesh = std::unique_ptr<ngl::Obj> (new ngl::Obj("./tempFiles/Frog.obj"));
+  m_mesh = std::unique_ptr<ngl::Obj> (new ngl::Obj(m_meshLoc));
   m_mesh->createVAO();
 
   ngl::VAOPrimitives::instance()->createSphere("sphere", 1,20);
