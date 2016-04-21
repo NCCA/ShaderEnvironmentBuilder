@@ -110,7 +110,8 @@ void MainWindow::createButtons()
       {
         QString _tempName = QString::fromStdString(m_parForButton->m_uniformList[i]->getName());
         ngl::Vec4 _tempVec=m_parForButton->m_uniformList[i]->getVec4();
-        Button *tempButton = new Button(_tempName, m_ui->vl_uniforms, i, _tempVec, m_ui->m_w_uniforms);
+        colourButton *tempButton = new colourButton(_tempName, m_ui->vl_uniforms, i, m_ui->m_w_uniforms);
+        tempButton->setColour(_tempVec);
 
         m_buttonList.push_back(tempButton);
       }
