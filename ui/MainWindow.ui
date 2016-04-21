@@ -66,31 +66,6 @@
              <property name="handleWidth">
               <number>10</number>
              </property>
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="baseSize">
-              <size>
-               <width>500</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="currentIndex">
-              <number>1</number>
-             </property>
-             <property name="documentMode">
-              <bool>false</bool>
-             </property>
-             <property name="tabsClosable">
-              <bool>false</bool>
-             </property>
-             <property name="movable">
-              <bool>false</bool>
-             </property>
-             <widget class="QWidget" name="m_tab_qsci_1">
              <widget class="QFrame" name="m_f_gl_temp">
               <property name="sizePolicy">
                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
@@ -391,7 +366,7 @@
      <x>0</x>
      <y>0</y>
      <width>1024</width>
-     <height>26</height>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -405,12 +380,11 @@
     <addaction name="separator"/>
     <addaction name="actionStartup_Window"/>
    </widget>
-   <widget class="QMenu" name="menuDebug">
+   <widget class="QMenu" name="shapesMenu">
     <property name="title">
      <string>Load Shapes</string>
     </property>
-    <addaction name="separator"/>
-    <addaction name="actionLoad_obj"/>
+    <addaction name="actionLoad_Obj"/>
     <addaction name="actionLoad_Sphere"/>
     <addaction name="actionLoad_Cube"/>
     <addaction name="actionLoad_Torus"/>
@@ -420,7 +394,7 @@
     <addaction name="actionLoad_Dragon"/>
    </widget>
    <addaction name="menuFile"/>
-   <addaction name="menuDebug"/>
+   <addaction name="shapesMenu"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionNew">
@@ -443,9 +417,17 @@
     <string>Save All</string>
    </property>
   </action>
-  <action name="actionLoad_obj">
+  <action name="actionStartup_Window">
    <property name="text">
-    <string>Load obj</string>
+    <string>Startup Window</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
+   </property>
+  </action>
+  <action name="actionLoad_Obj">
+   <property name="text">
+    <string>Import OBJ</string>
    </property>
   </action>
   <action name="actionLoad_Sphere">
@@ -458,19 +440,9 @@
     <string>Load Cube</string>
    </property>
   </action>
-  <action name="actionLoad_Teapot">
+  <action name="actionLoad_Torus">
    <property name="text">
-    <string>Load Teapot</string>
-   </property>
-  </action>
-  <action name="actionLoad_Dragon">
-   <property name="text">
-    <string>Load Dragon</string>
-   </property>
-  </action>
-  <action name="actionLoad_Troll">
-   <property name="text">
-    <string>Load Troll</string>
+    <string>Load Torus</string>
    </property>
   </action>
   <action name="actionLoad_Cone">
@@ -478,22 +450,19 @@
     <string>Load Cone</string>
    </property>
   </action>
-  <action name="actionLoad_Torus">
+  <action name="actionLoad_Teapot">
    <property name="text">
-    <string>Load Torus</string>
+    <string>Load Teapot</string>
    </property>
   </action>
-  <action name="actionLoad_Shape">
+  <action name="actionLoad_Troll">
    <property name="text">
-    <string>Load Shape</string>
+    <string>Load Troll</string>
    </property>
   </action>
-  <action name="actionStartup_Window">
+  <action name="actionLoad_Dragon">
    <property name="text">
-    <string>Startup Window</string>
-   </property>
-   <property name="shortcutContext">
-    <enum>Qt::ApplicationShortcut</enum>
+    <string>Load Dragon</string>
    </property>
   </action>
  </widget>

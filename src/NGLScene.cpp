@@ -181,11 +181,11 @@ void NGLScene::initializeGL()
     m_readFromXML->shaderData("WhyHelloThere", "PhongVertex", "shaders/PhongVertex.glsl", "PhongFragment", "shaders/PhongFragment.glsl");
     m_parser->assignAllData();
     std::cerr<<"Find number of active uniforms: "<<m_parser->m_num<<std::endl;
+    light.loadToShader("light");
   }
-}
+
 
   // load these values to the shader as well
-  light.loadToShader("light");
 
   m_readFromXML->shaderData("WhyHelloThere", "PhongVertex", "shaders/PhongVertex.glsl", "PhongFragment", "shaders/PhongFragment.glsl");
   m_parser->assignAllData();

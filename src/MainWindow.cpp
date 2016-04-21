@@ -57,7 +57,7 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   connect(m_ui->actionLoad_Troll,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
   connect(m_ui->actionLoad_Dragon,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
   // switching to .obj files
-  connect(m_ui->actionLoad_obj,SIGNAL(triggered()),this,SLOT(on_actionLoad_obj_opened()));
+  connect(m_ui->actionLoad_Obj,SIGNAL(triggered()),this,SLOT(on_actionLoad_obj_opened()));
   update();
   //std::cerr<<"Find number of active uniforms: "<<m_parForButton->m_num<<std::endl;
 
@@ -261,7 +261,6 @@ bool MainWindow::loadTextFileToTab(QString _path, Cebitor &_qsci)
 
 //----------------------------------------------------------------------------------------------------------------------
 void MainWindow::on_actionLoad_obj_opened()
-void MainWindow::setTerminalText(QString _txt)
 {
   QString fileName=QFileDialog::getOpenFileName(this,
   tr("Open Mesh"),"0Features-0BugsCVA3/",tr("Image Files (*.obj)"));
@@ -285,7 +284,7 @@ void MainWindow::on_actionLoad_shape_triggered()
 
   m_gl->setShapeType(a);
 }
-
+void MainWindow::setTerminalText(QString _txt)
 {
   m_ui->m_pte_terminal->setPlainText(_txt);
 }
