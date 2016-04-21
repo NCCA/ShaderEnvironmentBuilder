@@ -84,6 +84,8 @@ private slots:
   void on_m_tabs_qsci_currentChanged(int _index);
   //----------------------------------------------------------------------------------------------------------------------
   //----------------------------------------------------------------------------------------------------------------------
+  void on_actionLoad_shape_triggered();
+  void on_actionLoad_obj_opened();
   void on_actionStartup_Window_triggered();
 
   void on_actionNew_triggered();

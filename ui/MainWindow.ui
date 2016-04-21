@@ -279,7 +279,7 @@
      <x>0</x>
      <y>0</y>
      <width>1024</width>
-     <height>26</height>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -293,13 +293,21 @@
     <addaction name="separator"/>
     <addaction name="actionStartup_Window"/>
    </widget>
-   <widget class="QMenu" name="menuDebug">
+   <widget class="QMenu" name="shapesMenu">
     <property name="title">
-     <string>Debug</string>
+     <string>Load Shapes</string>
     </property>
+    <addaction name="actionLoad_Obj"/>
+    <addaction name="actionLoad_Sphere"/>
+    <addaction name="actionLoad_Cube"/>
+    <addaction name="actionLoad_Torus"/>
+    <addaction name="actionLoad_Cone"/>
+    <addaction name="actionLoad_Teapot"/>
+    <addaction name="actionLoad_Troll"/>
+    <addaction name="actionLoad_Dragon"/>
    </widget>
    <addaction name="menuFile"/>
-   <addaction name="menuDebug"/>
+   <addaction name="shapesMenu"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionNew">
@@ -331,6 +339,46 @@
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
+   </property>
+  </action>
+  <action name="actionLoad_Obj">
+   <property name="text">
+    <string>Import OBJ</string>
+   </property>
+  </action>
+  <action name="actionLoad_Sphere">
+   <property name="text">
+    <string>Load Sphere</string>
+   </property>
+  </action>
+  <action name="actionLoad_Cube">
+   <property name="text">
+    <string>Load Cube</string>
+   </property>
+  </action>
+  <action name="actionLoad_Torus">
+   <property name="text">
+    <string>Load Torus</string>
+   </property>
+  </action>
+  <action name="actionLoad_Cone">
+   <property name="text">
+    <string>Load Cone</string>
+   </property>
+  </action>
+  <action name="actionLoad_Teapot">
+   <property name="text">
+    <string>Load Teapot</string>
+   </property>
+  </action>
+  <action name="actionLoad_Troll">
+   <property name="text">
+    <string>Load Troll</string>
+   </property>
+  </action>
+  <action name="actionLoad_Dragon">
+   <property name="text">
+    <string>Load Dragon</string>
    </property>
   </action>
  </widget>

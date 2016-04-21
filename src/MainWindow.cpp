@@ -1,11 +1,12 @@
-#include <QTextStream>
-#include <QDesktopWidget>
-
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 #include "QsciLexerGlsl.h"
 #include "CebErrors.h"
 #include "NewProjectWizard.h"
+
+#include <QTextStream>
+#include <QFileDialog>
+#include <QDesktopWidget>
 
 MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
                                            m_ui(new Ui::MainWindow)
@@ -36,6 +37,17 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   loadTextFileToTab("shaders/PhongVertex.glsl", *m_qsci1);
   loadTextFileToTab("shaders/PhongFragment.glsl", *m_qsci2);
 
+  // switching between shapes
+  connect(m_ui->actionLoad_Sphere,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
+  connect(m_ui->actionLoad_Cube,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
+  connect(m_ui->actionLoad_Torus,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
+  connect(m_ui->actionLoad_Cone,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
+  connect(m_ui->actionLoad_Teapot ,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
+  connect(m_ui->actionLoad_Troll,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
+  connect(m_ui->actionLoad_Dragon,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
+  // switching to .obj files
+  connect(m_ui->actionLoad_Obj,SIGNAL(triggered()),this,SLOT(on_actionLoad_obj_opened()));
+  update();
   //std::cerr<<"Find number of active uniforms: "<<m_parForButton->m_num<<std::endl;
 
   this->setGeometry(
@@ -228,6 +240,31 @@ bool MainWindow::loadTextFileToTab(QString _path, Cebitor &_qsci)
   return true;
 }
 
+//----------------------------------------------------------------------------------------------------------------------
+void MainWindow::on_actionLoad_obj_opened()
+{
+  QString fileName=QFileDialog::getOpenFileName(this,
+  tr("Open Mesh"),"0Features-0BugsCVA3/",tr("Image Files (*.obj)"));
+  std::string importName=fileName.toStdString();
+  std::cout<<"IMPORT NAME :              "<<importName<<std::endl;
+  m_gl->importMeshName(importName);
+}
+
+void MainWindow::on_actionLoad_shape_triggered()
+{
+  QAction *action = static_cast<QAction*>(sender());
+  int a=0;
+
+  if (action==m_ui->actionLoad_Sphere)  {   a=1;  }
+  if (action==m_ui->actionLoad_Cube)    {   a=2;  }
+  if (action==m_ui->actionLoad_Torus)   {   a=3;  }
+  if (action==m_ui->actionLoad_Cone)    {   a=4;  }
+  if (action==m_ui->actionLoad_Teapot)  {   a=5;  }
+  if (action==m_ui->actionLoad_Troll)   {   a=6;  }
+  if (action==m_ui->actionLoad_Dragon)  {   a=7;  }
+
+  m_gl->setShapeType(a);
+}
 void MainWindow::setTerminalText(QString _txt)
 {
   m_ui->m_pte_terminal->setPlainText(_txt);
