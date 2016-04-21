@@ -59,9 +59,6 @@ void QsciLexerGLSL::styleText(int start, int end)
   std::vector<int> tokens;
   tok = lexer->yylex(&istr);
 
-  // paper colour
-
-
   while (tok>0)
   {
     tokens.push_back(tok);
@@ -85,7 +82,7 @@ QColor QsciLexerGLSL::defaultColor(int style) const
 {
   switch(style)
   {
-    case StyleType::DEFAULT:    { return QColor(247, 247, 241);}
+    case StyleType::DEFAULT:    { return QColor(247, 247, 241); }
     case StyleType::KEYWORD:    { return QColor(249, 38, 114); }
     case StyleType::DATATYPE:   { return QColor(102, 216, 238); }
     case StyleType::NUMBER:     { return QColor(174, 129, 255); }

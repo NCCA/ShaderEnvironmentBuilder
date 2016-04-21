@@ -28,13 +28,18 @@ public:
   enum MarkerType
   {
     ERROR,
-    WARNING
+    WARNING,
+    FILESTART
   };
   //------------------------------------------------------------------------------------------------------------------------
   /// @brief Cebitor constructor, initialises default values
   //------------------------------------------------------------------------------------------------------------------------
   Cebitor(QWidget *_parent);
+
+  bool loadTextFiles(const std::vector<QString> _paths);
+
 protected:
+  std::vector<int> m_fileMarkers;
   //------------------------------------------------------------------------------------------------------------------------
   /// @brief adds closing character for braces and quotes
   /// @param [in] _close closing character

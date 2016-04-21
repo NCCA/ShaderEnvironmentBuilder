@@ -43,10 +43,7 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
                                          ngl::ShaderType::VERTEX));
 
   // Load the text files into the corresponding tabs
-  std::vector<QString> files;
-  files.push_back("shaders/PhongVertex.glsl");
-  files.push_back("shaders/PhongFragment.glsl");
-  loadTextFilesToTab(files, *m_qsci1);
+  loadTextFileToTab("shaders/PhongVertex.glsl", *m_qsci1);
   loadTextFileToTab("shaders/PhongFragment.glsl", *m_qsci2);
 
   //std::cerr<<"Find number of active uniforms: "<<m_parForButton->m_num<<std::endl;
@@ -174,33 +171,4 @@ bool MainWindow::loadTextFileToTab(QString _path, Cebitor &_qsci)
 void MainWindow::updateTerminalText(QString _txt)
 {
   m_ui->m_pte_terminal->setPlainText(_txt);
-}
-
-
-//----------------------------------------------------------------------------------------------------------------------
-bool MainWindow::loadTextFilesToTab(std::vector<QString> _paths, Cebitor &_qsci)
-{
-  int numPaths;
-  numPaths = _paths.size();
-  for(int i=0; i<numPaths; i++)
-  {
-    QString text;
-    QFile file(_paths[i]);
-
-    // Open the file as readonly and text and ensure it loaded correctly
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-    {
-      // Raise an error if failed
-      ceb_raise::QtFileError(file.error(), _paths[i]);
-      return false;
-    }
-
-    // Fead the text into the tab if successful
-    QTextStream in(&file);
-    int startingLines = _qsci.text().count("\n");
-    text = _qsci.text() + in.readAll() + QString("\n");
-    _qsci.setText(text);
-    std::cout<<"added marker: "<<_qsci.markerAdd(startingLines,2)<<std::endl;
-  }
-  return true;
 }
