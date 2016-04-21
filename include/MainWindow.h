@@ -1,6 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "project.h"
+
 #include <ngl/Vec4.h>
 #include "NGLScene.h"
 #include <QMainWindow>
@@ -10,7 +12,6 @@
 #include "StartupDialog.h"
 #include "NewProjectWizard.h"
 #include <vector>
-#include "project.h"
 
 class NGLScene;
 
@@ -85,6 +86,12 @@ private slots:
   //----------------------------------------------------------------------------------------------------------------------
   void on_actionStartup_Window_triggered();
 
+  void on_actionNew_triggered();
+
+  void on_actionSaveProject_triggered();
+
+  void on_actionSaveProjectAs_triggered();
+
 private:
   //----------------------------------------------------------------------------------------------------------------------
   //----------------------------------------------------------------------------------------------------------------------
@@ -104,8 +111,6 @@ private:
   //----------------------------------------------------------------------------------------------------------------------
   NGLScene *m_gl;
   //----------------------------------------------------------------------------------------------------------------------
-  /// @brief the project
-  Project *m_project;
   /// @brief startup Dialog
   //----------------------------------------------------------------------------------------------------------------------
   StartupDialog *m_startDialog;
@@ -124,6 +129,8 @@ private:
 
   parserLib *m_parForButton;
   std::vector<Button*> m_buttonList;
+
+  Project *m_project;
 
 };
 

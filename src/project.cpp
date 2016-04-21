@@ -1,16 +1,17 @@
-#include "project.h"
-#include "json.h"
-#include <fstream>
-#include "io_xml.h"
 #include <QFile>
 #include <QTextStream>
 #include <QDebug>
+#include <QFileDialog>
+
+#include "project.h"
+#include "json.h"
 #include "CebErrors.h"
+#include "io_xml.h"
 
 Project::Project()
 {
-  m_name = "untitled";
-  m_dir = "";
+  m_data.m_projectName = "untitled";
+  m_data.m_projectDir = "";
   m_Json  = new Json;
   m_xml = new IO_XML;
   m_saved = false;
@@ -24,20 +25,38 @@ Project::~Project()
 
 void Project::set(std::string _name, std::string _dir)
 {
-  m_name = _name;
-  m_dir = _dir;
+  m_data.m_projectName = _name;
+  m_data.m_projectDir = _dir;
 }
 
-void Project::save()
+void Project::save(QString vertSource, QString fragSource)
 {
-  m_xml->writeProject(m_name, m_dir);
+  QString fileName;
+  if(!m_saved)
+  {
+    QFileDialog dialog;
+    dialog.setFileMode(QFileDialog::AnyFile);
+    dialog.setAcceptMode(QFileDialog::AcceptSave);
+    if (dialog.exec())
+    {
+      fileName = dialog.selectedFiles().at(0);
+      QFileInfo finfo = QFileInfo(fileName);
+      m_data.m_projectDir = finfo.absolutePath().toStdString();
+      m_data.m_projectName = finfo.baseName().toStdString();
+    }
+
+  }
+  std::cout<<m_data.m_projectDir<<std::endl;
+  std::cout<<m_data.m_projectName<<std::endl;
+
+  m_xml->writeProject(m_data.m_projectName, m_data.m_projectDir, vertSource.toStdString(), fragSource.toStdString());
   m_saved = true;
 }
 
-void Project::saveAs(string _name, string _dir)
+void Project::saveAs(QString vertSource, QString fragSource)
 {
-   set(_name, _dir);
-   save();
+   m_saved = false;
+   save(vertSource, fragSource);
 }
 
 bool Project::exportProject(std::string _targetDir, QString vertSource, QString fragSource)
@@ -45,7 +64,7 @@ bool Project::exportProject(std::string _targetDir, QString vertSource, QString 
 
 
   //create path to vertex.glsl in target directory
-  QString filePath = QString::fromStdString(_targetDir.append(m_name.append("Vertex.glsl")));
+  QString filePath = QString::fromStdString(_targetDir.append(m_data.m_projectName.append("Vertex.glsl")));
   qDebug() << filePath;
 
   //create qfile object assiciated with the file name
@@ -65,7 +84,7 @@ bool Project::exportProject(std::string _targetDir, QString vertSource, QString 
 
   //now do the same for fragment.glsl
   filePath.clear();
-  filePath = QString::fromStdString(_targetDir.append(m_name.append("Vertex.glsl")));
+  filePath = QString::fromStdString(_targetDir.append(m_data.m_projectName.append("Vertex.glsl")));
   qDebug() << filePath;
   QFile fragFile(filePath);
 

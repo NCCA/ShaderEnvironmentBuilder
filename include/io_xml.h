@@ -18,7 +18,7 @@ public:
                     const char *_fragmentShaderGlsl);
     void readXML(std::string _type);
     void writeXML(std::string _name, std::string _type, int _value);
-    void writeProject(std::string _name, std::string _dir);
+    void writeProject(std::string _name, std::string _dir, std::string vertSource, std::string fragSource);
     rapidxml::xml_document<> m_doc;
     rapidxml::xml_node<> * root_node;
 

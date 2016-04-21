@@ -1,8 +1,12 @@
+#include "CebErrors.h"
 #include <QtWidgets>
-#include "NewProjectWizard.h"
 #include <QFileDialog>
 #include <QModelIndex>
 #include <algorithm>
+#include "NewProjectWizard.h"
+
+
+
 
 QStringList GLSL_PROFILE_OUTPUT_TEXT = {"core", "compatibility"};
 
@@ -12,9 +16,7 @@ NewProjectWizard::NewProjectWizard(QWidget *parent): QWizard(parent)
   QString shadersPath = QDir::currentPath() + "/shaders/files";
   m_fileModel->setRootPath(shadersPath);
   m_fileModel->removeColumns(1,3);
-
-  m_projectOutput = new NewProjectOutput;
-
+  m_output = new outputData;
   //setDefaultProperty("QComboBox", "currentText", "currentIndexChanged");
 
   addPage(new IntroPage);
@@ -31,13 +33,10 @@ NewProjectWizard::NewProjectWizard(QWidget *parent): QWizard(parent)
 
 void NewProjectWizard::accept()
 {
-  m_projectOutput->m_projectName = field("projectName").toByteArray();
-  m_projectOutput->m_glslVersion = field("glslVersion").toByteArray();
-  m_projectOutput->m_glslProfile = QByteArray(GLSL_PROFILE_OUTPUT_TEXT[field("glslProfile").toInt()].toUtf8());
-  m_projectOutput->m_vertexName = field("vertexFileName").toByteArray();
-  m_projectOutput->m_fragmentName = field("fragmentFileName").toByteArray();
-
-  m_projectOutput->m_projectDir = field("projectDirectory").toString();
+  m_output->m_projectName = field("projectName").toString().toStdString();
+  m_output->m_projectDir = field("projectDirectory").toString().toStdString();
+  QString version = QString("#version %1 %2\n\n").arg(field("glslVersion").toString(),
+                                                    field("glslProfile").toString());
 
   QModelIndexList vertexFiles = m_vertexSelectModel->selectedRows();
   QModelIndexList fragmentFiles = m_fragmentSelectModel->selectedRows();
@@ -59,20 +58,38 @@ void NewProjectWizard::accept()
     fragmentOrderFileNames.append(glslOrderPg->m_ls_fragmentFilesOrder->item(i)->text());
   }
 
-  m_projectOutput->m_vertexFiles = QList<QDir>();
-  m_projectOutput->m_fragmentFiles = QList<QDir>();
-
+  QString vertexFilesString = version;
+  QString fragmentFilesString = version;
   for (int i=0; i<vertexFileNames.length(); ++i)
   {
     int index = vertexFileNames.indexOf(vertexOrderFileNames[i]);
-    m_projectOutput->m_vertexFiles.push_back(m_fileModel->fileInfo(vertexFiles.at(index)).absoluteFilePath());
+    QFile vertFile(m_fileModel->fileInfo(vertexFiles.at(index)).absoluteFilePath());
+    if (!vertFile.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+      // Raise an error if failed
+      ceb_raise::QtFileError(vertFile.error(), m_fileModel->fileInfo(vertexFiles.at(index)).absoluteFilePath());
+    }
+    QTextStream in(&vertFile);
+    vertexFilesString.append(in.readAll());
+    vertexFilesString.append("\n");
   }
 
   for (int i=0; i<fragmentFileNames.length(); ++i)
   {
     int index = fragmentFileNames.indexOf(fragmentOrderFileNames[i]);
-    m_projectOutput->m_fragmentFiles.push_back(m_fileModel->fileInfo(fragmentFiles.at(index)).absoluteFilePath());
+    QFile fragFile(m_fileModel->fileInfo(fragmentFiles.at(index)).absoluteFilePath());
+    if (!fragFile.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+      // Raise an error if failed
+      ceb_raise::QtFileError(fragFile.error(), m_fileModel->fileInfo(fragmentFiles.at(index)).absoluteFilePath());
+    }
+    QTextStream in(&fragFile);
+    fragmentFilesString.append(in.readAll());
+    fragmentFilesString.append("\n");
   }
+
+  m_output->m_vertSource = vertexFilesString;
+  m_output->m_fragSource = fragmentFilesString;
 
   QDialog::accept();
 }
@@ -132,7 +149,7 @@ ProjectInfoPage::ProjectInfoPage(QWidget *parent)
   registerField("projectName*", m_le_projectName);
   registerField("projectDirectory*", m_le_projectDirectory);
   registerField("glslVersion", m_cb_glslVersion, "currentText", "currentIndexChanged");
-  registerField("glslProfile", m_cb_glslProfile);
+  registerField("glslProfile", m_cb_glslProfile,"currentText", "currentIndexChanged");
 
   QGridLayout *layout = new QGridLayout;
   layout->addWidget(m_l_projectName, 0, 0);

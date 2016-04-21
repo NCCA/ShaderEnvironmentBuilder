@@ -1,10 +1,11 @@
+#include <QTextStream>
+#include <QDesktopWidget>
+
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 #include "QsciLexerGlsl.h"
 #include "CebErrors.h"
-
-#include <QTextStream>
-#include <QDesktopWidget>
+#include "NewProjectWizard.h"
 
 MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
                                            m_ui(new Ui::MainWindow)
@@ -15,14 +16,12 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   m_parForButton = new parserLib;
   // Create openGl and qsci widgets, pass in the parser
   m_gl=new  NGLScene(this, m_parForButton);
-  m_project = new Project;
 
   m_gl->setSizePolicy(m_ui->m_f_gl_temp->sizePolicy());
   m_gl->setMinimumSize(m_ui->m_f_gl_temp->minimumSize());
 
   // add the openGl window to the interface
   m_ui->m_splitH_editContext->insertWidget(0, m_gl);
-
   // Delete the template frame from the form designer
   delete(m_ui->m_f_gl_temp);
 
@@ -32,17 +31,6 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   // Widget 2 (fragment)
   m_qsci2 = createQsciWidget(m_ui->m_tab_qsci_2);
 
-  // Set the combo box values for the shader type
-  m_ui->m_cb_shaderType->insertItem(static_cast<int>(ngl::ShaderType::VERTEX),
-                                  "Vertex Shader");
-  m_ui->m_cb_shaderType->insertItem(static_cast<int>(ngl::ShaderType::FRAGMENT),
-                                  "Fragment Shader");
-  m_ui->m_cb_shaderType->insertItem(static_cast<int>(ngl::ShaderType::COMPUTE),
-                                  "Compute Shader");
-
-  // Set the combo box initially to VERTEX
-  m_ui->m_cb_shaderType->setCurrentIndex(static_cast<int>(
-                                         ngl::ShaderType::VERTEX));
 
   // Load the text files into the corresponding tabs
   loadTextFileToTab("shaders/PhongVertex.glsl", *m_qsci1);
@@ -60,6 +48,8 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   );
 
   m_startDialog = new StartupDialog(this);
+
+  m_project = new Project;
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -71,11 +61,12 @@ MainWindow::~MainWindow()
 //----------------------------------------------------------------------------------------------------------------------
 void MainWindow::on_m_btn_loadShader_clicked()
 {
+  //Project *project = Project::instance();
   QString vertSource, fragSource;
   vertSource = m_qsci1->text();
   fragSource = m_qsci2->text();
   std::string target = "./testDIR/";
-  m_project->exportProject(target, vertSource, fragSource);
+  //project->exportProject(target, vertSource, fragSource);
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -200,22 +191,7 @@ void MainWindow::updateShaderValues()
 //----------------------------------------------------------------------------------------------------------------------
 void MainWindow::on_m_tabs_qsci_currentChanged(int _index)
 {
-  // On switch of tab, change the combo box value to the corresponding tab type
-  switch (_index)
-  {
-    case 0:
-      m_ui->m_cb_shaderType->setCurrentIndex(static_cast<int>(
-                                               ngl::ShaderType::VERTEX));
-    break;
 
-    case 1:
-      m_ui->m_cb_shaderType->setCurrentIndex(static_cast<int>(
-                                               ngl::ShaderType::FRAGMENT));
-    break;
-
-    default:
-      std::cerr<< "ERROR: Tab id is not recognised\n";
-  }
 
 }
 
@@ -270,4 +246,30 @@ void MainWindow::on_actionStartup_Window_triggered()
 void MainWindow::showStartDialog()
 {
   m_startDialog->show();
+}
+
+void MainWindow::on_actionNew_triggered()
+{
+  NewProjectWizard *projectWiz = new NewProjectWizard(this);
+  if (projectWiz->exec())
+  {
+    m_project->set(projectWiz->m_output->m_projectName, projectWiz->m_output->m_projectDir);
+    m_qsci1->setText(projectWiz->m_output->m_vertSource);
+    m_qsci2->setText(projectWiz->m_output->m_fragSource);
+  }
+  else
+  {
+    qDebug() << "FAIL";
+  }
+}
+
+
+void MainWindow::on_actionSaveProject_triggered()
+{
+    m_project->save(m_qsci1->text(), m_qsci2->text());
+}
+
+void MainWindow::on_actionSaveProjectAs_triggered()
+{
+    m_project->saveAs(m_qsci1->text(), m_qsci2->text());
 }
