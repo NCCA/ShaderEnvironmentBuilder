@@ -34,8 +34,7 @@ NGLScene::NGLScene( QWidget *_parent, parserLib *_libParent  ) : QOpenGLWidget( 
   m_parser= new parserLib();
   m_shapeType=0;
   toggle=false;
-//  m_meshLoc= "/home/i7247470/0Features-0BugsCVA3/tempFiles/strawberry.obj";
-//  m_meshLocOrig= "/home/i7247470/0Features-0BugsCVA3/tempFiles/strawberry.obj";
+  m_meshLoc="./tempFiles/strawberry.obj";
   // re-size the widget to that of the parent (in this case the GLFrame passed in on construction)
   this->resize(_parent->size());
   m_wireframe=false;
@@ -57,21 +56,25 @@ NGLScene::~NGLScene()
 void NGLScene::setMeshLocation(std::string _meshDirectory)
 {
   m_meshLoc=_meshDirectory;
-//  std::cout<<"input location  :"<<_meshDirectory<<std::endl;
-//  std::cout<<"new location    :"<<m_meshLoc<<std::endl;
-  //std::cout<<"                :"<<m_meshLocOrig<<std::endl;
+}
+
+void NGLScene::toggleFunc()
+{
+  if(toggle==true)
+  {
+    m_mesh = std::unique_ptr<ngl::Obj> (new ngl::Obj(m_meshLoc));
+    m_mesh->createVAO();
+    toggle=false;
+  }
+
 }
 
 void NGLScene::importMeshName(const std::string &name)
 {
-    setMeshLocation(name);
-
-    setShapeType(0);
-    toggle=true;
-    update();
-
+  setMeshLocation(name);
+  setShapeType(0);
+  toggle=true;
 }
-
 
 //----------------------------------------------------------------------------------------------------------------------
 // This virtual function is called once before the first call to paintGL() or resizeGL(),
@@ -80,7 +83,6 @@ void NGLScene::importMeshName(const std::string &name)
 //----------------------------------------------------------------------------------------------------------------------
 void NGLScene::initializeGL()
 {
-
   ngl::NGLInit::instance();
   glClearColor(0.4f, 0.4f, 0.4f, 1.0f);			   // Grey Background
   // enable depth testing for drawing
@@ -151,16 +153,13 @@ void NGLScene::initializeGL()
 
   m_readFromXML->shaderData("WhyHelloThere", "PhongVertex", "shaders/PhongVertex.glsl", "PhongFragment", "shaders/PhongFragment.glsl");
   m_parser->assignAllData();
-//  m_mesh = std::unique_ptr<ngl::Obj>(new ngl::Obj(m_meshLoc));
-//  m_mesh->createVAO();
 
-  tmp = ngl::Obj("/home/i7247470/0Features-0BugsCVA3/tempFiles/strawberry.obj");
-  tmp.createVAO();
+  m_mesh = std::unique_ptr<ngl::Obj> (new ngl::Obj("./tempFiles/Frog.obj"));
+  m_mesh->createVAO();
 
   ngl::VAOPrimitives::instance()->createSphere("sphere", 1,20);
   ngl::VAOPrimitives::instance()->createCone("cone",0.5,1,20,1);
   ngl::VAOPrimitives::instance()->createTorus("torus",0.3,1,20,20);
-  m_timer=startTimer(100);
 
 }
 //----------------------------------------------------------------------------------------------------------------------
@@ -231,39 +230,34 @@ void NGLScene::paintGL()
   m_mouseGlobalTX.m_m[3][2] = m_modelPos.m_z;
 
   m_cam.setShape(m_fov, m_aspect, 0.5f, 150.0f);
-  if(m_timer==100)
-  {
-    if(toggle==true)
-    {
-      tmp = ngl::Obj(m_meshLoc);
-      tmp.createVAO();
-      toggle=false;
-    }
-    m_timer=1;
-  }
-  m_timer++;
+  m_transform.reset();
+
+
+  if (toggle)
+   toggleFunc();
 
   loadMatricesToShader();
   drawObject(m_shapeType);
 }
 
-void NGLScene::drawObject(int _type)
+void NGLScene::drawObject(uint _type)
 {
   ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
 
+  enum geo {input=0,sphere=1,cube=2,torus=3,cone=4,teapot=5,troll=6,dragon=7};
+
   switch(_type)
   {
-    case 0: tmp.draw(); break;
-    case 1: prim->draw("sphere");break;
-    case 2: prim->draw("cube");break;
-    case 3: prim->draw("torus");break;
-    case 4: prim->draw("cone");break;
-    case 5: prim->draw("teapot");break;
-    case 6: prim->draw("troll");break;
-    case 7: prim->draw("dragon");break;
+    case input : m_mesh->draw();break;
+    case sphere: prim->draw("sphere");break;
+    case cube  : prim->draw("cube");break;
+    case torus : prim->draw("torus");break;
+    case cone  : prim->draw("cone");break;
+    case teapot: prim->draw("teapot");break;
+    case troll : prim->draw("troll");break;
+    case dragon: prim->draw("dragon");break;
     default: std::cout<<"unrecognised shape type value"<<std::endl; break;
   }
-  update();
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -289,12 +283,11 @@ void NGLScene::loadMatricesToShader()
   ngl::Mat3 normalMatrix;
   ngl::Mat4 M;
 
-  M=m_mouseGlobalTX;
+  M=m_mouseGlobalTX*m_transform.getMatrix();
   MV=  M*m_cam.getViewMatrix();
   MVP= M*m_cam.getVPMatrix();
   normalMatrix=MV;
   normalMatrix.inverse();
-
 
   m_parser->sendUniformsToShader(shader);
   shader->setShaderParamFromMat4("MV",MV);
@@ -319,7 +312,7 @@ void NGLScene::keyPressEvent(QKeyEvent *_event)
   {
   // escape key to quit
   //case Qt::Key_Escape : QGuiApplication::exit(EXIT_SUCCESS); break;
-  // turn on wirframe rendering
+  // turn on wireframe rendering
   case Qt::Key_W : m_wireframe=true; break;
   // turn off wire frame
   case Qt::Key_S : m_wireframe=false; break;
@@ -327,46 +320,8 @@ void NGLScene::keyPressEvent(QKeyEvent *_event)
   case Qt::Key_F : showFullScreen(); break;
   // show windowed
   case Qt::Key_N : showNormal(); break;
-  case Qt::Key_Space: m_parser->assignUniformValues();
-
-  /*case Qt::Key_1 : m_parser->m_uniformList[0].m_vec4.m_x+=0.1;
-  std::cout<<m_parser->m_uniformList[0].m_name<<":(x)  "<<m_parser->m_uniformList[0].m_vec4.m_x<<std::endl; break;
-
-  case Qt::Key_2 : m_parser->m_uniformList[0].m_vec4.m_y+=0.1;
-  std::cout<<m_parser->m_uniformList[0].m_name<<":(y)  "<<m_parser->m_uniformList[0].m_vec4.m_y<<std::endl; break;
-
-  case Qt::Key_3 : m_parser->m_uniformList[0].m_vec4.m_z+=0.1;
-  std::cout<<m_parser->m_uniformList[0].m_name<<":(z)  "<<m_parser->m_uniformList[0].m_vec4.m_z<<std::endl; break;
-
-  case Qt::Key_4 : m_parser->m_uniformList[0].m_vec4.m_x-=0.1;
-  std::cout<<m_parser->m_uniformList[0].m_name<<":(x)  "<<m_parser->m_uniformList[0].m_vec4.m_x<<std::endl; break;
-
-  case Qt::Key_5 : m_parser->m_uniformList[0].m_vec4.m_y-=0.1;
-  std::cout<<m_parser->m_uniformList[0].m_name<<":(y)  "<<m_parser->m_uniformList[0].m_vec4.m_y<<std::endl; break;
-
-  case Qt::Key_6 : m_parser->m_uniformList[0].m_vec4.m_z-=0.1;
-  std::cout<<m_parser->m_uniformList[0].m_name<<":(z)  "<<m_parser->m_uniformList[0].m_vec4.m_z<<std::endl; break;
-
-  case Qt::Key_G : m_parser->m_uniformList[5].m_vec4.m_x+=0.1;
-  std::cout<<m_parser->m_uniformList[5].m_name<<":(z)  "<<m_parser->m_uniformList[5].m_vec4.m_x<<std::endl; break;
-
-  case Qt::Key_B : m_parser->m_uniformList[7].m_vec4.m_x+=0.1;
-  std::cout<<m_parser->m_uniformList[7].m_name<<":(x)  "<<m_parser->m_uniformList[7].m_vec4.m_x<<std::endl; break;
-
-  case Qt::Key_H : m_parser->m_uniformList[12].m_vec4.m_x+=0.1;
-  std::cout<<m_parser->m_uniformList[12].m_name<<":(x)  "<<m_parser->m_uniformList[12].m_vec4.m_x<<std::endl; break;
-
-  case Qt::Key_J : m_parser->m_uniformList[5].m_vec4.m_y+=0.1;
-  std::cout<<m_parser->m_uniformList[5].m_name<<":(y)  "<<m_parser->m_uniformList[5].m_vec4.m_y<<std::endl; break;
-
-  case Qt::Key_K : m_parser->m_uniformList[7].m_vec4.m_y+=0.1;
-  std::cout<<m_parser->m_uniformList[7].m_name<<":(y)  "<<m_parser->m_uniformList[7].m_vec4.m_y<<std::endl; break;
-
-  case Qt::Key_L : m_parser->m_uniformList[12].m_vec4.m_y+=0.1;
-  std::cout<<m_parser->m_uniformList[12].m_name<<":(y)  "<<m_parser->m_uniformList[12].m_vec4.m_y<<std::endl; break;
-  default : break;*/
   }
-    update();
+  update();
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -418,6 +373,7 @@ void NGLScene::mousePressEvent ( QMouseEvent * _event )
     m_translate=true;
   }
   setFocus();
+    update();
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -462,7 +418,7 @@ void NGLScene::loadShader(QString _text, ngl::ShaderType _type)
         shader->loadShaderSourceFromString("PhongVertex", _text.toUtf8().constData());
         break;
       case ngl::ShaderType::FRAGMENT:
-        shader->loadShaderSourceFromString("PhongFragment", _text.toUtf8().constData());
+        shader->loadShaderSourceFromString("PhongFragment",_text.toUtf8().constData());
         break;
       default:
         std::cout << "Shader type not compatible\n";
@@ -511,17 +467,5 @@ void NGLScene::compileShader()
   // load these values to the shader as well
   light.loadToShader("light");
 
-  update();
-}
-void NGLScene::timerEvent(QTimerEvent *_event)
-{
-//  if(m_timer==100)
-//  {
-//    m_timer=1;
-//  }
-//  else
-//  {
-//    m_timer++;
-//  }
 }
 

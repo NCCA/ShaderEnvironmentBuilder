@@ -56,13 +56,8 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   connect(m_ui->actionLoad_Troll,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
   connect(m_ui->actionLoad_Dragon,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
   // switching to .obj files
-  connect(m_ui->actionLoad_obj,SIGNAL(triggered()),this,SLOT(on_actionLoad_obj_triggered()));
-  // temporary buttons
-  connect(m_ui->pushButtonR,SIGNAL(clicked()),this,SLOT(on_pushButton_colour()));
-  connect(m_ui->pushButtonG,SIGNAL(clicked()),this,SLOT(on_pushButton_colour()));
-  connect(m_ui->pushButtonB,SIGNAL(clicked()),this,SLOT(on_pushButton_colour()));
-  connect(m_ui->test ,SIGNAL(clicked()),this,SLOT(on_test_clickedA()));
-
+  connect(m_ui->actionLoad_obj,SIGNAL(triggered()),this,SLOT(on_actionLoad_obj_opened()));
+  update();
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -184,15 +179,13 @@ bool MainWindow::loadTextFileToTab(QString _path, Cebitor &_qsci)
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-void MainWindow::on_actionLoad_obj_triggered()
+void MainWindow::on_actionLoad_obj_opened()
 {
-  QString fileName = QFileDialog::getOpenFileName(this,
-      tr("Open Mesh"), "tempFiles/", tr("Image Files (*.obj)"));
-
+  QString fileName=QFileDialog::getOpenFileName(this,
+  tr("Open Mesh"),"0Features-0BugsCVA3/",tr("Image Files (*.obj)"));
   std::string importName=fileName.toStdString();
   std::cout<<"IMPORT NAME :              "<<importName<<std::endl;
   m_gl->importMeshName(importName);
-
 }
 
 void MainWindow::on_actionLoad_shape_triggered()
@@ -208,27 +201,6 @@ void MainWindow::on_actionLoad_shape_triggered()
   if (action==m_ui->actionLoad_Troll)   {   a=6;  }
   if (action==m_ui->actionLoad_Dragon)  {   a=7;  }
 
-  //std::cout<<"Print >> " <<action<<"  "<<a<<std::endl;
   m_gl->setShapeType(a);
 }
-
-void MainWindow::on_pushButton_colour()
-{
-  QPushButton *button = static_cast<QPushButton*>(sender());
-  float a=0.0;
-  float b=0.0;
-  float c=0.0;
-  if (button==m_ui->pushButtonR)    {   a=1.0;b=0.0;c=0.0; }
-  if (button==m_ui->pushButtonG)    {   a=0.0;b=1.0;c=0.0; }
-  if (button==m_ui->pushButtonB)    {   a=0.0;b=0.0;c=1.0; }
-  std::cout<<"Print >> " <<button<<"  "<<a<<std::endl;
-  ngl::Vec4 abc(a,b,c,1.0);
-  m_gl->m_parser->m_uniformList[0]->setVec4(abc);
-}
-
-void MainWindow::on_test_clickedA()
-{
-  m_gl->importMeshName(m_ui->lineEdit->text().toStdString());
-}
-
 

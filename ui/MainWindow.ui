@@ -278,37 +278,6 @@
       </property>
      </widget>
     </item>
-    <item>
-     <widget class="QPushButton" name="pushButtonR">
-      <property name="text">
-       <string>Colour it red!</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="pushButtonG">
-      <property name="text">
-       <string>Colour it green!</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="pushButtonB">
-      <property name="text">
-       <string>Sacre bleu!</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="test">
-      <property name="text">
-       <string>PushButton</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QLineEdit" name="lineEdit"/>
-    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
