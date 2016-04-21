@@ -132,7 +132,7 @@ void NGLScene::initializeGL()
   m_shaderManager->initialize(m_cam);
   if(!m_shaderManager->compileStatus())
   {
-    m_window->updateTerminalText(m_shaderManager->getErrorLog());
+    m_window->setTerminalText(m_shaderManager->getErrorLog());
   }
   if(m_shaderManager->isInit())
   {
@@ -414,7 +414,7 @@ void NGLScene::compileShader(QString vertSource, QString fragSource)
   m_shaderManager->compileShader(m_cam, vertSource, fragSource);
   if(!m_shaderManager->compileStatus())
   {
-    m_window->updateTerminalText(m_shaderManager->getErrorLog());
+    m_window->setTerminalText(m_shaderManager->getErrorLog());
   }
   ngl::Light light(ngl::Vec3(2,2,2),ngl::Colour(1,1,1,1),ngl::Colour(1,1,1,1),ngl::LightModes::POINTLIGHT);
   // now create our light this is done after the camera so we can pass the
