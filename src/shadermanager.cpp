@@ -31,6 +31,8 @@ void ShaderManager::use()
 
 void ShaderManager::initialize(ngl::Camera _cam)
 {
+  //set our data
+  setData("Phong", "PhongVertex", "PhongFragment");
   //grab an instance of shader manager
   ngl::ShaderLib *shaderLib=ngl::ShaderLib::instance();
   //we are creating a shader called Phong
@@ -49,6 +51,7 @@ void ShaderManager::initialize(ngl::Camera _cam)
   {
     std::cout << m_errorLog.toUtf8().constData();
     m_compileStatus = false;
+    std::cout<<"Initial Program compilation fail"<<std::endl;
   }
   else
   {
@@ -69,11 +72,6 @@ void ShaderManager::initialize(ngl::Camera _cam)
     shaderLib->setShaderParam1i("Normalize",1);
     shaderLib->setShaderParam3f("viewerPos",_cam.getEye().m_x,_cam.getEye().m_y,_cam.getEye().m_z);
     shaderLib->setShaderParam4f("Colour",0.23125f,0.23125f,0.23125f,1);
-
-    //set our data
-    m_data.m_name = "Phong";
-    m_data.m_vert = "PhongVertex";
-    m_data.m_frag = "fragVertex";
 
     // set initialise flag to true
     m_init = true;

@@ -190,8 +190,7 @@ void NGLScene::paintGL()
     glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
   }
 
-  ngl::ShaderLib *shader=ngl::ShaderLib::instance();
-  (*shader)["Phong"]->use();
+  m_shaderManager->use();
 
   // Rotation based on the mouse position for our global transform
   ngl::Mat4 rotX;
@@ -237,7 +236,7 @@ void NGLScene::resizeGL(int _w, int _h)
 void NGLScene::loadMatricesToShader()
 {
   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
-  (*shader)["Phong"]->use();
+  m_shaderManager->use();
 
   ngl::Mat4 MV;
   ngl::Mat4 MVP;
