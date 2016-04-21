@@ -28,13 +28,17 @@ bool checkCompileError(std::string _shaderProgName, QString *o_log)
 {
   GLint isCompiled = 0;
   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
+
   GLuint shaderId = shader->getShaderID(_shaderProgName);
+  //Using modified NGL to query ID of given shader
+
 
   glGetShaderiv(shaderId, GL_COMPILE_STATUS, &isCompiled);
   if(isCompiled == GL_FALSE)
   {
     GLint maxLength = 0;
     glGetShaderiv(shaderId, GL_INFO_LOG_LENGTH, &maxLength);
+    //Compile failed, accessing information of error
 
     // The maxLength includes the NULL character
     std::vector<GLchar> errorLog(maxLength);
@@ -43,7 +47,7 @@ bool checkCompileError(std::string _shaderProgName, QString *o_log)
     std::string s(errorLog.begin(), errorLog.end());
 
     QString errLog = QString(s.c_str());
-
+    //Convert to QString to output in IDE
     *o_log = errLog;
 
     // Provide the infolog in whatever manor you deem best.
@@ -54,6 +58,7 @@ bool checkCompileError(std::string _shaderProgName, QString *o_log)
 
 bool checkAllCompileError(std::vector<std::string> _shaderProgNames, QString *o_log)
 {
+  //Traverses std::vector to check compilation
   GLint isCompiled = GL_TRUE;
   QString temp_log;
   for (auto shaderProg: _shaderProgNames)
@@ -124,21 +129,24 @@ void NGLScene::initializeGL()
   // grab an instance of shader manager
   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
   // we are creating a shader called Phong
-  shader->createShaderProgram("Phong"); //RENAME TO INPUT SHADER
+  shader->createShaderProgram("Phong");
   // now we are going to create empty shaders for Frag and Vert
-  shader->attachShader("PhongVertex",ngl::ShaderType::VERTEX); //INPUTVERTEX
-  shader->attachShader("PhongFragment",ngl::ShaderType::FRAGMENT); //INPUTSHADER
+  shader->attachShader("PhongVertex",ngl::ShaderType::VERTEX);
+  shader->attachShader("PhongFragment",ngl::ShaderType::FRAGMENT);
   // attach the source
-  shader->loadShaderSource("PhongVertex","shaders/PhongVertex.glsl"); //NEEDS TO BE SHADERFROMTSTRING
-  shader->loadShaderSource("PhongFragment","shaders/PhongFragment.glsl"); //NEEDS TO BE SHADERFROMSTRING
+  shader->loadShaderSource("PhongVertex","shaders/PhongVertex.glsl"); //Loads default vertex shader
+  shader->loadShaderSource("PhongFragment","shaders/PhongFragment.glsl"); //Loads default fragment shader
   // compile the shaders
   shader->compileShader("PhongFragment");
   shader->compileShader("PhongVertex");
 
+  //Store programs in std::vector and traverse to prevent duplicating code
   std::vector<std::string> programs = {"PhongFragment", "PhongVertex"};
 
   QString log;
 
+
+  //Check both fragment and vertex shaders before attaching to program
   if (!checkAllCompileError(programs, &log))
   {
     std::cout << log.toUtf8().constData();
@@ -159,7 +167,7 @@ void NGLScene::initializeGL()
     shader->bindAttribute("Phong",2,"inNormal");
 
 
-  //error checking vertex shader
+
     // now we have associated this data we can link the shader
     shader->linkProgramObject("Phong");
     // and make it active ready to load values
