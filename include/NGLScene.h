@@ -92,6 +92,8 @@ public :
 
   void importMeshName(const std::string &);
 
+  void newProject(std::string _name);
+
 public slots:
   void setShapeType(int _type);
 private:

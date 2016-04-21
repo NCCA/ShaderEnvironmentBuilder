@@ -84,12 +84,15 @@ void ShaderManager::compileShader(ngl::Camera _cam, QString vertSource, QString 
 {
   ngl::ShaderLib *shaderLib=ngl::ShaderLib::instance();
 
+  std::cout<< "name " << m_data.m_name << "\n";
+  std::cout<< "vert " << m_data.m_vert << "\n";
+  std::cout<< "frag " << m_data.m_frag << "\n";
   shaderLib->loadShaderSourceFromString(m_data.m_vert, vertSource.toStdString());
   shaderLib->loadShaderSourceFromString(m_data.m_frag, fragSource.toStdString());
 
   // compile shaders
   shaderLib->compileShader(m_data.m_vert);
-  shaderLib->compileShader(m_data.m_vert);
+  shaderLib->compileShader(m_data.m_frag);
 
   if (!checkAllCompileError(&m_errorLog))
   {

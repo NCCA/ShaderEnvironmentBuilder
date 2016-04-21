@@ -462,8 +462,10 @@ void NGLScene::compileShader(QString vertSource, QString fragSource)
   light.enable();
   // load these values to the shader as well
   light.loadToShader("light");
+  update();
 
 }
+
 
 
 void NGLScene::resetObjPos()
@@ -474,4 +476,9 @@ void NGLScene::resetObjPos()
   m_modelPos.m_z = 0;
   m_spinXFace = 0;
   m_spinYFace = 0;
+}
+
+void NGLScene::newProject(std::string _name)
+{
+  m_shaderManager->createShaderProgram(_name);
 }
