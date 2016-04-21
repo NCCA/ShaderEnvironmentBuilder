@@ -153,7 +153,7 @@
                 <number>4</number>
                </property>
                <item>
-                <widget class="QTabWidget" name="m_tabs_qsci">
+                <widget class="QTabWidget" name="cameraSettings">
                  <property name="enabled">
                   <bool>true</bool>
                  </property>
@@ -175,8 +175,14 @@
                    <height>0</height>
                   </size>
                  </property>
+                 <property name="toolTip">
+                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Camera Settings&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 </property>
+                 <property name="whatsThis">
+                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CameraSettings&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 </property>
                  <property name="currentIndex">
-                  <number>0</number>
+                  <number>2</number>
                  </property>
                  <property name="documentMode">
                   <bool>false</bool>
@@ -202,6 +208,171 @@
                   <attribute name="title">
                    <string>Fragment</string>
                   </attribute>
+                 </widget>
+                 <widget class="QWidget" name="tab">
+                  <attribute name="title">
+                   <string>Page</string>
+                  </attribute>
+                  <widget class="QWidget" name="gridLayoutWidget">
+                   <property name="geometry">
+                    <rect>
+                     <x>-1</x>
+                     <y>-1</y>
+                     <width>751</width>
+                     <height>221</height>
+                    </rect>
+                   </property>
+                   <layout class="QGridLayout" name="gridLayout">
+                    <item row="2" column="0">
+                     <layout class="QHBoxLayout" name="horizontalLayout_3">
+                      <item>
+                       <widget class="QLabel" name="label_3">
+                        <property name="text">
+                         <string>Roll</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QDoubleSpinBox" name="m_cameraRoll">
+                        <property name="minimum">
+                         <double>-99.000000000000000</double>
+                        </property>
+                        <property name="maximum">
+                         <double>99.000000000000000</double>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QLabel" name="label_4">
+                        <property name="text">
+                         <string>Yaw</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QDoubleSpinBox" name="m_cameraYaw">
+                        <property name="minimum">
+                         <double>-99.000000000000000</double>
+                        </property>
+                        <property name="maximum">
+                         <double>99.000000000000000</double>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <spacer name="horizontalSpacer_4">
+                        <property name="orientation">
+                         <enum>Qt::Horizontal</enum>
+                        </property>
+                        <property name="sizeHint" stdset="0">
+                         <size>
+                          <width>40</width>
+                          <height>20</height>
+                         </size>
+                        </property>
+                       </spacer>
+                      </item>
+                     </layout>
+                    </item>
+                    <item row="0" column="0">
+                     <layout class="QHBoxLayout" name="horizontalLayout">
+                      <item>
+                       <widget class="QLabel" name="label">
+                        <property name="text">
+                         <string>Camera </string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QComboBox" name="m_comboBox_view">
+                        <item>
+                         <property name="text">
+                          <string>Persp</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>Top</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>Bottom</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>Left</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>Right</string>
+                         </property>
+                        </item>
+                       </widget>
+                      </item>
+                      <item>
+                       <spacer name="horizontalSpacer">
+                        <property name="orientation">
+                         <enum>Qt::Horizontal</enum>
+                        </property>
+                        <property name="sizeHint" stdset="0">
+                         <size>
+                          <width>40</width>
+                          <height>20</height>
+                         </size>
+                        </property>
+                       </spacer>
+                      </item>
+                     </layout>
+                    </item>
+                    <item row="1" column="0">
+                     <layout class="QHBoxLayout" name="horizontalLayout_2">
+                      <item>
+                       <widget class="QLabel" name="label_2">
+                        <property name="text">
+                         <string>Focal length</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QSlider" name="m_sldr_cameraAspect">
+                        <property name="orientation">
+                         <enum>Qt::Horizontal</enum>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <spacer name="horizontalSpacer_3">
+                        <property name="orientation">
+                         <enum>Qt::Horizontal</enum>
+                        </property>
+                        <property name="sizeHint" stdset="0">
+                         <size>
+                          <width>40</width>
+                          <height>20</height>
+                         </size>
+                        </property>
+                       </spacer>
+                      </item>
+                      <item>
+                       <spacer name="horizontalSpacer_2">
+                        <property name="orientation">
+                         <enum>Qt::Horizontal</enum>
+                        </property>
+                        <property name="sizeHint" stdset="0">
+                         <size>
+                          <width>40</width>
+                          <height>20</height>
+                         </size>
+                        </property>
+                       </spacer>
+                      </item>
+                     </layout>
+                    </item>
+                   </layout>
+                  </widget>
                  </widget>
                 </widget>
                </item>
@@ -359,7 +530,7 @@
      <x>0</x>
      <y>0</y>
      <width>1024</width>
-     <height>26</height>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

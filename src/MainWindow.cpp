@@ -2,7 +2,7 @@
 #include "ui_MainWindow.h"
 #include "QsciLexerGlsl.h"
 #include "CebErrors.h"
-
+#include "QString"
 #include <QTextStream>
 
 MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
@@ -41,7 +41,15 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   // Set the combo box initially to VERTEX
   m_ui->m_cb_shaderType->setCurrentIndex(static_cast<int>(
                                          ngl::ShaderType::VERTEX));
-
+  // Camera Settings
+   connect(m_ui->m_sldr_cameraAspect,SIGNAL(valueChanged(int)),m_gl,SLOT(setCameraFocalLength(int)));
+ //connect(m_ui->m_comboBox_view, SIGNAL(itemChanged(QTableWidgetItem *)), this, SLOT(m_ui->m_cameraRoll(0.00));
+   //void QTableWidget::itemChanged((QTableWidgetItem * m_ui->m_comboBox_view)), this, SLOT(m_ui->m_comboBox_view)
+   //connect(m_ui->m_sldr_cameraAspect, SIGNAL(valueChanged(int)), m_ui, SLOT()
+   connect(m_ui->m_cameraRoll, SIGNAL(valueChanged(double)), m_gl, SLOT(setCameraRoll(double)));
+   connect(m_ui->m_cameraYaw, SIGNAL(valueChanged(double)), m_gl, SLOT(setCameraYaw(double)));
+   connect(m_ui->m_comboBox_view, SIGNAL(currentTextChanged(QString)), m_gl, SLOT(setCameraShape(QString)));
+   //connect(m_ui->m_btn_view, SIGNAL(clicked(bool), m_gl, SLOT(setCameraShape(string));
   // Load the text files into the corresponding tabs
   loadTextFileToTab("shaders/PhongVertex.glsl", *m_qsci1);
   loadTextFileToTab("shaders/PhongFragment.glsl", *m_qsci2);

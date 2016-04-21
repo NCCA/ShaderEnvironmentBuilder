@@ -83,7 +83,13 @@ NGLScene::NGLScene( QWidget *_parent, parserLib *_libParent ) : QOpenGLWidget( _
   // re-size the widget to that of the parent (in this case the GLFrame passed in on construction)
   this->resize(_parent->size());
   m_wireframe=false;
-  m_fov=65.0;
+  //Camera Settings
+  m_fov=100;
+  m_cameraIndex = 0;
+  m_rotation = 0;
+  m_cameraRoll = 0;
+  m_cameraYaw = 0;
+
   m_newJson= new Json();
   m_shaderManager = new ShaderManager();
   // set this widget to have the initial keyboard focus
@@ -97,6 +103,58 @@ NGLScene::~NGLScene()
   //delete m_readFromXML;
   delete m_parser;
 }
+
+void NGLScene::createCamera()
+{
+    ngl::Camera Pcam;
+    ngl::Camera Tcam;
+    ngl::Camera Bcam;
+    ngl::Camera Lcam;
+    ngl::Camera Rcam;
+
+    ngl::Vec3 perspEye(0.0f,1.0f,2.0f);
+    ngl::Vec3 perspLook(0,0,0);
+    ngl::Vec3 perspUp(0.0f,1.0f,0.0f);
+
+    ngl::Vec3 topEye(0.0f,1.0f,0.0f);
+    ngl::Vec3 topLook=(0,0,0);
+    ngl::Vec3 topUp(0.0f,0.0f,1.0f);
+
+    ngl::Vec3 bottomEye(0.0f,-1.0f,0.0f);
+    ngl::Vec3 bottomLook=(0,0,0);
+    ngl::Vec3 bottomUp(0.0f,0.0f,1.0f);
+
+    ngl::Vec3 leftEye(0.0f,0.0f,-3.0f);
+    ngl::Vec3 leftLook=(0,0,0);
+    ngl::Vec3 leftUp(0.0f,1.0f,0.0f);
+
+    ngl::Vec3 rightEye(0.0f,0.0f,3.0f);
+    ngl::Vec3 rightLook=(0,0,0);
+    ngl::Vec3 rightUp(0.0f,1.0f,0.0f);
+
+    Pcam.set(perspEye,perspLook, perspUp);
+    Pcam.setShape(m_fov,m_aspect, 0.5f,150.0f);
+    m_cameras.push_back(Pcam);
+
+    Tcam.set(topEye,topLook,topUp);
+    Tcam.setShape(m_fov,m_aspect, 0.5f,150.0f);
+    m_cameras.push_back(Tcam);
+
+    Bcam.set(bottomEye,bottomLook,bottomUp);
+    Bcam.setShape(m_fov,m_aspect, 0.5f,150.0f);
+    m_cameras.push_back(Bcam);
+
+    Lcam.set(leftEye,leftLook,leftUp);
+    Lcam.setShape(m_fov,m_aspect, 0.5f,150.0f);
+    m_cameras.push_back(Lcam);
+
+    Rcam.set(rightEye,rightLook,rightUp);
+    Rcam.setShape(m_fov,m_aspect, 0.5f,150.0f);
+    m_cameras.push_back(Rcam);
+
+    m_cameraIndex = 0;
+}
+
 
 //----------------------------------------------------------------------------------------------------------------------
 // This virtual function is called once before the first call to paintGL() or resizeGL(),
@@ -116,15 +174,16 @@ void NGLScene::initializeGL()
   glEnable(GL_MULTISAMPLE);
 
   // create our camera
-  ngl::Vec3 eye(0,1,1);
-  ngl::Vec3 look(0,0,0);
-  ngl::Vec3 up(0,1,0);
-  m_cam.set(eye,look,up);
-  setCamShape();
+  createCamera();
+  //setCamShape();
   // now to load the shader and set the values
   // grab an instance of shader manager
   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
-  m_shaderManager->initialize(m_cam);
+
+  shader->setShaderParam3f("viewerPos",m_cameras[m_cameraIndex].getEye().m_x,m_cameras[m_cameraIndex].getEye().m_y,m_cameras[m_cameraIndex].getEye().m_z);
+
+
+  m_shaderManager->initialize(m_cameras[m_cameraIndex]);
   if(!m_shaderManager->compileStatus())
   {
     m_window->updateTerminalText(m_shaderManager->getErrorLog());
@@ -136,7 +195,7 @@ void NGLScene::initializeGL()
     //transformations
     ngl::Light light(ngl::Vec3(2,2,2),ngl::Colour(1,1,1,1),ngl::Colour(1,1,1,1),ngl::LightModes::POINTLIGHT);
 
-    ngl::Mat4 iv=m_cam.getViewMatrix();
+    ngl::Mat4 iv=m_cameras[m_cameraIndex].getViewMatrix();
     iv.transpose();
 
     light.setTransform(iv);
@@ -208,7 +267,7 @@ void NGLScene::paintGL()
   m_mouseGlobalTX.m_m[3][1] = m_modelPos.m_y;
   m_mouseGlobalTX.m_m[3][2] = m_modelPos.m_z;
 
-  m_cam.setShape(m_fov, m_aspect, 0.5f, 150.0f);
+  m_cameras[m_cameraIndex].setShape(m_fov,m_aspect, 0.5f,150.0f);
 
   loadMatricesToShader();
   ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
@@ -226,13 +285,13 @@ void NGLScene::paintGL()
 //----------------------------------------------------------------------------------------------------------------------
 void NGLScene::resizeGL(QResizeEvent *_event)
 {
-  setCamShape();
+  setCameraShape(QString::fromStdString("Persp"));
 }
 
 //----------------------------------------------------------------------------------------------------------------------
 void NGLScene::resizeGL(int _w, int _h)
 {
-  setCamShape();
+  setCameraShape(QString::fromStdString("Persp"));
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -247,8 +306,8 @@ void NGLScene::loadMatricesToShader()
   ngl::Mat4 M;
 
   M=m_mouseGlobalTX;
-  MV=  M*m_cam.getViewMatrix();
-  MVP= M*m_cam.getVPMatrix();
+  MV=  M*m_cameras[m_cameraIndex].getViewMatrix();
+  MVP= M*m_cameras[m_cameraIndex].getVPMatrix();
   normalMatrix=MV;
   normalMatrix.inverse();
 
@@ -258,15 +317,59 @@ void NGLScene::loadMatricesToShader()
   shader->setShaderParamFromMat4("MVP",MVP);
   shader->setShaderParamFromMat3("normalMatrix",normalMatrix);
   shader->setShaderParamFromMat4("M",M);
+
+  shader->setShaderParam3f("viewerPos",m_cameras[m_cameraIndex].getEye().m_x,m_cameras[m_cameraIndex].getEye().m_y,m_cameras[m_cameraIndex].getEye().m_z);
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-void NGLScene::setCamShape()
+
+void NGLScene::setCameraShape(QString _view)
 {
+  string view = _view.toStdString();
+
+  map<string, int> camViewMap;
+  camViewMap["Persp"]=0;
+  camViewMap["Top"]=1;
+  camViewMap["Bottom"]=2;
+  camViewMap["Left"]=3;
+  camViewMap["Right"]=4;
+
+  m_modelPos.m_x=0;
+  m_modelPos.m_y=0;
+  m_modelPos.m_z=0;
+  m_spinXFace=0;
+  m_spinYFace=0;
+
+  m_cameraIndex = camViewMap[view];
   m_aspect=(float)width()/height();
-  m_cam.setShape(m_fov, m_aspect, 0.5f, 150.0f);
+  for(auto &cam : m_cameras)
+    {
+      cam.setShape(m_fov,m_aspect, 0.5f,150.0f);
+    }
+  update();
+}
 
+void NGLScene::setCameraFocalLength(int _focalLength)
+{
+    m_fov= _focalLength;
+    update();
+}
+void NGLScene::setCameraRoll(double _cameraRoll)
+{
+    m_cameras[m_cameraIndex].roll(-m_cameraRoll);
+    m_cameraRoll=_cameraRoll;
+    m_cameras[m_cameraIndex].setShape(m_fov,m_aspect, 0.5f,150.0f);
+    m_cameras[m_cameraIndex].roll(_cameraRoll);
+    update();
+}
+void NGLScene::setCameraYaw(double _cameraYaw)
+{
 
+    m_cameras[m_cameraIndex].yaw(-m_cameraYaw);
+    m_cameraYaw=_cameraYaw;
+    m_cameras[m_cameraIndex].setShape(m_fov,m_aspect, 0.5f,150.0f);
+    m_cameras[m_cameraIndex].yaw(_cameraYaw);
+    update();
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -289,6 +392,12 @@ void NGLScene::keyPressEvent(QKeyEvent *_event)
   case Qt::Key_Space: m_parser->assignUniformValues();
   case Qt::Key_R : resetObjPos(); break;
 
+    case Qt::Key_Plus : { ++m_fov; setCameraShape("persp"); break; }
+    case Qt::Key_Underscore :{ --m_fov; setCameraShape("top"); break; }
+    case Qt::Key_1 : { m_cameraIndex=0; break; }
+    case Qt::Key_2 : { m_cameraIndex=1; break; }
+    case Qt::Key_3 : { m_cameraIndex=3; break; }
+    case Qt::Key_4 : { m_cameraIndex=4; break; }
   /*case Qt::Key_1 : m_parser->m_uniformList[0].m_vec4.m_x+=0.1;
   std::cout<<m_parser->m_uniformList[0].m_name<<":(x)  "<<m_parser->m_uniformList[0].m_vec4.m_x<<std::endl; break;
 
@@ -414,7 +523,7 @@ void NGLScene::wheelEvent ( QWheelEvent * _event )
 //----------------------------------------------------------------------------------------------------------------------
 void NGLScene::compileShader(QString vertSource, QString fragSource)
 {
-  m_shaderManager->compileShader(m_cam, vertSource, fragSource);
+  m_shaderManager->compileShader(m_cameras[m_cameraIndex], vertSource, fragSource);
   if(!m_shaderManager->compileStatus())
   {
     m_window->updateTerminalText(m_shaderManager->getErrorLog());
@@ -423,7 +532,7 @@ void NGLScene::compileShader(QString vertSource, QString fragSource)
   // now create our light this is done after the camera so we can pass the
   // transpose of the projection matrix to the light to do correct eye space
   // transformations
-  ngl::Mat4 iv=m_cam.getViewMatrix();
+  ngl::Mat4 iv=m_cameras[m_cameraIndex].getViewMatrix();
   iv.transpose();
 
   light.setTransform(iv);
@@ -434,6 +543,7 @@ void NGLScene::compileShader(QString vertSource, QString fragSource)
 
   update();
 }
+
 
 
 void NGLScene::resetObjPos()
