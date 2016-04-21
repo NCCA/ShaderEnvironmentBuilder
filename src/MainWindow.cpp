@@ -115,6 +115,15 @@ void MainWindow::createButtons()
 
         m_buttonList.push_back(tempButton);
       }
+      if(m_parForButton->m_uniformList[i]->getTypeName()=="float")
+      {
+        QString _tempName = QString::fromStdString(m_parForButton->m_uniformList[i]->getName());
+        float _tempFloat=m_parForButton->m_uniformList[i]->getFloat();
+        floatButton *tempButton = new floatButton(_tempName, m_ui->vl_uniforms, i, m_ui->m_w_uniforms);
+        tempButton->setValue(_tempFloat);
+
+        m_buttonList.push_back(tempButton);
+      }
     }
   }
   }/*

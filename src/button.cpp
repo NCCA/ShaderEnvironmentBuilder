@@ -74,3 +74,18 @@ void colourButton::openBox()
                m_colourPicked.blueF());
   //printValues();
 }
+
+
+void floatButton::openBox()
+{
+  //m_colourGroupBox = new QColorDialog(tr("Colour"));
+  //m_colourBoxLabel = new QLabel(tr("Select a colour:"));
+
+  //colourBoxLayout = new QGridLayout;
+  //colourGroupBox->setLayout(colourBoxLayout);
+  m_sliderLayout = new QGridLayout;
+  m_sliderGroupBox=new QGroupBox(tr("Float slider"));
+  QWidget *floatSlider = new QSlider;
+  m_sliderLayout->addWidget(floatSlider);
+  //printValues();
+}
