@@ -1,10 +1,20 @@
 #include "CebErrors.h"
-#include <QtWidgets>
 #include <QFileDialog>
 #include <QModelIndex>
+#include <QFileSystemModel>
+#include <QItemSelectionModel>
+#include <QListWidget>
+#include <QTextStream>
+#include <QLabel>
+#include <QVBoxLayout>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QComboBox>
+#include <QTreeView>
+#include <QGroupBox>
+#include <QDebug>
 #include <algorithm>
 #include "NewProjectWizard.h"
-
 
 
 
