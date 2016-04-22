@@ -4,9 +4,9 @@
 #include <QFileDialog>
 
 #include "project.h"
-#include "json.h"
+#include "Json.h"
 #include "CebErrors.h"
-#include "io_xml.h"
+#include "Io_xml.h"
 
 Project::Project()
 {
@@ -48,11 +48,13 @@ void Project::save(QString vertSource, QString fragSource)
   }
   std::cout<<"Name: "<<m_data.m_projectName<<"  Directory: "<<m_data.m_projectDir<<std::endl;
 
-  // Converts QString to const char*
-  const char * vertSource_c = vertSource.toStdString().c_str();
-  const char * fragSource_c = fragSource.toStdString().c_str();
+  // Converts QString to const char* (These have to be separate, not .toStdString.c_str() otherwise it doesn't write the string.)
+  std::string vertSourceString = vertSource.toStdString();
+  std::string fragSourceString = vertSource.toStdString();
+  const char * vertSource_c = vertSourceString.c_str();
+  const char * fragSource_c = fragSourceString.c_str();
+
   m_xml->writeProject(m_data.m_projectName, m_data.m_projectDir, vertSource_c, fragSource_c);
-  //m_xml->writeProject(projectName, projectDir, vertex, fragment);
   m_saved = true;
 }
 

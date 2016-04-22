@@ -1,5 +1,5 @@
 
-#include "io_xml.h"
+#include "Io_xml.h"
 #include <fstream>
 #include <ostream>
 #include <vector>
@@ -120,7 +120,7 @@ void IO_XML::writeProject(std::string _name, std::string _dir, std::string _vert
     child2->append_attribute(saveProject.allocate_attribute("FragData", fragSource));
 
     // Save to file
-    std::ofstream file_stored(_dir+"/"+_name);
+    std::ofstream file_stored(_dir+"/"+_name+".xml");
     file_stored << saveProject;
     file_stored.close();
     saveProject.clear();

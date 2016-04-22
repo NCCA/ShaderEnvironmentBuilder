@@ -1,4 +1,4 @@
-#include <json.h>
+#include <Json.h>
 
 // Only need boost for creating directories
 #include <boost/filesystem.hpp>

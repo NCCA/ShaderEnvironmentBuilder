@@ -1,13 +1,13 @@
 #ifndef PROJECT_H
 #define PROJECT_H
 
-#include "io_xml.h"
+#include "Io_xml.h"
 
 #include <QString>
 #include <cstdlib>
 #include <string>
 
-#include "json.h"
+#include "Json.h"
 
 struct projectData
 {

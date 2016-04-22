@@ -10,8 +10,8 @@
 #include <QResizeEvent>
 #include <QOpenGLWidget>
 #include <QString>
-#include "io_xml.h"
-#include "json.h"
+#include "Io_xml.h"
+#include "Json.h"
 #include "ParserLib.h"
 #include "ngl/Obj.h"
 #include "shadermanager.h"

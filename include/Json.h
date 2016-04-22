@@ -6,14 +6,13 @@
 #include <string.h>
 #include <vector>
 
-
 #include "json/json.hpp"
 #include "boost/property_tree/ptree.hpp"
 #include "boost/property_tree/json_parser.hpp"
 #include "rapidjson/document.h"
 
 //------------------------------------------------------------------------------------------------------------------------
-/// @file json.h
+/// @file Json.h
 /// @brief Creates a json file to then load shader data to the shader manager.
 /// @author Ellie Ansell
 /// @version 1.0
