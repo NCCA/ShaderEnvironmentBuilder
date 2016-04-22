@@ -4,6 +4,7 @@
 #include <ostream>
 #include <vector>
 #include <stdio.h>
+
 //#include "rapidxml_print.hpp"
 using namespace rapidxml;
 using namespace std;
@@ -86,8 +87,43 @@ void IO_XML::readXML(std::string _type)
 }
 
 //------------------------------------------------------------------------------------------------------------------------
-// write project proxy function
-void IO_XML::writeProject(std::string _name, std::string _dir, std::string vertSource, std::string fragSource)
+// Saves project file to user's directory
+void IO_XML::writeProject(std::string _name, std::string _dir, std::string _vertSource, std::string _fragSource)
 {
+    // Converts strings to type const char* for rapidXML functions
+    const char * projectName =_name.c_str();
+    const char * projectDir = _dir.c_str();
+    const char * vertSource = _vertSource.c_str();
+    const char * fragSource = _fragSource.c_str();
 
+    // Creating XML document
+    xml_document<> saveProject;
+    // Set default version and encoding
+    xml_node<>* decl = saveProject.allocate_node(node_declaration);
+    decl->append_attribute(saveProject.allocate_attribute("version", "1.0"));
+    decl->append_attribute(saveProject.allocate_attribute("encoding", "utf-8"));
+    saveProject.append_node(decl);
+
+    // Creating root node with name and directory
+    xml_node<>* root = saveProject.allocate_node(node_element, "Shader_Data");
+    root->append_attribute(saveProject.allocate_attribute("Name", projectName));
+    root->append_attribute(saveProject.allocate_attribute("Dir",projectDir));
+    saveProject.append_node(root);
+
+    // Creating child nodes containing input vertex and fragment shader data
+    xml_node<>* child = saveProject.allocate_node(node_element, "Vertex");
+    root->append_node(child);
+    child->append_attribute(saveProject.allocate_attribute("VtxData", vertSource));
+
+    xml_node<>* child2 = saveProject.allocate_node(node_element, "Fragment");
+    root->append_node(child2);
+    child2->append_attribute(saveProject.allocate_attribute("FragData", fragSource));
+
+    // Save to file
+    std::ofstream file_stored(_dir+"/"+_name);
+    file_stored << saveProject;
+    file_stored.close();
+    saveProject.clear();
+
+    cout<<"Written "<<_name<<".xml"<<" to "<<_dir<<std::endl;
 }
