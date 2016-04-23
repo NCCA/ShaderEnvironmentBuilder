@@ -559,10 +559,10 @@
     <addaction name="actionLoad_Sphere"/>
     <addaction name="actionLoad_Cube"/>
     <addaction name="actionLoad_Torus"/>
-    <addaction name="actionLoad_Cone"/>
     <addaction name="actionLoad_Teapot"/>
     <addaction name="actionLoad_Troll"/>
     <addaction name="actionLoad_Dragon"/>
+    <addaction name="actionLoad_Bunny"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="shapesMenu"/>
@@ -634,6 +634,11 @@
   <action name="actionLoad_Dragon">
    <property name="text">
     <string>Load Dragon</string>
+   </property>
+  </action>
+  <action name="actionLoad_Bunny">
+   <property name="text">
+    <string>Load Bunny</string>
    </property>
   </action>
  </widget>

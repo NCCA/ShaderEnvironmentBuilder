@@ -60,10 +60,10 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   connect(m_ui->actionLoad_Sphere,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
   connect(m_ui->actionLoad_Cube,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
   connect(m_ui->actionLoad_Torus,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
-  connect(m_ui->actionLoad_Cone,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
   connect(m_ui->actionLoad_Teapot ,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
   connect(m_ui->actionLoad_Troll,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
   connect(m_ui->actionLoad_Dragon,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
+  connect(m_ui->actionLoad_Bunny,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
   // switching to .obj files
   connect(m_ui->actionLoad_Obj,SIGNAL(triggered()),this,SLOT(on_actionLoad_obj_opened()));
   update();
@@ -285,10 +285,10 @@ void MainWindow::on_actionLoad_shape_triggered()
   if (action==m_ui->actionLoad_Sphere)  {   a=1;  }
   if (action==m_ui->actionLoad_Cube)    {   a=2;  }
   if (action==m_ui->actionLoad_Torus)   {   a=3;  }
-  if (action==m_ui->actionLoad_Cone)    {   a=4;  }
-  if (action==m_ui->actionLoad_Teapot)  {   a=5;  }
-  if (action==m_ui->actionLoad_Troll)   {   a=6;  }
-  if (action==m_ui->actionLoad_Dragon)  {   a=7;  }
+  if (action==m_ui->actionLoad_Teapot)  {   a=4;  }
+  if (action==m_ui->actionLoad_Troll)   {   a=5;  }
+  if (action==m_ui->actionLoad_Dragon)  {   a=6;  }
+  if (action==m_ui->actionLoad_Bunny)  {   a=7;  }
 
   m_gl->setShapeType(a);
 }
