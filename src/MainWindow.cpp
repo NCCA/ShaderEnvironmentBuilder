@@ -36,8 +36,6 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
 
 
   // Set the combo box initially to VERTEX
-  m_ui->m_cb_shaderType->setCurrentIndex(static_cast<int>(
-                                         ngl::ShaderType::VERTEX));
   // Camera Settings
    connect(m_ui->m_sldr_cameraAspect,SIGNAL(valueChanged(int)),m_gl,SLOT(setCameraFocalLength(int)));
  //connect(m_ui->m_comboBox_view, SIGNAL(itemChanged(QTableWidgetItem *)), this, SLOT(m_ui->m_cameraRoll(0.00));
@@ -216,7 +214,7 @@ void MainWindow::on_actionLoad_shape_triggered()
   if (action==m_ui->actionLoad_Teapot)  {   a=4;  }
   if (action==m_ui->actionLoad_Troll)   {   a=5;  }
   if (action==m_ui->actionLoad_Dragon)  {   a=6;  }
-  if (action==m_ui->actionLoad_Bunny)  {   a=7;  }
+  if (action==m_ui->actionLoad_Bunny)   {   a=7;  }
 
   m_gl->setShapeType(a);
 }
