@@ -1,6 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "project.h"
+
 #include <ngl/Vec4.h>
 #include "NGLScene.h"
 #include <QMainWindow>
@@ -68,23 +70,20 @@ public:
 private slots:
   //----------------------------------------------------------------------------------------------------------------------
   //----------------------------------------------------------------------------------------------------------------------
-  /// @brief activated when Load Shader button is clicked
-  //----------------------------------------------------------------------------------------------------------------------
-  void on_m_btn_loadShader_clicked();
-  //----------------------------------------------------------------------------------------------------------------------
   /// @brief activated when Compile Shader button is clicked
   //----------------------------------------------------------------------------------------------------------------------
   void on_m_btn_compileShader_clicked();
-  //----------------------------------------------------------------------------------------------------------------------
-  /// @brief activated when the current tab is changed
-  /// @param [in] _index the index of the now current tab
-  //----------------------------------------------------------------------------------------------------------------------
-  void on_m_tabs_qsci_currentChanged(int _index);
   //----------------------------------------------------------------------------------------------------------------------
   //----------------------------------------------------------------------------------------------------------------------
   void on_actionLoad_shape_triggered();
   void on_actionLoad_obj_opened();
   void on_actionStartup_Window_triggered();
+
+  void on_actionNew_triggered();
+
+  void on_actionSaveProject_triggered();
+
+  void on_actionSaveProjectAs_triggered();
 
 private:
   //----------------------------------------------------------------------------------------------------------------------
@@ -123,6 +122,8 @@ private:
 
   parserLib *m_parForButton;
   std::vector<Button*> m_buttonList;
+
+  Project *m_project;
 
 };
 

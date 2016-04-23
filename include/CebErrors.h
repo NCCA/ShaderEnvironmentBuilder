@@ -1,9 +1,11 @@
 #ifndef CEBERRORS_H
 #define CEBERRORS_H
 
+#include <ngl/Types.h>
+
 #include <exception>
 #include <QFileDevice>
-#include <ngl/Types.h>
+
 
 //------------------------------------------------------------------------------------------------------------------------
 /// @file CebErrors.h

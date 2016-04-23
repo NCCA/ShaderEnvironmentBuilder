@@ -5,67 +5,34 @@
 
 ShaderManager::ShaderManager()
 {
+  m_data.m_name = "untitled";
+  m_data.m_vert = "";
+  m_data.m_frag = "";
   m_init = false;
 }
 
-void ShaderManager::createShaderProgram(std::string _name, QString _sourceVert, QString _sourceFrag)
+void ShaderManager::createShaderProgram(std::string _name)
 {
   ngl::ShaderLib *shaderLib = ngl::ShaderLib::instance();
-  std::string sourceVert = _sourceVert.toStdString();
-  std::string sourceFrag = _sourceFrag.toStdString();
 
+  shaderLib->createShaderProgram(_name);
   shaderLib->attachShader(_name+"Vertex", ngl::ShaderType::VERTEX);
   shaderLib->attachShader(_name+"Fragment", ngl::ShaderType::FRAGMENT);
-  shaderLib->loadShaderSource(_name+"Vertex", sourceVert);
-  shaderLib->loadShaderSource(_name+"Fragment", sourceFrag);
 
-  shaderLib->compileShader(_name+"Vertex");
-  shaderLib->compileShader(_name+"Fragment");
-  shaderLib->attachShaderToProgram(_name,_name+"Vertex");
-  shaderLib->attachShaderToProgram(_name,_name+"Fragment");
-
-  // now bind the shader attributes for most NGL primitives we use the following
-  // layout attribute 0 is the vertex data (x,y,z)
-  shaderLib->bindAttribute(_name,0,"inVert");
-  // attribute 1 is the UV data u,v (if present)
-  shaderLib->bindAttribute(_name,1,"inUV");
-  // attribute 2 are the normals x,y,z
-  shaderLib->bindAttribute(_name,2,"inNormal");
-
-  shaderLib->linkProgramObject(_name);
-
+  setData(_name, _name.append("Vertex"), _name.append("fragment"));
 }
 
-void ShaderManager::updateShaderProgram(std::string _name, QString _sourceVert, QString _sourceFrag)
+
+void ShaderManager::use()
 {
   ngl::ShaderLib *shaderLib = ngl::ShaderLib::instance();
-
-  // create a pointer to the vertex shader attached to the current shader program
-  ngl::Shader* shader = shaderLib->getShader(_name+"Vertex");
-  // update the shader with the QString from the text editor
-  shader->loadFromString(_sourceVert.toStdString());
-
-  // create a pointer to the fragment shader attached to the current shader program
-  shader = shaderLib->getShader(_name+"Fragment");
-  // update the shader with the QString from the text editor
-  shader->loadFromString(_sourceFrag.toStdString());
-
-  // compile the updated shaders
-  shaderLib->compileShader(_name+"Vertex");
-  shaderLib->compileShader(_name+"Fragment");
-
-  // now link the shaderProgram
-  shaderLib->linkProgramObject(_name);
-}
-
-void ShaderManager::use(std::string _name)
-{
-  ngl::ShaderLib *shaderLib = ngl::ShaderLib::instance();
-  (*shaderLib)[_name]->use();
+  (*shaderLib)[m_data.m_name]->use();
 }
 
 void ShaderManager::initialize(ngl::Camera _cam)
 {
+  //set our data
+  setData("Phong", "PhongVertex", "PhongFragment");
   //grab an instance of shader manager
   ngl::ShaderLib *shaderLib=ngl::ShaderLib::instance();
   //we are creating a shader called Phong
@@ -80,12 +47,11 @@ void ShaderManager::initialize(ngl::Camera _cam)
   shaderLib->compileShader("PhongFragment");
   shaderLib->compileShader("PhongVertex");
 
-  std::vector<std::string> programs = {"PhongFragment", "PhongVertex"};
-
-  if (!checkAllCompileError(programs, &m_errorLog))
+  if (!checkAllCompileError(&m_errorLog))
   {
     std::cout << m_errorLog.toUtf8().constData();
     m_compileStatus = false;
+    std::cout<<"Initial Program compilation fail"<<std::endl;
   }
   else
   {
@@ -112,29 +78,23 @@ void ShaderManager::initialize(ngl::Camera _cam)
   }
 }
 
-//----------------------------------------------------------------------------------------------------------------------
-void ShaderManager::loadShader(QString vertSource, QString fragSource)
-{
-  ngl::ShaderLib *shaderLib=ngl::ShaderLib::instance();
-  shaderLib->loadShaderSourceFromString("PhongVertex", vertSource.toStdString());
-  shaderLib->loadShaderSourceFromString("PhongFragment", fragSource.toStdString());
-}
 
 //----------------------------------------------------------------------------------------------------------------------
 void ShaderManager::compileShader(ngl::Camera _cam, QString vertSource, QString fragSource)
 {
   ngl::ShaderLib *shaderLib=ngl::ShaderLib::instance();
 
-  shaderLib->loadShaderSourceFromString("PhongVertex", vertSource.toStdString());
-  shaderLib->loadShaderSourceFromString("PhongFragment", fragSource.toStdString());
+  std::cout<< "name " << m_data.m_name << "\n";
+  std::cout<< "vert " << m_data.m_vert << "\n";
+  std::cout<< "frag " << m_data.m_frag << "\n";
+  shaderLib->loadShaderSourceFromString(m_data.m_vert, vertSource.toStdString());
+  shaderLib->loadShaderSourceFromString(m_data.m_frag, fragSource.toStdString());
 
   // compile shaders
-  shaderLib->compileShader("PhongVertex");
-  shaderLib->compileShader("PhongFragment");
+  shaderLib->compileShader(m_data.m_vert);
+  shaderLib->compileShader(m_data.m_frag);
 
-  std::vector<std::string> programs = {"PhongFragment", "PhongVertex"};
-
-  if (!checkAllCompileError(programs, &m_errorLog))
+  if (!checkAllCompileError(&m_errorLog))
   {
     std::cout << m_errorLog.toUtf8().constData();
     m_compileStatus = false;
@@ -188,11 +148,12 @@ bool ShaderManager::checkCompileError(std::string _shaderProgName, QString *o_lo
   return isCompiled;
 }
 
-bool ShaderManager::checkAllCompileError(std::vector<std::string> _shaderProgNames, QString *o_log)
+bool ShaderManager::checkAllCompileError(QString *o_log)
 {
   GLint isCompiled = GL_TRUE;
   QString temp_log;
-  for (auto shaderProg: _shaderProgNames)
+  std::vector <std::string> shaderPrograms = {m_data.m_vert, m_data.m_frag};
+  for (auto shaderProg: shaderPrograms)
   {
     isCompiled &= checkCompileError(shaderProg, &temp_log);
     if (!isCompiled)

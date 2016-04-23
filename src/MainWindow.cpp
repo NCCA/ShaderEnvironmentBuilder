@@ -2,7 +2,10 @@
 #include "ui_MainWindow.h"
 #include "QsciLexerGlsl.h"
 #include "CebErrors.h"
+
 #include "QString"
+#include "NewProjectWizard.h"
+
 #include <QTextStream>
 #include <QFileDialog>
 #include <QDesktopWidget>
@@ -22,7 +25,6 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
 
   // add the openGl window to the interface
   m_ui->m_splitH_editContext->insertWidget(0, m_gl);
-
   // Delete the template frame from the form designer
   delete(m_ui->m_f_gl_temp);
 
@@ -32,13 +34,6 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   // Widget 2 (fragment)
   m_qsci2 = createQsciWidget(m_ui->m_tab_qsci_2);
 
-  // Set the combo box values for the shader type
-  m_ui->m_cb_shaderType->insertItem(static_cast<int>(ngl::ShaderType::VERTEX),
-                                  "Vertex Shader");
-  m_ui->m_cb_shaderType->insertItem(static_cast<int>(ngl::ShaderType::FRAGMENT),
-                                  "Fragment Shader");
-  m_ui->m_cb_shaderType->insertItem(static_cast<int>(ngl::ShaderType::COMPUTE),
-                                  "Compute Shader");
 
   // Set the combo box initially to VERTEX
   m_ui->m_cb_shaderType->setCurrentIndex(static_cast<int>(
@@ -79,6 +74,8 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   );
 
   m_startDialog = new StartupDialog(this);
+
+  m_project = new Project;
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -88,21 +85,13 @@ MainWindow::~MainWindow()
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-void MainWindow::on_m_btn_loadShader_clicked()
-{
-
-}
-
-//----------------------------------------------------------------------------------------------------------------------
 void MainWindow::on_m_btn_compileShader_clicked()
 {
   QString vertSource, fragSource;
   vertSource = m_qsci1->text();
   fragSource = m_qsci2->text();
-  m_gl->compileShader(vertSource, fragSource);
-  //m_parForButton->printUniforms(1);
+  m_gl->compileShader(vertSource,fragSource);
   createButtons();
-  //TEST VAR m_parForButton->m_uniformList[12]->setVec4(ngl::Vec4(0.2f,0.8f,0.1f,1.0f));
   updateShaderValues();
 }
 
@@ -137,45 +126,8 @@ void MainWindow::createButtons()
       }
     }
   }
-  }/*
-  std::vector<Button*> _uniformsToAdd;
-  for(auto uniform: m_parForButton->m_uniformList)
-  {
-    bool _exists=0;
-    //std::cout<<uniform->getName()<<std::endl;
-    for (auto button: m_buttonList)
-    {
-      QString _tempName = button->getName();
-      std::string _temp = _tempName.toUtf8().constData();
-      if(uniform->getName()==_temp)
-      {
-        button->setID(uniform->getLocation());
-        //qDebug()<<button->getName()<<"\n"<<button->getID()<<"\n";
-        _exists=1;
-        break;
-      }
-    }
-    if(_exists==0 && (uniform->getName()==_temp))
-    {
-      //std::cout<<"CREATING"<<std::endl;
-      //qDebug()<<uniform->getName()<<"\n"<<uniform->getLocation()<<"\n";
-      QString _tempName = QString::fromStdString(uniform->getName());
-      Button *tempButton = new Button(_tempName,
-                                      m_ui->vl_uniforms,
-                                      uniform->getLocation(),
-                                      uniform->getVec4(),
-                                      m_ui->m_w_uniforms);
-      _uniformsToAdd.push_back(tempButton);
-    }
-  }
-  for(auto button: _uniformsToAdd)
-  {
-    m_buttonList.push_back(button);
-  }
 }
-  //std::cerr<<"THIS IS THE BUTTON LIST LENGTH: "<<m_buttonList.size()<<std::endl;
 
-*/
 void MainWindow::updateShaderValues()
 {
   for(auto uniform: m_parForButton->m_uniformList)
@@ -208,30 +160,6 @@ void MainWindow::updateShaderValues()
 
     }
   }
-}
-
-
-
-//----------------------------------------------------------------------------------------------------------------------
-void MainWindow::on_m_tabs_qsci_currentChanged(int _index)
-{
-  // On switch of tab, change the combo box value to the corresponding tab type
-  switch (_index)
-  {
-    case 0:
-      m_ui->m_cb_shaderType->setCurrentIndex(static_cast<int>(
-                                               ngl::ShaderType::VERTEX));
-    break;
-
-    case 1:
-      m_ui->m_cb_shaderType->setCurrentIndex(static_cast<int>(
-                                               ngl::ShaderType::FRAGMENT));
-    break;
-
-    default:
-      std::cerr<< "ERROR: Tab id is not recognised\n";
-  }
-
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -310,4 +238,31 @@ void MainWindow::on_actionStartup_Window_triggered()
 void MainWindow::showStartDialog()
 {
   m_startDialog->show();
+}
+
+void MainWindow::on_actionNew_triggered()
+{
+  NewProjectWizard *projectWiz = new NewProjectWizard(this);
+  if (projectWiz->exec())
+  {
+    m_project->set(projectWiz->m_output->m_projectName, projectWiz->m_output->m_projectDir);
+    m_gl->newProject(m_project->getName());
+    m_qsci1->setText(projectWiz->m_output->m_vertSource);
+    m_qsci2->setText(projectWiz->m_output->m_fragSource);
+  }
+  else
+  {
+    qDebug() << "FAIL";
+  }
+}
+
+
+void MainWindow::on_actionSaveProject_triggered()
+{
+    m_project->save(m_qsci1->text(), m_qsci2->text());
+}
+
+void MainWindow::on_actionSaveProjectAs_triggered()
+{
+    m_project->saveAs(m_qsci1->text(), m_qsci2->text());
 }

@@ -2,8 +2,6 @@
 #define NEWPROJECTWIZARD_H
 
 #include <QWizard>
-
-enum GLSL_PROFILE {CORE, COMPATIBILITY};
 extern QStringList GLSL_PROFILE_OUTPUT_TEXT;
 
 QT_BEGIN_NAMESPACE
@@ -22,16 +20,12 @@ class QListWidget;
 class QDir;
 QT_END_NAMESPACE
 
-struct NewProjectOutput
+struct outputData
 {
-  QByteArray m_projectName;
-  QByteArray m_glslVersion;
-  QByteArray m_glslProfile;
-  QByteArray m_vertexName;
-  QByteArray m_fragmentName;
-  QString m_projectDir;
-  QList<QDir> m_vertexFiles;
-  QList<QDir> m_fragmentFiles;
+  std::string m_projectName;
+  std::string m_projectDir;
+  QString m_vertSource;
+  QString m_fragSource;
 };
 
 class NewProjectWizard : public QWizard
@@ -44,7 +38,7 @@ public:
   QItemSelectionModel *m_vertexSelectModel;
   QItemSelectionModel *m_fragmentSelectModel;
   QFileSystemModel *m_fileModel;
-  NewProjectOutput *m_projectOutput;
+  outputData *m_output;
 };
 
 class IntroPage : public QWizardPage

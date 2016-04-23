@@ -212,7 +212,7 @@ void NGLScene::initializeGL()
   m_readFromXML->shaderData("WhyHelloThere", "PhongVertex", "shaders/PhongVertex.glsl", "PhongFragment", "shaders/PhongFragment.glsl");
   m_parser->assignAllData();
 
-  m_mesh = std::unique_ptr<ngl::Obj> (new ngl::Obj("./tempFiles/Frog.obj"));
+  m_mesh = std::unique_ptr<ngl::Obj> (new ngl::Obj(m_meshLoc));
   m_mesh->createVAO();
 
   ngl::VAOPrimitives::instance()->createSphere("sphere",0.7,20);
@@ -271,8 +271,7 @@ void NGLScene::paintGL()
     glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
   }
 
-  ngl::ShaderLib *shader=ngl::ShaderLib::instance();
-  (*shader)["Phong"]->use();
+  m_shaderManager->use();
 
   // Rotation based on the mouse position for our global transform
   ngl::Mat4 rotX;
@@ -361,7 +360,7 @@ void NGLScene::resizeGL(int _w, int _h)
 void NGLScene::loadMatricesToShader()
 {
   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
-  (*shader)["Phong"]->use();
+  m_shaderManager->use();
 
   ngl::Mat4 MV;
   ngl::Mat4 MVP;
@@ -515,6 +514,7 @@ void NGLScene::compileShader(QString vertSource, QString fragSource)
   light.enable();
   // load these values to the shader as well
   light.loadToShader("light");
+  update();
 
 }
 
@@ -560,4 +560,9 @@ void NGLScene::resetObjPos()
   m_modelPos.m_z = 0;
   m_spinXFace = 0;
   m_spinYFace = 0;
+}
+
+void NGLScene::newProject(std::string _name)
+{
+  m_shaderManager->createShaderProgram(_name);
 }

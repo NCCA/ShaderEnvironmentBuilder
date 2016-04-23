@@ -26,25 +26,25 @@ public:
 
   //destructor
   ~Project();
-
+  
   //method to edit the project information
   void set(std::string _name, std::string _dir);
-
-  //method to save the current project
+  
+  //method to save the current project  
   void save(QString vertSource, QString fragSource);
-
+  
   //method to save the current project as another project
   void saveAs(QString vertSource, QString fragSource);
-
+  
   //method to load a project from json
   void load(std::string _pathToXML);
-
+  
   //method to export the current project to accessible glsl files
   bool exportProject(std::string _targetDir, QString vertSource, QString fragSource);
-
+  
   //get method to return the project name
   inline std::string getName(){return m_data.m_projectName;}
-
+  
   //get method to return the project dir
   inline std::string getDir(){return m_data.m_projectDir;}
 

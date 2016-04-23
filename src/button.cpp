@@ -22,15 +22,16 @@ Button::Button(QString _buttonName, QLayout *_layout, unsigned int _id, QWidget 
   m_buttonName = _buttonName;
   m_id=_id;
   createButtonBox(_buttonName);
-  _layout->addWidget(m_buttonBox);
+  _layout->addWidget(m_button);
  // m_colour.set(_defaultVal.m_x, _defaultVal.m_y, _defaultVal.m_z, 1.0f);
 }
 
 void Button::createButtonBox(QString _buttonName)
 {
-  m_buttonBox = new QDialogButtonBox;
+  //m_buttonBox = new QDialogButtonBox;
 
-  m_button = m_buttonBox->addButton(_buttonName,QDialogButtonBox::ActionRole);
+  m_button = new QPushButton();
+  m_button->setText(_buttonName);
 
   connect(m_button, SIGNAL(clicked()), this, SLOT(openBox()));
 }
