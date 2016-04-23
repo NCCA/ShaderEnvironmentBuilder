@@ -93,7 +93,6 @@ NGLScene::NGLScene( QWidget *_parent, parserLib *_libParent ) : QOpenGLWidget( _
   this->resize(_parent->size());
   m_wireframe=false;
   m_fov=65.0;
-  m_newJson= new Json();
   m_shaderManager = new ShaderManager();
   // set this widget to have the initial keyboard focus
   setFocus();
@@ -102,9 +101,9 @@ NGLScene::NGLScene( QWidget *_parent, parserLib *_libParent ) : QOpenGLWidget( _
 //----------------------------------------------------------------------------------------------------------------------
 NGLScene::~NGLScene()
 {
-  delete m_newJson;
   //delete m_readFromXML;
   delete m_parser;
+  delete m_shaderManager;
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -175,11 +174,11 @@ void NGLScene::initializeGL()
   ngl::Vec3 look(0,0,0);
   ngl::Vec3 up(0,1,0);
   m_cam.set(eye,look,up);
-  setCameraShape();
+  setCamShape();
   // now to load the shader and set the values
   // grab an instance of shader manager
-  ngl::ShaderLib *shader=ngl::ShaderLib::instance();
   m_shaderManager->initialize(m_cam);
+
   if(!m_shaderManager->compileStatus())
   {
     m_window->setTerminalText(m_shaderManager->getErrorLog());
@@ -349,13 +348,13 @@ void NGLScene::drawObject(uint _type)
 //----------------------------------------------------------------------------------------------------------------------
 void NGLScene::resizeGL(QResizeEvent *_event)
 {
-  setCameraShape();
+  setCamShape();
 }
 
 //----------------------------------------------------------------------------------------------------------------------
 void NGLScene::resizeGL(int _w, int _h)
 {
-  setCameraShape();
+  setCamShape();
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -383,7 +382,7 @@ void NGLScene::loadMatricesToShader()
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-void NGLScene::setCameraShape()
+void NGLScene::setCamShape()
 {
   m_aspect=(float)width()/height();
   m_cam.setShape(m_fov, m_aspect, 0.5f, 150.0f);

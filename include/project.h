@@ -1,30 +1,71 @@
 #ifndef PROJECT_H
 #define PROJECT_H
 
+#include "Io_xml.h"
+
+#include <QString>
 #include <cstdlib>
 #include <string>
 
+#include "Json.h"
+
+struct projectData
+{
+  std::string m_projectName;
+  std::string m_projectDir;
+};
+
 class Project
 {
+
+
 public:
-    Project();
-    Project(std::string json_file);
 
-    void save();
-    void edit();
-    void load(std::string json_file);
+  //default constructor creating "untitled" project
+  Project();
 
-    std::string getShaderSource(std::string _path);
-    std::string getShaderPath(std::string _path);
+  //destructor
+  ~Project();
+
+  //method to edit the project information
+  void set(std::string _name, std::string _dir);
+
+  //method to save the current project
+  void save(QString vertSource, QString fragSource);
+
+  //method to save the current project as another project
+  void saveAs(QString vertSource, QString fragSource);
+
+  //method to load a project from json
+  void load(std::string _pathToXML);
+
+  //method to export the current project to accessible glsl files
+  bool exportProject(std::string _targetDir, QString vertSource, QString fragSource);
+
+  //get method to return the project name
+  inline std::string getName(){return m_data.m_projectName;}
+
+  //get method to return the project dir
+  inline std::string getDir(){return m_data.m_projectDir;}
 
 private:
-    std::string m_name;
 
-    std::string m_fragmentPath;
+  //project name
+  projectData m_data;
 
-    std::string m_vertexPath;
+  //flag to say if the current project has alerady been saved
+  bool m_saved;
 
-    std::string m_jsonPath;
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief used to save shaders to a json file
+  //----------------------------------------------------------------------------------------------------------------------
+  Json *m_Json;
+
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief used to save and load project information from xml file
+  //----------------------------------------------------------------------------------------------------------------------
+  IO_XML *m_xml;
+
 
 };
 
