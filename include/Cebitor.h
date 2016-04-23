@@ -22,11 +22,24 @@ class Cebitor : public QsciScintilla
   Q_OBJECT;
 
 public:
+  //----------------------------------------------------------------------------------------------------------------------
+  /// \brief enum for supported style types
+  //----------------------------------------------------------------------------------------------------------------------
+  enum MarkerType
+  {
+    ERROR,
+    WARNING,
+    FILESTART
+  };
   //------------------------------------------------------------------------------------------------------------------------
   /// @brief Cebitor constructor, initialises default values
   //------------------------------------------------------------------------------------------------------------------------
   Cebitor(QWidget *_parent);
+
+  bool loadTextFiles(const std::vector<QString> _paths);
+
 protected:
+  std::vector<int> m_fileMarkers;
   //------------------------------------------------------------------------------------------------------------------------
   /// @brief adds closing character for braces and quotes
   /// @param [in] _close closing character

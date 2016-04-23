@@ -1,4 +1,5 @@
 ﻿#include "Cebitor.h"
+#include "CebErrors.h"
 
 #include <iostream>
 #include <QAction>
@@ -6,6 +7,9 @@
 #include <QStringList>
 #include <Qsci/qscicommand.h>
 #include <Qsci/qscicommandset.h>
+
+#include <QTextStream>
+#include <QFile>
 
 //----------------------------------------------------------------------------------------------------------------------
 /// @file Cebitor.cpp
@@ -15,21 +19,26 @@
 //----------------------------------------------------------------------------------------------------------------------
 Cebitor::Cebitor(QWidget *_parent) : QsciScintilla(_parent)
 {
-  this->setMinimumHeight(300);
+  setMinimumHeight(300);
 
   // Create and assign the lexer
   QsciLexer* lex = new QsciLexerGLSL(this);
   setLexer(lex);
 
   // Set the margin defaults
-  setMarginType(1,QsciScintilla::MarginType::NumberMargin);
-  setMarginWidth(1," 012");
+  setMarginType(0,MarginType::NumberMargin);
+  setMarginWidth(0," 012");
   setMarginsForegroundColor(QColor(128, 128, 128));
+  // Set the symbol margin defaults
+  setMarginType(1,MarginType::SymbolMargin);
+  setMarginWidth(1,12);
+  setMarginMarkerMask(1, 1 << 0 | 1 << 1 | 1 << 2);
+
   // Set the caret defaults
   setCaretForegroundColor(QColor(247, 247, 241));
   setCaretWidth(2);
   // Set the brace defaults
-  setBraceMatching(QsciScintilla::BraceMatch::SloppyBraceMatch);
+  setBraceMatching(BraceMatch::SloppyBraceMatch);
   setMatchedBraceBackgroundColor(QColor(62, 61, 50));
   setUnmatchedBraceBackgroundColor(QColor(249, 38, 114));
 
@@ -38,12 +47,20 @@ Cebitor::Cebitor(QWidget *_parent) : QsciScintilla(_parent)
   setIndentationsUseTabs(false);
   setIndentationWidth(2);
 
-
   // Enable scroll width tracking and set the scroll width to a low number
   // Scintilla doesn't track line length, so if we wanted automated scrollbar
   // to appear we would need to implement a line length checking
   SendScintilla(QsciScintillaBase::SCI_SETSCROLLWIDTHTRACKING, 1);
   SendScintilla(QsciScintillaBase::SCI_SETSCROLLWIDTH, 5);
+
+  // set up line markers
+  QIcon errorIcon = QIcon::fromTheme(QString("dialog-error"));
+  QIcon warnIcon = QIcon::fromTheme(QString("dialog-warning"));
+
+  markerDefine(errorIcon.pixmap(10,10), MarkerType::ERROR);
+  markerDefine(warnIcon.pixmap(10,10), MarkerType::WARNING);
+  markerDefine(MarkerSymbol::Background, MarkerType::FILESTART);
+  SendScintilla(QsciScintillaBase::SCI_MARKERSETBACK, MarkerType::FILESTART, QColor(45,46,38));
 
   // unbind CTRL-/ keyboard shortcut
   standardCommands()->boundTo(Qt::Key_Slash | Qt::CTRL)->setKey(0);
@@ -57,6 +74,34 @@ Cebitor::Cebitor(QWidget *_parent) : QsciScintilla(_parent)
 
   // connect signals and slots
   connect(this, SIGNAL(SCN_CHARADDED(int)), this, SLOT(charAdded(int)));
+}
+
+bool Cebitor::loadTextFiles(const std::vector<QString> _paths)
+{
+  int numPaths;
+  numPaths = _paths.size();
+  for(int i=0; i<numPaths; i++)
+  {
+    QString fileText;
+    QFile file(_paths[i]);
+
+    // Open the file as readonly and text and ensure it loaded correctly
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+      // Raise an error if failed
+      ceb_raise::QtFileError(file.error(), _paths[i]);
+      return false;
+    }
+
+    // Fead the text into the tab if successful, adding to the end of the existing text
+    QTextStream in(&file);
+    int startingLines = text().count("\n");
+    fileText = text() + in.readAll() + QString("\n");
+    setText(fileText);
+    int markerHandle = markerAdd(startingLines,2);
+    m_fileMarkers.push_back(markerHandle);
+  }
+  return true;
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -181,7 +226,6 @@ void Cebitor::comment()
 
 void Cebitor::braceIndent()
 {
-  std::cout<<"braceIndentCheck\n";
   int cursorIndex;
   int cursorLine;
   QString currentLine;
@@ -189,7 +233,8 @@ void Cebitor::braceIndent()
   getCursorPosition(&cursorLine, &cursorIndex);
   currentLine = text(cursorLine);
   previousLine = text(cursorLine-1);
-  std::cout<<previousLine.toStdString()<<"\n";
+
+  // indent if previous line ends with "{"
   if(previousLine.endsWith("{\n"))
   {
     int indentSize;
@@ -198,11 +243,14 @@ void Cebitor::braceIndent()
     cursorIndex = cursorIndex+indentationWidth();
     setCursorPosition(cursorLine, cursorIndex);
     currentLine = text(cursorLine);
+    // extra newline to separate "{}"
     if(currentLine.indexOf("}") == cursorIndex)
     {
       insert(QString("\n"));
     }
   }
+
+  // unindent if "}" after cursor
   else if(currentLine.indexOf("}") == cursorIndex)
   {
     int indentSize;
@@ -230,6 +278,8 @@ void Cebitor::charAdded(int _c)
 
     // special case since " opens and closes
     case (int) '"':
+
+    // auto indent for braces
     case (int) '\n': { braceIndent(); break; }
     {
       if(!closing(QString('"')))

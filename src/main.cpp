@@ -1,6 +1,7 @@
 #include <QApplication>
 #include "CebApplication.h"
 #include "MainWindow.h"
+#include <qsurfaceformat.h>
 
 int main(int argc, char **argv)
 {
@@ -33,6 +34,7 @@ int main(int argc, char **argv)
   MainWindow w;
   // show it
   w.show();
+  w.showStartDialog();
   // hand control over to Qt framework
   return a.exec();
 }

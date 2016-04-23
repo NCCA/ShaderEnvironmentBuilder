@@ -484,6 +484,13 @@
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>
+            <widget class="QLabel" name="m_l_terminal">
+             <property name="text">
+              <string>Error Log</string>
+             </property>
+            </widget>
+           </item>
+           <item>
             <widget class="QPlainTextEdit" name="m_pte_terminal">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -541,14 +548,24 @@
     <addaction name="actionOpen"/>
     <addaction name="actionSaveFile"/>
     <addaction name="actionSaveAll"/>
+    <addaction name="separator"/>
+    <addaction name="actionStartup_Window"/>
    </widget>
-   <widget class="QMenu" name="menuDebug">
+   <widget class="QMenu" name="shapesMenu">
     <property name="title">
-     <string>Debug</string>
+     <string>Load Shapes</string>
     </property>
+    <addaction name="actionLoad_Obj"/>
+    <addaction name="actionLoad_Sphere"/>
+    <addaction name="actionLoad_Cube"/>
+    <addaction name="actionLoad_Torus"/>
+    <addaction name="actionLoad_Cone"/>
+    <addaction name="actionLoad_Teapot"/>
+    <addaction name="actionLoad_Troll"/>
+    <addaction name="actionLoad_Dragon"/>
    </widget>
    <addaction name="menuFile"/>
-   <addaction name="menuDebug"/>
+   <addaction name="shapesMenu"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionNew">
@@ -569,6 +586,54 @@
   <action name="actionSaveAll">
    <property name="text">
     <string>Save All</string>
+   </property>
+  </action>
+  <action name="actionStartup_Window">
+   <property name="text">
+    <string>Startup Window</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
+   </property>
+  </action>
+  <action name="actionLoad_Obj">
+   <property name="text">
+    <string>Import OBJ</string>
+   </property>
+  </action>
+  <action name="actionLoad_Sphere">
+   <property name="text">
+    <string>Load Sphere</string>
+   </property>
+  </action>
+  <action name="actionLoad_Cube">
+   <property name="text">
+    <string>Load Cube</string>
+   </property>
+  </action>
+  <action name="actionLoad_Torus">
+   <property name="text">
+    <string>Load Torus</string>
+   </property>
+  </action>
+  <action name="actionLoad_Cone">
+   <property name="text">
+    <string>Load Cone</string>
+   </property>
+  </action>
+  <action name="actionLoad_Teapot">
+   <property name="text">
+    <string>Load Teapot</string>
+   </property>
+  </action>
+  <action name="actionLoad_Troll">
+   <property name="text">
+    <string>Load Troll</string>
+   </property>
+  </action>
+  <action name="actionLoad_Dragon">
+   <property name="text">
+    <string>Load Dragon</string>
    </property>
   </action>
  </widget>

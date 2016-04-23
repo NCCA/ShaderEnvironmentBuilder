@@ -3,6 +3,15 @@
 #include <iostream>
 #include <ngl/ShaderLib.h>
 #include <ngl/Shader.h>
+
+//------------------------------------------------------------------------------------------------------------------------
+/// @file UniformData.h
+/// @brief the UniformData stores individual uniform data per data type.
+/// @author Adam Jonathan Ting
+/// @version 1.0
+/// @date 25/02/16
+//------------------------------------------------------------------------------------------------------------------------
+
 class uniformData
 {
 protected:
@@ -159,9 +168,6 @@ public:
   /// @return m_mat4 from uniformDataM4
   //----------------------------------------------------------------------------------------------------------------------
   virtual ngl::Mat4 getMat4() {return ngl::Mat4();}
-
-
-
 };
 
 

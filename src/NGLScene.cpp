@@ -152,6 +152,27 @@ void NGLScene::importMeshName(const std::string &name)
 }
 
 //----------------------------------------------------------------------------------------------------------------------
+}
+
+void NGLScene::toggleFunc()
+{
+  if(toggle==true)
+  {
+    m_mesh = std::unique_ptr<ngl::Obj> (new ngl::Obj(m_meshLoc));
+    m_mesh->createVAO();
+    toggle=false;
+  }
+
+}
+
+void NGLScene::importMeshName(const std::string &name)
+{
+  setMeshLocation(name);
+  setShapeType(0);
+  toggle=true;
+}
+
+//----------------------------------------------------------------------------------------------------------------------
 // This virtual function is called once before the first call to paintGL() or resizeGL(),
 // and then once whenever the widget has been assigned a new QGLContext.
 // This function should set up any required OpenGL context rendering flags, defining display lists, etc.
@@ -289,17 +310,13 @@ void NGLScene::paintGL()
   m_cam.setShape(m_fov, m_aspect, 0.5f, 150.0f);
   m_transform.reset();
 
+
   if (toggle)
    toggleFunc();
 
 
   loadMatricesToShader();
-//  prim->draw("Grid");
   drawObject(m_shapeType);
-
-
-
-
 }
 
 void NGLScene::drawObject(uint _type)
@@ -343,8 +360,6 @@ void NGLScene::drawObject(uint _type)
       break;
       // Moved the bunny to be the same relative shape and position as other vaoprimitive objects
     }
-
-
     default: std::cout<<"unrecognised shape type value"<<std::endl; break;
   }
 }
@@ -519,6 +534,7 @@ void NGLScene::compileShader(QString vertSource, QString fragSource)
   light.enable();
   // load these values to the shader as well
   light.loadToShader("light");
+
 }
 
 
@@ -552,7 +568,6 @@ QString NGLScene::parseString(QString _string)
       outString.append("\n");
     }
   }
-
   return outString;
 }
 

@@ -20,7 +20,8 @@ CONFIG-=app_bundle
 SOURCES= $$PWD/src/*.cpp
 # same for the .h files
 HEADERS+= $$PWD/include/*.h
-FORMS+= $$PWD/ui/MainWindow.ui
+FORMS+= $$PWD/ui/MainWindow.ui \
+        $$PWD/ui/StartupDialog.ui
 # and add the include dir into the search path for Qt and make
 INCLUDEPATH +=./include
 # where our exe is going to live (root of project)
