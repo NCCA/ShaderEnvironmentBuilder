@@ -152,25 +152,7 @@ void NGLScene::importMeshName(const std::string &name)
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-}
 
-void NGLScene::toggleFunc()
-{
-  if(toggle==true)
-  {
-    m_mesh = std::unique_ptr<ngl::Obj> (new ngl::Obj(m_meshLoc));
-    m_mesh->createVAO();
-    toggle=false;
-  }
-
-}
-
-void NGLScene::importMeshName(const std::string &name)
-{
-  setMeshLocation(name);
-  setShapeType(0);
-  toggle=true;
-}
 
 //----------------------------------------------------------------------------------------------------------------------
 // This virtual function is called once before the first call to paintGL() or resizeGL(),
@@ -193,7 +175,7 @@ void NGLScene::initializeGL()
   ngl::Vec3 look(0,0,0);
   ngl::Vec3 up(0,1,0);
   m_cam.set(eye,look,up);
-  setCamShape();
+  setCameraShape();
   // now to load the shader and set the values
   // grab an instance of shader manager
   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
@@ -367,13 +349,13 @@ void NGLScene::drawObject(uint _type)
 //----------------------------------------------------------------------------------------------------------------------
 void NGLScene::resizeGL(QResizeEvent *_event)
 {
-  setCamShape();
+  setCameraShape();
 }
 
 //----------------------------------------------------------------------------------------------------------------------
 void NGLScene::resizeGL(int _w, int _h)
 {
-  setCamShape();
+  setCameraShape();
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -401,7 +383,7 @@ void NGLScene::loadMatricesToShader()
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-void NGLScene::setCamShape()
+void NGLScene::setCameraShape()
 {
   m_aspect=(float)width()/height();
   m_cam.setShape(m_fov, m_aspect, 0.5f, 150.0f);

@@ -268,6 +268,7 @@ private:
   bool m_shaderError;
 
   ShaderManager *m_shaderManager;
+  QString parseString(QString);
 
 };
 
