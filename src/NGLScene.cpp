@@ -82,7 +82,7 @@ NGLScene::NGLScene( QWidget *_parent, parserLib *_libParent ) : QOpenGLWidget( _
   // mouse rotation values set to 0
   m_spinXFace=0.0f;
   m_spinYFace=0.0f;
-  m_parser= new parserLib();
+  m_parser= _libParent;
   m_shapeType=5;
   toggle=false;
   m_meshLoc="./tempFiles/strawberry.obj";

@@ -71,17 +71,6 @@ MainWindow::~MainWindow()
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-void MainWindow::on_m_btn_loadShader_clicked()
-{
-  //Project *project = Project::instance();
-  QString vertSource, fragSource;
-  vertSource = m_qsci1->text();
-  fragSource = m_qsci2->text();
-  std::string target = "./testDIR/";
-  //project->exportProject(target, vertSource, fragSource);
-}
-
-//----------------------------------------------------------------------------------------------------------------------
 void MainWindow::on_m_btn_compileShader_clicked()
 {
   QString vertSource, fragSource;
@@ -157,15 +146,6 @@ void MainWindow::updateShaderValues()
 
     }
   }
-}
-
-
-
-//----------------------------------------------------------------------------------------------------------------------
-void MainWindow::on_m_tabs_qsci_currentChanged(int _index)
-{
-
-
 }
 
 //----------------------------------------------------------------------------------------------------------------------
