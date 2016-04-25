@@ -382,6 +382,60 @@
                     </item>
                    </layout>
                   </widget>
+                  <widget class="QSlider" name="m_normalSize">
+                   <property name="geometry">
+                    <rect>
+                     <x>250</x>
+                     <y>370</y>
+                     <width>160</width>
+                     <height>19</height>
+                    </rect>
+                   </property>
+                   <property name="minimum">
+                    <number>1</number>
+                   </property>
+                   <property name="maximum">
+                    <number>60</number>
+                   </property>
+                   <property name="singleStep">
+                    <number>1</number>
+                   </property>
+                   <property name="value">
+                    <number>10</number>
+                   </property>
+                   <property name="sliderPosition">
+                    <number>10</number>
+                   </property>
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                  </widget>
+                  <widget class="QCheckBox" name="m_showWireframe">
+                   <property name="geometry">
+                    <rect>
+                     <x>10</x>
+                     <y>370</y>
+                     <width>96</width>
+                     <height>26</height>
+                    </rect>
+                   </property>
+                   <property name="text">
+                    <string>Wireframe</string>
+                   </property>
+                  </widget>
+                  <widget class="QCheckBox" name="m_showNormals">
+                   <property name="geometry">
+                    <rect>
+                     <x>120</x>
+                     <y>350</y>
+                     <width>96</width>
+                     <height>26</height>
+                    </rect>
+                   </property>
+                   <property name="text">
+                    <string>Normals</string>
+                   </property>
+                  </widget>
                  </widget>
                 </widget>
                </item>
@@ -483,14 +537,14 @@
     <property name="title">
      <string>Load Shapes</string>
     </property>
-    <addaction name="actionLoad_Obj"/>
-    <addaction name="actionLoad_Sphere"/>
-    <addaction name="actionLoad_Cube"/>
-    <addaction name="actionLoad_Torus"/>
-    <addaction name="actionLoad_Teapot"/>
-    <addaction name="actionLoad_Troll"/>
-    <addaction name="actionLoad_Dragon"/>
-    <addaction name="actionLoad_Bunny"/>
+    <addaction name="m_actionLoad_Obj"/>
+    <addaction name="m_actionLoad_Sphere"/>
+    <addaction name="m_actionLoad_Cube"/>
+    <addaction name="m_actionLoad_Torus"/>
+    <addaction name="m_actionLoad_Teapot"/>
+    <addaction name="m_actionLoad_Troll"/>
+    <addaction name="m_actionLoad_Dragon"/>
+    <addaction name="m_actionLoad_Bunny"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="shapesMenu"/>
@@ -527,22 +581,22 @@
     <enum>Qt::ApplicationShortcut</enum>
    </property>
   </action>
-  <action name="actionLoad_Obj">
+  <action name="m_actionLoad_Obj">
    <property name="text">
     <string>Import OBJ</string>
    </property>
   </action>
-  <action name="actionLoad_Sphere">
+  <action name="m_actionLoad_Sphere">
    <property name="text">
     <string>Load Sphere</string>
    </property>
   </action>
-  <action name="actionLoad_Cube">
+  <action name="m_actionLoad_Cube">
    <property name="text">
     <string>Load Cube</string>
    </property>
   </action>
-  <action name="actionLoad_Torus">
+  <action name="m_actionLoad_Torus">
    <property name="text">
     <string>Load Torus</string>
    </property>
@@ -552,22 +606,22 @@
     <string>Load Cone</string>
    </property>
   </action>
-  <action name="actionLoad_Teapot">
+  <action name="m_actionLoad_Teapot">
    <property name="text">
     <string>Load Teapot</string>
    </property>
   </action>
-  <action name="actionLoad_Troll">
+  <action name="m_actionLoad_Troll">
    <property name="text">
     <string>Load Troll</string>
    </property>
   </action>
-  <action name="actionLoad_Dragon">
+  <action name="m_actionLoad_Dragon">
    <property name="text">
     <string>Load Dragon</string>
    </property>
   </action>
-  <action name="actionLoad_Bunny">
+  <action name="m_actionLoad_Bunny">
    <property name="text">
     <string>Load Bunny</string>
    </property>

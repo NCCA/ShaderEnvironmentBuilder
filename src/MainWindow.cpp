@@ -50,15 +50,21 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   loadTextFileToTab("shaders/PhongFragment.glsl", *m_qsci2);
 
   // switching between shapes
-  connect(m_ui->actionLoad_Sphere,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
-  connect(m_ui->actionLoad_Cube,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
-  connect(m_ui->actionLoad_Torus,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
-  connect(m_ui->actionLoad_Teapot ,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
-  connect(m_ui->actionLoad_Troll,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
-  connect(m_ui->actionLoad_Dragon,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
-  connect(m_ui->actionLoad_Bunny,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
+  connect(m_ui->m_actionLoad_Sphere,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
+  connect(m_ui->m_actionLoad_Cube,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
+  connect(m_ui->m_actionLoad_Torus,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
+  connect(m_ui->m_actionLoad_Teapot ,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
+  connect(m_ui->m_actionLoad_Troll,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
+  connect(m_ui->m_actionLoad_Dragon,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
+  connect(m_ui->m_actionLoad_Bunny,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
   // switching to .obj files
-  connect(m_ui->actionLoad_Obj,SIGNAL(triggered()),this,SLOT(on_actionLoad_obj_opened()));
+  connect(m_ui->m_actionLoad_Obj,SIGNAL(triggered()),this,SLOT(on_actionLoad_obj_opened()));
+
+  connect(m_ui->m_showNormals,SIGNAL(toggled(bool)),m_gl,SLOT(toggleNormals(bool)));
+  connect(m_ui->m_showWireframe,SIGNAL(toggled(bool)),m_gl,SLOT(toggleWireframe(bool)));
+  connect(m_ui->m_normalSize,SIGNAL(valueChanged(int)),m_gl,SLOT(setNormalSize(int)));
+
+
   update();
   //std::cerr<<"Find number of active uniforms: "<<m_parForButton->m_num<<std::endl;
 
@@ -208,13 +214,13 @@ void MainWindow::on_actionLoad_shape_triggered()
   QAction *action = static_cast<QAction*>(sender());
   int a=0;
 
-  if (action==m_ui->actionLoad_Sphere)  {   a=1;  }
-  if (action==m_ui->actionLoad_Cube)    {   a=2;  }
-  if (action==m_ui->actionLoad_Torus)   {   a=3;  }
-  if (action==m_ui->actionLoad_Teapot)  {   a=4;  }
-  if (action==m_ui->actionLoad_Troll)   {   a=5;  }
-  if (action==m_ui->actionLoad_Dragon)  {   a=6;  }
-  if (action==m_ui->actionLoad_Bunny)   {   a=7;  }
+  if (action==m_ui->m_actionLoad_Sphere)  {   a=1;  }
+  if (action==m_ui->m_actionLoad_Cube)    {   a=2;  }
+  if (action==m_ui->m_actionLoad_Torus)   {   a=3;  }
+  if (action==m_ui->m_actionLoad_Teapot)  {   a=4;  }
+  if (action==m_ui->m_actionLoad_Troll)   {   a=5;  }
+  if (action==m_ui->m_actionLoad_Dragon)  {   a=6;  }
+  if (action==m_ui->m_actionLoad_Bunny)   {   a=7;  }
 
   m_gl->setShapeType(a);
 }
@@ -253,6 +259,24 @@ void MainWindow::on_actionNew_triggered()
     qDebug() << "FAIL";
   }
 }
+void MainWindow::keyPressEvent(QKeyEvent *_event)
+{
+  // that method is called every time the main window recives a key event.
+  // we then switch on the key value and set the camera in the GLWindow
+  switch (_event->key())
+  {
+  // escape key to quit
+  //case Qt::Key_Escape : QGuiApplication::exit(EXIT_SUCCESS); break;
+  // turn on wireframe rendering
+  case Qt::Key_W : {m_ui->m_showWireframe->toggle(); break;}
+  // show full screen
+  //  case Qt::Key_F : showFullScreen(); break;
+  // show windowed
+  case Qt::Key_N : {m_ui->m_showNormals->toggle(); break;}
+
+  }
+  update();
+}
 
 
 void MainWindow::on_actionSaveProject_triggered()
@@ -264,3 +288,4 @@ void MainWindow::on_actionSaveProjectAs_triggered()
 {
     m_project->saveAs(m_qsci1->text(), m_qsci2->text());
 }
+

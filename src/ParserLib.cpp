@@ -470,8 +470,7 @@ void parserLib::sendUniformsToShader(ngl::ShaderLib *shader)
         shader->setShaderParamFromMat4(m_uniformList[i]->getName(),  m_uniformList[i]->getMat4());
         break;
       }
-    default:
-      std::cout<<"unrecognised data type name"<<std::endl;
+    default:std::cerr<<"unrecognised data type name"<<std::endl;
     }
 
   }

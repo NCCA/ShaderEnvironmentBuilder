@@ -78,11 +78,8 @@ private slots:
   void on_actionLoad_shape_triggered();
   void on_actionLoad_obj_opened();
   void on_actionStartup_Window_triggered();
-
   void on_actionNew_triggered();
-
   void on_actionSaveProject_triggered();
-
   void on_actionSaveProjectAs_triggered();
 
 private:
@@ -119,6 +116,11 @@ private:
   /// @param [in] _qsci the QsciScintilla tab to be filled with the file
   //----------------------------------------------------------------------------------------------------------------------
   bool loadTextFileToTab(QString _path, Cebitor &_qsci);
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief Qt Event called when a key is pressed
+  /// @param [in] _event the Qt event to query for size etc
+  //----------------------------------------------------------------------------------------------------------------------
+  void keyPressEvent(QKeyEvent *_event);
 
   parserLib *m_parForButton;
   std::vector<Button*> m_buttonList;

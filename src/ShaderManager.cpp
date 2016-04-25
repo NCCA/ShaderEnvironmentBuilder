@@ -1,7 +1,6 @@
-#include "include/shadermanager.h"
+#include "include/ShaderManager.h"
 #include "ngl/Light.h"
 #include "ngl/Material.h"
-
 
 ShaderManager::ShaderManager()
 {
@@ -22,12 +21,18 @@ void ShaderManager::createShaderProgram(std::string _name)
   setData(_name, _name.append("Vertex"), _name.append("fragment"));
 }
 
-
-void ShaderManager::use()
+void ShaderManager::use(ngl::ShaderLib *_shader,uint shaderType)
 {
-  ngl::ShaderLib *shaderLib = ngl::ShaderLib::instance();
-  (*shaderLib)[m_data.m_name]->use();
+  enum shader{objectShader=0,objectNormals=1};
+  switch(shaderType)
+  {
+    case objectShader :    (*_shader)[m_data.m_name]->use(); break;
+    case objectNormals:    (*_shader)["normalShader"]->use();break;
+    default:               std::cerr<<"Invalid shaderType"<<std::endl; break;
+  }
 }
+
+
 
 void ShaderManager::initialize(ngl::Camera _cam)
 {
@@ -73,9 +78,42 @@ void ShaderManager::initialize(ngl::Camera _cam)
     shaderLib->setShaderParam3f("viewerPos",_cam.getEye().m_x,_cam.getEye().m_y,_cam.getEye().m_z);
     shaderLib->setShaderParam4f("Colour",0.23125f,0.23125f,0.23125f,1);
 
+    // Johns Code to initialise NORMALSHADER
+    shaderLib->createShaderProgram("normalShader");
+    constexpr auto normalVert="normalVertex";
+    constexpr auto normalGeo="normalGeo";
+    constexpr auto normalFrag="normalFrag";
+    shaderLib->attachShader(normalVert,ngl::ShaderType::VERTEX);
+    shaderLib->attachShader(normalFrag,ngl::ShaderType::FRAGMENT);
+    shaderLib->loadShaderSource(normalVert,"shaders/normalVertex.glsl");
+    shaderLib->loadShaderSource(normalFrag,"shaders/normalFragment.glsl");
+    shaderLib->compileShader(normalVert);
+    shaderLib->compileShader(normalFrag);
+    shaderLib->attachShaderToProgram("normalShader",normalVert);
+    shaderLib->attachShaderToProgram("normalShader",normalFrag);
+    shaderLib->attachShader(normalGeo,ngl::ShaderType::GEOMETRY);
+    shaderLib->loadShaderSource(normalGeo,"shaders/normalGeo.glsl");
+    shaderLib->compileShader(normalGeo);
+    shaderLib->attachShaderToProgram("normalShader",normalGeo);
+    shaderLib->linkProgramObject("normalShader");
+    shaderLib->use("normalShader");
+    // now pass the modelView and projection values to the shader
+    shaderLib->setUniform("normalSize",0.1f);
+    shaderLib->setUniform("vertNormalColour",1.0f,1.0f,0.0f,1.0f);
+    shaderLib->setUniform("faceNormalColour",.0f,1.0f,0.0f,1.0f);
+    shaderLib->setShaderParam1i("drawFaceNormals",true);
+    shaderLib->setShaderParam1i("drawVertexNormals",true);
+
+
+
+
     // set initialise flag to true
     m_init = true;
   }
+
+
+
+
 }
 
 

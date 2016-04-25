@@ -19,7 +19,7 @@ class ShaderManager
 public:
     ShaderManager();
     void createShaderProgram(std::string _name);
-    void use();
+    void use(ngl::ShaderLib  *_shaderLib,uint shaderType);
     void initialize(ngl::Camera _cam);
     void compileShader(ngl::Camera _cam, QString vertSource, QString fragSource);
     inline bool isInit() {return m_init;}

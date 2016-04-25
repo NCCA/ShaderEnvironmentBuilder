@@ -82,11 +82,12 @@ NGLScene::NGLScene( QWidget *_parent, parserLib *_libParent ) : QOpenGLWidget( _
   // mouse rotation values set to 0
   m_spinXFace=0.0f;
   m_spinYFace=0.0f;
-  m_parser= new parserLib();
+  m_parser= _libParent; //DONT CHANGE THIS
   m_shapeType=6;
-  toggle=false;
+  m_toggleObj=false;
   m_meshLoc="./tempFiles/strawberry.obj";
-
+  m_drawNormals=false;
+  m_normalSize=0.1;
   // Store main window to send data from compile errors
   m_window = dynamic_cast<MainWindow*>(_parent);
   // re-size the widget to that of the parent (in this case the GLFrame passed in on construction)
@@ -113,13 +114,13 @@ void NGLScene::setMeshLocation(std::string _meshDirectory)
   std::cout<<"Imported file:  "<<_meshDirectory<<std::endl;
 }
 
-void NGLScene::toggleFunc()
+void NGLScene::toggleObj()
 {
-  if(toggle==true)
+  if(m_toggleObj==true)
   {
     m_mesh = std::unique_ptr<ngl::Obj> (new ngl::Obj(m_meshLoc));
     m_mesh->createVAO();
-    toggle=false;
+    m_toggleObj=false;
   }
 
 }
@@ -145,7 +146,7 @@ void NGLScene::importMeshName(const std::string &name)
   {
     setMeshLocation(name);
     setShapeType(0);
-    toggle=true;
+    m_toggleObj=true;
   }
 
 }
@@ -219,6 +220,17 @@ void NGLScene::initializeGL()
   ngl::VAOPrimitives::instance()->createTorus("torus",0.3,0.7,20,20);
   ngl::VAOPrimitives::instance()->createLineGrid("Grid",10,10,10);
 
+
+
+
+
+
+
+
+
+
+
+
 }
 //----------------------------------------------------------------------------------------------------------------------
 void NGLScene::exportUniforms()
@@ -270,8 +282,9 @@ void NGLScene::paintGL()
   {
     glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
   }
+  ngl::ShaderLib *shaderLib=ngl::ShaderLib::instance();
 
-  m_shaderManager->use();
+  m_shaderManager->use(shaderLib,0);
 
   // Rotation based on the mouse position for our global transform
   ngl::Mat4 rotX;
@@ -289,16 +302,73 @@ void NGLScene::paintGL()
 
   m_cam.setShape(m_fov, m_aspect, 0.5f, 150.0f);
   m_transform.reset();
-
-
-  if (toggle)
-   toggleFunc();
-
-
   loadMatricesToShader();
-  drawObject(m_shapeType);
+  objectTransform(m_shapeType);
+
+  if (m_toggleObj)
+  {
+    toggleObj();
+  }
+  drawObject(m_shapeType); //draw the object
+
+
+  if(m_drawNormals)
+  {
+    // set the shader to use the normalShader
+    m_shaderManager->use(shaderLib,1);
+    ngl::Mat4 MV;
+    ngl::Mat4 MVP;
+    MV=m_transform.getMatrix()*m_mouseGlobalTX* m_cam.getViewMatrix();
+    MVP=MV*m_cam.getProjectionMatrix();
+    // set the uniform to use the current transformations
+    shaderLib->setUniform("MVP",MVP);
+    // set the normalSize
+    shaderLib->setUniform("normalSize",m_normalSize);
+    //draw the object normals
+    drawObject(m_shapeType);
+  }
 }
 
+void NGLScene::objectTransform(uint _type)
+{
+  ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
+
+  enum geo {input=0,sphere=1,cube=2,torus=3,teapot=4,troll=5,dragon=6,bunny=7};
+  switch(_type)
+  {
+    case input : break;
+    case sphere: break;
+    case cube  : break;
+    case torus : break;
+    case teapot: break;
+    case troll :
+    {
+      m_transform.setScale(1.5,1.5,1.5);
+      loadMatricesToShader();
+     // prim->draw("troll");
+     // m_transform.reset();
+      break;
+      // Moved the troll to be the same relative shape and position as other vaoprimitive objects
+    }
+    case dragon:
+    {
+      m_transform.setScale(0.1,0.1,0.1);
+      m_transform.setPosition(0,-0.5,0);
+      loadMatricesToShader();
+      break;
+      // Moved the dragon to be the same relative shape and position as other vaoprimitive objects
+    }
+    case bunny:
+    {
+      m_transform.setScale(0.15,0.15,0.15);
+      m_transform.setPosition(0,-0.5,0);
+      loadMatricesToShader();
+      break;
+      // Moved the bunny to be the same relative shape and position as other vaoprimitive objects
+    }
+    default: std::cout<<"unrecognised shape type value"<<std::endl; break;
+  }
+}
 void NGLScene::drawObject(uint _type)
 {
   ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
@@ -313,30 +383,30 @@ void NGLScene::drawObject(uint _type)
     case teapot: prim->draw("teapot");break;
     case troll :
     {
-      m_transform.setScale(1.5,1.5,1.5);
-      loadMatricesToShader();
+      //m_transform.setScale(1.5,1.5,1.5);
+     // loadMatricesToShader();
       prim->draw("troll");
-      m_transform.reset();
+     // m_transform.reset();
       break;
       // Moved the troll to be the same relative shape and position as other vaoprimitive objects
     }
     case dragon:
     {
-      m_transform.setScale(0.1,0.1,0.1);
-      m_transform.setPosition(0,-0.5,0);
-      loadMatricesToShader();
+      //m_transform.setScale(0.1,0.1,0.1);
+     // m_transform.setPosition(0,-0.5,0);
+     // loadMatricesToShader();
       prim->draw("dragon");
-      m_transform.reset();
+    //  m_transform.reset();
       break;
       // Moved the dragon to be the same relative shape and position as other vaoprimitive objects
     }
     case bunny:
     {
-      m_transform.setScale(0.15,0.15,0.15);
-      m_transform.setPosition(0,-0.5,0);
-      loadMatricesToShader();
+      //m_transform.setScale(0.15,0.15,0.15);
+    //  m_transform.setPosition(0,-0.5,0);
+     // loadMatricesToShader();
       prim->draw("bunny");
-      m_transform.reset();
+     // m_transform.reset();
       break;
       // Moved the bunny to be the same relative shape and position as other vaoprimitive objects
     }
@@ -359,8 +429,8 @@ void NGLScene::resizeGL(int _w, int _h)
 //----------------------------------------------------------------------------------------------------------------------
 void NGLScene::loadMatricesToShader()
 {
-  ngl::ShaderLib *shader=ngl::ShaderLib::instance();
-  m_shaderManager->use();
+  ngl::ShaderLib *shaderLib=ngl::ShaderLib::instance();
+  m_shaderManager->use(shaderLib,0);
 
   ngl::Mat4 MV;
   ngl::Mat4 MVP;
@@ -373,11 +443,11 @@ void NGLScene::loadMatricesToShader()
   normalMatrix=MV;
   normalMatrix.inverse();
 
-  m_parser->sendUniformsToShader(shader);
-  shader->setShaderParamFromMat4("MV",MV);
-  shader->setShaderParamFromMat4("MVP",MVP);
-  shader->setShaderParamFromMat3("normalMatrix",normalMatrix);
-  shader->setShaderParamFromMat4("M",M);
+  m_parser->sendUniformsToShader(shaderLib);
+  shaderLib->setShaderParamFromMat4("MV",MV);
+  shaderLib->setShaderParamFromMat4("MVP",MVP);
+  shaderLib->setShaderParamFromMat3("normalMatrix",normalMatrix);
+  shaderLib->setShaderParamFromMat4("M",M);
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -388,28 +458,26 @@ void NGLScene::setCamShape()
 
 
 }
-
-//----------------------------------------------------------------------------------------------------------------------
-void NGLScene::keyPressEvent(QKeyEvent *_event)
+void NGLScene::toggleWireframe(bool _value)
 {
-  // that method is called every time the main window recives a key event.
-  // we then switch on the key value and set the camera in the GLWindow
-  switch (_event->key())
-  {
-  // escape key to quit
-  //case Qt::Key_Escape : QGuiApplication::exit(EXIT_SUCCESS); break;
-  // turn on wireframe rendering
-  case Qt::Key_W : m_wireframe=true; break;
-  // turn off wire frame
-  case Qt::Key_S : m_wireframe=false; break;
-  // show full screen
-  case Qt::Key_F : showFullScreen(); break;
-  // show windowed
-  case Qt::Key_N : showNormal(); break;
-  }
-  update();
+  std::cout<< "TOGGLE WIREFRAME"<<std::endl;
+    m_wireframe=_value;
+    update();
+}
+void NGLScene::toggleNormals(bool _value)
+{
+    m_drawNormals=_value;
+    std::cout<< "TOGGLE NORMALS"<<std::endl;
+    update();
 }
 
+
+void NGLScene::setNormalSize(int _size)
+{
+  m_normalSize=_size/100.0f;
+  std::cout<< "doing a thing\n"<<_size<<"    "<<m_normalSize<<std::endl;
+  update();
+}
 //----------------------------------------------------------------------------------------------------------------------
 void NGLScene::mouseMoveEvent ( QMouseEvent * _event )
 {
@@ -446,7 +514,6 @@ void NGLScene::mousePressEvent ( QMouseEvent * _event )
   if(_event->button() == Qt::LeftButton)
   {
     ngl::Vec4 _tempVec=m_parser->m_uniformList[12]->getVec4();
-    std::cout<<"\nVal:\nx: "<<_tempVec.m_x<<"\ny: "<<_tempVec.m_y<<"\nz:"<<_tempVec.m_z<<std::endl;
     m_origX = _event->x();
     m_origY = _event->y();
     m_rotate =true;
@@ -523,7 +590,7 @@ void NGLScene::compileShader(QString vertSource, QString fragSource)
 //------------------------------------------------------------------
 QString NGLScene::parseString(QString _string)
 {
-
+  std::vector<int> lineErrors;
   QString outString;
   QRegExp separateLines("\n");
   QStringList lines=_string.split(separateLines);
@@ -535,13 +602,25 @@ QString NGLScene::parseString(QString _string)
     uint nLen=pieces.length();
     for (uint j=0;j<nLen;j++)
     {
-      if(pieces[j]=="0")
+      if (pieces.length()==1 && pieces[j]!="")
+      {
+        QRegExp removeColon(":");
+        QStringList title=pieces.value(j).split(removeColon);
+      //  std::cout<<"New Title:  " <<title[0].toStdString()<<std::endl;
+      }
+
+      if(pieces[j].length()==1 && j==0)
       {
         outString.append("Line ");
+        std::cout<<"TRUE"<<std::endl;
       }
-      if(pieces[j]!="0")
+      else
       {
         outString.append(pieces.value(j));
+        if (j==1)
+        {
+          lineErrors.push_back(pieces.value(j).toInt());
+        }
       }
     }
     if (i!=len-1)
@@ -550,6 +629,7 @@ QString NGLScene::parseString(QString _string)
     }
   }
   return outString;
+  //return lineErrors;
 }
 
 void NGLScene::resetObjPos()
