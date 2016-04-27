@@ -302,6 +302,8 @@ void NGLScene::paintGL()
 
   m_cam.setShape(m_fov, m_aspect, 0.5f, 150.0f);
   m_transform.reset();
+  ngl::Vec3 pos(0,2,0);
+  drawAxis(pos);
   loadMatricesToShader();
   objectTransform(m_shapeType);
 
@@ -345,8 +347,6 @@ void NGLScene::objectTransform(uint _type)
     {
       m_transform.setScale(1.5,1.5,1.5);
       loadMatricesToShader();
-     // prim->draw("troll");
-     // m_transform.reset();
       break;
       // Moved the troll to be the same relative shape and position as other vaoprimitive objects
     }
@@ -372,44 +372,17 @@ void NGLScene::objectTransform(uint _type)
 void NGLScene::drawObject(uint _type)
 {
   ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
-
   enum geo {input=0,sphere=1,cube=2,torus=3,teapot=4,troll=5,dragon=6,bunny=7};
   switch(_type)
   {
-    case input : m_mesh->draw();break;
-    case sphere: prim->draw("sphere");break;
-    case cube  : prim->draw("cube");break;
-    case torus : prim->draw("torus");break;
-    case teapot: prim->draw("teapot");break;
-    case troll :
-    {
-      //m_transform.setScale(1.5,1.5,1.5);
-     // loadMatricesToShader();
-      prim->draw("troll");
-     // m_transform.reset();
-      break;
-      // Moved the troll to be the same relative shape and position as other vaoprimitive objects
-    }
-    case dragon:
-    {
-      //m_transform.setScale(0.1,0.1,0.1);
-     // m_transform.setPosition(0,-0.5,0);
-     // loadMatricesToShader();
-      prim->draw("dragon");
-    //  m_transform.reset();
-      break;
-      // Moved the dragon to be the same relative shape and position as other vaoprimitive objects
-    }
-    case bunny:
-    {
-      //m_transform.setScale(0.15,0.15,0.15);
-    //  m_transform.setPosition(0,-0.5,0);
-     // loadMatricesToShader();
-      prim->draw("bunny");
-     // m_transform.reset();
-      break;
-      // Moved the bunny to be the same relative shape and position as other vaoprimitive objects
-    }
+    case input : { m_mesh->draw();      break; }
+    case sphere: { prim->draw("sphere");break; }
+    case cube  : { prim->draw("cube");  break; }
+    case torus : { prim->draw("torus"); break; }
+    case teapot: { prim->draw("teapot");break; }
+    case troll : { prim->draw("troll"); break; }
+    case dragon: { prim->draw("dragon");break; }
+    case bunny:  { prim->draw("bunny"); break; }
     default: std::cout<<"unrecognised shape type value"<<std::endl; break;
   }
 }
@@ -645,4 +618,38 @@ void NGLScene::resetObjPos()
 void NGLScene::newProject(std::string _name)
 {
   m_shaderManager->createShaderProgram(_name);
+}
+void NGLScene::drawAxis(ngl::Vec3 _pos)
+{
+  // Instance the Shader
+  ngl::ShaderLib *shaderLib=ngl::ShaderLib::instance();
+  m_shaderManager->use(shaderLib,0);
+  ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
+
+  // Move the Y AXIS geo
+  m_transform.setScale(0.05,0.5,0.05);
+  m_transform.setPosition(0,0.3,0);
+  m_transform.addPosition(_pos);
+  loadMatricesToShader();
+  shaderLib->setShaderParam4f("Colour",0,1,0,1); //Not entirely sure if this is the best way, as the name "Colour" could be changed....
+  prim->draw("cube");
+  m_transform.reset();
+
+  // Move the X AXIS geo
+  m_transform.setScale(0.5,0.05,0.05);
+  m_transform.setPosition(0.3,0,0);
+  m_transform.addPosition(_pos);
+  loadMatricesToShader();
+  shaderLib->setShaderParam4f("Colour",1,0,0,1); //Not entirely sure if this is the best way, as the name "Colour" could be changed....
+  prim->draw("cube");
+  m_transform.reset();
+
+  // Move the Z AXIS geo
+  m_transform.setScale(0.05,0.05,0.5);
+  m_transform.setPosition(0,0,0.3);
+  m_transform.addPosition(_pos);
+  loadMatricesToShader();
+  shaderLib->setShaderParam4f("Colour",0,0,1,1); //Not entirely sure if this is the best way, as the name "Colour" could be changed....
+  prim->draw("cube");
+  m_transform.reset();
 }
