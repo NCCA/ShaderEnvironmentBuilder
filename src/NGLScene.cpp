@@ -87,6 +87,7 @@ NGLScene::NGLScene( QWidget *_parent, parserLib *_libParent ) : QOpenGLWidget( _
   m_toggleObj=false;
   m_meshLoc="./tempFiles/strawberry.obj";
   m_drawNormals=false;
+  m_drawGrid=false;
   m_normalSize=0.1;
   // Store main window to send data from compile errors
   m_window = dynamic_cast<MainWindow*>(_parent);
@@ -264,6 +265,7 @@ void NGLScene::setShapeType(int _type)
   {
     std::cout<<"Invalid shape type"<<std::endl;
   }
+  update();
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -305,15 +307,19 @@ void NGLScene::paintGL()
   ngl::Vec3 pos(0,2,0);
   drawAxis(pos);
   loadMatricesToShader();
-  objectTransform(m_shapeType);
 
+  if (m_drawGrid)
+  {
+    // draw a grid
+    prim->draw("Grid");
+  }
   if (m_toggleObj)
   {
+    // Activate Obj
     toggleObj();
   }
+  objectTransform(m_shapeType);
   drawObject(m_shapeType); //draw the object
-
-
   if(m_drawNormals)
   {
     // set the shader to use the normalShader
@@ -443,7 +449,12 @@ void NGLScene::toggleNormals(bool _value)
     std::cout<< "TOGGLE NORMALS"<<std::endl;
     update();
 }
-
+void NGLScene::toggleGrid(bool _value)
+{
+    m_drawGrid=_value;
+    std::cout<< "TOGGLE GRID"<<std::endl;
+    update();
+}
 
 void NGLScene::setNormalSize(int _size)
 {

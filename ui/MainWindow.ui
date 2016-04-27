@@ -436,6 +436,19 @@
                     <string>Normals</string>
                    </property>
                   </widget>
+                  <widget class="QCheckBox" name="m_showGrid">
+                   <property name="geometry">
+                    <rect>
+                     <x>20</x>
+                     <y>340</y>
+                     <width>96</width>
+                     <height>26</height>
+                    </rect>
+                   </property>
+                   <property name="text">
+                    <string>Grid</string>
+                   </property>
+                  </widget>
                  </widget>
                 </widget>
                </item>

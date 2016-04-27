@@ -62,6 +62,8 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
 
   connect(m_ui->m_showNormals,SIGNAL(toggled(bool)),m_gl,SLOT(toggleNormals(bool)));
   connect(m_ui->m_showWireframe,SIGNAL(toggled(bool)),m_gl,SLOT(toggleWireframe(bool)));
+  connect(m_ui->m_showGrid,SIGNAL(toggled(bool)),m_gl,SLOT(toggleGrid(bool)));
+
   connect(m_ui->m_normalSize,SIGNAL(valueChanged(int)),m_gl,SLOT(setNormalSize(int)));
 
 
@@ -265,15 +267,9 @@ void MainWindow::keyPressEvent(QKeyEvent *_event)
   // we then switch on the key value and set the camera in the GLWindow
   switch (_event->key())
   {
-  // escape key to quit
-  //case Qt::Key_Escape : QGuiApplication::exit(EXIT_SUCCESS); break;
-  // turn on wireframe rendering
-  case Qt::Key_W : {m_ui->m_showWireframe->toggle(); break;}
-  // show full screen
-  //  case Qt::Key_F : showFullScreen(); break;
-  // show windowed
-  case Qt::Key_N : {m_ui->m_showNormals->toggle(); break;}
-
+    case Qt::Key_W : {m_ui->m_showWireframe->toggle(); break;}
+    case Qt::Key_N : {m_ui->m_showNormals->toggle();   break;}
+    case Qt::Key_G : {m_ui->m_showGrid->toggle();      break;}
   }
   update();
 }

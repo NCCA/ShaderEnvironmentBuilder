@@ -96,10 +96,11 @@ public :
 
 public slots:
   void setShapeType(int _type);
-
   void toggleWireframe(bool);
   void toggleNormals(bool);
+  void toggleGrid(bool);
   void setNormalSize(int);
+
 private:
   //----------------------------------------------------------------------------------------------------------------------
   //----------------------------------------------------------------------------------------------------------------------
@@ -220,7 +221,7 @@ private:
   bool m_toggleObj;
   void objectTransform(uint);
   bool m_drawNormals;
-
+  bool m_drawGrid;
   float m_normalSize;
 
 
