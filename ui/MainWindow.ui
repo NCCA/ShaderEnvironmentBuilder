@@ -459,7 +459,7 @@
                     </rect>
                    </property>
                    <property name="text">
-                    <string>EXPORT UNIFORMS</string>
+                    <string>Export Uniforms</string>
                    </property>
                   </widget>
                   <widget class="QPushButton" name="m_printUniforms">
