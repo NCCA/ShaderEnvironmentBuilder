@@ -26,8 +26,8 @@ void ShaderManager::use(ngl::ShaderLib *_shader,uint shaderType)
   enum shader{objectShader=0,objectNormals=1};
   switch(shaderType)
   {
-    case objectShader :    (*_shader)[m_data.m_name]->use(); break;
-    case objectNormals:    (*_shader)["normalShader"]->use();break;
+    case objectShader :  {  (*_shader)[m_data.m_name]->use(); break;  }
+  case objectNormals:  {  (*_shader)["normalShader"]->use();break;  }
     default:               std::cerr<<"Invalid shaderType"<<std::endl; break;
   }
 }

@@ -385,8 +385,8 @@
                   <widget class="QSlider" name="m_normalSize">
                    <property name="geometry">
                     <rect>
-                     <x>250</x>
-                     <y>370</y>
+                     <x>100</x>
+                     <y>300</y>
                      <width>160</width>
                      <height>19</height>
                     </rect>
@@ -413,8 +413,8 @@
                   <widget class="QCheckBox" name="m_showWireframe">
                    <property name="geometry">
                     <rect>
-                     <x>10</x>
-                     <y>370</y>
+                     <x>0</x>
+                     <y>270</y>
                      <width>96</width>
                      <height>26</height>
                     </rect>
@@ -426,8 +426,8 @@
                   <widget class="QCheckBox" name="m_showNormals">
                    <property name="geometry">
                     <rect>
-                     <x>120</x>
-                     <y>350</y>
+                     <x>0</x>
+                     <y>290</y>
                      <width>96</width>
                      <height>26</height>
                     </rect>
@@ -439,14 +439,40 @@
                   <widget class="QCheckBox" name="m_showGrid">
                    <property name="geometry">
                     <rect>
-                     <x>20</x>
-                     <y>340</y>
+                     <x>0</x>
+                     <y>250</y>
                      <width>96</width>
                      <height>26</height>
                     </rect>
                    </property>
                    <property name="text">
                     <string>Grid</string>
+                   </property>
+                  </widget>
+                  <widget class="QPushButton" name="m_exportUniforms">
+                   <property name="geometry">
+                    <rect>
+                     <x>0</x>
+                     <y>220</y>
+                     <width>151</width>
+                     <height>31</height>
+                    </rect>
+                   </property>
+                   <property name="text">
+                    <string>EXPORT UNIFORMS</string>
+                   </property>
+                  </widget>
+                  <widget class="QPushButton" name="m_printUniforms">
+                   <property name="geometry">
+                    <rect>
+                     <x>150</x>
+                     <y>220</y>
+                     <width>121</width>
+                     <height>31</height>
+                    </rect>
+                   </property>
+                   <property name="text">
+                    <string>Print Uniforms</string>
                    </property>
                   </widget>
                  </widget>

@@ -214,53 +214,25 @@ void NGLScene::initializeGL()
   m_readFromXML->shaderData("WhyHelloThere", "PhongVertex", "shaders/PhongVertex.glsl", "PhongFragment", "shaders/PhongFragment.glsl");
   m_parser->assignAllData();
 
+  // Create
   m_mesh = std::unique_ptr<ngl::Obj> (new ngl::Obj(m_meshLoc));
   m_mesh->createVAO();
 
-  ngl::VAOPrimitives::instance()->createSphere("sphere",0.7,20);
+  // Create some default shapes
+  ngl::VAOPrimitives::instance()->createSphere("sphere",0.7,30);
   ngl::VAOPrimitives::instance()->createTorus("torus",0.3,0.7,20,20);
   ngl::VAOPrimitives::instance()->createLineGrid("Grid",10,10,10);
 
-
-
-
-
-
-
-
-
-
-
-
-}
-//----------------------------------------------------------------------------------------------------------------------
-void NGLScene::exportUniforms()
-{
-  std::ofstream fileOut;
-  fileOut.open("./tempFiles/ParsingOutput.txt");
-  if(!fileOut.is_open())    ///If it can be opened
-  {
-    std::cerr<<"couldn't' open file\n";
-    exit(EXIT_FAILURE);
-  }
-  for(uint i=0;i<m_parser->m_num;i++)
-  {
-    fileOut<<m_parser->m_uniformList[i]->getName()<<"\n";
-    fileOut<<m_parser->m_uniformList[i]->getLocation()<<"\n";
-    fileOut<<m_parser->m_uniformList[i]->getTypeName()<<"\n";
-  }
-  fileOut.close();
-  // close files
-  std::cout<<"EXPORTED\n"<<std::endl;
 }
 
 void NGLScene::setShapeType(int _type)
 {
-  if (_type<=7)
+  if (_type<=7 && _type>=0)
   {
     m_shapeType=_type;
     std::cout<<"new shape type is :"<<_type<<std::endl;
   }
+  // Don't update if
   else
   {
     std::cout<<"Invalid shape type"<<std::endl;
@@ -275,7 +247,6 @@ void NGLScene::setShapeType(int _type)
 void NGLScene::paintGL()
 {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
   if(m_wireframe == true)
   {
     glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
@@ -304,13 +275,13 @@ void NGLScene::paintGL()
 
   m_cam.setShape(m_fov, m_aspect, 0.5f, 150.0f);
   m_transform.reset();
-  ngl::Vec3 pos(0,2,0);
+  ngl::Vec3 pos(-1,-0.5,-1);
   drawAxis(pos);
   loadMatricesToShader();
 
   if (m_drawGrid)
   {
-    // draw a grid
+    // Draw a grid
     prim->draw("Grid");
   }
   if (m_toggleObj)
@@ -318,8 +289,10 @@ void NGLScene::paintGL()
     // Activate Obj
     toggleObj();
   }
+
+  // Set object transformation and draw
   objectTransform(m_shapeType);
-  drawObject(m_shapeType); //draw the object
+  drawObject(m_shapeType);
   if(m_drawNormals)
   {
     // set the shader to use the normalShader
@@ -342,6 +315,9 @@ void NGLScene::objectTransform(uint _type)
   ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
 
   enum geo {input=0,sphere=1,cube=2,torus=3,teapot=4,troll=5,dragon=6,bunny=7};
+
+  // Transform differently depending on the object being drawn
+  // Used to make all default shapes a similar size
   switch(_type)
   {
     case input : break;
@@ -354,7 +330,7 @@ void NGLScene::objectTransform(uint _type)
       m_transform.setScale(1.5,1.5,1.5);
       loadMatricesToShader();
       break;
-      // Moved the troll to be the same relative shape and position as other vaoprimitive objects
+      // Moved the troll to be the same relative shape and position
     }
     case dragon:
     {
@@ -362,7 +338,7 @@ void NGLScene::objectTransform(uint _type)
       m_transform.setPosition(0,-0.5,0);
       loadMatricesToShader();
       break;
-      // Moved the dragon to be the same relative shape and position as other vaoprimitive objects
+      // Moved the dragon to be the same relative shape and position
     }
     case bunny:
     {
@@ -370,7 +346,7 @@ void NGLScene::objectTransform(uint _type)
       m_transform.setPosition(0,-0.5,0);
       loadMatricesToShader();
       break;
-      // Moved the bunny to be the same relative shape and position as other vaoprimitive objects
+      // Moved the bunny to be the same relative shape and position
     }
     default: std::cout<<"unrecognised shape type value"<<std::endl; break;
   }
@@ -379,6 +355,8 @@ void NGLScene::drawObject(uint _type)
 {
   ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
   enum geo {input=0,sphere=1,cube=2,torus=3,teapot=4,troll=5,dragon=6,bunny=7};
+
+  // Draw different objects depending on the input value
   switch(_type)
   {
     case input : { m_mesh->draw();      break; }
@@ -388,8 +366,8 @@ void NGLScene::drawObject(uint _type)
     case teapot: { prim->draw("teapot");break; }
     case troll : { prim->draw("troll"); break; }
     case dragon: { prim->draw("dragon");break; }
-    case bunny:  { prim->draw("bunny"); break; }
-    default: std::cout<<"unrecognised shape type value"<<std::endl; break;
+    case bunny :  { prim->draw("bunny"); break; }
+    default    : std::cout<<"unrecognised shape type value"<<std::endl; break;
   }
 }
 
@@ -439,27 +417,23 @@ void NGLScene::setCamShape()
 }
 void NGLScene::toggleWireframe(bool _value)
 {
-  std::cout<< "TOGGLE WIREFRAME"<<std::endl;
-    m_wireframe=_value;
-    update();
+  m_wireframe=_value;
+  update();
 }
 void NGLScene::toggleNormals(bool _value)
 {
-    m_drawNormals=_value;
-    std::cout<< "TOGGLE NORMALS"<<std::endl;
-    update();
+  m_drawNormals=_value;
+  update();
 }
 void NGLScene::toggleGrid(bool _value)
 {
-    m_drawGrid=_value;
-    std::cout<< "TOGGLE GRID"<<std::endl;
-    update();
+  m_drawGrid=_value;
+  update();
 }
 
 void NGLScene::setNormalSize(int _size)
 {
   m_normalSize=_size/100.0f;
-  std::cout<< "doing a thing\n"<<_size<<"    "<<m_normalSize<<std::endl;
   update();
 }
 //----------------------------------------------------------------------------------------------------------------------
@@ -548,7 +522,6 @@ void NGLScene::wheelEvent ( QWheelEvent * _event )
 void NGLScene::compileShader(QString vertSource, QString fragSource)
 {
   m_shaderManager->compileShader(m_cam, vertSource, fragSource);
-  std::cout<<"before status: "<<m_shaderManager->compileStatus()<<std::endl;
   if(!m_shaderManager->compileStatus())
   {
     m_window->setTerminalText(parseString(m_shaderManager->getErrorLog()));
@@ -571,51 +544,65 @@ void NGLScene::compileShader(QString vertSource, QString fragSource)
 
 
 
-//------------------------------------------------------------------
+//------------------------------------------------------------------------------
+
 QString NGLScene::parseString(QString _string)
 {
-  std::vector<int> lineErrors;
+  // Declare a string to output
+  // And a list of integer to be used for line error highlighting
   QString outString;
+  std::vector<int> lineErrors;
+
+  // Separate the input _string into separate lines.
   QRegExp separateLines("\n");
   QStringList lines=_string.split(separateLines);
   uint len=lines.length();
+
   for (uint i=0;i<len;i++)
   {
+    // Split each line using braces; "(" and ")"
     QRegExp separateNumbers("(\\(|\\))");
     QStringList pieces=lines.value(i).split(separateNumbers);
     uint nLen=pieces.length();
+
     for (uint j=0;j<nLen;j++)
     {
+      // This is the how to get the Title (Shader file)
       if (pieces.length()==1 && pieces[j]!="")
       {
+        // Split the line using the "Remove Colon"
         QRegExp removeColon(":");
         QStringList title=pieces.value(j).split(removeColon);
-      //  std::cout<<"New Title:  " <<title[0].toStdString()<<std::endl;
       }
-
+      // If the first segment of the line is 0...
+      // remove it and replace it with "Line"
       if(pieces[j].length()==1 && j==0)
       {
         outString.append("Line ");
-        std::cout<<"TRUE"<<std::endl;
       }
       else
       {
+        // Add the rest of the string to the list
         outString.append(pieces.value(j));
+        // Add the second part of the line fragment as that is the line error number.
+        // This can be returned as a list of integers
         if (j==1)
         {
           lineErrors.push_back(pieces.value(j).toInt());
         }
       }
     }
+    // If it is the last line, add a new line to the string
     if (i!=len-1)
     {
       outString.append("\n");
     }
   }
   return outString;
-  //return lineErrors;
+  //return lineErrors;    // This wil return a list of integers
 }
 
+//------------------------------------------------------------------------------
 void NGLScene::resetObjPos()
 {
   //reset object position back to default
@@ -626,10 +613,19 @@ void NGLScene::resetObjPos()
   m_spinYFace = 0;
 }
 
+//------------------------------------------------------------------------------
 void NGLScene::newProject(std::string _name)
 {
   m_shaderManager->createShaderProgram(_name);
 }
+
+//------------------------------------------------------------------------------
+void NGLScene::exportUniform()
+{
+  m_parser->exportUniforms();
+}
+
+//------------------------------------------------------------------------------
 void NGLScene::drawAxis(ngl::Vec3 _pos)
 {
   // Instance the Shader

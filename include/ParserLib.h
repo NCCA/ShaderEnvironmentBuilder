@@ -47,14 +47,14 @@ public:
   void sendUniformsToShader(ngl::ShaderLib *shader);
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief prints the uniform location, data type and names
-  /// @param[in] _printValues is whether or not you want to print out values.
   //----------------------------------------------------------------------------------------------------------------------
-  void printUniforms(bool _printValues);
+  void printUniforms();
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief used to translate the data type name from a number into a name. e.g. 35676 -> mat4
   /// The following section was originally written by Jon Macey:-
   /// Jon Macey. NCCA library NGL::ShaderProgram::printRegisteredUniforms [online]. [Accessed 01/10/16].
   /// Available from: <https://nccastaff.bournemouth.ac.uk/jmacey/GraphicsLib/index.html>.
+  /// @Editor Adam Ting
   //----------------------------------------------------------------------------------------------------------------------
   void uniformDataTypes();
   //----------------------------------------------------------------------------------------------------------------------

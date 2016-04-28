@@ -60,6 +60,9 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   // switching to .obj files
   connect(m_ui->m_actionLoad_Obj,SIGNAL(triggered()),this,SLOT(on_actionLoad_obj_opened()));
 
+  connect(m_ui->m_exportUniforms,SIGNAL(clicked()),m_gl,SLOT(exportUniform()));
+  connect(m_ui->m_printUniforms ,SIGNAL(clicked()),this,SLOT(printUniforms()));
+
   connect(m_ui->m_showNormals,SIGNAL(toggled(bool)),m_gl,SLOT(toggleNormals(bool)));
   connect(m_ui->m_showWireframe,SIGNAL(toggled(bool)),m_gl,SLOT(toggleWireframe(bool)));
   connect(m_ui->m_showGrid,SIGNAL(toggled(bool)),m_gl,SLOT(toggleGrid(bool)));
@@ -103,7 +106,7 @@ void MainWindow::on_m_btn_compileShader_clicked()
 
 void MainWindow::printUniforms()
 {
-  m_parForButton->printUniforms(1);
+  m_parForButton->printUniforms();
 }
 
 void MainWindow::createButtons()
@@ -204,18 +207,21 @@ bool MainWindow::loadTextFileToTab(QString _path, Cebitor &_qsci)
 //----------------------------------------------------------------------------------------------------------------------
 void MainWindow::on_actionLoad_obj_opened()
 {
+  // Open a file dialog and return a file directory
   QString fileName=QFileDialog::getOpenFileName(this,
   tr("Open Mesh"),"0Features-0BugsCVA3/",tr("Image Files (*.obj)"));
+
   std::string importName=fileName.toStdString();
-  std::cout<<"IMPORT NAME :              "<<importName<<std::endl;
+  // Import the mesh
   m_gl->importMeshName(importName);
 }
 
 void MainWindow::on_actionLoad_shape_triggered()
 {
+  //get the action
   QAction *action = static_cast<QAction*>(sender());
   int a=0;
-
+  // apply a different shape depending on the button clicked
   if (action==m_ui->m_actionLoad_Sphere)  {   a=1;  }
   if (action==m_ui->m_actionLoad_Cube)    {   a=2;  }
   if (action==m_ui->m_actionLoad_Torus)   {   a=3;  }
@@ -223,7 +229,7 @@ void MainWindow::on_actionLoad_shape_triggered()
   if (action==m_ui->m_actionLoad_Troll)   {   a=5;  }
   if (action==m_ui->m_actionLoad_Dragon)  {   a=6;  }
   if (action==m_ui->m_actionLoad_Bunny)   {   a=7;  }
-
+  //set the shape
   m_gl->setShapeType(a);
 }
 void MainWindow::setTerminalText(QString _txt)
@@ -264,7 +270,6 @@ void MainWindow::on_actionNew_triggered()
 void MainWindow::keyPressEvent(QKeyEvent *_event)
 {
   // that method is called every time the main window recives a key event.
-  // we then switch on the key value and set the camera in the GLWindow
   switch (_event->key())
   {
     case Qt::Key_W : {m_ui->m_showWireframe->toggle(); break;}
