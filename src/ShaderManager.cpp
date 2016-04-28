@@ -120,6 +120,7 @@ void ShaderManager::initialize(ngl::Camera _cam)
 //----------------------------------------------------------------------------------------------------------------------
 void ShaderManager::compileShader(ngl::Camera _cam, QString vertSource, QString fragSource)
 {
+  m_errorLog.clear();
   ngl::ShaderLib *shaderLib=ngl::ShaderLib::instance();
 
   std::cout<< "name " << m_data.m_name << "\n";
@@ -139,7 +140,8 @@ void ShaderManager::compileShader(ngl::Camera _cam, QString vertSource, QString 
   }
   else
   {
-    m_compileStatus = false;
+    m_compileStatus = true;
+    m_errorLog.append("No Errors");
     // add them to the program
     shaderLib->attachShaderToProgram("Phong","PhongVertex");
     shaderLib->attachShaderToProgram("Phong","PhongFragment");
@@ -188,17 +190,19 @@ bool ShaderManager::checkCompileError(std::string _shaderProgName, QString *o_lo
 
 bool ShaderManager::checkAllCompileError(QString *o_log)
 {
-  GLint isCompiled = GL_TRUE;
+  GLint isAllCompiled = GL_TRUE;
   QString temp_log;
   std::vector <std::string> shaderPrograms = {m_data.m_vert, m_data.m_frag};
+
   for (auto shaderProg: shaderPrograms)
   {
-    isCompiled &= checkCompileError(shaderProg, &temp_log);
+    GLint isCompiled = checkCompileError(shaderProg, &temp_log);
     if (!isCompiled)
     {
       o_log->append(QString("%1:\n").arg(shaderProg.c_str()));
       o_log->append(temp_log);
     }
+    isAllCompiled &= isCompiled;
   }
-  return isCompiled;
+  return isAllCompiled;
 }
