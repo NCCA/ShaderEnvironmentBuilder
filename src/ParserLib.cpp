@@ -165,35 +165,35 @@ void parserLib::printUniforms()
       }
       case GL_FLOAT_MAT3:
       {
-        std::cout<<"m_mat3:(x) "<<m_uniformList[i]->getMat3().m_00
-                                <<m_uniformList[i]->getMat3().m_01
-                                <<m_uniformList[i]->getMat3().m_02<<std::endl;
-        std::cout<<"m_mat3:(y) "<<m_uniformList[i]->getMat3().m_10
-                                <<m_uniformList[i]->getMat3().m_11
-                                <<m_uniformList[i]->getMat3().m_12<<std::endl;
-        std::cout<<"m_mat3:(z) "<<m_uniformList[i]->getMat3().m_20
-                                <<m_uniformList[i]->getMat3().m_21
-                                <<m_uniformList[i]->getMat3().m_22<<std::endl;
+//        std::cout<<"m_mat3:(x) "<<m_uniformList[i]->getMat3().m_00
+//                                <<m_uniformList[i]->getMat3().m_01
+//                                <<m_uniformList[i]->getMat3().m_02<<std::endl;
+//        std::cout<<"m_mat3:(y) "<<m_uniformList[i]->getMat3().m_10
+//                                <<m_uniformList[i]->getMat3().m_11
+//                                <<m_uniformList[i]->getMat3().m_12<<std::endl;
+//        std::cout<<"m_mat3:(z) "<<m_uniformList[i]->getMat3().m_20
+//                                <<m_uniformList[i]->getMat3().m_21
+//                                <<m_uniformList[i]->getMat3().m_22<<std::endl;
         break;
       }
       case GL_FLOAT_MAT4:
       {
-        std::cout<<"m_mat3:(x) "<<m_uniformList[i]->getMat4().m_00
-                                <<m_uniformList[i]->getMat4().m_01
-                                <<m_uniformList[i]->getMat4().m_02
-                                <<m_uniformList[i]->getMat4().m_03<<std::endl;
-        std::cout<<"m_mat3:(y) "<<m_uniformList[i]->getMat4().m_10
-                                <<m_uniformList[i]->getMat4().m_11
-                                <<m_uniformList[i]->getMat4().m_12
-                                <<m_uniformList[i]->getMat4().m_13<<std::endl;
-        std::cout<<"m_mat3:(z) "<<m_uniformList[i]->getMat4().m_20
-                                <<m_uniformList[i]->getMat4().m_21
-                                <<m_uniformList[i]->getMat4().m_22
-                                <<m_uniformList[i]->getMat4().m_23<<std::endl;
-        std::cout<<"m_mat3:(w) "<<m_uniformList[i]->getMat4().m_30
-                                <<m_uniformList[i]->getMat4().m_31
-                                <<m_uniformList[i]->getMat4().m_32
-                                <<m_uniformList[i]->getMat4().m_33<<std::endl;
+//        std::cout<<"m_mat3:(x) "<<m_uniformList[i]->getMat4().m_00
+//                                <<m_uniformList[i]->getMat4().m_01
+//                                <<m_uniformList[i]->getMat4().m_02
+//                                <<m_uniformList[i]->getMat4().m_03<<std::endl;
+//        std::cout<<"m_mat3:(y) "<<m_uniformList[i]->getMat4().m_10
+//                                <<m_uniformList[i]->getMat4().m_11
+//                                <<m_uniformList[i]->getMat4().m_12
+//                                <<m_uniformList[i]->getMat4().m_13<<std::endl;
+//        std::cout<<"m_mat3:(z) "<<m_uniformList[i]->getMat4().m_20
+//                                <<m_uniformList[i]->getMat4().m_21
+//                                <<m_uniformList[i]->getMat4().m_22
+//                                <<m_uniformList[i]->getMat4().m_23<<std::endl;
+//        std::cout<<"m_mat3:(w) "<<m_uniformList[i]->getMat4().m_30
+//                                <<m_uniformList[i]->getMat4().m_31
+//                                <<m_uniformList[i]->getMat4().m_32
+//                                <<m_uniformList[i]->getMat4().m_33<<std::endl;
         break;
       }
       default:
@@ -400,40 +400,42 @@ void parserLib::exportUniforms()
         fileOut<<m_uniformList[i]->getVec4().m_w<<"\n";
         break;
       }
-//      case GL_FLOAT_MAT3:
-//      {
-//        fileOut<<m_uniformList[i]->getMat3().m_00<<" ";
-//        fileOut<<m_uniformList[i]->getMat3().m_01<<" ";
-//        fileOut<<m_uniformList[i]->getMat3().m_02<<" ";
+      case GL_FLOAT_MAT3:
+      {
 
-//        fileOut<<m_uniformList[i]->getMat3().m_10<<" ";
-//        fileOut<<m_uniformList[i]->getMat3().m_11<<" ";
-//        fileOut<<m_uniformList[i]->getMat3().m_12<<" ";
+        fileOut<<m_uniformList[i]->getMat3().m_00<<" ";
+        fileOut<<m_uniformList[i]->getMat3().m_01<<" ";
+        fileOut<<m_uniformList[i]->getMat3().m_02<<" ";
 
-//        fileOut<<m_uniformList[i]->getMat3().m_20<<" ";
-//        fileOut<<m_uniformList[i]->getMat3().m_21<<" ";
-//        fileOut<<m_uniformList[i]->getMat3().m_22<<"\n";
+        fileOut<<m_uniformList[i]->getMat3().m_10<<" ";
+        fileOut<<m_uniformList[i]->getMat3().m_11<<" ";
+        fileOut<<m_uniformList[i]->getMat3().m_12<<" ";
 
-//        break;
-//      }
-//      case GL_FLOAT_MAT4:
-//      {
-//        fileOut<<m_uniformList[i]->getMat4().m_00<<" ";
-//        fileOut<<m_uniformList[i]->getMat4().m_01<<" ";
-//        fileOut<<m_uniformList[i]->getMat4().m_02<<" ";
-//        fileOut<<m_uniformList[i]->getMat4().m_03<<" ";
+        fileOut<<m_uniformList[i]->getMat3().m_20<<" ";
+        fileOut<<m_uniformList[i]->getMat3().m_21<<" ";
+        fileOut<<m_uniformList[i]->getMat3().m_22<<"\n";
 
-//        fileOut<<m_uniformList[i]->getMat4().m_10<<" ";
-//        fileOut<<m_uniformList[i]->getMat4().m_11<<" ";
-//        fileOut<<m_uniformList[i]->getMat4().m_12<<" ";
-//        fileOut<<m_uniformList[i]->getMat4().m_13<<" ";
+        break;
+      }
+      case GL_FLOAT_MAT4:
+      {
+        fileOut<<m_uniformList[i]->getMat4().m_00<<" ";
+        fileOut<<m_uniformList[i]->getMat4().m_01<<" ";
+        fileOut<<m_uniformList[i]->getMat4().m_02<<" ";
+        fileOut<<m_uniformList[i]->getMat4().m_03<<" ";
 
-//        fileOut<<m_uniformList[i]->getMat4().m_20<<" ";
-//        fileOut<<m_uniformList[i]->getMat4().m_21<<" ";
-//        fileOut<<m_uniformList[i]->getMat4().m_22<<" ";
-//        fileOut<<m_uniformList[i]->getMat4().m_23<<"\n";
-//        break;
-//      }
+        fileOut<<m_uniformList[i]->getMat4().m_10<<" ";
+        fileOut<<m_uniformList[i]->getMat4().m_11<<" ";
+        fileOut<<m_uniformList[i]->getMat4().m_12<<" ";
+        fileOut<<m_uniformList[i]->getMat4().m_13<<" ";
+
+        fileOut<<m_uniformList[i]->getMat4().m_20<<" ";
+        fileOut<<m_uniformList[i]->getMat4().m_21<<" ";
+        fileOut<<m_uniformList[i]->getMat4().m_22<<" ";
+        fileOut<<m_uniformList[i]->getMat4().m_23<<"\n";
+
+        break;
+      }
     default:std::cerr<<"unrecognised data type name"<<std::endl;
     }
   }
