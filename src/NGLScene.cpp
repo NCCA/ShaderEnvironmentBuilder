@@ -522,10 +522,7 @@ void NGLScene::wheelEvent ( QWheelEvent * _event )
 void NGLScene::compileShader(QString vertSource, QString fragSource)
 {
   m_shaderManager->compileShader(m_cam, vertSource, fragSource);
-  if(!m_shaderManager->compileStatus())
-  {
-    m_window->setTerminalText(parseString(m_shaderManager->getErrorLog()));
-  }
+  m_window->setTerminalText(parseString(m_shaderManager->getErrorLog()));
   ngl::Light light(ngl::Vec3(2,2,2),ngl::Colour(1,1,1,1),ngl::Colour(1,1,1,1),ngl::LightModes::POINTLIGHT);
   // now create our light this is done after the camera so we can pass the
   // transpose of the projection matrix to the light to do correct eye space
