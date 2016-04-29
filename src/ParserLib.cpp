@@ -366,8 +366,6 @@ void parserLib::exportUniforms()
     fileOut<<m_uniformList[i]->getName()<<"\n";
     fileOut<<m_uniformList[i]->getLocation()<<"\n";
     fileOut<<m_uniformList[i]->getTypeName()<<"\n";
-    // Was going to implement the default values, but exportUniforms() is now deprecated
-
     switch(m_uniformList[i]->getTypeEnum())
     {
       case GL_BOOL:
@@ -507,6 +505,8 @@ void parserLib::assignUniformValues()
 //----------------------------------------------------------------------------------------------------------------------
 void parserLib::sendUniformsToShader(ngl::ShaderLib *shader)
 {
+
+  // set shader values depending on it's data type
   for (uint i=0;i<m_num;i++)
   {
     switch(m_uniformList[i]->getTypeEnum())
