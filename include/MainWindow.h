@@ -5,6 +5,7 @@
 #include "NGLScene.h"
 #include <QMainWindow>
 #include "ParserLib.h"
+#include "ButtonLib.h"
 #include "button.h"
 #include "Cebitor.h"
 #include <vector>
@@ -89,6 +90,10 @@ private:
   //----------------------------------------------------------------------------------------------------------------------
   parserLib *m_parForButton;
   //----------------------------------------------------------------------------------------------------------------------
+  /// @brief button library used for button creation and uniform value setting
+  //----------------------------------------------------------------------------------------------------------------------
+  ButtonLib *m_buttonLibrary;
+  //----------------------------------------------------------------------------------------------------------------------
   /// @brief create QsciScintilla widget in the style of sublime defaults
   /// @param [in] _parent the parent widget to fill with the new Qsci Widget
   //----------------------------------------------------------------------------------------------------------------------
@@ -100,7 +105,7 @@ private:
   //----------------------------------------------------------------------------------------------------------------------
   bool loadTextFileToTab(QString _path, Cebitor &_qsci);
 
-  std::vector<Button*> m_buttonList;
+  //std::vector<Button*> m_buttonList;
 
 };
 
