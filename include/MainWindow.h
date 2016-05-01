@@ -85,7 +85,9 @@ private:
   //----------------------------------------------------------------------------------------------------------------------
   NGLScene *m_gl;
   //----------------------------------------------------------------------------------------------------------------------
-
+  /// @brief parser used for button creation and uniform value setting
+  //----------------------------------------------------------------------------------------------------------------------
+  parserLib *m_parForButton;
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief create QsciScintilla widget in the style of sublime defaults
   /// @param [in] _parent the parent widget to fill with the new Qsci Widget
@@ -98,7 +100,6 @@ private:
   //----------------------------------------------------------------------------------------------------------------------
   bool loadTextFileToTab(QString _path, Cebitor &_qsci);
 
-  parserLib *m_parForButton;
   std::vector<Button*> m_buttonList;
 
 };

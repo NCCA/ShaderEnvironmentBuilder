@@ -91,7 +91,6 @@ void MainWindow::on_m_btn_compileShader_clicked()
   m_gl->compileShader();
   //m_parForButton->printUniforms(1);
   createButtons();
-  //TEST VAR m_parForButton->m_uniformList[12]->setVec4(ngl::Vec4(0.2f,0.8f,0.1f,1.0f));
   updateShaderValues();
 }
 
