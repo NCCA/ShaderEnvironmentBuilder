@@ -199,8 +199,6 @@ void MainWindow::updateShaderValues()
   }
 }
 
-
-
 //----------------------------------------------------------------------------------------------------------------------
 void MainWindow::on_m_tabs_qsci_currentChanged(int _index)
 {

@@ -40,7 +40,11 @@ void colourButton::printAttributes()
 
 void colourButton::openBox()
 {
-  m_colourPicked=m_colourGroupBox->getColor();
+  //these are set so when the colour picker is opened the current colour is opened
+  m_colourPicked.setRedF(m_colour.m_x);
+  m_colourPicked.setGreenF(m_colour.m_y);
+  m_colourPicked.setBlueF(m_colour.m_z);
+  m_colourPicked=m_colourGroupBox->getColor(m_colourPicked);
   m_colour.set(m_colourPicked.redF(),
                m_colourPicked.greenF(),
                m_colourPicked.blueF(),
@@ -60,7 +64,7 @@ void colourButton::setColour(QColor _col)
 void floatButton::openBox()
 {
   m_window = new QDialog;
-  double val = QInputDialog::getDouble(this, tr("Input"), tr("Input"));
+  double val = QInputDialog::getDouble(this, tr("Input"), tr("Input"), m_value, -5.0, 5.0, 3);
   m_value=val;
   //printValues();
 }
