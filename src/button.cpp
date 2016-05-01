@@ -68,10 +68,10 @@ void colourButton::openBox()
   //colourBoxLayout = new QGridLayout;
   //colourGroupBox->setLayout(colourBoxLayout);
   m_colourPicked=m_colourGroupBox->getColor();
-
   m_colour.set(m_colourPicked.redF(),
                m_colourPicked.greenF(),
-               m_colourPicked.blueF());
+               m_colourPicked.blueF(),
+               m_colourPicked.alphaF());
   //printValues();
 }
 
@@ -93,4 +93,13 @@ void floatButton::openBox()
 //  m_window->show();
 
   //printValues();
+}
+
+void colourButton::setColour(QColor _col)
+{
+  m_colourPicked=_col;
+  m_colour.set(_col.redF(),
+               _col.greenF(),
+               _col.blueF(),
+               _col.alphaF());
 }
