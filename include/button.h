@@ -37,10 +37,17 @@ class Button : public QDialog
 
 public:
   //----------------------------------------------------------------------------------------------------------------------
-  /// @brief constructor to create the button, custom variables can also be assigned
+  /// @brief default constructor to create the button
   /// @param [in] the parent window is defaulted to nothing
   //----------------------------------------------------------------------------------------------------------------------
   Button(QWidget *parent=0);
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief constructor to create the button, custom variables can also be assigned
+  /// @param [in] name of the button to be used
+  /// @param [in] the layout environment for the button to be attached to
+  /// @param [in] the id used to access the button information
+  /// @param [in] the parent window is defaulted to nothing
+  //----------------------------------------------------------------------------------------------------------------------
   Button(QString _buttonName,
          QLayout *_layout,
          unsigned int _id,
@@ -51,7 +58,7 @@ public:
   //----------------------------------------------------------------------------------------------------------------------
   QString getName() {return m_buttonName;}
   //----------------------------------------------------------------------------------------------------------------------
-  /// @brief sets the current ID for the button, based on its' shader location
+  /// @brief sets the current ID for the button, from its' shader location
   //----------------------------------------------------------------------------------------------------------------------
   void setID(unsigned int _id) {m_id=_id;}
   //----------------------------------------------------------------------------------------------------------------------
@@ -61,6 +68,7 @@ public:
   unsigned int getID() {return m_id;}
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief sets the colour to be used by colour buttons
+  /// @param [in] the colour to be set within the colourButton class
   //----------------------------------------------------------------------------------------------------------------------
   virtual void setColour(QColor _col) {return;}
   //----------------------------------------------------------------------------------------------------------------------
@@ -68,7 +76,10 @@ public:
   /// @return m_colour
   //----------------------------------------------------------------------------------------------------------------------
   virtual ngl::Vec4 getColour() {return ngl::Vec4();}
-
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief sets the value to be for float attributes
+  /// @param [in] the value to be set within the floatButton class
+  //----------------------------------------------------------------------------------------------------------------------
   virtual void setValue(float _val) {return;}
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief returns the value, stored by the button
