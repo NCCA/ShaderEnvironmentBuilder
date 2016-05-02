@@ -13,6 +13,7 @@
 #include <typeinfo>
 #include <QColorDialog>
 #include <QString>
+#include <ngl/Texture.h>
 
 //----------------------------------------------------------------------------------------------------------------------
 /// @brief the increment for x/y translation with mouse movement
@@ -150,6 +151,9 @@ void NGLScene::importMeshName(const std::string &name)
     m_toggleObj=true;
   }
 
+
+  //clear all loaded textures
+  glDeleteTextures(1,&m_textureName);
 }
 
 //----------------------------------------------------------------------------------------------------------------------
