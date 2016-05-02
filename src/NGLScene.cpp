@@ -13,6 +13,7 @@
 #include <typeinfo>
 #include <QColorDialog>
 #include <QString>
+#include <ngl/Texture.h>
 
 //----------------------------------------------------------------------------------------------------------------------
 /// @brief the increment for x/y translation with mouse movement
@@ -100,6 +101,9 @@ NGLScene::~NGLScene()
   delete m_newJson;
   //delete m_readFromXML;
   delete m_parser;
+
+  //clear all loaded textures
+  glDeleteTextures(1,&m_textureName);
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -140,6 +144,8 @@ void NGLScene::initializeGL()
   shader->compileShader("PhongFragment");
   shader->compileShader("PhongVertex");
 
+
+
   //Store programs in std::vector and traverse to prevent duplicating code
   std::vector<std::string> programs = {"PhongFragment", "PhongVertex"};
 
@@ -172,6 +178,13 @@ void NGLScene::initializeGL()
     shader->linkProgramObject("Phong");
     // and make it active ready to load values
     (*shader)["Phong"]->use();
+
+
+    //load in texture map, can be edited
+    //Look for QDir
+    ngl::Texture texture("textures/woodTexture.jpg");
+    m_textureName=texture.setTextureGL();
+
     shader->setShaderParam1i("Normalize",1);
     shader->setShaderParam3f("viewerPos",m_cam.getEye().m_x,m_cam.getEye().m_y,m_cam.getEye().m_z);
     // now pass the modelView and projection values to the shader
@@ -233,6 +246,9 @@ void NGLScene::paintGL()
 {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+  //Need to bind textures here
+  glBindTexture(GL_TEXTURE_2D,m_textureName);
+
   if(m_wireframe == true)
   {
     glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
@@ -241,6 +257,9 @@ void NGLScene::paintGL()
   {
     glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
   }
+
+
+
 
   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
   (*shader)["Phong"]->use();

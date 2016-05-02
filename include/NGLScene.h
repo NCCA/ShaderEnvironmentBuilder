@@ -208,6 +208,8 @@ private:
   //----------------------------------------------------------------------------------------------------------------------
   void exportUniforms();
 
+  GLuint m_textureName;
+
   std::unique_ptr<ngl::Text> m_text; //Text for errors etc
 
   bool m_shaderError;
