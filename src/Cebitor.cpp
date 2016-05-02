@@ -76,6 +76,7 @@ Cebitor::Cebitor(QWidget *_parent) : QsciScintilla(_parent)
   connect(this, SIGNAL(SCN_CHARADDED(int)), this, SLOT(charAdded(int)));
 }
 
+//----------------------------------------------------------------------------------------------------------------------
 bool Cebitor::loadTextFiles(const std::vector<QString> _paths)
 {
   int numPaths;
@@ -102,6 +103,13 @@ bool Cebitor::loadTextFiles(const std::vector<QString> _paths)
     m_fileMarkers.push_back(markerHandle);
   }
   return true;
+}
+
+//----------------------------------------------------------------------------------------------------------------------
+void Cebitor::clearErrors()
+{
+  markerDeleteAll(MarkerType::ERROR);
+  markerDeleteAll(MarkerType::WARNING);
 }
 
 //----------------------------------------------------------------------------------------------------------------------
