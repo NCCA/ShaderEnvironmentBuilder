@@ -97,6 +97,8 @@ NGLScene::NGLScene( QWidget *_parent, parserLib *_libParent ) : QOpenGLWidget( _
   m_wireframe=false;
   m_fov=65.0;
   m_shaderManager = new ShaderManager();
+  m_camera = new Camera();
+  m_cameraIndex = 0;
   // set this widget to have the initial keyboard focus
   setFocus();
 }
@@ -175,15 +177,10 @@ void NGLScene::initializeGL()
   // enable multisampling for smoother drawing
   glEnable(GL_MULTISAMPLE);
 
-  // create our camera
-  ngl::Vec3 eye(2,0.5,2);
-  ngl::Vec3 look(0,0,0);
-  ngl::Vec3 up(0,1,0);
-  m_cam.set(eye,look,up);
-  setCamShape();
+  m_cameras = m_camera->createCamera();  //returns vector of cameras
   // now to load the shader and set the values
   // grab an instance of shader manager
-  m_shaderManager->initialize(m_cam);
+  m_shaderManager->initialize(m_cameras[m_cameraIndex]);
 
   if(!m_shaderManager->compileStatus())
   {
@@ -196,7 +193,7 @@ void NGLScene::initializeGL()
     //transformations
     ngl::Light light(ngl::Vec3(2,2,2),ngl::Colour(1,1,1,1),ngl::Colour(1,1,1,1),ngl::LightModes::POINTLIGHT);
 
-    ngl::Mat4 iv=m_cam.getViewMatrix();
+    ngl::Mat4 iv=m_cameras[m_cameraIndex].getViewMatrix();
     iv.transpose();
 
     light.setTransform(iv);
@@ -277,7 +274,7 @@ void NGLScene::paintGL()
   m_mouseGlobalTX.m_m[3][2] = m_modelPos.m_z;
   ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
 
-  m_cam.setShape(m_fov, m_aspect, 0.5f, 150.0f);
+  m_cameras[m_cameraIndex].setShape(m_fov, m_aspect, 0.5f, 150.0f);
   m_transform.reset();
   ngl::Vec3 pos(-1,-0.5,-1);
   drawAxis(pos);
@@ -303,8 +300,8 @@ void NGLScene::paintGL()
     m_shaderManager->use(shaderLib,1);
     ngl::Mat4 MV;
     ngl::Mat4 MVP;
-    MV=m_transform.getMatrix()*m_mouseGlobalTX* m_cam.getViewMatrix();
-    MVP=MV*m_cam.getProjectionMatrix();
+    MV=m_transform.getMatrix()*m_mouseGlobalTX* m_cameras[m_cameraIndex].getViewMatrix();
+    MVP=MV*m_cameras[m_cameraIndex].getProjectionMatrix();
     // set the uniform to use the current transformations
     shaderLib->setUniform("MVP",MVP);
     // set the normalSize
@@ -378,13 +375,13 @@ void NGLScene::drawObject(uint _type)
 //----------------------------------------------------------------------------------------------------------------------
 void NGLScene::resizeGL(QResizeEvent *_event)
 {
-  setCamShape();
+  setCameraShape(QString::fromStdString("Persp"));
 }
 
 //----------------------------------------------------------------------------------------------------------------------
 void NGLScene::resizeGL(int _w, int _h)
 {
-  setCamShape();
+  setCameraShape(QString::fromStdString("Persp"));
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -399,8 +396,8 @@ void NGLScene::loadMatricesToShader()
   ngl::Mat4 M;
 
   M=m_transform.getMatrix()*m_mouseGlobalTX;
-  MV=  M*m_cam.getViewMatrix();
-  MVP= M*m_cam.getVPMatrix();
+  MV=  M*m_cameras[m_cameraIndex].getViewMatrix();
+  MVP= M*m_cameras[m_cameraIndex].getVPMatrix();
   normalMatrix=MV;
   normalMatrix.inverse();
 
@@ -415,7 +412,7 @@ void NGLScene::loadMatricesToShader()
 void NGLScene::setCamShape()
 {
   m_aspect=(float)width()/height();
-  m_cam.setShape(m_fov, m_aspect, 0.5f, 150.0f);
+  m_cameras[m_cameraIndex].setShape(m_fov, m_aspect, 0.5f, 150.0f);
 
 
 }
@@ -525,13 +522,13 @@ void NGLScene::wheelEvent ( QWheelEvent * _event )
 //----------------------------------------------------------------------------------------------------------------------
 void NGLScene::compileShader(QString vertSource, QString fragSource)
 {
-  m_shaderManager->compileShader(m_cam, vertSource, fragSource);
+  m_shaderManager->compileShader(m_cameras[m_cameraIndex], vertSource, fragSource);
   m_window->setTerminalText(parseString(m_shaderManager->getErrorLog()));
   ngl::Light light(ngl::Vec3(2,2,2),ngl::Colour(1,1,1,1),ngl::Colour(1,1,1,1),ngl::LightModes::POINTLIGHT);
   // now create our light this is done after the camera so we can pass the
   // transpose of the projection matrix to the light to do correct eye space
   // transformations
-  ngl::Mat4 iv=m_cam.getViewMatrix();
+  ngl::Mat4 iv=m_cameras[m_cameraIndex].getViewMatrix();
   iv.transpose();
 
   light.setTransform(iv);
@@ -660,4 +657,48 @@ void NGLScene::drawAxis(ngl::Vec3 _pos)
   shaderLib->setShaderParam4f("Colour",0,0,1,1); //Not entirely sure if this is the best way, as the name "Colour" could be changed....
   prim->draw("cube");
   m_transform.reset();
+}
+
+
+
+//----------------------------------------------------------------------------------------------------------------------
+// Sets the view of the camera (persp, top, bottom, side).
+void NGLScene::setCameraShape(QString _view)
+{
+  m_cameraIndex = m_camera->setCameraShape(_view);
+  m_modelPos.m_x=0;
+  m_modelPos.m_y=0;
+  m_modelPos.m_z=0;
+  m_spinXFace=0;
+  m_spinYFace=0;
+  m_aspect=(float)width()/height();
+  for(auto &cam : m_cameras)
+    {
+      cam.setShape(m_fov,m_aspect, 0.5f,150.0f);
+    }
+  update();
+}
+
+//----------------------------------------------------------------------------------------------------------------------
+// Signal passed from the UI to set the camera FOV
+void NGLScene::setCameraFocalLength(int _focalLength)
+{
+    m_fov= _focalLength;
+    update();
+}
+
+//----------------------------------------------------------------------------------------------------------------------
+// Signal passed from the UI to set the camera roll.
+void NGLScene::setCameraRoll(double _cameraRoll)
+{
+    m_cameras[m_cameraIndex] = m_camera->cameraRoll(m_cameras[m_cameraIndex], _cameraRoll);
+    update();
+}
+
+//----------------------------------------------------------------------------------------------------------------------
+// Signal passed from the UI to set the camera yaw.
+void NGLScene::setCameraYaw(double _cameraYaw)
+{
+    m_cameras[m_cameraIndex] = m_camera->cameraYaw(m_cameras[m_cameraIndex], _cameraYaw);
+    update();
 }

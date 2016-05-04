@@ -346,7 +346,7 @@
                        </widget>
                       </item>
                       <item>
-                       <widget class="QSlider" name="m_sldr_cameraAspect">
+                       <widget class="QSlider" name="m_sldr_cameraFov">
                         <property name="orientation">
                          <enum>Qt::Horizontal</enum>
                         </property>
