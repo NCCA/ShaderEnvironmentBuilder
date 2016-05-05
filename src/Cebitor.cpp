@@ -76,32 +76,11 @@ Cebitor::Cebitor(QWidget *_parent) : QsciScintilla(_parent)
   connect(this, SIGNAL(SCN_CHARADDED(int)), this, SLOT(charAdded(int)));
 }
 
-bool Cebitor::loadTextFiles(const std::vector<QString> _paths)
+//----------------------------------------------------------------------------------------------------------------------
+void Cebitor::clearErrors()
 {
-  int numPaths;
-  numPaths = _paths.size();
-  for(int i=0; i<numPaths; i++)
-  {
-    QString fileText;
-    QFile file(_paths[i]);
-
-    // Open the file as readonly and text and ensure it loaded correctly
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-    {
-      // Raise an error if failed
-      ceb_raise::QtFileError(file.error(), _paths[i]);
-      return false;
-    }
-
-    // Fead the text into the tab if successful, adding to the end of the existing text
-    QTextStream in(&file);
-    int startingLines = text().count("\n");
-    fileText = text() + in.readAll() + QString("\n");
-    setText(fileText);
-    int markerHandle = markerAdd(startingLines,2);
-    m_fileMarkers.push_back(markerHandle);
-  }
-  return true;
+  markerDeleteAll(MarkerType::ERROR);
+  markerDeleteAll(MarkerType::WARNING);
 }
 
 //----------------------------------------------------------------------------------------------------------------------
