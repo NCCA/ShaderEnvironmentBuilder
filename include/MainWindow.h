@@ -66,6 +66,13 @@ public:
   void showStartDialog();
   //----------------------------------------------------------------------------------------------------------------------
   //----------------------------------------------------------------------------------------------------------------------
+public slots:
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief adds line marker to text editor for _shaderName at lineNum
+  /// @param [in] _shaderName Name of the shader type
+  /// @param [in] _lineNum line to add error symbol at
+  //----------------------------------------------------------------------------------------------------------------------
+  void addError(QString _shaderName, int _lineNum);
 private slots:
   //----------------------------------------------------------------------------------------------------------------------
   //----------------------------------------------------------------------------------------------------------------------
@@ -74,14 +81,18 @@ private slots:
   void on_m_btn_compileShader_clicked();
   //----------------------------------------------------------------------------------------------------------------------
   //----------------------------------------------------------------------------------------------------------------------
-  void on_actionLoad_shape_triggered();
-  void on_actionLoad_obj_opened();
+  void shapeTriggered();
+  void objOpened();
   void on_actionStartup_Window_triggered();
   void on_actionNew_triggered();
   void on_actionSaveProject_triggered();
   void on_actionSaveProjectAs_triggered();
   void printUniforms();
 
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief function that is activated when Load Texture is clicked
+  void on_m_actionLoad_Texture_triggered();
+  //----------------------------------------------------------------------------------------------------------------------
 
   void on_actionOpen_triggered();
   
@@ -126,7 +137,7 @@ private:
   /// @param [in] _event the Qt event to query for size etc
   //----------------------------------------------------------------------------------------------------------------------
   void keyPressEvent(QKeyEvent *_event);
-
+  //----------------------------------------------------------------------------------------------------------------------
   parserLib *m_parForButton;
   std::vector<Button*> m_buttonList;
 

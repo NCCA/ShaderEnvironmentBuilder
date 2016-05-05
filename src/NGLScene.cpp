@@ -109,6 +109,10 @@ NGLScene::~NGLScene()
   //delete m_readFromXML;
   delete m_parser;
   delete m_shaderManager;
+
+  //Clear any existing texture maps
+  glDeleteTextures(1,&m_textureName);
+
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -154,9 +158,16 @@ void NGLScene::importMeshName(const std::string &name)
   }
 
 
-  //clear all loaded textures
-  glDeleteTextures(1,&m_textureName);
 }
+
+void NGLScene::importTextureMap(const string &name)
+{
+  std::ifstream textureSource(name.c_str());
+  ngl::Texture texture (name);
+  m_textureName=texture.setTextureGL();
+
+}
+
 
 //----------------------------------------------------------------------------------------------------------------------
 
@@ -182,9 +193,13 @@ void NGLScene::initializeGL()
   // grab an instance of shader manager
   m_shaderManager->initialize(m_cameras[m_cameraIndex]);
 
+  ngl::Texture texture ("textures/metalTexture.jpg");
+  m_textureName=texture.setTextureGL();
+
+
   if(!m_shaderManager->compileStatus())
   {
-    m_window->setTerminalText(m_shaderManager->getErrorLog());
+    m_window->setTerminalText(parseErrorLog(m_shaderManager->getErrorLog()));
   }
   if(m_shaderManager->isInit())
   {
@@ -254,6 +269,7 @@ void NGLScene::paintGL()
   }
   else
   {
+    //glBindTexture(GL_TEXTURE_2D, m_textureName);
     glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
   }
   ngl::ShaderLib *shaderLib=ngl::ShaderLib::instance();
@@ -272,6 +288,11 @@ void NGLScene::paintGL()
   m_mouseGlobalTX.m_m[3][0] = m_modelPos.m_x;
   m_mouseGlobalTX.m_m[3][1] = m_modelPos.m_y;
   m_mouseGlobalTX.m_m[3][2] = m_modelPos.m_z;
+
+  //draw initial texture map
+  glBindTexture(GL_TEXTURE_2D, m_textureName);
+  m_shaderManager->use(0);
+
   ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
 
   m_cameras[m_cameraIndex].setShape(m_fov, m_aspect, 0.5f, 150.0f);
@@ -484,7 +505,6 @@ void NGLScene::mousePressEvent ( QMouseEvent * _event )
     m_origYPos = _event->y();
     m_translate=true;
   }
-  setFocus();
   update();
 }
 
@@ -520,10 +540,21 @@ void NGLScene::wheelEvent ( QWheelEvent * _event )
   update();
 }
 //----------------------------------------------------------------------------------------------------------------------
+void NGLScene::keyPressEvent(QKeyEvent *_event)
+{
+  switch (_event->key())
+  {
+    case Qt::Key_F : resetObjPos(); break;
+    default : break ;
+  }
+  update();
+}
+
+
 void NGLScene::compileShader(QString vertSource, QString fragSource)
 {
   m_shaderManager->compileShader(m_cameras[m_cameraIndex], vertSource, fragSource);
-  m_window->setTerminalText(parseString(m_shaderManager->getErrorLog()));
+  m_window->setTerminalText(parseErrorLog(m_shaderManager->getErrorLog()));
   ngl::Light light(ngl::Vec3(2,2,2),ngl::Colour(1,1,1,1),ngl::Colour(1,1,1,1),ngl::LightModes::POINTLIGHT);
   // now create our light this is done after the camera so we can pass the
   // transpose of the projection matrix to the light to do correct eye space
@@ -545,66 +576,76 @@ void NGLScene::compileShader(QString vertSource, QString fragSource)
 
 //------------------------------------------------------------------------------
 
-QString NGLScene::parseString(QString _string)
+QString NGLScene::parseErrorLog(QString _string)
 {
   // Declare a string to output
   // And a list of integer to be used for line error highlighting
-  QString outString;
-  std::vector<int> lineErrors;
+  QString outputErrors;
+
+  QString shaderName;
 
   // Separate the input _string into separate lines.
   QRegExp separateLines("\n");
   QStringList lines=_string.split(separateLines);
-  uint len=lines.length();
 
-  for (uint i=0;i<len;i++)
+  for (uint i=0;i<lines.length();i++)
   {
     // Split each line using braces; "(" and ")"
     QRegExp separateNumbers("(\\(|\\))");
     QStringList pieces=lines.value(i).split(separateNumbers);
-    uint nLen=pieces.length();
 
-    for (uint j=0;j<nLen;j++)
+    for (uint j=0;j<pieces.length();j++)
     {
       // This is the how to get the Title (Shader file)
       if (pieces.length()==1 && pieces[j]!="")
       {
         // Split the line using the "Remove Colon"
-        QRegExp removeColon(":");
-        QStringList title=pieces.value(j).split(removeColon);
+        if(pieces.value(j).endsWith("Vertex:"))
+        {
+          shaderName=QString("Vertex");
+        }
+        if(pieces.value(j).endsWith("Fragment:"))
+        {
+          shaderName=QString("Fragment");
+        }
       }
       // If the first segment of the line is 0...
       // remove it and replace it with "Line"
       if(pieces[j].length()==1 && j==0)
       {
-        outString.append("Line ");
+        outputErrors.append("Line ");
       }
+
+      // Add the rest of the string to the list
       else
       {
-        // Add the rest of the string to the list
-        outString.append(pieces.value(j));
+        outputErrors.append(pieces.value(j));
+
+
         // Add the second part of the line fragment as that is the line error number.
         // This can be returned as a list of integers
         if (j==1)
         {
-          lineErrors.push_back(pieces.value(j).toInt());
+          int lineNumber = pieces.value(j).toInt();
+          emit createLineMarker(shaderName,lineNumber-1);
         }
       }
     }
     // If it is the last line, add a new line to the string
-    if (i!=len-1)
+    int finalLine =lines.length()-1;
+    if (i!=finalLine)
     {
-      outString.append("\n");
+      outputErrors.append("\n");
     }
   }
-  return outString;
-  //return lineErrors;    // This wil return a list of integers
+
+  return outputErrors;
 }
 
 //------------------------------------------------------------------------------
 void NGLScene::resetObjPos()
 {
-  //reset object position back to default
+  //move back to default
   m_modelPos.m_x = 0;
   m_modelPos.m_y = 0;
   m_modelPos.m_z = 0;
@@ -667,11 +708,11 @@ void NGLScene::drawAxis(ngl::Vec3 _pos)
 void NGLScene::setCameraShape(QString _view)
 {
   m_cameraIndex = m_camera->setCameraShape(_view);
-  m_modelPos.m_x=0;
-  m_modelPos.m_y=0;
-  m_modelPos.m_z=0;
-  m_spinXFace=0;
-  m_spinYFace=0;
+//  m_modelPos.m_x=0;
+//  m_modelPos.m_y=0;
+//  m_modelPos.m_z=0;
+//  m_spinXFace=0;
+//  m_spinYFace=0;
   m_aspect=(float)width()/height();
   for(auto &cam : m_cameras)
     {

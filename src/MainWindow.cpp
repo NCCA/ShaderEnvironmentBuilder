@@ -47,15 +47,18 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   loadTextFileToTab("shaders/PhongFragment.glsl", *m_qsci2);
 
   // switching between shapes
-  connect(m_ui->m_actionLoad_Sphere,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
-  connect(m_ui->m_actionLoad_Cube,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
-  connect(m_ui->m_actionLoad_Torus,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
-  connect(m_ui->m_actionLoad_Teapot ,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
-  connect(m_ui->m_actionLoad_Troll,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
-  connect(m_ui->m_actionLoad_Dragon,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
-  connect(m_ui->m_actionLoad_Bunny,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
+  connect(m_ui->m_actionLoad_Sphere,SIGNAL(triggered()),this,SLOT(shapeTriggered()));
+  connect(m_ui->m_actionLoad_Cube,SIGNAL(triggered()),this,SLOT(shapeTriggered()));
+  connect(m_ui->m_actionLoad_Torus,SIGNAL(triggered()),this,SLOT(shapeTriggered()));
+  connect(m_ui->m_actionLoad_Teapot ,SIGNAL(triggered()),this,SLOT(shapeTriggered()));
+  connect(m_ui->m_actionLoad_Troll,SIGNAL(triggered()),this,SLOT(shapeTriggered()));
+  connect(m_ui->m_actionLoad_Dragon,SIGNAL(triggered()),this,SLOT(shapeTriggered()));
+  connect(m_ui->m_actionLoad_Bunny,SIGNAL(triggered()),this,SLOT(shapeTriggered()));
   // switching to .obj files
-  connect(m_ui->m_actionLoad_Obj,SIGNAL(triggered()),this,SLOT(on_actionLoad_obj_opened()));
+  connect(m_ui->m_actionLoad_Obj,SIGNAL(triggered()),this,SLOT(objOpened()));
+
+  // switching to .jpg files
+  connect(m_ui->m_actionLoad_Texture,SIGNAL(triggered()),m_gl,SLOT(on_m_actionLoad_Texture_triggered()));
 
   connect(m_ui->m_exportUniforms,SIGNAL(clicked()),m_gl,SLOT(exportUniform()));
   connect(m_ui->m_printUniforms ,SIGNAL(clicked()),this,SLOT(printUniforms()));
@@ -65,6 +68,10 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   connect(m_ui->m_showGrid,SIGNAL(toggled(bool)),m_gl,SLOT(toggleGrid(bool)));
 
   connect(m_ui->m_normalSize,SIGNAL(valueChanged(int)),m_gl,SLOT(setNormalSize(int)));
+  // line marker connections
+  connect(m_ui->m_btn_compileShader,SIGNAL(pressed()),m_qsci1,SLOT(clearErrors()));
+  connect(m_ui->m_btn_compileShader,SIGNAL(pressed()),m_qsci2,SLOT(clearErrors()));
+  connect(m_gl,SIGNAL(createLineMarker(QString,int)),this,SLOT(addError(QString,int)));
 
 
   update();
@@ -202,7 +209,7 @@ bool MainWindow::loadTextFileToTab(QString _path, Cebitor &_qsci)
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-void MainWindow::on_actionLoad_obj_opened()
+void MainWindow::objOpened()
 {
   // Open a file dialog and return a file directory
   QString fileName=QFileDialog::getOpenFileName(this,
@@ -213,7 +220,7 @@ void MainWindow::on_actionLoad_obj_opened()
   m_gl->importMeshName(importName);
 }
 
-void MainWindow::on_actionLoad_shape_triggered()
+void MainWindow::shapeTriggered()
 {
   //get the action
   QAction *action = static_cast<QAction*>(sender());
@@ -300,4 +307,29 @@ void MainWindow::on_actionOpen_triggered()
 void MainWindow::on_actionExport_triggered()
 {
     //m_project->exportProject()
+}
+void MainWindow::on_m_actionLoad_Texture_triggered()
+{
+  // Open a file dialog and return a file directory
+  QString fileName=QFileDialog::getOpenFileName(this,
+  tr("Open Texture Map"),"0Features-0BugsCVA3/",tr("Image Files (*.jpg)"));
+
+  //load texture map to OBJ
+  std::string importName=fileName.toStdString();
+  std::cout<<"imported texture "<<importName<<std::endl;
+  m_gl->importTextureMap(importName);
+}
+
+void MainWindow::addError(QString _shaderName, int _lineNum)
+{
+  Cebitor * cebitorInstance;
+  if(_shaderName==QString("Vertex"))
+  {
+    cebitorInstance = m_qsci1;
+  }
+  if(_shaderName==QString("Fragment"))
+  {
+    cebitorInstance = m_qsci2;
+  }
+  cebitorInstance->markerAdd(_lineNum,Cebitor::MarkerType::ERROR);
 }

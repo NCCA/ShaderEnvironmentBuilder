@@ -1,6 +1,7 @@
 #include "include/ShaderManager.h"
 #include "ngl/Light.h"
 #include "ngl/Material.h"
+#include "ngl/Texture.h"
 
 ShaderManager::ShaderManager()
 {
@@ -51,25 +52,29 @@ void ShaderManager::initialize(ngl::Camera _cam)
   //grab an instance of shader manager
   ngl::ShaderLib *shaderLib=ngl::ShaderLib::instance();
   //we are creating a shader called Phong
-  shaderLib->createShaderProgram("Phong"); //RENAME TO INPUT SHADER
+  shaderLib->createShaderProgram("Phong");
   // now we are going to create empty shaders for Frag and Vert
-  shaderLib->attachShader("PhongVertex",ngl::ShaderType::VERTEX); //INPUTVERTEX
-  shaderLib->attachShader("PhongFragment",ngl::ShaderType::FRAGMENT); //INPUTSHADER
+  shaderLib->attachShader("PhongVertex",ngl::ShaderType::VERTEX);
+  shaderLib->attachShader("PhongFragment",ngl::ShaderType::FRAGMENT);
   // attach the source
-  shaderLib->loadShaderSource("PhongVertex","shaders/PhongVertex.glsl"); //NEEDS TO BE SHADERFROMTSTRING
-  shaderLib->loadShaderSource("PhongFragment","shaders/PhongFragment.glsl"); //NEEDS TO BE SHADERFROMSTRING
+  shaderLib->loadShaderSource("PhongVertex","shaders/PhongVertex.glsl");
+  shaderLib->loadShaderSource("PhongFragment","shaders/PhongFragment.glsl");
   // compile the shaders
   shaderLib->compileShader("PhongFragment");
   shaderLib->compileShader("PhongVertex");
 
+
+
   if (!checkAllCompileError(&m_errorLog))
   {
+    // output code errors to user
     std::cout << m_errorLog.toUtf8().constData();
     m_compileStatus = false;
     std::cout<<"Initial Program compilation fail"<<std::endl;
   }
   else
   {
+    // user's code has no errors, will now be attached to program
     m_compileStatus = true;
     shaderLib->attachShaderToProgram("Phong","PhongVertex");
     shaderLib->attachShaderToProgram("Phong","PhongFragment");
@@ -116,7 +121,6 @@ void ShaderManager::initialize(ngl::Camera _cam)
 
 
 
-
     // set initialise flag to true
     m_init = true;
   }
@@ -136,6 +140,8 @@ void ShaderManager::compileShader(ngl::Camera _cam, QString vertSource, QString 
   std::cout<< "name " << m_data.m_name << "\n";
   std::cout<< "vert " << m_data.m_vert << "\n";
   std::cout<< "frag " << m_data.m_frag << "\n";
+
+  // convert from QString to std::string for compiling
   shaderLib->loadShaderSourceFromString(m_data.m_vert, vertSource.toStdString());
   shaderLib->loadShaderSourceFromString(m_data.m_frag, fragSource.toStdString());
 
@@ -145,6 +151,7 @@ void ShaderManager::compileShader(ngl::Camera _cam, QString vertSource, QString 
 
   if (!checkAllCompileError(&m_errorLog))
   {
+    // output any compile errors to user
     std::cout << m_errorLog.toUtf8().constData();
     m_compileStatus = false;
   }
@@ -162,6 +169,8 @@ void ShaderManager::compileShader(ngl::Camera _cam, QString vertSource, QString 
     // Load stuff. Need to remove this stuff in the next build, just used to set
     // inital values
     (*shaderLib)[m_data.m_name]->use();
+    ngl::Texture texture("textures/rustTexture.jpg");
+    m_textureName=texture.setTextureGL();
 
     shaderLib->setShaderParam1i("Normalize",1);
     shaderLib->setShaderParam3f("viewerPos",_cam.getEye().m_x,_cam.getEye().m_y,_cam.getEye().m_z);
@@ -177,9 +186,11 @@ bool ShaderManager::checkCompileError(std::string _shaderProgName, QString *o_lo
   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
   GLuint shaderId = shader->getShaderID(_shaderProgName);
 
+  // Get compile status of shader
   glGetShaderiv(shaderId, GL_COMPILE_STATUS, &isCompiled);
   if(isCompiled == GL_FALSE)
   {
+    // Receive info log
     GLint maxLength = 0;
     glGetShaderiv(shaderId, GL_INFO_LOG_LENGTH, &maxLength);
 
@@ -187,6 +198,7 @@ bool ShaderManager::checkCompileError(std::string _shaderProgName, QString *o_lo
     std::vector<GLchar> errorLog(maxLength);
     glGetShaderInfoLog(shaderId, maxLength, &maxLength, &errorLog[0]);
 
+    //  Write error log to an std::string to be output at QString
     std::string s(errorLog.begin(), errorLog.end());
 
     QString errLog = QString(s.c_str());
@@ -205,9 +217,11 @@ bool ShaderManager::checkAllCompileError(QString *o_log)
   QString temp_log;
   std::vector <std::string> shaderPrograms = {m_data.m_vert, m_data.m_frag};
 
+  // Iterate between vertex and fragment shaders to check compile errors
   for (auto shaderProg: shaderPrograms)
   {
     GLint isCompiled = checkCompileError(shaderProg, &temp_log);
+    std::cout<<"thingy thingy thingy::::     "<<shaderProg<<std::endl;
     if (!isCompiled)
     {
       o_log->append(QString("%1:\n").arg(shaderProg.c_str()));
