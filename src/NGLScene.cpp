@@ -97,6 +97,8 @@ NGLScene::NGLScene( QWidget *_parent, parserLib *_libParent ) : QOpenGLWidget( _
   this->resize(_parent->size());
   m_wireframe=false;
   m_fov=65.0;
+  m_nearClip = 0.5f;
+  m_farClip - 150.0f;
   m_shaderManager = new ShaderManager();
   m_camera = new Camera();
   m_cameraIndex = 0;
@@ -190,6 +192,7 @@ void NGLScene::initializeGL()
   glEnable(GL_MULTISAMPLE);
 
   m_cameras = m_camera->createCamera();  //returns vector of cameras
+
   // now to load the shader and set the values
   // grab an instance of shader manager
   m_shaderManager->initialize(m_cameras[m_cameraIndex]);
@@ -225,6 +228,7 @@ void NGLScene::initializeGL()
   }
 
 
+  m_cameras[cameraIndex].setShape(m_fov, m_aspect, m_nearClip, m_farClip);
   // load these values to the shader as well
 
   m_readFromXML->shaderData("WhyHelloThere", "PhongVertex", "shaders/PhongVertex.glsl", "PhongFragment", "shaders/PhongFragment.glsl");
@@ -592,8 +596,6 @@ void NGLScene::compileShader(QString vertSource, QString fragSource)
 
 }
 
-
-
 //------------------------------------------------------------------------------
 
 QString NGLScene::parseErrorLog(QString _string)
@@ -665,12 +667,13 @@ QString NGLScene::parseErrorLog(QString _string)
 //------------------------------------------------------------------------------
 void NGLScene::resetObjPos()
 {
-  //move back to default
+  //move camera back to default
   m_modelPos.m_x = 0;
   m_modelPos.m_y = 0;
   m_modelPos.m_z = 0;
   m_spinXFace = 0;
   m_spinYFace = 0;
+  update();
 }
 
 //------------------------------------------------------------------------------
@@ -736,7 +739,7 @@ void NGLScene::setCameraShape(QString _view)
   m_aspect=(float)width()/height();
   for(auto &cam : m_cameras)
     {
-      cam.setShape(m_fov,m_aspect, 0.5f,150.0f);
+      cam.setShape(m_fov,m_aspect, m_nearClip, m_farClip);
     }
   update();
 }
@@ -746,6 +749,22 @@ void NGLScene::setCameraShape(QString _view)
 void NGLScene::setCameraFocalLength(int _focalLength)
 {
     m_fov= _focalLength;
+    update();
+}
+
+//----------------------------------------------------------------------------------------------------------------------
+// Set camera near clipping plane
+void NGLScene::setCamNearClip(double _nearClip)
+{
+    m_nearClip= _nearClip;
+    update();
+}
+
+//----------------------------------------------------------------------------------------------------------------------
+// Set camera far clipping plane
+void NGLScene::setCamFarClip(double _farClip)
+{
+    m_farClip= _farClip;
     update();
 }
 
@@ -764,3 +783,13 @@ void NGLScene::setCameraYaw(double _cameraYaw)
     m_cameras[m_cameraIndex] = m_camera->cameraYaw(m_cameras[m_cameraIndex], _cameraYaw);
     update();
 }
+
+//----------------------------------------------------------------------------------------------------------------------
+// Signal passed from the UI to set the camera pitch.
+void NGLScene::setCameraPitch(double _cameraPitch)
+{
+    m_cameras[m_cameraIndex] = m_camera->cameraPitch(m_cameras[m_cameraIndex], _cameraPitch);
+    update();
+}
+
+

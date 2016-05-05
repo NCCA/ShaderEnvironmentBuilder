@@ -101,3 +101,13 @@ ngl::Camera Camera::cameraRoll(ngl::Camera _cam, double _cameraRoll)
     _cam.roll(_cameraRoll);
     return _cam;
 }
+
+//----------------------------------------------------------------------------------------------------------------------
+// Camera Roll settings
+ngl::Camera Camera::cameraPitch(ngl::Camera _cam, double _cameraPitch)
+{
+    _cam.pitch(-m_cameraPitch);
+    m_cameraPitch = _cameraPitch;
+    _cam.pitch(_cameraPitch);
+    return _cam;
+}
