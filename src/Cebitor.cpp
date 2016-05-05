@@ -241,8 +241,6 @@ void Cebitor::toggleSearchBox()
   {
     m_searchWidget->hide();
     setFocus();
-    setSelectionBackgroundColor(QColor(61,61,52));
-    resetSelectionForegroundColor();
   }
 }
 
@@ -311,4 +309,10 @@ void Cebitor::charAdded(int _c)
       break;
     }
   }
+}
+
+void Cebitor::focusInEvent(QFocusEvent *_event)
+{
+  setSelectionBackgroundColor(QColor(61,61,52));
+  resetSelectionForegroundColor();
 }
