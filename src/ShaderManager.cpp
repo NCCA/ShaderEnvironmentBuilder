@@ -78,7 +78,9 @@ void ShaderManager::initialize(ngl::Camera _cam)
     shaderLib->setShaderParam3f("viewerPos",_cam.getEye().m_x,_cam.getEye().m_y,_cam.getEye().m_z);
     shaderLib->setShaderParam4f("Colour",0.23125f,0.23125f,0.23125f,1);
 
-    // Johns Code to initialise NORMALSHADER
+    /// The following section is from :-
+    /// Jon Macey (2016) AffineTransforms [online]. [Accessed 2016].
+    /// Available from: <https://github.com/NCCA/AffineTransforms>.
     shaderLib->createShaderProgram("normalShader");
     constexpr auto normalVert="normalVertex";
     constexpr auto normalGeo="normalGeo";
@@ -103,7 +105,7 @@ void ShaderManager::initialize(ngl::Camera _cam)
     shaderLib->setUniform("faceNormalColour",.0f,1.0f,0.0f,1.0f);
     shaderLib->setShaderParam1i("drawFaceNormals",true);
     shaderLib->setShaderParam1i("drawVertexNormals",true);
-
+    ///End of Citation
 
 
 
@@ -197,7 +199,6 @@ bool ShaderManager::checkAllCompileError(QString *o_log)
   for (auto shaderProg: shaderPrograms)
   {
     GLint isCompiled = checkCompileError(shaderProg, &temp_log);
-    std::cout<<"thingy thingy thingy::::     "<<shaderProg<<std::endl;
     if (!isCompiled)
     {
       o_log->append(QString("%1:\n").arg(shaderProg.c_str()));

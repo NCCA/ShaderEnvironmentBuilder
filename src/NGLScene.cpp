@@ -86,6 +86,7 @@ NGLScene::NGLScene( QWidget *_parent, parserLib *_libParent ) : QOpenGLWidget( _
   m_parser= _libParent; //DONT CHANGE THIS
   m_shapeType=6;
   m_toggleObj=false;
+  m_toggleAxis=false;
   m_meshLoc="./tempFiles/strawberry.obj";
   m_drawNormals=false;
   m_drawGrid=false;
@@ -205,7 +206,6 @@ void NGLScene::initializeGL()
 
     m_readFromXML->shaderData("WhyHelloThere", "PhongVertex", "shaders/PhongVertex.glsl", "PhongFragment", "shaders/PhongFragment.glsl");
     m_parser->assignAllData();
-    std::cerr<<"Find number of active uniforms: "<<m_parser->m_num<<std::endl;
     light.loadToShader("light");
   }
 
@@ -231,9 +231,7 @@ void NGLScene::setShapeType(int _type)
   if (_type<=7 && _type>=0)
   {
     m_shapeType=_type;
-    std::cout<<"new shape type is :"<<_type<<std::endl;
   }
-  // Don't update if
   else
   {
     std::cout<<"Invalid shape type"<<std::endl;
@@ -276,8 +274,11 @@ void NGLScene::paintGL()
 
   m_cameras[m_cameraIndex].setShape(m_fov, m_aspect, 0.5f, 150.0f);
   m_transform.reset();
-  ngl::Vec3 pos(-1,-0.5,-1);
-  drawAxis(pos);
+  if (m_toggleAxis)
+  {
+    ngl::Vec3 pos={-1,-0.5,-1};
+    drawAxis(pos);
+  }
   loadMatricesToShader();
 
   if (m_drawGrid)
@@ -431,6 +432,11 @@ void NGLScene::toggleGrid(bool _value)
   m_drawGrid=_value;
   update();
 }
+void NGLScene::toggleAxis(bool _value)
+{
+  m_toggleAxis=_value;
+  update();
+}
 
 void NGLScene::setNormalSize(int _size)
 {
@@ -567,7 +573,6 @@ QString NGLScene::parseErrorLog(QString _string)
       {
         // Split the line using the "Remove Colon"
         QRegExp removeColon(":");
-
         QStringList title=pieces.value(j).split(removeColon);
       }
       // If the first segment of the line is 0...
@@ -593,7 +598,7 @@ QString NGLScene::parseErrorLog(QString _string)
     }
     // If it is the last line, add a new line to the string
     int finalLine =lines.length()-1;
-    if (i!=finalLine-1)
+    if (i!=finalLine)
     {
       outputErrors.append("\n");
     }

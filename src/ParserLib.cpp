@@ -6,7 +6,8 @@
 //----------------------------------------------------------------------------------------------------------------------
 parserLib::parserLib()
 {
-
+  m_num=0;
+  m_uniformList.resize(0);
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -19,8 +20,8 @@ parserLib::~parserLib()
 void parserLib::initializeUniformData()
 {
   //create instance of a shader
-  ngl::ShaderLib *shader=ngl::ShaderLib::instance();
-  GLuint id=shader->getProgramID("Phong");
+  ngl::ShaderLib *shaderLib=ngl::ShaderLib::instance();
+  GLuint id=shaderLib->getProgramID("Phong");
 
   // extract the number of uniforms active and update class data.
   GLint nUniforms;
@@ -165,35 +166,10 @@ void parserLib::printUniforms()
       }
       case GL_FLOAT_MAT3:
       {
-//        std::cout<<"m_mat3:(x) "<<m_uniformList[i]->getMat3().m_00
-//                                <<m_uniformList[i]->getMat3().m_01
-//                                <<m_uniformList[i]->getMat3().m_02<<std::endl;
-//        std::cout<<"m_mat3:(y) "<<m_uniformList[i]->getMat3().m_10
-//                                <<m_uniformList[i]->getMat3().m_11
-//                                <<m_uniformList[i]->getMat3().m_12<<std::endl;
-//        std::cout<<"m_mat3:(z) "<<m_uniformList[i]->getMat3().m_20
-//                                <<m_uniformList[i]->getMat3().m_21
-//                                <<m_uniformList[i]->getMat3().m_22<<std::endl;
         break;
       }
       case GL_FLOAT_MAT4:
       {
-//        std::cout<<"m_mat3:(x) "<<m_uniformList[i]->getMat4().m_00
-//                                <<m_uniformList[i]->getMat4().m_01
-//                                <<m_uniformList[i]->getMat4().m_02
-//                                <<m_uniformList[i]->getMat4().m_03<<std::endl;
-//        std::cout<<"m_mat3:(y) "<<m_uniformList[i]->getMat4().m_10
-//                                <<m_uniformList[i]->getMat4().m_11
-//                                <<m_uniformList[i]->getMat4().m_12
-//                                <<m_uniformList[i]->getMat4().m_13<<std::endl;
-//        std::cout<<"m_mat3:(z) "<<m_uniformList[i]->getMat4().m_20
-//                                <<m_uniformList[i]->getMat4().m_21
-//                                <<m_uniformList[i]->getMat4().m_22
-//                                <<m_uniformList[i]->getMat4().m_23<<std::endl;
-//        std::cout<<"m_mat3:(w) "<<m_uniformList[i]->getMat4().m_30
-//                                <<m_uniformList[i]->getMat4().m_31
-//                                <<m_uniformList[i]->getMat4().m_32
-//                                <<m_uniformList[i]->getMat4().m_33<<std::endl;
         break;
       }
       default:
@@ -346,8 +322,9 @@ void parserLib::uniformDataTypes()
     }
     m_uniformList[d.second->getLocation()]->setTypeName(type);
   }
-  std::cout<<"End Uniforms" <<"\n";
+  std::cout<<"End Uniforms"<<"\n";
 }
+/// end of Citation
 
 //----------------------------------------------------------------------------------------------------------------------
 void parserLib::exportUniforms()
