@@ -606,7 +606,6 @@ QString NGLScene::parseErrorLog(QString _string)
         {
           shaderName=QString("Fragment");
         }
-        std::cout<<shaderName.toStdString()<<"\n";
       }
       // If the first segment of the line is 0...
       // remove it and replace it with "Line"
