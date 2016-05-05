@@ -275,7 +275,7 @@ private:
   //----------------------------------------------------------------------------
   /// @brief Stores a QString. Used to edit the error log message
   //----------------------------------------------------------------------------
-  QString parseString(QString);
+  QString parseErrorLog(QString);
   //----------------------------------------------------------------------------
   /// @brief Draw a xyz axis
   /// @param _pos is the position that the axis is drawn relative to the origin
