@@ -47,15 +47,15 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   loadTextFileToTab("shaders/PhongFragment.glsl", *m_qsci2);
 
   // switching between shapes
-  connect(m_ui->m_actionLoad_Sphere,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
-  connect(m_ui->m_actionLoad_Cube,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
-  connect(m_ui->m_actionLoad_Torus,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
-  connect(m_ui->m_actionLoad_Teapot ,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
-  connect(m_ui->m_actionLoad_Troll,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
-  connect(m_ui->m_actionLoad_Dragon,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
-  connect(m_ui->m_actionLoad_Bunny,SIGNAL(triggered()),this,SLOT(on_actionLoad_shape_triggered()));
+  connect(m_ui->m_actionLoad_Sphere,SIGNAL(triggered()),this,SLOT(shapeTriggered()));
+  connect(m_ui->m_actionLoad_Cube,SIGNAL(triggered()),this,SLOT(shapeTriggered()));
+  connect(m_ui->m_actionLoad_Torus,SIGNAL(triggered()),this,SLOT(shapeTriggered()));
+  connect(m_ui->m_actionLoad_Teapot ,SIGNAL(triggered()),this,SLOT(shapeTriggered()));
+  connect(m_ui->m_actionLoad_Troll,SIGNAL(triggered()),this,SLOT(shapeTriggered()));
+  connect(m_ui->m_actionLoad_Dragon,SIGNAL(triggered()),this,SLOT(shapeTriggered()));
+  connect(m_ui->m_actionLoad_Bunny,SIGNAL(triggered()),this,SLOT(shapeTriggered()));
   // switching to .obj files
-  connect(m_ui->m_actionLoad_Obj,SIGNAL(triggered()),this,SLOT(on_actionLoad_obj_opened()));
+  connect(m_ui->m_actionLoad_Obj,SIGNAL(triggered()),this,SLOT(objOpened()));
 
   // switching to .jpg files
   connect(m_ui->m_actionLoad_Texture,SIGNAL(triggered()),m_gl,SLOT(on_m_actionLoad_Texture_triggered()));
@@ -68,7 +68,6 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   connect(m_ui->m_showGrid,SIGNAL(toggled(bool)),m_gl,SLOT(toggleGrid(bool)));
 
   connect(m_ui->m_normalSize,SIGNAL(valueChanged(int)),m_gl,SLOT(setNormalSize(int)));
-
 
   update();
   //std::cerr<<"Find number of active uniforms: "<<m_parForButton->m_num<<std::endl;
@@ -205,7 +204,7 @@ bool MainWindow::loadTextFileToTab(QString _path, Cebitor &_qsci)
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-void MainWindow::on_actionLoad_obj_opened()
+void MainWindow::objOpened()
 {
   // Open a file dialog and return a file directory
   QString fileName=QFileDialog::getOpenFileName(this,
@@ -216,7 +215,7 @@ void MainWindow::on_actionLoad_obj_opened()
   m_gl->importMeshName(importName);
 }
 
-void MainWindow::on_actionLoad_shape_triggered()
+void MainWindow::shapeTriggered()
 {
   //get the action
   QAction *action = static_cast<QAction*>(sender());

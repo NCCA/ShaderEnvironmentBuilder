@@ -504,7 +504,6 @@ void NGLScene::mousePressEvent ( QMouseEvent * _event )
     m_origYPos = _event->y();
     m_translate=true;
   }
-  setFocus();
   update();
 }
 
@@ -699,11 +698,11 @@ void NGLScene::drawAxis(ngl::Vec3 _pos)
 void NGLScene::setCameraShape(QString _view)
 {
   m_cameraIndex = m_camera->setCameraShape(_view);
-  m_modelPos.m_x=0;
-  m_modelPos.m_y=0;
-  m_modelPos.m_z=0;
-  m_spinXFace=0;
-  m_spinYFace=0;
+//  m_modelPos.m_x=0;
+//  m_modelPos.m_y=0;
+//  m_modelPos.m_z=0;
+//  m_spinXFace=0;
+//  m_spinYFace=0;
   m_aspect=(float)width()/height();
   for(auto &cam : m_cameras)
     {
