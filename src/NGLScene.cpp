@@ -87,7 +87,7 @@ NGLScene::NGLScene( QWidget *_parent, parserLib *_libParent ) : QOpenGLWidget( _
   m_shapeType=6;
   m_toggleObj=false;
   m_toggleAxis=false;
-  m_meshLoc="./tempFiles/strawberry.obj";
+  m_meshLoc="./models/Suzanne.obj";
   m_drawNormals=false;
   m_drawGrid=false;
   m_normalSize=0.1;
@@ -166,7 +166,7 @@ void NGLScene::importTextureMap(const string &name)
   std::ifstream textureSource(name.c_str());
   ngl::Texture texture (name);
   m_textureName=texture.setTextureGL();
-
+  update();
 }
 
 
@@ -230,7 +230,7 @@ void NGLScene::initializeGL()
   m_readFromXML->shaderData("WhyHelloThere", "PhongVertex", "shaders/PhongVertex.glsl", "PhongFragment", "shaders/PhongFragment.glsl");
   m_parser->assignAllData();
 
-  // Create
+  // Create mesh VAO
   m_mesh = std::unique_ptr<ngl::Obj> (new ngl::Obj(m_meshLoc));
   m_mesh->createVAO();
 
@@ -335,9 +335,7 @@ void NGLScene::paintGL()
 
 void NGLScene::objectTransform(uint _type)
 {
-  ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
-
-  enum geo {input=0,sphere=1,cube=2,torus=3,teapot=4,troll=5,dragon=6,bunny=7};
+    enum geo {input=0,sphere=1,cube=2,torus=3,teapot=4,troll=5,dragon=6,bunny=7};
 
   // Transform differently depending on the object being drawn
   // Used to make all default shapes a similar size
@@ -593,13 +591,13 @@ QString NGLScene::parseErrorLog(QString _string)
   QRegExp separateLines("\n");
   QStringList lines=_string.split(separateLines);
 
-  for (uint i=0;i<lines.length();i++)
+  for (int i=0;i<lines.length();i++)
   {
     // Split each line using braces; "(" and ")"
     QRegExp separateNumbers("(\\(|\\))");
     QStringList pieces=lines.value(i).split(separateNumbers);
 
-    for (uint j=0;j<pieces.length();j++)
+    for (int j=0;j<pieces.length();j++)
     {
       // This is the how to get the Title (Shader file)
       if (pieces.length()==1 && pieces[j]!="")
