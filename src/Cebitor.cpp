@@ -69,13 +69,10 @@ Cebitor::Cebitor(QWidget *_parent) : QsciScintilla(_parent)
   QAction *commentAction = new QAction(this);
   commentAction->setShortcut(Qt::Key_Slash | Qt::CTRL);
 
-  connect(commentAction, SIGNAL(triggered()), this, SLOT(toggleSearchBox()));
+  connect(commentAction, SIGNAL(triggered()), this, SLOT(comment()));
   addAction(commentAction);
 
-//  // unbind CTRL-F keyboard shortcut
-//  standardCommands()->boundTo(Qt::Key_F | Qt::CTRL)->setKey(0);
-
-  // rebind CTRL-F to search function
+  // bind CTRL-F to search function
   QAction *searchAction = new QAction(this);
   searchAction->setShortcut(Qt::Key_F | Qt::CTRL);
 
@@ -237,8 +234,8 @@ void Cebitor::comment()
 
 void Cebitor::toggleSearchBox()
 {
-  bool searchHidden = m_searchWidget->isHidden();
-  if(searchHidden)
+  bool searchFocus = m_searchLineEdit->hasFocus();
+  if(!searchFocus)
   {
     m_searchWidget->show();
     m_searchLineEdit->setFocus();

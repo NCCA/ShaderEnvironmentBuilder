@@ -189,19 +189,20 @@ Cebitor *MainWindow::createQsciWidget(QWidget *_parent)
   QBoxLayout *searchLayout = new QVBoxLayout(searchWidget);
   searchLayout->setMargin(0);
   QLineEdit *qsciSearch = new QLineEdit(searchWidget);
+  QPushButton *searchNextBtn = new QPushButton(QString("Find Next"),searchWidget);
+  QPushButton *searchPrevBtn = new QPushButton(QString("Find Previous"),searchWidget);
   qsci->setSearchWidget(searchWidget);
   qsci->setSearchLineEdit(qsciSearch);
+
   connect(qsciSearch,SIGNAL(returnPressed()),qsci,SLOT(searchNext()));
+  connect(searchNextBtn,SIGNAL(pressed()),qsci,SLOT(searchNext()));
+  connect(searchPrevBtn,SIGNAL(pressed()),qsci,SLOT(searchPrev()));
+
   QAction *escAction = new QAction(this);
   escAction->setShortcut(Qt::Key_Escape);
-
   connect(escAction, SIGNAL(triggered()), qsci, SLOT(toggleSearchBox()));
   qsciSearch->addAction(escAction);
 
-  QPushButton *searchNextBtn = new QPushButton(QString("Find Next"),searchWidget);
-  QPushButton *searchPrevBtn = new QPushButton(QString("Find Previous"),searchWidget);
-  connect(searchNextBtn,SIGNAL(pressed()),qsci,SLOT(searchNext()));
-  connect(searchPrevBtn,SIGNAL(pressed()),qsci,SLOT(searchPrev()));
   searchLayout->setDirection(QBoxLayout::Direction::LeftToRight);
   searchLayout->addWidget(qsciSearch);
   searchLayout->addWidget(searchNextBtn);
