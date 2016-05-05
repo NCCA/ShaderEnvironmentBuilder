@@ -244,10 +244,13 @@
                       <item>
                        <widget class="QDoubleSpinBox" name="m_cameraRoll">
                         <property name="minimum">
-                         <double>-99.000000000000000</double>
+                         <double>-360.000000000000000</double>
                         </property>
                         <property name="maximum">
-                         <double>99.000000000000000</double>
+                         <double>360.000000000000000</double>
+                        </property>
+                        <property name="singleStep">
+                         <double>5.000000000000000</double>
                         </property>
                        </widget>
                       </item>
@@ -261,10 +264,33 @@
                       <item>
                        <widget class="QDoubleSpinBox" name="m_cameraYaw">
                         <property name="minimum">
-                         <double>-99.000000000000000</double>
+                         <double>-360.000000000000000</double>
                         </property>
                         <property name="maximum">
-                         <double>99.000000000000000</double>
+                         <double>360.000000000000000</double>
+                        </property>
+                        <property name="singleStep">
+                         <double>5.000000000000000</double>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QLabel" name="label_5">
+                        <property name="text">
+                         <string>Pitch</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QDoubleSpinBox" name="m_cameraPitch">
+                        <property name="minimum">
+                         <double>-360.000000000000000</double>
+                        </property>
+                        <property name="maximum">
+                         <double>360.000000000000000</double>
+                        </property>
+                        <property name="singleStep">
+                         <double>5.000000000000000</double>
                         </property>
                        </widget>
                       </item>
@@ -273,9 +299,12 @@
                         <property name="orientation">
                          <enum>Qt::Horizontal</enum>
                         </property>
+                        <property name="sizeType">
+                         <enum>QSizePolicy::Fixed</enum>
+                        </property>
                         <property name="sizeHint" stdset="0">
                          <size>
-                          <width>40</width>
+                          <width>160</width>
                           <height>20</height>
                          </size>
                         </property>
@@ -326,9 +355,35 @@
                         <property name="orientation">
                          <enum>Qt::Horizontal</enum>
                         </property>
+                        <property name="sizeType">
+                         <enum>QSizePolicy::Fixed</enum>
+                        </property>
                         <property name="sizeHint" stdset="0">
                          <size>
-                          <width>40</width>
+                          <width>90</width>
+                          <height>20</height>
+                         </size>
+                        </property>
+                       </spacer>
+                      </item>
+                      <item>
+                       <widget class="QPushButton" name="m_resetCam">
+                        <property name="text">
+                         <string>Reset</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <spacer name="horizontalSpacer_3">
+                        <property name="orientation">
+                         <enum>Qt::Horizontal</enum>
+                        </property>
+                        <property name="sizeType">
+                         <enum>QSizePolicy::Fixed</enum>
+                        </property>
+                        <property name="sizeHint" stdset="0">
+                         <size>
+                          <width>100</width>
                           <height>20</height>
                          </size>
                         </property>
@@ -353,7 +408,7 @@
                        </widget>
                       </item>
                       <item>
-                       <spacer name="horizontalSpacer_3">
+                       <spacer name="horizontalSpacer_2">
                         <property name="orientation">
                          <enum>Qt::Horizontal</enum>
                         </property>
@@ -366,17 +421,38 @@
                        </spacer>
                       </item>
                       <item>
-                       <spacer name="horizontalSpacer_2">
-                        <property name="orientation">
-                         <enum>Qt::Horizontal</enum>
+                       <widget class="QLabel" name="label_7">
+                        <property name="text">
+                         <string>Near clip</string>
                         </property>
-                        <property name="sizeHint" stdset="0">
-                         <size>
-                          <width>40</width>
-                          <height>20</height>
-                         </size>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QDoubleSpinBox" name="m_nearClip">
+                        <property name="maximum">
+                         <double>100.000000000000000</double>
                         </property>
-                       </spacer>
+                        <property name="singleStep">
+                         <double>0.200000000000000</double>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QLabel" name="label_8">
+                        <property name="text">
+                         <string>Far clip</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QDoubleSpinBox" name="m_farClip">
+                        <property name="maximum">
+                         <double>10000.000000000000000</double>
+                        </property>
+                        <property name="singleStep">
+                         <double>1.000000000000000</double>
+                        </property>
+                       </widget>
                       </item>
                      </layout>
                     </item>

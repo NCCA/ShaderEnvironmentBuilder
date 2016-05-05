@@ -41,8 +41,11 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
    connect(m_ui->m_sldr_cameraFov,SIGNAL(valueChanged(int)),m_gl,SLOT(setCameraFocalLength(int)));
    connect(m_ui->m_cameraRoll, SIGNAL(valueChanged(double)), m_gl, SLOT(setCameraRoll(double)));
    connect(m_ui->m_cameraYaw, SIGNAL(valueChanged(double)), m_gl, SLOT(setCameraYaw(double)));
+   connect(m_ui->m_cameraPitch, SIGNAL(valueChanged(double)), m_gl, SLOT(setCameraPitch(double)));
    connect(m_ui->m_comboBox_view, SIGNAL(currentTextChanged(QString)), m_gl, SLOT(setCameraShape(QString)));
-
+   connect(m_ui->m_resetCam,SIGNAL(clicked()),m_gl,SLOT(resetObjPos()));
+  connect(m_ui->m_nearClip, SIGNAL(valueChanged(double)), m_gl, SLOT(setCamNearClip(double)));
+  connect(m_ui->m_farClip, SIGNAL(valueChanged(double)), m_gl, SLOT(setCamFarClip(double)));
   // Load the text files into the corresponding tabs
   loadTextFileToTab("shaders/PhongVertex.glsl", *m_qsci1);
   loadTextFileToTab("shaders/PhongFragment.glsl", *m_qsci2);
