@@ -164,15 +164,7 @@ bool Cebitor::closing(const QString _close)
 
 //----------------------------------------------------------------------------------------------------------------------
 void Cebitor::comment()
-{  // unbind CTRL-F keyboard shortcut
-  standardCommands()->boundTo(Qt::Key_F | Qt::CTRL)->setKey(0);
-
-  // rebind CTRL-F to search function
-  QAction *searchAction = new QAction(this);
-  searchAction->setShortcut(Qt::Key_F | Qt::CTRL);
-
-  connect(searchAction, SIGNAL(triggered()), this, SLOT(toggleSearchBox()));
-  addAction(searchAction);
+{
   beginUndoAction();
   int lineFrom;
   int indexFrom;
