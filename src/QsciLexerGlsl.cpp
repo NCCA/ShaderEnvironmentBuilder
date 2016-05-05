@@ -22,6 +22,8 @@ QsciLexerGLSL::QsciLexerGLSL(QsciScintilla *_parent) : QsciLexerCustom(_parent)
   m_parent->setAutoCompletionThreshold(2);
   m_parent->setAutoCompletionFillupsEnabled(true);
   m_parent->setAutoCompletionSource(QsciScintilla::AcsAPIs);
+  m_parent->setSelectionBackgroundColor(QColor(56,56,48));
+  m_parent->resetSelectionForegroundColor();
 }
 
 //----------------------------------------------------------------------------------------------------------------------

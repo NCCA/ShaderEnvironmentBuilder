@@ -110,6 +110,10 @@ NGLScene::~NGLScene()
   //delete m_readFromXML;
   delete m_parser;
   delete m_shaderManager;
+
+  //Clear any existing texture maps
+  glDeleteTextures(1,&m_textureName);
+
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -155,9 +159,16 @@ void NGLScene::importMeshName(const std::string &name)
   }
 
 
-  //clear all loaded textures
-  glDeleteTextures(1,&m_textureName);
 }
+
+void NGLScene::importTextureMap(const string &name)
+{
+  std::ifstream textureSource(name.c_str());
+  ngl::Texture texture (name);
+  m_textureName=texture.setTextureGL();
+
+}
+
 
 //----------------------------------------------------------------------------------------------------------------------
 
@@ -182,6 +193,10 @@ void NGLScene::initializeGL()
   // now to load the shader and set the values
   // grab an instance of shader manager
   m_shaderManager->initialize(m_cameras[m_cameraIndex]);
+
+  ngl::Texture texture ("textures/metalTexture.jpg");
+  m_textureName=texture.setTextureGL();
+
 
   if(!m_shaderManager->compileStatus())
   {
@@ -252,11 +267,12 @@ void NGLScene::paintGL()
   }
   else
   {
+    //glBindTexture(GL_TEXTURE_2D, m_textureName);
     glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
   }
   ngl::ShaderLib *shaderLib=ngl::ShaderLib::instance();
 
-  m_shaderManager->use(shaderLib,0);
+  m_shaderManager->use(0);
 
   // Rotation based on the mouse position for our global transform
   ngl::Mat4 rotX;
@@ -270,6 +286,11 @@ void NGLScene::paintGL()
   m_mouseGlobalTX.m_m[3][0] = m_modelPos.m_x;
   m_mouseGlobalTX.m_m[3][1] = m_modelPos.m_y;
   m_mouseGlobalTX.m_m[3][2] = m_modelPos.m_z;
+
+  //draw initial texture map
+  glBindTexture(GL_TEXTURE_2D, m_textureName);
+  m_shaderManager->use(0);
+
   ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
 
   m_cameras[m_cameraIndex].setShape(m_fov, m_aspect, 0.5f, 150.0f);
@@ -298,7 +319,7 @@ void NGLScene::paintGL()
   if(m_drawNormals)
   {
     // set the shader to use the normalShader
-    m_shaderManager->use(shaderLib,1);
+    m_shaderManager->use(1);
     ngl::Mat4 MV;
     ngl::Mat4 MVP;
     MV=m_transform.getMatrix()*m_mouseGlobalTX* m_cameras[m_cameraIndex].getViewMatrix();
@@ -389,7 +410,7 @@ void NGLScene::resizeGL(int _w, int _h)
 void NGLScene::loadMatricesToShader()
 {
   ngl::ShaderLib *shaderLib=ngl::ShaderLib::instance();
-  m_shaderManager->use(shaderLib,0);
+  m_shaderManager->use(0);
 
   ngl::Mat4 MV;
   ngl::Mat4 MVP;
@@ -490,7 +511,6 @@ void NGLScene::mousePressEvent ( QMouseEvent * _event )
     m_origYPos = _event->y();
     m_translate=true;
   }
-  setFocus();
   update();
 }
 
@@ -526,6 +546,17 @@ void NGLScene::wheelEvent ( QWheelEvent * _event )
   update();
 }
 //----------------------------------------------------------------------------------------------------------------------
+void NGLScene::keyPressEvent(QKeyEvent *_event)
+{
+  switch (_event->key())
+  {
+    case Qt::Key_F : resetObjPos(); break;
+    default : break ;
+  }
+  update();
+}
+
+
 void NGLScene::compileShader(QString vertSource, QString fragSource)
 {
   m_shaderManager->compileShader(m_cameras[m_cameraIndex], vertSource, fragSource);
@@ -543,6 +574,7 @@ void NGLScene::compileShader(QString vertSource, QString fragSource)
   // load these values to the shader as well
   light.loadToShader("light");
   update();
+  m_parser->assignAllData();
 
 }
 
@@ -555,6 +587,8 @@ QString NGLScene::parseErrorLog(QString _string)
   // Declare a string to output
   // And a list of integer to be used for line error highlighting
   QString outputErrors;
+
+  QString shaderName;
 
   // Separate the input _string into separate lines.
   QRegExp separateLines("\n");
@@ -572,8 +606,14 @@ QString NGLScene::parseErrorLog(QString _string)
       if (pieces.length()==1 && pieces[j]!="")
       {
         // Split the line using the "Remove Colon"
-        QRegExp removeColon(":");
-        QStringList title=pieces.value(j).split(removeColon);
+        if(pieces.value(j).endsWith("Vertex:"))
+        {
+          shaderName=QString("Vertex");
+        }
+        if(pieces.value(j).endsWith("Fragment:"))
+        {
+          shaderName=QString("Fragment");
+        }
       }
       // If the first segment of the line is 0...
       // remove it and replace it with "Line"
@@ -593,6 +633,7 @@ QString NGLScene::parseErrorLog(QString _string)
         if (j==1)
         {
           int lineNumber = pieces.value(j).toInt();
+          emit createLineMarker(shaderName,lineNumber-1);
         }
       }
     }
@@ -610,7 +651,7 @@ QString NGLScene::parseErrorLog(QString _string)
 //------------------------------------------------------------------------------
 void NGLScene::resetObjPos()
 {
-  //reset object position back to default
+  //move back to default
   m_modelPos.m_x = 0;
   m_modelPos.m_y = 0;
   m_modelPos.m_z = 0;
@@ -619,9 +660,9 @@ void NGLScene::resetObjPos()
 }
 
 //------------------------------------------------------------------------------
-void NGLScene::newProject(std::string _name)
+void NGLScene::newProject(std::string _name, QString vertSource, QString fragSource)
 {
-  m_shaderManager->createShaderProgram(_name);
+  m_shaderManager->createShaderProgram(_name, m_cam, vertSource, fragSource);
 }
 
 //------------------------------------------------------------------------------
@@ -635,7 +676,7 @@ void NGLScene::drawAxis(ngl::Vec3 _pos)
 {
   // Instance the Shader
   ngl::ShaderLib *shaderLib=ngl::ShaderLib::instance();
-  m_shaderManager->use(shaderLib,0);
+  m_shaderManager->use(0);
   ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
 
   // Move the Y AXIS geo
@@ -673,11 +714,11 @@ void NGLScene::drawAxis(ngl::Vec3 _pos)
 void NGLScene::setCameraShape(QString _view)
 {
   m_cameraIndex = m_camera->setCameraShape(_view);
-  m_modelPos.m_x=0;
-  m_modelPos.m_y=0;
-  m_modelPos.m_z=0;
-  m_spinXFace=0;
-  m_spinYFace=0;
+//  m_modelPos.m_x=0;
+//  m_modelPos.m_y=0;
+//  m_modelPos.m_z=0;
+//  m_spinXFace=0;
+//  m_spinYFace=0;
   m_aspect=(float)width()/height();
   for(auto &cam : m_cameras)
     {
