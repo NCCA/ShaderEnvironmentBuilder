@@ -184,7 +184,7 @@ void NGLScene::initializeGL()
 
   if(!m_shaderManager->compileStatus())
   {
-    m_window->setTerminalText(m_shaderManager->getErrorLog());
+    m_window->setTerminalText(parseErrorLog(m_shaderManager->getErrorLog()));
   }
   if(m_shaderManager->isInit())
   {
@@ -523,7 +523,7 @@ void NGLScene::wheelEvent ( QWheelEvent * _event )
 void NGLScene::compileShader(QString vertSource, QString fragSource)
 {
   m_shaderManager->compileShader(m_cameras[m_cameraIndex], vertSource, fragSource);
-  m_window->setTerminalText(parseString(m_shaderManager->getErrorLog()));
+  m_window->setTerminalText(parseErrorLog(m_shaderManager->getErrorLog()));
   ngl::Light light(ngl::Vec3(2,2,2),ngl::Colour(1,1,1,1),ngl::Colour(1,1,1,1),ngl::LightModes::POINTLIGHT);
   // now create our light this is done after the camera so we can pass the
   // transpose of the projection matrix to the light to do correct eye space
@@ -544,60 +544,62 @@ void NGLScene::compileShader(QString vertSource, QString fragSource)
 
 //------------------------------------------------------------------------------
 
-QString NGLScene::parseString(QString _string)
+QString NGLScene::parseErrorLog(QString _string)
 {
   // Declare a string to output
   // And a list of integer to be used for line error highlighting
-  QString outString;
-  std::vector<int> lineErrors;
+  QString outputErrors;
 
   // Separate the input _string into separate lines.
   QRegExp separateLines("\n");
   QStringList lines=_string.split(separateLines);
-  uint len=lines.length();
 
-  for (uint i=0;i<len;i++)
+  for (uint i=0;i<lines.length();i++)
   {
     // Split each line using braces; "(" and ")"
     QRegExp separateNumbers("(\\(|\\))");
     QStringList pieces=lines.value(i).split(separateNumbers);
-    uint nLen=pieces.length();
 
-    for (uint j=0;j<nLen;j++)
+    for (uint j=0;j<pieces.length();j++)
     {
       // This is the how to get the Title (Shader file)
       if (pieces.length()==1 && pieces[j]!="")
       {
         // Split the line using the "Remove Colon"
         QRegExp removeColon(":");
+
         QStringList title=pieces.value(j).split(removeColon);
       }
       // If the first segment of the line is 0...
       // remove it and replace it with "Line"
       if(pieces[j].length()==1 && j==0)
       {
-        outString.append("Line ");
+        outputErrors.append("Line ");
       }
+
+      // Add the rest of the string to the list
       else
       {
-        // Add the rest of the string to the list
-        outString.append(pieces.value(j));
+        outputErrors.append(pieces.value(j));
+
+
         // Add the second part of the line fragment as that is the line error number.
         // This can be returned as a list of integers
         if (j==1)
         {
-          lineErrors.push_back(pieces.value(j).toInt());
+          int lineNumber = pieces.value(j).toInt();
         }
       }
     }
     // If it is the last line, add a new line to the string
-    if (i!=len-1)
+    int finalLine =lines.length()-1;
+    if (i!=finalLine-1)
     {
-      outString.append("\n");
+      outputErrors.append("\n");
     }
   }
-  return outString;
-  //return lineErrors;    // This wil return a list of integers
+
+  return outputErrors;
 }
 
 //------------------------------------------------------------------------------

@@ -197,6 +197,7 @@ bool ShaderManager::checkAllCompileError(QString *o_log)
   for (auto shaderProg: shaderPrograms)
   {
     GLint isCompiled = checkCompileError(shaderProg, &temp_log);
+    std::cout<<"thingy thingy thingy::::     "<<shaderProg<<std::endl;
     if (!isCompiled)
     {
       o_log->append(QString("%1:\n").arg(shaderProg.c_str()));
