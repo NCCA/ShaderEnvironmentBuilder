@@ -92,6 +92,8 @@ void Cebitor::clearErrors()
 
 void Cebitor::searchNext()
 {
+  setSelectionBackgroundColor(QColor(230, 219, 116));
+  setSelectionForegroundColor(QColor(39,40,34));
   QString searchTerm = m_searchLineEdit->text();
   bool found;
   found = findFirst(searchTerm, false, false, false, true);
@@ -99,6 +101,8 @@ void Cebitor::searchNext()
 
 void Cebitor::searchPrev()
 {
+  setSelectionBackgroundColor(QColor(230, 219, 116));
+  setSelectionForegroundColor(QColor(39,40,34));
   QString searchTerm = m_searchLineEdit->text();
   bool found;
   found = findFirst(searchTerm, false, false, false, true, false);
@@ -245,6 +249,8 @@ void Cebitor::toggleSearchBox()
   {
     m_searchWidget->hide();
     setFocus();
+    setSelectionBackgroundColor(QColor(61,61,52));
+    resetSelectionForegroundColor();
   }
 }
 
