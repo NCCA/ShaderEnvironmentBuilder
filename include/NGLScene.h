@@ -24,6 +24,7 @@ class MainWindow;
 /// @brief a basic Qt GL widget class for ngl demos
 /// @author Jonathan Macey
 /// @author Jonathan Flynn
+/// @author Anand Hotwani
 /// @version 1.0
 /// @date 01/03/16
 /// Revision History :
@@ -77,6 +78,9 @@ public :
   /// @param fragSource the Qstring containing the fragment shader source code
   //----------------------------------------------------------------------------------------------------------------------
   void compileShader(QString vertSource, QString fragSource);
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief resets the position of the active OBJ in the OpenGL context
+  //----------------------------------------------------------------------------------------------------------------------
   void resetObjPos();
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief sets the file location you of a mesh
@@ -93,6 +97,13 @@ public :
   /// @param the new directory  used to draw m_mesh
   //----------------------------------------------------------------------------------------------------------------------
   void importMeshName(const std::string &);
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief loads in a texture map and directly applies it to the OBJ. (Requires UVs)
+  /// @param the desired directory of the texture map
+  //----------------------------------------------------------------------------------------------------------------------
+  void importTextureMap(const std::string &);
+  //----------------------------------------------------------------------------------------------------------------------
+
 public slots:
   //----------------------------------------------------------------------------
   /// @brief sets the shape type
@@ -197,8 +208,6 @@ private:
   //----------------------------------------------------------------------------------------------------------------------
   MainWindow *m_window;
   //----------------------------------------------------------------------------------------------------------------------
-
-  //----------------------------------------------------------------------------------------------------------------------
   /// @brief method to load transform matrices to the shader
   //----------------------------------------------------------------------------------------------------------------------
   void loadMatricesToShader();
@@ -233,6 +242,11 @@ private:
   /// @brief Set object transformations depending on the shape type
   /// @param _event the Qt Event structure
   //----------------------------------------------------------------------------
+  /// @brief this method should be called every time a keyboard button is pressed
+  /// inherited from QObject and overridden here.
+  /// @param _event the Qt Event structure
+  void keyPressEvent (QKeyEvent *_event);
+  //------------------------------------------------------------------------------
   void objectTransform(uint _type);
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief defines the mesh type
@@ -263,8 +277,6 @@ private:
   /// @param _pos is the position that the axis is drawn relative to the origin
   //----------------------------------------------------------------------------
   void drawAxis(ngl::Vec3 _pos);
-
-
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief A string to store the .obj m_mesh directory
   //----------------------------------------------------------------------------------------------------------------------
@@ -281,9 +293,11 @@ private:
   /// @brief Activate the m_mesh .obj
   //----------------------------------------------------------------------------------------------------------------------
   void toggleObj();
-
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief stores the texture name
+  //----------------------------------------------------------------------------------------------------------------------
   GLuint m_textureName;
-
+  //----------------------------------------------------------------------------------------------------------------------
   std::unique_ptr<ngl::Text> m_text; //Text for errors etc
 
   bool m_shaderError;

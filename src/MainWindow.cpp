@@ -60,6 +60,9 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   // switching to .obj files
   connect(m_ui->m_actionLoad_Obj,SIGNAL(triggered()),this,SLOT(on_actionLoad_obj_opened()));
 
+  // switching to .jpg files
+  connect(m_ui->m_actionLoad_Texture,SIGNAL(triggered()),m_gl,SLOT(on_m_actionLoad_Texture_triggered()));
+
   connect(m_ui->m_exportUniforms,SIGNAL(clicked()),m_gl,SLOT(exportUniform()));
   connect(m_ui->m_printUniforms ,SIGNAL(clicked()),this,SLOT(printUniforms()));
 
@@ -290,3 +293,15 @@ void MainWindow::on_actionSaveProjectAs_triggered()
     m_project->saveAs(m_qsci1->text(), m_qsci2->text());
 }
 
+
+void MainWindow::on_m_actionLoad_Texture_triggered()
+{
+  // Open a file dialog and return a file directory
+  QString fileName=QFileDialog::getOpenFileName(this,
+  tr("Open Texture Map"),"0Features-0BugsCVA3/",tr("Image Files (*.jpg)"));
+
+  //load texture map to OBJ
+  std::string importName=fileName.toStdString();
+  std::cout<<"imported texture "<<importName<<std::endl;
+  m_gl->importTextureMap(importName);
+}
