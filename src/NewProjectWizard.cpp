@@ -53,71 +53,79 @@ void NewProjectWizard::accept()
 {
   m_output->m_projectName = field("projectName").toString().toStdString();
   m_output->m_projectDir = field("projectDirectory").toString().toStdString();
-  QString version = QString("#version %1 %2\n\n").arg(field("glslVersion").toString(),
-                                                      field("glslProfile").toString());
+  QString ver = QString("#version %1 %2\n\n")
+                .arg(field("glslVersion").toString(),
+                     field("glslProfile").toString());
 
-  QModelIndexList vertexFiles = m_vertexSelectModel->selectedRows();
-  QModelIndexList fragmentFiles = m_fragmentSelectModel->selectedRows();
+  QModelIndexList vertFiles = m_vertexSelectModel->selectedRows();
+  QModelIndexList fragFiles = m_fragmentSelectModel->selectedRows();
 
   GlslOrderPage* glslOrderPg = static_cast<GlslOrderPage*>(page(3));
 
   QStringList vertexOrderFileNames, fragmentOrderFileNames;
-  QStringList vertexFileNames, fragmentFileNames;
+  QStringList vertFileNames, fragFileNames;
 
   const QListWidget* vertFilesOrder = glslOrderPg->getVertListWidget();
   const QListWidget* fragFilesOrder = glslOrderPg->getFragListWidget();
 
   for (int i=0; i<vertFilesOrder->count(); ++i)
   {
-    vertexFileNames.append(m_fileModel->fileInfo(vertexFiles.at(i)).fileName());
+    vertFileNames.append(m_fileModel->fileInfo(vertFiles.at(i)).fileName());
     vertexOrderFileNames.append(vertFilesOrder->item(i)->text());
   }
 
   for (int i=0; i<fragFilesOrder->count(); ++i)
   {
-    fragmentFileNames.append(m_fileModel->fileInfo(fragmentFiles.at(i)).fileName());
+    fragFileNames.append(m_fileModel->fileInfo(fragFiles.at(i)).fileName());
     fragmentOrderFileNames.append(fragFilesOrder->item(i)->text());
   }
 
   QString vertexFilesString, fragmentFilesString;
-  for (int i=0; i<vertexFileNames.length(); ++i)
+  for (int i=0; i<vertFileNames.length(); ++i)
   {
-    int index = vertexFileNames.indexOf(vertexOrderFileNames[i]);
-    QFile vertFile(m_fileModel->fileInfo(vertexFiles.at(index)).absoluteFilePath());
-    if (!vertFile.open(QIODevice::ReadOnly | QIODevice::Text))
+    int index = vertFileNames.indexOf(vertexOrderFileNames[i]);
+    QFile vFile(m_fileModel->fileInfo(vertFiles.at(index)).absoluteFilePath());
+    if (!vFile.open(QIODevice::ReadOnly | QIODevice::Text))
     {
       // Raise an error if failed
-      CEBRaise::QtFileError(vertFile.error(), m_fileModel->fileInfo(vertexFiles.at(index)).absoluteFilePath());
+      CEBRaise::QtFileError(vFile.error(),
+                            m_fileModel->fileInfo(vertFiles.at(index))
+                                                           .absoluteFilePath());
     }
-    QTextStream in(&vertFile);
+    QTextStream in(&vFile);
     vertexFilesString.append(in.readAll());
     vertexFilesString.append("\n");
   }
 
-  for (int i=0; i<fragmentFileNames.length(); ++i)
+  for (int i=0; i<fragFileNames.length(); ++i)
   {
-    int index = fragmentFileNames.indexOf(fragmentOrderFileNames[i]);
-    QFile fragFile(m_fileModel->fileInfo(fragmentFiles.at(index)).absoluteFilePath());
-    if (!fragFile.open(QIODevice::ReadOnly | QIODevice::Text))
+    int index = fragFileNames.indexOf(fragmentOrderFileNames[i]);
+    QFile fFile(m_fileModel->fileInfo(fragFiles.at(index)).absoluteFilePath());
+    if (!fFile.open(QIODevice::ReadOnly | QIODevice::Text))
     {
       // Raise an error if failed
-      CEBRaise::QtFileError(fragFile.error(), m_fileModel->fileInfo(fragmentFiles.at(index)).absoluteFilePath());
+      CEBRaise::QtFileError(fFile.error(),
+                            m_fileModel->fileInfo(fragFiles.at(index))
+                                                           .absoluteFilePath());
     }
-    QTextStream in(&fragFile);
+    QTextStream in(&fFile);
     fragmentFilesString.append(in.readAll());
     fragmentFilesString.append("\n");
   }
 
-  m_output->m_vertSource = vertexFilesString;
+
   if(!vertexFilesString.contains("#version"))
   {
-    vertexFilesString.push_front(version+"\n");
+    vertexFilesString.push_front(ver+"\n");
   }
-  m_output->m_fragSource = fragmentFilesString;
+
   if(!fragmentFilesString.contains("#version"))
   {
-    fragmentFilesString.push_front(version+"\n");
+    fragmentFilesString.push_front(ver+"\n");
   }
+
+  m_output->m_vertSource = vertexFilesString;
+  m_output->m_fragSource = fragmentFilesString;
 
   QDialog::accept();
 }
@@ -179,8 +187,10 @@ ProjectInfoPage::ProjectInfoPage(QWidget *parent)
 
   registerField("projectName*", m_le_projectName);
   registerField("projectDirectory*", m_le_projectDirectory);
-  registerField("glslVersion", m_cb_glslVersion, "currentText", "currentIndexChanged");
-  registerField("glslProfile", m_cb_glslProfile,"currentText", "currentIndexChanged");
+  registerField("glslVersion", m_cb_glslVersion, "currentText",
+                "currentIndexChanged");
+  registerField("glslProfile", m_cb_glslProfile,"currentText",
+                "currentIndexChanged");
 
   QGridLayout *layout = new QGridLayout;
   layout->addWidget(m_l_projectName, 0, 0);
@@ -195,7 +205,8 @@ ProjectInfoPage::ProjectInfoPage(QWidget *parent)
   layout->addWidget(m_cb_glslProfile, 4,1,1,2);
   setLayout(layout);
 
-  connect(m_b_browseDirectory, SIGNAL (clicked()),this, SLOT(setProjectDirectory()));
+  connect(m_b_browseDirectory, SIGNAL (clicked()),this,
+          SLOT(setProjectDirectory()));
 }
 
 //------------------------------------------------------------------------------
@@ -249,7 +260,8 @@ GlslFilesPage::GlslFilesPage(QWidget *parent)
   m_tv_vertexSelectFiles = new QTreeView;
   m_tv_fragmentSelectFiles = new QTreeView;
 
-  std::vector<QTreeView*> tViews = {m_tv_vertexSelectFiles, m_tv_fragmentSelectFiles};
+  std::vector<QTreeView*> tViews = {m_tv_vertexSelectFiles,
+                                    m_tv_fragmentSelectFiles};
 
   for (auto tv: tViews)
   {
@@ -264,10 +276,18 @@ GlslFilesPage::GlslFilesPage(QWidget *parent)
   m_wizard->m_vertexSelectModel = m_tv_vertexSelectFiles->selectionModel();
   m_wizard->m_fragmentSelectModel = m_tv_fragmentSelectFiles->selectionModel();
 
-  connect(m_wizard->m_vertexSelectModel, SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)),
-          this, SLOT(vertexSelectChanged(const QItemSelection&, const QItemSelection&)));
-  connect(m_wizard->m_fragmentSelectModel, SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)),
-          this, SLOT(fragmentSelectChanged(const QItemSelection&, const QItemSelection&)));
+  connect(m_wizard->m_vertexSelectModel,
+          SIGNAL(selectionChanged(const QItemSelection&,
+                                  const QItemSelection&)),
+          this,
+          SLOT(vertexSelectChanged(const QItemSelection&,
+                                   const QItemSelection&)));
+  connect(m_wizard->m_fragmentSelectModel,
+          SIGNAL(selectionChanged(const QItemSelection&,
+                                  const QItemSelection&)),
+          this,
+          SLOT(fragmentSelectChanged(const QItemSelection&,
+                                     const QItemSelection&)));
 
   registerField("vertexFileName*", m_le_vertexName);
   registerField("fragmentFileName*", m_le_fragmentName);
