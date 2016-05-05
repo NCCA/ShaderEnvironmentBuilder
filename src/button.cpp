@@ -20,6 +20,7 @@ Button::Button(QString _buttonName, QLayout *_layout, unsigned int _id, ButtonLi
   createButtonBox(_buttonName);
   m_libParent=_libParent;
   m_sceneParent=_sceneParent;
+  m_parent=parent;
   _layout->addWidget(m_buttonBox);
 }
 
@@ -46,14 +47,19 @@ void colourButton::openBox()
   m_colourPicked.setRedF(m_colour.m_x);
   m_colourPicked.setGreenF(m_colour.m_y);
   m_colourPicked.setBlueF(m_colour.m_z);
-  m_colourPicked=m_colourGroupBox->getColor(m_colourPicked);
-  m_colour.set(m_colourPicked.redF(),
-               m_colourPicked.greenF(),
-               m_colourPicked.blueF(),
-               m_colourPicked.alphaF());
-  qDebug()<<"Box opened and colours set\n";
-  m_libParent->updateShaderValues();
-  m_sceneParent->update();
+  m_colourPicked=m_colourGroupBox->getColor(m_colourPicked,
+                                            m_parent,
+                                            "Pick a colour",
+                                            0);
+  if(m_colourPicked.spec()!=QColor::Spec::Invalid)
+  {
+    m_colour.set(m_colourPicked.redF(),
+                 m_colourPicked.greenF(),
+                 m_colourPicked.blueF(),
+                 m_colourPicked.alphaF());
+    m_libParent->updateShaderValues();
+    m_sceneParent->update();
+  }
   //printValues();
 }
 

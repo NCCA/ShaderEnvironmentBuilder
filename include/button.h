@@ -102,11 +102,14 @@ public:
 
   NGLScene *m_sceneParent;
 
+  QWidget *m_parent;
+
 private slots:
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief a slot to open a widget upon button press event
   //----------------------------------------------------------------------------------------------------------------------
   virtual void openBox() {return;}
+
 private:
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief string to hold button's name
@@ -160,6 +163,7 @@ private slots:
   void openBox();
 public:
   using Button::Button;
+  //colourButton(QString _buttonName, QLayout *_layout, unsigned int _id, ButtonLib *_libParent, NGLScene *_sceneParent, QWidget *parent);
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief sets the picked colour and colour attribute to the colour input
   /// @param [in] colour value

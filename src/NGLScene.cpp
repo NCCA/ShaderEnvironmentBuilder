@@ -330,8 +330,6 @@ void NGLScene::mousePressEvent ( QMouseEvent * _event )
   // store the value where the maouse was clicked (x,y) and set the Rotate flag to true
   if(_event->button() == Qt::LeftButton)
   {
-    ngl::Vec4 _tempVec=m_parser->m_uniformList[12]->getVec4();
-    std::cout<<"\nVal:\nx: "<<_tempVec.m_x<<"\ny: "<<_tempVec.m_y<<"\nz:"<<_tempVec.m_z<<std::endl;
     m_origX = _event->x();
     m_origY = _event->y();
     m_rotate =true;
