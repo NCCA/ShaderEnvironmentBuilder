@@ -5,6 +5,19 @@
 #include <ngl/ShaderLib.h>
 #include <QString>
 #include <ngl/Camera.h>
+//------------------------------------------------------------------------------------------------------------------------
+/// @file ShaderManager
+/// @brief the method for managing and updating data for GLSL shaders in the IDE
+/// @author Alexander La Tourelle
+/// @author Anand Hotwani
+/// @author Jonathan Flynn
+/// @version 1.0
+/// @date 05/05/16
+//------------------------------------------------------------------------------------------------------------------------
+/// @class ShaderManager
+/// @brief will check and return compile status to user whether successful or unsuccessful
+//------------------------------------------------------------------------------------------------------------------------
+
 
 //structure containing currently active shader data
 struct shaderProgramData
@@ -35,7 +48,7 @@ private:
     bool checkCompileError(std::string _shaderProgName, QString *o_log);
     bool checkAllCompileError(QString *o_log);
     shaderProgramData m_data;
-
+    GLuint m_textureName;
 
 };
 

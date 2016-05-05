@@ -584,6 +584,7 @@
     <addaction name="m_actionLoad_Troll"/>
     <addaction name="m_actionLoad_Dragon"/>
     <addaction name="m_actionLoad_Bunny"/>
+    <addaction name="m_actionLoad_Texture"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="shapesMenu"/>
@@ -663,6 +664,11 @@
   <action name="m_actionLoad_Bunny">
    <property name="text">
     <string>Load Bunny</string>
+   </property>
+  </action>
+  <action name="m_actionLoad_Texture">
+   <property name="text">
+    <string>Load Texture</string>
    </property>
   </action>
  </widget>

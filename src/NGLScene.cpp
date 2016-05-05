@@ -109,6 +109,10 @@ NGLScene::~NGLScene()
   //delete m_readFromXML;
   delete m_parser;
   delete m_shaderManager;
+
+  //Clear any existing texture maps
+  glDeleteTextures(1,&m_textureName);
+
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -154,9 +158,16 @@ void NGLScene::importMeshName(const std::string &name)
   }
 
 
-  //clear all loaded textures
-  glDeleteTextures(1,&m_textureName);
 }
+
+void NGLScene::importTextureMap(const string &name)
+{
+  std::ifstream textureSource(name.c_str());
+  ngl::Texture texture (name);
+  m_textureName=texture.setTextureGL();
+
+}
+
 
 //----------------------------------------------------------------------------------------------------------------------
 
@@ -181,6 +192,10 @@ void NGLScene::initializeGL()
   // now to load the shader and set the values
   // grab an instance of shader manager
   m_shaderManager->initialize(m_cameras[m_cameraIndex]);
+
+  ngl::Texture texture ("textures/metalTexture.jpg");
+  m_textureName=texture.setTextureGL();
+
 
   if(!m_shaderManager->compileStatus())
   {
@@ -254,11 +269,11 @@ void NGLScene::paintGL()
   }
   else
   {
+    //glBindTexture(GL_TEXTURE_2D, m_textureName);
     glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
   }
   ngl::ShaderLib *shaderLib=ngl::ShaderLib::instance();
 
-  m_shaderManager->use(shaderLib,0);
 
   // Rotation based on the mouse position for our global transform
   ngl::Mat4 rotX;
@@ -272,6 +287,11 @@ void NGLScene::paintGL()
   m_mouseGlobalTX.m_m[3][0] = m_modelPos.m_x;
   m_mouseGlobalTX.m_m[3][1] = m_modelPos.m_y;
   m_mouseGlobalTX.m_m[3][2] = m_modelPos.m_z;
+
+  //draw initial texture map
+  glBindTexture(GL_TEXTURE_2D, m_textureName);
+  m_shaderManager->use(shaderLib,0);
+
   ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
 
   m_cameras[m_cameraIndex].setShape(m_fov, m_aspect, 0.5f, 150.0f);
@@ -520,6 +540,17 @@ void NGLScene::wheelEvent ( QWheelEvent * _event )
   update();
 }
 //----------------------------------------------------------------------------------------------------------------------
+void NGLScene::keyPressEvent(QKeyEvent *_event)
+{
+  switch (_event->key())
+  {
+    case Qt::Key_F : resetObjPos(); break;
+    default : break ;
+  }
+  update();
+}
+
+
 void NGLScene::compileShader(QString vertSource, QString fragSource)
 {
   m_shaderManager->compileShader(m_cameras[m_cameraIndex], vertSource, fragSource);
@@ -605,7 +636,7 @@ QString NGLScene::parseErrorLog(QString _string)
 //------------------------------------------------------------------------------
 void NGLScene::resetObjPos()
 {
-  //reset object position back to default
+  //move back to default
   m_modelPos.m_x = 0;
   m_modelPos.m_y = 0;
   m_modelPos.m_z = 0;
