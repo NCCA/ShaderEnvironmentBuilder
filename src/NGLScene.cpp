@@ -98,7 +98,7 @@ NGLScene::NGLScene( QWidget *_parent, parserLib *_libParent ) : QOpenGLWidget( _
   m_wireframe=false;
   m_fov=65.0;
   m_nearClip = 0.5f;
-  m_farClip - 150.0f;
+  m_farClip = 150.0f;
   m_shaderManager = new ShaderManager();
   m_camera = new Camera();
   m_cameraIndex = 0;
@@ -227,8 +227,6 @@ void NGLScene::initializeGL()
     light.loadToShader("light");
   }
 
-
-  m_cameras[cameraIndex].setShape(m_fov, m_aspect, m_nearClip, m_farClip);
   // load these values to the shader as well
 
   m_readFromXML->shaderData("WhyHelloThere", "PhongVertex", "shaders/PhongVertex.glsl", "PhongFragment", "shaders/PhongFragment.glsl");
@@ -297,6 +295,7 @@ void NGLScene::paintGL()
 
   ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
 
+  m_cameras[m_cameraIndex].setShape(m_fov, m_aspect, m_nearClip, m_farClip);
   m_transform.reset();
   if (m_toggleAxis)
   {
