@@ -2,14 +2,13 @@
 #define BUTTON_H_
 
 #include <ngl/Vec4.h>
-#include <QtWidgets>
 #include <ngl/Colour.h>
-#include <QtWidgets>
-#include <QDialogButtonBox>
 #include "ButtonLib.h"
 #include "NGLScene.h"
 
 #include <QDialog>
+#include <QInputDialog>
+#include <QGroupBox>
 #include <QGridLayout>
 #include <QLabel>
 #include <QPushButton>

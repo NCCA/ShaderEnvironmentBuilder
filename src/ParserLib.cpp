@@ -6,7 +6,8 @@
 //----------------------------------------------------------------------------------------------------------------------
 parserLib::parserLib()
 {
-
+  m_num=0;
+  m_uniformList.resize(0);
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -19,8 +20,8 @@ parserLib::~parserLib()
 void parserLib::initializeUniformData()
 {
   //create instance of a shader
-  ngl::ShaderLib *shader=ngl::ShaderLib::instance();
-  GLuint id=shader->getProgramID("Phong");
+  ngl::ShaderLib *shaderLib=ngl::ShaderLib::instance();
+  GLuint id=shaderLib->getProgramID("Phong");
 
   // extract the number of uniforms active and update class data.
   GLint nUniforms;
@@ -37,7 +38,7 @@ void parserLib::initializeUniformData()
   // Permanently assign data to the class
   for (GLint i=0; i<nUniforms; i++)
   {
-    // craete local variables to store temp values.
+    // create local variables to store temp values.
     GLint tempLoc;
     // get the active uniform data...
     glGetActiveUniform(id,i, 256, &length, &size , &type , uniformName);
@@ -112,18 +113,14 @@ void parserLib::initializeUniformData()
   uniformDataTypes();
 }
 
-
-
 void parserLib::assignAllData()
 {
   initializeUniformData();
   assignUniformValues();
-  printUniforms(true);
 }
 
-
 //----------------------------------------------------------------------------------------------------------------------
-void parserLib::printUniforms(bool _printValues)
+void parserLib::printUniforms()
 {
   std::cout<<"_________________________________________Uniform Information: Starts//"<<std::endl;
   std::cout<<"There are "<<m_num<<" Uniforms"<<std::endl;
@@ -169,53 +166,29 @@ void parserLib::printUniforms(bool _printValues)
       }
       case GL_FLOAT_MAT3:
       {
-        std::cout<<"m_mat3:(x) "<<m_uniformList[i]->getMat3().m_00
-                                <<m_uniformList[i]->getMat3().m_01
-                                <<m_uniformList[i]->getMat3().m_02<<std::endl;
-        std::cout<<"m_mat3:(y) "<<m_uniformList[i]->getMat3().m_10
-                                <<m_uniformList[i]->getMat3().m_11
-                                <<m_uniformList[i]->getMat3().m_12<<std::endl;
-        std::cout<<"m_mat3:(z) "<<m_uniformList[i]->getMat3().m_20
-                                <<m_uniformList[i]->getMat3().m_21
-                                <<m_uniformList[i]->getMat3().m_22<<std::endl;
         break;
       }
       case GL_FLOAT_MAT4:
       {
-        std::cout<<"m_mat3:(x) "<<m_uniformList[i]->getMat4().m_00
-                                <<m_uniformList[i]->getMat4().m_01
-                                <<m_uniformList[i]->getMat4().m_02
-                                <<m_uniformList[i]->getMat4().m_03<<std::endl;
-        std::cout<<"m_mat3:(y) "<<m_uniformList[i]->getMat4().m_10
-                                <<m_uniformList[i]->getMat4().m_11
-                                <<m_uniformList[i]->getMat4().m_12
-                                <<m_uniformList[i]->getMat4().m_13<<std::endl;
-        std::cout<<"m_mat3:(z) "<<m_uniformList[i]->getMat4().m_20
-                                <<m_uniformList[i]->getMat4().m_21
-                                <<m_uniformList[i]->getMat4().m_22
-                                <<m_uniformList[i]->getMat4().m_23<<std::endl;
-        std::cout<<"m_mat3:(w) "<<m_uniformList[i]->getMat4().m_30
-                                <<m_uniformList[i]->getMat4().m_31
-                                <<m_uniformList[i]->getMat4().m_32
-                                <<m_uniformList[i]->getMat4().m_33<<std::endl;
         break;
       }
       default:
         std::cout<<"unrecognised data type name"<<std::endl;
     }
-    std::cout<<"___________________________________________Uniform Information: Ends//"<<std::endl;
   }
+  std::cout<<"___________________________________________Uniform Information: Ends//"<<std::endl;
+
 }
 
-
-/// The following section was originally written by Jon Macey:-
-/// Jon Macey. NCCA library NGL::ShaderProgram::printRegisteredUniforms [online]. [Accessed 01/10/16].
-/// Available from: <https://nccastaff.bournemouth.ac.uk/jmacey/GraphicsLib/index.html>.
+//----------------------------------------------------------------------------------------------------------------------
+/// @brief Converts GLenums into const chars
+/// Modified from :-
+/// Jon Macey. NCCA library NGL::ShaderProgram::printRegisteredUniforms [online].
+/// [Accessed 01/10/16]. Available from: <https://nccastaff.bournemouth.ac.uk/jmacey/GraphicsLib/index.html>.
 //----------------------------------------------------------------------------------------------------------------------
 void parserLib::uniformDataTypes()
 {
-  std::cout<<"Started Uniforms" <<"\n";
-
+  // Uses an unordered map to map the GLenum's into const char's
   const static std::unordered_map<GLenum,const char *> types=
   {
     {GL_FLOAT,"float"},
@@ -347,104 +320,104 @@ void parserLib::uniformDataTypes()
     {
       type="unknown type";
     }
-    /// end of Citation
     m_uniformList[d.second->getLocation()]->setTypeName(type);
   }
-  std::cout<<"End Uniforms" <<"\n";
+  std::cout<<"End Uniforms"<<"\n";
 }
+/// end of Citation
 
 //----------------------------------------------------------------------------------------------------------------------
 void parserLib::exportUniforms()
 {
+  // Open the text file "ParsingOutput.txt"
   std::ofstream fileOut;
   fileOut.open("ParsingOutput.txt");
-  if(!fileOut.is_open())    ///If it can be opened
+  if(!fileOut.is_open())    ///If it can't be opened
   {
     std::cerr<<"couldn't' open file\n";
     exit(EXIT_FAILURE);
   }
   for(uint i=0;i<m_num;i++)
   {
+    // Input Name, Location and Type
     fileOut<<m_uniformList[i]->getName()<<"\n";
     fileOut<<m_uniformList[i]->getLocation()<<"\n";
     fileOut<<m_uniformList[i]->getTypeName()<<"\n";
+    switch(m_uniformList[i]->getTypeEnum())
+    {
+      case GL_BOOL:
+      {
+        fileOut<<m_uniformList[i]->getBool()<<"\n";
+        break;
+      }
+      case GL_FLOAT:
+      {
+        fileOut<<m_uniformList[i]->getFloat()<<"\n";
+        break;
+      }
+      case GL_INT:
+      {
+        fileOut<<m_uniformList[i]->getInt()<<"\n";
+        break;
+      }
+      case GL_FLOAT_VEC3:
+      {
+        fileOut<<m_uniformList[i]->getVec3().m_x<<" ";
+        fileOut<<m_uniformList[i]->getVec3().m_y<<" ";
+        fileOut<<m_uniformList[i]->getVec3().m_z<<"\n";
+        break;
+      }
+      case GL_FLOAT_VEC4:
+      {
+        fileOut<<m_uniformList[i]->getVec4().m_x<<" ";
+        fileOut<<m_uniformList[i]->getVec4().m_y<<" ";
+        fileOut<<m_uniformList[i]->getVec4().m_z<<" ";
+        fileOut<<m_uniformList[i]->getVec4().m_w<<"\n";
+        break;
+      }
+      case GL_FLOAT_MAT3:
+      {
+
+        fileOut<<m_uniformList[i]->getMat3().m_00<<" ";
+        fileOut<<m_uniformList[i]->getMat3().m_01<<" ";
+        fileOut<<m_uniformList[i]->getMat3().m_02<<" ";
+
+        fileOut<<m_uniformList[i]->getMat3().m_10<<" ";
+        fileOut<<m_uniformList[i]->getMat3().m_11<<" ";
+        fileOut<<m_uniformList[i]->getMat3().m_12<<" ";
+
+        fileOut<<m_uniformList[i]->getMat3().m_20<<" ";
+        fileOut<<m_uniformList[i]->getMat3().m_21<<" ";
+        fileOut<<m_uniformList[i]->getMat3().m_22<<"\n";
+
+        break;
+      }
+      case GL_FLOAT_MAT4:
+      {
+        fileOut<<m_uniformList[i]->getMat4().m_00<<" ";
+        fileOut<<m_uniformList[i]->getMat4().m_01<<" ";
+        fileOut<<m_uniformList[i]->getMat4().m_02<<" ";
+        fileOut<<m_uniformList[i]->getMat4().m_03<<" ";
+
+        fileOut<<m_uniformList[i]->getMat4().m_10<<" ";
+        fileOut<<m_uniformList[i]->getMat4().m_11<<" ";
+        fileOut<<m_uniformList[i]->getMat4().m_12<<" ";
+        fileOut<<m_uniformList[i]->getMat4().m_13<<" ";
+
+        fileOut<<m_uniformList[i]->getMat4().m_20<<" ";
+        fileOut<<m_uniformList[i]->getMat4().m_21<<" ";
+        fileOut<<m_uniformList[i]->getMat4().m_22<<" ";
+        fileOut<<m_uniformList[i]->getMat4().m_23<<"\n";
+
+        break;
+      }
+    default:std::cerr<<"unrecognised data type name"<<std::endl;
+    }
   }
+  // close file
   fileOut.close();
-  // close files
-  std::cout<<"EXPORTED\n"<<std::endl;
+  std::cout<<"Exported Uniforms\n"<<std::endl;
 }
-
-////----------------------------------------------------------------------------------------------------------------------
-//bool parserLib::getBool(int _loc)
-//{
-//    return m_uniformList[_loc].m_bool;
-//}
-////----------------------------------------------------------------------------------------------------------------------
-//int parserLib::getInt(int _loc)
-//{
-//    return m_uniformList[_loc].m_int;
-//}
-////----------------------------------------------------------------------------------------------------------------------
-//float parserLib::getFloat(int _loc)
-//{
-//    return m_uniformList[_loc].m_float;
-//}
-////----------------------------------------------------------------------------------------------------------------------
-//ngl::Mat3 parserLib::getMat3(int _loc)
-//{
-//    return m_uniformList[_loc].m_mat3;
-//}
-////----------------------------------------------------------------------------------------------------------------------
-//ngl::Mat4 parserLib::getMat4(int _loc)
-//{
-//    return m_uniformList[_loc].m_mat4;
-//}
-////----------------------------------------------------------------------------------------------------------------------
-//ngl::Vec3 parserLib::getVec3(int _loc)
-//{
-//    return m_uniformList[_loc].m_vec3;
-//}
-////----------------------------------------------------------------------------------------------------------------------
-//ngl::Vec4 parserLib::getVec4(int _loc)
-//{
-//    return m_uniformList[_loc].m_vec4;
-//}
-////----------------------------------------------------------------------------------------------------------------------
-//void parserLib::setBool(int _loc, bool _value)
-//{
-//    m_uniformList[_loc].m_bool=_value;
-//}
-////----------------------------------------------------------------------------------------------------------------------
-//void parserLib::setInt(int _loc, int _value)
-//{
-//    m_uniformList[_loc].m_int=_value;
-//}
-////----------------------------------------------------------------------------------------------------------------------
-//void parserLib::setFloat(int _loc, float _value)
-//{
-//    m_uniformList[_loc].m_float=_value;
-//}
-////----------------------------------------------------------------------------------------------------------------------
-//void parserLib::setMat3(int _loc, ngl::Mat3 _value)
-//{
-//    m_uniformList[_loc].m_mat3=_value;
-//}
-////----------------------------------------------------------------------------------------------------------------------
-//void parserLib::setMat4(int _loc, ngl::Mat4 _value)
-//{
-//    m_uniformList[_loc].m_mat4=_value;
-//}
-////----------------------------------------------------------------------------------------------------------------------
-//void parserLib::setVec3(int _loc, ngl::Vec3 _value)
-//{
-//    m_uniformList[_loc].m_vec3=_value;
-//}
-////----------------------------------------------------------------------------------------------------------------------
-//void parserLib::setVec4(int _loc, ngl::Vec4 _value)
-//{
-//    m_uniformList[_loc].m_vec4=_value;
-//}
-
 
 //----------------------------------------------------------------------------------------------------------------------
 void parserLib::assignUniformValues()
@@ -454,7 +427,6 @@ void parserLib::assignUniformValues()
   // sets default values depending on it's data type
   for (uint i=0;i<m_num;i++)
   {
-    std::cout<<"assignUniforms "<< i<<std::endl;
     switch(m_uniformList[i]->getTypeEnum())
     {
       case GL_BOOL:
@@ -484,16 +456,25 @@ void parserLib::assignUniformValues()
       }
       case GL_FLOAT_MAT3:
       {
-        m_uniformList[i]->setMat3(shader->getUniformBlockIndex(m_uniformList[i]->getName()) );
-        break;
+      ngl::Mat3 temp= shader->getUniformBlockIndex(m_uniformList[i]->getName());
+      temp.m_00=1;
+      temp.m_11=1;
+      temp.m_22=1;
+      m_uniformList[i]->setMat3(temp);
+      break;
       }
       case GL_FLOAT_MAT4:
       {
-        m_uniformList[i]->setMat4( shader->getUniformBlockIndex(m_uniformList[i]->getName()) );
+        ngl::Mat4 temp= shader->getUniformBlockIndex(m_uniformList[i]->getName());
+        temp.m_00=1;
+        temp.m_11=1;
+        temp.m_22=1;
+        temp.m_33=1;
+        m_uniformList[i]->setMat4(temp);
         break;
       }
-    default:
-      std::cout<<"unrecognised data type name"<<std::endl;
+      default:
+      { std::cout<<"unrecognised data type name"<<std::endl; }
     }
   }
 }
@@ -501,23 +482,25 @@ void parserLib::assignUniformValues()
 //----------------------------------------------------------------------------------------------------------------------
 void parserLib::sendUniformsToShader(ngl::ShaderLib *shader)
 {
+
+  // set shader values depending on it's data type
   for (uint i=0;i<m_num;i++)
   {
     switch(m_uniformList[i]->getTypeEnum())
     {
       case GL_BOOL:
       {
-      shader->setShaderParam1i(m_uniformList[i]->getName(),m_uniformList[i]->getBool());
+        shader->setShaderParam1i(m_uniformList[i]->getName(),m_uniformList[i]->getBool());
         break;
       }
       case GL_FLOAT:
       {
-      shader->setShaderParam1f(m_uniformList[i]->getName(),m_uniformList[i]->getFloat());
+        shader->setShaderParam1f(m_uniformList[i]->getName(),m_uniformList[i]->getFloat());
         break;
       }
       case GL_INT:
       {
-      shader->setShaderParam1i(m_uniformList[i]->getName(),m_uniformList[i]->getInt());
+        shader->setShaderParam1i(m_uniformList[i]->getName(),m_uniformList[i]->getInt());
         break;
       }
       case GL_FLOAT_VEC3:
@@ -545,8 +528,7 @@ void parserLib::sendUniformsToShader(ngl::ShaderLib *shader)
         shader->setShaderParamFromMat4(m_uniformList[i]->getName(),  m_uniformList[i]->getMat4());
         break;
       }
-    default:
-      std::cout<<"unrecognised data type name"<<std::endl;
+    default:std::cerr<<"unrecognised data type name"<<std::endl;
     }
 
   }

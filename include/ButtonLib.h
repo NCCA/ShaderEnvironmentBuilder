@@ -5,6 +5,8 @@
 #include "button.h"
 #include "NGLScene.h"
 
+#include <QDebug>
+
 //----------------------------------------------------------------------------------------------------------------------
 /// @file ButtonLib.h
 /// @brief this class creates a button library to store buttons and set uniform values

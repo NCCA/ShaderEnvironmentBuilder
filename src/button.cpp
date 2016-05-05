@@ -21,19 +21,22 @@ Button::Button(QString _buttonName, QLayout *_layout, unsigned int _id, ButtonLi
   m_libParent=_libParent;
   m_sceneParent=_sceneParent;
   m_parent=parent;
-  _layout->addWidget(m_buttonBox);
+  _layout->addWidget(m_button);
 }
 
 void Button::createButtonBox(QString _buttonName)
 {
-  m_buttonBox = new QDialogButtonBox;
-  m_button = m_buttonBox->addButton(_buttonName,QDialogButtonBox::ActionRole);
+//  m_buttonBox = new QDialogButtonBox;
+
+  m_button = new QPushButton();
+  m_button->setText(_buttonName);
+
   connect(m_button, SIGNAL(clicked()), this, SLOT(openBox()));
 }
 
 void Button::printValues()
 {
-  qDebug()<<"Name:"<<m_buttonName<<"\nID: "<<m_id;
+  //qDebug()<<"Name:"<<m_buttonName<<"\nID: "<<m_id;
 }
 
 void colourButton::printAttributes()
@@ -75,7 +78,8 @@ void colourButton::setColour(QColor _col)
 void floatButton::openBox()
 {
   m_window = new QDialog;
-  double val = QInputDialog::getDouble(this, tr("Input"), tr("Input"), m_value, -5.0, 5.0, 3);
+  double val = QInputDialog::getDouble(
+        this, tr("Input"), tr("Input"),m_value,-2147483647,2147483647,5);
   m_value=val;
   m_libParent->updateShaderValues();
   m_sceneParent->update();

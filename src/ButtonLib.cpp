@@ -18,6 +18,7 @@ void ButtonLib::createButtons()
     {
       if(uniform->getTypeName()=="vec4")
       {
+        qDebug()<<"Vec4 found and being created";
         QString _uniformName = QString::fromStdString(uniform->getName());
         ngl::Vec4 _uniformVec=uniform->getVec4();
         colourButton *tempButton = new colourButton(_uniformName,

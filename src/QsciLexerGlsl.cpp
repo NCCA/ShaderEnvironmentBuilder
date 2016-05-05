@@ -22,6 +22,8 @@ QsciLexerGLSL::QsciLexerGLSL(QsciScintilla *_parent) : QsciLexerCustom(_parent)
   m_parent->setAutoCompletionThreshold(2);
   m_parent->setAutoCompletionFillupsEnabled(true);
   m_parent->setAutoCompletionSource(QsciScintilla::AcsAPIs);
+  m_parent->setSelectionBackgroundColor(QColor(56,56,48));
+  m_parent->resetSelectionForegroundColor();
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -58,6 +60,7 @@ void QsciLexerGLSL::styleText(int start, int end)
 
   std::vector<int> tokens;
   tok = lexer->yylex(&istr);
+
   while (tok>0)
   {
     tokens.push_back(tok);
@@ -81,15 +84,16 @@ QColor QsciLexerGLSL::defaultColor(int style) const
 {
   switch(style)
   {
-    case StyleType::DEFAULT:  { return QColor(247, 247, 241);}
-    case StyleType::KEYWORD:  { return QColor(249, 38, 114); }
-    case StyleType::DATATYPE: { return QColor(102, 216, 238); }
-    case StyleType::NUMBER:   { return QColor(174, 129, 255); }
-    case StyleType::OPERATOR: { return QColor(249, 38, 114); }
-    case StyleType::STRING:   { return QColor(230, 219, 116); }
-    case StyleType::FUNCTION: { return QColor(166, 226, 46); }
-    case StyleType::COMMENT:  { return QColor(117, 113, 94); }
-    default:                  { return QColor(247,247,241); }
+    case StyleType::DEFAULT:    { return QColor(247, 247, 241); }
+    case StyleType::KEYWORD:    { return QColor(249, 38, 114); }
+    case StyleType::DATATYPE:   { return QColor(102, 216, 238); }
+    case StyleType::NUMBER:     { return QColor(174, 129, 255); }
+    case StyleType::OPERATOR:   { return QColor(249, 38, 114); }
+    case StyleType::STRING:     { return QColor(230, 219, 116); }
+    case StyleType::FUNCTION:   { return QColor(166, 226, 46); }
+    case StyleType::COMMENT:    { return QColor(117, 113, 94); }
+    case StyleType::HASHCOMMENT:{ return QColor(174, 129, 255); }
+    default:                    { return QColor(247,247,241); }
   }
 }
 

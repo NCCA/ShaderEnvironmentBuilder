@@ -3,7 +3,12 @@
 #include "QsciLexerGlsl.h"
 #include "CebErrors.h"
 
+#include "QString"
+#include "NewProjectWizard.h"
+
 #include <QTextStream>
+#include <QFileDialog>
+#include <QDesktopWidget>
 
 MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
                                            m_ui(new Ui::MainWindow)
@@ -19,8 +24,7 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   m_gl->setMinimumSize(m_ui->m_f_gl_temp->minimumSize());
 
   // add the openGl window to the interface
-  m_ui->m_split_mainContext->insertWidget(0, m_gl);
-
+  m_ui->m_splitH_editContext->insertWidget(0, m_gl);
   // Delete the template frame from the form designer
   delete(m_ui->m_f_gl_temp);
 
@@ -30,23 +34,63 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   // Widget 2 (fragment)
   m_qsci2 = createQsciWidget(m_ui->m_tab_qsci_2);
 
-  // Set the combo box values for the shader type
-  m_ui->m_cb_shaderType->insertItem(static_cast<int>(ngl::ShaderType::VERTEX),
-                                  "Vertex Shader");
-  m_ui->m_cb_shaderType->insertItem(static_cast<int>(ngl::ShaderType::FRAGMENT),
-                                  "Fragment Shader");
-  m_ui->m_cb_shaderType->insertItem(static_cast<int>(ngl::ShaderType::COMPUTE),
-                                  "Compute Shader");
 
   // Set the combo box initially to VERTEX
-  m_ui->m_cb_shaderType->setCurrentIndex(static_cast<int>(
-                                         ngl::ShaderType::VERTEX));
+  // Camera Settings
+   connect(m_ui->m_sldr_cameraFov,SIGNAL(valueChanged(int)),m_gl,SLOT(setCameraFocalLength(int)));
+   connect(m_ui->m_cameraRoll, SIGNAL(valueChanged(double)), m_gl, SLOT(setCameraRoll(double)));
+   connect(m_ui->m_cameraYaw, SIGNAL(valueChanged(double)), m_gl, SLOT(setCameraYaw(double)));
+   connect(m_ui->m_comboBox_view, SIGNAL(currentTextChanged(QString)), m_gl, SLOT(setCameraShape(QString)));
+
   // Load the text files into the corresponding tabs
   loadTextFileToTab("shaders/PhongVertex.glsl", *m_qsci1);
   loadTextFileToTab("shaders/PhongFragment.glsl", *m_qsci2);
   m_buttonLibrary = new ButtonLib(m_parForButton, m_ui->vl_uniforms, m_gl, m_ui->m_w_uniforms);
+
+  // switching between shapes
+  connect(m_ui->m_actionLoad_Sphere,SIGNAL(triggered()),this,SLOT(shapeTriggered()));
+  connect(m_ui->m_actionLoad_Cube,SIGNAL(triggered()),this,SLOT(shapeTriggered()));
+  connect(m_ui->m_actionLoad_Torus,SIGNAL(triggered()),this,SLOT(shapeTriggered()));
+  connect(m_ui->m_actionLoad_Teapot ,SIGNAL(triggered()),this,SLOT(shapeTriggered()));
+  connect(m_ui->m_actionLoad_Troll,SIGNAL(triggered()),this,SLOT(shapeTriggered()));
+  connect(m_ui->m_actionLoad_Dragon,SIGNAL(triggered()),this,SLOT(shapeTriggered()));
+  connect(m_ui->m_actionLoad_Bunny,SIGNAL(triggered()),this,SLOT(shapeTriggered()));
+  // switching to .obj files
+  connect(m_ui->m_actionLoad_Obj,SIGNAL(triggered()),this,SLOT(objOpened()));
+
+  // switching to .jpg files
+  connect(m_ui->m_actionLoad_Texture,SIGNAL(triggered()),m_gl,SLOT(on_m_actionLoad_Texture_triggered()));
+
+  connect(m_ui->m_exportUniforms,SIGNAL(clicked()),m_gl,SLOT(exportUniform()));
+  connect(m_ui->m_printUniforms ,SIGNAL(clicked()),this,SLOT(printUniforms()));
+
+  connect(m_ui->m_showNormals,SIGNAL(toggled(bool)),m_gl,SLOT(toggleNormals(bool)));
+  connect(m_ui->m_showWireframe,SIGNAL(toggled(bool)),m_gl,SLOT(toggleWireframe(bool)));
+  connect(m_ui->m_showGrid,SIGNAL(toggled(bool)),m_gl,SLOT(toggleGrid(bool)));
+  connect(m_ui->m_showAxis,SIGNAL(toggled(bool)),m_gl,SLOT(toggleAxis(bool)));
+
+  connect(m_ui->m_normalSize,SIGNAL(valueChanged(int)),m_gl,SLOT(setNormalSize(int)));
+  // line marker connections
+  connect(m_ui->m_btn_compileShader,SIGNAL(pressed()),m_qsci1,SLOT(clearErrors()));
+  connect(m_ui->m_btn_compileShader,SIGNAL(pressed()),m_qsci2,SLOT(clearErrors()));
+  connect(m_gl,SIGNAL(createLineMarker(QString,int)),this,SLOT(addError(QString,int)));
+
+
+  update();
   //std::cerr<<"Find number of active uniforms: "<<m_parForButton->m_num<<std::endl;
 
+  this->setGeometry(
+      QStyle::alignedRect(
+          Qt::LeftToRight,
+          Qt::AlignCenter,
+          this->size(),
+          qApp->desktop()->availableGeometry()
+      )
+  );
+
+  m_startDialog = new StartupDialog(this);
+
+  m_project = new Project;
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -56,69 +100,19 @@ MainWindow::~MainWindow()
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-void MainWindow::on_m_btn_loadShader_clicked()
-{
-  // Get and cast the shader type combo box value
-  int cb_id = m_ui->m_cb_shaderType->currentIndex();
-  ngl::ShaderType shdrChoiceId = static_cast<ngl::ShaderType>(cb_id);
-
-  // Get the current tabid
-  int tabId = m_ui->m_tabs_qsci->currentIndex();
-
-  // Get the text from the currently selected tab
-  QString text;
-  switch (tabId)
-  {
-  case 0:
-    text = m_qsci1->text();
-    break;
-
-  case 1:
-    text = m_qsci2->text();
-    break;
-
-  default:
-    std::cerr<< "ERROR: Tab id is not recognised\n";
-  }
-  // Load the text into the shader with the shader type
-  m_gl->loadShader(text, shdrChoiceId);
-}
-
-//----------------------------------------------------------------------------------------------------------------------
 void MainWindow::on_m_btn_compileShader_clicked()
 {
-  m_gl->compileShader();
+  QString vertSource, fragSource;
+  vertSource = m_qsci1->text();
+  fragSource = m_qsci2->text();
+  m_gl->compileShader(vertSource,fragSource);
   m_buttonLibrary->createButtons();
   m_buttonLibrary->updateShaderValues();
-  //m_parForButton->printUniforms(1);
-
 }
 
 void MainWindow::printUniforms()
 {
-  m_parForButton->printUniforms(1);
-}
-
-//----------------------------------------------------------------------------------------------------------------------
-void MainWindow::on_m_tabs_qsci_currentChanged(int _index)
-{
-  // On switch of tab, change the combo box value to the corresponding tab type
-  switch (_index)
-  {
-    case 0:
-      m_ui->m_cb_shaderType->setCurrentIndex(static_cast<int>(
-                                               ngl::ShaderType::VERTEX));
-    break;
-
-    case 1:
-      m_ui->m_cb_shaderType->setCurrentIndex(static_cast<int>(
-                                               ngl::ShaderType::FRAGMENT));
-    break;
-
-    default:
-      std::cerr<< "ERROR: Tab id is not recognised\n";
-  }
-
+  m_parForButton->printUniforms();
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -154,3 +148,128 @@ bool MainWindow::loadTextFileToTab(QString _path, Cebitor &_qsci)
   return true;
 }
 
+//----------------------------------------------------------------------------------------------------------------------
+void MainWindow::objOpened()
+{
+  // Open a file dialog and return a file directory
+  QString fileName=QFileDialog::getOpenFileName(this,
+  tr("Open Mesh"),"0Features-0BugsCVA3/",tr("Image Files (*.obj)"));
+
+  std::string importName=fileName.toStdString();
+  // Import the mesh
+  m_gl->importMeshName(importName);
+}
+
+void MainWindow::shapeTriggered()
+{
+  //get the action
+  QAction *action = static_cast<QAction*>(sender());
+  int a=0;
+  // apply a different shape depending on the button clicked
+  if (action==m_ui->m_actionLoad_Sphere)  {   a=1;  }
+  if (action==m_ui->m_actionLoad_Cube)    {   a=2;  }
+  if (action==m_ui->m_actionLoad_Torus)   {   a=3;  }
+  if (action==m_ui->m_actionLoad_Teapot)  {   a=4;  }
+  if (action==m_ui->m_actionLoad_Troll)   {   a=5;  }
+  if (action==m_ui->m_actionLoad_Dragon)  {   a=6;  }
+  if (action==m_ui->m_actionLoad_Bunny)   {   a=7;  }
+  //set the shape
+  m_gl->setShapeType(a);
+}
+void MainWindow::setTerminalText(QString _txt)
+{
+  m_ui->m_pte_terminal->setPlainText(_txt);
+}
+
+void MainWindow::clearTerminalText()
+{
+  m_ui->m_pte_terminal->clear();
+}
+
+void MainWindow::on_actionStartup_Window_triggered()
+{
+  m_startDialog->show();
+}
+
+void MainWindow::showStartDialog()
+{
+  m_startDialog->show();
+}
+
+void MainWindow::on_actionNew_triggered()
+{
+  NewProjectWizard *projectWiz = new NewProjectWizard(this);
+  if (projectWiz->exec())
+  {
+    m_project->set(projectWiz->m_output->m_projectName, projectWiz->m_output->m_projectDir);
+    m_qsci1->setText(projectWiz->m_output->m_vertSource);
+    m_qsci2->setText(projectWiz->m_output->m_fragSource);
+    QString vertSource, fragSource;
+    vertSource = m_qsci1->text();
+    fragSource = m_qsci2->text();
+    std::cout<<m_project->getName()<<std::endl;
+    m_gl->newProject(m_project->getName(), vertSource,fragSource);
+  }
+  else
+  {
+    qDebug() << "FAIL";
+  }
+}
+void MainWindow::keyPressEvent(QKeyEvent *_event)
+{
+  // that method is called every time the main window recives a key event.
+  switch (_event->key())
+  {
+    case Qt::Key_W : {m_ui->m_showWireframe->toggle(); break;}
+    case Qt::Key_N : {m_ui->m_showNormals->toggle();   break;}
+    case Qt::Key_G : {m_ui->m_showGrid->toggle();      break;}
+  }
+  update();
+}
+
+
+void MainWindow::on_actionSaveProject_triggered()
+{
+    m_project->save(m_qsci1->text(), m_qsci2->text());
+}
+
+void MainWindow::on_actionSaveProjectAs_triggered()
+{
+    m_project->saveAs(m_qsci1->text(), m_qsci2->text());
+}
+
+
+void MainWindow::on_actionOpen_triggered()
+{
+    
+}
+
+void MainWindow::on_actionExport_triggered()
+{
+    //m_project->exportProject()
+}
+void MainWindow::on_m_actionLoad_Texture_triggered()
+{
+  // Open a file dialog and return a file directory
+  QString fileName=QFileDialog::getOpenFileName(this,
+  tr("Open Texture Map"),"0Features-0BugsCVA3/",tr("Image Files (*.jpg)"));
+
+  //load texture map to OBJ
+  std::string importName=fileName.toStdString();
+  std::cout<<"imported texture "<<importName<<std::endl;
+  m_gl->importTextureMap(importName);
+}
+
+void MainWindow::addError(QString _shaderName, int _lineNum)
+{
+  Cebitor * cebitorInstance;
+  if(_shaderName==QString("Vertex"))
+  {
+    cebitorInstance = m_qsci1;
+  }
+  if(_shaderName==QString("Fragment"))
+  {
+    cebitorInstance = m_qsci2;
+  }
+  cebitorInstance->markerAdd(_lineNum,Cebitor::MarkerType::ERROR);
+}

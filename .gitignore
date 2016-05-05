@@ -39,6 +39,7 @@ build-*/
 
 # temp files under linux
 *.~*
+*~
 
 # Qt creator stuff
 .qmake*
@@ -63,7 +64,7 @@ include/generated/*
 tempFiles/*
 
 # Wiki files
-*.wiki/*
+*.wiki*
 
 # Temp files created on linux
 .nfs*
