@@ -10,24 +10,34 @@ ShaderManager::ShaderManager()
   m_init = false;
 }
 
-void ShaderManager::createShaderProgram(std::string _name)
+void ShaderManager::createShaderProgram(std::string _name, ngl::Camera _cam, QString vertSource, QString fragSource)
 {
   ngl::ShaderLib *shaderLib = ngl::ShaderLib::instance();
-
+  setData(_name, _name+"Vertex", _name+"fragment");
   shaderLib->createShaderProgram(_name);
-  shaderLib->attachShader(_name+"Vertex", ngl::ShaderType::VERTEX);
-  shaderLib->attachShader(_name+"Fragment", ngl::ShaderType::FRAGMENT);
+  shaderLib->attachShader(m_data.m_vert, ngl::ShaderType::VERTEX);
+  shaderLib->attachShader(m_data.m_frag, ngl::ShaderType::FRAGMENT);
+  shaderLib->attachShaderToProgram(m_data.m_name, m_data.m_vert);
+  shaderLib->attachShaderToProgram(m_data.m_name, m_data.m_frag);
 
-  setData(_name, _name.append("Vertex"), _name.append("fragment"));
+  shaderLib->bindAttribute(m_data.m_name,0,"inVert");
+  // attribute 1 is the UV data u,v (if present)
+  shaderLib->bindAttribute(m_data.m_name,1,"inUV");
+  // attribute 2 are the normals x,y,z
+  shaderLib->bindAttribute(m_data.m_name,2,"inNormal");
+
+  compileShader(_cam, vertSource, fragSource);
+  use(0);
 }
 
-void ShaderManager::use(ngl::ShaderLib *_shader,uint shaderType)
+void ShaderManager::use(uint shaderType)
 {
+  ngl::ShaderLib *shaderLib = ngl::ShaderLib::instance(); 
   enum shader{objectShader=0,objectNormals=1};
   switch(shaderType)
   {
-    case objectShader :  {  (*_shader)[m_data.m_name]->use(); break;  }
-  case objectNormals:  {  (*_shader)["normalShader"]->use();break;  }
+    case objectShader :  {  shaderLib->use(m_data.m_name); break;  }
+    case objectNormals:  {  (*shaderLib)["normalShader"]->use();break;  }
     default:               std::cerr<<"Invalid shaderType"<<std::endl; break;
   }
 }
@@ -73,7 +83,7 @@ void ShaderManager::initialize(ngl::Camera _cam)
     // now we have associated this data we can link the shader
     shaderLib->linkProgramObject("Phong");
     // and make it active ready to load values
-    (*shaderLib)["Phong"]->use();
+    shaderLib->use("Phong");
     shaderLib->setShaderParam1i("Normalize",1);
     shaderLib->setShaderParam3f("viewerPos",_cam.getEye().m_x,_cam.getEye().m_y,_cam.getEye().m_z);
     shaderLib->setShaderParam4f("Colour",0.23125f,0.23125f,0.23125f,1);
@@ -143,15 +153,16 @@ void ShaderManager::compileShader(ngl::Camera _cam, QString vertSource, QString 
     m_compileStatus = true;
     m_errorLog.append("No Errors");
     // add them to the program
-    shaderLib->attachShaderToProgram("Phong","PhongVertex");
-    shaderLib->attachShaderToProgram("Phong","PhongFragment");
+    shaderLib->attachShaderToProgram(m_data.m_name,m_data.m_vert);
+    shaderLib->attachShaderToProgram(m_data.m_name,m_data.m_frag);
 
     // now we have associated this data we can link the shader
-    shaderLib->linkProgramObject("Phong");
+    shaderLib->linkProgramObject(m_data.m_name);
 
     // Load stuff. Need to remove this stuff in the next build, just used to set
     // inital values
-    (*shaderLib)["Phong"]->use();
+    (*shaderLib)[m_data.m_name]->use();
+
     shaderLib->setShaderParam1i("Normalize",1);
     shaderLib->setShaderParam3f("viewerPos",_cam.getEye().m_x,_cam.getEye().m_y,_cam.getEye().m_z);
     // we need to set a base colour as the material isn't being used for all the params

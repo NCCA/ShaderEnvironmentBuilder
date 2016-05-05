@@ -258,7 +258,7 @@ void NGLScene::paintGL()
   }
   ngl::ShaderLib *shaderLib=ngl::ShaderLib::instance();
 
-  m_shaderManager->use(shaderLib,0);
+  m_shaderManager->use(0);
 
   // Rotation based on the mouse position for our global transform
   ngl::Mat4 rotX;
@@ -297,7 +297,7 @@ void NGLScene::paintGL()
   if(m_drawNormals)
   {
     // set the shader to use the normalShader
-    m_shaderManager->use(shaderLib,1);
+    m_shaderManager->use(1);
     ngl::Mat4 MV;
     ngl::Mat4 MVP;
     MV=m_transform.getMatrix()*m_mouseGlobalTX* m_cameras[m_cameraIndex].getViewMatrix();
@@ -388,7 +388,7 @@ void NGLScene::resizeGL(int _w, int _h)
 void NGLScene::loadMatricesToShader()
 {
   ngl::ShaderLib *shaderLib=ngl::ShaderLib::instance();
-  m_shaderManager->use(shaderLib,0);
+  m_shaderManager->use(0);
 
   ngl::Mat4 MV;
   ngl::Mat4 MVP;
@@ -537,6 +537,7 @@ void NGLScene::compileShader(QString vertSource, QString fragSource)
   // load these values to the shader as well
   light.loadToShader("light");
   update();
+  m_parser->assignAllData();
 
 }
 
@@ -612,9 +613,9 @@ void NGLScene::resetObjPos()
 }
 
 //------------------------------------------------------------------------------
-void NGLScene::newProject(std::string _name)
+void NGLScene::newProject(std::string _name, QString vertSource, QString fragSource)
 {
-  m_shaderManager->createShaderProgram(_name);
+  m_shaderManager->createShaderProgram(_name, m_cam, vertSource, fragSource);
 }
 
 //------------------------------------------------------------------------------
@@ -628,7 +629,7 @@ void NGLScene::drawAxis(ngl::Vec3 _pos)
 {
   // Instance the Shader
   ngl::ShaderLib *shaderLib=ngl::ShaderLib::instance();
-  m_shaderManager->use(shaderLib,0);
+  m_shaderManager->use(0);
   ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
 
   // Move the Y AXIS geo

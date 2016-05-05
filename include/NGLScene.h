@@ -88,7 +88,7 @@ public :
   //----------------------------------------------------------------------------------------------------------------------
   parserLib *m_parser;
 
-  void newProject(std::string _name);
+  void newProject(std::string _name, QString vertSource, QString fragSource);
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief Changes the name of the m_mesh object directory
   /// @param the new directory  used to draw m_mesh

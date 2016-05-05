@@ -255,9 +255,13 @@ void MainWindow::on_actionNew_triggered()
   if (projectWiz->exec())
   {
     m_project->set(projectWiz->m_output->m_projectName, projectWiz->m_output->m_projectDir);
-    m_gl->newProject(m_project->getName());
     m_qsci1->setText(projectWiz->m_output->m_vertSource);
     m_qsci2->setText(projectWiz->m_output->m_fragSource);
+    QString vertSource, fragSource;
+    vertSource = m_qsci1->text();
+    fragSource = m_qsci2->text();
+    std::cout<<m_project->getName()<<std::endl;
+    m_gl->newProject(m_project->getName(), vertSource,fragSource);
   }
   else
   {
@@ -287,3 +291,13 @@ void MainWindow::on_actionSaveProjectAs_triggered()
     m_project->saveAs(m_qsci1->text(), m_qsci2->text());
 }
 
+
+void MainWindow::on_actionOpen_triggered()
+{
+    
+}
+
+void MainWindow::on_actionExport_triggered()
+{
+    //m_project->exportProject()
+}
