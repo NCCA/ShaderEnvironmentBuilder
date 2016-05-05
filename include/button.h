@@ -6,6 +6,8 @@
 #include <ngl/Colour.h>
 #include <QtWidgets>
 #include <QDialogButtonBox>
+#include "ButtonLib.h"
+#include "NGLScene.h"
 
 #include <QDialog>
 #include <QGridLayout>
@@ -31,6 +33,8 @@ QT_END_NAMESPACE
 /// @date 20/04/16
 //----------------------------------------------------------------------------------------------------------------------
 
+class ButtonLib;
+class NGLScene;
 class Button : public QDialog
 {
   Q_OBJECT
@@ -51,6 +55,8 @@ public:
   Button(QString _buttonName,
          QLayout *_layout,
          unsigned int _id,
+         ButtonLib *_libParent,
+         NGLScene *_sceneParent,
          QWidget *parent=0);
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief returns the current button name
@@ -92,6 +98,10 @@ public:
   //----------------------------------------------------------------------------------------------------------------------
   void printValues();
 
+  ButtonLib *m_libParent;
+
+  NGLScene *m_sceneParent;
+
 private slots:
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief a slot to open a widget upon button press event
@@ -123,6 +133,7 @@ private:
   /// @brief layout for the button box to be stored within
   //----------------------------------------------------------------------------------------------------------------------
   QGridLayout *m_gridLayout;
+
 };
 
 class colourButton : public Button

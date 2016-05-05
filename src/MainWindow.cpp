@@ -44,7 +44,7 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   // Load the text files into the corresponding tabs
   loadTextFileToTab("shaders/PhongVertex.glsl", *m_qsci1);
   loadTextFileToTab("shaders/PhongFragment.glsl", *m_qsci2);
-  m_buttonLibrary = new ButtonLib(m_parForButton, m_ui->vl_uniforms, m_ui->m_w_uniforms);
+  m_buttonLibrary = new ButtonLib(m_parForButton, m_ui->vl_uniforms, m_gl, m_ui->m_w_uniforms);
   //std::cerr<<"Find number of active uniforms: "<<m_parForButton->m_num<<std::endl;
 
 }

@@ -13,11 +13,13 @@ Button::Button(QWidget *parent) : QDialog(parent)
   createButtonBox();
 }
 
-Button::Button(QString _buttonName, QLayout *_layout, unsigned int _id, QWidget *parent) : QDialog(parent)
+Button::Button(QString _buttonName, QLayout *_layout, unsigned int _id, ButtonLib *_libParent, NGLScene *_sceneParent, QWidget *parent) : QDialog(parent)
 {
   m_buttonName = _buttonName;
   m_id=_id;
   createButtonBox(_buttonName);
+  m_libParent=_libParent;
+  m_sceneParent=_sceneParent;
   _layout->addWidget(m_buttonBox);
 }
 
@@ -49,6 +51,9 @@ void colourButton::openBox()
                m_colourPicked.greenF(),
                m_colourPicked.blueF(),
                m_colourPicked.alphaF());
+  qDebug()<<"Box opened and colours set\n";
+  m_libParent->updateShaderValues();
+  m_sceneParent->update();
   //printValues();
 }
 
@@ -66,5 +71,7 @@ void floatButton::openBox()
   m_window = new QDialog;
   double val = QInputDialog::getDouble(this, tr("Input"), tr("Input"), m_value, -5.0, 5.0, 3);
   m_value=val;
+  m_libParent->updateShaderValues();
+  m_sceneParent->update();
   //printValues();
 }

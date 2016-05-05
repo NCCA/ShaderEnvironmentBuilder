@@ -3,6 +3,7 @@
 
 #include "ParserLib.h"
 #include "button.h"
+#include "NGLScene.h"
 
 //----------------------------------------------------------------------------------------------------------------------
 /// @file ButtonLib.h
@@ -12,6 +13,8 @@
 /// @date 01/05/16
 //----------------------------------------------------------------------------------------------------------------------
 
+class Button;
+class NGLScene;
 class ButtonLib
 {
 
@@ -22,7 +25,7 @@ public:
   /// @param [in] the layout environment for the buttons to be attached to
   /// @param [in] the parent window for the buttons
   //----------------------------------------------------------------------------------------------------------------------
-  ButtonLib(parserLib *_parser, QLayout *_layout, QWidget *_parent=0);
+  ButtonLib(parserLib *_parser, QLayout *_layout, NGLScene *_scene, QWidget *_parent=0);
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief call to a function to create the buttons in the gui
   //----------------------------------------------------------------------------------------------------------------------
@@ -49,6 +52,8 @@ private:
   /// @brief pointer to the parser to access and set uniform values
   //----------------------------------------------------------------------------------------------------------------------
   parserLib *m_parser;
+
+  NGLScene *m_scene;
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief vector of buttons to dynamically and delete different types
   //----------------------------------------------------------------------------------------------------------------------

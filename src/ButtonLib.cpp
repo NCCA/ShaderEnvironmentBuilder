@@ -1,10 +1,11 @@
 #include "ButtonLib.h"
 
-ButtonLib::ButtonLib(parserLib *_parser, QLayout *_layout, QWidget *_parent)
+ButtonLib::ButtonLib(parserLib *_parser, QLayout *_layout, NGLScene *_scene, QWidget *_parent)
 {
   m_parser=_parser;
   m_layout=_layout;
   m_parent=_parent;
+  m_scene=_scene;
   createButtons();
   updateShaderValues();
 }
@@ -21,7 +22,12 @@ void ButtonLib::createButtons()
       {
         QString _tempName = QString::fromStdString(uniform->getName());
         ngl::Vec4 _tempVec=uniform->getVec4();
-        colourButton *tempButton = new colourButton(_tempName, m_layout, uniform->getLocation(), m_parent);
+        colourButton *tempButton = new colourButton(_tempName,
+                                                    m_layout,
+                                                    uniform->getLocation(),
+                                                    this,
+                                                    m_scene,
+                                                    m_parent);
         tempButton->setColour(_tempVec);
         m_buttonList.push_back(tempButton);
       }
@@ -29,7 +35,12 @@ void ButtonLib::createButtons()
       {
         QString _tempName = QString::fromStdString(uniform->getName());
         float _tempFloat=uniform->getFloat();
-        floatButton *tempButton = new floatButton(_tempName, m_layout, uniform->getLocation(), m_parent);
+        floatButton *tempButton = new floatButton(_tempName,
+                                                  m_layout,
+                                                  uniform->getLocation(),
+                                                  this,
+                                                  m_scene,
+                                                  m_parent);
         tempButton->setValue(_tempFloat);
         m_buttonList.push_back(tempButton);
       }
@@ -39,6 +50,7 @@ void ButtonLib::createButtons()
 
 void ButtonLib::updateShaderValues()
 {
+  qDebug()<<"Function ran\n";
   for(auto uniform: m_parser->m_uniformList)
   {
     if(uniform->getTypeName()=="vec4")
