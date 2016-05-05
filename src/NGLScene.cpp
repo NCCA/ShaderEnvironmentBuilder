@@ -293,7 +293,6 @@ void NGLScene::paintGL()
 
   ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
 
-  m_cameras[m_cameraIndex].setShape(m_fov, m_aspect, 0.5f, 150.0f);
   m_transform.reset();
   if (m_toggleAxis)
   {
@@ -430,14 +429,6 @@ void NGLScene::loadMatricesToShader()
   shaderLib->setShaderParamFromMat4("M",M);
 }
 
-//----------------------------------------------------------------------------------------------------------------------
-void NGLScene::setCamShape()
-{
-  m_aspect=(float)width()/height();
-  m_cameras[m_cameraIndex].setShape(m_fov, m_aspect, 0.5f, 150.0f);
-
-
-}
 void NGLScene::toggleWireframe(bool _value)
 {
   m_wireframe=_value;
@@ -536,11 +527,35 @@ void NGLScene::wheelEvent ( QWheelEvent * _event )
   // check the diff of the wheel position (0 means no change)
   if(_event->delta() > 0)
   {
-    m_modelPos.m_z+=ZOOM;
+      switch(m_cameraIndex){
+      case 0:
+          m_modelPos.m_z+=ZOOM;
+          m_modelPos.m_x+=ZOOM; break;
+      case 1:
+          m_modelPos.m_y+=ZOOM; break;
+      case 2:
+          m_modelPos.m_y-=ZOOM; break;
+      case 3:
+          m_modelPos.m_z-=ZOOM; break;
+      case 4:
+          m_modelPos.m_z+=ZOOM; break;
+      }
   }
   else if(_event->delta() < 0)
   {
-    m_modelPos.m_z-=ZOOM;
+      switch(m_cameraIndex){
+      case 0:
+          m_modelPos.m_z-=ZOOM;
+          m_modelPos.m_x-=ZOOM; break;
+      case 1:
+          m_modelPos.m_y-=ZOOM; break;
+      case 2:
+          m_modelPos.m_y+=ZOOM; break;
+      case 3:
+          m_modelPos.m_z+=ZOOM; break;
+      case 4:
+          m_modelPos.m_z-=ZOOM; break;
+      }
   }
   update();
 }
