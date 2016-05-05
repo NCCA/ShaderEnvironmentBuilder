@@ -36,8 +36,6 @@ public:
   //------------------------------------------------------------------------------------------------------------------------
   Cebitor(QWidget *_parent);
 
-  bool loadTextFiles(const std::vector<QString> _paths);
-
 public slots:
   //------------------------------------------------------------------------------------------------------------------------
   /// @brief Removes all error and warning line markers
