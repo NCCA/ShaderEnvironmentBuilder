@@ -101,7 +101,8 @@ void Cebitor::searchPrev()
 {
   QString searchTerm = m_searchLineEdit->text();
   bool found;
-  found = findFirst(searchTerm, false, false, false, false);
+  found = findFirst(searchTerm, false, false, false, true, false);
+  findNext();
 }
 
 //----------------------------------------------------------------------------------------------------------------------
