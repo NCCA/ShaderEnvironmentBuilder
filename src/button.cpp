@@ -2,33 +2,31 @@
 #include <cstdlib>
 #include <iostream>
 
+//----------------------------------------------------------------------------------------------------------------------
+/// @file button.cpp
+/// @brief implementation of the different button classes
+/// @author Jonny Lyddon
+//----------------------------------------------------------------------------------------------------------------------
+
 Button::Button(QWidget *parent) : QDialog(parent)
 {
   createButtonBox();
-
-
-  /*mainLayout = new QGridLayout;
-  mainLayout->addWidget(buttonBox, 0, 1);
-  setLayout(mainLayout);
-
-  mainLayout->setSizeConstraint(QLayout::SetMinimumSize);
-
-  setWindowTitle(tr("Button Layout"));*/
-
 }
 
-Button::Button(QString _buttonName, QLayout *_layout, unsigned int _id, QWidget *parent) : QDialog(parent)
+Button::Button(QString _buttonName, QLayout *_layout, unsigned int _id, ButtonLib *_libParent, NGLScene *_sceneParent, QWidget *parent) : QDialog(parent)
 {
   m_buttonName = _buttonName;
   m_id=_id;
   createButtonBox(_buttonName);
+  m_libParent=_libParent;
+  m_sceneParent=_sceneParent;
+  m_parent=parent;
   _layout->addWidget(m_button);
- // m_colour.set(_defaultVal.m_x, _defaultVal.m_y, _defaultVal.m_z, 1.0f);
 }
 
 void Button::createButtonBox(QString _buttonName)
 {
-  //m_buttonBox = new QDialogButtonBox;
+//  m_buttonBox = new QDialogButtonBox;
 
   m_button = new QPushButton();
   m_button->setText(_buttonName);
@@ -38,23 +36,8 @@ void Button::createButtonBox(QString _buttonName)
 
 void Button::printValues()
 {
-  qDebug()<<"Name:"<<m_buttonName<<"\nID: "<<m_id;
+  //qDebug()<<"Name:"<<m_buttonName<<"\nID: "<<m_id;
 }
-
-/*void Button::openColourBox()
-{
-  em_colourGroupBox = new QColorDialog(tr("Colour"));
-  m_colourBoxLabel = new QLabel(tr("Select a colour:"));
-
-  //colourBoxLayout = new QGridLayout;
-  //colourGroupBox->setLayout(colourBoxLayout);
-  m_colourPicked=m_colourGroupBox->getColor();
-
-  m_colour.set(m_colourPicked.redF(),
-               m_colourPicked.greenF(),
-               m_colourPicked.blueF());
-  //printValues();
-}*/
 
 void colourButton::printAttributes()
 {
@@ -63,36 +46,42 @@ void colourButton::printAttributes()
 
 void colourButton::openBox()
 {
-  //m_colourGroupBox = new QColorDialog(tr("Colour"));
-  //m_colourBoxLabel = new QLabel(tr("Select a colour:"));
-
-  //colourBoxLayout = new QGridLayout;
-  //colourGroupBox->setLayout(colourBoxLayout);
-  m_colourPicked=m_colourGroupBox->getColor();
-
-  m_colour.set(m_colourPicked.redF(),
-               m_colourPicked.greenF(),
-               m_colourPicked.blueF());
+  //these are set so when the colour picker is opened the current colour is opened
+  m_colourPicked.setRedF(m_colour.m_x);
+  m_colourPicked.setGreenF(m_colour.m_y);
+  m_colourPicked.setBlueF(m_colour.m_z);
+  m_colourPicked=m_colourGroupBox->getColor(m_colourPicked,
+                                            m_parent,
+                                            "Pick a colour",
+                                            0);
+  if(m_colourPicked.spec()!=QColor::Spec::Invalid)
+  {
+    m_colour.set(m_colourPicked.redF(),
+                 m_colourPicked.greenF(),
+                 m_colourPicked.blueF(),
+                 m_colourPicked.alphaF());
+    m_libParent->updateShaderValues();
+    m_sceneParent->update();
+  }
   //printValues();
 }
 
+void colourButton::setColour(QColor _col)
+{
+  m_colourPicked=_col;
+  m_colour.set(_col.redF(),
+               _col.greenF(),
+               _col.blueF(),
+               _col.alphaF());
+}
 
 void floatButton::openBox()
 {
-  //m_colourGroupBox = new QColorDialog(tr("Colour"));
-  //m_colourBoxLabel = new QLabel(tr("Select a colour:"));
-
-  //colourBoxLayout = new QGridLayout;
-  //colourGroupBox->setLayout(colourBoxLayout);
   m_window = new QDialog;
   double val = QInputDialog::getDouble(
-        this, tr("Input"), tr("Input"),0.5,-2147483647,2147483647,5);
+        this, tr("Input"), tr("Input"),m_value,-2147483647,2147483647,5);
   m_value=val;
-//  m_sliderLayout = new QGridLayout;
-//  m_sliderGroupBox=new QGroupBox(tr("Float slider"));
-//  QWidget *floatSlider = new QSlider;
-//  m_sliderLayout->addWidget(floatSlider, 0, 1);
-//  m_window->show();
-
+  m_libParent->updateShaderValues();
+  m_sceneParent->update();
   //printValues();
 }

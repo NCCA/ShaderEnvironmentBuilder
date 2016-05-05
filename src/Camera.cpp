@@ -88,7 +88,6 @@ ngl::Camera Camera::cameraYaw(ngl::Camera _cam, double _cameraYaw)
 {
     _cam.yaw(-m_cameraYaw);
     m_cameraYaw = _cameraYaw;
-    _cam.setShape(m_fov,m_aspect, 0.5f,150.0f);
     _cam.yaw(_cameraYaw);
     return _cam;
 }
@@ -99,7 +98,16 @@ ngl::Camera Camera::cameraRoll(ngl::Camera _cam, double _cameraRoll)
 {
     _cam.roll(-m_cameraRoll);
     m_cameraRoll = _cameraRoll;
-    _cam.setShape(m_fov,m_aspect, 0.5f,150.0f);
     _cam.roll(_cameraRoll);
+    return _cam;
+}
+
+//----------------------------------------------------------------------------------------------------------------------
+// Camera Roll settings
+ngl::Camera Camera::cameraPitch(ngl::Camera _cam, double _cameraPitch)
+{
+    _cam.pitch(-m_cameraPitch);
+    m_cameraPitch = _cameraPitch;
+    _cam.pitch(_cameraPitch);
     return _cam;
 }

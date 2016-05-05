@@ -106,4 +106,8 @@ bool Project::exportProject(std::string _targetDir, QString vertSource, QString 
   return true;
 }
 
+void load()
+{
+
+}
 

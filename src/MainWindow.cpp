@@ -10,6 +10,7 @@
 #include <QFileDialog>
 #include <QDesktopWidget>
 #include <QString>
+#include <QLineEdit>
 
 // Project includes
 #include "QsciLexerGlsl.h"
@@ -30,6 +31,8 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   // Create openGl and qsci widgets, pass in the parser
   m_gl=new  NGLScene(this, m_parForButton);
 
+  m_ui->m_sldr_cameraFov->setValue(65.0f);
+
   m_gl->setSizePolicy(m_ui->m_f_gl_temp->sizePolicy());
   m_gl->setMinimumSize(m_ui->m_f_gl_temp->minimumSize());
 
@@ -45,14 +48,18 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   m_fragQsci = createQsciWidget(m_ui->m_tab_qsci_2);
 
   // Camera Settings
-  connect(m_ui->m_sldr_cameraFov,SIGNAL(valueChanged(int)),m_gl,SLOT(setCameraFocalLength(int)));
-  connect(m_ui->m_cameraRoll, SIGNAL(valueChanged(double)), m_gl, SLOT(setCameraRoll(double)));
-  connect(m_ui->m_cameraYaw, SIGNAL(valueChanged(double)), m_gl, SLOT(setCameraYaw(double)));
-  connect(m_ui->m_comboBox_view, SIGNAL(currentTextChanged(QString)), m_gl, SLOT(setCameraShape(QString)));
-
+   connect(m_ui->m_sldr_cameraFov,SIGNAL(valueChanged(int)),m_gl,SLOT(setCameraFocalLength(int)));
+   connect(m_ui->m_cameraRoll, SIGNAL(valueChanged(double)), m_gl, SLOT(setCameraRoll(double)));
+   connect(m_ui->m_cameraYaw, SIGNAL(valueChanged(double)), m_gl, SLOT(setCameraYaw(double)));
+   connect(m_ui->m_cameraPitch, SIGNAL(valueChanged(double)), m_gl, SLOT(setCameraPitch(double)));
+   connect(m_ui->m_comboBox_view, SIGNAL(currentTextChanged(QString)), m_gl, SLOT(setCameraShape(QString)));
+   connect(m_ui->m_resetCam,SIGNAL(clicked()),m_gl,SLOT(resetObjPos()));
+  connect(m_ui->m_nearClip, SIGNAL(valueChanged(double)), m_gl, SLOT(setCamNearClip(double)));
+  connect(m_ui->m_farClip, SIGNAL(valueChanged(double)), m_gl, SLOT(setCamFarClip(double)));
   // Load the text files into the corresponding tabs
   loadTextFileToTab("shaders/PhongVertex.glsl", *m_vertQsci);
   loadTextFileToTab("shaders/PhongFragment.glsl", *m_fragQsci);
+  m_buttonLibrary = new ButtonLib(m_parForButton, m_ui->vl_uniforms, m_gl, m_ui->m_w_uniforms);
 
   // switching between shapes
   connect(m_ui->m_actionLoad_Sphere,SIGNAL(triggered()),this,SLOT(shapeTriggered()));
@@ -66,7 +73,7 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   connect(m_ui->m_actionLoad_Obj,SIGNAL(triggered()),this,SLOT(objOpened()));
 
   // switching to .jpg files
-  connect(m_ui->m_actionLoad_Texture,SIGNAL(triggered()),m_gl,SLOT(on_m_actionLoad_Texture_triggered()));
+  connect(m_ui->m_actionLoad_Texture,SIGNAL(triggered()),this,SLOT(textureTriggered()));
 
   connect(m_ui->m_exportUniforms,SIGNAL(clicked()),m_gl,SLOT(exportUniform()));
   connect(m_ui->m_printUniforms ,SIGNAL(clicked()),this,SLOT(printUniforms()));
@@ -74,8 +81,14 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   connect(m_ui->m_showNormals,SIGNAL(toggled(bool)),m_gl,SLOT(toggleNormals(bool)));
   connect(m_ui->m_showWireframe,SIGNAL(toggled(bool)),m_gl,SLOT(toggleWireframe(bool)));
   connect(m_ui->m_showGrid,SIGNAL(toggled(bool)),m_gl,SLOT(toggleGrid(bool)));
+  connect(m_ui->m_showAxis,SIGNAL(toggled(bool)),m_gl,SLOT(toggleAxis(bool)));
 
   connect(m_ui->m_normalSize,SIGNAL(valueChanged(int)),m_gl,SLOT(setNormalSize(int)));
+  // line marker connections
+  connect(m_ui->m_btn_compileShader,SIGNAL(pressed()),m_vertQsci,SLOT(clearErrors()));
+  connect(m_ui->m_btn_compileShader,SIGNAL(pressed()),m_fragQsci,SLOT(clearErrors()));
+  connect(m_gl,SIGNAL(createLineMarker(QString,int)),this,SLOT(addError(QString,int)));
+
 
   update();
   //std::cerr<<"Find number of active uniforms: "<<m_parForButton->m_num<<std::endl;
@@ -107,8 +120,8 @@ void MainWindow::on_m_btn_compileShader_clicked()
   vertSource = m_vertQsci->text();
   fragSource = m_fragQsci->text();
   m_gl->compileShader(vertSource,fragSource);
-  createButtons();
-  updateShaderValues();
+  m_buttonLibrary->createButtons();
+  m_buttonLibrary->updateShaderValues();
 }
 
 //------------------------------------------------------------------------------
@@ -117,76 +130,42 @@ void MainWindow::printUniforms()
   m_parForButton->printUniforms();
 }
 
-//------------------------------------------------------------------------------
-void MainWindow::createButtons()
-{
-  if(m_buttonList.size()==0)
-  {
-    for(unsigned int i=0;i<m_parForButton->m_num; ++i)
-    {
-      if(m_parForButton->m_uniformList[i]->getTypeName()=="vec4")
-      {
-        QString _tempName = QString::fromStdString(m_parForButton->m_uniformList[i]->getName());
-        ngl::Vec4 _tempVec=m_parForButton->m_uniformList[i]->getVec4();
-        colourButton *tempButton = new colourButton(_tempName, m_ui->vl_uniforms, i, m_ui->m_w_uniforms);
-        tempButton->setColour(_tempVec);
-
-        m_buttonList.push_back(tempButton);
-      }
-      if(m_parForButton->m_uniformList[i]->getTypeName()=="float")
-      {
-        QString _tempName = QString::fromStdString(m_parForButton->m_uniformList[i]->getName());
-        float _tempFloat=m_parForButton->m_uniformList[i]->getFloat();
-        floatButton *tempButton = new floatButton(_tempName, m_ui->vl_uniforms, i, m_ui->m_w_uniforms);
-        tempButton->setValue(_tempFloat);
-
-        m_buttonList.push_back(tempButton);
-      }
-    }
-  }
-}
-
-//------------------------------------------------------------------------------
-void MainWindow::updateShaderValues()
-{
-  for(auto uniform: m_parForButton->m_uniformList)
-  {
-    if(uniform->getTypeName()=="vec4")
-    {
-      for(auto button: m_buttonList)
-      {
-        if(uniform->getLocation()==button->getID())
-        {
-          ngl::Vec4 temp = button->getColour();
-          qDebug()<<temp.m_x<<", "<<temp.m_y<<", "<<temp.m_z<<"\n";
-          uniform->setVec4(temp);
-          break;
-        }
-      }
-
-    }
-    if(uniform->getTypeName()=="float")
-    {
-      for(auto button: m_buttonList)
-      {
-        if(uniform->getLocation()==button->getID())
-        {
-          float temp = button->getValue();
-          uniform->setFloat(temp);
-          break;
-        }
-      }
-    }
-  }
-}
-
-//------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------
 Cebitor *MainWindow::createQsciWidget(QWidget *_parent)
 {
   // Create the QsciScintilla widget
   Cebitor* qsci = new Cebitor(_parent);
   QBoxLayout *layout = new QVBoxLayout;
   layout->addWidget(qsci);
+
+  // Create search bar widget
+  QWidget *searchWidget = new QWidget(_parent);
+  QBoxLayout *searchLayout = new QVBoxLayout(searchWidget);
+  searchLayout->setMargin(0);
+  QLineEdit *qsciSearch = new QLineEdit(searchWidget);
+  QPushButton *searchNextBtn = new QPushButton(QString("Find Next"),searchWidget);
+  QPushButton *searchPrevBtn = new QPushButton(QString("Find Previous"),searchWidget);
+  qsci->setSearchWidget(searchWidget);
+  qsci->setSearchLineEdit(qsciSearch);
+
+  connect(qsciSearch,SIGNAL(returnPressed()),qsci,SLOT(searchNext()));
+  connect(searchNextBtn,SIGNAL(pressed()),qsci,SLOT(searchNext()));
+  connect(searchPrevBtn,SIGNAL(pressed()),qsci,SLOT(searchPrev()));
+
+  QAction *escAction = new QAction(this);
+  escAction->setShortcut(Qt::Key_Escape);
+  connect(escAction, SIGNAL(triggered()), qsci, SLOT(toggleSearchBox()));
+  qsciSearch->addAction(escAction);
+
+  searchLayout->setDirection(QBoxLayout::Direction::LeftToRight);
+  searchLayout->addWidget(qsciSearch);
+  searchLayout->addWidget(searchNextBtn);
+  searchLayout->addWidget(searchPrevBtn);
+
+  layout->addWidget(searchWidget);
+
+  searchWidget->hide();
+
   _parent->setLayout(layout);
 
   return qsci;
@@ -277,9 +256,13 @@ bool MainWindow::newProjectWiz(QWidget* _parent)
   {
     const OutputData *output = projectWiz->getOutput();
     m_project->set(output->m_projectName, output->m_projectDir);
-    m_gl->newProject(m_project->getName());
     m_vertQsci->setText(output->m_vertSource);
     m_fragQsci->setText(output->m_fragSource);
+    QString vertSource, fragSource;
+    vertSource = m_vertQsci->text();
+    fragSource = m_fragQsci->text();
+    std::cout<<m_project->getName()<<std::endl;
+    m_gl->newProject(m_project->getName(), vertSource,fragSource);
   }
   else
   {
@@ -321,6 +304,15 @@ void MainWindow::on_actionSaveProjectAs_triggered()
 }
 
 //------------------------------------------------------------------------------
+void MainWindow::on_actionOpen_triggered()
+{
+    
+}
+
+void MainWindow::on_actionExport_triggered()
+{
+    //m_project->exportProject()
+}
 void MainWindow::on_m_actionLoad_Texture_triggered()
 {
   // Open a file dialog and return a file directory
@@ -331,4 +323,18 @@ void MainWindow::on_m_actionLoad_Texture_triggered()
   std::string importName=fileName.toStdString();
   std::cout<<"imported texture "<<importName<<std::endl;
   m_gl->importTextureMap(importName);
+}
+
+void MainWindow::addError(QString _shaderName, int _lineNum)
+{
+  Cebitor * cebitorInstance;
+  if(_shaderName==QString("Vertex"))
+  {
+    cebitorInstance = m_vertQsci;
+  }
+  if(_shaderName==QString("Fragment"))
+  {
+    cebitorInstance = m_fragQsci;
+  }
+  cebitorInstance->markerAdd(_lineNum,Cebitor::MarkerType::ERROR);
 }

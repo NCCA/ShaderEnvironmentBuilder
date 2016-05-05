@@ -3,17 +3,17 @@
 
 #include <ngl/Vec4.h>
 #include <ngl/Colour.h>
+#include "ButtonLib.h"
+#include "NGLScene.h"
 
 #include <QDialog>
-#include <QDialogButtonBox>
+#include <QInputDialog>
+#include <QGroupBox>
 #include <QGridLayout>
 #include <QLabel>
 #include <QPushButton>
 #include <QColor>
 #include <QColorDialog>
-#include <QGroupBox>
-#include <QDebug>
-#include <QInputDialog>
 
 QT_BEGIN_NAMESPACE
 class QDialogButtonBox;
@@ -21,8 +21,6 @@ class QGridLayout;
 class QLabel;
 class QPushButton;
 class QColor;
-class QDialog;
-class QColorDialog;
 QT_END_NAMESPACE
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -34,19 +32,30 @@ QT_END_NAMESPACE
 /// @date 20/04/16
 //----------------------------------------------------------------------------------------------------------------------
 
+class ButtonLib;
+class NGLScene;
 class Button : public QDialog
 {
   Q_OBJECT
 
 public:
   //----------------------------------------------------------------------------------------------------------------------
-  /// @brief constructor to create the button, custom variables can also be assigned
+  /// @brief default constructor to create the button
   /// @param [in] the parent window is defaulted to nothing
   //----------------------------------------------------------------------------------------------------------------------
   Button(QWidget *parent=0);
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief constructor to create the button, custom variables can also be assigned
+  /// @param [in] name of the button to be used
+  /// @param [in] the layout environment for the button to be attached to
+  /// @param [in] the id used to access the button information
+  /// @param [in] the parent window is defaulted to nothing
+  //----------------------------------------------------------------------------------------------------------------------
   Button(QString _buttonName,
          QLayout *_layout,
          unsigned int _id,
+         ButtonLib *_libParent,
+         NGLScene *_sceneParent,
          QWidget *parent=0);
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief returns the current button name
@@ -54,7 +63,8 @@ public:
   //----------------------------------------------------------------------------------------------------------------------
   QString getName() {return m_buttonName;}
   //----------------------------------------------------------------------------------------------------------------------
-  /// @brief sets the current ID for the button, based on its' shader location
+  /// @brief sets the current ID for the button, from its' shader location
+  /// @param [in] the location ID for the button id
   //----------------------------------------------------------------------------------------------------------------------
   void setID(unsigned int _id) {m_id=_id;}
   //----------------------------------------------------------------------------------------------------------------------
@@ -64,6 +74,7 @@ public:
   unsigned int getID() {return m_id;}
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief sets the colour to be used by colour buttons
+  /// @param [in] the colour to be set within the colourButton class
   //----------------------------------------------------------------------------------------------------------------------
   virtual void setColour(QColor _col) {return;}
   //----------------------------------------------------------------------------------------------------------------------
@@ -71,7 +82,10 @@ public:
   /// @return m_colour
   //----------------------------------------------------------------------------------------------------------------------
   virtual ngl::Vec4 getColour() {return ngl::Vec4();}
-
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief sets the value to be for float attributes
+  /// @param [in] the value to be set within the floatButton class
+  //----------------------------------------------------------------------------------------------------------------------
   virtual void setValue(float _val) {return;}
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief returns the value, stored by the button
@@ -83,37 +97,45 @@ public:
   //----------------------------------------------------------------------------------------------------------------------
   void printValues();
 
+  ButtonLib *m_libParent;
+
+  NGLScene *m_sceneParent;
+
+  QWidget *m_parent;
+
 private slots:
   //----------------------------------------------------------------------------------------------------------------------
-  /// @brief a slot to open a colour box upon event
+  /// @brief a slot to open a widget upon button press event
   //----------------------------------------------------------------------------------------------------------------------
   virtual void openBox() {return;}
+
 private:
   //----------------------------------------------------------------------------------------------------------------------
-  /// @brief colour struct used to access colour attributes
   /// @brief string to hold button's name
   //----------------------------------------------------------------------------------------------------------------------
   QString m_buttonName;
   //----------------------------------------------------------------------------------------------------------------------
-  /// @brief id to access specific buttons
+  /// @brief id to access specific buttons and shader locations
   //----------------------------------------------------------------------------------------------------------------------
   unsigned int m_id;
   //----------------------------------------------------------------------------------------------------------------------
-  /// @brief button object to be pressed
+  /// @brief button object to be pressed by user to open relevant widget
   //----------------------------------------------------------------------------------------------------------------------
   QPushButton *m_button;
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief function to create the button box for the colour picker
+  /// @param [in] button name
   //----------------------------------------------------------------------------------------------------------------------
   void createButtonBox(QString _buttonName="Select &Colour");
   //----------------------------------------------------------------------------------------------------------------------
-  /// @brief button box to open colour picker
+  /// @brief button box to open the necessary widget
   //----------------------------------------------------------------------------------------------------------------------
   QDialogButtonBox *m_buttonBox;
   //----------------------------------------------------------------------------------------------------------------------
-  /// @brief layout for colour box to be stored within
+  /// @brief layout for the button box to be stored within
   //----------------------------------------------------------------------------------------------------------------------
   QGridLayout *m_gridLayout;
+
 };
 
 class colourButton : public Button
@@ -122,7 +144,7 @@ class colourButton : public Button
 
 private:
   //----------------------------------------------------------------------------------------------------------------------
-  /// @brief colour structure to store colour attributes for easy accessibility
+  /// @brief vector to store colour attributes for easy accessibility
   //----------------------------------------------------------------------------------------------------------------------
   ngl::Vec4 m_colour;
   //----------------------------------------------------------------------------------------------------------------------
@@ -134,19 +156,31 @@ private:
   //----------------------------------------------------------------------------------------------------------------------
   QColorDialog *m_colourGroupBox;
 private slots:
-    void openBox();
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief a slot to open a colour widget upon button press event
+  //----------------------------------------------------------------------------------------------------------------------
+  void openBox();
 public:
   using Button::Button;
+  //colourButton(QString _buttonName, QLayout *_layout, unsigned int _id, ButtonLib *_libParent, NGLScene *_sceneParent, QWidget *parent);
   //----------------------------------------------------------------------------------------------------------------------
-  /// @brief sets the colour to be used by colour buttons
+  /// @brief sets the picked colour and colour attribute to the colour input
+  /// @param [in] colour value
   //----------------------------------------------------------------------------------------------------------------------
-  void setColour(QColor _col) {m_colourPicked=_col;}
+  void setColour(QColor _col);
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief sets the colour attribute to the colour input
+  /// @param [in] colour value
+  //----------------------------------------------------------------------------------------------------------------------
   void setColour(ngl::Vec4 _col) {m_colour=_col;}
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief returns the colour, stored by the button
   /// @return m_colour
   //----------------------------------------------------------------------------------------------------------------------
   ngl::Vec4 getColour() {return m_colour;}
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief print the attribute data stored within the colour attriubte for debugging
+  //----------------------------------------------------------------------------------------------------------------------
   void printAttributes();
 };
 
@@ -156,25 +190,30 @@ class floatButton : public Button
 
 private:
   //----------------------------------------------------------------------------------------------------------------------
-  /// @brief colour structure to store colour attributes for easy accessibility
+  /// @brief float to store attribute for easy accessibility
   //----------------------------------------------------------------------------------------------------------------------
   float m_value;
   //----------------------------------------------------------------------------------------------------------------------
-  /// @brief colour used to store attributes coming out from colour picker
-  //----------------------------------------------------------------------------------------------------------------------
-  //float m_valueSelected;
-  //----------------------------------------------------------------------------------------------------------------------
-  /// @brief colour box to select colours
+  /// @brief window to hold float slider
   //----------------------------------------------------------------------------------------------------------------------
   QDialog *m_window;
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief creates a frame with a tile to hold float slider
+  //----------------------------------------------------------------------------------------------------------------------
   QGroupBox *m_sliderGroupBox;
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief layout to hold float slider widget
+  //----------------------------------------------------------------------------------------------------------------------
   QGridLayout *m_sliderLayout;
 private slots:
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief a slot to open float widget upon button press event
+  //----------------------------------------------------------------------------------------------------------------------
     void openBox();
 public:
   using Button::Button;
   //----------------------------------------------------------------------------------------------------------------------
-  /// @brief sets the value to be used by colour buttons
+  /// @brief sets the value of the float
   //----------------------------------------------------------------------------------------------------------------------
   void setValue(float _val) {m_value=_val;}
   //----------------------------------------------------------------------------------------------------------------------
@@ -182,6 +221,9 @@ public:
   /// @return m_value
   //----------------------------------------------------------------------------------------------------------------------
   float getValue() {return m_value;}
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief print the attribute data stored within the float attriubte for debugging
+  //----------------------------------------------------------------------------------------------------------------------
   void printAttributes();
 };
 

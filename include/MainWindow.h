@@ -7,6 +7,7 @@
 #include "NGLScene.h"
 #include <QMainWindow>
 #include "ParserLib.h"
+#include "ButtonLib.h"
 #include "button.h"
 #include "Cebitor.h"
 #include "StartupDialog.h"
@@ -16,6 +17,7 @@
 class NGLScene;
 class StartupDialog;
 
+class ButtonLib;
 //------------------------------------------------------------------------------
 /// @file NGLScene.h
 /// @brief the MainWindow class for our program
@@ -78,6 +80,20 @@ public:
   bool                  newProjectWiz(QWidget* _parent=0);
   //----------------------------------------------------------------------------
   //----------------------------------------------------------------------------
+
+public slots:
+  //----------------------------------------------------------------------------
+  /// @brief adds line marker to text editor for _shaderName at lineNum
+  /// @param [in] _shaderName Name of the shader type
+  /// @param [in] _lineNum line to add error symbol at
+  //----------------------------------------------------------------------------
+  void addError(QString _shaderName, int _lineNum);
+  //----------------------------------------------------------------------------
+
+  void on_actionOpen_triggered();
+
+  void on_actionExport_triggered();
+  
 private:
   //----------------------------------------------------------------------------
   /// @brief our QScintilla widget1 (vertex)
@@ -100,10 +116,6 @@ private:
   //----------------------------------------------------------------------------
   parserLib*            m_parForButton;
   //----------------------------------------------------------------------------
-  /// @brief The button list for all the uniforms
-  //----------------------------------------------------------------------------
-  std::vector<Button*>  m_buttonList;
-  //----------------------------------------------------------------------------
   /// @brief The project that is used for storing name, directory etc.
   //----------------------------------------------------------------------------
   Project*              m_project;
@@ -113,6 +125,8 @@ private:
   Ui::MainWindow*       m_ui;
   //----------------------------------------------------------------------------
   //----------------------------------------------------------------------------
+  ButtonLib *m_buttonLibrary;
+  //----------------------------------------------------------------------------------------------------------------------
   /// @brief create QsciScintilla widget in the style of sublime defaults
   /// @param [in] _parent the parent widget to fill with the new Qsci Widget
   //----------------------------------------------------------------------------

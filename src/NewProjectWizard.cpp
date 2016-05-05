@@ -79,8 +79,7 @@ void NewProjectWizard::accept()
     fragmentOrderFileNames.append(fragFilesOrder->item(i)->text());
   }
 
-  QString vertexFilesString = version;
-  QString fragmentFilesString = version;
+  QString vertexFilesString, fragmentFilesString;
   for (int i=0; i<vertexFileNames.length(); ++i)
   {
     int index = vertexFileNames.indexOf(vertexOrderFileNames[i]);
@@ -110,7 +109,15 @@ void NewProjectWizard::accept()
   }
 
   m_output->m_vertSource = vertexFilesString;
+  if(!vertexFilesString.contains("#version"))
+  {
+    vertexFilesString.push_front(version+"\n");
+  }
   m_output->m_fragSource = fragmentFilesString;
+  if(!fragmentFilesString.contains("#version"))
+  {
+    fragmentFilesString.push_front(version+"\n");
+  }
 
   QDialog::accept();
 }

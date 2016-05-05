@@ -36,8 +36,8 @@ public:
   //method to save the current project as another project
   void saveAs(QString vertSource, QString fragSource);
   
-  //method to load a project from json
-  void load(std::string _pathToXML);
+  //method to load
+  void load();
   
   //method to export the current project to accessible glsl files
   bool exportProject(std::string _targetDir, QString vertSource, QString fragSource);
