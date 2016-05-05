@@ -72,6 +72,13 @@ Cebitor::Cebitor(QWidget *_parent) : QsciScintilla(_parent)
   connect(commentAction, SIGNAL(triggered()), this, SLOT(comment()));
   addAction(commentAction);
 
+  // bind CTRL-F to search function
+  QAction *searchAction = new QAction(this);
+  searchAction->setShortcut(Qt::Key_F | Qt::CTRL);
+
+  connect(searchAction, SIGNAL(triggered()), this, SLOT(toggleSearchBox()));
+  addAction(searchAction);
+
   // connect signals and slots
   connect(this, SIGNAL(SCN_CHARADDED(int)), this, SLOT(charAdded(int)));
 }
@@ -81,6 +88,25 @@ void Cebitor::clearErrors()
 {
   markerDeleteAll(MarkerType::ERROR);
   markerDeleteAll(MarkerType::WARNING);
+}
+
+void Cebitor::searchNext()
+{
+  setSelectionBackgroundColor(QColor(230, 219, 116));
+  setSelectionForegroundColor(QColor(39,40,34));
+  QString searchTerm = m_searchLineEdit->text();
+  bool found;
+  found = findFirst(searchTerm, false, false, false, true);
+}
+
+void Cebitor::searchPrev()
+{
+  setSelectionBackgroundColor(QColor(230, 219, 116));
+  setSelectionForegroundColor(QColor(39,40,34));
+  QString searchTerm = m_searchLineEdit->text();
+  bool found;
+  found = findFirst(searchTerm, false, false, false, true, false);
+  findNext();
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -201,6 +227,23 @@ void Cebitor::comment()
   // reselect to match original selection
   setSelection(lineFrom,indexFrom,lineTo,indexTo);
   endUndoAction();
+}
+
+void Cebitor::toggleSearchBox()
+{
+  bool searchFocus = m_searchLineEdit->hasFocus();
+  if(!searchFocus)
+  {
+    m_searchWidget->show();
+    m_searchLineEdit->setFocus();
+  }
+  else
+  {
+    m_searchWidget->hide();
+    setFocus();
+    setSelectionBackgroundColor(QColor(61,61,52));
+    resetSelectionForegroundColor();
+  }
 }
 
 void Cebitor::braceIndent()
