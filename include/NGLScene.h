@@ -1,5 +1,5 @@
-#ifndef NGLSCENE_H__
-#define NGLSCENE_H__
+#ifndef _NGLSCENE_H__
+#define _NGLSCENE_H__
 #include <memory>
 #include <unordered_map>
 #include <ngl/Camera.h>
@@ -358,4 +358,4 @@ private:
   //    void setCameraYaw(double _yaw);
 };
 
-#endif
+#endif // _NGLSCENE_H__

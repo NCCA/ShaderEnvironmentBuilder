@@ -1,17 +1,22 @@
+//------------------------------------------------------------------------------
+// INCLUDES
+//------------------------------------------------------------------------------
+// System includes
 #include <array>
 #include <iostream>
-#include <QAction>
-#include "CebApplication.h"
-#include "CebErrors.h"
 #include <typeinfo>
 
-//----------------------------------------------------------------------------------------------------------------------
-/// @brief easy to read error level values for message box
-//----------------------------------------------------------------------------------------------------------------------
-const static std::array<QString, 5> ERROR_LEVEL_STR {{"Message", "Information",
-                                               "Warning", "Critical",
-                                               "Question"}};
-//----------------------------------------------------------------------------------------------------------------------
+// Engine includes
+
+// Library  includes
+#include <QAction>
+
+// Project includes
+#include "CebApplication.h"
+#include "CebErrors.h"
+
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 bool CebApplication::notify(QObject *_reciever, QEvent *_event)
 {
   try // Try to notify but will catch an exception if it fails
@@ -29,7 +34,7 @@ bool CebApplication::notify(QObject *_reciever, QEvent *_event)
   }
   catch (...) {
     // Create unknown error message then create and show messagebox
-    ceb_error::unknown_error e = ceb_error::unknown_error();
+    CEBError::unknownError e = CEBError::unknownError();
     QMessageBox *mBox = createErrorMsgBox(&e, _reciever, _event,
                                           QMessageBox::Critical);
     mBox->exec();
@@ -40,22 +45,21 @@ bool CebApplication::notify(QObject *_reciever, QEvent *_event)
   return false;
 }
 
-//----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 QMessageBox* CebApplication::createErrorMsgBox(std::exception *_e,
-                                              QObject *_reciever,
-                                              QEvent *_event,
-                                              QMessageBox::Icon _errLvl)
+                                               QObject *_reciever,
+                                               QEvent *_event,
+                                               QMessageBox::Icon _errLvl)
 {
   // Create text and window title message
-  QString msg = QString("%1 Error").arg(
-                                    ERROR_LEVEL_STR[static_cast<int>(_errLvl)]);
+  QString msg = QString("%1 Error").arg(m_errorLvl[static_cast<int>(_errLvl)]);
   // Create informative text message
   QString iMsg = QString(_e->what());
 
   QString dMsg = QString("Sending event "
                          "'%1' to object '%2' (%3)").arg(typeid(*_event).name(),
-                               qPrintable(_reciever->objectName()),
-                               typeid(*_reciever).name());
+                                                         qPrintable(_reciever->objectName()),
+                                                         typeid(*_reciever).name());
   // Output to console for extra logging
   std::cerr << msg.toUtf8().constData() << std::endl
             << iMsg.toUtf8().constData() << std::endl;

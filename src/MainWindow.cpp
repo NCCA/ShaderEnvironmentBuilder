@@ -1,17 +1,27 @@
-#include "MainWindow.h"
-#include "ui_MainWindow.h"
-#include "QsciLexerGlsl.h"
-#include "CebErrors.h"
+//------------------------------------------------------------------------------
+// INCLUDES
+//------------------------------------------------------------------------------
+// System includes
 
-#include "QString"
-#include "NewProjectWizard.h"
+// Engine includes
 
+// Library  includes
 #include <QTextStream>
 #include <QFileDialog>
 #include <QDesktopWidget>
+#include <QString>
 
+// Project includes
+#include "QsciLexerGlsl.h"
+#include "CebErrors.h"
+#include "NewProjectWizard.h"
+#include "MainWindow.h"
+#include "ui_MainWindow.h"
+
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
-                                           m_ui(new Ui::MainWindow)
+  m_ui(new Ui::MainWindow)
 {
   // Setup ui from form creator (MainWindow.ui)
   m_ui->setupUi(this);
@@ -29,22 +39,20 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   delete(m_ui->m_f_gl_temp);
 
   // Widget 1 (vertex)
-  m_qsci1 = createQsciWidget(m_ui->m_tab_qsci_1);
+  m_vertQsci = createQsciWidget(m_ui->m_tab_qsci_1);
 
   // Widget 2 (fragment)
-  m_qsci2 = createQsciWidget(m_ui->m_tab_qsci_2);
+  m_fragQsci = createQsciWidget(m_ui->m_tab_qsci_2);
 
-
-  // Set the combo box initially to VERTEX
   // Camera Settings
-   connect(m_ui->m_sldr_cameraFov,SIGNAL(valueChanged(int)),m_gl,SLOT(setCameraFocalLength(int)));
-   connect(m_ui->m_cameraRoll, SIGNAL(valueChanged(double)), m_gl, SLOT(setCameraRoll(double)));
-   connect(m_ui->m_cameraYaw, SIGNAL(valueChanged(double)), m_gl, SLOT(setCameraYaw(double)));
-   connect(m_ui->m_comboBox_view, SIGNAL(currentTextChanged(QString)), m_gl, SLOT(setCameraShape(QString)));
+  connect(m_ui->m_sldr_cameraFov,SIGNAL(valueChanged(int)),m_gl,SLOT(setCameraFocalLength(int)));
+  connect(m_ui->m_cameraRoll, SIGNAL(valueChanged(double)), m_gl, SLOT(setCameraRoll(double)));
+  connect(m_ui->m_cameraYaw, SIGNAL(valueChanged(double)), m_gl, SLOT(setCameraYaw(double)));
+  connect(m_ui->m_comboBox_view, SIGNAL(currentTextChanged(QString)), m_gl, SLOT(setCameraShape(QString)));
 
   // Load the text files into the corresponding tabs
-  loadTextFileToTab("shaders/PhongVertex.glsl", *m_qsci1);
-  loadTextFileToTab("shaders/PhongFragment.glsl", *m_qsci2);
+  loadTextFileToTab("shaders/PhongVertex.glsl", *m_vertQsci);
+  loadTextFileToTab("shaders/PhongFragment.glsl", *m_fragQsci);
 
   // switching between shapes
   connect(m_ui->m_actionLoad_Sphere,SIGNAL(triggered()),this,SLOT(shapeTriggered()));
@@ -73,41 +81,43 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   //std::cerr<<"Find number of active uniforms: "<<m_parForButton->m_num<<std::endl;
 
   this->setGeometry(
-      QStyle::alignedRect(
+        QStyle::alignedRect(
           Qt::LeftToRight,
           Qt::AlignCenter,
           this->size(),
           qApp->desktop()->availableGeometry()
-      )
-  );
+          )
+        );
 
   m_startDialog = new StartupDialog(this);
 
   m_project = new Project;
 }
 
-//----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 MainWindow::~MainWindow()
 {
-    delete m_ui;
+  delete m_ui;
 }
 
-//----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void MainWindow::on_m_btn_compileShader_clicked()
 {
   QString vertSource, fragSource;
-  vertSource = m_qsci1->text();
-  fragSource = m_qsci2->text();
+  vertSource = m_vertQsci->text();
+  fragSource = m_fragQsci->text();
   m_gl->compileShader(vertSource,fragSource);
   createButtons();
   updateShaderValues();
 }
 
+//------------------------------------------------------------------------------
 void MainWindow::printUniforms()
 {
   m_parForButton->printUniforms();
 }
 
+//------------------------------------------------------------------------------
 void MainWindow::createButtons()
 {
   if(m_buttonList.size()==0)
@@ -136,6 +146,7 @@ void MainWindow::createButtons()
   }
 }
 
+//------------------------------------------------------------------------------
 void MainWindow::updateShaderValues()
 {
   for(auto uniform: m_parForButton->m_uniformList)
@@ -165,12 +176,11 @@ void MainWindow::updateShaderValues()
           break;
         }
       }
-
     }
   }
 }
 
-//----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 Cebitor *MainWindow::createQsciWidget(QWidget *_parent)
 {
   // Create the QsciScintilla widget
@@ -181,7 +191,8 @@ Cebitor *MainWindow::createQsciWidget(QWidget *_parent)
 
   return qsci;
 }
-//----------------------------------------------------------------------------------------------------------------------
+
+//------------------------------------------------------------------------------
 bool MainWindow::loadTextFileToTab(QString _path, Cebitor &_qsci)
 {
   QString text;
@@ -191,7 +202,7 @@ bool MainWindow::loadTextFileToTab(QString _path, Cebitor &_qsci)
   if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
   {
     // Raise an error if failed
-    ceb_raise::QtFileError(file.error(), _path);
+    CEBRaise::QtFileError(file.error(), _path);
     return false;
   }
 
@@ -203,18 +214,19 @@ bool MainWindow::loadTextFileToTab(QString _path, Cebitor &_qsci)
   return true;
 }
 
-//----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void MainWindow::objOpened()
 {
   // Open a file dialog and return a file directory
   QString fileName=QFileDialog::getOpenFileName(this,
-  tr("Open Mesh"),"0Features-0BugsCVA3/",tr("Image Files (*.obj)"));
+                                                tr("Open Mesh"),"0Features-0BugsCVA3/",tr("Image Files (*.obj)"));
 
   std::string importName=fileName.toStdString();
   // Import the mesh
   m_gl->importMeshName(importName);
 }
 
+//------------------------------------------------------------------------------
 void MainWindow::shapeTriggered()
 {
   //get the action
@@ -231,41 +243,59 @@ void MainWindow::shapeTriggered()
   //set the shape
   m_gl->setShapeType(a);
 }
+
+//------------------------------------------------------------------------------
 void MainWindow::setTerminalText(QString _txt)
 {
   m_ui->m_pte_terminal->setPlainText(_txt);
 }
 
+//------------------------------------------------------------------------------
 void MainWindow::clearTerminalText()
 {
   m_ui->m_pte_terminal->clear();
 }
 
+//------------------------------------------------------------------------------
 void MainWindow::on_actionStartup_Window_triggered()
 {
   m_startDialog->show();
 }
 
+//------------------------------------------------------------------------------
 void MainWindow::showStartDialog()
 {
   m_startDialog->show();
 }
 
-void MainWindow::on_actionNew_triggered()
+//------------------------------------------------------------------------------
+bool MainWindow::newProject(QWidget* _parent)
 {
-  NewProjectWizard *projectWiz = new NewProjectWizard(this);
-  if (projectWiz->exec())
+  NewProjectWizard *projectWiz = new NewProjectWizard(_parent);
+  bool success = projectWiz->exec();
+  if (success)
   {
-    m_project->set(projectWiz->m_output->m_projectName, projectWiz->m_output->m_projectDir);
+    const OutputData *output = projectWiz->getOutput();
+    m_project->set(output->m_projectName, output->m_projectDir);
     m_gl->newProject(m_project->getName());
-    m_qsci1->setText(projectWiz->m_output->m_vertSource);
-    m_qsci2->setText(projectWiz->m_output->m_fragSource);
+    m_vertQsci->setText(output->m_vertSource);
+    m_fragQsci->setText(output->m_fragSource);
   }
   else
   {
     qDebug() << "FAIL";
   }
+  delete projectWiz;
+  return success;
 }
+
+//------------------------------------------------------------------------------
+void MainWindow::on_actionNew_triggered()
+{
+  newProject(this);
+}
+
+//------------------------------------------------------------------------------
 void MainWindow::keyPressEvent(QKeyEvent *_event)
 {
   // that method is called every time the main window recives a key event.
@@ -278,23 +308,24 @@ void MainWindow::keyPressEvent(QKeyEvent *_event)
   update();
 }
 
-
+//------------------------------------------------------------------------------
 void MainWindow::on_actionSaveProject_triggered()
 {
-    m_project->save(m_qsci1->text(), m_qsci2->text());
+  m_project->save(m_vertQsci->text(), m_fragQsci->text());
 }
 
+//------------------------------------------------------------------------------
 void MainWindow::on_actionSaveProjectAs_triggered()
 {
-    m_project->saveAs(m_qsci1->text(), m_qsci2->text());
+  m_project->saveAs(m_vertQsci->text(), m_fragQsci->text());
 }
 
-
+//------------------------------------------------------------------------------
 void MainWindow::on_m_actionLoad_Texture_triggered()
 {
   // Open a file dialog and return a file directory
   QString fileName=QFileDialog::getOpenFileName(this,
-  tr("Open Texture Map"),"0Features-0BugsCVA3/",tr("Image Files (*.jpg)"));
+                                                tr("Open Texture Map"),"0Features-0BugsCVA3/",tr("Image Files (*.jpg)"));
 
   //load texture map to OBJ
   std::string importName=fileName.toStdString();
