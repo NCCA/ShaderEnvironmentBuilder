@@ -69,8 +69,18 @@ Cebitor::Cebitor(QWidget *_parent) : QsciScintilla(_parent)
   QAction *commentAction = new QAction(this);
   commentAction->setShortcut(Qt::Key_Slash | Qt::CTRL);
 
-  connect(commentAction, SIGNAL(triggered()), this, SLOT(comment()));
+  connect(commentAction, SIGNAL(triggered()), this, SLOT(toggleSearchBox()));
   addAction(commentAction);
+
+//  // unbind CTRL-F keyboard shortcut
+//  standardCommands()->boundTo(Qt::Key_F | Qt::CTRL)->setKey(0);
+
+  // rebind CTRL-F to search function
+  QAction *searchAction = new QAction(this);
+  searchAction->setShortcut(Qt::Key_F | Qt::CTRL);
+
+  connect(searchAction, SIGNAL(triggered()), this, SLOT(toggleSearchBox()));
+  addAction(searchAction);
 
   // connect signals and slots
   connect(this, SIGNAL(SCN_CHARADDED(int)), this, SLOT(charAdded(int)));
@@ -81,6 +91,20 @@ void Cebitor::clearErrors()
 {
   markerDeleteAll(MarkerType::ERROR);
   markerDeleteAll(MarkerType::WARNING);
+}
+
+void Cebitor::searchNext()
+{
+  QString searchTerm = m_searchLineEdit->text();
+  bool found;
+  found = findFirst(searchTerm, false, false, false, true);
+}
+
+void Cebitor::searchPrev()
+{
+  QString searchTerm = m_searchLineEdit->text();
+  bool found;
+  found = findFirst(searchTerm, false, false, false, false);
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -138,7 +162,15 @@ bool Cebitor::closing(const QString _close)
 
 //----------------------------------------------------------------------------------------------------------------------
 void Cebitor::comment()
-{
+{  // unbind CTRL-F keyboard shortcut
+  standardCommands()->boundTo(Qt::Key_F | Qt::CTRL)->setKey(0);
+
+  // rebind CTRL-F to search function
+  QAction *searchAction = new QAction(this);
+  searchAction->setShortcut(Qt::Key_F | Qt::CTRL);
+
+  connect(searchAction, SIGNAL(triggered()), this, SLOT(toggleSearchBox()));
+  addAction(searchAction);
   beginUndoAction();
   int lineFrom;
   int indexFrom;
@@ -201,6 +233,21 @@ void Cebitor::comment()
   // reselect to match original selection
   setSelection(lineFrom,indexFrom,lineTo,indexTo);
   endUndoAction();
+}
+
+void Cebitor::toggleSearchBox()
+{
+  bool searchHidden = m_searchWidget->isHidden();
+  if(searchHidden)
+  {
+    m_searchWidget->show();
+    m_searchLineEdit->setFocus();
+  }
+  else
+  {
+    m_searchWidget->hide();
+    setFocus();
+  }
 }
 
 void Cebitor::braceIndent()
