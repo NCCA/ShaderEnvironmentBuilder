@@ -269,7 +269,7 @@ void MainWindow::showStartDialog()
 }
 
 //------------------------------------------------------------------------------
-bool MainWindow::newProject(QWidget* _parent)
+bool MainWindow::newProjectWiz(QWidget* _parent)
 {
   NewProjectWizard *projectWiz = new NewProjectWizard(_parent);
   bool success = projectWiz->exec();
@@ -292,7 +292,7 @@ bool MainWindow::newProject(QWidget* _parent)
 //------------------------------------------------------------------------------
 void MainWindow::on_actionNew_triggered()
 {
-  newProject(this);
+  newProjectWiz(this);
 }
 
 //------------------------------------------------------------------------------
