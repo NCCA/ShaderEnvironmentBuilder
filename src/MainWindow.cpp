@@ -68,6 +68,11 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   connect(m_ui->m_showGrid,SIGNAL(toggled(bool)),m_gl,SLOT(toggleGrid(bool)));
 
   connect(m_ui->m_normalSize,SIGNAL(valueChanged(int)),m_gl,SLOT(setNormalSize(int)));
+  // line marker connections
+  connect(m_ui->m_btn_compileShader,SIGNAL(pressed()),m_qsci1,SLOT(clearErrors()));
+  connect(m_ui->m_btn_compileShader,SIGNAL(pressed()),m_qsci2,SLOT(clearErrors()));
+  connect(m_gl,SIGNAL(createLineMarker(QString,int)),this,SLOT(addError(QString,int)));
+
 
   update();
   //std::cerr<<"Find number of active uniforms: "<<m_parForButton->m_num<<std::endl;
@@ -300,4 +305,18 @@ void MainWindow::on_m_actionLoad_Texture_triggered()
   std::string importName=fileName.toStdString();
   std::cout<<"imported texture "<<importName<<std::endl;
   m_gl->importTextureMap(importName);
+}
+
+void MainWindow::addError(QString _shaderName, int _lineNum)
+{
+  Cebitor * cebitorInstance;
+  if(_shaderName==QString("Vertex"))
+  {
+    cebitorInstance = m_qsci1;
+  }
+  if(_shaderName==QString("Fragment"))
+  {
+    cebitorInstance = m_qsci2;
+  }
+  cebitorInstance->markerAdd(_lineNum,Cebitor::MarkerType::ERROR);
 }

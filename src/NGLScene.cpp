@@ -580,6 +580,8 @@ QString NGLScene::parseErrorLog(QString _string)
   // And a list of integer to be used for line error highlighting
   QString outputErrors;
 
+  QString shaderName;
+
   // Separate the input _string into separate lines.
   QRegExp separateLines("\n");
   QStringList lines=_string.split(separateLines);
@@ -596,9 +598,15 @@ QString NGLScene::parseErrorLog(QString _string)
       if (pieces.length()==1 && pieces[j]!="")
       {
         // Split the line using the "Remove Colon"
-        QRegExp removeColon(":");
-
-        QStringList title=pieces.value(j).split(removeColon);
+        if(pieces.value(j).endsWith("Vertex:"))
+        {
+          shaderName=QString("Vertex");
+        }
+        if(pieces.value(j).endsWith("Fragment:"))
+        {
+          shaderName=QString("Fragment");
+        }
+        std::cout<<shaderName.toStdString()<<"\n";
       }
       // If the first segment of the line is 0...
       // remove it and replace it with "Line"
@@ -618,12 +626,13 @@ QString NGLScene::parseErrorLog(QString _string)
         if (j==1)
         {
           int lineNumber = pieces.value(j).toInt();
+          emit createLineMarker(shaderName,lineNumber-1);
         }
       }
     }
     // If it is the last line, add a new line to the string
     int finalLine =lines.length()-1;
-    if (i!=finalLine-1)
+    if (i!=finalLine)
     {
       outputErrors.append("\n");
     }
