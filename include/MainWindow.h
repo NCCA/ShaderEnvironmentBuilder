@@ -74,14 +74,13 @@ private slots:
   void on_m_btn_compileShader_clicked();
   //----------------------------------------------------------------------------------------------------------------------
   //----------------------------------------------------------------------------------------------------------------------
-  void on_actionLoad_shape_triggered();
-  void on_actionLoad_obj_opened();
+  void shapeTriggered();
+  void objOpened();
   void on_actionStartup_Window_triggered();
   void on_actionNew_triggered();
   void on_actionSaveProject_triggered();
   void on_actionSaveProjectAs_triggered();
   void printUniforms();
-
 
 private:
   //----------------------------------------------------------------------------------------------------------------------
