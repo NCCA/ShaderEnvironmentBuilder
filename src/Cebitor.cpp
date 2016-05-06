@@ -59,8 +59,6 @@ Cebitor::Cebitor(QWidget *_parent) : QsciScintilla(_parent)
 
   markerDefine(errorIcon.pixmap(10,10), MarkerType::ERROR);
   markerDefine(warnIcon.pixmap(10,10), MarkerType::WARNING);
-  markerDefine(MarkerSymbol::Background, MarkerType::FILESTART);
-  SendScintilla(QsciScintillaBase::SCI_MARKERSETBACK, MarkerType::FILESTART, QColor(45,46,38));
 
   // unbind CTRL-/ keyboard shortcut
   standardCommands()->boundTo(Qt::Key_Slash | Qt::CTRL)->setKey(0);

@@ -13,8 +13,6 @@
   #include "QsciLexerGlsl.h"
 %}
 
-%s LEXSTRING
-
 %%
 
 "attribute"               |

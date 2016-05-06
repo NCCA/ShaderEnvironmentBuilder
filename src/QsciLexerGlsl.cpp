@@ -33,7 +33,7 @@ QsciLexerGLSL::~QsciLexerGLSL()
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-void QsciLexerGLSL::styleText(int start, int end)
+void QsciLexerGLSL::styleText(const int start, const int end)
 {
   m_parent->autoCompleteFromAPIs();
   //return if no QsciScintilla editor
@@ -79,7 +79,7 @@ void QsciLexerGLSL::styleText(int start, int end)
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-QColor QsciLexerGLSL::defaultColor(int style) const
+QColor QsciLexerGLSL::defaultColor(const int style) const
 {
   switch(style)
   {
@@ -97,7 +97,7 @@ QColor QsciLexerGLSL::defaultColor(int style) const
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-QColor QsciLexerGLSL::defaultPaper(int style) const
+QColor QsciLexerGLSL::defaultPaper(const int style) const
 {
   switch(style)
   {
@@ -107,7 +107,7 @@ QColor QsciLexerGLSL::defaultPaper(int style) const
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-QFont QsciLexerGLSL::defaultFont(int style) const
+QFont QsciLexerGLSL::defaultFont(const int style) const
 {
   int weight = 50;
   int size = 12;
@@ -131,7 +131,7 @@ QFont QsciLexerGLSL::defaultFont(int style) const
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-QString QsciLexerGLSL::description(int style) const
+QString QsciLexerGLSL::description(const int style) const
 {
   switch(style)
   {
@@ -142,7 +142,6 @@ QString QsciLexerGLSL::description(int style) const
     case StyleType::FUNCTION:   {return "FUNCTION";}
     case StyleType::STRING:     {return "STRING";}
     case StyleType::COMMENT:    {return "COMMENT";}
-    case StyleType::DISABLED:   {return "DISABLED";}
     case StyleType::OPERATOR:   {return "OPERATOR";}
     case StyleType::WHITESPACE: {return "WHITESPACE";}
     case StyleType::DATATYPE:   {return "DATATYPE";}

@@ -29,7 +29,6 @@ public:
     FUNCTION,
     STRING,
     COMMENT,
-    DISABLED,
     OPERATOR,
     WHITESPACE,
     DATATYPE,
@@ -41,7 +40,7 @@ public:
   /// \brief QsciLexerGLSL constructor
   /// \param [in] _parent Parent QsciScintilla instance
   //----------------------------------------------------------------------------------------------------------------------
-  QsciLexerGLSL(QsciScintilla *_parent=0);
+  QsciLexerGLSL( QsciScintilla *_parent = 0 );
   //----------------------------------------------------------------------------------------------------------------------
   /// \brief QsciLexerGLSL destructor.
   //----------------------------------------------------------------------------------------------------------------------
@@ -52,7 +51,7 @@ public:
   /// \param [in] _start  Start position of text to be styled.
   /// \param [in] _end    End position of text to be styleed.
   //----------------------------------------------------------------------------------------------------------------------
-  virtual void styleText(int _start, int _end);
+  virtual void styleText( const int _start, const int _end );
   //----------------------------------------------------------------------------------------------------------------------
   /// \brief virtual function reimplemented from qscilexer.
   /// \return lexer language.
@@ -63,25 +62,25 @@ public:
   /// \param [in] _style  style number.
   /// \return Default colour for style \a _style.
   //----------------------------------------------------------------------------------------------------------------------
-  virtual QColor defaultColor(int _style) const;
+  virtual QColor defaultColor( const int _style ) const;
   //----------------------------------------------------------------------------------------------------------------------
   /// \brief virtual function reimplemented from qscilexer.
   /// \param [in] _style  style number.
   /// \return Default paper colour for style \a _style.
   //----------------------------------------------------------------------------------------------------------------------
-  virtual QColor defaultPaper(int _style) const;
+  virtual QColor defaultPaper( const int _style ) const;
   //----------------------------------------------------------------------------------------------------------------------
   /// \brief virtual function reimplemented from qscilexer.
   /// \param [in] _style  style number.
   /// \return Default font for style \a _style.
   //----------------------------------------------------------------------------------------------------------------------
-  virtual QFont defaultFont(int _style) const;
+  virtual QFont defaultFont( const int _style ) const;
   //----------------------------------------------------------------------------------------------------------------------
   /// \brief virtual function reimplemented from qscilexer.
   /// \param [in] _style  style number.
   /// \return Descriptive for style \a _style.
   //----------------------------------------------------------------------------------------------------------------------
-  virtual QString description(int _style) const;
+  virtual QString description( const int _style ) const;
 
 
 
@@ -89,19 +88,19 @@ protected:
   //----------------------------------------------------------------------------------------------------------------------
   /// \brief parent QScintilla instance
   //----------------------------------------------------------------------------------------------------------------------
-  QsciScintilla   *m_parent;
+  QsciScintilla *m_parent;
   //----------------------------------------------------------------------------------------------------------------------
   /// \brief glsl API instance
   //----------------------------------------------------------------------------------------------------------------------
-  QsciAPIs        *m_API;
+  QsciAPIs *m_API;
   //----------------------------------------------------------------------------------------------------------------------
   /// \brief copy constructor
   //----------------------------------------------------------------------------------------------------------------------
-  QsciLexerGLSL(const QsciLexerGLSL &);
+  QsciLexerGLSL( const QsciLexerGLSL & );
   //----------------------------------------------------------------------------------------------------------------------
   /// \brief assignment operator
   //----------------------------------------------------------------------------------------------------------------------
-  QsciLexerGLSL &operator=(const QsciLexerGLSL &);
+  QsciLexerGLSL &operator=( const QsciLexerGLSL & );
 };
 
 #endif
