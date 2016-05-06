@@ -16,11 +16,7 @@
 %s LEXSTRING
 
 %%
-<LEXSTRING>[^"]*                    { return QsciLexerGLSL::StyleType::STRING; }
-<LEXSTRING>[\"\n]                   {
-                                      BEGIN(INITIAL);
-                                      return QsciLexerGLSL::StyleType::STRING;
-                                    }
+
 "attribute"               |
 "const"                   |
 "uniform"                 |
@@ -68,11 +64,6 @@ mat[234](x[234])?/.                                       { return QsciLexerGLSL
 \.\= |
 \?:  |
 ">>"|"<<"\=?                        { return QsciLexerGLSL::StyleType::OPERATOR; }
-
-\"                                  {
-                                      BEGIN(LEXSTRING);
-                                      return QsciLexerGLSL::StyleType::STRING;
-                                    }
 
 [Tt]rue |
 [Ff]alse |
