@@ -13,9 +13,10 @@ Button::Button(QWidget *parent) : QDialog(parent)
   createButtonBox();
 }
 
-Button::Button(QString _buttonName, QLayout *_layout, unsigned int _id, ButtonLib *_libParent, NGLScene *_sceneParent, QWidget *parent) : QDialog(parent)
+Button::Button(QString _buttonName, std::string _buttonType, QLayout *_layout, unsigned int _id, ButtonLib *_libParent, NGLScene *_sceneParent, QWidget *parent) : QDialog(parent)
 {
   m_buttonName = _buttonName;
+  m_buttonType = _buttonType;
   m_id=_id;
   createButtonBox(_buttonName);
   m_libParent=_libParent;
@@ -85,3 +86,16 @@ void floatButton::openBox()
   m_sceneParent->update();
   //printValues();
 }
+
+/*colourButton& colourButton::operator=(colourButton &_rhs)
+{
+  this->m_colour=_rhs.m_colour;
+  this->m_colourPicked=_rhs.m_colourPicked;
+  return *this;
+}
+
+floatButton& floatButton::operator=(floatButton &_rhs)
+{
+  this->m_value=_rhs.m_value;
+  return *this;
+}*/
