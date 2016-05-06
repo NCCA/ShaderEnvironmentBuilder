@@ -8,7 +8,7 @@
 #include <QMainWindow>
 #include "ParserLib.h"
 #include "ButtonLib.h"
-#include "button.h"
+#include "Button.h"
 #include "Cebitor.h"
 #include "StartupDialog.h"
 #include "NewProjectWizard.h"

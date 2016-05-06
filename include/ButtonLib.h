@@ -2,7 +2,7 @@
 #define BUTTONLIB_H_
 
 #include "ParserLib.h"
-#include "button.h"
+#include "Button.h"
 #include "NGLScene.h"
 
 #include <QDebug>

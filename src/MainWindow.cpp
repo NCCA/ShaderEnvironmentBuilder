@@ -107,6 +107,7 @@ void MainWindow::on_m_btn_compileShader_clicked()
   vertSource = m_qsci1->text();
   fragSource = m_qsci2->text();
   m_gl->compileShader(vertSource,fragSource);
+  m_parForButton->initializeUniformData();
   m_buttonLibrary->createButtons();
   m_buttonLibrary->updateShaderValues();
 }

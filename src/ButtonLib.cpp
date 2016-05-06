@@ -18,7 +18,6 @@ void ButtonLib::createButtons()
     {
       if(uniform->getTypeName()=="vec4")
       {
-        qDebug()<<"Vec4 found and being created";
         QString _uniformName = QString::fromStdString(uniform->getName());
         ngl::Vec4 _uniformVec=uniform->getVec4();
         colourButton *tempButton = new colourButton(_uniformName,
@@ -45,11 +44,27 @@ void ButtonLib::createButtons()
       }
     }
   }
-}
+  /*std::cout<<"These are the active uniforms:\n";
+  for(auto uniform : m_parser->m_uniformList)
+  {
+    std::cout<<"Uniform name: "<<uniform->getName()<<"\nID: "<<uniform->getLocation()<<"\n";
+  }*/
 
+  /*else
+  {
+    std::vector<Button*> _buttonDup = m_buttonList;
+    for (auto but: m_buttonList)
+    {
+      delete but;
+    }
+    //m_buttonList.clear();
+    //qDebug()<<"My button list length is "<<m_buttonList.size();
+    //_buttonDup.pop_back();
+  }*/
+}
 void ButtonLib::updateShaderValues()
 {
-  qDebug()<<"Function ran\n";
+  //qDebug()<<"Function ran\n";
   for(auto uniform: m_parser->m_uniformList)
   {
     if(uniform->getTypeName()=="vec4")
