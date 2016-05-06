@@ -81,6 +81,9 @@ Cebitor::Cebitor(QWidget *_parent) : QsciScintilla(_parent)
 
   // connect signals and slots
   connect(this, SIGNAL(SCN_CHARADDED(int)), this, SLOT(charAdded(int)));
+
+  // work-around since using built-in focusInEvent causes caret to be invisible
+  connect(this, SIGNAL(SCN_FOCUSIN()), this, SLOT(resetHighlightColour()));
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -311,7 +314,7 @@ void Cebitor::charAdded(int _c)
   }
 }
 
-void Cebitor::focusInEvent(QFocusEvent *_event)
+void Cebitor::resetHighlightColour()
 {
   setSelectionBackgroundColor(QColor(61,61,52));
   resetSelectionForegroundColor();
