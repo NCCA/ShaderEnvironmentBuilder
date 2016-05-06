@@ -54,6 +54,10 @@ public slots:
   /// @brief Search for previous occurance
   //------------------------------------------------------------------------------------------------------------------------
   void searchPrev();
+  //------------------------------------------------------------------------------------------------------------------------
+  /// @brief sets indicator for each search result
+  //------------------------------------------------------------------------------------------------------------------------
+  void highlightAllSearch();
 
 protected:
   QWidget *m_searchWidget;
@@ -61,6 +65,8 @@ protected:
   QLineEdit *m_searchLineEdit;
 
   std::vector<int> m_fileMarkers;
+
+  int m_searchIndicator;
   //------------------------------------------------------------------------------------------------------------------------
   /// @brief adds closing character for braces and quotes
   /// @param [in] _close closing character

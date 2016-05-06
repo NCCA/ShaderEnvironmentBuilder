@@ -148,6 +148,7 @@ Cebitor *MainWindow::createQsciWidget(QWidget *_parent)
   qsci->setSearchWidget(searchWidget);
   qsci->setSearchLineEdit(qsciSearch);
 
+  connect(qsciSearch,SIGNAL(textChanged(QString)),qsci,SLOT(highlightAllSearch()));
   connect(qsciSearch,SIGNAL(returnPressed()),qsci,SLOT(searchNext()));
   connect(searchNextBtn,SIGNAL(pressed()),qsci,SLOT(searchNext()));
   connect(searchPrevBtn,SIGNAL(pressed()),qsci,SLOT(searchPrev()));
