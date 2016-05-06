@@ -78,13 +78,12 @@ Cebitor::Cebitor(QWidget *_parent) : QsciScintilla(_parent)
   addAction(searchAction);
 
   // define search indicator
-
   m_searchIndicator = indicatorDefine(IndicatorStyle::PlainIndicator, -1);
   setIndicatorDrawUnder(true, m_searchIndicator);
   setIndicatorForegroundColor(QColor(142,143,137,0));
   setIndicatorOutlineColor(QColor(142,143,137,255));
 
-  // connect signals and slots
+  // connect char added signals and slots
   connect(this, SIGNAL(SCN_CHARADDED(int)), this, SLOT(charAdded(int)));
 
   // work-around since using built-in focusInEvent causes caret to be invisible
@@ -92,6 +91,7 @@ Cebitor::Cebitor(QWidget *_parent) : QsciScintilla(_parent)
 }
 
 //----------------------------------------------------------------------------------------------------------------------
+
 void Cebitor::clearErrors()
 {
   markerDeleteAll(MarkerType::ERROR);
@@ -110,6 +110,8 @@ void Cebitor::searchNext()
   }
 }
 
+//----------------------------------------------------------------------------------------------------------------------
+
 void Cebitor::searchPrev()
 {
   QString searchTerm = m_searchLineEdit->text();
@@ -124,6 +126,9 @@ void Cebitor::searchPrev()
   }
   findNext();
 }
+
+//----------------------------------------------------------------------------------------------------------------------
+
 void Cebitor::highlightAllSearch()
 {
   clearIndicatorRange(0,0,lines(),text(lines()).length(),m_searchIndicator);
@@ -147,6 +152,7 @@ void Cebitor::highlightAllSearch()
 }
 
 //----------------------------------------------------------------------------------------------------------------------
+
 bool Cebitor::autoClose(const QString _close)
 {
   int cursorIndex;
@@ -170,6 +176,7 @@ bool Cebitor::autoClose(const QString _close)
 }
 
 //----------------------------------------------------------------------------------------------------------------------
+
 bool Cebitor::closing(const QString _close)
 {
   int cursorIndex;
@@ -200,6 +207,7 @@ bool Cebitor::closing(const QString _close)
 }
 
 //----------------------------------------------------------------------------------------------------------------------
+
 void Cebitor::comment()
 {
   beginUndoAction();
@@ -266,6 +274,8 @@ void Cebitor::comment()
   endUndoAction();
 }
 
+//----------------------------------------------------------------------------------------------------------------------
+
 void Cebitor::toggleSearchBox()
 {
   bool searchFocus = m_searchLineEdit->hasFocus();
@@ -283,6 +293,8 @@ void Cebitor::toggleSearchBox()
     clearIndicatorRange(0,0,lines(),text(lines()).length(),m_searchIndicator);
   }
 }
+
+//----------------------------------------------------------------------------------------------------------------------
 
 void Cebitor::braceIndent()
 {
@@ -324,6 +336,7 @@ void Cebitor::braceIndent()
 }
 
 //----------------------------------------------------------------------------------------------------------------------
+
 void Cebitor::charAdded(int _c)
 {
   switch(_c)
@@ -350,6 +363,8 @@ void Cebitor::charAdded(int _c)
     case (int) '\n': { braceIndent(); break; }
   }
 }
+
+//----------------------------------------------------------------------------------------------------------------------
 
 void Cebitor::resetHighlightColour()
 {
