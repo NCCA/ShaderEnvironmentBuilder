@@ -285,7 +285,7 @@ private slots:
   /// @param[in] _deselected the objects that have been deselected in the
   /// treeview
   //----------------------------------------------------------------------------
-  void              vSelectChanged(const QItemSelection &_selected,
+  void              vertexSelectChanged(const QItemSelection &_selected,
                                         const QItemSelection &_deselected);
   //----------------------------------------------------------------------------
   /// @brief Activated when an object in the Fragment Treeview is changed
@@ -293,7 +293,7 @@ private slots:
   /// @param[in] _deselected the objects that have been deselected in the
   /// treeview
   //----------------------------------------------------------------------------
-  void              fSelectChanged(const QItemSelection &_selected,
+  void              fragmentSelectChanged(const QItemSelection &_selected,
                                           const QItemSelection &_deselected);
 };
 

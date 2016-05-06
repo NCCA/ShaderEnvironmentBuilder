@@ -104,10 +104,15 @@ bool Project::exportProject(std::string _targetDir, QString vertSource, QString 
   fragFile.close();
 
   return true;
+
 }
 
-void load()
+void Project::load()
 {
-
+   std::string _vertSource = "Hello vert";
+   std::string _fragSource = "Hello frag";
+   m_xml->readProjectXML(m_data.m_projectName, m_data.m_projectDir, _vertSource, _fragSource);
+   std::cout<<"Opened: "<<_vertSource<<std::endl;
+   std::cout<<"Opened: "<<_fragSource<<std::endl;
 }
 

@@ -306,7 +306,7 @@ void MainWindow::on_actionSaveProjectAs_triggered()
 //------------------------------------------------------------------------------
 void MainWindow::on_actionOpen_triggered()
 {
-    
+      m_project->load();
 }
 
 void MainWindow::on_actionExport_triggered()
