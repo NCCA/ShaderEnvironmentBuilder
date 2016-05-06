@@ -306,7 +306,21 @@ void MainWindow::on_actionSaveProjectAs_triggered()
 //------------------------------------------------------------------------------
 void MainWindow::on_actionOpen_triggered()
 {
-      m_project->load();
+    // Open a file dialog and return a file directory
+    QString fileName=QFileDialog::getOpenFileName(this,
+                                                  tr("Open Project"),"./",tr("XML Files (*.xml)"));
+//    QString importDirectory = QFileDialog::getExistingDirectory(this, tr("Open Project"),
+//                                                 "./",
+//                                                 QFileDialog::ShowDirsOnly
+//                                                 | QFileDialog::DontResolveSymlinks);
+
+    std::string importName=fileName.toStdString();
+    std::string fileDirectory = ":";
+//    std::string fileDirectory=importDirectory.toStdString();
+    // Import the mesh
+    //m_gl->importMeshName(importName);
+
+    m_project->load(importName, fileDirectory);
 }
 
 void MainWindow::on_actionExport_triggered()

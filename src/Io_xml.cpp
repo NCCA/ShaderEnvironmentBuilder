@@ -74,11 +74,9 @@ void IO_XML::readProjectXML(std::string _name, std::string _dir, std::string& _v
     xml_node<> *fragment_node = current_node->first_node("Fragment");
     std::cout<<"Name: "<<current_node->first_attribute("Name")->value()<<"\tDir: "<<current_node->first_attribute("Dir")->value()<<std::endl;
 
-    //current_node = current_node->first_node("Vertex");
     _vertSource = vertex_node->first_attribute("VtxData")->value();
     std::cout<<"Vtx data: "<<_vertSource<<std::endl;
 
-    //current_node = current_node->first_node("Fragment");
     _fragSource = fragment_node->first_attribute("FragData")->value();
     std::cout<<"Fragment data: "<<_fragSource<<std::endl;
 
