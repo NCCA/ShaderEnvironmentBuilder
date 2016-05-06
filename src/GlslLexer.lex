@@ -66,6 +66,7 @@ mat[234](x[234])?/.                                       { return QsciLexerGLSL
 \|\| |
 \^\^ |
 \.\= |
+\?:  |
 ">>"|"<<"\=?                        { return QsciLexerGLSL::StyleType::OPERATOR; }
 
 \"                                  {
@@ -79,10 +80,15 @@ mat[234](x[234])?/.                                       { return QsciLexerGLSL
 
 [a-zA-Z0-9]+/\(                     { return QsciLexerGLSL::StyleType::FUNCTION; }
 [\(\)\{\}\[\]] |
-[#@;,_]        |
+[#@\?:;,_\~\\] |
 [a-zA-Z0-9]+   |
-"."            |
-à                                   { return QsciLexerGLSL::StyleType::DEFAULT; }
+"."                                 { return QsciLexerGLSL::StyleType::DEFAULT; }
+
+�*                                  {
+                                      yyleng = 1;
+                                      return QsciLexerGLSL::StyleType::ILLEGAL;
+                                    }
+.                                   { return QsciLexerGLSL::StyleType::ILLEGAL; }
 
 
 %%

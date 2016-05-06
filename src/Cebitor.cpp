@@ -340,9 +340,6 @@ void Cebitor::charAdded(int _c)
 
     // special case since " opens and closes
     case (int) '"':
-
-    // auto indent for braces
-    case (int) '\n': { braceIndent(); break; }
     {
       if(!closing(QString('"')))
       {
@@ -350,6 +347,9 @@ void Cebitor::charAdded(int _c)
       }
       break;
     }
+
+    // auto indent for braces
+    case (int) '\n': { braceIndent(); break; }
   }
 }
 
