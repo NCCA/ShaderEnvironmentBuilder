@@ -24,16 +24,15 @@ int main(int argc, char **argv)
   format.setProfile(QSurfaceFormat::CoreProfile);
   // now set the depth buffer to 24 bits
   format.setDepthBufferSize(24);
-
   // this will set the format for all widgets
-
   QSurfaceFormat::setDefaultFormat(format);
   // make an instance of the QApplication
   CebApplication a(argc, argv);
   // Create a new MainWindow
   MainWindow w;
-  // show it
+  // show main window
   w.show();
+  // show start dialog
   w.showStartDialog();
   // hand control over to Qt framework
   return a.exec();

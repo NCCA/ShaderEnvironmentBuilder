@@ -78,7 +78,7 @@ bool Project::exportProject(std::string _targetDir, QString vertSource, QString 
   //try to open the file for writing, if it doesnt exist the open() method will create it.
   if(!vertFile.open(QIODevice::WriteOnly | QIODevice::Text))
   {
-    ceb_raise::QtFileError(vertFile.error(), filePath);
+    CEBRaise::QtFileError(vertFile.error(), filePath);
     return false;
   }
 
@@ -95,7 +95,7 @@ bool Project::exportProject(std::string _targetDir, QString vertSource, QString 
 
   if(!fragFile.open(QIODevice::WriteOnly | QIODevice::Text))
   {
-    ceb_raise::QtFileError(fragFile.error(), filePath);
+    CEBRaise::QtFileError(fragFile.error(), filePath);
     return false;
   }
 
@@ -106,4 +106,8 @@ bool Project::exportProject(std::string _targetDir, QString vertSource, QString 
   return true;
 }
 
+void load()
+{
+
+}
 
