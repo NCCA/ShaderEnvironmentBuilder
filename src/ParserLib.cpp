@@ -190,7 +190,9 @@ void parserLib::printUniforms()
         break;
       }
       default:
+      {
         std::cout<<"unrecognised data type name"<<std::endl;
+      }
     }
   }
   std::cout<<"___________________________________Uniform Information: Ends//\n";
@@ -429,7 +431,10 @@ void parserLib::exportUniforms()
 
         break;
       }
-      default:std::cerr<<"unrecognised data type name"<<std::endl;
+      default:
+      {
+        std::cerr<<"unrecognised data type name"<<std::endl;
+      }
     }
   }
   // close file
@@ -494,7 +499,9 @@ void parserLib::assignUniformValues()
         break;
       }
       default:
-      { std::cout<<"unrecognised data type name"<<std::endl; }
+      {
+        std::cout<<"unrecognised data type name"<<std::endl;
+      }
     }
   }
 }
@@ -555,7 +562,10 @@ void parserLib::sendUniformsToShader(ngl::ShaderLib *shader)
                                        m_uniformList[i]->getMat4());
         break;
       }
-      default:std::cerr<<"unrecognised data type name"<<std::endl;
+      default:
+      {
+        std::cerr<<"unrecognised data type name"<<std::endl;
+      }
     }
 
   }
