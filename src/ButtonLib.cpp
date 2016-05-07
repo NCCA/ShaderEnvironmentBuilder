@@ -54,7 +54,7 @@ void ButtonLib::updateButtons()
   else
   {
     std::vector<Button*> _buttonDup = m_buttonList;
-    m_buttonList.clear();
+    m_buttonList.resize(0);
     createButtons();
     for(auto uniform: m_buttonList)
     {
@@ -67,7 +67,7 @@ void ButtonLib::updateButtons()
           {
             qDebug()<<"\nUniform name:"<<uniform->getName()<<"\nTemp: "<<_buttonDup[i]->getName();
             QColor display = _buttonDup[i]->getColourQ();
-            qDebug()<<"\nDuplicat vals: "<<display.redF()<<", "<<display.greenF()<<", "<<display.blueF()<<"\n";
+            qDebug()<<"\nDuplicate vals: "<<display.redF()<<", "<<display.greenF()<<", "<<display.blueF()<<"\n";
             uniform->setColour(_buttonDup[i]->getColourQ());
 
           }

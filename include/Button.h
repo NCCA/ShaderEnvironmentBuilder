@@ -190,7 +190,7 @@ public:
   /// @brief sets the colour attribute to the colour input
   /// @param [in] colour value
   //----------------------------------------------------------------------------------------------------------------------
-  void setColour(ngl::Vec4 _col) {m_colour=_col;}
+  void setColour(ngl::Vec4 _col);
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief returns the colour, stored by the button
   /// @return m_colour

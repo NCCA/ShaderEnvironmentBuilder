@@ -76,6 +76,14 @@ void colourButton::setColour(QColor _col)
                _col.alphaF());
 }
 
+void colourButton::setColour(ngl::Vec4 _col)
+{
+  m_colour=_col;
+  m_colourPicked.setRgbF(m_colour.m_x,
+                         m_colour.m_y,
+                         m_colour.m_z);
+}
+
 void floatButton::openBox()
 {
   m_window = new QDialog;
