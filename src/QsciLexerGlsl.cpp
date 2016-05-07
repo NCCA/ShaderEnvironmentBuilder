@@ -1,16 +1,20 @@
+#include <iostream>
+#include <sstream>
+
 #include <QsciLexerGlsl.h>
 #include <Qsci/qsciscintilla.h>
 
-#include <iostream>
-#include <sstream>
 #include "generated/GlslLexer.h"
 
-//----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /// @file QsciLexerGlsl.cpp
 /// @brief implementation for GLSL Lexer class
-//----------------------------------------------------------------------------------------------------------------------
+/// @author Phil Rouse
+/// @version 1.0
+/// @date 07/05/2016
+//------------------------------------------------------------------------------
 
-//----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 QsciLexerGLSL::QsciLexerGLSL(QsciScintilla *_parent) : QsciLexerCustom(_parent)
 {
   m_parent = _parent;
@@ -26,14 +30,15 @@ QsciLexerGLSL::QsciLexerGLSL(QsciScintilla *_parent) : QsciLexerCustom(_parent)
   m_parent->resetSelectionForegroundColor();
 }
 
-//----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 QsciLexerGLSL::~QsciLexerGLSL()
 {
+  delete m_API;
   return;
 }
 
-//----------------------------------------------------------------------------------------------------------------------
-void QsciLexerGLSL::styleText(int start, int end)
+//------------------------------------------------------------------------------
+void QsciLexerGLSL::styleText(const int start, const int end)
 {
   m_parent->autoCompleteFromAPIs();
   //return if no QsciScintilla editor
@@ -78,8 +83,8 @@ void QsciLexerGLSL::styleText(int start, int end)
   }
 }
 
-//----------------------------------------------------------------------------------------------------------------------
-QColor QsciLexerGLSL::defaultColor(int style) const
+//------------------------------------------------------------------------------
+QColor QsciLexerGLSL::defaultColor(const int style) const
 {
   switch(style)
   {
@@ -96,8 +101,8 @@ QColor QsciLexerGLSL::defaultColor(int style) const
   }
 }
 
-//----------------------------------------------------------------------------------------------------------------------
-QColor QsciLexerGLSL::defaultPaper(int style) const
+//------------------------------------------------------------------------------
+QColor QsciLexerGLSL::defaultPaper(const int style) const
 {
   switch(style)
   {
@@ -106,8 +111,8 @@ QColor QsciLexerGLSL::defaultPaper(int style) const
   }
 }
 
-//----------------------------------------------------------------------------------------------------------------------
-QFont QsciLexerGLSL::defaultFont(int style) const
+//------------------------------------------------------------------------------
+QFont QsciLexerGLSL::defaultFont(const int style) const
 {
   int weight = 50;
   int size = 12;
@@ -130,8 +135,8 @@ QFont QsciLexerGLSL::defaultFont(int style) const
   return QFont("Monospace", size,weight,italic);
 }
 
-//----------------------------------------------------------------------------------------------------------------------
-QString QsciLexerGLSL::description(int style) const
+//------------------------------------------------------------------------------
+QString QsciLexerGLSL::description(const int style) const
 {
   switch(style)
   {
@@ -142,7 +147,6 @@ QString QsciLexerGLSL::description(int style) const
     case StyleType::FUNCTION:   {return "FUNCTION";}
     case StyleType::STRING:     {return "STRING";}
     case StyleType::COMMENT:    {return "COMMENT";}
-    case StyleType::DISABLED:   {return "DISABLED";}
     case StyleType::OPERATOR:   {return "OPERATOR";}
     case StyleType::WHITESPACE: {return "WHITESPACE";}
     case StyleType::DATATYPE:   {return "DATATYPE";}
@@ -150,7 +154,7 @@ QString QsciLexerGLSL::description(int style) const
   }
 }
 
-//----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 const char *QsciLexerGLSL::language() const
 {
   return "GLSL";

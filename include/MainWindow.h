@@ -2,6 +2,12 @@
 /// @file MainWindow.h
 /// @brief the MainWindow, GUI for our program
 /// @author Jonathan Flynn
+/// @author Alexander la Tourelle
+/// @author Anand Hotwani
+/// @author Ellie Ansell
+/// @author Adam Ting
+/// @author Phil Rouse
+/// @author Jonathan Lyddon
 /// @version 1.0
 /// @date 01/03/16
 //------------------------------------------------------------------------------
@@ -21,12 +27,12 @@
 
 // Project includes
 #include "ButtonLib.h"
-#include "button.h"
+#include "Button.h"
 #include "Cebitor.h"
 #include "NewProjectWizard.h"
 #include "NGLScene.h"
 #include "ParserLib.h"
-#include "project.h"
+#include "Project.h"
 #include "Camera.h"
 #include "StartupDialog.h"
 
@@ -128,7 +134,7 @@ private:
   //----------------------------------------------------------------------------
   /// @brief The parser library used for the uniform buttons
   //----------------------------------------------------------------------------
-  parserLib*            m_parForButton;
+  ParserLib*            m_parForButton;
   //----------------------------------------------------------------------------
   /// @brief The project that is used for storing name, directory etc.
   //----------------------------------------------------------------------------

@@ -34,7 +34,6 @@ int main(int argc, char **argv)
   w.show();
   // show start dialog
   w.showStartDialog();
-  //const unsigned char* glver = glGetString(GL_SHADING_LANGUAGE_VERSION);
 
   // hand control over to Qt framework
   return a.exec();

@@ -1,4 +1,4 @@
-#include "button.h"
+#include "Button.h"
 #include <cstdlib>
 #include <iostream>
 
@@ -6,6 +6,7 @@
 /// @file button.cpp
 /// @brief implementation of the different button classes
 /// @author Jonny Lyddon
+/// @date 07/05/16
 //----------------------------------------------------------------------------------------------------------------------
 
 Button::Button(QWidget *parent) : QDialog(parent)
@@ -13,9 +14,10 @@ Button::Button(QWidget *parent) : QDialog(parent)
   createButtonBox();
 }
 
-Button::Button(QString _buttonName, QLayout *_layout, unsigned int _id, ButtonLib *_libParent, NGLScene *_sceneParent, QWidget *parent) : QDialog(parent)
+Button::Button(QString _buttonName, GLenum _buttonType, QLayout *_layout, GLuint _id, ButtonLib *_libParent, NGLScene *_sceneParent, QWidget *parent) : QDialog(parent)
 {
   m_buttonName = _buttonName;
+  m_buttonType = _buttonType;
   m_id=_id;
   createButtonBox(_buttonName);
   m_libParent=_libParent;
@@ -75,13 +77,35 @@ void colourButton::setColour(QColor _col)
                _col.alphaF());
 }
 
+void colourButton::setColour(ngl::Vec4 _col)
+{
+  m_colour=_col;
+  m_colourPicked.setRgbF(m_colour.m_x,
+                         m_colour.m_y,
+                         m_colour.m_z,
+                         m_colour.m_w);
+}
+
 void floatButton::openBox()
 {
-  m_window = new QDialog;
+  //m_window = new QDialog;
   double val = QInputDialog::getDouble(
-        this, tr("Input"), tr("Input"),m_value,-2147483647,2147483647,5);
+        m_parent, tr("Input"), tr("Input"),m_value,-2147483647,2147483647,5);
   m_value=val;
   m_libParent->updateShaderValues();
   m_sceneParent->update();
   //printValues();
 }
+
+/*colourButton& colourButton::operator=(colourButton &_rhs)
+{
+  this->m_colour=_rhs.m_colour;
+  this->m_colourPicked=_rhs.m_colourPicked;
+  return *this;
+}
+
+floatButton& floatButton::operator=(floatButton &_rhs)
+{
+  this->m_value=_rhs.m_value;
+  return *this;
+}*/

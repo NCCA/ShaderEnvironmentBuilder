@@ -76,7 +76,7 @@ bool checkAllCompileError(std::vector<std::string> _shaderProgNames, QString *o_
 
 
 //----------------------------------------------------------------------------------------------------------------------
-NGLScene::NGLScene( QWidget *_parent, parserLib *_libParent ) : QOpenGLWidget( _parent )
+NGLScene::NGLScene( QWidget *_parent, ParserLib *_libParent ) : QOpenGLWidget( _parent )
 {
   // re-size the widget to that of the parent (in that case the GLFrame passed in on construction)
   m_rotate=false;
@@ -103,6 +103,7 @@ NGLScene::NGLScene( QWidget *_parent, parserLib *_libParent ) : QOpenGLWidget( _
 
   // set this widget to have the initial keyboard focus
   setFocus();
+  connect(this, SIGNAL(initializeGL()), this, SLOT(initGL()));
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -121,7 +122,7 @@ NGLScene::~NGLScene()
 void NGLScene::setMeshLocation(std::string _meshDirectory)
 {
   m_meshLoc=_meshDirectory;
-  std::cout<<"Imported file:  "<<_meshDirectory<<std::endl;
+  //std::cout<<"Imported file:  "<<_meshDirectory<<std::endl;
 }
 
 void NGLScene::toggleObj()
@@ -179,7 +180,7 @@ void NGLScene::importTextureMap(const string &_name)
 // and then once whenever the widget has been assigned a new QGLContext.
 // This function should set up any required OpenGL context rendering flags, defining display lists, etc.
 //----------------------------------------------------------------------------------------------------------------------
-void NGLScene::initializeGL()
+void NGLScene::initGL()
 {
   ngl::NGLInit::instance();
   clearAllGlErrors();
@@ -204,30 +205,10 @@ void NGLScene::initializeGL()
   }
   if(m_shaderManager->isInit())
   {
-    //now create our light this is done after the camera so we can pass the
-    //transpose of the projection matrix to the light to do correct eye space
-    //transformations
-    ngl::Light light(ngl::Vec3(2,2,2),ngl::Colour(1,1,1,1),ngl::Colour(1,1,1,1),ngl::LightModes::POINTLIGHT);
-
     ngl::Mat4 iv=m_cam.getViewMatrix();
     iv.transpose();
-
-    light.setTransform(iv);
-    light.setAttenuation(1,0,0);
-    light.enable();
-
-    //load these values to the shader as well
-    light.loadToShader("light");
-
-    m_readFromXML->shaderData("WhyHelloThere", "PhongVertex", "shaders/PhongVertex.glsl", "PhongFragment", "shaders/PhongFragment.glsl");
     m_parser->assignAllData();
-    light.loadToShader("light");
   }
-
-  // load these values to the shader as well
-
-  m_readFromXML->shaderData("WhyHelloThere", "PhongVertex", "shaders/PhongVertex.glsl", "PhongFragment", "shaders/PhongFragment.glsl");
-  m_parser->assignAllData();
 
   // Create mesh VAO
   m_mesh = std::unique_ptr<ngl::Obj> (new ngl::Obj(m_meshLoc));
@@ -248,7 +229,7 @@ void NGLScene::setShapeType(int _type)
   }
   else
   {
-    std::cout<<"Invalid shape type"<<std::endl;
+    //std::cout<<"Invalid shape type"<<std::endl;
   }
   update();
 }
@@ -373,7 +354,7 @@ void NGLScene::objectTransform(uint _type)
       break;
       // Moved the bunny to be the same relative shape and position
     }
-    default: std::cout<<"unrecognised shape type value"<<std::endl; break;
+    default: std::cerr<<"unrecognised shape type value\n"; break;
   }
 }
 void NGLScene::drawObject(uint _type)
@@ -391,8 +372,8 @@ void NGLScene::drawObject(uint _type)
     case teapot: { prim->draw("teapot");break; }
     case troll : { prim->draw("troll"); break; }
     case dragon: { prim->draw("dragon");break; }
-    case bunny :  { prim->draw("bunny"); break; }
-    default    : std::cout<<"unrecognised shape type value"<<std::endl; break;
+    case bunny : { prim->draw("bunny"); break; }
+    default    : std::cerr<<"unrecognised shape type value\n"; break;
   }
 }
 
@@ -489,6 +470,8 @@ void NGLScene::mouseMoveEvent ( QMouseEvent * _event )
 //----------------------------------------------------------------------------------------------------------------------
 void NGLScene::mousePressEvent ( QMouseEvent * _event )
 {
+  // Focus set to main window since it controls all keypress events.
+  m_window->setFocus();
   // that method is called when the mouse button is pressed in this case we
   // store the value where the maouse was clicked (x,y) and set the Rotate flag to true
   if(_event->button() == Qt::LeftButton)
@@ -567,7 +550,6 @@ void NGLScene::keyPressEvent(QKeyEvent *_event)
 {
   switch (_event->key())
   {
-    case Qt::Key_F : resetObjPos(); break;
     default : break ;
   }
   update();
@@ -672,13 +654,22 @@ void NGLScene::resetObjPos()
   m_modelPos.m_z = 0;
   m_spinXFace = 0;
   m_spinYFace = 0;
+
+  /// @bug On rare occasion object may not be reset exactly to 0,0,0 after
+  ///      camera pitch/roll/yaw are changed in IDE directly.
+  setCameraRoll(0.0);
+  setCameraYaw(0.0);
+  setCameraPitch(0.0);
+
   update();
 }
 
 //------------------------------------------------------------------------------
-void NGLScene::newProject(std::string _name, QString _vertSource, QString _fragSource)
+
+void NGLScene::setProject(std::string _name, QString _vertSource, QString _fragSource)
 {
-  m_shaderManager->createShaderProgram(_name, m_cam, _vertSource, _fragSource);
+  m_shaderManager->createShaderProgram(_name);
+  compileShader(_vertSource, _fragSource);
 }
 
 //------------------------------------------------------------------------------

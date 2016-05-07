@@ -4,6 +4,7 @@
 /// @author Jonathan Macey
 /// @author Jonathan Flynn
 /// @author Anand Hotwani
+/// @author Alexander la Tourelle
 /// @version 1.0
 /// @date 01/03/16
 /// Revision History :
@@ -59,7 +60,7 @@ public :
   /// @brief the parser to deal with all the uniform values stored in the shader
   /// @todo Should be private and have get method
   //----------------------------------------------------------------------------
-  parserLib*                  m_parser;
+  ParserLib*                  m_parser;
   //----------------------------------------------------------------------------
   /// @brief Pointer to inherit camera class
   //----------------------------------------------------------------------------
@@ -69,17 +70,11 @@ public :
   /// @brief Constructor for GLWindow
   /// @param [in] _parent the parent window to create the GL context in
   //----------------------------------------------------------------------------
-  NGLScene                    (QWidget *_parent, parserLib *_libParent);
+  NGLScene                    (QWidget *_parent, ParserLib *_libParent);
   //----------------------------------------------------------------------------
   /// @brief dtor must close down ngl and release OpenGL resources
   //----------------------------------------------------------------------------
   ~NGLScene();
-  //----------------------------------------------------------------------------
-  /// @brief the initialize class is called once when the window is created and
-  /// we have a valid GL context
-  /// use this to setup any default GL stuff
-  //----------------------------------------------------------------------------
-  void                        initializeGL();
   //----------------------------------------------------------------------------
   /// @brief this is called everytime we want to draw the scene
   //----------------------------------------------------------------------------
@@ -117,7 +112,7 @@ public :
   /// @param[in] _vertSource the text that makes of the vertex shader
   /// @param[in] _fragSource The text that makes up the fragment shader
   //----------------------------------------------------------------------------
-  void                        newProject(std::string _name, QString _vertSource,
+  void                        setProject(std::string _name, QString _vertSource,
                                          QString _fragSource);
   //----------------------------------------------------------------------------
   /// @brief Changes the name of the m_mesh object directory
@@ -133,6 +128,12 @@ public :
   //----------------------------------------------------------------------------
   //----------------------------------------------------------------------------
 public slots:
+  //----------------------------------------------------------------------------
+  /// @brief the initialize class is called once when the window is created and
+  /// we have a valid GL context
+  /// use this to setup any default GL stuff
+  //----------------------------------------------------------------------------
+  void                        initGL();
   //----------------------------------------------------------------------------
   /// @brief sets the shape type
   /// @param[in] _type is the type of object drawn
@@ -198,6 +199,10 @@ signals:
   //----------------------------------------------------------------------------
   void                        createLineMarker(QString _shaderName,
                                                int _lineNum);
+  //----------------------------------------------------------------------------
+  /// @brief the signal for initialize GL
+  //----------------------------------------------------------------------------
+  void                        initializeGL();
   //----------------------------------------------------------------------------
   //----------------------------------------------------------------------------
 private:
