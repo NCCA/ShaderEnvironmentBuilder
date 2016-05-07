@@ -318,8 +318,8 @@ void parserLib::uniformDataTypes()
     {GL_UNSIGNED_INT_ATOMIC_COUNTER,"atomic_uint"}
   };
 
-  ngl::ShaderLib *shader=ngl::ShaderLib::instance();
-  GLuint id=shader->getProgramID("Phong");
+  ngl::ShaderLib *shaderLib=ngl::ShaderLib::instance();
+  GLuint id=shaderLib->getProgramID("Phong");
 
   GLint nUniforms;
   glGetProgramInterfaceiv(id, GL_UNIFORM, GL_ACTIVE_RESOURCES, &nUniforms);
