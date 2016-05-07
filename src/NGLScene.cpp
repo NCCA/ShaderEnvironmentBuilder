@@ -193,7 +193,7 @@ void NGLScene::initGL()
 
   // now to load the shader and set the values
   // grab an instance of shader manager
-  m_shaderManager->initialize(m_cam);
+  m_shaderManager->initialize();
 
   ngl::Texture texture ("textures/metalTexture.jpg");
   m_textureName=texture.setTextureGL();
@@ -558,7 +558,7 @@ void NGLScene::keyPressEvent(QKeyEvent *_event)
 
 void NGLScene::compileShader(QString _vertSource, QString _fragSource)
 {
-  m_shaderManager->compileShader(m_cam, _vertSource, _fragSource);
+  m_shaderManager->compileShader(_vertSource, _fragSource);
   m_window->setTerminalText(parseErrorLog(m_shaderManager->getErrorLog()));
   ngl::Light light(ngl::Vec3(2,2,2),ngl::Colour(1,1,1,1),ngl::Colour(1,1,1,1),ngl::LightModes::POINTLIGHT);
   // now create our light this is done after the camera so we can pass the
@@ -657,9 +657,9 @@ void NGLScene::resetObjPos()
 
   /// @bug On rare occasion object may not be reset exactly to 0,0,0 after
   ///      camera pitch/roll/yaw are changed in IDE directly.
-  setCameraRoll(0.0);
-  setCameraYaw(0.0);
-  setCameraPitch(0.0);
+//  setCameraRoll(0.0);
+//  setCameraYaw(0.0);
+//  setCameraPitch(0.0);
 
   update();
 }
