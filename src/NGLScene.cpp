@@ -674,6 +674,7 @@ void NGLScene::resetObjPos()
 
   setCameraRoll(0.0);
   setCameraYaw(0.0);
+  setCameraPitch(0.0);
 
   update();
 }
