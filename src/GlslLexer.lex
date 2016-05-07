@@ -42,18 +42,18 @@
 ["low""medium""high"]"p"  |
 "discard"                 |
 "precision"               |
-"struct"                            { return QsciLexerGLSL::StyleType::KEYWORD; }
+"struct"                  { return QsciLexerGLSL::StyleType::KEYWORD; }
 
-(?#/* "/." added to override function rule*/)
-[iu]?sampler(([123]D)|Cube)|([12]DArray)|2DRect|Buffer/.  { return QsciLexerGLSL::StyleType::DATATYPE; }
-sampler(([123]D)|Cube)|([12]DArray)|((2DRect)Shadow)/.    { return QsciLexerGLSL::StyleType::DATATYPE; }
-[ibu]?vec[234]/.                                          { return QsciLexerGLSL::StyleType::DATATYPE; }
-mat[234](x[234])?/.                                       { return QsciLexerGLSL::StyleType::DATATYPE; }
-(u?int)|"float"|"bool"|"void"/.                           { return QsciLexerGLSL::StyleType::DATATYPE; }
+(?#/* "/.?" added to override function rule*/)
+[iu]?sampler(([123]D)|Cube)|([12]DArray)|2DRect|Buffer/.? { return QsciLexerGLSL::StyleType::DATATYPE; }
+sampler(([123]D)|Cube)|([12]DArray)|((2DRect)Shadow)/.?   { return QsciLexerGLSL::StyleType::DATATYPE; }
+[ibu]?vec[234]/.?                                         { return QsciLexerGLSL::StyleType::DATATYPE; }
+mat[234](x[234])?/.?                                      { return QsciLexerGLSL::StyleType::DATATYPE; }
+(u?int)|"float"|"bool"|"void"/.?                          { return QsciLexerGLSL::StyleType::DATATYPE; }
 
-"//".*                              { return QsciLexerGLSL::StyleType::COMMENT; }
-^#.*                                { return QsciLexerGLSL::StyleType::HASHCOMMENT; }
-[ \t\n\r]                           { return QsciLexerGLSL::StyleType::WHITESPACE; }
+"//".*                        { return QsciLexerGLSL::StyleType::COMMENT; }
+^#.*                          { return QsciLexerGLSL::StyleType::HASHCOMMENT; }
+[ \t\n\r]                     { return QsciLexerGLSL::StyleType::WHITESPACE; }
 
 [\*\+\-\/\>\<\%\^\|\&\!\=]?\=? |
 &&   |
@@ -61,23 +61,23 @@ mat[234](x[234])?/.                                       { return QsciLexerGLSL
 \^\^ |
 \.\= |
 \?:  |
-">>"|"<<"\=?                        { return QsciLexerGLSL::StyleType::OPERATOR; }
+">>"|"<<"\=?                  { return QsciLexerGLSL::StyleType::OPERATOR; }
 
 [Tt]rue |
 [Ff]alse |
--?+?[0-9]+"."?[0-9]*f?l?u?          { return QsciLexerGLSL::StyleType::NUMBER; }
+-?+?[0-9]+"."?[0-9]*f?l?u?    { return QsciLexerGLSL::StyleType::NUMBER; }
 
-[a-zA-Z0-9]+/\(                     { return QsciLexerGLSL::StyleType::FUNCTION; }
+[a-zA-Z0-9]+/\(               { return QsciLexerGLSL::StyleType::FUNCTION; }
 [\(\)\{\}\[\]] |
 [#@\?:;,_\~\\] |
 [a-zA-Z0-9]+   |
-"."                                 { return QsciLexerGLSL::StyleType::DEFAULT; }
+"."                           { return QsciLexerGLSL::StyleType::DEFAULT; }
 
-�*                                  {
-                                      yyleng = 1;
-                                      return QsciLexerGLSL::StyleType::ILLEGAL;
-                                    }
-.                                   { return QsciLexerGLSL::StyleType::ILLEGAL; }
+�*                            {
+                                yyleng = 1;
+                                return QsciLexerGLSL::StyleType::ILLEGAL;
+                              }
+.                             { return QsciLexerGLSL::StyleType::ILLEGAL; }
 
 
 %%
