@@ -148,7 +148,7 @@ void MainWindow::updateShaderValues()
         if(uniform->getLocation()==button->getID())
         {
           ngl::Vec4 temp = button->getColour();
-          qDebug()<<temp.m_x<<", "<<temp.m_y<<", "<<temp.m_z<<"\n";
+
           uniform->setVec4(temp);
           break;
         }
@@ -264,7 +264,7 @@ void MainWindow::on_actionNew_triggered()
   }
   else
   {
-    qDebug() << "FAIL";
+    //qDebug() << "FAIL";
   }
 }
 void MainWindow::keyPressEvent(QKeyEvent *_event)
@@ -299,6 +299,5 @@ void MainWindow::on_m_actionLoad_Texture_triggered()
 
   //load texture map to OBJ
   std::string importName=fileName.toStdString();
-  std::cout<<"imported texture "<<importName<<std::endl;
   m_gl->importTextureMap(importName);
 }
