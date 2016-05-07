@@ -24,6 +24,8 @@
 MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   m_ui(new Ui::MainWindow)
 {
+  m_project = new Project;
+  m_camera = new Camera;
   // Setup ui from form creator (MainWindow.ui)
   m_ui->setupUi(this);
   // create parser in main window
@@ -47,8 +49,21 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   // Widget 2 (fragment)
   m_fragQsci = createQsciWidget(m_ui->m_tab_qsci_2);
 
+
+ // connect(m_camera, SIGNAL(updateSignal()), m_gl, SLOT(update()));
+  //connect(m_camera->updateSignal(), SIGNAL(valueChanged()), m_gl->update(), SLOT(updateValue()));
+//    connect(m_camera->updateSignal(), &Camera::updateSignal {
+//                                                            m_gl->update();
+//                                                            });
+
+
+ // connect(m_gl->m_camera->updateSignal(), m_gl->update());
   // Camera Settings
-  connect(m_ui->m_sldr_cameraFov,SIGNAL(valueChanged(int)),m_gl,SLOT(setCameraFocalLength(int)));
+ // connect(m_ui->m_sldr_cameraFov, SIGNAL(valueChanged(int)), m_gl->m_camera, SLOT(setCameraFocalLength(int)));
+  connect(m_ui->m_sldr_cameraFov, SIGNAL(valueChanged(int)), m_gl->m_camera, SLOT(setCameraFocalLength(int)));
+  connect(m_ui->m_comboBox_view, SIGNAL(currentTextChanged(QString)), m_gl->m_camera, SLOT(setCameraShape(QString)));
+  connect(m_gl->m_camera, SIGNAL(updateSignal()), m_gl, SLOT(update()));
+  //connect(m_ui->m_sldr_cameraFov,SIGNAL(valueChanged(int)),m_gl,SLOT(setCameraFocalLength(int)));
   connect(m_ui->m_cameraRoll, SIGNAL(valueChanged(double)), m_gl, SLOT(setCameraRoll(double)));
   connect(m_ui->m_cameraYaw, SIGNAL(valueChanged(double)), m_gl, SLOT(setCameraYaw(double)));
   connect(m_ui->m_cameraPitch, SIGNAL(valueChanged(double)), m_gl, SLOT(setCameraPitch(double)));
@@ -103,8 +118,6 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
         );
 
   m_startDialog = new StartupDialog(this);
-
-  m_project = new Project;
 }
 
 //------------------------------------------------------------------------------

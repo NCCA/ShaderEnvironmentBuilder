@@ -61,6 +61,10 @@ public :
   //----------------------------------------------------------------------------
   parserLib*                  m_parser;
   //----------------------------------------------------------------------------
+  /// @brief Pointer to inherit camera class
+  //----------------------------------------------------------------------------
+  Camera*                     m_camera;
+  //----------------------------------------------------------------------------
   //----------------------------------------------------------------------------
   /// @brief Constructor for GLWindow
   /// @param [in] _parent the parent window to create the GL context in
@@ -164,11 +168,6 @@ public slots:
   /// @brief exports the uniforms and writes them to the file ParsingOutput.txt
   //----------------------------------------------------------------------------
   void                        exportUniform();
-  //----------------------------------------------------------------------------
-  /// @brief Function to set camera FOV
-  /// @param[in] _focalLength the FOV value to set
-  //----------------------------------------------------------------------------
-  void                        setCameraFocalLength(int _focalLength);
   //----------------------------------------------------------------------------
   /// @brief Sets camera shape (persp, top, bottom, side)
   /// @param[in] _view the camara shape as either (persp, top, bottom, side)
@@ -333,10 +332,6 @@ private:
   /// of shaders
   //----------------------------------------------------------------------------
   ShaderManager*              m_shaderManager;
-  //----------------------------------------------------------------------------
-  /// @brief Pointer to inherit camera class
-  //----------------------------------------------------------------------------
-  Camera*                     m_camera;
   //----------------------------------------------------------------------------
   /// @brief An index to access the cameras
   //----------------------------------------------------------------------------

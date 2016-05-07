@@ -4,7 +4,7 @@
 // Camera settings
 Camera::Camera()
 {
-    m_fov=100.0;
+    m_fov=60.0;
     m_cameraIndex = 0;
     m_cameraRoll = 0.00;
     m_cameraYaw = 0.00;
@@ -59,27 +59,14 @@ std::vector<ngl::Camera> Camera::createCamera()
     Rcam.set(rightEye,rightLook,rightUp);
     Rcam.setShape(m_fov,m_aspect, 0.5f,150.0f);
     m_cameras.push_back(Rcam);
-
-    m_cameraIndex = 0;
-
+    m_mainCamera = m_cameras[m_cameraIndex];
     return m_cameras;
 }
 
-//----------------------------------------------------------------------------------------------------------------------
-// Returns the correct camera selected by the UI.
-int Camera::setCameraShape(QString _view)
+ngl::Camera Camera::setShapeCam()
 {
-  string view = _view.toStdString();
-  map<string, int> camViewMap;
-  camViewMap["Persp"]=0;
-  camViewMap["Top"]=1;
-  camViewMap["Bottom"]=2;
-  camViewMap["Left"]=3;
-  camViewMap["Right"]=4;
-
-  m_cameraIndex = camViewMap[view];
-
-  return m_cameraIndex;
+  m_mainCamera.setShape(m_fov, m_aspect, 0.5f, 150.0f);
+  return m_mainCamera;
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -110,4 +97,36 @@ ngl::Camera Camera::cameraPitch(ngl::Camera _cam, double _cameraPitch)
     m_cameraPitch = _cameraPitch;
     _cam.pitch(_cameraPitch);
     return _cam;
+}
+
+
+//----------------------------------------------------------------------------------------------------------------------
+// Signal passed from the UI to set the camera FOV
+void Camera::setCameraFocalLength(int _focalLength)
+{
+    m_fov= _focalLength;
+    m_mainCamera.setShape(m_fov, m_aspect, 0.5f, 150.0f);
+    emit updateSignal();
+}
+
+void Camera::setCameraShape(QString _view)
+{
+  string view = _view.toStdString();
+
+  map<string, int> camViewMap;
+  camViewMap["Persp"]=0;
+  camViewMap["Top"]=1;
+  camViewMap["Bottom"]=2;
+  camViewMap["Left"]=3;
+  camViewMap["Right"]=4;
+
+  m_cameraIndex = camViewMap[view];
+  m_mainCamera = m_cameras[m_cameraIndex];
+  std::cout<<view<<std::endl;
+  emit updateSignal();
+}
+
+void updateSignal()
+{
+    ;
 }

@@ -101,7 +101,9 @@ NGLScene::NGLScene( QWidget *_parent, parserLib *_libParent ) : QOpenGLWidget( _
   m_farClip = 150.0f;
   m_shaderManager = new ShaderManager();
   m_camera = new Camera();
-  m_cameraIndex = 0;
+  m_cameras = m_camera->createCamera();  //returns vector of cameras
+  m_cam = m_camera->m_mainCamera;
+
   // set this widget to have the initial keyboard focus
   setFocus();
 }
@@ -191,11 +193,9 @@ void NGLScene::initializeGL()
   // enable multisampling for smoother drawing
   glEnable(GL_MULTISAMPLE);
 
-  m_cameras = m_camera->createCamera();  //returns vector of cameras
-
   // now to load the shader and set the values
   // grab an instance of shader manager
-  m_shaderManager->initialize(m_cameras[m_cameraIndex]);
+  m_shaderManager->initialize(m_cam);
 
   ngl::Texture texture ("textures/metalTexture.jpg");
   m_textureName=texture.setTextureGL();
@@ -212,7 +212,7 @@ void NGLScene::initializeGL()
     //transformations
     ngl::Light light(ngl::Vec3(2,2,2),ngl::Colour(1,1,1,1),ngl::Colour(1,1,1,1),ngl::LightModes::POINTLIGHT);
 
-    ngl::Mat4 iv=m_cameras[m_cameraIndex].getViewMatrix();
+    ngl::Mat4 iv=m_cam.getViewMatrix();
     iv.transpose();
 
     light.setTransform(iv);
@@ -294,8 +294,10 @@ void NGLScene::paintGL()
   m_shaderManager->use(0);
 
   ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
-
-  m_cameras[m_cameraIndex].setShape(m_fov, m_aspect, m_nearClip, m_farClip);
+  m_camera->m_aspect = (float)width()/height();
+  m_camera->setShapeCam();
+  m_cam = m_camera->m_mainCamera;
+  m_cameraIndex = m_camera->m_cameraIndex;
   m_transform.reset();
   if (m_toggleAxis)
   {
@@ -324,8 +326,8 @@ void NGLScene::paintGL()
     m_shaderManager->use(1);
     ngl::Mat4 MV;
     ngl::Mat4 MVP;
-    MV=m_transform.getMatrix()*m_mouseGlobalTX* m_cameras[m_cameraIndex].getViewMatrix();
-    MVP=MV*m_cameras[m_cameraIndex].getProjectionMatrix();
+    MV=m_transform.getMatrix()*m_mouseGlobalTX*m_cam.getViewMatrix();
+    MVP=MV*m_cam.getProjectionMatrix();
     // set the uniform to use the current transformations
     shaderLib->setUniform("MVP",MVP);
     // set the normalSize
@@ -418,8 +420,8 @@ void NGLScene::loadMatricesToShader()
   ngl::Mat4 M;
 
   M=m_transform.getMatrix()*m_mouseGlobalTX;
-  MV=  M*m_cameras[m_cameraIndex].getViewMatrix();
-  MVP= M*m_cameras[m_cameraIndex].getVPMatrix();
+  MV=  M*m_cam.getViewMatrix();
+  MVP= M*m_cam.getVPMatrix();
   normalMatrix=MV;
   normalMatrix.inverse();
 
@@ -574,13 +576,13 @@ void NGLScene::keyPressEvent(QKeyEvent *_event)
 
 void NGLScene::compileShader(QString _vertSource, QString _fragSource)
 {
-  m_shaderManager->compileShader(m_cameras[m_cameraIndex], _vertSource, _fragSource);
+  m_shaderManager->compileShader(m_cam, _vertSource, _fragSource);
   m_window->setTerminalText(parseErrorLog(m_shaderManager->getErrorLog()));
   ngl::Light light(ngl::Vec3(2,2,2),ngl::Colour(1,1,1,1),ngl::Colour(1,1,1,1),ngl::LightModes::POINTLIGHT);
   // now create our light this is done after the camera so we can pass the
   // transpose of the projection matrix to the light to do correct eye space
   // transformations
-  ngl::Mat4 iv=m_cameras[m_cameraIndex].getViewMatrix();
+  ngl::Mat4 iv=m_cam.getViewMatrix();
   iv.transpose();
 
   light.setTransform(iv);
@@ -727,26 +729,20 @@ void NGLScene::drawAxis(ngl::Vec3 _pos)
 // Sets the view of the camera (persp, top, bottom, side).
 void NGLScene::setCameraShape(QString _view)
 {
-  m_cameraIndex = m_camera->setCameraShape(_view);
+  //m_cameraIndex = m_camera->setCameraShape(_view);
+
 //  m_modelPos.m_x=0;
 //  m_modelPos.m_y=0;
 //  m_modelPos.m_z=0;
 //  m_spinXFace=0;
 //  m_spinYFace=0;
   m_aspect=(float)width()/height();
-  for(auto &cam : m_cameras)
-    {
-      cam.setShape(m_fov,m_aspect, m_nearClip, m_farClip);
-    }
-  update();
-}
+//  for(auto &cam : m_camera->m_cameras)
+//    {
+//      cam.setShape(m_fov,m_aspect, m_nearClip, m_farClip);
+//    }
+ // update();
 
-//----------------------------------------------------------------------------------------------------------------------
-// Signal passed from the UI to set the camera FOV
-void NGLScene::setCameraFocalLength(int _focalLength)
-{
-    m_fov= _focalLength;
-    update();
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -769,7 +765,7 @@ void NGLScene::setCamFarClip(double _farClip)
 // Signal passed from the UI to set the camera roll.
 void NGLScene::setCameraRoll(double _cameraRoll)
 {
-    m_cameras[m_cameraIndex] = m_camera->cameraRoll(m_cameras[m_cameraIndex], _cameraRoll);
+    m_cam = m_camera->cameraRoll(m_cam, _cameraRoll);
     update();
 }
 
@@ -777,7 +773,7 @@ void NGLScene::setCameraRoll(double _cameraRoll)
 // Signal passed from the UI to set the camera yaw.
 void NGLScene::setCameraYaw(double _cameraYaw)
 {
-    m_cameras[m_cameraIndex] = m_camera->cameraYaw(m_cameras[m_cameraIndex], _cameraYaw);
+    m_cam = m_camera->cameraYaw(m_cam, _cameraYaw);
     update();
 }
 
@@ -785,8 +781,6 @@ void NGLScene::setCameraYaw(double _cameraYaw)
 // Signal passed from the UI to set the camera pitch.
 void NGLScene::setCameraPitch(double _cameraPitch)
 {
-    m_cameras[m_cameraIndex] = m_camera->cameraPitch(m_cameras[m_cameraIndex], _cameraPitch);
+    m_cam = m_camera->cameraPitch(m_cam, _cameraPitch);
     update();
 }
-
-
