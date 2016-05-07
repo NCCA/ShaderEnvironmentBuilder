@@ -36,6 +36,8 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   m_gl->setSizePolicy(m_ui->m_f_gl_temp->sizePolicy());
   m_gl->setMinimumSize(m_ui->m_f_gl_temp->minimumSize());
 
+  m_ui->m_vl_tab_camera->setAlignment(Qt::AlignTop);
+
   // add the openGl window to the interface
   m_ui->m_splitH_editContext->insertWidget(0, m_gl);
   // Delete the template frame from the form designer
