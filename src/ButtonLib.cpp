@@ -54,6 +54,10 @@ void ButtonLib::updateButtons()
   else
   {
     std::vector<Button*> _buttonDup = m_buttonList;
+    for(auto uniform : m_buttonList)
+    {
+      delete uniform->m_button;
+    }
     m_buttonList.resize(0);
     createButtons();
     for(auto uniform: m_buttonList)
