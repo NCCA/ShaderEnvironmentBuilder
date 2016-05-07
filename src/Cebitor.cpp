@@ -1,15 +1,15 @@
-﻿#include "Cebitor.h"
-#include "CebErrors.h"
-
-#include <iostream>
+﻿#include <iostream>
 #include <QAction>
 #include <QSettings>
 #include <QStringList>
+#include <QTextStream>
+#include <QFile>
+
 #include <Qsci/qscicommand.h>
 #include <Qsci/qscicommandset.h>
 
-#include <QTextStream>
-#include <QFile>
+#include "Cebitor.h"
+#include "CebErrors.h"
 
 //------------------------------------------------------------------------------
 /// @file Cebitor.cpp
