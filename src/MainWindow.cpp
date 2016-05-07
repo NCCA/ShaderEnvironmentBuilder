@@ -145,7 +145,6 @@ Cebitor *MainWindow::createQsciWidget(QWidget *_parent)
   Cebitor* qsci = new Cebitor(_parent);
   QBoxLayout *layout = new QVBoxLayout;
   layout->addWidget(qsci);
-
   // Create search bar widget
   QWidget *searchWidget = new QWidget(_parent);
   QBoxLayout *searchLayout = new QVBoxLayout(searchWidget);
@@ -156,7 +155,8 @@ Cebitor *MainWindow::createQsciWidget(QWidget *_parent)
   qsci->setSearchWidget(searchWidget);
   qsci->setSearchLineEdit(qsciSearch);
 
-  connect(qsciSearch,SIGNAL(textChanged(QString)),qsci,SLOT(highlightAllSearch()));
+  // Connect search widget signals to editor slots
+  connect(qsciSearch,SIGNAL(textChanged()),qsci,SLOT(highlightAllSearch()));
   connect(qsciSearch,SIGNAL(returnPressed()),qsci,SLOT(searchNext()));
   connect(searchNextBtn,SIGNAL(pressed()),qsci,SLOT(searchNext()));
   connect(searchPrevBtn,SIGNAL(pressed()),qsci,SLOT(searchPrev()));

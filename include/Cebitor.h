@@ -25,17 +25,12 @@ class Cebitor : public QsciScintilla
 
 public:
   //----------------------------------------------------------------------------
-  /// @enum Cebitor::MarkerType
-  /// Enum for supported marker types
-  /// @enum Cebitor::MarkerType::ERROR
-  /// Symbol marker for Errors
-  /// @enum Cebitor::MarkerType::WARNING
-  /// Symbol marker for warknigs
+  /// @brief Enum for supported marker types
   //----------------------------------------------------------------------------
   enum MarkerType
   {
-    ERROR,
-    WARNING,
+    ERROR,    ///< Symbol marker for Errors
+    WARNING,  ///< Symbol marker for warnings
   };
   //----------------------------------------------------------------------------
   /// @brief Cebitor constructor, initialises default values

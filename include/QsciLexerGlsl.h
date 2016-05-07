@@ -1,6 +1,8 @@
 #ifndef _QSCILEXERGLSL_H__
 #define _QSCILEXERGLSL_H__
 
+#include <memory>
+
 #include <Qsci/qscilexercustom.h>
 #include <Qsci/qscistyle.h>
 #include <Qsci/qsciapis.h>
@@ -14,7 +16,7 @@
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-/// @class QsciLexerGlsl
+/// @class QsciLexerGLSL
 /// @brief Custom QScintilla lexer for GLSL
 ///
 /// Inherits from QsciLexerCustom to provide formatting specific to GLSL files
@@ -23,47 +25,22 @@ class QsciLexerGLSL: public QsciLexerCustom
 {
 public:
   //----------------------------------------------------------------------------
-  /// @enum QsciLexerGLSL::StyleType
-  /// enum for supported style types
-  /// @enum QsciLexerGLSL::StyleType::NONE
-  /// No styling
-  /// @enum QsciLexerGLSL::StyleType::DEFAULT
-  /// Default
-  /// @enum QsciLexerGLSL::StyleType::NUMBER
-  /// Numbers
-  /// @enum QsciLexerGLSL::StyleType::KEYWORD
-  /// GLSL Keywords
-  /// @enum QsciLexerGLSL::StyleType::FUNCTION
-  /// Functions
-  /// @enum QsciLexerGLSL::StyleType::STRING
-  /// Strings
-  /// @enum QsciLexerGLSL::StyleType::COMMENT
-  /// Comments
-  /// @enum QsciLexerGLSL::StyleType::OPERATOR
-  /// Operators
-  /// @enum QsciLexerGLSL::StyleType::WHITESPACE
-  /// Whitespace
-  /// @enum QsciLexerGLSL::StyleType::DATATYPE
-  /// GLSL datatypes
-  /// @enum QsciLexerGLSL::StyleType::HASHCOMMENT
-  /// Preprocessor commands starting with #
-  /// @enum QsciLexerGLSL::StyleType::ILLEGAL
-  /// Illegal GLSL characters
+  /// @brief enum for supported style types
   //----------------------------------------------------------------------------
   enum StyleType
   {
-    NONE,
-    DEFAULT,
-    NUMBER,
-    KEYWORD,
-    FUNCTION,
-    STRING,
-    COMMENT,
-    OPERATOR,
-    WHITESPACE,
-    DATATYPE,
-    HASHCOMMENT,
-    ILLEGAL
+    NONE,         ///<No styling
+    DEFAULT,      ///<Default
+    NUMBER,       ///<Numbers
+    KEYWORD,      ///<GLSL Keywords
+    FUNCTION,     ///<Functions
+    STRING,       ///<Strings
+    COMMENT,      ///<Comments
+    OPERATOR,     ///<Operators
+    WHITESPACE,   ///<Whitespace
+    DATATYPE,     ///<GLSL datatypes
+    HASHCOMMENT,  ///<Preprocessor commands starting with #
+    ILLEGAL       ///<Illegal GLSL characters
   };
   //----------------------------------------------------------------------------
   /// @brief QsciLexerGLSL constructor
@@ -75,7 +52,7 @@ public:
   //----------------------------------------------------------------------------
   virtual ~QsciLexerGLSL();
   //----------------------------------------------------------------------------
-  /// @brief virtual function reimplemented from qscilexercustom.
+  /// @brief virtual function reimplemented from QsciLexerCustom.
   ///
   /// This is called when text needs to be styled.
   /// @param [in] _start  Start position of text to be styled.
@@ -83,30 +60,30 @@ public:
   //----------------------------------------------------------------------------
   virtual void styleText( const int _start, const int _end );
   //----------------------------------------------------------------------------
-  /// @brief virtual function reimplemented from qscilexer.
+  /// @brief virtual function reimplemented from QsciLexer.
   /// @return lexer language.
   //----------------------------------------------------------------------------
   virtual const char* language() const;
   //----------------------------------------------------------------------------
-  /// @brief virtual function reimplemented from qscilexer.
+  /// @brief virtual function reimplemented from QsciLexer.
   /// @param [in] _style  style number.
   /// @return Default colour for style \a _style.
   //----------------------------------------------------------------------------
   virtual QColor defaultColor( const int _style ) const;
   //----------------------------------------------------------------------------
-  /// @brief virtual function reimplemented from qscilexer.
+  /// @brief virtual function reimplemented from QsciLexer.
   /// @param [in] _style  style number.
   /// @return Default paper colour for style \a _style.
   //----------------------------------------------------------------------------
   virtual QColor defaultPaper( const int _style ) const;
   //----------------------------------------------------------------------------
-  /// @brief virtual function reimplemented from qscilexer.
+  /// @brief virtual function reimplemented from QsciLexer.
   /// @param [in] _style  style number.
   /// @return Default font for style \a _style.
   //----------------------------------------------------------------------------
   virtual QFont defaultFont( const int _style ) const;
   //----------------------------------------------------------------------------
-  /// @brief virtual function reimplemented from qscilexer.
+  /// @brief virtual function reimplemented from QsciLexer.
   /// @param [in] _style  style number.
   /// @return Descriptive for style \a _style.
   //----------------------------------------------------------------------------
@@ -118,7 +95,7 @@ protected:
   //----------------------------------------------------------------------------
   QsciScintilla *m_parent;
   //----------------------------------------------------------------------------
-  /// @brief glsl API instance
+  /// @brief GLSL API instance
   //----------------------------------------------------------------------------
   QsciAPIs *m_API;
   //----------------------------------------------------------------------------
