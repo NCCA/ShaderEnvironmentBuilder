@@ -1,41 +1,50 @@
-#ifndef _MAINWINDOW_H_
-#define _MAINWINDOW_H_
-
-#include "project.h"
-
-#include <ngl/Vec4.h>
-#include "NGLScene.h"
-#include <QMainWindow>
-#include "ParserLib.h"
-#include "ButtonLib.h"
-#include "button.h"
-#include "Cebitor.h"
-#include "StartupDialog.h"
-#include "NewProjectWizard.h"
-#include <vector>
-
-class NGLScene;
-class StartupDialog;
-
-class ButtonLib;
 //------------------------------------------------------------------------------
-/// @file NGLScene.h
-/// @brief the MainWindow class for our program
+/// @file MainWindow.h
+/// @brief the MainWindow, GUI for our program
 /// @author Jonathan Flynn
 /// @version 1.0
 /// @date 01/03/16
 //------------------------------------------------------------------------------
+#ifndef _MAINWINDOW_H__
+#define _MAINWINDOW_H__
+//------------------------------------------------------------------------------
+// INCLUDES
+//------------------------------------------------------------------------------
+// System includes
+#include <vector>
 
+// Engine includes
+
+// Library  includes
+#include <ngl/Vec4.h>
+#include <QMainWindow>
+
+// Project includes
+#include "ButtonLib.h"
+#include "button.h"
+#include "Cebitor.h"
+#include "NewProjectWizard.h"
+#include "NGLScene.h"
+#include "ParserLib.h"
+#include "project.h"
+#include "StartupDialog.h"
+
+//------------------------------------------------------------------------------
+// Forward declaring some classes to stop cyclic dependencies
+//------------------------------------------------------------------------------
+class NGLScene;
+class StartupDialog;
+class ButtonLib;
 //------------------------------------------------------------------------------
 // Used to inherit the MainWindow from the generated form file ui_MainWindow.h
 //------------------------------------------------------------------------------
 namespace Ui {
 class MainWindow;
 }
-
+//------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 /// @class MainWindow
-/// @brief our main window used for holding all the Qt widgets
+/// @brief our main window class used for holding all the GUI Qt widgets
 //------------------------------------------------------------------------------
 class MainWindow : public QMainWindow
 {
@@ -80,7 +89,6 @@ public:
   bool                  newProjectWiz(QWidget* _parent=0);
   //----------------------------------------------------------------------------
   //----------------------------------------------------------------------------
-
 public slots:
   //----------------------------------------------------------------------------
   /// @brief adds line marker to text editor for _shaderName at lineNum
@@ -89,11 +97,15 @@ public slots:
   //----------------------------------------------------------------------------
   void addError(QString _shaderName, int _lineNum);
   //----------------------------------------------------------------------------
-
+  /// @brief Called when Open button is triggered in File Menu bar
+  //----------------------------------------------------------------------------
   void on_actionOpen_triggered();
-
+  //----------------------------------------------------------------------------
+  /// @brief Called when Export button is triggered in File Menu bar
+  //----------------------------------------------------------------------------
   void on_actionExport_triggered();
-  
+  //----------------------------------------------------------------------------
+  //----------------------------------------------------------------------------
 private:
   //----------------------------------------------------------------------------
   /// @brief our QScintilla widget1 (vertex)
@@ -125,8 +137,8 @@ private:
   Ui::MainWindow*       m_ui;
   //----------------------------------------------------------------------------
   //----------------------------------------------------------------------------
-  ButtonLib *m_buttonLibrary;
-  //----------------------------------------------------------------------------------------------------------------------
+  ButtonLib*            m_buttonLibrary;
+  //----------------------------------------------------------------------------
   /// @brief create QsciScintilla widget in the style of sublime defaults
   /// @param [in] _parent the parent widget to fill with the new Qsci Widget
   //----------------------------------------------------------------------------
