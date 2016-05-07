@@ -1,5 +1,5 @@
-#ifndef _CEBITOR_H_
-#define _CEBITOR_H_
+#ifndef _CEBITOR_H__
+#define _CEBITOR_H__
 
 #include <QLineEdit>
 #include <Qsci/qsciscintilla.h>
@@ -11,13 +11,13 @@
 /// @file Cebitor.h
 /// @brief CEB text editor, implementation of QScintilla
 /// @author Phil Rouse
-/// @version 1.0
+/// @version 1.0.1
 /// @date 03/03/16
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
 /// @class Cebitor
-/// @brief CEB text editor class derived from QsciScintilla
+/// @brief CEB text editor class inherits from QsciScintilla
 //------------------------------------------------------------------------------
 class Cebitor : public QsciScintilla
 {
@@ -25,7 +25,12 @@ class Cebitor : public QsciScintilla
 
 public:
   //----------------------------------------------------------------------------
-  /// @brief enum for supported style types
+  /// @enum Cebitor::MarkerType
+  /// Enum for supported marker types
+  /// @enum Cebitor::MarkerType::ERROR
+  /// Symbol marker for Errors
+  /// @enum Cebitor::MarkerType::WARNING
+  /// Symbol marker for warknigs
   //----------------------------------------------------------------------------
   enum MarkerType
   {
@@ -129,4 +134,4 @@ protected slots:
 
 }; // end class
 
-#endif  // _CEBITOR_H_
+#endif  // _CEBITOR_H__
