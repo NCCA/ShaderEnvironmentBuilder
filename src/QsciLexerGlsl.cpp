@@ -1,8 +1,9 @@
+#include <iostream>
+#include <sstream>
+
 #include <QsciLexerGlsl.h>
 #include <Qsci/qsciscintilla.h>
 
-#include <iostream>
-#include <sstream>
 #include "generated/GlslLexer.h"
 
 //------------------------------------------------------------------------------
@@ -32,6 +33,7 @@ QsciLexerGLSL::QsciLexerGLSL(QsciScintilla *_parent) : QsciLexerCustom(_parent)
 //------------------------------------------------------------------------------
 QsciLexerGLSL::~QsciLexerGLSL()
 {
+  delete m_API;
   return;
 }
 

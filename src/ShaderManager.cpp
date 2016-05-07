@@ -87,7 +87,7 @@ void ShaderManager::initialize(ngl::Camera _cam)
     // now we have associated this data we can link the shader
     shaderLib->linkProgramObject("Phong");
     // and make it active ready to load values
-    shaderLib->use("Phong");
+    shaderLib->use(m_data.m_name);
     shaderLib->setShaderParam1i("Normalize",1);
     shaderLib->setShaderParam3f("viewerPos",_cam.getEye().m_x,_cam.getEye().m_y,_cam.getEye().m_z);
     shaderLib->setShaderParam4f("Colour",0.23125f,0.23125f,0.23125f,1);
