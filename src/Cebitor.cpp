@@ -11,12 +11,12 @@
 #include <QTextStream>
 #include <QFile>
 
-//----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /// @file Cebitor.cpp
 /// @brief implementation of Cebitor class
-//----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
-//----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 Cebitor::Cebitor(QWidget *_parent) : QsciScintilla(_parent)
 {
   setMinimumHeight(300);
@@ -90,7 +90,7 @@ Cebitor::Cebitor(QWidget *_parent) : QsciScintilla(_parent)
   connect(this, SIGNAL(SCN_FOCUSIN()), this, SLOT(resetHighlightColour()));
 }
 
-//----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 void Cebitor::clearErrors()
 {
@@ -110,7 +110,7 @@ void Cebitor::searchNext()
   }
 }
 
-//----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 void Cebitor::searchPrev()
 {
@@ -127,7 +127,7 @@ void Cebitor::searchPrev()
   findNext();
 }
 
-//----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 void Cebitor::highlightAllSearch()
 {
@@ -141,17 +141,25 @@ void Cebitor::highlightAllSearch()
     return;
   }
   int current;
-  current = text().indexOf(searchTerm,0,Qt::CaseSensitivity::CaseInsensitive);
+  current = text().indexOf(
+        searchTerm,
+        0,
+        Qt::CaseSensitivity::CaseInsensitive
+        );
   while(current!= -1)
   {
     lineIndexFromPosition(current,&line,&indexFrom);
     indexTo = indexFrom + searchTerm.length();
     fillIndicatorRange(line,indexFrom,line,indexTo,m_searchIndicator);
-    current = text().indexOf(searchTerm,current+1,Qt::CaseSensitivity::CaseInsensitive);
+    current = text().indexOf(
+          searchTerm,
+          current+1,
+          Qt::CaseSensitivity::CaseInsensitive
+          );
   }
 }
 
-//----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 bool Cebitor::autoClose(const QString _close)
 {
@@ -161,13 +169,9 @@ bool Cebitor::autoClose(const QString _close)
   getCursorPosition(&cursorLine, &cursorIndex);
   length = lineLength(cursorLine);
 
-  // insert closing character if cursor is at EOL or the next character is a space
-  if(cursorIndex == length-1)
-  {
-    insert(_close);
-    return true;
-  }
-  else if(text(cursorLine).at(cursorIndex).toLatin1() == ' ')
+  // insert closing character if cursor is at EOL or the next character is space
+  if(cursorIndex == length-1 ||
+     text(cursorLine).at(cursorIndex).toLatin1() == ' ')
   {
     insert(_close);
     return true;
@@ -175,15 +179,13 @@ bool Cebitor::autoClose(const QString _close)
   return false;
 }
 
-//----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 bool Cebitor::closing(const QString _close)
 {
   int cursorIndex;
   int cursorLine;
-  //int length;
   getCursorPosition(&cursorLine, &cursorIndex);
-  //length = lineLength(cursorLine);
 
   // remove duplicate if next character is the same as _close
   if(text(cursorLine).at(cursorIndex) == _close.at(0))
@@ -206,7 +208,7 @@ bool Cebitor::closing(const QString _close)
   return false;
 }
 
-//----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 void Cebitor::comment()
 {
@@ -274,7 +276,7 @@ void Cebitor::comment()
   endUndoAction();
 }
 
-//----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 void Cebitor::toggleSearchBox()
 {
@@ -294,7 +296,7 @@ void Cebitor::toggleSearchBox()
   }
 }
 
-//----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 void Cebitor::braceIndent()
 {
@@ -335,7 +337,7 @@ void Cebitor::braceIndent()
   }
 }
 
-//----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 void Cebitor::charAdded(int _c)
 {
@@ -364,7 +366,7 @@ void Cebitor::charAdded(int _c)
   }
 }
 
-//----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 void Cebitor::resetHighlightColour()
 {
