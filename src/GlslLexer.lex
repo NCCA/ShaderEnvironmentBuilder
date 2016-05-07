@@ -16,11 +16,7 @@
 %s LEXSTRING
 
 %%
-<LEXSTRING>[^"]*                    { return QsciLexerGLSL::StyleType::STRING; }
-<LEXSTRING>[\"\n]                   {
-                                      BEGIN(INITIAL);
-                                      return QsciLexerGLSL::StyleType::STRING;
-                                    }
+
 "attribute"               |
 "const"                   |
 "uniform"                 |
@@ -66,12 +62,8 @@ mat[234](x[234])?/.                                       { return QsciLexerGLSL
 \|\| |
 \^\^ |
 \.\= |
+\?:  |
 ">>"|"<<"\=?                        { return QsciLexerGLSL::StyleType::OPERATOR; }
-
-\"                                  {
-                                      BEGIN(LEXSTRING);
-                                      return QsciLexerGLSL::StyleType::STRING;
-                                    }
 
 [Tt]rue |
 [Ff]alse |
@@ -79,10 +71,15 @@ mat[234](x[234])?/.                                       { return QsciLexerGLSL
 
 [a-zA-Z0-9]+/\(                     { return QsciLexerGLSL::StyleType::FUNCTION; }
 [\(\)\{\}\[\]] |
-[#@;,_]        |
+[#@\?:;,_\~\\] |
 [a-zA-Z0-9]+   |
-"."            |
-à                                   { return QsciLexerGLSL::StyleType::DEFAULT; }
+"."                                 { return QsciLexerGLSL::StyleType::DEFAULT; }
+
+�*                                  {
+                                      yyleng = 1;
+                                      return QsciLexerGLSL::StyleType::ILLEGAL;
+                                    }
+.                                   { return QsciLexerGLSL::StyleType::ILLEGAL; }
 
 
 %%

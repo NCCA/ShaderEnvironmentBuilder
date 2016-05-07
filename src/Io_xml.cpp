@@ -60,30 +60,27 @@ void IO_XML::shaderData(const char* _shaderProgramName, const char* _vertexShade
 
 // ----------------------------------------------------------------------------------------------------------------------
 // (May be omitted) Reading from an XML file.
-void IO_XML::readXML(std::string _type)
+void IO_XML::readProjectXML(std::string _name, std::string _dir, std::string& _vertSource, std::string& _fragSource)
 {
-        xml_document<> doc;
-        ifstream file("./XMLfiles/readFrom.xml");
-        vector<char> buffer((istreambuf_iterator<char>(file)), istreambuf_iterator<char>( ));
-        buffer.push_back('\0');
-        //cout<<&buffer[0]<<endl;  //prints xml buffer
-        doc.parse<0>(&buffer[0]);
+    xml_document<> doc;
+    ifstream file("/home/i7685565/Downloads/test.xml");  // ***SANDY correct where to read the directory from.
+    vector<char> buffer((istreambuf_iterator<char>(file)), istreambuf_iterator<char>( ));
+    buffer.push_back('\0');
+    cout<<&buffer[0]<<endl;  //prints xml buffer
+    doc.parse<0>(&buffer[0]);
 
-        xml_node<> *current_node = doc.first_node("root");
+    xml_node<> *current_node = doc.first_node("Shader_Data");
+    xml_node<> *vertex_node = current_node->first_node("Vertex");
+    xml_node<> *fragment_node = current_node->first_node("Fragment");
+    std::cout<<"Name: "<<current_node->first_attribute("Name")->value()<<"\tDir: "<<current_node->first_attribute("Dir")->value()<<std::endl;
 
-        // switching to a different node
-        current_node = current_node->first_node("dataSets")->first_node("a");
+    _vertSource = vertex_node->first_attribute("VtxData")->value();
+    std::cout<<"Vtx data: "<<_vertSource<<std::endl;
 
-        //traverse through node attributes until it finds _type
-        for (current_node->first_node("dataSets"); current_node; current_node = current_node->next_sibling())
-        {
-            if (current_node->first_attribute("name")->value()==_type)
-            {
-                std::cout<<"Data for "<<_type<<": ";
-                std::cout<<"\tName: "<<current_node->first_attribute("name")->value()<<"\tValue: "<< current_node->first_attribute("value")->value()<<"\tType: "<<current_node->first_attribute("type")->value()<<std::endl;
-            break;
-            };
-        }
+    _fragSource = fragment_node->first_attribute("FragData")->value();
+    std::cout<<"Fragment data: "<<_fragSource<<std::endl;
+
+    return;
 }
 
 //------------------------------------------------------------------------------------------------------------------------

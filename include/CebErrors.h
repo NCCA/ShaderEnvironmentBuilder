@@ -1,12 +1,12 @@
 //------------------------------------------------------------------------------
 /// @file CebErrors.h
-/// @brief contains all the code for generating and handling errors for CEB
+/// @brief Contains all the code for generating and handling errors for CEB.
 /// @author Jonathan Flynn
 /// @version 1.0
 /// @date 01/03/16
 //------------------------------------------------------------------------------
-#ifndef _CEBERRORS_H_
-#define _CEBERRORS_H_
+#ifndef _CEBERRORS_H__
+#define _CEBERRORS_H__
 //------------------------------------------------------------------------------
 // INCLUDES
 //------------------------------------------------------------------------------
@@ -24,7 +24,7 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 /// @enum glErrorCodes
-/// @brief Contains all the error codes for openGl in an easy to read enum
+/// @brief All the error codes for openGl in an easy to read enum
 //------------------------------------------------------------------------------
 enum glErrorCodes : GLenum
 {

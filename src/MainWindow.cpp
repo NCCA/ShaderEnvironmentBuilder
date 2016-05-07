@@ -149,6 +149,7 @@ Cebitor *MainWindow::createQsciWidget(QWidget *_parent)
   qsci->setSearchWidget(searchWidget);
   qsci->setSearchLineEdit(qsciSearch);
 
+  connect(qsciSearch,SIGNAL(textChanged(QString)),qsci,SLOT(highlightAllSearch()));
   connect(qsciSearch,SIGNAL(returnPressed()),qsci,SLOT(searchNext()));
   connect(searchNextBtn,SIGNAL(pressed()),qsci,SLOT(searchNext()));
   connect(searchPrevBtn,SIGNAL(pressed()),qsci,SLOT(searchPrev()));
@@ -307,7 +308,21 @@ void MainWindow::on_actionSaveProjectAs_triggered()
 //------------------------------------------------------------------------------
 void MainWindow::on_actionOpen_triggered()
 {
-    
+    // Open a file dialog and return a file directory
+    QString fileName=QFileDialog::getOpenFileName(this,
+                                                  tr("Open Project"),"./",tr("XML Files (*.xml)"));
+//    QString importDirectory = QFileDialog::getExistingDirectory(this, tr("Open Project"),
+//                                                 "./",
+//                                                 QFileDialog::ShowDirsOnly
+//                                                 | QFileDialog::DontResolveSymlinks);
+
+    std::string importName=fileName.toStdString();
+    std::string fileDirectory = ":";
+//    std::string fileDirectory=importDirectory.toStdString();
+    // Import the mesh
+    //m_gl->importMeshName(importName);
+
+    m_project->load(importName, fileDirectory);
 }
 
 void MainWindow::on_actionExport_triggered()

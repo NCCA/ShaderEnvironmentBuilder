@@ -67,7 +67,6 @@ void QsciLexerGLSL::styleText(int start, int end)
     tokens.push_back(loc);
     tokens.push_back(lexer->YYLeng());
     loc = loc + lexer->YYLeng();
-    QString s(lexer->YYText());
     tok = lexer->yylex();
   }
 
@@ -100,7 +99,11 @@ QColor QsciLexerGLSL::defaultColor(int style) const
 //----------------------------------------------------------------------------------------------------------------------
 QColor QsciLexerGLSL::defaultPaper(int style) const
 {
-  return QColor(39,40,34);
+  switch(style)
+  {
+    case StyleType::ILLEGAL:  { return QColor(249, 38, 114); }
+    default:                  { return QColor(39,40,34); }
+  }
 }
 
 //----------------------------------------------------------------------------------------------------------------------

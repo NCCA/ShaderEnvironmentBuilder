@@ -79,8 +79,18 @@ Cebitor::Cebitor(QWidget *_parent) : QsciScintilla(_parent)
   connect(searchAction, SIGNAL(triggered()), this, SLOT(toggleSearchBox()));
   addAction(searchAction);
 
+  // define search indicator
+
+  m_searchIndicator = indicatorDefine(IndicatorStyle::PlainIndicator, -1);
+  setIndicatorDrawUnder(true, m_searchIndicator);
+  setIndicatorForegroundColor(QColor(142,143,137,0));
+  setIndicatorOutlineColor(QColor(142,143,137,255));
+
   // connect signals and slots
   connect(this, SIGNAL(SCN_CHARADDED(int)), this, SLOT(charAdded(int)));
+
+  // work-around since using built-in focusInEvent causes caret to be invisible
+  connect(this, SIGNAL(SCN_FOCUSIN()), this, SLOT(resetHighlightColour()));
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -92,21 +102,50 @@ void Cebitor::clearErrors()
 
 void Cebitor::searchNext()
 {
-  setSelectionBackgroundColor(QColor(230, 219, 116));
-  setSelectionForegroundColor(QColor(39,40,34));
   QString searchTerm = m_searchLineEdit->text();
   bool found;
   found = findFirst(searchTerm, false, false, false, true);
+  if(found)
+  {
+    setSelectionBackgroundColor(QColor(230, 219, 116));
+    setSelectionForegroundColor(QColor(39,40,34));
+  }
 }
 
 void Cebitor::searchPrev()
 {
-  setSelectionBackgroundColor(QColor(230, 219, 116));
-  setSelectionForegroundColor(QColor(39,40,34));
   QString searchTerm = m_searchLineEdit->text();
+  std::cout<<searchTerm.length()<<"\n";
   bool found;
   found = findFirst(searchTerm, false, false, false, true, false);
+  if(found)
+  {
+    findNext();
+    setSelectionBackgroundColor(QColor(230, 219, 116));
+    setSelectionForegroundColor(QColor(39,40,34));
+  }
   findNext();
+}
+void Cebitor::highlightAllSearch()
+{
+  clearIndicatorRange(0,0,lines(),text(lines()).length(),m_searchIndicator);
+  int line;
+  int indexFrom;
+  int indexTo;
+  QString searchTerm = m_searchLineEdit->text();
+  if(searchTerm.length()==0)
+  {
+    return;
+  }
+  int current;
+  current = text().indexOf(searchTerm,0,Qt::CaseSensitivity::CaseInsensitive);
+  while(current!= -1)
+  {
+    lineIndexFromPosition(current,&line,&indexFrom);
+    indexTo = indexFrom + searchTerm.length();
+    fillIndicatorRange(line,indexFrom,line,indexTo,m_searchIndicator);
+    current = text().indexOf(searchTerm,current+1,Qt::CaseSensitivity::CaseInsensitive);
+  }
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -234,13 +273,16 @@ void Cebitor::toggleSearchBox()
   bool searchFocus = m_searchLineEdit->hasFocus();
   if(!searchFocus)
   {
+    connect(this,SIGNAL(textChanged()),this,SLOT(highlightAllSearch()));
     m_searchWidget->show();
     m_searchLineEdit->setFocus();
   }
   else
   {
+    disconnect(this,SIGNAL(textChanged()),this,SLOT(highlightAllSearch()));
     m_searchWidget->hide();
     setFocus();
+    clearIndicatorRange(0,0,lines(),text(lines()).length(),m_searchIndicator);
   }
 }
 
@@ -298,9 +340,6 @@ void Cebitor::charAdded(int _c)
 
     // special case since " opens and closes
     case (int) '"':
-
-    // auto indent for braces
-    case (int) '\n': { braceIndent(); break; }
     {
       if(!closing(QString('"')))
       {
@@ -308,10 +347,13 @@ void Cebitor::charAdded(int _c)
       }
       break;
     }
+
+    // auto indent for braces
+    case (int) '\n': { braceIndent(); break; }
   }
 }
 
-void Cebitor::focusInEvent(QFocusEvent *_event)
+void Cebitor::resetHighlightColour()
 {
   setSelectionBackgroundColor(QColor(61,61,52));
   resetSelectionForegroundColor();
