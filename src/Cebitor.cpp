@@ -32,12 +32,18 @@ Cebitor::Cebitor(QWidget *_parent) : QsciScintilla(_parent)
   // Set the symbol margin defaults
   setMarginType(1,MarginType::SymbolMargin);
   setMarginWidth(1,12);
-  setMarginMarkerMask(1, 1 << 0 | 1 << 1 | 1 << 2);
+  setMarginMarkerMask(1,
+                      1 << MarkerType::ERROR |
+                      1 << MarkerType::WARNING
+                      );
 
   // Set the caret defaults
   setCaretForegroundColor(QColor(247, 247, 241));
   setCaretWidth(2);
   // Set the brace defaults
+  //----------------------------------------------------------------------------
+  /// @bug brace matching matches "<" and ">" characters
+  //----------------------------------------------------------------------------
   setBraceMatching(BraceMatch::SloppyBraceMatch);
   setMatchedBraceBackgroundColor(QColor(62, 61, 50));
   setUnmatchedBraceBackgroundColor(QColor(249, 38, 114));
