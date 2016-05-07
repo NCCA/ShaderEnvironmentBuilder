@@ -32,9 +32,13 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   m_gl=new  NGLScene(this, m_parForButton);
 
   m_ui->m_sldr_cameraFov->setValue(65.0f);
+  m_ui->m_nearClip->setValue(0.5f);
+  m_ui->m_farClip->setValue(150.0f);
 
   m_gl->setSizePolicy(m_ui->m_f_gl_temp->sizePolicy());
   m_gl->setMinimumSize(m_ui->m_f_gl_temp->minimumSize());
+
+  m_ui->m_vl_tab_camera->setAlignment(Qt::AlignTop);
 
   // add the openGl window to the interface
   m_ui->m_splitH_editContext->insertWidget(0, m_gl);
@@ -344,8 +348,9 @@ void MainWindow::on_m_actionLoad_Texture_triggered()
 {
   // Open a file dialog and return a file directory
   QString fileName=QFileDialog::getOpenFileName(this,
-                                                tr("Open Texture Map"),"0Features-0BugsCVA3/",tr("Image Files (*.jpg)"));
-
+                                              tr("Open Texture Map"),
+                                              "0Features-0BugsCVA3/",
+                                              tr("Image Files (*.jpg)"));
   //load texture map to OBJ
   std::string importName=fileName.toStdString();
   m_gl->importTextureMap(importName);
