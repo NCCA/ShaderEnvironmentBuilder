@@ -4,10 +4,15 @@
 #include <unordered_map>
 #include <ngl/Camera.h>
 #include <map>
-
+#include <iostream>
+//#include <QOpenGLWidget>
+//#include "NGLScene.h"
 #include "vector"
 #include "QString"
-#include <iostream>
+#include "QWidget"
+#include <QObject>
+//#include <QOpenGLWidget>
+//#include <QGLWidget>
 
 //------------------------------------------------------------------------------------------------------------------------
 /// @file Camera.h
@@ -19,10 +24,11 @@
 
 using namespace std;
 
-class Camera
+class Camera : public QObject
 {
+Q_OBJECT        // must include this if you use Qt signals/slots
 public:
-    Camera();
+    Camera(); // {connect(this, &Camera::someSignal, this, &Camera::someSlot);}
 
     //---------------------------------------------------------------------------------------------------------------------
     /// @brief A vector containing the ngl cameras
@@ -55,7 +61,7 @@ public:
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief Sets the view of the camera (perso, top, bottom, side)
     //----------------------------------------------------------------------------------------------------------------------
-    int setCameraShape(QString _view);
+    //int setCameraShape(QString _view);
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief Creates a vector of ngl cameras and sets their shapes
     //----------------------------------------------------------------------------------------------------------------------
@@ -68,11 +74,49 @@ public:
     /// @brief Sets camera roll
     //----------------------------------------------------------------------------------------------------------------------
     ngl::Camera cameraRoll(ngl::Camera _cam, double _cameraRoll);
-    //----------------------------------------------------------------------------------------------------------------------
-    /// @brief Sets camera pitch
-    //----------------------------------------------------------------------------------------------------------------------
-    ngl::Camera cameraPitch(ngl::Camera _cam, double _cameraPitch);
 
+
+    ngl::Camera setShapeCam();
+    ngl::Camera m_mainCamera;
+    float m_nearClip;
+    float m_farClip;
+
+    void someSlot(const QVariant &);
+public slots:
+    //----------------------------------------------------------------------------
+    /// @brief Function to set camera FOV
+    /// @param[in] _focalLength the FOV value to set
+    //----------------------------------------------------------------------------
+    void setCameraFocalLength(int _focalLength);
+    void setCameraShape(QString _view);
+
+    //----------------------------------------------------------------------------
+    /// @brief Sets camera Pitch
+    /// @param[in] _cameraRoll the new pitch value
+    //----------------------------------------------------------------------------
+    void cameraRoll(double _cameraRoll);
+    //----------------------------------------------------------------------------
+    /// @brief Sets camera Pitch
+    /// @param[in] _cameraPitch the new pitch value
+    //----------------------------------------------------------------------------
+    void cameraPitch(double _cameraPitch);
+    //----------------------------------------------------------------------------
+    /// @brief Sets camera Yaw
+    /// @param[in] _cameraYaw the new yaw value
+    //----------------------------------------------------------------------------
+    void cameraYaw(double _cameraYaw);
+    //----------------------------------------------------------------------------------------------------------------------
+    // Set camera near clipping plane
+    void setCamNearClip(double _nearClip);
+
+    //----------------------------------------------------------------------------------------------------------------------
+    // Set camera far clipping plane
+    void setCamFarClip(double _farClip);
+
+
+
+    signals:
+    void updateSignal();
 };
 
 #endif // CAMERA_H

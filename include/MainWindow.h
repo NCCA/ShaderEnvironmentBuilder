@@ -33,6 +33,7 @@
 #include "NGLScene.h"
 #include "ParserLib.h"
 #include "Project.h"
+#include "Camera.h"
 #include "StartupDialog.h"
 
 //------------------------------------------------------------------------------
@@ -41,6 +42,7 @@
 class NGLScene;
 class StartupDialog;
 class ButtonLib;
+//class Camera;
 //------------------------------------------------------------------------------
 // Used to inherit the MainWindow from the generated form file ui_MainWindow.h
 //------------------------------------------------------------------------------
@@ -137,6 +139,10 @@ private:
   /// @brief The project that is used for storing name, directory etc.
   //----------------------------------------------------------------------------
   Project*              m_project;
+  //----------------------------------------------------------------------------
+  /// @brief The camera settings
+  //----------------------------------------------------------------------------
+  Camera*              m_camera;
   //----------------------------------------------------------------------------
   /// @brief the generated widgets created from the form using ui_MainWindow.h
   //----------------------------------------------------------------------------

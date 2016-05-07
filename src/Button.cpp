@@ -6,6 +6,7 @@
 /// @file button.cpp
 /// @brief implementation of the different button classes
 /// @author Jonny Lyddon
+/// @date 07/05/16
 //----------------------------------------------------------------------------------------------------------------------
 
 Button::Button(QWidget *parent) : QDialog(parent)
@@ -13,7 +14,7 @@ Button::Button(QWidget *parent) : QDialog(parent)
   createButtonBox();
 }
 
-Button::Button(QString _buttonName, std::string _buttonType, QLayout *_layout, unsigned int _id, ButtonLib *_libParent, NGLScene *_sceneParent, QWidget *parent) : QDialog(parent)
+Button::Button(QString _buttonName, GLenum _buttonType, QLayout *_layout, GLuint _id, ButtonLib *_libParent, NGLScene *_sceneParent, QWidget *parent) : QDialog(parent)
 {
   m_buttonName = _buttonName;
   m_buttonType = _buttonType;
@@ -81,7 +82,8 @@ void colourButton::setColour(ngl::Vec4 _col)
   m_colour=_col;
   m_colourPicked.setRgbF(m_colour.m_x,
                          m_colour.m_y,
-                         m_colour.m_z);
+                         m_colour.m_z,
+                         m_colour.m_w);
 }
 
 void floatButton::openBox()
