@@ -3,7 +3,6 @@
 
 #include <QsciLexerGlsl.h>
 #include <Qsci/qsciscintilla.h>
-
 #include "generated/GlslLexer.h"
 
 //------------------------------------------------------------------------------
@@ -28,12 +27,15 @@ QsciLexerGLSL::QsciLexerGLSL(QsciScintilla *_parent) : QsciLexerCustom(_parent)
   m_parent->setAutoCompletionSource(QsciScintilla::AcsAPIs);
   m_parent->setSelectionBackgroundColor(QColor(61,61,52));
   m_parent->resetSelectionForegroundColor();
+
+  m_flexScanner = new yyFlexLexer;
 }
 
 //------------------------------------------------------------------------------
 QsciLexerGLSL::~QsciLexerGLSL()
 {
   delete m_API;
+  delete m_flexScanner;
   return;
 }
 
@@ -42,37 +44,32 @@ void QsciLexerGLSL::styleText(const int start, const int end)
 {
   m_parent->autoCompleteFromAPIs();
   //return if no QsciScintilla editor
-  if(!editor())
-    return;
+  if(!editor()) { return; }
+  //return if no text to be styled
+  if(start == end) { return; }
 
   char * data = new char[end - start +1];
 
   //get text to be styled
   editor()->SendScintilla(QsciScintilla::SCI_GETTEXTRANGE, start, end, data);
-  QString source(data);
+  std::istringstream istr (data);
   delete [] data;
-
-  //return if no text to be styled
-  if(source.isEmpty())
-    return;
 
   //style keywords
 
-  FlexLexer* lexer = new yyFlexLexer;
   int tok;
   int loc=0;
-  std::istringstream istr (source.toStdString());
 
   std::vector<int> tokens;
-  tok = lexer->yylex(&istr);
+  tok = m_flexScanner->yylex(&istr);
 
   while (tok>0)
   {
     tokens.push_back(tok);
     tokens.push_back(loc);
-    tokens.push_back(lexer->YYLeng());
-    loc = loc + lexer->YYLeng();
-    tok = lexer->yylex();
+    tokens.push_back(m_flexScanner->YYLeng());
+    loc = loc + m_flexScanner->YYLeng();
+    tok = m_flexScanner->yylex();
   }
 
   int tokensCount = tokens.size();

@@ -11,8 +11,6 @@
 %option c++
 
 %{
-	#include <vector>
-	#include <sstream>
   #include "QsciLexerGlsl.h"
 %}
 
