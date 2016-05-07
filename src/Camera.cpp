@@ -4,7 +4,7 @@
 // Camera settings
 Camera::Camera()
 {
-    m_fov=100.0;
+    m_fov=60.0;
     m_cameraIndex = 0;
     m_cameraRoll = 0.00;
     m_cameraYaw = 0.00;
@@ -59,17 +59,61 @@ std::vector<ngl::Camera> Camera::createCamera()
     Rcam.set(rightEye,rightLook,rightUp);
     Rcam.setShape(m_fov,m_aspect, 0.5f,150.0f);
     m_cameras.push_back(Rcam);
-
-    m_cameraIndex = 0;
-
+    m_mainCamera = m_cameras[m_cameraIndex];
     return m_cameras;
 }
 
+ngl::Camera Camera::setShapeCam()
+{
+  m_mainCamera.setShape(m_fov, m_aspect, m_nearClip, m_farClip);
+  return m_mainCamera;
+}
+
 //----------------------------------------------------------------------------------------------------------------------
-// Returns the correct camera selected by the UI.
-int Camera::setCameraShape(QString _view)
+// Camera Roll settings
+void Camera::cameraYaw(double _cameraYaw)
+{
+    m_mainCamera.yaw(-m_cameraYaw);
+    m_cameraYaw = _cameraYaw;
+    m_mainCamera.yaw(_cameraYaw);
+    emit updateSignal();
+}
+
+
+//----------------------------------------------------------------------------------------------------------------------
+// Camera Roll settings
+void Camera::cameraPitch(double _cameraPitch)
+{
+    m_mainCamera.pitch(-m_cameraPitch);
+    m_cameraPitch = _cameraPitch;
+    m_mainCamera.pitch(_cameraPitch);
+    emit updateSignal();
+}
+
+
+//----------------------------------------------------------------------------------------------------------------------
+// Camera Roll settings
+void Camera::cameraRoll(double _cameraRoll)
+{
+    m_mainCamera.roll(-m_cameraRoll);
+    m_cameraRoll = _cameraRoll;
+    m_mainCamera.roll(_cameraRoll);
+    emit updateSignal();
+}
+
+//----------------------------------------------------------------------------------------------------------------------
+// Signal passed from the UI to set the camera FOV
+void Camera::setCameraFocalLength(int _focalLength)
+{
+    m_fov= _focalLength;
+    m_mainCamera.setShape(m_fov, m_aspect, 0.5f, 150.0f);
+    emit updateSignal();
+}
+
+void Camera::setCameraShape(QString _view)
 {
   string view = _view.toStdString();
+
   map<string, int> camViewMap;
   camViewMap["Persp"]=0;
   camViewMap["Top"]=1;
@@ -78,36 +122,32 @@ int Camera::setCameraShape(QString _view)
   camViewMap["Right"]=4;
 
   m_cameraIndex = camViewMap[view];
+  m_mainCamera = m_cameras[m_cameraIndex];
+  std::cout<<view<<std::endl;
+  emit updateSignal();
+}
 
-  return m_cameraIndex;
+
+//----------------------------------------------------------------------------------------------------------------------
+// Set camera near clipping plane
+void Camera::setCamNearClip(double _nearClip)
+{
+    m_nearClip= _nearClip;
+    emit updateSignal();
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-// Camera Yaw settings
-ngl::Camera Camera::cameraYaw(ngl::Camera _cam, double _cameraYaw)
+// Set camera far clipping plane
+void Camera::setCamFarClip(double _farClip)
 {
-    _cam.yaw(-m_cameraYaw);
-    m_cameraYaw = _cameraYaw;
-    _cam.yaw(_cameraYaw);
-    return _cam;
+    m_farClip= _farClip;
+    emit updateSignal();
 }
 
-//----------------------------------------------------------------------------------------------------------------------
-// Camera Roll settings
-ngl::Camera Camera::cameraRoll(ngl::Camera _cam, double _cameraRoll)
-{
-    _cam.roll(-m_cameraRoll);
-    m_cameraRoll = _cameraRoll;
-    _cam.roll(_cameraRoll);
-    return _cam;
-}
 
-//----------------------------------------------------------------------------------------------------------------------
-// Camera Roll settings
-ngl::Camera Camera::cameraPitch(ngl::Camera _cam, double _cameraPitch)
+
+
+void updateSignal()
 {
-    _cam.pitch(-m_cameraPitch);
-    m_cameraPitch = _cameraPitch;
-    _cam.pitch(_cameraPitch);
-    return _cam;
+    ;
 }

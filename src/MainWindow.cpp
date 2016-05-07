@@ -24,6 +24,8 @@
 MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   m_ui(new Ui::MainWindow)
 {
+  m_project = new Project;
+  m_camera = new Camera;
   // Setup ui from form creator (MainWindow.ui)
   m_ui->setupUi(this);
   // create parser in main window
@@ -51,15 +53,17 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   // Widget 2 (fragment)
   m_fragQsci = createQsciWidget(m_ui->m_tab_qsci_2);
 
-  // Camera Settings
-  connect(m_ui->m_sldr_cameraFov,SIGNAL(valueChanged(int)),m_gl,SLOT(setCameraFocalLength(int)));
-  connect(m_ui->m_cameraRoll, SIGNAL(valueChanged(double)), m_gl, SLOT(setCameraRoll(double)));
-  connect(m_ui->m_cameraYaw, SIGNAL(valueChanged(double)), m_gl, SLOT(setCameraYaw(double)));
-  connect(m_ui->m_cameraPitch, SIGNAL(valueChanged(double)), m_gl, SLOT(setCameraPitch(double)));
+  connect(m_ui->m_nearClip, SIGNAL(valueChanged(double)), m_gl->m_camera, SLOT(setCamNearClip(double)));
+  connect(m_ui->m_farClip, SIGNAL(valueChanged(double)), m_gl->m_camera, SLOT(setCamFarClip(double)));
+  connect(m_ui->m_cameraRoll, SIGNAL(valueChanged(double)), m_gl->m_camera, SLOT(cameraRoll(double)));
+  connect(m_ui->m_cameraYaw, SIGNAL(valueChanged(double)), m_gl->m_camera, SLOT(cameraYaw(double)));
+  connect(m_ui->m_cameraPitch, SIGNAL(valueChanged(double)), m_gl->m_camera, SLOT(cameraPitch(double)));
+  connect(m_ui->m_sldr_cameraFov, SIGNAL(valueChanged(int)), m_gl->m_camera, SLOT(setCameraFocalLength(int)));
+  connect(m_ui->m_comboBox_view, SIGNAL(currentTextChanged(QString)), m_gl->m_camera, SLOT(setCameraShape(QString)));
+  connect(m_gl->m_camera, SIGNAL(updateSignal()), m_gl, SLOT(update()));
   connect(m_ui->m_comboBox_view, SIGNAL(currentTextChanged(QString)), m_gl, SLOT(setCameraShape(QString)));
   connect(m_ui->m_resetCam,SIGNAL(clicked()),m_gl,SLOT(resetObjPos()));
-  connect(m_ui->m_nearClip, SIGNAL(valueChanged(double)), m_gl, SLOT(setCamNearClip(double)));
-  connect(m_ui->m_farClip, SIGNAL(valueChanged(double)), m_gl, SLOT(setCamFarClip(double)));
+
   // Load the text files into the corresponding tabs
   loadTextFileToTab("shaders/PhongVertex.glsl", *m_vertQsci);
   loadTextFileToTab("shaders/PhongFragment.glsl", *m_fragQsci);
@@ -110,8 +114,6 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
 
   m_startDialog = new StartupDialog(this);
 
-  m_project = new Project;
-
 }
 
 //------------------------------------------------------------------------------
@@ -123,11 +125,15 @@ MainWindow::~MainWindow()
 //------------------------------------------------------------------------------
 void MainWindow::on_m_btn_compileShader_clicked()
 {
+  // read new vertex and fragment source code from text editor
   QString vertSource, fragSource;
   vertSource = m_vertQsci->text();
   fragSource = m_fragQsci->text();
+
+  // compile shader with new vertex and fragment source code
   m_gl->compileShader(vertSource,fragSource);
-  //m_parForButton->initializeUniformData();
+
+  // update uniform buttons
   m_buttonLibrary->updateButtons();
   m_buttonLibrary->updateShaderValues();
 }
@@ -314,23 +320,27 @@ void MainWindow::on_actionSaveProjectAs_triggered()
 }
 
 //------------------------------------------------------------------------------
-// Opens the .xml project file.
+
 void MainWindow::on_actionOpen_triggered()
 {
-    QString fileDir=QFileDialog::getOpenFileName(this,
-                                                 tr("Open Project"),
-                                                 "0Features-0BugsCVA3/",
-                                                 tr("XML Files (*.xml)"));
-    string fileDirectory = "";
-    if( !fileDir.isEmpty() )
-    {
-       QString vertSource, fragSource;
-       fileDirectory = fileDir.toStdString();
-       m_project->load(fileDirectory, vertSource, fragSource);
-       m_vertQsci->setText(vertSource);
-       m_fragQsci->setText(fragSource);
-       m_gl->setProject(m_project->getName(), vertSource,fragSource);
-    }
+  // read file directory from dialog
+  QString fileDir=QFileDialog::getOpenFileName(this,
+                                               tr("Open Project"),
+                                               "0Features-0BugsCVA3/",
+                                               tr("XML Files (*.xml)"));
+  string fileDirectory = "";
+  if( !fileDir.isEmpty() )
+  {
+     QString vertSource, fragSource;
+     fileDirectory = fileDir.toStdString();
+     // load project data
+     m_project->load(fileDirectory, vertSource, fragSource);
+     // set the text editor strings
+     m_vertQsci->setText(vertSource);
+     m_fragQsci->setText(fragSource);
+     // set proect data in scene for shader manager
+     m_gl->setProject(m_project->getName(), vertSource,fragSource);
+  }
 
 
 

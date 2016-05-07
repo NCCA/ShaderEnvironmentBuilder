@@ -2,6 +2,12 @@
 /// @file MainWindow.h
 /// @brief the MainWindow, GUI for our program
 /// @author Jonathan Flynn
+/// @author Alexander la Tourelle
+/// @author Anand Hotwani
+/// @author Ellie Ansell
+/// @author Adam Ting
+/// @author Phil Rouse
+/// @author Jonathan Lyddon
 /// @version 1.0
 /// @date 01/03/16
 //------------------------------------------------------------------------------
@@ -27,6 +33,7 @@
 #include "NGLScene.h"
 #include "ParserLib.h"
 #include "Project.h"
+#include "Camera.h"
 #include "StartupDialog.h"
 
 //------------------------------------------------------------------------------
@@ -35,6 +42,7 @@
 class NGLScene;
 class StartupDialog;
 class ButtonLib;
+//class Camera;
 //------------------------------------------------------------------------------
 // Used to inherit the MainWindow from the generated form file ui_MainWindow.h
 //------------------------------------------------------------------------------
@@ -131,6 +139,10 @@ private:
   /// @brief The project that is used for storing name, directory etc.
   //----------------------------------------------------------------------------
   Project*              m_project;
+  //----------------------------------------------------------------------------
+  /// @brief The camera settings
+  //----------------------------------------------------------------------------
+  Camera*              m_camera;
   //----------------------------------------------------------------------------
   /// @brief the generated widgets created from the form using ui_MainWindow.h
   //----------------------------------------------------------------------------
