@@ -26,7 +26,7 @@
 #include "NewProjectWizard.h"
 #include "NGLScene.h"
 #include "ParserLib.h"
-#include "project.h"
+#include "Project.h"
 #include "StartupDialog.h"
 
 //------------------------------------------------------------------------------

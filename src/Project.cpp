@@ -4,7 +4,7 @@
 #include <QFileDialog>
 #include <QFileInfo>
 
-#include "project.h"
+#include "Project.h"
 #include "Json.h"
 #include "CebErrors.h"
 #include "Io_xml.h"
