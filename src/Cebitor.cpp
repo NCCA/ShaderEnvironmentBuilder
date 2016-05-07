@@ -11,12 +11,15 @@
 #include <QTextStream>
 #include <QFile>
 
-//----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /// @file Cebitor.cpp
 /// @brief implementation of Cebitor class
-//----------------------------------------------------------------------------------------------------------------------
+/// @author Phil Rouse
+/// @version 1.0
+/// @date 07/05/2016
+//------------------------------------------------------------------------------
 
-//----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 Cebitor::Cebitor(QWidget *_parent) : QsciScintilla(_parent)
 {
   setMinimumHeight(300);
@@ -32,12 +35,18 @@ Cebitor::Cebitor(QWidget *_parent) : QsciScintilla(_parent)
   // Set the symbol margin defaults
   setMarginType(1,MarginType::SymbolMargin);
   setMarginWidth(1,12);
-  setMarginMarkerMask(1, 1 << 0 | 1 << 1 | 1 << 2);
+  setMarginMarkerMask(1,
+                      1 << MarkerType::ERROR |
+                      1 << MarkerType::WARNING
+                      );
 
   // Set the caret defaults
   setCaretForegroundColor(QColor(247, 247, 241));
   setCaretWidth(2);
   // Set the brace defaults
+  //----------------------------------------------------------------------------
+  /// @bug brace matching matches "<" and ">" characters
+  //----------------------------------------------------------------------------
   setBraceMatching(BraceMatch::SloppyBraceMatch);
   setMatchedBraceBackgroundColor(QColor(62, 61, 50));
   setUnmatchedBraceBackgroundColor(QColor(249, 38, 114));
@@ -59,8 +68,6 @@ Cebitor::Cebitor(QWidget *_parent) : QsciScintilla(_parent)
 
   markerDefine(errorIcon.pixmap(10,10), MarkerType::ERROR);
   markerDefine(warnIcon.pixmap(10,10), MarkerType::WARNING);
-  markerDefine(MarkerSymbol::Background, MarkerType::FILESTART);
-  SendScintilla(QsciScintillaBase::SCI_MARKERSETBACK, MarkerType::FILESTART, QColor(45,46,38));
 
   // unbind CTRL-/ keyboard shortcut
   standardCommands()->boundTo(Qt::Key_Slash | Qt::CTRL)->setKey(0);
@@ -80,20 +87,20 @@ Cebitor::Cebitor(QWidget *_parent) : QsciScintilla(_parent)
   addAction(searchAction);
 
   // define search indicator
-
   m_searchIndicator = indicatorDefine(IndicatorStyle::PlainIndicator, -1);
   setIndicatorDrawUnder(true, m_searchIndicator);
   setIndicatorForegroundColor(QColor(142,143,137,0));
   setIndicatorOutlineColor(QColor(142,143,137,255));
 
-  // connect signals and slots
+  // connect char added signals and slots
   connect(this, SIGNAL(SCN_CHARADDED(int)), this, SLOT(charAdded(int)));
 
   // work-around since using built-in focusInEvent causes caret to be invisible
   connect(this, SIGNAL(SCN_FOCUSIN()), this, SLOT(resetHighlightColour()));
 }
 
-//----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+
 void Cebitor::clearErrors()
 {
   markerDeleteAll(MarkerType::ERROR);
@@ -112,6 +119,8 @@ void Cebitor::searchNext()
   }
 }
 
+//------------------------------------------------------------------------------
+
 void Cebitor::searchPrev()
 {
   QString searchTerm = m_searchLineEdit->text();
@@ -126,6 +135,9 @@ void Cebitor::searchPrev()
   }
   findNext();
 }
+
+//------------------------------------------------------------------------------
+
 void Cebitor::highlightAllSearch()
 {
   clearIndicatorRange(0,0,lines(),text(lines()).length(),m_searchIndicator);
@@ -138,17 +150,26 @@ void Cebitor::highlightAllSearch()
     return;
   }
   int current;
-  current = text().indexOf(searchTerm,0,Qt::CaseSensitivity::CaseInsensitive);
+  current = text().indexOf(
+        searchTerm,
+        0,
+        Qt::CaseSensitivity::CaseInsensitive
+        );
   while(current!= -1)
   {
     lineIndexFromPosition(current,&line,&indexFrom);
     indexTo = indexFrom + searchTerm.length();
     fillIndicatorRange(line,indexFrom,line,indexTo,m_searchIndicator);
-    current = text().indexOf(searchTerm,current+1,Qt::CaseSensitivity::CaseInsensitive);
+    current = text().indexOf(
+          searchTerm,
+          current+1,
+          Qt::CaseSensitivity::CaseInsensitive
+          );
   }
 }
 
-//----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+
 bool Cebitor::autoClose(const QString _close)
 {
   int cursorIndex;
@@ -157,13 +178,9 @@ bool Cebitor::autoClose(const QString _close)
   getCursorPosition(&cursorLine, &cursorIndex);
   length = lineLength(cursorLine);
 
-  // insert closing character if cursor is at EOL or the next character is a space
-  if(cursorIndex == length-1)
-  {
-    insert(_close);
-    return true;
-  }
-  else if(text(cursorLine).at(cursorIndex).toLatin1() == ' ')
+  // insert closing character if cursor is at EOL or the next character is space
+  if(cursorIndex == length-1 ||
+     text(cursorLine).at(cursorIndex).toLatin1() == ' ')
   {
     insert(_close);
     return true;
@@ -171,14 +188,13 @@ bool Cebitor::autoClose(const QString _close)
   return false;
 }
 
-//----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+
 bool Cebitor::closing(const QString _close)
 {
   int cursorIndex;
   int cursorLine;
-  //int length;
   getCursorPosition(&cursorLine, &cursorIndex);
-  //length = lineLength(cursorLine);
 
   // remove duplicate if next character is the same as _close
   if(text(cursorLine).at(cursorIndex) == _close.at(0))
@@ -201,7 +217,8 @@ bool Cebitor::closing(const QString _close)
   return false;
 }
 
-//----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+
 void Cebitor::comment()
 {
   beginUndoAction();
@@ -268,6 +285,8 @@ void Cebitor::comment()
   endUndoAction();
 }
 
+//------------------------------------------------------------------------------
+
 void Cebitor::toggleSearchBox()
 {
   bool searchFocus = m_searchLineEdit->hasFocus();
@@ -285,6 +304,8 @@ void Cebitor::toggleSearchBox()
     clearIndicatorRange(0,0,lines(),text(lines()).length(),m_searchIndicator);
   }
 }
+
+//------------------------------------------------------------------------------
 
 void Cebitor::braceIndent()
 {
@@ -325,7 +346,8 @@ void Cebitor::braceIndent()
   }
 }
 
-//----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+
 void Cebitor::charAdded(int _c)
 {
   switch(_c)
@@ -352,6 +374,8 @@ void Cebitor::charAdded(int _c)
     case (int) '\n': { braceIndent(); break; }
   }
 }
+
+//------------------------------------------------------------------------------
 
 void Cebitor::resetHighlightColour()
 {

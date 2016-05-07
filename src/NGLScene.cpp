@@ -104,6 +104,7 @@ NGLScene::NGLScene( QWidget *_parent, parserLib *_libParent ) : QOpenGLWidget( _
   m_cameraIndex = 0;
   // set this widget to have the initial keyboard focus
   setFocus();
+  connect(this, SIGNAL(initializeGL()), this, SLOT(initGL()));
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -122,7 +123,7 @@ NGLScene::~NGLScene()
 void NGLScene::setMeshLocation(std::string _meshDirectory)
 {
   m_meshLoc=_meshDirectory;
-  std::cout<<"Imported file:  "<<_meshDirectory<<std::endl;
+  //std::cout<<"Imported file:  "<<_meshDirectory<<std::endl;
 }
 
 void NGLScene::toggleObj()
@@ -180,7 +181,7 @@ void NGLScene::importTextureMap(const string &_name)
 // and then once whenever the widget has been assigned a new QGLContext.
 // This function should set up any required OpenGL context rendering flags, defining display lists, etc.
 //----------------------------------------------------------------------------------------------------------------------
-void NGLScene::initializeGL()
+void NGLScene::initGL()
 {
   ngl::NGLInit::instance();
   clearAllGlErrors();
@@ -251,7 +252,7 @@ void NGLScene::setShapeType(int _type)
   }
   else
   {
-    std::cout<<"Invalid shape type"<<std::endl;
+    //std::cout<<"Invalid shape type"<<std::endl;
   }
   update();
 }
@@ -371,7 +372,7 @@ void NGLScene::objectTransform(uint _type)
       break;
       // Moved the bunny to be the same relative shape and position
     }
-    default: std::cout<<"unrecognised shape type value"<<std::endl; break;
+    default: std::cerr<<"unrecognised shape type value\n"; break;
   }
 }
 void NGLScene::drawObject(uint _type)
@@ -389,8 +390,8 @@ void NGLScene::drawObject(uint _type)
     case teapot: { prim->draw("teapot");break; }
     case troll : { prim->draw("troll"); break; }
     case dragon: { prim->draw("dragon");break; }
-    case bunny :  { prim->draw("bunny"); break; }
-    default    : std::cout<<"unrecognised shape type value"<<std::endl; break;
+    case bunny : { prim->draw("bunny"); break; }
+    default    : std::cerr<<"unrecognised shape type value\n"; break;
   }
 }
 
@@ -487,6 +488,8 @@ void NGLScene::mouseMoveEvent ( QMouseEvent * _event )
 //----------------------------------------------------------------------------------------------------------------------
 void NGLScene::mousePressEvent ( QMouseEvent * _event )
 {
+  // Focus set to main window since it controls all keypress events.
+  m_window->setFocus();
   // that method is called when the mouse button is pressed in this case we
   // store the value where the maouse was clicked (x,y) and set the Rotate flag to true
   if(_event->button() == Qt::LeftButton)
@@ -565,7 +568,6 @@ void NGLScene::keyPressEvent(QKeyEvent *_event)
 {
   switch (_event->key())
   {
-    case Qt::Key_F : resetObjPos(); break;
     default : break ;
   }
   update();
@@ -671,6 +673,11 @@ void NGLScene::resetObjPos()
   m_modelPos.m_z = 0;
   m_spinXFace = 0;
   m_spinYFace = 0;
+
+  setCameraRoll(0.0);
+  setCameraYaw(0.0);
+  setCameraPitch(0.0);
+
   update();
 }
 

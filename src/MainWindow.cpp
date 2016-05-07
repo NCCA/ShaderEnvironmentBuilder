@@ -73,7 +73,7 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   connect(m_ui->m_actionLoad_Obj,SIGNAL(triggered()),this,SLOT(objOpened()));
 
   // switching to .jpg files
-  connect(m_ui->m_actionLoad_Texture,SIGNAL(triggered()),this,SLOT(textureTriggered()));
+  connect(m_ui->m_actionLoad_Texture,SIGNAL(triggered()),this,SLOT(on_m_actionLoad_Texture_triggered()));
 
   connect(m_ui->m_exportUniforms,SIGNAL(clicked()),m_gl,SLOT(exportUniform()));
   connect(m_ui->m_printUniforms ,SIGNAL(clicked()),this,SLOT(printUniforms()));
@@ -88,6 +88,8 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   connect(m_ui->m_btn_compileShader,SIGNAL(pressed()),m_vertQsci,SLOT(clearErrors()));
   connect(m_ui->m_btn_compileShader,SIGNAL(pressed()),m_fragQsci,SLOT(clearErrors()));
   connect(m_gl,SIGNAL(createLineMarker(QString,int)),this,SLOT(addError(QString,int)));
+
+  connect(m_gl,SIGNAL(initializeGL()), this, SLOT(on_m_btn_compileShader_clicked()));
 
 
   update();
@@ -105,6 +107,7 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   m_startDialog = new StartupDialog(this);
 
   m_project = new Project;
+
 }
 
 //------------------------------------------------------------------------------
@@ -267,7 +270,7 @@ bool MainWindow::newProjectWiz(QWidget* _parent)
   }
   else
   {
-    qDebug() << "FAIL";
+    //qDebug() << "FAIL";
   }
   delete projectWiz;
   return success;
@@ -288,6 +291,7 @@ void MainWindow::keyPressEvent(QKeyEvent *_event)
     case Qt::Key_W : {m_ui->m_showWireframe->toggle(); break;}
     case Qt::Key_N : {m_ui->m_showNormals->toggle();   break;}
     case Qt::Key_G : {m_ui->m_showGrid->toggle();      break;}
+    case Qt::Key_F : {m_gl->resetObjPos();             break;}
   }
   update();
 }
@@ -309,38 +313,47 @@ void MainWindow::on_actionSaveProjectAs_triggered()
 void MainWindow::on_actionOpen_triggered()
 {
     QString fileDir=QFileDialog::getOpenFileName(this,
-                                                  tr("Open Project"),"0Features-0BugsCVA3/",tr("XML Files (*.xml)"));
+                                                 tr("Open Project"),
+                                                 "0Features-0BugsCVA3/",
+                                                 tr("XML Files (*.xml)"));
     string fileDirectory = "";
-    if( fileDir.isEmpty() )
+    if( !fileDir.isEmpty() )
     {
-      fileDirectory = "Empty";
-
-    }
-    else
-    {
+       QString vertSource, fragSource;
        fileDirectory = fileDir.toStdString();
+       m_project->load(fileDirectory, vertSource, fragSource);
+       m_vertQsci->setText(vertSource);
+       m_fragQsci->setText(fragSource);
+       m_gl->setProject(m_project->getName(), vertSource,fragSource);
     }
-    QString vertSource, fragSource;
-    m_project->load(fileDirectory, vertSource, fragSource);
-    m_vertQsci->setText(vertSource);
-    m_fragQsci->setText(fragSource);
-    m_gl->setProject(m_project->getName(), vertSource,fragSource);
+
+
 
 }
 
 void MainWindow::on_actionExport_triggered()
 {
-    //m_project->exportProject()
+  QFileDialog dialog(this);
+  dialog.setFileMode(QFileDialog::Directory);
+  dialog.setOption(QFileDialog::ShowDirsOnly);
+  dialog.setDirectory(QString(m_project->getDir().c_str()));
+  QStringList dirNames;
+  if (dialog.exec())
+  {
+    dirNames = dialog.selectedFiles();
+    m_project->exportProject(dirNames.at(0).toStdString(), m_vertQsci->text(), m_fragQsci->text());
+  }
+
 }
 void MainWindow::on_m_actionLoad_Texture_triggered()
 {
   // Open a file dialog and return a file directory
   QString fileName=QFileDialog::getOpenFileName(this,
-                                                tr("Open Texture Map"),"0Features-0BugsCVA3/",tr("Image Files (*.jpg)"));
-
+                                              tr("Open Texture Map"),
+                                              "0Features-0BugsCVA3/",
+                                              tr("Image Files (*.jpg)"));
   //load texture map to OBJ
   std::string importName=fileName.toStdString();
-  std::cout<<"imported texture "<<importName<<std::endl;
   m_gl->importTextureMap(importName);
 }
 
