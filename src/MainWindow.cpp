@@ -32,6 +32,8 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   m_gl=new  NGLScene(this, m_parForButton);
 
   m_ui->m_sldr_cameraFov->setValue(65.0f);
+  m_ui->m_nearClip->setValue(0.5f);
+  m_ui->m_farClip->setValue(150.0f);
 
   m_gl->setSizePolicy(m_ui->m_f_gl_temp->sizePolicy());
   m_gl->setMinimumSize(m_ui->m_f_gl_temp->minimumSize());
