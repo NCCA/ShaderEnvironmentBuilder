@@ -332,8 +332,9 @@ void MainWindow::on_m_actionLoad_Texture_triggered()
 {
   // Open a file dialog and return a file directory
   QString fileName=QFileDialog::getOpenFileName(this,
-                                                tr("Open Texture Map"),"0Features-0BugsCVA3/",tr("Image Files (*.jpg)"));
-
+                                              tr("Open Texture Map"),
+                                              "0Features-0BugsCVA3/",
+                                              tr("Image Files (*.jpg)"));
   //load texture map to OBJ
   std::string importName=fileName.toStdString();
   std::cout<<"imported texture "<<importName<<std::endl;
