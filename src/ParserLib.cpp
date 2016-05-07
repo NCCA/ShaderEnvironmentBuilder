@@ -1,5 +1,6 @@
-#include "ParserLib.h"
+#include <QDir>
 #include <ngl/ShaderLib.h>
+#include "ParserLib.h"
 
 //----------------------------------------------------------------------------
 /// @brief ctor for our ParserLib
@@ -351,6 +352,10 @@ void ParserLib::uniformDataTypes()
 void ParserLib::exportUniforms()
 {
   // Open the text file "ParsingOutput.txt"
+  if ( !QDir("./tempFiles").exists())
+  {
+    QDir().mkdir("tempFiles");
+  }
   std::ofstream fileOut;
   fileOut.open("./tempFiles/ParsingOutput.txt");
   if(!fileOut.is_open())    ///If it can't be opened
@@ -440,7 +445,7 @@ void ParserLib::exportUniforms()
   }
   // close file
   fileOut.close();
-  std::cout<<"Exported Uniforms\n"<<std::endl;
+  std::cout<<"Exported Uniforms to ./tempFles/ParsingOutput.txt\n"<<std::endl;
 }
 
 //------------------------------------------------------------------------------
