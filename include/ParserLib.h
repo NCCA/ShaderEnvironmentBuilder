@@ -14,18 +14,18 @@
 /// @version 1.0
 /// @date 05/05/16
 //------------------------------------------------------------------------------
-class parserLib
+class ParserLib
 {
 
 public:
   //----------------------------------------------------------------------------
   /// @brief ctor for our ParserLib
   //----------------------------------------------------------------------------
-  parserLib();
+  ParserLib();
   //----------------------------------------------------------------------------
   /// @brief dtor for our ParserLib
   //----------------------------------------------------------------------------
-  ~parserLib();
+  ~ParserLib();
 
   //----------------------------------------------------------------------------
   /// @brief finds number of active uniforms and stores the data in blocks
@@ -72,12 +72,12 @@ public:
   //----------------------------------------------------------------------------
   /// @brief used to store a list of pre-registered Uniform data types.
   //----------------------------------------------------------------------------
-  std::unordered_map <std::string, uniformData*> m_registeredUniforms;
+  std::unordered_map <std::string, UniformData*> m_registeredUniforms;
 
   //----------------------------------------------------------------------------
   /// @brief used to store a list of uniformData
   //----------------------------------------------------------------------------
-  std::vector <uniformData*> m_uniformList;
+  std::vector <UniformData*> m_uniformList;
 
 
 };
