@@ -5,9 +5,10 @@
 #include <QFileInfo>
 
 #include "Project.h"
-#include "Json.h"
 #include "CebErrors.h"
 #include "Io_xml.h"
+
+//----------------------------------------------------------------------------
 
 Project::Project()
 {
@@ -17,19 +18,16 @@ Project::Project()
   m_saved = false;
 }
 
+//----------------------------------------------------------------------------
+
 Project::~Project()
 {
   delete m_xml;
 }
 
-void Project::set(std::string _name, std::string _dir, bool _saved)
-{
-  m_projectName = _name;
-  m_projectDir = _dir;
-  m_saved = _saved;
-}
+//----------------------------------------------------------------------------
 
-void Project::save(QString vertSource, QString fragSource)
+void Project::save(QString _vertSource, QString _fragSource)
 {
   QString fileName;
 
@@ -52,8 +50,8 @@ void Project::save(QString vertSource, QString fragSource)
   std::cout<<"Saving project..."<<std::endl;
 
   // convert QStrings to c strings.
-  std::string vertSourceString = vertSource.toStdString();
-  std::string fragSourceString = fragSource.toStdString();
+  std::string vertSourceString = _vertSource.toStdString();
+  std::string fragSourceString = _fragSource.toStdString();
 
   const char * vertSource_c = vertSourceString.c_str();
   const char * fragSource_c = fragSourceString.c_str();
@@ -64,11 +62,16 @@ void Project::save(QString vertSource, QString fragSource)
   std::cout<<"Saved project: \n Name: "<<m_projectName<<"  Directory: "<<m_projectDir<<std::endl;
 }
 
-void Project::saveAs(QString vertSource, QString fragSource)
+//----------------------------------------------------------------------------
+
+void Project::saveAs(QString vertSource, QString _fragSource)
 {
+  // set save state to false then call save function
   m_saved = false;
-  save(vertSource, fragSource);
+  save(vertSource, _fragSource);
 }
+
+//----------------------------------------------------------------------------
 
 int Project::confirmOverwrite(QString _filePath)
 {
@@ -82,7 +85,9 @@ int Project::confirmOverwrite(QString _filePath)
   return ret;
 }
 
-bool Project::exportProject(std::string _targetDir, QString vertSource, QString fragSource)
+//----------------------------------------------------------------------------
+
+bool Project::exportProject(std::string _targetDir, QString _vertSource, QString _fragSource)
 {
 
   _targetDir.append("/");
@@ -117,7 +122,7 @@ bool Project::exportProject(std::string _targetDir, QString vertSource, QString 
 
     // write vertex source into Vertex.glsl file
     QTextStream outVert(&vertFile);
-    outVert << vertSource;
+    outVert << _vertSource;
     vertFile.close();
     detOutput.append("Vertex File: " + vFilePath + "\n");
   }
@@ -147,7 +152,7 @@ bool Project::exportProject(std::string _targetDir, QString vertSource, QString 
     }
 
     QTextStream outFrag(&fragFile);
-    outFrag << fragSource;
+    outFrag << _fragSource;
     fragFile.close();
     detOutput.append("Fragment File: " + vFilePath + "\n");
   }
@@ -158,8 +163,9 @@ bool Project::exportProject(std::string _targetDir, QString vertSource, QString 
   msgBox.exec();
   return true;
 }
+
 // ----------------------------------------------------------------------------------------------------------------------
-// Loads the xml saved project data.
+
 void Project::load(std::string _loadedFileDirectory, QString &o_vertSource, QString &o_fragSource)
 {
 

@@ -650,6 +650,7 @@ void NGLScene::resetObjPos()
 }
 
 //------------------------------------------------------------------------------
+
 void NGLScene::setProject(std::string _name, QString _vertSource, QString _fragSource)
 {
   m_shaderManager->createShaderProgram(_name);

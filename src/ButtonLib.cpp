@@ -1,6 +1,6 @@
 #include "ButtonLib.h"
 
-ButtonLib::ButtonLib(parserLib *_parser, QLayout *_layout, NGLScene *_scene, QWidget *_parent)
+ButtonLib::ButtonLib(ParserLib *_parser, QLayout *_layout, NGLScene *_scene, QWidget *_parent)
 {
   m_parser=_parser;
   m_layout=_layout;

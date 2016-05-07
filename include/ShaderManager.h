@@ -1,3 +1,13 @@
+//------------------------------------------------------------------------------------------------------------------------
+/// @file ShaderManager
+/// @brief Class for managing and updating data for GLSL shaders in the IDE
+/// @author Alexander La Tourelle
+/// @author Anand Hotwani
+/// @author Jonathan Flynn
+/// @version 1.0
+/// @date 05/05/16
+//------------------------------------------------------------------------------------------------------------------------
+
 #ifndef SHADERMANAGER_H
 #define SHADERMANAGER_H
 
@@ -5,15 +15,6 @@
 #include <ngl/ShaderLib.h>
 #include <QString>
 #include <ngl/Camera.h>
-//------------------------------------------------------------------------------------------------------------------------
-/// @file ShaderManager
-/// @brief the method for managing and updating data for GLSL shaders in the IDE
-/// @author Alexander La Tourelle
-/// @author Anand Hotwani
-/// @author Jonathan Flynn
-/// @version 1.0
-/// @date 05/05/16
-//------------------------------------------------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------------------------------------------------
 /// @brief structure containing currently active shader data
@@ -27,13 +28,14 @@ struct shaderProgramData
 
 //------------------------------------------------------------------------------------------------------------------------
 /// @class ShaderManager
-/// @brief will check and return compile status to user whether successful or unsuccessful
+/// @brief Handles creation and compilation of shaders via modified NGL ShaderLib.
+/// @brief will check and return compile status to user whether successful or unsuccessful.
 //------------------------------------------------------------------------------------------------------------------------
 class ShaderManager
 {
 public:
   //------------------------------------------------------------------------------------------------------------------------
-  /// @brief Constructor
+  /// @brief default constructor for ShaderManager class
   //------------------------------------------------------------------------------------------------------------------------
   ShaderManager();
   //------------------------------------------------------------------------------------------------------------------------

@@ -2,6 +2,12 @@
 /// @file MainWindow.h
 /// @brief the MainWindow, GUI for our program
 /// @author Jonathan Flynn
+/// @author Alexander la Tourelle
+/// @author Anand Hotwani
+/// @author Ellie Ansell
+/// @author Adam Ting
+/// @author Phil Rouse
+/// @author Jonathan Lyddon
 /// @version 1.0
 /// @date 01/03/16
 //------------------------------------------------------------------------------

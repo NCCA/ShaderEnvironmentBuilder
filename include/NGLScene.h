@@ -4,6 +4,7 @@
 /// @author Jonathan Macey
 /// @author Jonathan Flynn
 /// @author Anand Hotwani
+/// @author Alexander la Tourelle
 /// @version 1.0
 /// @date 01/03/16
 /// Revision History :
