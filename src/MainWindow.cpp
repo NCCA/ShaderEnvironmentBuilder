@@ -291,6 +291,7 @@ void MainWindow::keyPressEvent(QKeyEvent *_event)
     case Qt::Key_W : {m_ui->m_showWireframe->toggle(); break;}
     case Qt::Key_N : {m_ui->m_showNormals->toggle();   break;}
     case Qt::Key_G : {m_ui->m_showGrid->toggle();      break;}
+    case Qt::Key_F : {m_gl->resetObjPos();             break;}
   }
   update();
 }
