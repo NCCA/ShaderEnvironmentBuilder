@@ -294,11 +294,14 @@ void NGLScene::paintGL()
   m_shaderManager->use(0);
 
   ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
+
   m_camera->m_aspect = (float)width()/height();
   m_camera->setShapeCam();
   m_cam = m_camera->m_mainCamera;
   m_cameraIndex = m_camera->m_cameraIndex;
+
   m_transform.reset();
+
   if (m_toggleAxis)
   {
     ngl::Vec3 pos={-1,-0.5,-1};
@@ -763,24 +766,24 @@ void NGLScene::setCamFarClip(double _farClip)
 
 //----------------------------------------------------------------------------------------------------------------------
 // Signal passed from the UI to set the camera roll.
-void NGLScene::setCameraRoll(double _cameraRoll)
-{
-    m_cam = m_camera->cameraRoll(m_cam, _cameraRoll);
-    update();
-}
+//void NGLScene::setCameraRoll(double _cameraRoll)
+//{
+//    m_cam = m_camera->cameraRoll(m_cam, _cameraRoll);
+//    update();
+//}
 
 //----------------------------------------------------------------------------------------------------------------------
 // Signal passed from the UI to set the camera yaw.
-void NGLScene::setCameraYaw(double _cameraYaw)
-{
-    m_cam = m_camera->cameraYaw(m_cam, _cameraYaw);
-    update();
-}
+//void NGLScene::setCameraYaw(double _cameraYaw)
+//{
+//    m_cam = m_camera->cameraYaw(m_cam, _cameraYaw);
+//    update();
+//}
 
 //----------------------------------------------------------------------------------------------------------------------
 // Signal passed from the UI to set the camera pitch.
-void NGLScene::setCameraPitch(double _cameraPitch)
-{
-    m_cam = m_camera->cameraPitch(m_cam, _cameraPitch);
-    update();
-}
+//void NGLScene::setCameraPitch(double _cameraPitch)
+//{
+//    m_cam = m_camera->cameraPitch(m_cam, _cameraPitch);
+//    update();
+//}

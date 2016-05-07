@@ -74,20 +74,11 @@ public:
     /// @brief Sets camera roll
     //----------------------------------------------------------------------------------------------------------------------
     ngl::Camera cameraRoll(ngl::Camera _cam, double _cameraRoll);
-    //----------------------------------------------------------------------------------------------------------------------
-    /// @brief Sets camera pitch
-    //----------------------------------------------------------------------------------------------------------------------
-    ngl::Camera cameraPitch(ngl::Camera _cam, double _cameraPitch);
+
 
     ngl::Camera setShapeCam();
     ngl::Camera m_mainCamera;
-   // void setCameraShape(QString _view);
 
-
-//    Camera()
-//    {
-//        m_signal.Connect(m_worker.m_slot);
-//    }
     void someSlot(const QVariant &);
 public slots:
     //----------------------------------------------------------------------------
@@ -96,8 +87,23 @@ public slots:
     //----------------------------------------------------------------------------
     void setCameraFocalLength(int _focalLength);
     void setCameraShape(QString _view);
+
+    //----------------------------------------------------------------------------
+    /// @brief Sets camera Pitch
+    /// @param[in] _cameraRoll the new pitch value
+    //----------------------------------------------------------------------------
+    void cameraRoll(double _cameraRoll);
+    //----------------------------------------------------------------------------
+    /// @brief Sets camera Pitch
+    /// @param[in] _cameraPitch the new pitch value
+    //----------------------------------------------------------------------------
+    void cameraPitch(double _cameraPitch);
+    //----------------------------------------------------------------------------
+    /// @brief Sets camera Yaw
+    /// @param[in] _cameraYaw the new yaw value
+    //----------------------------------------------------------------------------
+    void cameraYaw(double _cameraYaw);
     signals:
-   // void someSignal(const QString &);
     void updateSignal();
 };
 

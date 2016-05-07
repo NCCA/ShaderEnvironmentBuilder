@@ -70,35 +70,36 @@ ngl::Camera Camera::setShapeCam()
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-// Camera Yaw settings
-ngl::Camera Camera::cameraYaw(ngl::Camera _cam, double _cameraYaw)
+// Camera Roll settings
+void Camera::cameraYaw(double _cameraYaw)
 {
-    _cam.yaw(-m_cameraYaw);
+    m_mainCamera.yaw(-m_cameraYaw);
     m_cameraYaw = _cameraYaw;
-    _cam.yaw(_cameraYaw);
-    return _cam;
+    m_mainCamera.yaw(_cameraYaw);
+    emit updateSignal();
 }
+
 
 //----------------------------------------------------------------------------------------------------------------------
 // Camera Roll settings
-ngl::Camera Camera::cameraRoll(ngl::Camera _cam, double _cameraRoll)
+void Camera::cameraPitch(double _cameraPitch)
 {
-    _cam.roll(-m_cameraRoll);
-    m_cameraRoll = _cameraRoll;
-    _cam.roll(_cameraRoll);
-    return _cam;
-}
-
-//----------------------------------------------------------------------------------------------------------------------
-// Camera Roll settings
-ngl::Camera Camera::cameraPitch(ngl::Camera _cam, double _cameraPitch)
-{
-    _cam.pitch(-m_cameraPitch);
+    m_mainCamera.pitch(-m_cameraPitch);
     m_cameraPitch = _cameraPitch;
-    _cam.pitch(_cameraPitch);
-    return _cam;
+    m_mainCamera.pitch(_cameraPitch);
+    emit updateSignal();
 }
 
+
+//----------------------------------------------------------------------------------------------------------------------
+// Camera Roll settings
+void Camera::cameraRoll(double _cameraRoll)
+{
+    m_mainCamera.roll(-m_cameraRoll);
+    m_cameraRoll = _cameraRoll;
+    m_mainCamera.roll(_cameraRoll);
+    emit updateSignal();
+}
 
 //----------------------------------------------------------------------------------------------------------------------
 // Signal passed from the UI to set the camera FOV
