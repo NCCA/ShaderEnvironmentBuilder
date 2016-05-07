@@ -27,7 +27,7 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   // Setup ui from form creator (MainWindow.ui)
   m_ui->setupUi(this);
   // create parser in main window
-  m_parForButton = new parserLib;
+  m_parForButton = new ParserLib;
   // Create openGl and qsci widgets, pass in the parser
   m_gl=new  NGLScene(this, m_parForButton);
 

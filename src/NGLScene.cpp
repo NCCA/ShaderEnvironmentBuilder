@@ -76,7 +76,7 @@ bool checkAllCompileError(std::vector<std::string> _shaderProgNames, QString *o_
 
 
 //----------------------------------------------------------------------------------------------------------------------
-NGLScene::NGLScene( QWidget *_parent, parserLib *_libParent ) : QOpenGLWidget( _parent )
+NGLScene::NGLScene( QWidget *_parent, ParserLib *_libParent ) : QOpenGLWidget( _parent )
 {
   // re-size the widget to that of the parent (in that case the GLFrame passed in on construction)
   m_rotate=false;
