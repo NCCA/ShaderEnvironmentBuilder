@@ -86,9 +86,9 @@ void colourButton::setColour(ngl::Vec4 _col)
 
 void floatButton::openBox()
 {
-  m_window = new QDialog;
+  //m_window = new QDialog;
   double val = QInputDialog::getDouble(
-        this, tr("Input"), tr("Input"),m_value,-2147483647,2147483647,5);
+        m_parent, tr("Input"), tr("Input"),m_value,-2147483647,2147483647,5);
   m_value=val;
   m_libParent->updateShaderValues();
   m_sceneParent->update();
