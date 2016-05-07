@@ -96,9 +96,6 @@ NGLScene::NGLScene( QWidget *_parent, parserLib *_libParent ) : QOpenGLWidget( _
   // re-size the widget to that of the parent (in this case the GLFrame passed in on construction)
   this->resize(_parent->size());
   m_wireframe=false;
-  m_fov=65.0;
-  m_nearClip = 0.5f;
-  m_farClip = 150.0f;
   m_shaderManager = new ShaderManager();
   m_camera = new Camera();
   m_cameras = m_camera->createCamera();  //returns vector of cameras
@@ -732,58 +729,6 @@ void NGLScene::drawAxis(ngl::Vec3 _pos)
 // Sets the view of the camera (persp, top, bottom, side).
 void NGLScene::setCameraShape(QString _view)
 {
-  //m_cameraIndex = m_camera->setCameraShape(_view);
-
-//  m_modelPos.m_x=0;
-//  m_modelPos.m_y=0;
-//  m_modelPos.m_z=0;
-//  m_spinXFace=0;
-//  m_spinYFace=0;
-  m_aspect=(float)width()/height();
-//  for(auto &cam : m_camera->m_cameras)
-//    {
-//      cam.setShape(m_fov,m_aspect, m_nearClip, m_farClip);
-//    }
- // update();
-
 }
 
-//----------------------------------------------------------------------------------------------------------------------
-// Set camera near clipping plane
-void NGLScene::setCamNearClip(double _nearClip)
-{
-    m_nearClip= _nearClip;
-    update();
-}
 
-//----------------------------------------------------------------------------------------------------------------------
-// Set camera far clipping plane
-void NGLScene::setCamFarClip(double _farClip)
-{
-    m_farClip= _farClip;
-    update();
-}
-
-//----------------------------------------------------------------------------------------------------------------------
-// Signal passed from the UI to set the camera roll.
-//void NGLScene::setCameraRoll(double _cameraRoll)
-//{
-//    m_cam = m_camera->cameraRoll(m_cam, _cameraRoll);
-//    update();
-//}
-
-//----------------------------------------------------------------------------------------------------------------------
-// Signal passed from the UI to set the camera yaw.
-//void NGLScene::setCameraYaw(double _cameraYaw)
-//{
-//    m_cam = m_camera->cameraYaw(m_cam, _cameraYaw);
-//    update();
-//}
-
-//----------------------------------------------------------------------------------------------------------------------
-// Signal passed from the UI to set the camera pitch.
-//void NGLScene::setCameraPitch(double _cameraPitch)
-//{
-//    m_cam = m_camera->cameraPitch(m_cam, _cameraPitch);
-//    update();
-//}

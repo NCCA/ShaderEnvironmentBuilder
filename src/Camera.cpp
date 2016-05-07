@@ -65,7 +65,7 @@ std::vector<ngl::Camera> Camera::createCamera()
 
 ngl::Camera Camera::setShapeCam()
 {
-  m_mainCamera.setShape(m_fov, m_aspect, 0.5f, 150.0f);
+  m_mainCamera.setShape(m_fov, m_aspect, m_nearClip, m_farClip);
   return m_mainCamera;
 }
 
@@ -126,6 +126,26 @@ void Camera::setCameraShape(QString _view)
   std::cout<<view<<std::endl;
   emit updateSignal();
 }
+
+
+//----------------------------------------------------------------------------------------------------------------------
+// Set camera near clipping plane
+void Camera::setCamNearClip(double _nearClip)
+{
+    m_nearClip= _nearClip;
+    emit updateSignal();
+}
+
+//----------------------------------------------------------------------------------------------------------------------
+// Set camera far clipping plane
+void Camera::setCamFarClip(double _farClip)
+{
+    m_farClip= _farClip;
+    emit updateSignal();
+}
+
+
+
 
 void updateSignal()
 {

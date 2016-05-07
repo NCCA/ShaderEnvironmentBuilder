@@ -185,7 +185,7 @@
                   </size>
                  </property>
                  <property name="toolTip">
-                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Teeheehee&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                  </property>
                  <property name="whatsThis">
                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CameraSettings&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -438,6 +438,9 @@
                         <property name="singleStep">
                          <double>0.100000000000000</double>
                         </property>
+                        <property name="value">
+                         <double>0.500000000000000</double>
+                        </property>
                        </widget>
                       </item>
                       <item>
@@ -457,6 +460,9 @@
                         </property>
                         <property name="singleStep">
                          <double>1.000000000000000</double>
+                        </property>
+                        <property name="value">
+                         <double>15.000000000000000</double>
                         </property>
                        </widget>
                       </item>

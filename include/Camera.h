@@ -78,6 +78,8 @@ public:
 
     ngl::Camera setShapeCam();
     ngl::Camera m_mainCamera;
+    float m_nearClip;
+    float m_farClip;
 
     void someSlot(const QVariant &);
 public slots:
@@ -103,6 +105,16 @@ public slots:
     /// @param[in] _cameraYaw the new yaw value
     //----------------------------------------------------------------------------
     void cameraYaw(double _cameraYaw);
+    //----------------------------------------------------------------------------------------------------------------------
+    // Set camera near clipping plane
+    void setCamNearClip(double _nearClip);
+
+    //----------------------------------------------------------------------------------------------------------------------
+    // Set camera far clipping plane
+    void setCamFarClip(double _farClip);
+
+
+
     signals:
     void updateSignal();
 };
