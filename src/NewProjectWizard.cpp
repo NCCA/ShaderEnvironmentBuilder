@@ -214,7 +214,13 @@ void ProjectInfoPage::initializePage()
 {
   m_le_projectName->setText("Phong");
   m_le_projectDirectory->setText(QDir::homePath());
-  m_cb_glslVersion->setCurrentIndex(0);
+
+  // get the shader version and set the combobox to the highest compatible
+  const unsigned char* glv = glGetString(GL_SHADING_LANGUAGE_VERSION);
+  QString glVerStrConvert = QString((const char* ) glv);
+  QString glVerStr = glVerStrConvert.left(1) + glVerStrConvert.mid(2,2);
+
+  m_cb_glslVersion->setCurrentText(glVerStr);
   m_cb_glslProfile->setCurrentIndex(0);
 }
 

@@ -104,6 +104,7 @@ NGLScene::NGLScene( QWidget *_parent, parserLib *_libParent ) : QOpenGLWidget( _
   m_cameraIndex = 0;
   // set this widget to have the initial keyboard focus
   setFocus();
+  connect(this, SIGNAL(initializeGL()), this, SLOT(initGL()));
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -180,7 +181,7 @@ void NGLScene::importTextureMap(const string &_name)
 // and then once whenever the widget has been assigned a new QGLContext.
 // This function should set up any required OpenGL context rendering flags, defining display lists, etc.
 //----------------------------------------------------------------------------------------------------------------------
-void NGLScene::initializeGL()
+void NGLScene::initGL()
 {
   ngl::NGLInit::instance();
   clearAllGlErrors();

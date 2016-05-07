@@ -4,6 +4,7 @@
 #include "Io_xml.h"
 
 #include <QString>
+#include <QMessageBox>
 #include <cstdlib>
 #include <string>
 
@@ -47,6 +48,8 @@ public:
   
   //get method to return the project dir
   inline std::string getDir(){return m_data.m_projectDir;}
+
+  int confirmOverwrite(QString _filePath);
 
 private:
 
