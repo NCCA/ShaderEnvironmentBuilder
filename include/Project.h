@@ -1,24 +1,16 @@
 #ifndef PROJECT_H
 #define PROJECT_H
 
-#include "Io_xml.h"
-
 #include <QString>
 #include <QMessageBox>
 #include <cstdlib>
 #include <string>
 
-#include "Json.h"
+#include "Io_xml.h"
 
-struct projectData
-{
-  std::string m_projectName;
-  std::string m_projectDir;
-};
 
 class Project
 {
-
 
 public:
 
@@ -38,37 +30,33 @@ public:
   void saveAs(QString vertSource, QString fragSource);
   
   //method to load
-  void load(string _loadedFileDirectory, QString &o_vertSource, QString &o_fragSource);
+  void load(std::string _loadedFileDirectory, QString &o_vertSource, QString &o_fragSource);
   
   //method to export the current project to accessible glsl files
   bool exportProject(std::string _targetDir, QString vertSource, QString fragSource);
   
   //get method to return the project name
-  inline std::string getName(){return m_data.m_projectName;}
+  inline std::string getName(){return m_projectName;}
   
   //get method to return the project dir
-  inline std::string getDir(){return m_data.m_projectDir;}
+  inline std::string getDir(){return m_projectDir;}
 
   int confirmOverwrite(QString _filePath);
 
 private:
 
   //project name
-  projectData m_data;
+  std::string m_projectName;
+
+  std::string m_projectDir;
 
   //flag to say if the current project has alerady been saved
   bool m_saved;
 
   //----------------------------------------------------------------------------------------------------------------------
-  /// @brief used to save shaders to a json file
-  //----------------------------------------------------------------------------------------------------------------------
-  Json *m_Json;
-
-  //----------------------------------------------------------------------------------------------------------------------
   /// @brief used to save and load project information from xml file
   //----------------------------------------------------------------------------------------------------------------------
   IO_XML *m_xml;
-
 
 };
 

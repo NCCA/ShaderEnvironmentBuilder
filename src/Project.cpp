@@ -11,29 +11,29 @@
 
 Project::Project()
 {
-  m_data.m_projectName = "untitled";
-  m_data.m_projectDir = "";
-  m_Json  = new Json;
+  m_projectName = "untitled";
+  m_projectDir = "";
   m_xml = new IO_XML;
   m_saved = false;
 }
 
 Project::~Project()
 {
-  delete m_Json;
   delete m_xml;
 }
 
 void Project::set(std::string _name, std::string _dir, bool _saved)
 {
-  m_data.m_projectName = _name;
-  m_data.m_projectDir = _dir;
+  m_projectName = _name;
+  m_projectDir = _dir;
   m_saved = _saved;
 }
 
 void Project::save(QString vertSource, QString fragSource)
 {
   QString fileName;
+
+  // if the project has not been saved before then open the QFile Dialog
   if(!m_saved)
   {
     QFileDialog dialog;
@@ -41,23 +41,27 @@ void Project::save(QString vertSource, QString fragSource)
     dialog.setAcceptMode(QFileDialog::AcceptSave);
     if (dialog.exec())
     {
+
       fileName = dialog.selectedFiles().at(0);
       QFileInfo finfo = QFileInfo(fileName);
-      m_data.m_projectDir = finfo.absolutePath().toStdString();
-      m_data.m_projectName = finfo.baseName().toStdString();
+      // set project data fromt eh dialog and set m_saved to true
+      set(finfo.baseName().toStdString(), finfo.absolutePath().toStdString(), true);
     }
 
   }
-  std::cout<<"Name: "<<m_data.m_projectName<<"  Directory: "<<m_data.m_projectDir<<std::endl;
+  std::cout<<"Saving project..."<<std::endl;
 
-  // Converts QString to const char* (These have to be separate, not .toStdString.c_str() otherwise it doesn't write the string.)
+  // convert QStrings to c strings.
   std::string vertSourceString = vertSource.toStdString();
   std::string fragSourceString = fragSource.toStdString();
+
   const char * vertSource_c = vertSourceString.c_str();
   const char * fragSource_c = fragSourceString.c_str();
 
-  m_xml->writeProject(m_data.m_projectName, m_data.m_projectDir, vertSource_c, fragSource_c);
-  m_saved = true;
+  //write project to XML
+  m_xml->writeProject(m_projectName, m_projectDir, vertSource_c, fragSource_c);
+
+  std::cout<<"Saved project: \n Name: "<<m_projectName<<"  Directory: "<<m_projectDir<<std::endl;
 }
 
 void Project::saveAs(QString vertSource, QString fragSource)
@@ -85,7 +89,7 @@ bool Project::exportProject(std::string _targetDir, QString vertSource, QString 
 
   QString detOutput;
   //create path to vertex.glsl in target directory
-  QString vFilePath = QString::fromStdString(_targetDir + m_data.m_projectName + "Vertex.glsl");
+  QString vFilePath = QString::fromStdString(_targetDir + m_projectName + "Vertex.glsl");
   qDebug() << vFilePath;
 
   //create qfile object assiciated with the file name
@@ -119,7 +123,7 @@ bool Project::exportProject(std::string _targetDir, QString vertSource, QString 
   }
 
   //now do the same for fragment.glsl
-  QString fFilePath = QString::fromStdString(_targetDir + m_data.m_projectName + "Fragment.glsl");
+  QString fFilePath = QString::fromStdString(_targetDir + m_projectName + "Fragment.glsl");
   qDebug() << fFilePath;
   QFile fragFile(fFilePath);
   checkPath = QFileInfo(fFilePath);
@@ -158,17 +162,22 @@ bool Project::exportProject(std::string _targetDir, QString vertSource, QString 
 // Loads the xml saved project data.
 void Project::load(std::string _loadedFileDirectory, QString &o_vertSource, QString &o_fragSource)
 {
-   m_saved = true;
-   std::cout<<"Opening: "<<_loadedFileDirectory<<std::endl;
 
+   std::cout<<"Opening: "<<_loadedFileDirectory<<std::endl;
    std::string vertSource = "";
    std::string fragSource = "";
    std::string fileName = "";
    std::string fileDirectory = "";
+
+   // read project from XML file storing data in variables.
    m_xml->readProjectXML(fileName, fileDirectory, _loadedFileDirectory, vertSource, fragSource);
-   m_data.m_projectName = fileName;
-   m_data.m_projectDir = fileDirectory;
+
+   // set the project data
+   set(fileName, fileDirectory, true);
+
+   // set output shader source strings
    o_vertSource = QString::fromStdString(vertSource);
    o_fragSource = QString::fromStdString(fragSource);
+
 }
 
