@@ -160,11 +160,10 @@ void Cebitor::highlightAllSearch()
     lineIndexFromPosition(current,&line,&indexFrom);
     indexTo = indexFrom + searchTerm.length();
     fillIndicatorRange(line,indexFrom,line,indexTo,m_searchIndicator);
-    current = text().indexOf(
-          searchTerm,
-          current+1,
-          Qt::CaseSensitivity::CaseInsensitive
-          );
+    current = text().indexOf(searchTerm,
+                             current+1,
+                             Qt::CaseSensitivity::CaseInsensitive
+                             );
   }
 }
 
