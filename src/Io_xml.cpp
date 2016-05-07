@@ -1,35 +1,28 @@
-
 #include "Io_xml.h"
-#include <fstream>
-#include <ostream>
-#include <vector>
-#include <stdio.h>
 
-//#include "rapidxml_print.hpp"
 using namespace rapidxml;
 using namespace std;
 IO_XML::IO_XML()
 {
 }
 // ----------------------------------------------------------------------------------------------------------------------
-// Organises name, type and value for shader data into an XML file. E.g. Name: light.diffuse, Type: mat4, value: 1
+// (Unused) Organises name, type and value for shader data into an XML file. E.g. Name: light.diffuse, Type: mat4, value: 1.
 void IO_XML::writeXML(std::string _name, std::string _type, int _value)
 {
-
-        cout<<"Input name = "<<_name<<"\tInput value = "<<_type<<"\tInput value = "<<_value<<std::endl;
-        xml_document<> doc;
-        ifstream file("./XMLfiles/readFrom.xml");
-        vector<char> buffer((istreambuf_iterator<char>(file)), istreambuf_iterator<char>( ));
-        buffer.push_back('\0');
-        //cout<<&buffer[0]<<endl;  //prints xml buffer
-        doc.parse<0>(&buffer[0]);
-        xml_node<> *current_node = doc.first_node("root");
-        current_node = current_node->first_node("dataSets");
-        current_node->append_attribute(doc.allocate_attribute("NewName", "Henry"));
-        current_node->append_attribute(doc.allocate_attribute("Version", "5000"));
-        ofstream newfile;
-        newfile.open("./XMLfiles/writtenTo.xml");
-        newfile << doc;
+    cout<<"Input name = "<<_name<<"\tInput value = "<<_type<<"\tInput value = "<<_value<<std::endl;
+    xml_document<> doc;
+    ifstream file("./XMLfiles/readFrom.xml");
+    vector<char> buffer((istreambuf_iterator<char>(file)), istreambuf_iterator<char>( ));
+    buffer.push_back('\0');
+    //cout<<&buffer[0]<<endl;  //prints xml buffer
+    doc.parse<0>(&buffer[0]);
+    xml_node<> *current_node = doc.first_node("root");
+    current_node = current_node->first_node("dataSets");
+    current_node->append_attribute(doc.allocate_attribute("NewName", "Henry"));
+    current_node->append_attribute(doc.allocate_attribute("Version", "5000"));
+    ofstream newfile;
+    newfile.open("./XMLfiles/writtenTo.xml");
+    newfile << doc;
 }
 
 //----------------------------------------------------------------------------------------------------------------------

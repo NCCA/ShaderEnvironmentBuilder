@@ -26,10 +26,13 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
 {
   m_project = new Project;
   m_camera = new Camera;
+
   // Setup ui from form creator (MainWindow.ui)
   m_ui->setupUi(this);
+
   // create parser in main window
   m_parForButton = new ParserLib;
+
   // Create openGl and qsci widgets, pass in the parser
   m_gl=new  NGLScene(this, m_parForButton);
 
@@ -44,6 +47,7 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
 
   // add the openGl window to the interface
   m_ui->m_splitH_editContext->insertWidget(0, m_gl);
+
   // Delete the template frame from the form designer
   delete(m_ui->m_f_gl_temp);
 
@@ -77,31 +81,31 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   connect(m_ui->m_actionLoad_Troll,SIGNAL(triggered()),this,SLOT(shapeTriggered()));
   connect(m_ui->m_actionLoad_Dragon,SIGNAL(triggered()),this,SLOT(shapeTriggered()));
   connect(m_ui->m_actionLoad_Bunny,SIGNAL(triggered()),this,SLOT(shapeTriggered()));
+
   // switching to .obj files
   connect(m_ui->m_actionLoad_Obj,SIGNAL(triggered()),this,SLOT(objOpened()));
 
   // switching to .jpg files
   connect(m_ui->m_actionLoad_Texture,SIGNAL(triggered()),this,SLOT(on_m_actionLoad_Texture_triggered()));
 
+  // Prints the active uniforms
   connect(m_ui->m_exportUniforms,SIGNAL(clicked()),m_gl,SLOT(exportUniform()));
   connect(m_ui->m_printUniforms ,SIGNAL(clicked()),this,SLOT(printUniforms()));
 
+  // Obj features
   connect(m_ui->m_showNormals,SIGNAL(toggled(bool)),m_gl,SLOT(toggleNormals(bool)));
   connect(m_ui->m_showWireframe,SIGNAL(toggled(bool)),m_gl,SLOT(toggleWireframe(bool)));
   connect(m_ui->m_showGrid,SIGNAL(toggled(bool)),m_gl,SLOT(toggleGrid(bool)));
   connect(m_ui->m_showAxis,SIGNAL(toggled(bool)),m_gl,SLOT(toggleAxis(bool)));
-
   connect(m_ui->m_normalSize,SIGNAL(valueChanged(int)),m_gl,SLOT(setNormalSize(int)));
+
   // line marker connections
   connect(m_ui->m_btn_compileShader,SIGNAL(pressed()),m_vertQsci,SLOT(clearErrors()));
   connect(m_ui->m_btn_compileShader,SIGNAL(pressed()),m_fragQsci,SLOT(clearErrors()));
   connect(m_gl,SIGNAL(createLineMarker(QString,int)),this,SLOT(addError(QString,int)));
-
   connect(m_gl,SIGNAL(initializeGL()), this, SLOT(on_m_btn_compileShader_clicked()));
 
-
   update();
-  //std::cerr<<"Find number of active uniforms: "<<m_parForButton->m_num<<std::endl;
 
   this->setGeometry(
         QStyle::alignedRect(
@@ -114,12 +118,6 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
 
   m_startDialog = new StartupDialog(this);
 
-}
-
-//------------------------------------------------------------------------------
-MainWindow::~MainWindow()
-{
-  delete m_ui;
 }
 
 //------------------------------------------------------------------------------
@@ -144,13 +142,14 @@ void MainWindow::printUniforms()
   m_parForButton->printUniforms();
 }
 
-//----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 Cebitor *MainWindow::createQsciWidget(QWidget *_parent)
 {
   // Create the QsciScintilla widget
   Cebitor* qsci = new Cebitor(_parent);
   QBoxLayout *layout = new QVBoxLayout;
   layout->addWidget(qsci);
+
   // Create search bar widget
   QWidget *searchWidget = new QWidget(_parent);
   QBoxLayout *searchLayout = new QVBoxLayout(searchWidget);
@@ -213,8 +212,9 @@ void MainWindow::objOpened()
 {
   // Open a file dialog and return a file directory
   QString fileName=QFileDialog::getOpenFileName(this,
-                                                tr("Open Mesh"),"0Features-0BugsCVA3/",tr("Image Files (*.obj)"));
-
+                                                tr("Open Mesh"),
+                                                "0Features-0BugsCVA3/",
+                                                tr("Image Files (*.obj)"));
   std::string importName=fileName.toStdString();
   // Import the mesh
   m_gl->importMeshName(importName);
@@ -281,7 +281,7 @@ bool MainWindow::newProjectWiz(QWidget* _parent)
   }
   else
   {
-    //qDebug() << "FAIL";
+    // qDebug() << "FAIL";
   }
   delete projectWiz;
   return success;
@@ -296,7 +296,7 @@ void MainWindow::on_actionNew_triggered()
 //------------------------------------------------------------------------------
 void MainWindow::keyPressEvent(QKeyEvent *_event)
 {
-  // that method is called every time the main window recives a key event.
+  // this method is called every time the main window recives a key event.
   switch (_event->key())
   {
     case Qt::Key_W : {m_ui->m_showWireframe->toggle(); break;}
@@ -320,7 +320,6 @@ void MainWindow::on_actionSaveProjectAs_triggered()
 }
 
 //------------------------------------------------------------------------------
-
 void MainWindow::on_actionOpen_triggered()
 {
   // read file directory from dialog
@@ -341,11 +340,9 @@ void MainWindow::on_actionOpen_triggered()
      // set proect data in scene for shader manager
      m_gl->setProject(m_project->getName(), vertSource,fragSource);
   }
-
-
-
 }
 
+//------------------------------------------------------------------------------
 void MainWindow::on_actionExport_triggered()
 {
   QFileDialog dialog(this);
@@ -356,10 +353,14 @@ void MainWindow::on_actionExport_triggered()
   if (dialog.exec())
   {
     dirNames = dialog.selectedFiles();
-    m_project->exportProject(dirNames.at(0).toStdString(), m_vertQsci->text(), m_fragQsci->text());
+    m_project->exportProject(dirNames.at(0).toStdString(),
+                             m_vertQsci->text(),
+                             m_fragQsci->text());
   }
 
 }
+
+//------------------------------------------------------------------------------
 void MainWindow::on_m_actionLoad_Texture_triggered()
 {
   // Open a file dialog and return a file directory
@@ -367,11 +368,12 @@ void MainWindow::on_m_actionLoad_Texture_triggered()
                                               tr("Open Texture Map"),
                                               "0Features-0BugsCVA3/",
                                               tr("Image Files (*.jpg)"));
-  //load texture map to OBJ
+  // load texture map to OBJ
   std::string importName=fileName.toStdString();
   m_gl->importTextureMap(importName);
 }
 
+//------------------------------------------------------------------------------
 void MainWindow::addError(QString _shaderName, int _lineNum)
 {
   Cebitor * cebitorInstance;
@@ -384,4 +386,10 @@ void MainWindow::addError(QString _shaderName, int _lineNum)
     cebitorInstance = m_fragQsci;
   }
   cebitorInstance->markerAdd(_lineNum,Cebitor::MarkerType::ERROR);
+}
+
+//------------------------------------------------------------------------------
+MainWindow::~MainWindow()
+{
+  delete m_ui;
 }

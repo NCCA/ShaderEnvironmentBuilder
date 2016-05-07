@@ -19,8 +19,6 @@
 // System includes
 #include <vector>
 
-// Engine includes
-
 // Library  includes
 #include <ngl/Vec4.h>
 #include <QMainWindow>
@@ -42,7 +40,6 @@
 class NGLScene;
 class StartupDialog;
 class ButtonLib;
-//class Camera;
 //------------------------------------------------------------------------------
 // Used to inherit the MainWindow from the generated form file ui_MainWindow.h
 //------------------------------------------------------------------------------
