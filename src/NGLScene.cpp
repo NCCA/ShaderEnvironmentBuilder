@@ -487,6 +487,8 @@ void NGLScene::mouseMoveEvent ( QMouseEvent * _event )
 //----------------------------------------------------------------------------------------------------------------------
 void NGLScene::mousePressEvent ( QMouseEvent * _event )
 {
+  // Focus set to main window since it controls all keypress events.
+  m_window->setFocus();
   // that method is called when the mouse button is pressed in this case we
   // store the value where the maouse was clicked (x,y) and set the Rotate flag to true
   if(_event->button() == Qt::LeftButton)
@@ -565,7 +567,6 @@ void NGLScene::keyPressEvent(QKeyEvent *_event)
 {
   switch (_event->key())
   {
-    case Qt::Key_F : resetObjPos(); break;
     default : break ;
   }
   update();
