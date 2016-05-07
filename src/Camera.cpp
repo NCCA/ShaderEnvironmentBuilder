@@ -1,6 +1,6 @@
 #include "Camera.h"
 
-//----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Camera settings
 Camera::Camera()
 {
@@ -8,18 +8,22 @@ Camera::Camera()
     m_cameraIndex = 0;
     m_cameraRoll = 0.00;
     m_cameraYaw = 0.00;
+    m_nearClip = 0.5f;
+    m_farClip = 150.0f;
 }
 
-//----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Creates a vector of cameras with different perspectives.
-std::vector<ngl::Camera> Camera::createCamera()
+void Camera::createCameras()
 {
+    // Initialises ngl cameras.
     ngl::Camera Pcam;
     ngl::Camera Tcam;
     ngl::Camera Bcam;
     ngl::Camera Lcam;
     ngl::Camera Rcam;
 
+    // Sets the eye, look, up position vectors of the cameras.
     ngl::Vec3 perspEye(2.0f, 0.5f,2.0f);
     ngl::Vec3 perspLook(0,0,0);
     ngl::Vec3 perspUp(0.0f,1.0f,0.0f);
@@ -40,6 +44,7 @@ std::vector<ngl::Camera> Camera::createCamera()
     ngl::Vec3 rightLook=(0,0,0);
     ngl::Vec3 rightUp(0.0f,1.0f,0.0f);
 
+    // Applies the camera positions and sets their shapes, then pushes to the vector of cameras.
     Pcam.set(perspEye,perspLook, perspUp);
     Pcam.setShape(m_fov,m_aspect, 0.5f,150.0f);
     m_cameras.push_back(Pcam);
@@ -59,17 +64,20 @@ std::vector<ngl::Camera> Camera::createCamera()
     Rcam.set(rightEye,rightLook,rightUp);
     Rcam.setShape(m_fov,m_aspect, 0.5f,150.0f);
     m_cameras.push_back(Rcam);
+
+    // Active camera used by NGLScene.
     m_mainCamera = m_cameras[m_cameraIndex];
-    return m_cameras;
 }
 
+//------------------------------------------------------------------------------
+// Sets camera shape and returns active camera to NGLScene.
 ngl::Camera Camera::setShapeCam()
 {
   m_mainCamera.setShape(m_fov, m_aspect, m_nearClip, m_farClip);
   return m_mainCamera;
 }
 
-//----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Camera Roll settings
 void Camera::cameraYaw(double _cameraYaw)
 {
@@ -80,7 +88,7 @@ void Camera::cameraYaw(double _cameraYaw)
 }
 
 
-//----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Camera Roll settings
 void Camera::cameraPitch(double _cameraPitch)
 {
@@ -91,7 +99,7 @@ void Camera::cameraPitch(double _cameraPitch)
 }
 
 
-//----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Camera Roll settings
 void Camera::cameraRoll(double _cameraRoll)
 {
@@ -101,7 +109,7 @@ void Camera::cameraRoll(double _cameraRoll)
     emit updateSignal();
 }
 
-//----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Signal passed from the UI to set the camera FOV
 void Camera::setCameraFocalLength(int _focalLength)
 {
@@ -110,6 +118,9 @@ void Camera::setCameraFocalLength(int _focalLength)
     emit updateSignal();
 }
 
+//------------------------------------------------------------------------------
+// The UI combo box signals the correct cam which is mapped to m_cameraIndex.
+// The new camera position is set.
 void Camera::setCameraShape(QString _view)
 {
   string view = _view.toStdString();
@@ -123,12 +134,12 @@ void Camera::setCameraShape(QString _view)
 
   m_cameraIndex = camViewMap[view];
   m_mainCamera = m_cameras[m_cameraIndex];
-  std::cout<<view<<std::endl;
+
   emit updateSignal();
 }
 
 
-//----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Set camera near clipping plane
 void Camera::setCamNearClip(double _nearClip)
 {
@@ -136,18 +147,10 @@ void Camera::setCamNearClip(double _nearClip)
     emit updateSignal();
 }
 
-//----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Set camera far clipping plane
 void Camera::setCamFarClip(double _farClip)
 {
     m_farClip= _farClip;
     emit updateSignal();
-}
-
-
-
-
-void updateSignal()
-{
-    ;
 }

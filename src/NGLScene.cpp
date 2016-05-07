@@ -98,7 +98,7 @@ NGLScene::NGLScene( QWidget *_parent, ParserLib *_libParent ) : QOpenGLWidget( _
   m_wireframe=false;
   m_shaderManager = new ShaderManager();
   m_camera = new Camera();
-  m_cameras = m_camera->createCamera();  //returns vector of cameras
+  m_camera->createCameras();
   m_cam = m_camera->m_mainCamera;
 
   // set this widget to have the initial keyboard focus
@@ -380,13 +380,13 @@ void NGLScene::drawObject(uint _type)
 //----------------------------------------------------------------------------------------------------------------------
 void NGLScene::resizeGL(QResizeEvent *_event)
 {
-  setCameraShape(QString::fromStdString("Persp"));
+    m_camera->m_aspect = (float)width()/height();
 }
 
 //----------------------------------------------------------------------------------------------------------------------
 void NGLScene::resizeGL(int _w, int _h)
 {
-  setCameraShape(QString::fromStdString("Persp"));
+     m_camera->m_aspect = (float)width()/height();
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -717,10 +717,10 @@ void NGLScene::drawAxis(ngl::Vec3 _pos)
 
 
 
-//----------------------------------------------------------------------------------------------------------------------
-// Sets the view of the camera (persp, top, bottom, side).
-void NGLScene::setCameraShape(QString _view)
-{
-}
+////----------------------------------------------------------------------------------------------------------------------
+//// Sets the view of the camera (persp, top, bottom, side).
+//void NGLScene::setCameraShape(QString _view)
+//{
+//}
 
 

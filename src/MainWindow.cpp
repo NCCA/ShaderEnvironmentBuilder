@@ -53,6 +53,7 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   // Widget 2 (fragment)
   m_fragQsci = createQsciWidget(m_ui->m_tab_qsci_2);
 
+  // Camera settings
   connect(m_ui->m_nearClip, SIGNAL(valueChanged(double)), m_gl->m_camera, SLOT(setCamNearClip(double)));
   connect(m_ui->m_farClip, SIGNAL(valueChanged(double)), m_gl->m_camera, SLOT(setCamFarClip(double)));
   connect(m_ui->m_cameraRoll, SIGNAL(valueChanged(double)), m_gl->m_camera, SLOT(cameraRoll(double)));
@@ -61,7 +62,6 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   connect(m_ui->m_sldr_cameraFov, SIGNAL(valueChanged(int)), m_gl->m_camera, SLOT(setCameraFocalLength(int)));
   connect(m_ui->m_comboBox_view, SIGNAL(currentTextChanged(QString)), m_gl->m_camera, SLOT(setCameraShape(QString)));
   connect(m_gl->m_camera, SIGNAL(updateSignal()), m_gl, SLOT(update()));
-  connect(m_ui->m_comboBox_view, SIGNAL(currentTextChanged(QString)), m_gl, SLOT(setCameraShape(QString)));
   connect(m_ui->m_resetCam,SIGNAL(clicked()),m_gl,SLOT(resetObjPos()));
 
   // Load the text files into the corresponding tabs

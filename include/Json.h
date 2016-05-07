@@ -5,11 +5,10 @@
 #include <fstream>
 #include <string.h>
 #include <vector>
-
-#include "json/json.hpp"
-#include "boost/property_tree/ptree.hpp"
-#include "boost/property_tree/json_parser.hpp"
-#include "rapidjson/document.h"
+#include <json/json.hpp>
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/json_parser.hpp>
+#include <rapidjson/document.h>
 
 //------------------------------------------------------------------------------------------------------------------------
 /// @file Json.h
