@@ -122,7 +122,7 @@ NGLScene::~NGLScene()
 void NGLScene::setMeshLocation(std::string _meshDirectory)
 {
   m_meshLoc=_meshDirectory;
-  std::cout<<"Imported file:  "<<_meshDirectory<<std::endl;
+  //std::cout<<"Imported file:  "<<_meshDirectory<<std::endl;
 }
 
 void NGLScene::toggleObj()
@@ -136,26 +136,26 @@ void NGLScene::toggleObj()
 
 }
 
-void NGLScene::importMeshName(const std::string &name)
+void NGLScene::importMeshName(const std::string &_name)
 {
   // If the CANCEL button is clicked, then don't update the shapetype or location
-  std::ifstream shaderSource(name.c_str());
+  std::ifstream shaderSource(_name.c_str());
   if (!shaderSource.is_open())
   {
-    if(name.length()==0)
+    if(_name.length()==0)
     {
       std::cerr<<"Import Cancelled"<<std::endl;
       //exit(EXIT_FAILURE);
     }
     else
     {
-      std::cerr<<"File not found"<<name.c_str()<<std::endl;
+      std::cerr<<"File not found"<<_name.c_str()<<std::endl;
       //exit(EXIT_FAILURE);
     }
   }
   else
   {
-    setMeshLocation(name);
+    setMeshLocation(_name);
     setShapeType(0);
     m_toggleObj=true;
   }
@@ -163,10 +163,10 @@ void NGLScene::importMeshName(const std::string &name)
 
 }
 
-void NGLScene::importTextureMap(const string &name)
+void NGLScene::importTextureMap(const string &_name)
 {
-  std::ifstream textureSource(name.c_str());
-  ngl::Texture texture (name);
+  std::ifstream textureSource(_name.c_str());
+  ngl::Texture texture (_name);
   m_textureName=texture.setTextureGL();
   update();
 }
@@ -251,7 +251,7 @@ void NGLScene::setShapeType(int _type)
   }
   else
   {
-    std::cout<<"Invalid shape type"<<std::endl;
+    //std::cout<<"Invalid shape type"<<std::endl;
   }
   update();
 }
@@ -371,7 +371,7 @@ void NGLScene::objectTransform(uint _type)
       break;
       // Moved the bunny to be the same relative shape and position
     }
-    default: std::cout<<"unrecognised shape type value"<<std::endl; break;
+    default: std::cerr<<"unrecognised shape type value\n"; break;
   }
 }
 void NGLScene::drawObject(uint _type)
@@ -389,8 +389,8 @@ void NGLScene::drawObject(uint _type)
     case teapot: { prim->draw("teapot");break; }
     case troll : { prim->draw("troll"); break; }
     case dragon: { prim->draw("dragon");break; }
-    case bunny :  { prim->draw("bunny"); break; }
-    default    : std::cout<<"unrecognised shape type value"<<std::endl; break;
+    case bunny : { prim->draw("bunny"); break; }
+    default    : std::cerr<<"unrecognised shape type value\n"; break;
   }
 }
 
@@ -430,24 +430,24 @@ void NGLScene::loadMatricesToShader()
   shaderLib->setShaderParamFromMat4("M",M);
 }
 
-void NGLScene::toggleWireframe(bool _value)
+void NGLScene::toggleWireframe(bool _state)
 {
-  m_wireframe=_value;
+  m_wireframe=_state;
   update();
 }
-void NGLScene::toggleNormals(bool _value)
+void NGLScene::toggleNormals(bool _state)
 {
-  m_drawNormals=_value;
+  m_drawNormals=_state;
   update();
 }
-void NGLScene::toggleGrid(bool _value)
+void NGLScene::toggleGrid(bool _state)
 {
-  m_drawGrid=_value;
+  m_drawGrid=_state;
   update();
 }
-void NGLScene::toggleAxis(bool _value)
+void NGLScene::toggleAxis(bool _state)
 {
-  m_toggleAxis=_value;
+  m_toggleAxis=_state;
   update();
 }
 
@@ -506,7 +506,7 @@ void NGLScene::mousePressEvent ( QMouseEvent * _event )
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-void NGLScene::mouseReleaseEvent ( QMouseEvent * _event )
+void NGLScene::mouseReleaseEvent(QMouseEvent * _event)
 {
   // that event is called when the mouse button is released
   // we then set Rotate to false
@@ -572,9 +572,9 @@ void NGLScene::keyPressEvent(QKeyEvent *_event)
 }
 
 
-void NGLScene::compileShader(QString vertSource, QString fragSource)
+void NGLScene::compileShader(QString _vertSource, QString _fragSource)
 {
-  m_shaderManager->compileShader(m_cameras[m_cameraIndex], vertSource, fragSource);
+  m_shaderManager->compileShader(m_cameras[m_cameraIndex], _vertSource, _fragSource);
   m_window->setTerminalText(parseErrorLog(m_shaderManager->getErrorLog()));
   ngl::Light light(ngl::Vec3(2,2,2),ngl::Colour(1,1,1,1),ngl::Colour(1,1,1,1),ngl::LightModes::POINTLIGHT);
   // now create our light this is done after the camera so we can pass the
@@ -670,13 +670,17 @@ void NGLScene::resetObjPos()
   m_modelPos.m_z = 0;
   m_spinXFace = 0;
   m_spinYFace = 0;
+
+  setCameraRoll(0.0);
+  setCameraYaw(0.0);
+
   update();
 }
 
 //------------------------------------------------------------------------------
-void NGLScene::newProject(std::string _name, QString vertSource, QString fragSource)
+void NGLScene::newProject(std::string _name, QString _vertSource, QString _fragSource)
 {
-  m_shaderManager->createShaderProgram(_name, m_cam, vertSource, fragSource);
+  m_shaderManager->createShaderProgram(_name, m_cam, _vertSource, _fragSource);
 }
 
 //------------------------------------------------------------------------------
