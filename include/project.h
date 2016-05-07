@@ -4,6 +4,7 @@
 #include "Io_xml.h"
 
 #include <QString>
+#include <QMessageBox>
 #include <cstdlib>
 #include <string>
 
@@ -37,7 +38,7 @@ public:
   void saveAs(QString vertSource, QString fragSource);
   
   //method to load
-  void load(string _fileName, string _fileDirectory);
+  void load(string _loadedFileDirectory);
   
   //method to export the current project to accessible glsl files
   bool exportProject(std::string _targetDir, QString vertSource, QString fragSource);
@@ -47,6 +48,8 @@ public:
   
   //get method to return the project dir
   inline std::string getDir(){return m_data.m_projectDir;}
+
+  int confirmOverwrite(QString _filePath);
 
 private:
 
