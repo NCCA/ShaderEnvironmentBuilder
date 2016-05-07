@@ -48,12 +48,12 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   m_fragQsci = createQsciWidget(m_ui->m_tab_qsci_2);
 
   // Camera Settings
-   connect(m_ui->m_sldr_cameraFov,SIGNAL(valueChanged(int)),m_gl,SLOT(setCameraFocalLength(int)));
-   connect(m_ui->m_cameraRoll, SIGNAL(valueChanged(double)), m_gl, SLOT(setCameraRoll(double)));
-   connect(m_ui->m_cameraYaw, SIGNAL(valueChanged(double)), m_gl, SLOT(setCameraYaw(double)));
-   connect(m_ui->m_cameraPitch, SIGNAL(valueChanged(double)), m_gl, SLOT(setCameraPitch(double)));
-   connect(m_ui->m_comboBox_view, SIGNAL(currentTextChanged(QString)), m_gl, SLOT(setCameraShape(QString)));
-   connect(m_ui->m_resetCam,SIGNAL(clicked()),m_gl,SLOT(resetObjPos()));
+  connect(m_ui->m_sldr_cameraFov,SIGNAL(valueChanged(int)),m_gl,SLOT(setCameraFocalLength(int)));
+  connect(m_ui->m_cameraRoll, SIGNAL(valueChanged(double)), m_gl, SLOT(setCameraRoll(double)));
+  connect(m_ui->m_cameraYaw, SIGNAL(valueChanged(double)), m_gl, SLOT(setCameraYaw(double)));
+  connect(m_ui->m_cameraPitch, SIGNAL(valueChanged(double)), m_gl, SLOT(setCameraPitch(double)));
+  connect(m_ui->m_comboBox_view, SIGNAL(currentTextChanged(QString)), m_gl, SLOT(setCameraShape(QString)));
+  connect(m_ui->m_resetCam,SIGNAL(clicked()),m_gl,SLOT(resetObjPos()));
   connect(m_ui->m_nearClip, SIGNAL(valueChanged(double)), m_gl, SLOT(setCamNearClip(double)));
   connect(m_ui->m_farClip, SIGNAL(valueChanged(double)), m_gl, SLOT(setCamFarClip(double)));
   // Load the text files into the corresponding tabs
@@ -305,23 +305,22 @@ void MainWindow::on_actionSaveProjectAs_triggered()
 }
 
 //------------------------------------------------------------------------------
+// Opens the .xml project file.
 void MainWindow::on_actionOpen_triggered()
 {
-    // Open a file dialog and return a file directory
-    QString fileName=QFileDialog::getOpenFileName(this,
-                                                  tr("Open Project"),"./",tr("XML Files (*.xml)"));
-//    QString importDirectory = QFileDialog::getExistingDirectory(this, tr("Open Project"),
-//                                                 "./",
-//                                                 QFileDialog::ShowDirsOnly
-//                                                 | QFileDialog::DontResolveSymlinks);
+    QString fileDir=QFileDialog::getOpenFileName(this,
+                                                  tr("Open Project"),"0Features-0BugsCVA3/",tr("XML Files (*.xml)"));
+    string fileDirectory = "";
+    if( fileDir.isEmpty() )
+    {
+      fileDirectory = "Empty";
 
-    std::string importName=fileName.toStdString();
-    std::string fileDirectory = ":";
-//    std::string fileDirectory=importDirectory.toStdString();
-    // Import the mesh
-    //m_gl->importMeshName(importName);
-
-    m_project->load(importName, fileDirectory);
+    }
+    else
+    {
+       fileDirectory = fileDir.toStdString();
+    }
+    m_project->load(fileDirectory);
 }
 
 void MainWindow::on_actionExport_triggered()

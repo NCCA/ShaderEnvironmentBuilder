@@ -106,49 +106,15 @@ bool Project::exportProject(std::string _targetDir, QString vertSource, QString 
   return true;
 
 }
-
-void Project::load(std::string _fileName, std::string _fileDirectory)
+// ----------------------------------------------------------------------------------------------------------------------
+// Loads the xml saved project data.
+void Project::load(std::string _fileDirectory)
 {
-    // Open a file dialog and return a file directory
-//    QString fileName=QFileDialog::getOpenFileName(this,
-//                                                  tr("Open Mesh"),"0Features-0BugsCVA3/",tr("Image Files (*.obj)"));
+   m_saved = true;
+   std::cout<<"Opening: "<<_fileDirectory<<std::endl;
 
-//    std::string importName=fileName.toStdString();
-    // Import the mesh
-    //m_gl->importMeshName(importName);
-
-//    QString fileName;
-//    if(!m_saved)
-//    {
-//      QFileDialog dialog;
-//      dialog.setFileMode(QFileDialog::AnyFile);
-
-//      dialog.setAcceptMode(QFileDialog::AcceptSave);
-//      if (dialog.exec())
-//      {
-//        fileName = dialog.selectedFiles().at(0);
-//        QFileInfo finfo = QFileInfo(fileName);
-//        m_data.m_projectDir = finfo.absolutePath().toStdString();
-//        m_data.m_projectName = finfo.baseName().toStdString();
-//      }
-
-//    }
-//    std::cout<<"Name: "<<m_data.m_projectName<<"  Directory: "<<m_data.m_projectDir<<std::endl;
-
-    // Converts QString to const char* (These have to be separate, not .toStdString.c_str() otherwise it doesn't write the string.)
-//    std::string vertSourceString = vertSource.toStdString();
-//    std::string fragSourceString = vertSource.toStdString();
-//    const char * vertSource_c = vertSourceString.c_str();
-//    const char * fragSource_c = fragSourceString.c_str();
-
-    //m_xml->writeProject(m_data.m_projectName, m_data.m_projectDir, vertSource_c, fragSource_c);
-    m_saved = true;
-
-
-   std::string _vertSource = "Hello vert";
-   std::string _fragSource = "Hello frag";
-   m_xml->readProjectXML(m_data.m_projectName, m_data.m_projectDir, _vertSource, _fragSource);
-   std::cout<<"Opened: "<<_vertSource<<std::endl;
-   std::cout<<"Opened: "<<_fragSource<<std::endl;
+   std::string _vertSource = "";
+   std::string _fragSource = "";
+   m_xml->readProjectXML(_fileDirectory, _vertSource, _fragSource);
 }
 

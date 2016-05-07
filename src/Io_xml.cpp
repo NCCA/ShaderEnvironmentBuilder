@@ -59,27 +59,31 @@ void IO_XML::shaderData(const char* _shaderProgramName, const char* _vertexShade
 
 
 // ----------------------------------------------------------------------------------------------------------------------
-// (May be omitted) Reading from an XML file.
-void IO_XML::readProjectXML(std::string _name, std::string _dir, std::string& _vertSource, std::string& _fragSource)
+// Reads the .xml project file vertex and fragment data, then returns this to project.cpp.
+// Returns an error if an incorrect XML file is opened.
+void IO_XML::readProjectXML(std::string _dir, std::string& _vertSource, std::string& _fragSource)
 {
     xml_document<> doc;
-    ifstream file("/home/i7685565/Downloads/test.xml");  // ***SANDY correct where to read the directory from.
+    ifstream file(_dir);
     vector<char> buffer((istreambuf_iterator<char>(file)), istreambuf_iterator<char>( ));
     buffer.push_back('\0');
-    cout<<&buffer[0]<<endl;  //prints xml buffer
     doc.parse<0>(&buffer[0]);
 
-    xml_node<> *current_node = doc.first_node("Shader_Data");
-    xml_node<> *vertex_node = current_node->first_node("Vertex");
-    xml_node<> *fragment_node = current_node->first_node("Fragment");
-    std::cout<<"Name: "<<current_node->first_attribute("Name")->value()<<"\tDir: "<<current_node->first_attribute("Dir")->value()<<std::endl;
+    xml_node<> *firstNode = doc.first_node();
+    if (!(doc.first_node("Shader_Data")))
+    {
+        std::cout<< "Error: Incorrect XML file. Open a previously saved project file and try again."<<std::endl;
+    }
+    else
+    {
+        xml_node<> *current_node = doc.first_node("Shader_Data");
+        xml_node<> *vertex_node = current_node->first_node("Vertex");
+        xml_node<> *fragment_node = current_node->first_node("Fragment");
+        std::cout<<"Opened project '"<<current_node->first_attribute("Name")->value()<<"' at "<<current_node->first_attribute("Dir")->value()<<" successfully."<<std::endl;
 
-    _vertSource = vertex_node->first_attribute("VtxData")->value();
-    std::cout<<"Vtx data: "<<_vertSource<<std::endl;
-
-    _fragSource = fragment_node->first_attribute("FragData")->value();
-    std::cout<<"Fragment data: "<<_fragSource<<std::endl;
-
+        _vertSource = vertex_node->first_attribute("VtxData")->value();
+        _fragSource = fragment_node->first_attribute("FragData")->value();
+    }
     return;
 }
 
