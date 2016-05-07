@@ -122,7 +122,7 @@ NGLScene::~NGLScene()
 void NGLScene::setMeshLocation(std::string _meshDirectory)
 {
   m_meshLoc=_meshDirectory;
-  std::cout<<"Imported file:  "<<_meshDirectory<<std::endl;
+  //std::cout<<"Imported file:  "<<_meshDirectory<<std::endl;
 }
 
 void NGLScene::toggleObj()
@@ -251,7 +251,7 @@ void NGLScene::setShapeType(int _type)
   }
   else
   {
-    std::cout<<"Invalid shape type"<<std::endl;
+    //std::cout<<"Invalid shape type"<<std::endl;
   }
   update();
 }
@@ -371,7 +371,7 @@ void NGLScene::objectTransform(uint _type)
       break;
       // Moved the bunny to be the same relative shape and position
     }
-    default: std::cout<<"unrecognised shape type value"<<std::endl; break;
+    default: std::cerr<<"unrecognised shape type value\n"; break;
   }
 }
 void NGLScene::drawObject(uint _type)
@@ -389,8 +389,8 @@ void NGLScene::drawObject(uint _type)
     case teapot: { prim->draw("teapot");break; }
     case troll : { prim->draw("troll"); break; }
     case dragon: { prim->draw("dragon");break; }
-    case bunny :  { prim->draw("bunny"); break; }
-    default    : std::cout<<"unrecognised shape type value"<<std::endl; break;
+    case bunny : { prim->draw("bunny"); break; }
+    default    : std::cerr<<"unrecognised shape type value\n"; break;
   }
 }
 
@@ -670,6 +670,10 @@ void NGLScene::resetObjPos()
   m_modelPos.m_z = 0;
   m_spinXFace = 0;
   m_spinYFace = 0;
+
+  setCameraRoll(0.0);
+  setCameraYaw(0.0);
+
   update();
 }
 

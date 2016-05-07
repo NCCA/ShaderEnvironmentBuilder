@@ -267,7 +267,7 @@ bool MainWindow::newProjectWiz(QWidget* _parent)
   }
   else
   {
-    qDebug() << "FAIL";
+    //qDebug() << "FAIL";
   }
   delete projectWiz;
   return success;
@@ -335,7 +335,6 @@ void MainWindow::on_m_actionLoad_Texture_triggered()
 
   //load texture map to OBJ
   std::string importName=fileName.toStdString();
-  std::cout<<"imported texture "<<importName<<std::endl;
   m_gl->importTextureMap(importName);
 }
 
