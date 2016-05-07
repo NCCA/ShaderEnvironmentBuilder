@@ -351,7 +351,7 @@ void parserLib::exportUniforms()
 {
   // Open the text file "ParsingOutput.txt"
   std::ofstream fileOut;
-  fileOut.open("ParsingOutput.txt");
+  fileOut.open("./tempFiles/ParsingOutput.txt");
   if(!fileOut.is_open())    ///If it can't be opened
   {
     std::cerr<<"couldn't' open file\n";
