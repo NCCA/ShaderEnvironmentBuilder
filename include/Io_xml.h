@@ -39,7 +39,7 @@ public:
     /// @brief Will read the project file data
     /// @param _type
     //----------------------------------------------------------------------------------------------------------------------
-    void readProjectXML(std::string _dir, std::string& _vertSource, std::string& _fragSource);
+    void readProjectXML(std::string &_name, std::string &_dir, std::string _loadedFileDirectory, std::string& _vertSource, std::string& _fragSource);
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief Deprecated function
     //----------------------------------------------------------------------------------------------------------------------

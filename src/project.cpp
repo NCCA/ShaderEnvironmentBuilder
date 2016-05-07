@@ -108,13 +108,17 @@ bool Project::exportProject(std::string _targetDir, QString vertSource, QString 
 }
 // ----------------------------------------------------------------------------------------------------------------------
 // Loads the xml saved project data.
-void Project::load(std::string _fileDirectory)
+void Project::load(std::string _loadedFileDirectory)
 {
    m_saved = true;
-   std::cout<<"Opening: "<<_fileDirectory<<std::endl;
+   std::cout<<"Opening: "<<_loadedFileDirectory<<std::endl;
 
    std::string _vertSource = "";
    std::string _fragSource = "";
-   m_xml->readProjectXML(_fileDirectory, _vertSource, _fragSource);
+   std::string _fileName = "";
+   std::string _fileDirectory = "";
+   m_xml->readProjectXML(_fileName, _fileDirectory, _loadedFileDirectory, _vertSource, _fragSource);
+   m_data.m_projectName = _fileName;
+   m_data.m_projectDir = _fileDirectory;
 }
 

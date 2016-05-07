@@ -250,7 +250,7 @@
                          <double>360.000000000000000</double>
                         </property>
                         <property name="singleStep">
-                         <double>5.000000000000000</double>
+                         <double>1.000000000000000</double>
                         </property>
                        </widget>
                       </item>
@@ -270,7 +270,7 @@
                          <double>360.000000000000000</double>
                         </property>
                         <property name="singleStep">
-                         <double>5.000000000000000</double>
+                         <double>1.000000000000000</double>
                         </property>
                        </widget>
                       </item>
@@ -290,7 +290,7 @@
                          <double>360.000000000000000</double>
                         </property>
                         <property name="singleStep">
-                         <double>5.000000000000000</double>
+                         <double>1.000000000000000</double>
                         </property>
                        </widget>
                       </item>
@@ -429,11 +429,14 @@
                       </item>
                       <item>
                        <widget class="QDoubleSpinBox" name="m_nearClip">
+                        <property name="minimum">
+                         <double>0.100000000000000</double>
+                        </property>
                         <property name="maximum">
                          <double>100.000000000000000</double>
                         </property>
                         <property name="singleStep">
-                         <double>0.200000000000000</double>
+                         <double>0.100000000000000</double>
                         </property>
                        </widget>
                       </item>
@@ -446,6 +449,9 @@
                       </item>
                       <item>
                        <widget class="QDoubleSpinBox" name="m_farClip">
+                        <property name="minimum">
+                         <double>1.000000000000000</double>
+                        </property>
                         <property name="maximum">
                          <double>10000.000000000000000</double>
                         </property>
@@ -453,6 +459,22 @@
                          <double>1.000000000000000</double>
                         </property>
                        </widget>
+                      </item>
+                      <item>
+                       <spacer name="horizontalSpacer_5">
+                        <property name="orientation">
+                         <enum>Qt::Horizontal</enum>
+                        </property>
+                        <property name="sizeType">
+                         <enum>QSizePolicy::Fixed</enum>
+                        </property>
+                        <property name="sizeHint" stdset="0">
+                         <size>
+                          <width>60</width>
+                          <height>20</height>
+                         </size>
+                        </property>
+                       </spacer>
                       </item>
                      </layout>
                     </item>

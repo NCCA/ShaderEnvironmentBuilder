@@ -37,7 +37,7 @@ public:
   void saveAs(QString vertSource, QString fragSource);
   
   //method to load
-  void load(string _fileDirectory);
+  void load(string _loadedFileDirectory);
   
   //method to export the current project to accessible glsl files
   bool exportProject(std::string _targetDir, QString vertSource, QString fragSource);

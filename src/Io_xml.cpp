@@ -61,10 +61,10 @@ void IO_XML::shaderData(const char* _shaderProgramName, const char* _vertexShade
 // ----------------------------------------------------------------------------------------------------------------------
 // Reads the .xml project file vertex and fragment data, then returns this to project.cpp.
 // Returns an error if an incorrect XML file is opened.
-void IO_XML::readProjectXML(std::string _dir, std::string& _vertSource, std::string& _fragSource)
+void IO_XML::readProjectXML(std::string& _fileName, std::string& _fileDirectory, std::string _loadedFileDirectory, std::string& _vertSource, std::string& _fragSource)
 {
     xml_document<> doc;
-    ifstream file(_dir);
+    ifstream file(_loadedFileDirectory);
     vector<char> buffer((istreambuf_iterator<char>(file)), istreambuf_iterator<char>( ));
     buffer.push_back('\0');
     doc.parse<0>(&buffer[0]);
@@ -83,6 +83,8 @@ void IO_XML::readProjectXML(std::string _dir, std::string& _vertSource, std::str
 
         _vertSource = vertex_node->first_attribute("VtxData")->value();
         _fragSource = fragment_node->first_attribute("FragData")->value();
+        _fileName = current_node->first_attribute("Name")->value();
+        _fileDirectory = current_node->first_attribute("Dir")->value();
     }
     return;
 }
