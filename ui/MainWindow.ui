@@ -123,7 +123,7 @@
                  <x>0</x>
                  <y>0</y>
                  <width>213</width>
-                 <height>442</height>
+                 <height>443</height>
                 </rect>
                </property>
                <property name="sizePolicy">
@@ -665,7 +665,7 @@
      <x>0</x>
      <y>0</y>
      <width>1280</width>
-     <height>27</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -677,7 +677,9 @@
     <addaction name="actionSaveProject"/>
     <addaction name="actionSaveProjectAs"/>
     <addaction name="separator"/>
+    <addaction name="actionExport"/>
     <addaction name="actionStartup_Window"/>
+    <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="shapesMenu">
     <property name="title">
@@ -776,6 +778,11 @@
   <action name="m_actionLoad_Texture">
    <property name="text">
     <string>Load Texture</string>
+   </property>
+  </action>
+  <action name="actionExport">
+   <property name="text">
+    <string>Export Shaders</string>
    </property>
   </action>
  </widget>

@@ -2,6 +2,7 @@
 #include <QTextStream>
 #include <QDebug>
 #include <QFileDialog>
+#include <QFileInfo>
 
 #include "project.h"
 #include "Json.h"
@@ -60,95 +61,141 @@ void Project::save(QString vertSource, QString fragSource)
 
 void Project::saveAs(QString vertSource, QString fragSource)
 {
-   m_saved = false;
-   save(vertSource, fragSource);
+  m_saved = false;
+  save(vertSource, fragSource);
+}
+
+int Project::confirmOverwrite(QString _filePath)
+{
+  QMessageBox msgBox;
+  msgBox.setIcon(QMessageBox::Warning);
+  msgBox.setText("The file you have specified already exists: " + _filePath);
+  msgBox.setInformativeText("Do you want to overwrite the file?");
+  msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::No | QMessageBox::Cancel);
+  msgBox.setDefaultButton(QMessageBox::Save);
+  QMessageBox::ButtonRole ret = static_cast<QMessageBox::ButtonRole>(msgBox.exec());
+  return ret;
 }
 
 bool Project::exportProject(std::string _targetDir, QString vertSource, QString fragSource)
 {
 
+  _targetDir.append("/");
 
+  QString detOutput;
   //create path to vertex.glsl in target directory
-  QString filePath = QString::fromStdString(_targetDir.append(m_data.m_projectName.append("Vertex.glsl")));
-  qDebug() << filePath;
+  QString vFilePath = QString::fromStdString(_targetDir + m_data.m_projectName + "Vertex.glsl");
+  qDebug() << vFilePath;
 
   //create qfile object assiciated with the file name
-  QFile vertFile(filePath);
+  QFile vertFile(vFilePath);
+  QFileInfo checkPath(vFilePath);
 
-  //try to open the file for writing, if it doesnt exist the open() method will create it.
-  if(!vertFile.open(QIODevice::WriteOnly | QIODevice::Text))
+  int state = QMessageBox::Save;
+  if (checkPath.exists() && checkPath.isFile())
   {
-    CEBRaise::QtFileError(vertFile.error(), filePath);
-    return false;
+    state = confirmOverwrite(vFilePath);
+    if (state == QMessageBox::Cancel)
+    {
+      return false;
+    }
   }
 
-  // write vertex source into Vertex.glsl file
-  QTextStream outVert(&vertFile);
-  outVert << vertSource;
-  vertFile.close();
+  if (state == QMessageBox::Save)
+  {
+    //try to open the file for writing, if it doesnt exist the open() method will create it.
+    if(!vertFile.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+      CEBRaise::QtFileError(vertFile.error(), vFilePath);
+      return false;
+    }
+
+    // write vertex source into Vertex.glsl file
+    QTextStream outVert(&vertFile);
+    outVert << vertSource;
+    vertFile.close();
+    detOutput.append("Vertex File: " + vFilePath + "\n");
+  }
 
   //now do the same for fragment.glsl
-  filePath.clear();
-  filePath = QString::fromStdString(_targetDir.append(m_data.m_projectName.append("Vertex.glsl")));
-  qDebug() << filePath;
-  QFile fragFile(filePath);
+  QString fFilePath = QString::fromStdString(_targetDir + m_data.m_projectName + "Fragment.glsl");
+  qDebug() << fFilePath;
+  QFile fragFile(fFilePath);
+  checkPath = QFileInfo(fFilePath);
 
-  if(!fragFile.open(QIODevice::WriteOnly | QIODevice::Text))
+  state = QMessageBox::Save;
+  if (checkPath.exists() && checkPath.isFile())
   {
-    CEBRaise::QtFileError(fragFile.error(), filePath);
-    return false;
+    state = confirmOverwrite(fFilePath);
+    if (state == QMessageBox::Cancel)
+    {
+      return false;
+    }
   }
 
-  QTextStream outFrag(&fragFile);
-  outFrag << fragSource;
-  fragFile.close();
+  if (state == QMessageBox::Save)
+  {
+    if(!fragFile.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+      CEBRaise::QtFileError(fragFile.error(), fFilePath);
+      return false;
+    }
 
+    QTextStream outFrag(&fragFile);
+    outFrag << fragSource;
+    fragFile.close();
+    detOutput.append("Fragment File: " + vFilePath + "\n");
+  }
+
+  QMessageBox msgBox;
+  msgBox.setText("The file(s) have been successfully saved");
+  msgBox.setDetailedText(detOutput);
+  msgBox.exec();
   return true;
-
 }
 
 void Project::load(std::string _fileName, std::string _fileDirectory)
 {
-    // Open a file dialog and return a file directory
-//    QString fileName=QFileDialog::getOpenFileName(this,
-//                                                  tr("Open Mesh"),"0Features-0BugsCVA3/",tr("Image Files (*.obj)"));
+  // Open a file dialog and return a file directory
+  //    QString fileName=QFileDialog::getOpenFileName(this,
+  //                                                  tr("Open Mesh"),"0Features-0BugsCVA3/",tr("Image Files (*.obj)"));
 
-//    std::string importName=fileName.toStdString();
-    // Import the mesh
-    //m_gl->importMeshName(importName);
+  //    std::string importName=fileName.toStdString();
+  // Import the mesh
+  //m_gl->importMeshName(importName);
 
-//    QString fileName;
-//    if(!m_saved)
-//    {
-//      QFileDialog dialog;
-//      dialog.setFileMode(QFileDialog::AnyFile);
+  //    QString fileName;
+  //    if(!m_saved)
+  //    {
+  //      QFileDialog dialog;
+  //      dialog.setFileMode(QFileDialog::AnyFile);
 
-//      dialog.setAcceptMode(QFileDialog::AcceptSave);
-//      if (dialog.exec())
-//      {
-//        fileName = dialog.selectedFiles().at(0);
-//        QFileInfo finfo = QFileInfo(fileName);
-//        m_data.m_projectDir = finfo.absolutePath().toStdString();
-//        m_data.m_projectName = finfo.baseName().toStdString();
-//      }
+  //      dialog.setAcceptMode(QFileDialog::AcceptSave);
+  //      if (dialog.exec())
+  //      {
+  //        fileName = dialog.selectedFiles().at(0);
+  //        QFileInfo finfo = QFileInfo(fileName);
+  //        m_data.m_projectDir = finfo.absolutePath().toStdString();
+  //        m_data.m_projectName = finfo.baseName().toStdString();
+  //      }
 
-//    }
-//    std::cout<<"Name: "<<m_data.m_projectName<<"  Directory: "<<m_data.m_projectDir<<std::endl;
+  //    }
+  //    std::cout<<"Name: "<<m_data.m_projectName<<"  Directory: "<<m_data.m_projectDir<<std::endl;
 
-    // Converts QString to const char* (These have to be separate, not .toStdString.c_str() otherwise it doesn't write the string.)
-//    std::string vertSourceString = vertSource.toStdString();
-//    std::string fragSourceString = vertSource.toStdString();
-//    const char * vertSource_c = vertSourceString.c_str();
-//    const char * fragSource_c = fragSourceString.c_str();
+  // Converts QString to const char* (These have to be separate, not .toStdString.c_str() otherwise it doesn't write the string.)
+  //    std::string vertSourceString = vertSource.toStdString();
+  //    std::string fragSourceString = vertSource.toStdString();
+  //    const char * vertSource_c = vertSourceString.c_str();
+  //    const char * fragSource_c = fragSourceString.c_str();
 
-    //m_xml->writeProject(m_data.m_projectName, m_data.m_projectDir, vertSource_c, fragSource_c);
-    m_saved = true;
+  //m_xml->writeProject(m_data.m_projectName, m_data.m_projectDir, vertSource_c, fragSource_c);
+  m_saved = true;
 
 
-   std::string _vertSource = "Hello vert";
-   std::string _fragSource = "Hello frag";
-   m_xml->readProjectXML(m_data.m_projectName, m_data.m_projectDir, _vertSource, _fragSource);
-   std::cout<<"Opened: "<<_vertSource<<std::endl;
-   std::cout<<"Opened: "<<_fragSource<<std::endl;
+  std::string _vertSource = "Hello vert";
+  std::string _fragSource = "Hello frag";
+  m_xml->readProjectXML(m_data.m_projectName, m_data.m_projectDir, _vertSource, _fragSource);
+  std::cout<<"Opened: "<<_vertSource<<std::endl;
+  std::cout<<"Opened: "<<_fragSource<<std::endl;
 }
 

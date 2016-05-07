@@ -73,7 +73,7 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   connect(m_ui->m_actionLoad_Obj,SIGNAL(triggered()),this,SLOT(objOpened()));
 
   // switching to .jpg files
-  connect(m_ui->m_actionLoad_Texture,SIGNAL(triggered()),this,SLOT(textureTriggered()));
+  connect(m_ui->m_actionLoad_Texture,SIGNAL(triggered()),this,SLOT(on_m_actionLoad_Texture_triggered()));
 
   connect(m_ui->m_exportUniforms,SIGNAL(clicked()),m_gl,SLOT(exportUniform()));
   connect(m_ui->m_printUniforms ,SIGNAL(clicked()),this,SLOT(printUniforms()));
@@ -326,7 +326,17 @@ void MainWindow::on_actionOpen_triggered()
 
 void MainWindow::on_actionExport_triggered()
 {
-    //m_project->exportProject()
+  QFileDialog dialog(this);
+  dialog.setFileMode(QFileDialog::Directory);
+  dialog.setOption(QFileDialog::ShowDirsOnly);
+  dialog.setDirectory(QString(m_project->getDir().c_str()));
+  QStringList dirNames;
+  if (dialog.exec())
+  {
+    dirNames = dialog.selectedFiles();
+    m_project->exportProject(dirNames.at(0).toStdString(), m_vertQsci->text(), m_fragQsci->text());
+  }
+
 }
 void MainWindow::on_m_actionLoad_Texture_triggered()
 {
