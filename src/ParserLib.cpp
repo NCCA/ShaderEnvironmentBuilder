@@ -13,7 +13,7 @@ ParserLib::ParserLib()
 //----------------------------------------------------------------------------
 ParserLib::~ParserLib()
 {
-  std::cout<<"ParserLib destroyed"<<std::endl;
+  std::cerr<<"ParserLib destroyed"<<std::endl;
 }
 
 //----------------------------------------------------------------------------
@@ -50,70 +50,70 @@ void ParserLib::initializeUniformData()
     {
       case GL_BOOL:
       {
-        uniformDataBool* newData= new uniformDataBool(uniformName,
+        UniformDataBool* newData= new UniformDataBool(uniformName,
                                                       tempLoc,
                                                       type);
-        // Add uniformData to the currently registeredUniforms
+        // Add UniformData to the currently registeredUniforms
         m_registeredUniforms[uniformName]=newData;
         m_uniformList[i]=newData;
         break;
       }
       case GL_FLOAT:
       {
-        uniformDataFloat* newData= new uniformDataFloat(uniformName,
+        UniformDataFloat* newData= new UniformDataFloat(uniformName,
                                                         tempLoc,
                                                         type);
-        // Add uniformData to the currently registeredUniforms
+        // Add UniformData to the currently registeredUniforms
         m_registeredUniforms[uniformName]=newData;
         m_uniformList[i]=newData;
         break;
       }
       case GL_INT:
       {
-        uniformDataInt* newData= new uniformDataInt(uniformName,
+        UniformDataInt* newData= new UniformDataInt(uniformName,
                                                     tempLoc,
                                                     type);
-        // Add uniformData to the currently registeredUniforms
+        // Add UniformData to the currently registeredUniforms
         m_registeredUniforms[uniformName]=newData;
         m_uniformList[i]=newData;
         break;
       }
       case GL_FLOAT_VEC3:
       {
-        uniformDataV3* newData= new uniformDataV3(uniformName,
+        UniformDataV3* newData= new UniformDataV3(uniformName,
                                                   tempLoc,
                                                   type);
-        // Add uniformData to the currently registeredUniforms
+        // Add UniformData to the currently registeredUniforms
         m_registeredUniforms[uniformName]=newData;
         m_uniformList[i]=newData;
         break;
       }
       case GL_FLOAT_VEC4:
       {
-        uniformDataV4* newData= new uniformDataV4(uniformName,
+        UniformDataV4* newData= new UniformDataV4(uniformName,
                                                   tempLoc,
                                                   type);
-        // Add uniformData to the currently registeredUniforms
+        // Add UniformData to the currently registeredUniforms
         m_registeredUniforms[uniformName]=newData;
         m_uniformList[i]=newData;
         break;
       }
       case GL_FLOAT_MAT3:
       {
-        uniformDataM3* newData= new uniformDataM3(uniformName,
+        UniformDataM3* newData= new UniformDataM3(uniformName,
                                                   tempLoc,
                                                   type);
-        // Add uniformData to the currently registeredUniforms
+        // Add UniformData to the currently registeredUniforms
         m_registeredUniforms[uniformName]=newData;
         m_uniformList[i]=newData;
         break;
       }
       case GL_FLOAT_MAT4:
       {
-        uniformDataM4* newData= new uniformDataM4(uniformName,
+        UniformDataM4* newData= new UniformDataM4(uniformName,
                                                   tempLoc,
                                                   type);
-        // Add uniformData to the currently registeredUniforms
+        // Add UniformData to the currently registeredUniforms
         m_registeredUniforms[uniformName]=newData;
         m_uniformList[i]=newData;
         break;
@@ -129,6 +129,7 @@ void ParserLib::initializeUniformData()
   uniformDataTypes();
 }
 
+//------------------------------------------------------------------------------
 void ParserLib::assignAllData()
 {
   initializeUniformData();
