@@ -196,7 +196,7 @@ void NGLScene::initGL()
 
   // now to load the shader and set the values
   // grab an instance of shader manager
-  m_shaderManager->initialize(m_cameras[m_cameraIndex]);
+  m_shaderManager->initialize();
 
   ngl::Texture texture ("textures/metalTexture.jpg");
   m_textureName=texture.setTextureGL();
@@ -557,7 +557,7 @@ void NGLScene::keyPressEvent(QKeyEvent *_event)
 void NGLScene::compileShader(QString _vertSource, QString _fragSource)
 {
   std::cout<<_vertSource.toStdString()<<std::endl;
-  m_shaderManager->compileShader(m_cameras[m_cameraIndex], _vertSource, _fragSource);
+  m_shaderManager->compileShader(_vertSource, _fragSource);
   m_window->setTerminalText(parseErrorLog(m_shaderManager->getErrorLog()));
   update();
   m_parser->assignAllData();
@@ -652,7 +652,7 @@ void NGLScene::resetObjPos()
 //------------------------------------------------------------------------------
 void NGLScene::setProject(std::string _name, QString _vertSource, QString _fragSource)
 {
-  m_shaderManager->createShaderProgram(_name, m_cam, _vertSource, _fragSource);
+  m_shaderManager->createShaderProgram(_name);
   compileShader(_vertSource, _fragSource);
 }
 
