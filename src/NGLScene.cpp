@@ -574,6 +574,7 @@ void NGLScene::keyPressEvent(QKeyEvent *_event)
 
 void NGLScene::compileShader(QString _vertSource, QString _fragSource)
 {
+  std::cout<<_vertSource.toStdString()<<std::endl;
   m_shaderManager->compileShader(m_cameras[m_cameraIndex], _vertSource, _fragSource);
   m_window->setTerminalText(parseErrorLog(m_shaderManager->getErrorLog()));
   ngl::Light light(ngl::Vec3(2,2,2),ngl::Colour(1,1,1,1),ngl::Colour(1,1,1,1),ngl::LightModes::POINTLIGHT);
@@ -674,9 +675,10 @@ void NGLScene::resetObjPos()
 }
 
 //------------------------------------------------------------------------------
-void NGLScene::newProject(std::string _name, QString _vertSource, QString _fragSource)
+void NGLScene::setProject(std::string _name, QString _vertSource, QString _fragSource)
 {
   m_shaderManager->createShaderProgram(_name, m_cam, _vertSource, _fragSource);
+  compileShader(_vertSource, _fragSource);
 }
 
 //------------------------------------------------------------------------------

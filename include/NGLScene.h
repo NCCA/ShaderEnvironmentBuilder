@@ -113,7 +113,7 @@ public :
   /// @param[in] _vertSource the text that makes of the vertex shader
   /// @param[in] _fragSource The text that makes up the fragment shader
   //----------------------------------------------------------------------------
-  void                        newProject(std::string _name, QString _vertSource,
+  void                        setProject(std::string _name, QString _vertSource,
                                          QString _fragSource);
   //----------------------------------------------------------------------------
   /// @brief Changes the name of the m_mesh object directory

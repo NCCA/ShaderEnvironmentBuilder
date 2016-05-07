@@ -256,14 +256,14 @@ bool MainWindow::newProjectWiz(QWidget* _parent)
   if (success)
   {
     const OutputData *output = projectWiz->getOutput();
-    m_project->set(output->m_projectName, output->m_projectDir);
+    m_project->set(output->m_projectName, output->m_projectDir, false);
     m_vertQsci->setText(output->m_vertSource);
     m_fragQsci->setText(output->m_fragSource);
     QString vertSource, fragSource;
     vertSource = m_vertQsci->text();
     fragSource = m_fragQsci->text();
     std::cout<<m_project->getName()<<std::endl;
-    m_gl->newProject(m_project->getName(), vertSource,fragSource);
+    m_gl->setProject(m_project->getName(), vertSource,fragSource);
   }
   else
   {
@@ -320,7 +320,12 @@ void MainWindow::on_actionOpen_triggered()
     {
        fileDirectory = fileDir.toStdString();
     }
-    m_project->load(fileDirectory);
+    QString vertSource, fragSource;
+    m_project->load(fileDirectory, vertSource, fragSource);
+    m_vertQsci->setText(vertSource);
+    m_fragQsci->setText(fragSource);
+    m_gl->setProject(m_project->getName(), vertSource,fragSource);
+
 }
 
 void MainWindow::on_actionExport_triggered()

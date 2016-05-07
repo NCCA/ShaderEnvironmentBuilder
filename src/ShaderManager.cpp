@@ -27,7 +27,6 @@ void ShaderManager::createShaderProgram(std::string _name, ngl::Camera _cam, QSt
   // attribute 2 are the normals x,y,z
   shaderLib->bindAttribute(m_data.m_name,2,"inNormal");
 
-  compileShader(_cam, vertSource, fragSource);
   use(0);
 }
 
@@ -136,6 +135,7 @@ void ShaderManager::initialize(ngl::Camera _cam)
 //----------------------------------------------------------------------------------------------------------------------
 void ShaderManager::compileShader(ngl::Camera _cam, QString vertSource, QString fragSource)
 {
+  std::cout<<vertSource.toStdString()<<std::endl;
   m_errorLog.clear();
   ngl::ShaderLib *shaderLib=ngl::ShaderLib::instance();
 
