@@ -52,16 +52,30 @@ public:
   /// @param [in] the parent window is defaulted to nothing
   //----------------------------------------------------------------------------------------------------------------------
   Button(QString _buttonName,
+         std::string _buttonType,
          QLayout *_layout,
          unsigned int _id,
          ButtonLib *_libParent,
          NGLScene *_sceneParent,
          QWidget *parent=0);
+
+  /*virtual Button& operator=(Button &_rhs);
+  virtual ~Button()
+  {
+    delete m_libParent;
+    delete m_sceneParent;
+  }*/
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief button object to be pressed by user to open relevant widget
+  //----------------------------------------------------------------------------------------------------------------------
+  QPushButton *m_button;
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief returns the current button name
   /// @return m_buttonName
   //----------------------------------------------------------------------------------------------------------------------
   QString getName() {return m_buttonName;}
+
+  std::string getType() {return m_buttonType;}
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief sets the current ID for the button, from its' shader location
   /// @param [in] the location ID for the button id
@@ -82,6 +96,7 @@ public:
   /// @return m_colour
   //----------------------------------------------------------------------------------------------------------------------
   virtual ngl::Vec4 getColour() {return ngl::Vec4();}
+  virtual QColor getColourQ() {return QColor();}
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief sets the value to be for float attributes
   /// @param [in] the value to be set within the floatButton class
@@ -114,14 +129,12 @@ private:
   /// @brief string to hold button's name
   //----------------------------------------------------------------------------------------------------------------------
   QString m_buttonName;
+
+  std::string m_buttonType;
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief id to access specific buttons and shader locations
   //----------------------------------------------------------------------------------------------------------------------
   unsigned int m_id;
-  //----------------------------------------------------------------------------------------------------------------------
-  /// @brief button object to be pressed by user to open relevant widget
-  //----------------------------------------------------------------------------------------------------------------------
-  QPushButton *m_button;
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief function to create the button box for the colour picker
   /// @param [in] button name
@@ -162,7 +175,12 @@ private slots:
   void openBox();
 public:
   using Button::Button;
-  //colourButton(QString _buttonName, QLayout *_layout, unsigned int _id, ButtonLib *_libParent, NGLScene *_sceneParent, QWidget *parent);
+
+  /*~colourButton()
+  {
+    delete m_libParent;
+    delete m_sceneParent;
+  }*/
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief sets the picked colour and colour attribute to the colour input
   /// @param [in] colour value
@@ -172,16 +190,19 @@ public:
   /// @brief sets the colour attribute to the colour input
   /// @param [in] colour value
   //----------------------------------------------------------------------------------------------------------------------
-  void setColour(ngl::Vec4 _col) {m_colour=_col;}
+  void setColour(ngl::Vec4 _col);
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief returns the colour, stored by the button
   /// @return m_colour
   //----------------------------------------------------------------------------------------------------------------------
   ngl::Vec4 getColour() {return m_colour;}
+  QColor getColourQ() {return m_colourPicked;}
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief print the attribute data stored within the colour attriubte for debugging
   //----------------------------------------------------------------------------------------------------------------------
   void printAttributes();
+
+  //colourButton& operator=(colourButton &_rhs);
 };
 
 class floatButton : public Button
@@ -225,6 +246,7 @@ public:
   /// @brief print the attribute data stored within the float attriubte for debugging
   //----------------------------------------------------------------------------------------------------------------------
   void printAttributes();
+  //floatButton& operator=(floatButton &_rhs);
 };
 
 #endif

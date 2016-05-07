@@ -21,7 +21,7 @@
 
 // Project includes
 #include "ButtonLib.h"
-#include "button.h"
+#include "Button.h"
 #include "Cebitor.h"
 #include "NewProjectWizard.h"
 #include "NGLScene.h"
