@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1280</width>
-    <height>768</height>
+    <height>774</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -144,7 +144,7 @@
                  <x>0</x>
                  <y>0</y>
                  <width>213</width>
-                 <height>409</height>
+                 <height>414</height>
                 </rect>
                </property>
                <property name="sizePolicy">
@@ -212,7 +212,7 @@
                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CameraSettings&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                  </property>
                  <property name="currentIndex">
-                  <number>2</number>
+                  <number>0</number>
                  </property>
                  <property name="documentMode">
                   <bool>false</bool>
@@ -895,7 +895,7 @@
      <x>0</x>
      <y>0</y>
      <width>1280</width>
-     <height>26</height>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

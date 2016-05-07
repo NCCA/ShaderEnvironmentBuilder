@@ -4,20 +4,20 @@
 //----------------------------------------------------------------------------
 /// @brief ctor for our ParserLib
 //----------------------------------------------------------------------------
-parserLib::parserLib()
+ParserLib::ParserLib()
 {
   m_num=0;
   m_uniformList.resize(0);
 }
 
 //----------------------------------------------------------------------------
-parserLib::~parserLib()
+ParserLib::~ParserLib()
 {
   std::cout<<"ParserLib destroyed"<<std::endl;
 }
 
 //----------------------------------------------------------------------------
-void parserLib::initializeUniformData()
+void ParserLib::initializeUniformData()
 {
   //create instance of a shader
   ngl::ShaderLib *shaderLib=ngl::ShaderLib::instance();
@@ -129,14 +129,14 @@ void parserLib::initializeUniformData()
   uniformDataTypes();
 }
 
-void parserLib::assignAllData()
+void ParserLib::assignAllData()
 {
   initializeUniformData();
   assignUniformValues();
 }
 
 //------------------------------------------------------------------------------
-void parserLib::printUniforms()
+void ParserLib::printUniforms()
 {
   std::cout<<"__________________________________Uniform Information: Starts//n";
   std::cout<<"There are "<<m_num<<" Uniforms/n";
@@ -206,7 +206,7 @@ void parserLib::printUniforms()
 /// [Accessed 01/10/16]. Available from:
 /// <https://nccastaff.bournemouth.ac.uk/jmacey/GraphicsLib/index.html>.
 //------------------------------------------------------------------------------
-void parserLib::uniformDataTypes()
+void ParserLib::uniformDataTypes()
 {
   // Uses an unordered map to map the GLenum's into const char's
   const static std::unordered_map<GLenum,const char *> types=
@@ -347,7 +347,7 @@ void parserLib::uniformDataTypes()
 /// end of Citation
 
 //------------------------------------------------------------------------------
-void parserLib::exportUniforms()
+void ParserLib::exportUniforms()
 {
   // Open the text file "ParsingOutput.txt"
   std::ofstream fileOut;
@@ -443,7 +443,7 @@ void parserLib::exportUniforms()
 }
 
 //------------------------------------------------------------------------------
-void parserLib::assignUniformValues()
+void ParserLib::assignUniformValues()
 {
   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
 
@@ -507,7 +507,7 @@ void parserLib::assignUniformValues()
 }
 
 //------------------------------------------------------------------------------
-void parserLib::sendUniformsToShader(ngl::ShaderLib *shader)
+void ParserLib::sendUniformsToShader(ngl::ShaderLib *shader)
 {
 
   // set shader values depending on it's data type

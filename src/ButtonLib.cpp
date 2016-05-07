@@ -1,6 +1,6 @@
 #include "ButtonLib.h"
 
-ButtonLib::ButtonLib(parserLib *_parser, QLayout *_layout, NGLScene *_scene, QWidget *_parent)
+ButtonLib::ButtonLib(ParserLib *_parser, QLayout *_layout, NGLScene *_scene, QWidget *_parent)
 {
   m_parser=_parser;
   m_layout=_layout;
@@ -12,13 +12,10 @@ ButtonLib::ButtonLib(parserLib *_parser, QLayout *_layout, NGLScene *_scene, QWi
 
 void ButtonLib::createButtons()
 {
-  //m_parser->initializeUniformData();
   for(auto uniform : m_parser->m_uniformList)
   {
     QString _uniformName = QString::fromStdString(uniform->getName());
     GLenum _uniformType = uniform->getTypeEnum();
-//    std::cout<<"Uniform name is "<<uniform->getName()<<"\nType: "<<_uniformType<<"\n";
-//    std::cout<<"Type2: "<<uniform->getTypeEnum()<<"\n";
     if(_uniformType==GL_FLOAT_VEC4)
     {
       ngl::Vec4 _uniformVec=uniform->getVec4();
@@ -80,7 +77,6 @@ void ButtonLib::updateButtons()
           }
           if(uniform->getTypeEnum()==GL_FLOAT)
           {
-            std::cout<<"Uniform vals, being set"<<std::endl;
             uniform->setValue(_buttonDup[i]->getValue());
           }
         }

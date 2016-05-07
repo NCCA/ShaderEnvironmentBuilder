@@ -1,7 +1,11 @@
-#include "include/ShaderManager.h"
+
 #include "ngl/Light.h"
 #include "ngl/Material.h"
 #include "ngl/Texture.h"
+
+#include "ShaderManager.h"
+
+//------------------------------------------------------------------------------------------------------------------------
 
 ShaderManager::ShaderManager()
 {
@@ -11,13 +15,20 @@ ShaderManager::ShaderManager()
   m_init = false;
 }
 
-void ShaderManager::createShaderProgram(std::string _name, ngl::Camera _cam, QString vertSource, QString fragSource)
+//------------------------------------------------------------------------------------------------------------------------
+
+void ShaderManager::createShaderProgram(std::string _name)
 {
-  ngl::ShaderLib *shaderLib = ngl::ShaderLib::instance();
+  //set our data
   setData(_name, _name+"Vertex", _name+"fragment");
+  //grab an instance of the shader lib
+  ngl::ShaderLib *shaderLib = ngl::ShaderLib::instance();
+  //create an empty shader program
   shaderLib->createShaderProgram(_name);
+  //create empty shader objects for vertex and fragment shaders
   shaderLib->attachShader(m_data.m_vert, ngl::ShaderType::VERTEX);
   shaderLib->attachShader(m_data.m_frag, ngl::ShaderType::FRAGMENT);
+  //attach empty shader objects to the shader program
   shaderLib->attachShaderToProgram(m_data.m_name, m_data.m_vert);
   shaderLib->attachShaderToProgram(m_data.m_name, m_data.m_frag);
 
@@ -27,14 +38,17 @@ void ShaderManager::createShaderProgram(std::string _name, ngl::Camera _cam, QSt
   // attribute 2 are the normals x,y,z
   shaderLib->bindAttribute(m_data.m_name,2,"inNormal");
 
-  compileShader(_cam, vertSource, fragSource);
   use(0);
 }
 
+//------------------------------------------------------------------------------------------------------------------------
+
 void ShaderManager::use(uint shaderType)
 {
+  //grab an instance of shaderLib
   ngl::ShaderLib *shaderLib = ngl::ShaderLib::instance(); 
   enum shader{objectShader=0,objectNormals=1};
+  //choose which shader to use
   switch(shaderType)
   {
     case objectShader :  {  shaderLib->use(m_data.m_name); break;  }
@@ -43,28 +57,27 @@ void ShaderManager::use(uint shaderType)
   }
 }
 
+//------------------------------------------------------------------------------------------------------------------------
 
-
-void ShaderManager::initialize(ngl::Camera _cam)
+void ShaderManager::initialize()
 {
   //set our data
   setData("Phong", "PhongVertex", "PhongFragment");
   //grab an instance of shader manager
   ngl::ShaderLib *shaderLib=ngl::ShaderLib::instance();
-  //we are creating a shader called Phong
+  //create an empty shader program called Phong
   shaderLib->createShaderProgram("Phong");
-  // now we are going to create empty shaders for Frag and Vert
+  // create and empty shader objects from fragment and vertex shaders
   shaderLib->attachShader("PhongVertex",ngl::ShaderType::VERTEX);
   shaderLib->attachShader("PhongFragment",ngl::ShaderType::FRAGMENT);
-  // attach the source
+  // load the source code to the shader objects
   shaderLib->loadShaderSource("PhongVertex","shaders/PhongVertex.glsl");
   shaderLib->loadShaderSource("PhongFragment","shaders/PhongFragment.glsl");
   // compile the shaders
   shaderLib->compileShader("PhongFragment");
   shaderLib->compileShader("PhongVertex");
 
-
-
+  // check if the shader compiled successfully
   if (!checkAllCompileError(&m_errorLog))
   {
     // output code errors to user
@@ -88,10 +101,7 @@ void ShaderManager::initialize(ngl::Camera _cam)
     // now we have associated this data we can link the shader
     shaderLib->linkProgramObject("Phong");
     // and make it active ready to load values
-    shaderLib->use("Phong");
-    shaderLib->setShaderParam1i("Normalize",1);
-    shaderLib->setShaderParam3f("viewerPos",_cam.getEye().m_x,_cam.getEye().m_y,_cam.getEye().m_z);
-    shaderLib->setShaderParam4f("Colour",0.23125f,0.23125f,0.23125f,1);
+    shaderLib->use(m_data.m_name);
 
     /// The following section is from :-
     /// Jon Macey (2016) AffineTransforms [online]. [Accessed 2016].
@@ -126,31 +136,26 @@ void ShaderManager::initialize(ngl::Camera _cam)
     // set initialise flag to true
     m_init = true;
   }
-
-
-
-
 }
 
-
 //----------------------------------------------------------------------------------------------------------------------
-void ShaderManager::compileShader(ngl::Camera _cam, QString vertSource, QString fragSource)
+
+void ShaderManager::compileShader(QString _vertSource, QString _fragSource)
 {
+  //clear the error log
   m_errorLog.clear();
+  //grab an instance of the shader lib
   ngl::ShaderLib *shaderLib=ngl::ShaderLib::instance();
 
-  std::cout<< "name " << m_data.m_name << "\n";
-  std::cout<< "vert " << m_data.m_vert << "\n";
-  std::cout<< "frag " << m_data.m_frag << "\n";
-
   // convert from QString to std::string for compiling
-  shaderLib->loadShaderSourceFromString(m_data.m_vert, vertSource.toStdString());
-  shaderLib->loadShaderSourceFromString(m_data.m_frag, fragSource.toStdString());
+  shaderLib->loadShaderSourceFromString(m_data.m_vert, _vertSource.toStdString());
+  shaderLib->loadShaderSourceFromString(m_data.m_frag, _fragSource.toStdString());
 
   // compile shaders
   shaderLib->compileShader(m_data.m_vert);
   shaderLib->compileShader(m_data.m_frag);
 
+  //check for compile errors
   if (!checkAllCompileError(&m_errorLog))
   {
     // output any compile errors to user
@@ -168,25 +173,20 @@ void ShaderManager::compileShader(ngl::Camera _cam, QString vertSource, QString 
     // now we have associated this data we can link the shader
     shaderLib->linkProgramObject(m_data.m_name);
 
-    // Load stuff. Need to remove this stuff in the next build, just used to set
-    // inital values
+    // use the shader program
     (*shaderLib)[m_data.m_name]->use();
     ngl::Texture texture("textures/rustTexture.jpg");
     m_textureName=texture.setTextureGL();
-
-    shaderLib->setShaderParam1i("Normalize",1);
-    shaderLib->setShaderParam3f("viewerPos",_cam.getEye().m_x,_cam.getEye().m_y,_cam.getEye().m_z);
-    // we need to set a base colour as the material isn't being used for all the params
-    shaderLib->setShaderParam4f("Colour",0.23125f,0.23125f,0.23125f,1);
   }
 }
 
+//------------------------------------------------------------------------------------------------------------------------
 
-bool ShaderManager::checkCompileError(std::string _shaderProgName, QString *o_log)
+bool ShaderManager::checkCompileError(std::string _shaderName, QString *o_log)
 {
   GLint isCompiled = 0;
   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
-  GLuint shaderId = shader->getShaderID(_shaderProgName);
+  GLuint shaderId = shader->getShaderID(_shaderName);
 
   // Get compile status of shader
   glGetShaderiv(shaderId, GL_COMPILE_STATUS, &isCompiled);
@@ -212,6 +212,8 @@ bool ShaderManager::checkCompileError(std::string _shaderProgName, QString *o_lo
   }
   return isCompiled;
 }
+
+//------------------------------------------------------------------------------------------------------------------------
 
 bool ShaderManager::checkAllCompileError(QString *o_log)
 {

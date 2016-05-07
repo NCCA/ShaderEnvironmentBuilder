@@ -76,7 +76,7 @@ bool checkAllCompileError(std::vector<std::string> _shaderProgNames, QString *o_
 
 
 //----------------------------------------------------------------------------------------------------------------------
-NGLScene::NGLScene( QWidget *_parent, parserLib *_libParent ) : QOpenGLWidget( _parent )
+NGLScene::NGLScene( QWidget *_parent, ParserLib *_libParent ) : QOpenGLWidget( _parent )
 {
   // re-size the widget to that of the parent (in that case the GLFrame passed in on construction)
   m_rotate=false;
@@ -196,7 +196,7 @@ void NGLScene::initGL()
 
   // now to load the shader and set the values
   // grab an instance of shader manager
-  m_shaderManager->initialize(m_cameras[m_cameraIndex]);
+  m_shaderManager->initialize();
 
   ngl::Texture texture ("textures/metalTexture.jpg");
   m_textureName=texture.setTextureGL();
@@ -208,30 +208,10 @@ void NGLScene::initGL()
   }
   if(m_shaderManager->isInit())
   {
-    //now create our light this is done after the camera so we can pass the
-    //transpose of the projection matrix to the light to do correct eye space
-    //transformations
-    ngl::Light light(ngl::Vec3(2,2,2),ngl::Colour(1,1,1,1),ngl::Colour(1,1,1,1),ngl::LightModes::POINTLIGHT);
-
     ngl::Mat4 iv=m_cameras[m_cameraIndex].getViewMatrix();
     iv.transpose();
-
-    light.setTransform(iv);
-    light.setAttenuation(1,0,0);
-    light.enable();
-
-    //load these values to the shader as well
-    light.loadToShader("light");
-
-    m_readFromXML->shaderData("WhyHelloThere", "PhongVertex", "shaders/PhongVertex.glsl", "PhongFragment", "shaders/PhongFragment.glsl");
     m_parser->assignAllData();
-    light.loadToShader("light");
   }
-
-  // load these values to the shader as well
-
-  m_readFromXML->shaderData("WhyHelloThere", "PhongVertex", "shaders/PhongVertex.glsl", "PhongFragment", "shaders/PhongFragment.glsl");
-  m_parser->assignAllData();
 
   // Create mesh VAO
   m_mesh = std::unique_ptr<ngl::Obj> (new ngl::Obj(m_meshLoc));
@@ -576,20 +556,9 @@ void NGLScene::keyPressEvent(QKeyEvent *_event)
 
 void NGLScene::compileShader(QString _vertSource, QString _fragSource)
 {
-  m_shaderManager->compileShader(m_cameras[m_cameraIndex], _vertSource, _fragSource);
+  std::cout<<_vertSource.toStdString()<<std::endl;
+  m_shaderManager->compileShader(_vertSource, _fragSource);
   m_window->setTerminalText(parseErrorLog(m_shaderManager->getErrorLog()));
-  ngl::Light light(ngl::Vec3(2,2,2),ngl::Colour(1,1,1,1),ngl::Colour(1,1,1,1),ngl::LightModes::POINTLIGHT);
-  // now create our light this is done after the camera so we can pass the
-  // transpose of the projection matrix to the light to do correct eye space
-  // transformations
-  ngl::Mat4 iv=m_cameras[m_cameraIndex].getViewMatrix();
-  iv.transpose();
-
-  light.setTransform(iv);
-  light.setAttenuation(1,0,0);
-  light.enable();
-  // load these values to the shader as well
-  light.loadToShader("light");
   update();
   m_parser->assignAllData();
 
@@ -681,9 +650,11 @@ void NGLScene::resetObjPos()
 }
 
 //------------------------------------------------------------------------------
-void NGLScene::newProject(std::string _name, QString _vertSource, QString _fragSource)
+
+void NGLScene::setProject(std::string _name, QString _vertSource, QString _fragSource)
 {
-  m_shaderManager->createShaderProgram(_name, m_cam, _vertSource, _fragSource);
+  m_shaderManager->createShaderProgram(_name);
+  compileShader(_vertSource, _fragSource);
 }
 
 //------------------------------------------------------------------------------
