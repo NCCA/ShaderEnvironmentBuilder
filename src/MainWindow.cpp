@@ -27,7 +27,7 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   // Setup ui from form creator (MainWindow.ui)
   m_ui->setupUi(this);
   // create parser in main window
-  m_parForButton = new parserLib;
+  m_parForButton = new ParserLib;
   // Create openGl and qsci widgets, pass in the parser
   m_gl=new  NGLScene(this, m_parForButton);
 
@@ -123,11 +123,15 @@ MainWindow::~MainWindow()
 //------------------------------------------------------------------------------
 void MainWindow::on_m_btn_compileShader_clicked()
 {
+  // read new vertex and fragment source code from text editor
   QString vertSource, fragSource;
   vertSource = m_vertQsci->text();
   fragSource = m_fragQsci->text();
+
+  // compile shader with new vertex and fragment source code
   m_gl->compileShader(vertSource,fragSource);
-  //m_parForButton->initializeUniformData();
+
+  // update uniform buttons
   m_buttonLibrary->updateButtons();
   m_buttonLibrary->updateShaderValues();
 }
@@ -145,7 +149,6 @@ Cebitor *MainWindow::createQsciWidget(QWidget *_parent)
   Cebitor* qsci = new Cebitor(_parent);
   QBoxLayout *layout = new QVBoxLayout;
   layout->addWidget(qsci);
-
   // Create search bar widget
   QWidget *searchWidget = new QWidget(_parent);
   QBoxLayout *searchLayout = new QVBoxLayout(searchWidget);
@@ -156,7 +159,8 @@ Cebitor *MainWindow::createQsciWidget(QWidget *_parent)
   qsci->setSearchWidget(searchWidget);
   qsci->setSearchLineEdit(qsciSearch);
 
-  connect(qsciSearch,SIGNAL(textChanged(QString)),qsci,SLOT(highlightAllSearch()));
+  // Connect search widget signals to editor slots
+  connect(qsciSearch,SIGNAL(textChanged()),qsci,SLOT(highlightAllSearch()));
   connect(qsciSearch,SIGNAL(returnPressed()),qsci,SLOT(searchNext()));
   connect(searchNextBtn,SIGNAL(pressed()),qsci,SLOT(searchNext()));
   connect(searchPrevBtn,SIGNAL(pressed()),qsci,SLOT(searchPrev()));
@@ -314,23 +318,27 @@ void MainWindow::on_actionSaveProjectAs_triggered()
 }
 
 //------------------------------------------------------------------------------
-// Opens the .xml project file.
+
 void MainWindow::on_actionOpen_triggered()
 {
-    QString fileDir=QFileDialog::getOpenFileName(this,
-                                                 tr("Open Project"),
-                                                 "0Features-0BugsCVA3/",
-                                                 tr("XML Files (*.xml)"));
-    string fileDirectory = "";
-    if( !fileDir.isEmpty() )
-    {
-       QString vertSource, fragSource;
-       fileDirectory = fileDir.toStdString();
-       m_project->load(fileDirectory, vertSource, fragSource);
-       m_vertQsci->setText(vertSource);
-       m_fragQsci->setText(fragSource);
-       m_gl->setProject(m_project->getName(), vertSource,fragSource);
-    }
+  // read file directory from dialog
+  QString fileDir=QFileDialog::getOpenFileName(this,
+                                               tr("Open Project"),
+                                               "0Features-0BugsCVA3/",
+                                               tr("XML Files (*.xml)"));
+  string fileDirectory = "";
+  if( !fileDir.isEmpty() )
+  {
+     QString vertSource, fragSource;
+     fileDirectory = fileDir.toStdString();
+     // load project data
+     m_project->load(fileDirectory, vertSource, fragSource);
+     // set the text editor strings
+     m_vertQsci->setText(vertSource);
+     m_fragQsci->setText(fragSource);
+     // set proect data in scene for shader manager
+     m_gl->setProject(m_project->getName(), vertSource,fragSource);
+  }
 
 
 

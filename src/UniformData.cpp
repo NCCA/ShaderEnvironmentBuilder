@@ -1,6 +1,6 @@
 #include "UniformData.h"
 
-uniformData::uniformData()
+UniformData::UniformData()
 {
   m_name=' ';
   m_loc=0;
@@ -9,13 +9,13 @@ uniformData::uniformData()
 }
 
 //------------------------------------------------------------------------------
-uniformData::~uniformData()
+UniformData::~UniformData()
 {
 
 }
 
 //------------------------------------------------------------------------------
-uniformData::uniformData(std::string _name , GLuint _loc , GLenum _type)
+UniformData::UniformData(std::string _name , GLuint _loc , GLenum _type)
 {
   m_name=_name;
   m_loc=_loc;
@@ -23,25 +23,25 @@ uniformData::uniformData(std::string _name , GLuint _loc , GLenum _type)
 }
 
 //------------------------------------------------------------------------------
-void uniformData::setName(std::string _name)
+void UniformData::setName(std::string _name)
 {
   m_name=_name;
 }
 
 //------------------------------------------------------------------------------
-void uniformData::setLocation(GLuint _loc)
+void UniformData::setLocation(GLuint _loc)
 {
   m_loc=_loc;
 }
 
 //------------------------------------------------------------------------------
-void uniformData::setType(GLenum _type)
+void UniformData::setType(GLenum _type)
 {
   m_type=_type;
 }
 
 //------------------------------------------------------------------------------
-void uniformData::setTypeName(std::string _typeName)
+void UniformData::setTypeName(std::string _typeName)
 {
   m_typeName=_typeName;
 }

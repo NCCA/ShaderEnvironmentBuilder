@@ -4,6 +4,7 @@
 /// @author Jonathan Macey
 /// @author Jonathan Flynn
 /// @author Anand Hotwani
+/// @author Alexander la Tourelle
 /// @version 1.0
 /// @date 01/03/16
 /// Revision History :
@@ -59,13 +60,13 @@ public :
   /// @brief the parser to deal with all the uniform values stored in the shader
   /// @todo Should be private and have get method
   //----------------------------------------------------------------------------
-  parserLib*                  m_parser;
+  ParserLib*                  m_parser;
   //----------------------------------------------------------------------------
   //----------------------------------------------------------------------------
   /// @brief Constructor for GLWindow
   /// @param [in] _parent the parent window to create the GL context in
   //----------------------------------------------------------------------------
-  NGLScene                    (QWidget *_parent, parserLib *_libParent);
+  NGLScene                    (QWidget *_parent, ParserLib *_libParent);
   //----------------------------------------------------------------------------
   /// @brief dtor must close down ngl and release OpenGL resources
   //----------------------------------------------------------------------------

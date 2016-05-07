@@ -52,9 +52,9 @@ public:
   /// @param [in] the parent window is defaulted to nothing
   //----------------------------------------------------------------------------------------------------------------------
   Button(QString _buttonName,
-         std::string _buttonType,
+         GLenum _buttonType,
          QLayout *_layout,
-         unsigned int _id,
+         GLuint _id,
          ButtonLib *_libParent,
          NGLScene *_sceneParent,
          QWidget *parent=0);
@@ -75,7 +75,7 @@ public:
   //----------------------------------------------------------------------------------------------------------------------
   QString getName() {return m_buttonName;}
 
-  std::string getType() {return m_buttonType;}
+  GLenum getTypeEnum() {return m_buttonType;}
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief sets the current ID for the button, from its' shader location
   /// @param [in] the location ID for the button id
@@ -85,11 +85,12 @@ public:
   /// @brief returns the button ID, this will change based on shader location
   /// @return m_id
   //----------------------------------------------------------------------------------------------------------------------
-  unsigned int getID() {return m_id;}
+  GLuint getID() {return m_id;}
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief sets the colour to be used by colour buttons
   /// @param [in] the colour to be set within the colourButton class
   //----------------------------------------------------------------------------------------------------------------------
+  virtual void setColour(ngl::Vec4 _col) {return;}
   virtual void setColour(QColor _col) {return;}
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief returns the colour, stored by the button
@@ -130,7 +131,7 @@ private:
   //----------------------------------------------------------------------------------------------------------------------
   QString m_buttonName;
 
-  std::string m_buttonType;
+  GLenum m_buttonType;
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief id to access specific buttons and shader locations
   //----------------------------------------------------------------------------------------------------------------------

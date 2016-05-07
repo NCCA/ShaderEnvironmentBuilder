@@ -12,7 +12,7 @@
 /// @date 05/05/16
 //------------------------------------------------------------------------------
 
-class uniformData
+class UniformData
 {
 protected:
   //----------------------------------------------------------------------------
@@ -35,18 +35,18 @@ public:
   //----------------------------------------------------------------------------
   /// @brief ctor for the uniformData
   //----------------------------------------------------------------------------
-  uniformData();
+  UniformData();
   //----------------------------------------------------------------------------
   /// @brief dtor for the uniformData
   //----------------------------------------------------------------------------
-  ~uniformData();
+  ~UniformData();
   //----------------------------------------------------------------------------
   /// @brief ctor for the uniformData, with input values
   /// @param[in] _name the name of the uniform
   /// @param[in] _loc the location of the uniform
   /// @param[in] _type the GLenum of the uniform, e.g. "35676"
   //----------------------------------------------------------------------------
-  uniformData(std::string _name , GLuint _loc , GLenum _type);
+  UniformData(std::string _name , GLuint _loc , GLenum _type);
   //----------------------------------------------------------------------------
   /// @brief sets the name of the uniformData
   /// @param[in] _name the name of the uniform
@@ -173,7 +173,7 @@ public:
 };
 
 
-class uniformDataM4 :public uniformData
+class uniformDataM4 :public UniformData
 {
 private:
   //----------------------------------------------------------------------------
@@ -184,7 +184,7 @@ public:
   //----------------------------------------------------------------------------
   /// @brief ctor for the uniformDataM4
   //----------------------------------------------------------------------------
-  using uniformData::uniformData;
+  using UniformData::UniformData;
   //----------------------------------------------------------------------------
   /// @brief dtor for the uniformDataM4
   //----------------------------------------------------------------------------
@@ -201,7 +201,7 @@ public:
   ngl::Mat4 getMat4()             {return m_mat4;}
 };
 
-class uniformDataM3 :public uniformData
+class uniformDataM3 :public UniformData
 {
 private:
   //----------------------------------------------------------------------------
@@ -212,7 +212,7 @@ public:
   //----------------------------------------------------------------------------
   /// @brief ctor for the uniformDataM3
   //----------------------------------------------------------------------------
-  using uniformData::uniformData;
+  using UniformData::UniformData;
   //----------------------------------------------------------------------------
   /// @brief dtor for the uniformDataM3
   //----------------------------------------------------------------------------
@@ -229,18 +229,18 @@ public:
   ngl::Mat3 getMat3()               {return m_mat3;}
 };
 
-class uniformDataV4 :public uniformData
+class uniformDataV4 :public UniformData
 {
 private:
   //----------------------------------------------------------------------------
   /// @brief used to store the vec4 value
   //----------------------------------------------------------------------------
-  ngl::Vec4 m_vec4={0,0,0,1};
+  ngl::Vec4 m_vec4={0.01,0.9,0.01,1};
 public:
   //----------------------------------------------------------------------------
   /// @brief ctor for the uniformDataV4
   //----------------------------------------------------------------------------
-  using uniformData::uniformData;
+  using UniformData::UniformData;
   //----------------------------------------------------------------------------
   /// @brief dtor for the uniformDataV4
   //----------------------------------------------------------------------------
@@ -262,7 +262,7 @@ public:
   ngl::Vec4 getVec4()            {return m_vec4;}
 };
 
-class uniformDataV3 :public uniformData
+class uniformDataV3 :public UniformData
 {
 private:
   //----------------------------------------------------------------------------
@@ -273,7 +273,7 @@ public:
   //----------------------------------------------------------------------------
   /// @brief ctor for the uniformDataV3
   //----------------------------------------------------------------------------
-  using uniformData::uniformData;
+  using UniformData::UniformData;
   //----------------------------------------------------------------------------
   /// @brief dtor for the uniformDataV3
   //----------------------------------------------------------------------------
@@ -295,7 +295,7 @@ public:
   ngl::Vec3 getVec3()            {return m_vec3;}
 };
 
-class uniformDataInt :public uniformData
+class uniformDataInt :public UniformData
 {
 private:
   //----------------------------------------------------------------------------
@@ -306,7 +306,7 @@ public:
   //----------------------------------------------------------------------------
   /// @brief ctor for the uniformDataInt
   //----------------------------------------------------------------------------
-  using uniformData::uniformData;
+  using UniformData::UniformData;
   //----------------------------------------------------------------------------
   /// @brief dtor for the uniformDataInt
   //----------------------------------------------------------------------------
@@ -323,7 +323,7 @@ public:
   int getInt()            {return m_int;}
 };
 
-class uniformDataFloat :public uniformData
+class uniformDataFloat :public UniformData
 {
 private:
   //----------------------------------------------------------------------------
@@ -334,7 +334,7 @@ public:
   //----------------------------------------------------------------------------
   /// @brief ctor for the uniformDataFloat
   //----------------------------------------------------------------------------
-  using uniformData::uniformData;
+  using UniformData::UniformData;
   //----------------------------------------------------------------------------
   /// @brief dtor for the uniformDataFloat
   //----------------------------------------------------------------------------
@@ -351,7 +351,7 @@ public:
   float getFloat()             {return m_float;}
 };
 
-class uniformDataBool :public uniformData
+class uniformDataBool :public UniformData
 {
 private:
   //----------------------------------------------------------------------------
@@ -362,7 +362,7 @@ public:
   //----------------------------------------------------------------------------
   /// @brief ctor for the uniformDataBool
   //----------------------------------------------------------------------------
-  using uniformData::uniformData;
+  using UniformData::UniformData;
   //----------------------------------------------------------------------------
   /// @brief dtor for the uniformDataBool
   //----------------------------------------------------------------------------
