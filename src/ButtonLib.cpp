@@ -69,15 +69,15 @@ void ButtonLib::updateButtons()
           int uniformID=uniform->getID();
           if(uniform->getType()=="vec4")
           {
-            qDebug()<<"\nUniform name:"<<uniform->getName()<<"\nTemp: "<<_buttonDup[i]->getName();
+//            qDebug()<<"\nUniform name:"<<uniform->getName()<<"\nTemp: "<<_buttonDup[i]->getName();
             QColor display = _buttonDup[i]->getColourQ();
-            qDebug()<<"\nDuplicate vals: "<<display.redF()<<", "<<display.greenF()<<", "<<display.blueF()<<"\n";
+//            qDebug()<<"\nDuplicate vals: "<<display.redF()<<", "<<display.greenF()<<", "<<display.blueF()<<"\n";
             uniform->setColour(_buttonDup[i]->getColourQ());
 
           }
           if(uniform->getType()=="float")
           {
-            std::cout<<"Uniform vals, being set"<<std::endl;
+//            std::cout<<"Uniform vals, being set"<<std::endl;
             uniform->setValue(_buttonDup[i]->getValue());
           }
         }
