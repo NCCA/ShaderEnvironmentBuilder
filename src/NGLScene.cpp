@@ -674,6 +674,8 @@ void NGLScene::resetObjPos()
   m_spinXFace = 0;
   m_spinYFace = 0;
 
+  /// @bug On rare occasion object may not be reset exactly to 0,0,0 after
+  ///      camera pitch/roll/yaw are changed in IDE directly.
   setCameraRoll(0.0);
   setCameraYaw(0.0);
   setCameraPitch(0.0);
