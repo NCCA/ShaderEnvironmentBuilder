@@ -82,14 +82,20 @@ void ButtonLib::updateButtons()
           if(uniform->getTypeEnum()==GL_FLOAT_VEC4)
           {
             uniform->setColour(_buttonDup[i]->getColourQ());
+            _buttonDup.erase(_buttonDup.begin()+i);
+            break;
           }
           if(uniform->getTypeEnum()==GL_FLOAT)
           {
             uniform->setValue(_buttonDup[i]->getValue());
+            _buttonDup.erase(_buttonDup.begin()+i);
+            break;
           }
           if(uniform->getTypeEnum()==GL_FLOAT_VEC3)
           {
             uniform->setVec(_buttonDup[i]->getVec());
+            _buttonDup.erase(_buttonDup.begin()+i);
+            break;
           }
         }
       }
@@ -134,7 +140,6 @@ void ButtonLib::updateShaderValues()
           uniform->setVec3(ngl::Vec3(temp.m_x,
                                      temp.m_y,
                                      temp.m_z));
-          ngl::Vec3 newV = uniform->getVec3();
           break;
         }
       }
