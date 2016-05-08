@@ -106,7 +106,7 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   connect(m_gl,SIGNAL(initializeGL()), this, SLOT(on_m_btn_compileShader_clicked()));
 
   connect(m_vertQsci, SIGNAL(textChanged()), this, SLOT(fileModified()));
-
+  connect(m_fragQsci, SIGNAL(textChanged()), this, SLOT(fileModified()));
 
   update();
 
@@ -228,7 +228,7 @@ void MainWindow::objOpened()
   QString fileName=QFileDialog::getOpenFileName(this,
                                                 tr("Open Mesh"),
                                                 "0Features-0BugsCVA3/",
-                                                tr("Image Files (*.obj)"));
+                                                tr("OBJ Files (*.obj)"));
   std::string importName=fileName.toStdString();
   // Import the mesh
   m_gl->importMeshName(importName);
