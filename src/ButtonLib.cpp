@@ -19,7 +19,7 @@ void ButtonLib::createButtons()
     if(_uniformType==GL_FLOAT_VEC4)
     {
       ngl::Vec4 _uniformVec=uniform->getVec4();
-      colourButton *tempButton = new colourButton(_uniformName,
+      ColourButton *tempButton = new ColourButton(_uniformName,
                                                   _uniformType,
                                                   m_layout,
                                                   uniform->getLocation(),
@@ -32,7 +32,7 @@ void ButtonLib::createButtons()
     if(_uniformType==GL_FLOAT)
     {
       float _uniformFloat=uniform->getFloat();
-      floatButton *tempButton = new floatButton(_uniformName,
+      FloatButton *tempButton = new FloatButton(_uniformName,
                                                 _uniformType,
                                                 m_layout,
                                                 uniform->getLocation(),
@@ -40,6 +40,19 @@ void ButtonLib::createButtons()
                                                 m_scene,
                                                 m_parent);
       tempButton->setValue(_uniformFloat);
+      m_buttonList.push_back(tempButton);
+    }
+    if(_uniformType==GL_FLOAT_VEC3)
+    {
+      ngl::Vec3 _uniformVec=uniform->getVec3();
+      VecButton *tempButton = new VecButton(_uniformName,
+                                                  _uniformType,
+                                                  m_layout,
+                                                  uniform->getLocation(),
+                                                  this,
+                                                  m_scene,
+                                                  m_parent);
+      tempButton->setUpButton(_uniformVec);
       m_buttonList.push_back(tempButton);
     }
   }
@@ -66,17 +79,19 @@ void ButtonLib::updateButtons()
       {
         if(uniform->getName()==_buttonDup[i]->getName() && uniform->getTypeEnum()==_buttonDup[i]->getTypeEnum())
         {
-          //int uniformID=uniform->getID();
           if(uniform->getTypeEnum()==GL_FLOAT_VEC4)
           {
-            //qDebug()<<"\nUniform name:"<<uniform->getName()<<"\nTemp: "<<_buttonDup[i]->getName();
-            //QColor display = _buttonDup[i]->getColourQ();
-            //qDebug()<<"\nDuplicate vals: "<<display.redF()<<", "<<display.greenF()<<", "<<display.blueF()<<"\n";
             uniform->setColour(_buttonDup[i]->getColourQ());
           }
           if(uniform->getTypeEnum()==GL_FLOAT)
           {
             uniform->setValue(_buttonDup[i]->getValue());
+          }
+          if(uniform->getTypeEnum()==GL_FLOAT_VEC3)
+          {
+            std::cout<<"Setting vector 3 values\n";
+            uniform->setVec(_buttonDup[i]->getVec());
+            std::cout<<"Values are set\n";
           }
         }
       }
@@ -107,6 +122,24 @@ void ButtonLib::updateShaderValues()
         {
           float temp = button->getValue();
           uniform->setFloat(temp);
+          break;
+        }
+      }
+    }
+    if(uniform->getTypeEnum()==GL_FLOAT_VEC3)
+    {
+      for(auto button: m_buttonList)
+      {
+        if(uniform->getLocation()==button->getID())
+        {
+          std::cout<<"Match found!\nName:"<<uniform->getName()<<std::endl;
+          ngl::Vec4 temp = button->getVec();
+          std::cout<<"Values are: "<<temp.m_x<<", "<<temp.m_y<<", "<<temp.m_z<<std::endl;
+          uniform->setVec3(ngl::Vec3(temp.m_x,
+                                     temp.m_y,
+                                     temp.m_z));
+          ngl::Vec3 newV = uniform->getVec3();
+          std::cout<<"New Uniforms are: "<<newV.m_x<<", "<<newV.m_y<<", "<<newV.m_z<<std::endl;
           break;
         }
       }
