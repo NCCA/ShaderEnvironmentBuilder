@@ -14,7 +14,7 @@
 
 //------------------------------------------------------------------------------
 /// @class UniformData
-/// @brief the UniformData stores individual uniform data per data type.
+/// @brief Stores individual uniform data per data type.
 //------------------------------------------------------------------------------
 class UniformData
 {
@@ -178,7 +178,7 @@ public:
 
 //------------------------------------------------------------------------------
 /// @class UniformDataM4
-/// @brief the UniformDataM4 stores individual uniform data for Mat4 data.
+/// @brief Stores individual uniform data for Mat4 data.
 //------------------------------------------------------------------------------
 class UniformDataM4 :public UniformData
 {
@@ -210,7 +210,7 @@ public:
 
 //------------------------------------------------------------------------------
 /// @class UniformDataM3
-/// @brief the UniformDataM3 stores individual uniform data for Mat3 data.
+/// @brief Stores individual uniform data for Mat3 data.
 //------------------------------------------------------------------------------
 class UniformDataM3 :public UniformData
 {
@@ -242,7 +242,7 @@ public:
 
 //------------------------------------------------------------------------------
 /// @class UniformDataV4
-/// @brief the UniformDataV4 stores individual uniform data for Vec4 data.
+/// @brief Stores individual uniform data for Vec4 data.
 //------------------------------------------------------------------------------
 class UniformDataV4 :public UniformData
 {
@@ -279,7 +279,7 @@ public:
 
 //------------------------------------------------------------------------------
 /// @class UniformDataV3
-/// @brief the UniformDataV3 stores individual uniform data for Vec3 data.
+/// @brief Stores individual uniform data for Vec3 data.
 //------------------------------------------------------------------------------
 class UniformDataV3 :public UniformData
 {
@@ -316,7 +316,7 @@ public:
 
 //------------------------------------------------------------------------------
 /// @class UniformDataInt
-/// @brief the UniformDataInt stores individual uniform data for int data.
+/// @brief Stores individual uniform data for int data.
 //------------------------------------------------------------------------------
 class UniformDataInt :public UniformData
 {
@@ -348,7 +348,7 @@ public:
 
 //------------------------------------------------------------------------------
 /// @class UniformDataFloat
-/// @brief the UniformDataFloat stores individual uniform data for float data
+/// @brief Stores individual uniform data for float data
 //------------------------------------------------------------------------------
 class UniformDataFloat :public UniformData
 {
@@ -380,7 +380,7 @@ public:
 
 //------------------------------------------------------------------------------
 /// @class UniformDataBool
-/// @brief the UniformDataBool stores individual uniform data for bool data
+/// @brief Stores individual uniform data for bool data
 //------------------------------------------------------------------------------
 class UniformDataBool :public UniformData
 {

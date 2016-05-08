@@ -20,6 +20,11 @@
 
 using namespace std;
 
+//------------------------------------------------------------------------------
+/// @class Camera
+/// @brief Manages using multiple cameras in NGLScene
+//------------------------------------------------------------------------------
+
 class Camera : public QObject
 {
 Q_OBJECT
