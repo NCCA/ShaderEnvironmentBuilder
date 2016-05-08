@@ -26,7 +26,9 @@ const static float ZOOM=0.1f;
 //----------------------------------------------------------------------------------------------------------------------
 
 //----------------------------------------------------------------------------------------------------------------------
-NGLScene::NGLScene( QWidget *_parent, ParserLib *_libParent ) : QOpenGLWidget( _parent )
+NGLScene::NGLScene( QWidget *_parent, ParserLib *_libParent,
+                    ShaderManager *_manager )
+  : QOpenGLWidget( _parent )
 {
   // re-size the widget to that of the parent (in that case the GLFrame passed in on construction)
   m_rotate=false;
@@ -46,7 +48,7 @@ NGLScene::NGLScene( QWidget *_parent, ParserLib *_libParent ) : QOpenGLWidget( _
   // re-size the widget to that of the parent (in this case the GLFrame passed in on construction)
   this->resize(_parent->size());
   m_wireframe=false;
-  m_shaderManager = new ShaderManager();
+  m_shaderManager = _manager;
   m_camera = new Camera();
   m_camera->createCameras();
   m_cam = m_camera->m_mainCamera;

@@ -5,10 +5,11 @@
 //----------------------------------------------------------------------------
 /// @brief ctor for our ParserLib
 //----------------------------------------------------------------------------
-ParserLib::ParserLib()
+ParserLib::ParserLib(ShaderManager* _manager)
 {
   m_num=0;
   m_uniformList.resize(0);
+  m_shaderManager = _manager;
 }
 
 //----------------------------------------------------------------------------
@@ -22,7 +23,7 @@ void ParserLib::initializeUniformData()
 {
   //create instance of a shader
   ngl::ShaderLib *shaderLib=ngl::ShaderLib::instance();
-  GLuint id=shaderLib->getProgramID("Phong");
+  GLuint id=shaderLib->getProgramID(m_shaderManager->getData().m_name);
 
   // extract the number of uniforms active and update class data.
   GLint nUniforms;
@@ -140,7 +141,7 @@ void ParserLib::assignAllData()
 //------------------------------------------------------------------------------
 void ParserLib::printUniforms()
 {
-  std::cout<<"__________________________________Uniform Information: Starts/\n";
+  std::cout<<"\n******\nUniform Information: Starts\n";
   std::cout<<"There are "<<m_num<<" Uniforms\n";
 
   // print information

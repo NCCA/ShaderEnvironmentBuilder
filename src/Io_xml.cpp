@@ -53,8 +53,7 @@ int IO_XML::confirmOverwrite(QString _filePath)
   msgBox.setInformativeText("Do you want to overwrite the file?");
   msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
   msgBox.setDefaultButton(QMessageBox::Save);
-  QMessageBox::ButtonRole ret = static_cast<QMessageBox::ButtonRole>(msgBox.exec());
-  return ret;
+  return msgBox.exec();
 }
 
 //--------------------------------------------------------------------------------
