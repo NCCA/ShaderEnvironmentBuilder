@@ -1,11 +1,12 @@
-#ifndef PARSER_H__
-#define PARSER_H__
+#ifndef _PARSER_H__
+#define _PARSER_H__
 #include <unordered_map>
 #include <iostream>
+#include <fstream>
 #include <ngl/ShaderLib.h>
 #include <ngl/Shader.h>
-#include <fstream>
-#include <UniformData.h>
+#include "UniformData.h"
+#include "ShaderManager.h"
 
 //------------------------------------------------------------------------------
 /// @file ParserLib.h
@@ -21,7 +22,7 @@ public:
   //----------------------------------------------------------------------------
   /// @brief ctor for our ParserLib
   //----------------------------------------------------------------------------
-  ParserLib();
+  ParserLib(ShaderManager* _manager);
   //----------------------------------------------------------------------------
   /// @brief dtor for our ParserLib
   //----------------------------------------------------------------------------
@@ -75,7 +76,11 @@ public:
   /// @brief used to store a list of uniformData
   //----------------------------------------------------------------------------
   std::vector <UniformData*> m_uniformList;
-
+  //----------------------------------------------------------------------------
+  /// @brief stores the shader manager so that the correct shader id can be
+  /// queried for its uniforms
+  //----------------------------------------------------------------------------
+  ShaderManager* m_shaderManager;
 
 };
 
