@@ -389,7 +389,105 @@ void MainWindow::addError(QString _shaderName, int _lineNum)
 }
 
 //------------------------------------------------------------------------------
+
 MainWindow::~MainWindow()
 {
   delete m_ui;
+}
+
+//------------------------------------------------------------------------------
+
+void MainWindow::on_actionImport_Vertex_Shader_triggered()
+{
+  //Open a dialog box
+  QString fileName=QFileDialog::getOpenFileName(this,
+                                              tr("Import Vertex Shader"),
+                                              "0Features-0BugsCVA3/",
+                                              tr("GLSL Files (*.glsl)"));
+  //If its not empty...
+  if(!fileName.isEmpty())
+  {
+    //Open the selected File
+    QFile shaderFile(fileName);
+    if(!shaderFile.open(QFile::ReadOnly | QFile::Text))
+    {
+      //If it failed to open return an error and return
+      std::cout<<"Error opening file: "<<fileName.toStdString()<<std::endl;
+      return;
+    }
+
+    //Otherwise create a message box to confirm overwriting the current shader
+    QMessageBox confirmBox;
+    confirmBox.setWindowTitle("Import Vertex Shader");
+    confirmBox.setText("Current shader will be overwritten. \nAre you sure you want to continue?");
+    confirmBox.setStandardButtons(QMessageBox::Yes);
+    confirmBox.addButton(QMessageBox::No);
+    confirmBox.setDefaultButton(QMessageBox::No);
+    if(confirmBox.exec() == QMessageBox::Yes)
+    {
+      //If confirmed read the file into a QString
+      QTextStream inVert(&shaderFile);
+      QString vertSource;
+      vertSource = inVert.readAll();
+      // Set the text in the text editor
+      m_vertQsci->setText(vertSource);
+      shaderFile.close();
+    }
+    else
+    {
+      //Else close the file and return
+      shaderFile.close();
+      return;
+    }
+  }
+
+}
+
+//------------------------------------------------------------------------------
+
+void MainWindow::on_actionImport_Fragment_Shader_triggered()
+{
+  //Open a dialog box
+  QString fileName=QFileDialog::getOpenFileName(this,
+                                              tr("Import Fragment Shader"),
+                                              "0Features-0BugsCVA3/",
+                                              tr("GLSL Files (*.glsl)"));
+
+  //If selected file directory is not empty...
+  if(!fileName.isEmpty())
+  {
+    //Open the selected File
+    QFile shaderFile(fileName);
+    if(!shaderFile.open(QFile::ReadOnly | QFile::Text))
+    {
+      //If it failed to open return an error and return
+      std::cout<<"Error opening file: "<<fileName.toStdString()<<std::endl;
+      return;
+    }
+
+    //Otherwise create a message box to confirm overwriting the current shader
+    QMessageBox confirmBox;
+    confirmBox.setWindowTitle("Import Fragment Shader");
+    confirmBox.setText("Current shader will be overwritten. \nAre you sure you want to continue?");
+    confirmBox.setStandardButtons(QMessageBox::Yes);
+    confirmBox.addButton(QMessageBox::No);
+    confirmBox.setDefaultButton(QMessageBox::No);
+    if(confirmBox.exec() == QMessageBox::Yes)
+    {
+      //If confirmed read the file into a QString
+      QTextStream inFrag(&shaderFile);
+      QString fragSource;
+      fragSource = inFrag.readAll();
+      // Set the text in the text editor
+      m_fragQsci->setText(fragSource);
+      shaderFile.close();
+    }
+    else
+    {
+      //Else close the file and return
+      shaderFile.close();
+      return;
+    }
+  }
+
 }

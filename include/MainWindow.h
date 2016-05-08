@@ -203,6 +203,14 @@ private slots:
   /// @brief Called when Load Texture is clicked
   //----------------------------------------------------------------------------
   void                  on_m_actionLoad_Texture_triggered();
+  //----------------------------------------------------------------------------
+  /// @brief Called when Import Vertex Shader is clicked
+  //----------------------------------------------------------------------------
+  void                  on_actionImport_Vertex_Shader_triggered();
+  //----------------------------------------------------------------------------
+  /// @brief Called when Import Fragment Shader is clicked
+  //----------------------------------------------------------------------------
+  void                  on_actionImport_Fragment_Shader_triggered();
 };
 
 #endif // _MAINWINDOW_H_

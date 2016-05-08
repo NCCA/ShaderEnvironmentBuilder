@@ -144,7 +144,7 @@
                  <x>0</x>
                  <y>0</y>
                  <width>213</width>
-                 <height>414</height>
+                 <height>415</height>
                 </rect>
                </property>
                <property name="sizePolicy">
@@ -898,18 +898,26 @@
      <x>0</x>
      <y>0</y>
      <width>1280</width>
-     <height>27</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
      <string>File</string>
     </property>
+    <widget class="QMenu" name="menuImport_Shaders">
+     <property name="title">
+      <string>Import Shaders</string>
+     </property>
+     <addaction name="actionImport_Vertex_Shader"/>
+     <addaction name="actionImport_Fragment_Shader"/>
+    </widget>
     <addaction name="actionNew"/>
     <addaction name="actionOpen"/>
     <addaction name="actionSaveProject"/>
     <addaction name="actionSaveProjectAs"/>
     <addaction name="separator"/>
+    <addaction name="menuImport_Shaders"/>
     <addaction name="actionExport"/>
     <addaction name="actionStartup_Window"/>
     <addaction name="separator"/>
@@ -1016,6 +1024,16 @@
   <action name="actionExport">
    <property name="text">
     <string>Export Shaders</string>
+   </property>
+  </action>
+  <action name="actionImport_Vertex_Shader">
+   <property name="text">
+    <string>Import Vertex Shader</string>
+   </property>
+  </action>
+  <action name="actionImport_Fragment_Shader">
+   <property name="text">
+    <string>Import Fragment Shader</string>
    </property>
   </action>
  </widget>
