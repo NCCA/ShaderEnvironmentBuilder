@@ -104,12 +104,33 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   connect(m_gl,SIGNAL(createLineMarker(QString,int)),this,SLOT(addError(QString,int)));
   connect(m_gl,SIGNAL(initializeGL()), this, SLOT(on_m_btn_compileShader_clicked()));
 
+  connect(m_vertQsci, SIGNAL(textChanged()), this, SLOT(fileModified()));
+
+
   update();
 
   centreWindow();
 
   m_startDialog = new StartupDialog(this);
 
+  m_fileChange=true;
+
+  updateTitle();
+
+}
+
+//------------------------------------------------------------------------------
+void MainWindow::fileModified()
+{
+  m_fileChange = true;
+  updateTitle();
+}
+
+//------------------------------------------------------------------------------
+void MainWindow::updateTitle()
+{
+  setWindowTitle(QString("%1[*] - C(S)hader Environment Builder").arg(m_project->getName().c_str()));
+  setWindowModified(m_fileChange);
 }
 
 //------------------------------------------------------------------------------
@@ -262,7 +283,7 @@ bool MainWindow::newProjectWiz(QWidget* _parent)
   if (success)
   {
     const OutputData *output = projectWiz->getOutput();
-    m_project->set(output->m_projectName, output->m_projectDir, false);
+    m_project->set(output->m_projectName, output->m_projectDir, false, true);
     m_vertQsci->setText(output->m_vertSource);
     m_fragQsci->setText(output->m_fragSource);
     QString vertSource, fragSource;
@@ -294,10 +315,10 @@ void MainWindow::keyPressEvent(QKeyEvent *_event)
   {
     switch (_event->key())
     {
-      case Qt::Key_W : {m_ui->m_showWireframe->toggle(); break;}
-      case Qt::Key_N : {m_ui->m_showNormals->toggle();   break;}
-      case Qt::Key_G : {m_ui->m_showGrid->toggle();      break;}
-      case Qt::Key_F : {m_gl->resetObjPos();             break;}
+    case Qt::Key_W : {m_ui->m_showWireframe->toggle(); break;}
+    case Qt::Key_N : {m_ui->m_showNormals->toggle();   break;}
+    case Qt::Key_G : {m_ui->m_showGrid->toggle();      break;}
+    case Qt::Key_F : {m_gl->resetObjPos();             break;}
     }
   }
   update();
@@ -306,13 +327,26 @@ void MainWindow::keyPressEvent(QKeyEvent *_event)
 //------------------------------------------------------------------------------
 void MainWindow::on_actionSaveProject_triggered()
 {
-  m_project->save(m_vertQsci->text(), m_fragQsci->text());
+  if (m_fileChange)
+  {
+    bool success = m_project->save(m_vertQsci->text(), m_fragQsci->text());
+    if (success)
+    {
+      m_fileChange = false;
+    }
+  }
+  updateTitle();
 }
 
 //------------------------------------------------------------------------------
 void MainWindow::on_actionSaveProjectAs_triggered()
 {
-  m_project->saveAs(m_vertQsci->text(), m_fragQsci->text());
+  bool success = m_project->saveAs(m_vertQsci->text(), m_fragQsci->text());
+  if (success)
+  {
+    m_fileChange = false;
+  }
+  updateTitle();
 }
 
 //------------------------------------------------------------------------------
@@ -326,15 +360,15 @@ void MainWindow::on_actionOpen_triggered()
   string fileDirectory = "";
   if( !fileDir.isEmpty() )
   {
-     QString vertSource, fragSource;
-     fileDirectory = fileDir.toStdString();
-     // load project data
-     m_project->load(fileDirectory, vertSource, fragSource);
-     // set the text editor strings
-     m_vertQsci->setText(vertSource);
-     m_fragQsci->setText(fragSource);
-     // set proect data in scene for shader manager
-     m_gl->setProject(m_project->getName(), vertSource,fragSource);
+    QString vertSource, fragSource;
+    fileDirectory = fileDir.toStdString();
+    // load project data
+    m_project->load(fileDirectory, vertSource, fragSource);
+    // set the text editor strings
+    m_vertQsci->setText(vertSource);
+    m_fragQsci->setText(fragSource);
+    // set proect data in scene for shader manager
+    m_gl->setProject(m_project->getName(), vertSource,fragSource);
   }
 }
 
@@ -361,9 +395,9 @@ void MainWindow::on_m_actionLoad_Tex_triggered()
 {
   // Open a file dialog and return a file directory
   QString fileName=QFileDialog::getOpenFileName(this,
-                                              tr("Open Texture Map"),
-                                              "0Features-0BugsCVA3/",
-                                              tr("Image Files (*.jpg)"));
+                                                tr("Open Texture Map"),
+                                                "0Features-0BugsCVA3/",
+                                                tr("Image Files (*.jpg)"));
   // load texture map to OBJ
   std::string importName=fileName.toStdString();
   m_gl->importTextureMap(importName);
@@ -396,9 +430,9 @@ void MainWindow::on_actionImport_Vertex_Shader_triggered()
 {
   //Open a dialog box
   QString fileName=QFileDialog::getOpenFileName(this,
-                                              tr("Import Vertex Shader"),
-                                              "0Features-0BugsCVA3/",
-                                              tr("GLSL Files (*.glsl)"));
+                                                tr("Import Vertex Shader"),
+                                                "0Features-0BugsCVA3/",
+                                                tr("GLSL Files (*.glsl)"));
   //If its not empty...
   if(!fileName.isEmpty())
   {
@@ -443,9 +477,9 @@ void MainWindow::on_actionImport_Fragment_Shader_triggered()
 {
   //Open a dialog box
   QString fileName=QFileDialog::getOpenFileName(this,
-                                              tr("Import Fragment Shader"),
-                                              "0Features-0BugsCVA3/",
-                                              tr("GLSL Files (*.glsl)"));
+                                                tr("Import Fragment Shader"),
+                                                "0Features-0BugsCVA3/",
+                                                tr("GLSL Files (*.glsl)"));
 
   //If selected file directory is not empty...
   if(!fileName.isEmpty())
