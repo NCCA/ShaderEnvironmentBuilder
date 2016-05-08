@@ -339,8 +339,6 @@ void ParserLib::uniformDataTypes()
 
   std::cout<<"Registered Uniforms for shader "<< id <<"\n";
 
-  int incr = 0;
-
   for(auto d : m_uniformList)
   {
     std::string type;
