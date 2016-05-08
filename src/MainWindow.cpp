@@ -32,10 +32,10 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
 
   m_shaderManager = new ShaderManager();
   // create parser in main window
-  m_parForButton = new ParserLib(m_shaderManager);
+  m_parser = new ParserLib(m_shaderManager);
 
   // Create openGl and qsci widgets, pass in the parser
-  m_gl=new  NGLScene(this, m_parForButton, m_shaderManager);
+  m_gl=new  NGLScene(this, m_parser, m_shaderManager);
 
   m_ui->m_sldr_cameraFov->setValue(65.0f);
   m_ui->m_nearClip->setValue(0.5f);
@@ -74,7 +74,7 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   // Load the text files into the corresponding tabs
   loadTextFileToTab("shaders/PhongVertex.glsl", *m_vertQsci);
   loadTextFileToTab("shaders/PhongFragment.glsl", *m_fragQsci);
-  m_buttonLibrary = new ButtonLib(m_parForButton, m_ui->vl_uniforms, m_gl, m_ui->m_w_uniforms);
+  m_buttonLibrary = new ButtonLib(m_parser, m_ui->vl_uniforms, m_gl, m_ui->m_w_uniforms);
 
   // switching between shapes
   connect(m_ui->m_actionLoad_Sphere,SIGNAL(triggered()),this,SLOT(shapeTriggered()));
@@ -153,7 +153,7 @@ void MainWindow::on_m_btn_compileShader_clicked()
 //------------------------------------------------------------------------------
 void MainWindow::printUniforms()
 {
-  m_parForButton->printUniforms();
+  m_parser->printUniforms();
 }
 
 //------------------------------------------------------------------------------

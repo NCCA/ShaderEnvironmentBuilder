@@ -102,7 +102,6 @@ void VecButton::setUpButton(ngl::Vec3 _vector)
    m_vecLayout = new QGridLayout(m_vecWindow);
 
    m_vecWindow->setWindowTitle("Input XYZ values");
-   std::cout<<"My widget created\n";
    m_vecWindow->setFixedSize(200,200);
    m_vecWindow->setModal(1);
    m_xName = new QLabel("X: ");
