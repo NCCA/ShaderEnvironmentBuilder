@@ -9,9 +9,13 @@
 /// @brief the UniformData stores individual uniform data per data type.
 /// @author Adam Jonathan Ting
 /// @version 1.0
-/// @date 05/05/16
+/// @date 07/05/16
 //------------------------------------------------------------------------------
 
+//------------------------------------------------------------------------------
+/// @class UniformData
+/// @brief Stores individual uniform data per data type.
+//------------------------------------------------------------------------------
 class UniformData
 {
 protected:
@@ -24,11 +28,11 @@ protected:
   //----------------------------------------------------------------------------
   GLuint m_loc;
   //----------------------------------------------------------------------------
-  /// @brief used to store the dataType enum of this uniform, e.g. "35676"
+  /// @brief used to store the dataType enum of this uniform, e.g. "35666"
   //----------------------------------------------------------------------------
   GLenum m_type;
   //----------------------------------------------------------------------------
-  /// @brief used to store the dataType name of this uniform, e.g. "mat3"
+  /// @brief used to store the dataType name of this uniform, e.g. "vec4"
   //----------------------------------------------------------------------------
   std::string m_typeName;
 public:
@@ -172,8 +176,11 @@ public:
   virtual ngl::Mat4 getMat4() {return ngl::Mat4();}
 };
 
-
-class uniformDataM4 :public UniformData
+//------------------------------------------------------------------------------
+/// @class UniformDataM4
+/// @brief Stores individual uniform data for Mat4 data.
+//------------------------------------------------------------------------------
+class UniformDataM4 :public UniformData
 {
 private:
   //----------------------------------------------------------------------------
@@ -188,7 +195,7 @@ public:
   //----------------------------------------------------------------------------
   /// @brief dtor for the uniformDataM4
   //----------------------------------------------------------------------------
-  ~uniformDataM4();
+  ~UniformDataM4();
   //----------------------------------------------------------------------------
   /// @brief this assigns the _value to the uniformData m_mat4
   /// @param[in] _value is the value to change m_mat4 into
@@ -201,7 +208,11 @@ public:
   ngl::Mat4 getMat4()             {return m_mat4;}
 };
 
-class uniformDataM3 :public UniformData
+//------------------------------------------------------------------------------
+/// @class UniformDataM3
+/// @brief Stores individual uniform data for Mat3 data.
+//------------------------------------------------------------------------------
+class UniformDataM3 :public UniformData
 {
 private:
   //----------------------------------------------------------------------------
@@ -216,7 +227,7 @@ public:
   //----------------------------------------------------------------------------
   /// @brief dtor for the uniformDataM3
   //----------------------------------------------------------------------------
-  ~uniformDataM3();
+  ~UniformDataM3();
   //----------------------------------------------------------------------------
   /// @brief this assigns the _value to the uniformData m_mat3
   /// @param[in] _value is the value to change m_mat3 into
@@ -229,7 +240,11 @@ public:
   ngl::Mat3 getMat3()               {return m_mat3;}
 };
 
-class uniformDataV4 :public UniformData
+//------------------------------------------------------------------------------
+/// @class UniformDataV4
+/// @brief Stores individual uniform data for Vec4 data.
+//------------------------------------------------------------------------------
+class UniformDataV4 :public UniformData
 {
 private:
   //----------------------------------------------------------------------------
@@ -244,7 +259,7 @@ public:
   //----------------------------------------------------------------------------
   /// @brief dtor for the uniformDataV4
   //----------------------------------------------------------------------------
-  ~uniformDataV4();
+  ~UniformDataV4();
   //----------------------------------------------------------------------------
   /// @brief this assigns the _value to the uniformData m_vec4
   /// @param[in] _value is the value to change m_vec4 into
@@ -262,7 +277,11 @@ public:
   ngl::Vec4 getVec4()            {return m_vec4;}
 };
 
-class uniformDataV3 :public UniformData
+//------------------------------------------------------------------------------
+/// @class UniformDataV3
+/// @brief Stores individual uniform data for Vec3 data.
+//------------------------------------------------------------------------------
+class UniformDataV3 :public UniformData
 {
 private:
   //----------------------------------------------------------------------------
@@ -277,7 +296,7 @@ public:
   //----------------------------------------------------------------------------
   /// @brief dtor for the uniformDataV3
   //----------------------------------------------------------------------------
-  ~uniformDataV3();
+  ~UniformDataV3();
   //----------------------------------------------------------------------------
   /// @brief this assigns the _value to the uniformData m_vec3
   /// @param[in] _value is the value to change m_vec3 into
@@ -295,7 +314,11 @@ public:
   ngl::Vec3 getVec3()            {return m_vec3;}
 };
 
-class uniformDataInt :public UniformData
+//------------------------------------------------------------------------------
+/// @class UniformDataInt
+/// @brief Stores individual uniform data for int data.
+//------------------------------------------------------------------------------
+class UniformDataInt :public UniformData
 {
 private:
   //----------------------------------------------------------------------------
@@ -310,7 +333,7 @@ public:
   //----------------------------------------------------------------------------
   /// @brief dtor for the uniformDataInt
   //----------------------------------------------------------------------------
-  ~uniformDataInt();
+  ~UniformDataInt();
   //----------------------------------------------------------------------------
   /// @brief this assigns the _value to the uniformData m_int
   /// @param[in] _value is the value to change m_int into
@@ -323,7 +346,11 @@ public:
   int getInt()            {return m_int;}
 };
 
-class uniformDataFloat :public UniformData
+//------------------------------------------------------------------------------
+/// @class UniformDataFloat
+/// @brief Stores individual uniform data for float data
+//------------------------------------------------------------------------------
+class UniformDataFloat :public UniformData
 {
 private:
   //----------------------------------------------------------------------------
@@ -338,7 +365,7 @@ public:
   //----------------------------------------------------------------------------
   /// @brief dtor for the uniformDataFloat
   //----------------------------------------------------------------------------
-  ~uniformDataFloat();
+  ~UniformDataFloat();
   //----------------------------------------------------------------------------
   /// @brief this assigns the _value to the uniformData m_float
   /// @param[in] _value is the value to change m_float into
@@ -351,7 +378,11 @@ public:
   float getFloat()             {return m_float;}
 };
 
-class uniformDataBool :public UniformData
+//------------------------------------------------------------------------------
+/// @class UniformDataBool
+/// @brief Stores individual uniform data for bool data
+//------------------------------------------------------------------------------
+class UniformDataBool :public UniformData
 {
 private:
   //----------------------------------------------------------------------------
@@ -366,7 +397,7 @@ public:
   //----------------------------------------------------------------------------
   /// @brief dtor for the uniformDataBool
   //----------------------------------------------------------------------------
-  ~uniformDataBool();
+  ~UniformDataBool();
   //----------------------------------------------------------------------------
   /// @brief this assigns the _value to the uniformData m_bool
   /// @param[in] _value is the value to change m_bool into
@@ -378,6 +409,7 @@ public:
   //----------------------------------------------------------------------------
   bool getBool()              {return m_bool;}
 };
+
 #endif // UNIFORMS_H__
 
 

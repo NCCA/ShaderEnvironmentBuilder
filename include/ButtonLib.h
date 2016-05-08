@@ -17,22 +17,30 @@
 
 class Button;
 class NGLScene;
+
+//----------------------------------------------------------------------------------------------------------------------
+/// @class ButtonLib
+/// @brief Stores vector of buttons with values and updates uniforms.
+//----------------------------------------------------------------------------------------------------------------------
 class ButtonLib
 {
 
 public:
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief constructor to create the button library
-  /// @param [in] the parser to check and set uniforms
-  /// @param [in] the layout environment for the buttons to be attached to
-  /// @param [in] the parent window for the buttons
+  /// @param [in] _parser the parser to check and set uniforms
+  /// @param [in] _layout the layout environment for the buttons to be attached to
+  /// @param [in] _scene the NGLScene for the GUI
+  /// @param [in] _parent the parent window for the buttons
   //----------------------------------------------------------------------------------------------------------------------
   ButtonLib(ParserLib *_parser, QLayout *_layout, NGLScene *_scene, QWidget *_parent=0);
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief call to a function to create the buttons in the gui
   //----------------------------------------------------------------------------------------------------------------------
   void createButtons();
-
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief call to update the buttons
+  //----------------------------------------------------------------------------------------------------------------------
   void updateButtons();
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief prints the uniforms for debugging purposes
@@ -56,15 +64,14 @@ private:
   /// @brief pointer to the parser to access and set uniform values
   //----------------------------------------------------------------------------------------------------------------------
   ParserLib *m_parser;
-
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief pointer to the NGLScene, gl Widget
+  //----------------------------------------------------------------------------------------------------------------------
   NGLScene *m_scene;
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief vector of buttons to dynamically and delete different types
   //----------------------------------------------------------------------------------------------------------------------
   std::vector<Button*> m_buttonList;
-
-
-
 };
 
 #endif

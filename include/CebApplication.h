@@ -24,7 +24,8 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 /// @class CebApplication
-/// @brief our main window used for holding all the Qt widgets
+/// @brief used to handle all the gui's application control flow and errors for
+/// the program
 //------------------------------------------------------------------------------
 class CebApplication : public QApplication
 {

@@ -1,36 +1,22 @@
 #include <Json.h>
 
-// Only need boost for creating directories
-#include <boost/filesystem.hpp>
-
-//using namespace rapidxml;
-using namespace rapidjson;
-using namespace std;
-using json = nlohmann::json;
-
-// ----------------------------------------------------------------------------------------------------------------------
-Json::Json()
-{
-  // Ensure the location of files for temp output. REMOVE IN FINAL VERSION
-  boost::filesystem::path dir("./");
-  boost::filesystem::create_directories(dir);
-}
-
-// ----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Writes an input string into to a file
+//------------------------------------------------------------------------------
 void Json::writeFile(std::string _fileName, std::string _stringData)
 {              
-    ofstream fileName("./tempFiles/"+_fileName);   // ofstream jsonFile("./tempFiles/shader.json");
+    std::ofstream fileName("./tempFiles/"+_fileName);   // ofstream jsonFile("./tempFiles/shader.json");
     if (fileName.is_open())
         fileName << _stringData << std::endl;
     fileName.close();
 }
 
-// ----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Reads an input file name and prints the file contents.
+//------------------------------------------------------------------------------
 void Json::readFile(std::string _fileName)
 {
-    ifstream jsonFile("./tempFiles/"+_fileName+".json");
+    std::ifstream jsonFile("./tempFiles/"+_fileName+".json");
     if(!jsonFile)
     {
         std::cout<<"Unable to open file."<<std::endl;
@@ -39,8 +25,9 @@ void Json::readFile(std::string _fileName)
     std::cout << "File contents \n " << jsonFile;
 }
 
-// ----------------------------------------------------------------------------------------------------------------------
-// Builds the shader in json format
+//------------------------------------------------------------------------------
+// Builds the shader in a default json format.
+//------------------------------------------------------------------------------
 void Json::defaultShader()
 {
     auto shaderProgramJson = R"(
@@ -72,21 +59,23 @@ void Json::defaultShader()
     writeFile("jsonString.json", shaderProgramJson.dump(1));
 }
 
-// ----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Appends shader data (name, type, value).
-void Json::addShaderData(string _name, string _type, double _value)
+//------------------------------------------------------------------------------
+void Json::addShaderData(std::string _name, std::string _type, double _value)
 {
-    json shaderDataJson;
+    nlohmann::json shaderDataJson;
 
     shaderDataJson[_name]={{"Name", _name}, {"Type", _value}, {"Value", _value}};
     writeFile("shaderData.json", shaderDataJson.dump(1));
 }
 
-// ----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Reads through the Json string, finds a word and replaces with a new word.
+//------------------------------------------------------------------------------
 void Json::replaceWord(std::string _oldWord, std::string _newWord)
 {
-    ifstream jsonFile("./tempFiles/jsonString.json");
+    std::ifstream jsonFile("./tempFiles/jsonString.json");
     std::string lineRead;
     size_t pos;
     std::string foundWord;
@@ -94,14 +83,14 @@ void Json::replaceWord(std::string _oldWord, std::string _newWord)
     {
         getline(jsonFile, lineRead);
         pos=lineRead.find(_oldWord);
-        if(pos!=string::npos)              //reads through the line
+        if(pos!=std::string::npos)              //reads through the line
         {
             lineRead.replace(pos, _oldWord.length(), _newWord);
             break;
         }
     }
     jsonFile.close();
-    ofstream jsonFileNew("./tempFiles/jsonString.json");
+    std::ofstream jsonFileNew("./tempFiles/jsonString.json");
     std::cout<<"\nNew file: \n"<<lineRead << std::endl;
     if (jsonFileNew.is_open())
         jsonFileNew << lineRead << std::endl;

@@ -29,7 +29,7 @@ class QColor;
 QT_END_NAMESPACE
 
 //----------------------------------------------------------------------------------------------------------------------
-/// @file button.h
+/// @file Button.h
 /// @brief this class creates a button with a pop up widget that can create modifiable
 /// attributes
 /// @author Jonny Lyddon
@@ -40,8 +40,10 @@ QT_END_NAMESPACE
 class ButtonLib;
 class NGLScene;
 
-
-
+//----------------------------------------------------------------------------------------------------------------------
+/// @class Button
+/// @brief Parent class of different button types to set uniform values
+//----------------------------------------------------------------------------------------------------------------------
 class Button : public QDialog
 {
   Q_OBJECT
@@ -165,6 +167,10 @@ private:
 
 };
 
+//----------------------------------------------------------------------------------------------------------------------
+/// @class ColourButton
+/// @brief Button to set colour uniform values
+//----------------------------------------------------------------------------------------------------------------------
 class colourButton : public Button
 {
     Q_OBJECT
@@ -219,6 +225,10 @@ public:
   //colourButton& operator=(colourButton &_rhs);
 };
 
+//----------------------------------------------------------------------------------------------------------------------
+/// @class FloatButton
+/// @brief Button to set float uniform values
+//----------------------------------------------------------------------------------------------------------------------
 class floatButton : public Button
 {
     Q_OBJECT

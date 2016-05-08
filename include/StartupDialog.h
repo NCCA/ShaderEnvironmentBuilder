@@ -1,6 +1,6 @@
 //------------------------------------------------------------------------------
-/// @file CebAppplication
-/// @brief the CEB implementation of QApplication to allow for error handling
+/// @file StartupDialog
+/// @brief the StatupDialog to do commonly used tasks
 /// @author Jonathan Flynn
 /// @version 1.0
 /// @date 01/03/16
@@ -49,7 +49,7 @@ public:
   /// @brief Constructor
   /// @param [in] _parent the parent window to create the StartupDialog in
   //----------------------------------------------------------------------------
-  explicit StartupDialog(QWidget *parent = 0);
+  explicit StartupDialog  (QWidget *parent = 0);
   //----------------------------------------------------------------------------
   /// @brief Destructor
   //----------------------------------------------------------------------------
@@ -60,11 +60,11 @@ private slots:
   //----------------------------------------------------------------------------
   /// @brief Runs whenever OpenProject button is clicked
   //----------------------------------------------------------------------------
-  void on_m_b_openProj_clicked();
+  void                    on_m_b_openProj_clicked();
   //----------------------------------------------------------------------------
   /// @brief Runs whenever NewProject button is clicked
   //----------------------------------------------------------------------------
-  void on_m_b_newProj_clicked();
+  void                    on_m_b_newProj_clicked();
   //----------------------------------------------------------------------------
   //----------------------------------------------------------------------------
 private:
@@ -72,12 +72,12 @@ private:
   /// @brief the generated widgets created from the form using
   /// ui_StartupDialog.h
   //----------------------------------------------------------------------------
-  Ui::StartupDialog *m_ui;
+  Ui::StartupDialog*      m_ui;
   //----------------------------------------------------------------------------
   /// @brief pointer to the main window stored from the parent passed to the
   /// dialog
   //----------------------------------------------------------------------------
-  MainWindow* m_mainWin;
+  MainWindow*             m_mainWin;
 };
 
 #endif // _STARTUPDIALOG_H_

@@ -1,19 +1,23 @@
-#include "ParserLib.h"
+#include <QDir>
 #include <ngl/ShaderLib.h>
+#include "ParserLib.h"
+#include "CebErrors.h"
+
 
 //----------------------------------------------------------------------------
 /// @brief ctor for our ParserLib
 //----------------------------------------------------------------------------
-ParserLib::ParserLib()
+ParserLib::ParserLib(ShaderManager* _manager)
 {
   m_num=0;
   m_uniformList.resize(0);
+  m_shaderManager = _manager;
 }
 
 //----------------------------------------------------------------------------
 ParserLib::~ParserLib()
 {
-  std::cout<<"ParserLib destroyed"<<std::endl;
+  std::cerr<<"ParserLib destroyed"<<std::endl;
 }
 
 //----------------------------------------------------------------------------
@@ -21,7 +25,7 @@ void ParserLib::initializeUniformData()
 {
   //create instance of a shader
   ngl::ShaderLib *shaderLib=ngl::ShaderLib::instance();
-  GLuint id=shaderLib->getProgramID("Phong");
+  GLuint id=shaderLib->getProgramID(m_shaderManager->getData().m_name);
 
   // extract the number of uniforms active and update class data.
   GLint nUniforms;
@@ -50,70 +54,70 @@ void ParserLib::initializeUniformData()
     {
       case GL_BOOL:
       {
-        uniformDataBool* newData= new uniformDataBool(uniformName,
+        UniformDataBool* newData= new UniformDataBool(uniformName,
                                                       tempLoc,
                                                       type);
-        // Add uniformData to the currently registeredUniforms
+        // Add UniformData to the currently registeredUniforms
         m_registeredUniforms[uniformName]=newData;
         m_uniformList[i]=newData;
         break;
       }
       case GL_FLOAT:
       {
-        uniformDataFloat* newData= new uniformDataFloat(uniformName,
+        UniformDataFloat* newData= new UniformDataFloat(uniformName,
                                                         tempLoc,
                                                         type);
-        // Add uniformData to the currently registeredUniforms
+        // Add UniformData to the currently registeredUniforms
         m_registeredUniforms[uniformName]=newData;
         m_uniformList[i]=newData;
         break;
       }
       case GL_INT:
       {
-        uniformDataInt* newData= new uniformDataInt(uniformName,
+        UniformDataInt* newData= new UniformDataInt(uniformName,
                                                     tempLoc,
                                                     type);
-        // Add uniformData to the currently registeredUniforms
+        // Add UniformData to the currently registeredUniforms
         m_registeredUniforms[uniformName]=newData;
         m_uniformList[i]=newData;
         break;
       }
       case GL_FLOAT_VEC3:
       {
-        uniformDataV3* newData= new uniformDataV3(uniformName,
+        UniformDataV3* newData= new UniformDataV3(uniformName,
                                                   tempLoc,
                                                   type);
-        // Add uniformData to the currently registeredUniforms
+        // Add UniformData to the currently registeredUniforms
         m_registeredUniforms[uniformName]=newData;
         m_uniformList[i]=newData;
         break;
       }
       case GL_FLOAT_VEC4:
       {
-        uniformDataV4* newData= new uniformDataV4(uniformName,
+        UniformDataV4* newData= new UniformDataV4(uniformName,
                                                   tempLoc,
                                                   type);
-        // Add uniformData to the currently registeredUniforms
+        // Add UniformData to the currently registeredUniforms
         m_registeredUniforms[uniformName]=newData;
         m_uniformList[i]=newData;
         break;
       }
       case GL_FLOAT_MAT3:
       {
-        uniformDataM3* newData= new uniformDataM3(uniformName,
+        UniformDataM3* newData= new UniformDataM3(uniformName,
                                                   tempLoc,
                                                   type);
-        // Add uniformData to the currently registeredUniforms
+        // Add UniformData to the currently registeredUniforms
         m_registeredUniforms[uniformName]=newData;
         m_uniformList[i]=newData;
         break;
       }
       case GL_FLOAT_MAT4:
       {
-        uniformDataM4* newData= new uniformDataM4(uniformName,
+        UniformDataM4* newData= new UniformDataM4(uniformName,
                                                   tempLoc,
                                                   type);
-        // Add uniformData to the currently registeredUniforms
+        // Add UniformData to the currently registeredUniforms
         m_registeredUniforms[uniformName]=newData;
         m_uniformList[i]=newData;
         break;
@@ -129,6 +133,7 @@ void ParserLib::initializeUniformData()
   uniformDataTypes();
 }
 
+//------------------------------------------------------------------------------
 void ParserLib::assignAllData()
 {
   initializeUniformData();
@@ -138,14 +143,14 @@ void ParserLib::assignAllData()
 //------------------------------------------------------------------------------
 void ParserLib::printUniforms()
 {
-  std::cout<<"__________________________________Uniform Information: Starts//n";
-  std::cout<<"There are "<<m_num<<" Uniforms/n";
+  std::cout<<"\n******\nUniform Information: Starts\n";
+  std::cout<<"There are "<<m_num<<" Uniforms\n";
 
   // print information
   for (uint i=0; i<m_num; i++)
   {
     std::cout << "Name: "<<m_uniformList[i]->getName();
-    std::cout << ";  Location: "<<m_uniformList[i]->getName()<<" ("<<i<<")";
+    std::cout << ";  Location: "<<" ("<<i<<")";
     std::cout << ";  Type: "<<m_uniformList[i]->getTypeEnum()<<"; ";
     std::cout <<m_uniformList[i]->getTypeName()<<std::endl;
 
@@ -195,6 +200,7 @@ void ParserLib::printUniforms()
       }
     }
   }
+
   std::cout<<"___________________________________Uniform Information: Ends//\n";
 
 }
@@ -347,15 +353,14 @@ void ParserLib::uniformDataTypes()
 /// end of Citation
 
 //------------------------------------------------------------------------------
-void ParserLib::exportUniforms()
+bool ParserLib::exportUniforms(QString _dir)
 {
-  // Open the text file "ParsingOutput.txt"
   std::ofstream fileOut;
-  fileOut.open("./tempFiles/ParsingOutput.txt");
+  fileOut.open(_dir.toStdString().c_str());
   if(!fileOut.is_open())    ///If it can't be opened
   {
-    std::cerr<<"couldn't' open file\n";
-    exit(EXIT_FAILURE);
+    throw CEBError::fileError(_dir);
+    return false;
   }
   for(uint i=0;i<m_num;i++)
   {
@@ -439,7 +444,7 @@ void ParserLib::exportUniforms()
   }
   // close file
   fileOut.close();
-  std::cout<<"Exported Uniforms\n"<<std::endl;
+  return true;
 }
 
 //------------------------------------------------------------------------------
@@ -507,7 +512,7 @@ void ParserLib::assignUniformValues()
 }
 
 //------------------------------------------------------------------------------
-void ParserLib::sendUniformsToShader(ngl::ShaderLib *shader)
+void ParserLib::sendUniformsToShader(ngl::ShaderLib *_shader)
 {
 
   // set shader values depending on it's data type
@@ -517,19 +522,19 @@ void ParserLib::sendUniformsToShader(ngl::ShaderLib *shader)
     {
       case GL_BOOL:
       {
-        shader->setShaderParam1i(m_uniformList[i]->getName(),
+        _shader->setShaderParam1i(m_uniformList[i]->getName(),
                                  m_uniformList[i]->getBool());
         break;
       }
       case GL_FLOAT:
       {
-        shader->setShaderParam1f(m_uniformList[i]->getName(),
+        _shader->setShaderParam1f(m_uniformList[i]->getName(),
                                  m_uniformList[i]->getFloat());
         break;
       }
       case GL_INT:
       {
-        shader->setShaderParam1i(m_uniformList[i]->getName(),
+        _shader->setShaderParam1i(m_uniformList[i]->getName(),
                                  m_uniformList[i]->getInt());
         break;
       }
@@ -540,25 +545,25 @@ void ParserLib::sendUniformsToShader(ngl::ShaderLib *shader)
         newVec3.m_y=m_uniformList[i]->getVec3().m_y;
         newVec3.m_z=m_uniformList[i]->getVec3().m_z;
         newVec3.m_w=1;
-        shader->setShaderParamFromVec4(m_uniformList[i]->getName(),
+        _shader->setShaderParamFromVec4(m_uniformList[i]->getName(),
                                        newVec3);
         break;
       }
       case GL_FLOAT_VEC4:
       {
-        shader->setShaderParamFromVec4(m_uniformList[i]->getName(),
+        _shader->setShaderParamFromVec4(m_uniformList[i]->getName(),
                                        m_uniformList[i]->getVec4());
         break;
       }
       case GL_FLOAT_MAT3:
       {
-        shader->setShaderParamFromMat3(m_uniformList[i]->getName(),
+        _shader->setShaderParamFromMat3(m_uniformList[i]->getName(),
                                        m_uniformList[i]->getMat3());
         break;
       }
       case GL_FLOAT_MAT4:
       {
-        shader->setShaderParamFromMat4(m_uniformList[i]->getName(),
+        _shader->setShaderParamFromMat4(m_uniformList[i]->getName(),
                                        m_uniformList[i]->getMat4());
         break;
       }

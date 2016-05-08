@@ -19,8 +19,6 @@
 // System includes
 #include <vector>
 
-// Engine includes
-
 // Library  includes
 #include <ngl/Vec4.h>
 #include <QMainWindow>
@@ -33,6 +31,7 @@
 #include "NGLScene.h"
 #include "ParserLib.h"
 #include "Project.h"
+#include "Camera.h"
 #include "StartupDialog.h"
 
 //------------------------------------------------------------------------------
@@ -42,7 +41,9 @@ class NGLScene;
 class StartupDialog;
 class ButtonLib;
 //------------------------------------------------------------------------------
-// Used to inherit the MainWindow from the generated form file ui_MainWindow.h
+/// @namespace Ui
+/// @brief Used to inherit the MainWindow from the generated form file
+/// ui_MainWindow.h
 //------------------------------------------------------------------------------
 namespace Ui {
 class MainWindow;
@@ -101,15 +102,15 @@ public slots:
   /// @param [in] _shaderName Name of the shader type
   /// @param [in] _lineNum line to add error symbol at
   //----------------------------------------------------------------------------
-  void addError(QString _shaderName, int _lineNum);
+  void                  addError(QString _shaderName, int _lineNum);
   //----------------------------------------------------------------------------
   /// @brief Called when Open button is triggered in File Menu bar
   //----------------------------------------------------------------------------
-  void on_actionOpen_triggered();
+  void                  on_actionOpen_triggered();
   //----------------------------------------------------------------------------
   /// @brief Called when Export button is triggered in File Menu bar
   //----------------------------------------------------------------------------
-  void on_actionExport_triggered();
+  void                  on_actionExport_triggered();
   //----------------------------------------------------------------------------
   //----------------------------------------------------------------------------
 private:
@@ -138,12 +139,26 @@ private:
   //----------------------------------------------------------------------------
   Project*              m_project;
   //----------------------------------------------------------------------------
+  /// @brief The camera settings
+  //----------------------------------------------------------------------------
+  Camera*               m_camera;
+  //----------------------------------------------------------------------------
   /// @brief the generated widgets created from the form using ui_MainWindow.h
   //----------------------------------------------------------------------------
   Ui::MainWindow*       m_ui;
   //----------------------------------------------------------------------------
+  /// @brief The button library used for the uniform buttons that are generated
   //----------------------------------------------------------------------------
   ButtonLib*            m_buttonLibrary;
+  //----------------------------------------------------------------------------
+  /// @brief The shader manager used to handle the switching of shader programs
+  //----------------------------------------------------------------------------
+  ShaderManager*        m_shaderManager;
+  //----------------------------------------------------------------------------
+  /// @brief The button library used for the uniform buttons that are generated
+  //----------------------------------------------------------------------------
+  bool                  m_fileChange;
+  //----------------------------------------------------------------------------
   //----------------------------------------------------------------------------
   /// @brief create QsciScintilla widget in the style of sublime defaults
   /// @param [in] _parent the parent widget to fill with the new Qsci Widget
@@ -160,6 +175,18 @@ private:
   /// @param [in] _event the Qt event to query for size etc
   //----------------------------------------------------------------------------
   void                  keyPressEvent(QKeyEvent *_event);
+  //----------------------------------------------------------------------------
+  /// @brief Centres the window to the monitor's resolution
+  //----------------------------------------------------------------------------
+  void                  centreWindow();
+  //----------------------------------------------------------------------------
+  /// @brief Update the title of the window
+  //----------------------------------------------------------------------------
+  void                  updateTitle();
+  //----------------------------------------------------------------------------
+  /// @brief Check if you want to close or open new file (loose changes)
+  //----------------------------------------------------------------------------
+  int                  unsavedChanges();
   //----------------------------------------------------------------------------
   //----------------------------------------------------------------------------
 private slots:
@@ -199,7 +226,19 @@ private slots:
   //----------------------------------------------------------------------------
   /// @brief Called when Load Texture is clicked
   //----------------------------------------------------------------------------
-  void                  on_m_actionLoad_Texture_triggered();
+  void                  on_m_actionLoad_Tex_triggered();
+  //----------------------------------------------------------------------------
+  /// @brief Called when Import Vertex Shader is clicked
+  //----------------------------------------------------------------------------
+  void                  on_actionImport_Vertex_Shader_triggered();
+  //----------------------------------------------------------------------------
+  /// @brief Called when Import Fragment Shader is clicked
+  //----------------------------------------------------------------------------
+  void                  on_actionImport_Fragment_Shader_triggered();
+  //----------------------------------------------------------------------------
+  /// @brief Called when a file has been modified and not saved
+  //----------------------------------------------------------------------------
+  void                  fileModified();
 };
 
 #endif // _MAINWINDOW_H_

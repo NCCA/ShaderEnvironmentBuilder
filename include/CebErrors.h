@@ -60,7 +60,7 @@ void clearAllGlErrors();
 namespace CEBError
 {
 //------------------------------------------------------------------------------
-/// @class unknown_error
+/// @class unknownError
 /// @brief an unknown error which is raised when a throw is not based from a
 /// normal exception
 //------------------------------------------------------------------------------
@@ -76,7 +76,7 @@ class unknownError: public std::exception
 };
 
 //------------------------------------------------------------------------------
-/// @class base_error
+/// @class baseError
 /// @brief an unknown error which is raised when a throw is not based from a
 /// normal exception
 //------------------------------------------------------------------------------
@@ -123,7 +123,7 @@ protected:
 };
 
 //------------------------------------------------------------------------------
-/// @class file_error
+/// @class fileError
 /// @brief base class which is raised for file errors
 //------------------------------------------------------------------------------
 class fileError: public baseError
@@ -147,7 +147,7 @@ public:
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-/// @class file_read_error
+/// @class fileReadError
 /// @brief raised for file read errors
 //------------------------------------------------------------------------------
 class fileReadError: public fileError
@@ -164,7 +164,7 @@ class fileReadError: public fileError
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-/// @class file_write_error
+/// @class fileWriteError
 /// @brief raised for file write errors
 //------------------------------------------------------------------------------
 class fileWriteError: public fileError
@@ -181,7 +181,7 @@ class fileWriteError: public fileError
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-/// @class file_fatal_error
+/// @class fileFatalError
 /// @brief raised for file fatal errors
 //------------------------------------------------------------------------------
 class fileFatalError: public fileError
@@ -198,7 +198,7 @@ class fileFatalError: public fileError
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-/// @class file_resource_error
+/// @class fileResourceError
 /// @brief raised for file resource errors
 //------------------------------------------------------------------------------
 class fileResourceError: public fileError
@@ -215,7 +215,7 @@ class fileResourceError: public fileError
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-/// @class file_open_error
+/// @class fileOpenError
 /// @brief raised for file open errors
 //------------------------------------------------------------------------------
 class fileOpenError: public fileError
@@ -232,7 +232,7 @@ class fileOpenError: public fileError
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-/// @class file_abort_error
+/// @class fileAbortError
 /// @brief raised for file abort errors
 //------------------------------------------------------------------------------
 class fileAbortError: public fileError
@@ -249,7 +249,7 @@ class fileAbortError: public fileError
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-/// @class file_time_out_error
+/// @class fileTimeOutError
 /// @brief raised for file timeout errors
 //------------------------------------------------------------------------------
 class fileTimeOutError: public fileError
@@ -266,7 +266,7 @@ class fileTimeOutError: public fileError
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-/// @class file_unspecified_error
+/// @class fileUnspecifiedError
 /// @brief raised for file unspecified errors
 //------------------------------------------------------------------------------
 class fileUnspecifiedError: public fileError
@@ -284,7 +284,7 @@ class fileUnspecifiedError: public fileError
 
 
 //------------------------------------------------------------------------------
-/// @class file_remove_error
+/// @class fileRemoveError
 /// @brief raised for file remove errors
 //------------------------------------------------------------------------------
 class fileRemoveError: public fileError
@@ -301,7 +301,7 @@ class fileRemoveError: public fileError
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-/// @class file_rename_error
+/// @class fileRenameError
 /// @brief raised for file rename errors
 //------------------------------------------------------------------------------
 class fileRenameError: public fileError
@@ -318,7 +318,7 @@ class fileRenameError: public fileError
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-/// @class file_position_error
+/// @class filePositionError
 /// @brief raised for file position errors
 //------------------------------------------------------------------------------
 class filePositionError: public fileError
@@ -335,7 +335,7 @@ class filePositionError: public fileError
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-/// @class file_write_error
+/// @class fileResizeError
 /// @brief raised for file resize errors
 //------------------------------------------------------------------------------
 class fileResizeError: public fileError
@@ -352,7 +352,7 @@ class fileResizeError: public fileError
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-/// @class file_write_error
+/// @class filePermissionsError
 /// @brief raised for file permission errors
 //------------------------------------------------------------------------------
 class filePermissionsError: public fileError
@@ -369,7 +369,7 @@ class filePermissionsError: public fileError
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-/// @class file_copy_error
+/// @class fileCopyError
 /// @brief raised for file copy errors
 //------------------------------------------------------------------------------
 class fileCopyError: public fileError
@@ -386,7 +386,7 @@ class fileCopyError: public fileError
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
-/// @class openGL_error
+/// @class openGlError
 /// @brief raised for openGL errors
 //------------------------------------------------------------------------------
 class openGlError: protected baseError
@@ -424,6 +424,10 @@ protected:
   }
 };
 
+//------------------------------------------------------------------------------
+/// @class openGlListError
+/// @brief raised for openGL list errors
+//-----------------------------------------------------------------------------
 class openGlListError: public baseError
 {
   //----------------------------------------------------------------------------

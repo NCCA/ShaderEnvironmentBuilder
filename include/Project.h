@@ -42,24 +42,26 @@ public:
   /// @param _dir the directory of the project
   /// @param _saveState flag for whether the project has previsouly been saved
   //----------------------------------------------------------------------------
-  inline void set(std::string _name, std::string _dir, bool _saveState)
+  inline void set(std::string _name, std::string _dir, bool _saveState,
+                  bool _firstSave)
   {
     m_projectName = _name;
     m_projectDir = _dir;
     m_saved = _saveState;
+    m_firstSave = _firstSave;
   }
   //----------------------------------------------------------------------------
   /// @brief method for saving the current project
   /// @param _vertSource the vertex shader source code to save
   /// @param _fragSource the fragment shader source code to save
   //----------------------------------------------------------------------------
-  void save(QString _vertSource, QString _fragSource);
+  bool save(QString _vertSource, QString _fragSource);
   //----------------------------------------------------------------------------
   /// @brief method for saving the current project as a new project
   /// @param _vertSource the vertex shader source code to save
   /// @param _fragSource the fragment shader source code to save
   //----------------------------------------------------------------------------
-  void saveAs(QString _vertSource, QString _fragSource);
+  bool saveAs(QString _vertSource, QString _fragSource);
   //----------------------------------------------------------------------------
   /// @brief method to load in a project from an xml file
   /// @param _loadedFileDirectory the directory of the loaded file
@@ -85,7 +87,7 @@ public:
   inline std::string getDir(){return m_projectDir;}
   //----------------------------------------------------------------------------
   /// @brief method to confirm overwriting exported files
-  /// _filePath the path of the file to overwrite
+  /// @param[in] _filePath the path of the file to overwrite
   //----------------------------------------------------------------------------
   int confirmOverwrite(QString _filePath);
 
@@ -102,6 +104,11 @@ private:
   /// @brief flag storing whether the current project has been previously saved
   //----------------------------------------------------------------------------
   bool m_saved;
+  //----------------------------------------------------------------------------
+  /// @brief flag storing whether the current project is being saved for the
+  /// first time
+  //----------------------------------------------------------------------------
+  bool m_firstSave;
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief used to save and load project information from xml file
   //----------------------------------------------------------------------------------------------------------------------

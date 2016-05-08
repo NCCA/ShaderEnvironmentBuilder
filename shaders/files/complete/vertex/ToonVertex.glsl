@@ -83,7 +83,7 @@ float dist;
 lightDir=vec3(light.position.xyz-eyeCord.xyz);
 dist = length(lightDir);
 lightDir/= dist;
-halfVector = normalize(eyeDirection + lightDir);
 
 }
+
 
