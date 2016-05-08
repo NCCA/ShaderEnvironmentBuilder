@@ -158,7 +158,7 @@ void NGLScene::initGL()
   {
     ngl::Mat4 iv=m_cam.getViewMatrix();
     iv.transpose();
-    m_parser->assignAllData();
+    //m_parser->assignAllData();
   }
 
   // Create mesh VAO

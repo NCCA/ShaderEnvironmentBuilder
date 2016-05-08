@@ -59,7 +59,6 @@ void ButtonLib::updateButtons()
       delete uniform->m_button;
     }
     m_buttonList.resize(0);
-    m_parser->initializeUniformData();
     createButtons();
     for(auto uniform: m_buttonList)
     {

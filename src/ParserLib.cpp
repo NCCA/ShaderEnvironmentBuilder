@@ -32,6 +32,9 @@ void ParserLib::initializeUniformData()
   glGetProgramInterfaceiv(id, GL_UNIFORM, GL_ACTIVE_RESOURCES, &nUniforms);
   m_num=nUniforms;
   m_uniformList.resize(m_num);
+  m_registeredUniforms.clear();
+
+  m_ignoreUniformIDs.resize(0);
 
   // declare some temp variables
   char uniformName[256];
@@ -58,8 +61,8 @@ void ParserLib::initializeUniformData()
                                                       tempLoc,
                                                       type);
         // Add UniformData to the currently registeredUniforms
-        m_registeredUniforms[uniformName]=newData;
-        m_uniformList[i]=newData;
+        // m_registeredUniforms[uniformName]=newData;
+        m_uniformList[i-m_ignoreUniformIDs.size()]=newData;
         break;
       }
       case GL_FLOAT:
@@ -68,8 +71,8 @@ void ParserLib::initializeUniformData()
                                                         tempLoc,
                                                         type);
         // Add UniformData to the currently registeredUniforms
-        m_registeredUniforms[uniformName]=newData;
-        m_uniformList[i]=newData;
+        // m_registeredUniforms[uniformName]=newData;
+        m_uniformList[i-m_ignoreUniformIDs.size()]=newData;
         break;
       }
       case GL_INT:
@@ -78,8 +81,8 @@ void ParserLib::initializeUniformData()
                                                     tempLoc,
                                                     type);
         // Add UniformData to the currently registeredUniforms
-        m_registeredUniforms[uniformName]=newData;
-        m_uniformList[i]=newData;
+        // m_registeredUniforms[uniformName]=newData;
+        m_uniformList[i-m_ignoreUniformIDs.size()]=newData;
         break;
       }
       case GL_FLOAT_VEC3:
@@ -88,8 +91,8 @@ void ParserLib::initializeUniformData()
                                                   tempLoc,
                                                   type);
         // Add UniformData to the currently registeredUniforms
-        m_registeredUniforms[uniformName]=newData;
-        m_uniformList[i]=newData;
+        // m_registeredUniforms[uniformName]=newData;
+        m_uniformList[i-m_ignoreUniformIDs.size()]=newData;
         break;
       }
       case GL_FLOAT_VEC4:
@@ -98,8 +101,8 @@ void ParserLib::initializeUniformData()
                                                   tempLoc,
                                                   type);
         // Add UniformData to the currently registeredUniforms
-        m_registeredUniforms[uniformName]=newData;
-        m_uniformList[i]=newData;
+        // m_registeredUniforms[uniformName]=newData;
+        m_uniformList[i-m_ignoreUniformIDs.size()]=newData;
         break;
       }
       case GL_FLOAT_MAT3:
@@ -108,8 +111,8 @@ void ParserLib::initializeUniformData()
                                                   tempLoc,
                                                   type);
         // Add UniformData to the currently registeredUniforms
-        m_registeredUniforms[uniformName]=newData;
-        m_uniformList[i]=newData;
+        // m_registeredUniforms[uniformName]=newData;
+        m_uniformList[i-m_ignoreUniformIDs.size()]=newData;
         break;
       }
       case GL_FLOAT_MAT4:
@@ -118,18 +121,22 @@ void ParserLib::initializeUniformData()
                                                   tempLoc,
                                                   type);
         // Add UniformData to the currently registeredUniforms
-        m_registeredUniforms[uniformName]=newData;
-        m_uniformList[i]=newData;
+        // m_registeredUniforms[uniformName]=newData;
+        m_uniformList[i-m_ignoreUniformIDs.size()]=newData;
         break;
       }
       default:
       {
         std::cout<<"unrecognised data type name"<<std::endl;
+        m_uniformList.erase(m_uniformList.begin()+(i-m_ignoreUniformIDs.size()));
+        m_ignoreUniformIDs.push_back(i);
+
       }
     }
 
 
   }
+  m_num -= m_ignoreUniformIDs.size();
   uniformDataTypes();
 }
 
@@ -150,7 +157,7 @@ void ParserLib::printUniforms()
   for (uint i=0; i<m_num; i++)
   {
     std::cout << "Name: "<<m_uniformList[i]->getName();
-    std::cout << ";  Location: "<<" ("<<i<<")";
+    std::cout << ";  Location: "<<m_uniformList[i]->getName()<<" ("<<i<<")";
     std::cout << ";  Type: "<<m_uniformList[i]->getTypeEnum()<<"; ";
     std::cout <<m_uniformList[i]->getTypeName()<<std::endl;
 
@@ -200,7 +207,6 @@ void ParserLib::printUniforms()
       }
     }
   }
-
   std::cout<<"___________________________________Uniform Information: Ends//\n";
 
 }
@@ -325,7 +331,7 @@ void ParserLib::uniformDataTypes()
   };
 
   ngl::ShaderLib *shaderLib=ngl::ShaderLib::instance();
-  GLuint id=shaderLib->getProgramID("Phong");
+  GLuint id=shaderLib->getProgramID(m_shaderManager->getData().m_name);
 
   GLint nUniforms;
   glGetProgramInterfaceiv(id, GL_UNIFORM, GL_ACTIVE_RESOURCES, &nUniforms);
@@ -333,20 +339,21 @@ void ParserLib::uniformDataTypes()
 
   std::cout<<"Registered Uniforms for shader "<< id <<"\n";
 
+  int incr = 0;
 
-  for(auto d : m_registeredUniforms)
+  for(auto d : m_uniformList)
   {
     std::string type;
-    auto value=types.find(d.second->getTypeEnum());
+    auto value=types.find(d->getTypeEnum());
     if(value !=types.end())
     {
-      type=value->second;
+      d->setTypeName(value->second);
     }
     else
     {
       type="unknown type";
     }
-    m_uniformList[d.second->getLocation()]->setTypeName(type);
+    m_registeredUniforms[d->getName()] = d;
   }
   std::cout<<"End Uniforms"<<"\n";
 }
@@ -439,6 +446,7 @@ bool ParserLib::exportUniforms(QString _dir)
       default:
       {
         std::cerr<<"unrecognised data type name"<<std::endl;
+        break;
       }
     }
   }
@@ -455,57 +463,61 @@ void ParserLib::assignUniformValues()
   // sets default values depending on it's data type
   for (uint i=0;i<m_num;i++)
   {
-    switch(m_uniformList[i]->getTypeEnum())
+    if (std::find(m_ignoreUniformIDs.begin(), m_ignoreUniformIDs.end(), i) == m_ignoreUniformIDs.end() )
     {
-      case GL_BOOL:
+      switch(m_uniformList[i]->getTypeEnum())
       {
-        m_uniformList[i]->setBool(0);
-        break;
-      }
-      case GL_FLOAT:
-      {
-        m_uniformList[i]->setFloat(0.5);
-        break;
-      }
-      case GL_INT:
-      {
-        m_uniformList[i]->setInt(0);
-        break;
-      }
-      case GL_FLOAT_VEC3:
-      {
-        m_uniformList[i]->setVec3(0.5);
-        break;
-      }
-      case GL_FLOAT_VEC4:
-      {
-        m_uniformList[i]->setVec4(0.5);
-        break;
-      }
-      case GL_FLOAT_MAT3:
-      {
-        ngl::Mat3 temp;
-        temp= shader->getUniformBlockIndex(m_uniformList[i]->getName());
-        temp.m_00=1;
-        temp.m_11=1;
-        temp.m_22=1;
-        m_uniformList[i]->setMat3(temp);
-        break;
-      }
-      case GL_FLOAT_MAT4:
-      {
-        ngl::Mat4 temp;
-        temp= shader->getUniformBlockIndex(m_uniformList[i]->getName());
-        temp.m_00=1;
-        temp.m_11=1;
-        temp.m_22=1;
-        temp.m_33=1;
-        m_uniformList[i]->setMat4(temp);
-        break;
-      }
-      default:
-      {
-        std::cout<<"unrecognised data type name"<<std::endl;
+        case GL_BOOL:
+        {
+          m_uniformList[i]->setBool(0);
+          break;
+        }
+        case GL_FLOAT:
+        {
+          m_uniformList[i]->setFloat(0.5);
+          break;
+        }
+        case GL_INT:
+        {
+          m_uniformList[i]->setInt(0);
+          break;
+        }
+        case GL_FLOAT_VEC3:
+        {
+          m_uniformList[i]->setVec3(0.5);
+          break;
+        }
+        case GL_FLOAT_VEC4:
+        {
+          m_uniformList[i]->setVec4(0.5);
+          break;
+        }
+        case GL_FLOAT_MAT3:
+        {
+          ngl::Mat3 temp;
+          temp= shader->getUniformBlockIndex(m_uniformList[i]->getName());
+          temp.m_00=1;
+          temp.m_11=1;
+          temp.m_22=1;
+          m_uniformList[i]->setMat3(temp);
+          break;
+        }
+        case GL_FLOAT_MAT4:
+        {
+          ngl::Mat4 temp;
+          temp= shader->getUniformBlockIndex(m_uniformList[i]->getName());
+          temp.m_00=1;
+          temp.m_11=1;
+          temp.m_22=1;
+          temp.m_33=1;
+          m_uniformList[i]->setMat4(temp);
+          break;
+        }
+        default:
+        {
+          std::cout<<"unrecognised data type name"<<std::endl;
+          break;
+        }
       }
     }
   }
@@ -523,19 +535,19 @@ void ParserLib::sendUniformsToShader(ngl::ShaderLib *_shader)
       case GL_BOOL:
       {
         _shader->setShaderParam1i(m_uniformList[i]->getName(),
-                                 m_uniformList[i]->getBool());
+                                  m_uniformList[i]->getBool());
         break;
       }
       case GL_FLOAT:
       {
         _shader->setShaderParam1f(m_uniformList[i]->getName(),
-                                 m_uniformList[i]->getFloat());
+                                  m_uniformList[i]->getFloat());
         break;
       }
       case GL_INT:
       {
         _shader->setShaderParam1i(m_uniformList[i]->getName(),
-                                 m_uniformList[i]->getInt());
+                                  m_uniformList[i]->getInt());
         break;
       }
       case GL_FLOAT_VEC3:
@@ -546,25 +558,25 @@ void ParserLib::sendUniformsToShader(ngl::ShaderLib *_shader)
         newVec3.m_z=m_uniformList[i]->getVec3().m_z;
         newVec3.m_w=1;
         _shader->setShaderParamFromVec4(m_uniformList[i]->getName(),
-                                       newVec3);
+                                        newVec3);
         break;
       }
       case GL_FLOAT_VEC4:
       {
         _shader->setShaderParamFromVec4(m_uniformList[i]->getName(),
-                                       m_uniformList[i]->getVec4());
+                                        m_uniformList[i]->getVec4());
         break;
       }
       case GL_FLOAT_MAT3:
       {
         _shader->setShaderParamFromMat3(m_uniformList[i]->getName(),
-                                       m_uniformList[i]->getMat3());
+                                        m_uniformList[i]->getMat3());
         break;
       }
       case GL_FLOAT_MAT4:
       {
         _shader->setShaderParamFromMat4(m_uniformList[i]->getName(),
-                                       m_uniformList[i]->getMat4());
+                                        m_uniformList[i]->getMat4());
         break;
       }
       default:

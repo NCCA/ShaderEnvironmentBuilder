@@ -82,6 +82,8 @@ public:
   //----------------------------------------------------------------------------
   ShaderManager* m_shaderManager;
 
+  std::vector<int> m_ignoreUniformIDs;
+
 };
 
 #endif // PARSER_H
