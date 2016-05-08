@@ -7,6 +7,9 @@
 #include "NGLScene.h"
 
 #include <QDialog>
+#include <QDialogButtonBox>
+#include <QLabel>
+#include <QDoubleSpinBox>
 #include <QInputDialog>
 #include <QGroupBox>
 #include <QGridLayout>
@@ -17,6 +20,8 @@
 
 QT_BEGIN_NAMESPACE
 class QDialogButtonBox;
+class QDoubleSpinBox;
+class QLabel;
 class QGridLayout;
 class QLabel;
 class QPushButton;
@@ -34,6 +39,9 @@ QT_END_NAMESPACE
 
 class ButtonLib;
 class NGLScene;
+
+
+
 class Button : public QDialog
 {
   Q_OBJECT
@@ -58,13 +66,6 @@ public:
          ButtonLib *_libParent,
          NGLScene *_sceneParent,
          QWidget *parent=0);
-
-  /*virtual Button& operator=(Button &_rhs);
-  virtual ~Button()
-  {
-    delete m_libParent;
-    delete m_sceneParent;
-  }*/
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief button object to be pressed by user to open relevant widget
   //----------------------------------------------------------------------------------------------------------------------
@@ -74,7 +75,10 @@ public:
   /// @return m_buttonName
   //----------------------------------------------------------------------------------------------------------------------
   QString getName() {return m_buttonName;}
-
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief returns the current button type
+  /// @return m_buttonType
+  //----------------------------------------------------------------------------------------------------------------------
   GLenum getTypeEnum() {return m_buttonType;}
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief sets the current ID for the button, from its' shader location
@@ -91,6 +95,10 @@ public:
   /// @param [in] the colour to be set within the colourButton class
   //----------------------------------------------------------------------------------------------------------------------
   virtual void setColour(ngl::Vec4 _col) {return;}
+  //----------------------------------------------------------------------------------------------------------------------
+  /// @brief overloaded function to set the colour
+  /// @param [in] the colour to be set within the colourButton class
+  //----------------------------------------------------------------------------------------------------------------------
   virtual void setColour(QColor _col) {return;}
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief returns the colour, stored by the button
@@ -111,7 +119,12 @@ public:
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief prints the button attribute values
   //----------------------------------------------------------------------------------------------------------------------
-  void printValues();
+  virtual void printValues();
+  virtual ngl::Vec4 getVec() {return ngl::Vec4();}
+  virtual void setVec(ngl::Vec4 _value) {return;}
+
+//  virtual void setVec(ngl::Vec4 _value){return;}
+//  virtual ngl::Vec4 getVec(){return ngl::Vec4();}
 
   ButtonLib *m_libParent;
 
@@ -249,5 +262,47 @@ public:
   void printAttributes();
   //floatButton& operator=(floatButton &_rhs);
 };
+
+class VecButton : public Button
+{
+  Q_OBJECT
+
+private:
+
+  QDialog *m_vecWindow;
+
+  QGridLayout *m_vecLayout;
+
+  QLabel *m_xName;
+  QLabel *m_yName;
+  QLabel *m_zName;
+
+  QDoubleSpinBox *m_xSpinBox;
+  QDoubleSpinBox *m_ySpinBox;
+  QDoubleSpinBox *m_zSpinBox;
+
+  QDialogButtonBox *m_buttonBox_ok;
+  QDialogButtonBox *m_buttonBox_cancel;
+
+  ngl::Vec4 m_value;
+
+private slots:
+//----------------------------------------------------------------------------------------------------------------------
+/// @brief a slot to open float widget upon button press event
+//----------------------------------------------------------------------------------------------------------------------
+  void openBox();
+
+public:
+  using Button::Button;
+
+  void setUpButton(ngl::Vec3 _vector);
+
+  void setVec(ngl::Vec4 _value){m_value=_value;}
+  ngl::Vec4 getVec(){return m_value;}
+
+  void printAttributes();
+
+};
+
 
 #endif
