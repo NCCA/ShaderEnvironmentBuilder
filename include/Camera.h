@@ -18,8 +18,6 @@
 /// @date 05/05/16
 //------------------------------------------------------------------------------
 
-using namespace std;
-
 class Camera : public QObject
 {
 Q_OBJECT

@@ -123,9 +123,9 @@ void Camera::setCameraFocalLength(int _focalLength)
 // The new camera position is set.
 void Camera::setCameraShape(QString _view)
 {
-  string view = _view.toStdString();
+  std::string view = _view.toStdString();
 
-  map<string, int> camViewMap;
+  std::map<std::string, int> camViewMap;
   camViewMap["Persp"]=0;
   camViewMap["Top"]=1;
   camViewMap["Bottom"]=2;
