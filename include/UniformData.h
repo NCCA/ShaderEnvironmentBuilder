@@ -9,9 +9,13 @@
 /// @brief the UniformData stores individual uniform data per data type.
 /// @author Adam Jonathan Ting
 /// @version 1.0
-/// @date 05/05/16
+/// @date 07/05/16
 //------------------------------------------------------------------------------
 
+//------------------------------------------------------------------------------
+/// @class UniformData
+/// @brief the UniformData stores individual uniform data per data type.
+//------------------------------------------------------------------------------
 class UniformData
 {
 protected:
@@ -172,7 +176,10 @@ public:
   virtual ngl::Mat4 getMat4() {return ngl::Mat4();}
 };
 
-
+//------------------------------------------------------------------------------
+/// @class UniformDataM4
+/// @brief the UniformDataM4 stores individual uniform data for Mat4 data.
+//------------------------------------------------------------------------------
 class UniformDataM4 :public UniformData
 {
 private:
@@ -201,6 +208,10 @@ public:
   ngl::Mat4 getMat4()             {return m_mat4;}
 };
 
+//------------------------------------------------------------------------------
+/// @class UniformDataM3
+/// @brief the UniformDataM3 stores individual uniform data for Mat3 data.
+//------------------------------------------------------------------------------
 class UniformDataM3 :public UniformData
 {
 private:
@@ -229,6 +240,10 @@ public:
   ngl::Mat3 getMat3()               {return m_mat3;}
 };
 
+//------------------------------------------------------------------------------
+/// @class UniformDataV4
+/// @brief the UniformDataV4 stores individual uniform data for Vec4 data.
+//------------------------------------------------------------------------------
 class UniformDataV4 :public UniformData
 {
 private:
@@ -262,6 +277,10 @@ public:
   ngl::Vec4 getVec4()            {return m_vec4;}
 };
 
+//------------------------------------------------------------------------------
+/// @class UniformDataV3
+/// @brief the UniformDataV3 stores individual uniform data for Vec3 data.
+//------------------------------------------------------------------------------
 class UniformDataV3 :public UniformData
 {
 private:
@@ -295,6 +314,10 @@ public:
   ngl::Vec3 getVec3()            {return m_vec3;}
 };
 
+//------------------------------------------------------------------------------
+/// @class UniformDataInt
+/// @brief the UniformDataInt stores individual uniform data for int data.
+//------------------------------------------------------------------------------
 class UniformDataInt :public UniformData
 {
 private:
@@ -323,6 +346,10 @@ public:
   int getInt()            {return m_int;}
 };
 
+//------------------------------------------------------------------------------
+/// @class UniformDataFloat
+/// @brief the UniformDataFloat stores individual uniform data for float data
+//------------------------------------------------------------------------------
 class UniformDataFloat :public UniformData
 {
 private:
@@ -351,6 +378,10 @@ public:
   float getFloat()             {return m_float;}
 };
 
+//------------------------------------------------------------------------------
+/// @class UniformDataBool
+/// @brief the UniformDataBool stores individual uniform data for bool data
+//------------------------------------------------------------------------------
 class UniformDataBool :public UniformData
 {
 private:
@@ -378,6 +409,7 @@ public:
   //----------------------------------------------------------------------------
   bool getBool()              {return m_bool;}
 };
+
 #endif // UNIFORMS_H__
 
 

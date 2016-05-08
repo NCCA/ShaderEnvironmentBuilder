@@ -13,7 +13,7 @@
 /// @brief the parsing library, used to manage all the uniform data.
 /// @author Adam Jonathan Ting
 /// @version 1.0
-/// @date 05/05/16
+/// @date 07/05/16
 //------------------------------------------------------------------------------
 class ParserLib
 {
@@ -63,7 +63,7 @@ public:
   //----------------------------------------------------------------------------
   /// @brief exports the uniformData into a .txt file
   //----------------------------------------------------------------------------
-  void exportUniforms();
+  bool exportUniforms(QString _dir);
   //----------------------------------------------------------------------------
   /// @brief used to store the number of active uniforms
   //----------------------------------------------------------------------------

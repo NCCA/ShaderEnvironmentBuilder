@@ -1,6 +1,8 @@
 #include <QDir>
 #include <ngl/ShaderLib.h>
 #include "ParserLib.h"
+#include "CebErrors.h"
+
 
 //----------------------------------------------------------------------------
 /// @brief ctor for our ParserLib
@@ -148,7 +150,7 @@ void ParserLib::printUniforms()
   for (uint i=0; i<m_num; i++)
   {
     std::cout << "Name: "<<m_uniformList[i]->getName();
-    std::cout << ";  Location: "<<m_uniformList[i]->getName()<<" ("<<i<<")";
+    std::cout << ";  Location: "<<" ("<<i<<")";
     std::cout << ";  Type: "<<m_uniformList[i]->getTypeEnum()<<"; ";
     std::cout <<m_uniformList[i]->getTypeName()<<std::endl;
 
@@ -198,6 +200,7 @@ void ParserLib::printUniforms()
       }
     }
   }
+
   std::cout<<"___________________________________Uniform Information: Ends//\n";
 
 }
@@ -350,19 +353,14 @@ void ParserLib::uniformDataTypes()
 /// end of Citation
 
 //------------------------------------------------------------------------------
-void ParserLib::exportUniforms()
+bool ParserLib::exportUniforms(QString _dir)
 {
-  // Open the text file "ParsingOutput.txt"
-  if ( !QDir("./tempFiles").exists())
-  {
-    QDir().mkdir("tempFiles");
-  }
   std::ofstream fileOut;
-  fileOut.open("./tempFiles/ParsingOutput.txt");
+  fileOut.open(_dir.toStdString().c_str());
   if(!fileOut.is_open())    ///If it can't be opened
   {
-    std::cerr<<"couldn't' open file\n";
-    exit(EXIT_FAILURE);
+    throw CEBError::fileError(_dir);
+    return false;
   }
   for(uint i=0;i<m_num;i++)
   {
@@ -446,7 +444,7 @@ void ParserLib::exportUniforms()
   }
   // close file
   fileOut.close();
-  std::cout<<"Exported Uniforms to ./tempFles/ParsingOutput.txt\n"<<std::endl;
+  return true;
 }
 
 //------------------------------------------------------------------------------

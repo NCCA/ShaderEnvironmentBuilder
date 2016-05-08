@@ -41,7 +41,9 @@ class NGLScene;
 class StartupDialog;
 class ButtonLib;
 //------------------------------------------------------------------------------
-// Used to inherit the MainWindow from the generated form file ui_MainWindow.h
+/// @namespace Ui
+/// @brief Used to inherit the MainWindow from the generated form file
+/// ui_MainWindow.h
 //------------------------------------------------------------------------------
 namespace Ui {
 class MainWindow;
@@ -237,7 +239,6 @@ private slots:
   /// @brief Called when a file has been modified and not saved
   //----------------------------------------------------------------------------
   void                  fileModified();
-  
 };
 
 #endif // _MAINWINDOW_H_
