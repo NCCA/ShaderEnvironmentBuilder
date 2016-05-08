@@ -183,7 +183,7 @@ bool Cebitor::autoClose(const QString _close)
   getCursorPosition(&cursorLine, &cursorIndex);
   length = lineLength(cursorLine);
 
-  // special case for if cursor is last position in file
+  // special case for if cursor is on last line since in has no EOL
   if (cursorLine == lines()-1) { length++; }
   // insert closing character if cursor is at EOL or the next character is space
   if(cursorIndex == length-1 ||
