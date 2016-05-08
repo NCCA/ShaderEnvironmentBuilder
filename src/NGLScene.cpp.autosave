@@ -466,6 +466,7 @@ void NGLScene::mouseMoveEvent ( QMouseEvent * _event )
         m_modelPos.m_y -= INCREMENT * diffY;
         m_modelPos.m_x += INCREMENT * diffY/2;
         m_modelPos.m_z += INCREMENT * diffY/2;
+        
 
         m_modelPos.m_x += INCREMENT * diffX/2;
         m_modelPos.m_z -= INCREMENT * diffX/2; break;
