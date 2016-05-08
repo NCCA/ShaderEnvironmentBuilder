@@ -75,7 +75,7 @@ public :
   /// @brief Constructor for GLWindow
   /// @param [in] _parent the parent window to create the GL context in
   //----------------------------------------------------------------------------
-  NGLScene                    (QWidget *_parent, ParserLib *_libParent);
+  NGLScene                    (QWidget *_parent, ParserLib *_libParent, ShaderManager *_manager);
   //----------------------------------------------------------------------------
   /// @brief dtor must close down ngl and release OpenGL resources
   //----------------------------------------------------------------------------
@@ -178,7 +178,8 @@ public slots:
   /// @brief resets the position of the active OBJ in the OpenGL context
   //----------------------------------------------------------------------------
   void                        resetObjPos();
-
+  //----------------------------------------------------------------------------
+  //----------------------------------------------------------------------------
 signals:
   //----------------------------------------------------------------------------
   /// @brief signal to create a line marker
@@ -254,6 +255,7 @@ private:
   /// @brief read from xml file
   //----------------------------------------------------------------------------
   IO_XML*                     m_readFromXML;
+  //----------------------------------------------------------------------------
   /// @brief the main window that is the GUI
   //----------------------------------------------------------------------------
   MainWindow*                 m_window;
@@ -367,4 +369,5 @@ private:
   //----------------------------------------------------------------------------
   void                        createCamera();
 };
+
 #endif // _NGLSCENE_H__

@@ -5,10 +5,11 @@
 //----------------------------------------------------------------------------
 /// @brief ctor for our ParserLib
 //----------------------------------------------------------------------------
-ParserLib::ParserLib()
+ParserLib::ParserLib(ShaderManager* _manager)
 {
   m_num=0;
   m_uniformList.resize(0);
+  m_shaderManager = _manager;
 }
 
 //----------------------------------------------------------------------------
@@ -22,7 +23,7 @@ void ParserLib::initializeUniformData()
 {
   //create instance of a shader
   ngl::ShaderLib *shaderLib=ngl::ShaderLib::instance();
-  GLuint id=shaderLib->getProgramID("Phong");
+  GLuint id=shaderLib->getProgramID(m_shaderManager->getData().m_name);
 
   // extract the number of uniforms active and update class data.
   GLint nUniforms;
@@ -140,8 +141,8 @@ void ParserLib::assignAllData()
 //------------------------------------------------------------------------------
 void ParserLib::printUniforms()
 {
-  std::cout<<"__________________________________Uniform Information: Starts//n";
-  std::cout<<"There are "<<m_num<<" Uniforms/n";
+  std::cout<<"\n******\nUniform Information: Starts\n";
+  std::cout<<"There are "<<m_num<<" Uniforms\n";
 
   // print information
   for (uint i=0; i<m_num; i++)
@@ -513,7 +514,7 @@ void ParserLib::assignUniformValues()
 }
 
 //------------------------------------------------------------------------------
-void ParserLib::sendUniformsToShader(ngl::ShaderLib *shader)
+void ParserLib::sendUniformsToShader(ngl::ShaderLib *_shader)
 {
 
   // set shader values depending on it's data type
@@ -523,19 +524,19 @@ void ParserLib::sendUniformsToShader(ngl::ShaderLib *shader)
     {
       case GL_BOOL:
       {
-        shader->setShaderParam1i(m_uniformList[i]->getName(),
+        _shader->setShaderParam1i(m_uniformList[i]->getName(),
                                  m_uniformList[i]->getBool());
         break;
       }
       case GL_FLOAT:
       {
-        shader->setShaderParam1f(m_uniformList[i]->getName(),
+        _shader->setShaderParam1f(m_uniformList[i]->getName(),
                                  m_uniformList[i]->getFloat());
         break;
       }
       case GL_INT:
       {
-        shader->setShaderParam1i(m_uniformList[i]->getName(),
+        _shader->setShaderParam1i(m_uniformList[i]->getName(),
                                  m_uniformList[i]->getInt());
         break;
       }
@@ -546,25 +547,25 @@ void ParserLib::sendUniformsToShader(ngl::ShaderLib *shader)
         newVec3.m_y=m_uniformList[i]->getVec3().m_y;
         newVec3.m_z=m_uniformList[i]->getVec3().m_z;
         newVec3.m_w=1;
-        shader->setShaderParamFromVec4(m_uniformList[i]->getName(),
+        _shader->setShaderParamFromVec4(m_uniformList[i]->getName(),
                                        newVec3);
         break;
       }
       case GL_FLOAT_VEC4:
       {
-        shader->setShaderParamFromVec4(m_uniformList[i]->getName(),
+        _shader->setShaderParamFromVec4(m_uniformList[i]->getName(),
                                        m_uniformList[i]->getVec4());
         break;
       }
       case GL_FLOAT_MAT3:
       {
-        shader->setShaderParamFromMat3(m_uniformList[i]->getName(),
+        _shader->setShaderParamFromMat3(m_uniformList[i]->getName(),
                                        m_uniformList[i]->getMat3());
         break;
       }
       case GL_FLOAT_MAT4:
       {
-        shader->setShaderParamFromMat4(m_uniformList[i]->getName(),
+        _shader->setShaderParamFromMat4(m_uniformList[i]->getName(),
                                        m_uniformList[i]->getMat4());
         break;
       }

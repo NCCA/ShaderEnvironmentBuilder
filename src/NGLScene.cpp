@@ -25,58 +25,10 @@ const static float INCREMENT=0.01f;
 const static float ZOOM=0.1f;
 //----------------------------------------------------------------------------------------------------------------------
 
-bool checkCompileError(std::string _shaderProgName, QString *o_log)
-{
-  GLint isCompiled = 0;
-  ngl::ShaderLib *shader=ngl::ShaderLib::instance();
-
-  GLuint shaderId = shader->getShaderID(_shaderProgName);
-  //Using modified NGL to query ID of given shader
-
-
-  glGetShaderiv(shaderId, GL_COMPILE_STATUS, &isCompiled);
-  if(isCompiled == GL_FALSE)
-  {
-    GLint maxLength = 0;
-    glGetShaderiv(shaderId, GL_INFO_LOG_LENGTH, &maxLength);
-    //Compile failed, accessing information of error
-
-    // The maxLength includes the NULL character
-    std::vector<GLchar> errorLog(maxLength);
-    glGetShaderInfoLog(shaderId, maxLength, &maxLength, &errorLog[0]);
-
-    std::string s(errorLog.begin(), errorLog.end());
-
-    QString errLog = QString(s.c_str());
-    //Convert to QString to output in IDE
-    *o_log = errLog;
-
-    // Provide the infolog in whatever manor you deem best.
-    //throw ceb_error::openGL_list_error(_shaderProgName, errLog);
-  }
-  return isCompiled;
-}
-
-bool checkAllCompileError(std::vector<std::string> _shaderProgNames, QString *o_log)
-{
-  //Traverses std::vector to check compilation
-  GLint isCompiled = GL_TRUE;
-  QString temp_log;
-  for (auto shaderProg: _shaderProgNames)
-  {
-    isCompiled &= checkCompileError(shaderProg, &temp_log);
-    if (!isCompiled) 
-    {
-      o_log->append(QString("%1:\n").arg(shaderProg.c_str()));
-      o_log->append(temp_log);
-    }
-  }
-  return isCompiled;
-}
-
-
 //----------------------------------------------------------------------------------------------------------------------
-NGLScene::NGLScene( QWidget *_parent, ParserLib *_libParent ) : QOpenGLWidget( _parent )
+NGLScene::NGLScene( QWidget *_parent, ParserLib *_libParent,
+                    ShaderManager *_manager )
+  : QOpenGLWidget( _parent )
 {
   // re-size the widget to that of the parent (in that case the GLFrame passed in on construction)
   m_rotate=false;
@@ -96,7 +48,7 @@ NGLScene::NGLScene( QWidget *_parent, ParserLib *_libParent ) : QOpenGLWidget( _
   // re-size the widget to that of the parent (in this case the GLFrame passed in on construction)
   this->resize(_parent->size());
   m_wireframe=false;
-  m_shaderManager = new ShaderManager();
+  m_shaderManager = _manager;
   m_camera = new Camera();
   m_camera->createCameras();
   m_cam = m_camera->m_mainCamera;
@@ -115,7 +67,6 @@ NGLScene::~NGLScene()
 
   //Clear any existing texture maps
   glDeleteTextures(1,&m_textureName);
-
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -135,6 +86,7 @@ void NGLScene::toggleObj()
   }
 
 }
+//----------------------------------------------------------------------------------------------------------------------
 
 void NGLScene::importMeshName(const std::string &_name)
 {
@@ -163,6 +115,7 @@ void NGLScene::importMeshName(const std::string &_name)
 
 }
 
+//----------------------------------------------------------------------------------------------------------------------
 void NGLScene::importTextureMap(const string &_name)
 {
   std::ifstream textureSource(_name.c_str());
@@ -170,10 +123,7 @@ void NGLScene::importTextureMap(const string &_name)
   m_textureName=texture.setTextureGL();
   update();
 }
-
-
 //----------------------------------------------------------------------------------------------------------------------
-
 
 //----------------------------------------------------------------------------------------------------------------------
 // This virtual function is called once before the first call to paintGL() or resizeGL(),
@@ -221,6 +171,7 @@ void NGLScene::initGL()
 
 }
 
+//----------------------------------------------------------------------------------------------------------------------
 void NGLScene::setShapeType(int _type)
 {
   if (_type<=7 && _type>=0)
@@ -318,45 +269,48 @@ void NGLScene::paintGL()
   }
 }
 
+//----------------------------------------------------------------------------------------------------------------------
 void NGLScene::objectTransform(uint _type)
 {
-    enum geo {input=0,sphere=1,cube=2,torus=3,teapot=4,troll=5,dragon=6,bunny=7};
+  enum geo {input=0,sphere=1,cube=2,torus=3,teapot=4,troll=5,dragon=6,bunny=7};
 
   // Transform differently depending on the object being drawn
   // Used to make all default shapes a similar size
   switch(_type)
   {
-    case input : break;
-    case sphere: break;
-    case cube  : break;
-    case torus : break;
-    case teapot: break;
-    case troll :
-    {
-      m_transform.setScale(1.5,1.5,1.5);
-      loadMatricesToShader();
-      break;
-      // Moved the troll to be the same relative shape and position
-    }
-    case dragon:
-    {
-      m_transform.setScale(0.1,0.1,0.1);
-      m_transform.setPosition(0,-0.5,0);
-      loadMatricesToShader();
-      break;
-      // Moved the dragon to be the same relative shape and position
-    }
-    case bunny:
-    {
-      m_transform.setScale(0.15,0.15,0.15);
-      m_transform.setPosition(0,-0.5,0);
-      loadMatricesToShader();
-      break;
-      // Moved the bunny to be the same relative shape and position
-    }
-    default: std::cerr<<"unrecognised shape type value\n"; break;
+  case input : break;
+  case sphere: break;
+  case cube  : break;
+  case torus : break;
+  case teapot: break;
+  case troll :
+  {
+    m_transform.setScale(1.5,1.5,1.5);
+    loadMatricesToShader();
+    break;
+    // Moved the troll to be the same relative shape and position
+  }
+  case dragon:
+  {
+    m_transform.setScale(0.1,0.1,0.1);
+    m_transform.setPosition(0,-0.5,0);
+    loadMatricesToShader();
+    break;
+    // Moved the dragon to be the same relative shape and position
+  }
+  case bunny:
+  {
+    m_transform.setScale(0.15,0.15,0.15);
+    m_transform.setPosition(0,-0.5,0);
+    loadMatricesToShader();
+    break;
+    // Moved the bunny to be the same relative shape and position
+  }
+  default: std::cerr<<"unrecognised shape type value\n"; break;
   }
 }
+
+//----------------------------------------------------------------------------------------------------------------------
 void NGLScene::drawObject(uint _type)
 {
   ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
@@ -365,28 +319,28 @@ void NGLScene::drawObject(uint _type)
   // Draw different objects depending on the input value
   switch(_type)
   {
-    case input : { m_mesh->draw();      break; }
-    case sphere: { prim->draw("sphere");break; }
-    case cube  : { prim->draw("cube");  break; }
-    case torus : { prim->draw("torus"); break; }
-    case teapot: { prim->draw("teapot");break; }
-    case troll : { prim->draw("troll"); break; }
-    case dragon: { prim->draw("dragon");break; }
-    case bunny : { prim->draw("bunny"); break; }
-    default    : std::cerr<<"unrecognised shape type value\n"; break;
+  case input : { m_mesh->draw();      break; }
+  case sphere: { prim->draw("sphere");break; }
+  case cube  : { prim->draw("cube");  break; }
+  case torus : { prim->draw("torus"); break; }
+  case teapot: { prim->draw("teapot");break; }
+  case troll : { prim->draw("troll"); break; }
+  case dragon: { prim->draw("dragon");break; }
+  case bunny : { prim->draw("bunny"); break; }
+  default    : std::cerr<<"unrecognised shape type value\n"; break;
   }
 }
 
 //----------------------------------------------------------------------------------------------------------------------
 void NGLScene::resizeGL(QResizeEvent *_event)
 {
-    m_camera->m_aspect = (float)width()/height();
+  m_camera->m_aspect = (float)width()/height();
 }
 
 //----------------------------------------------------------------------------------------------------------------------
 void NGLScene::resizeGL(int _w, int _h)
 {
-     m_camera->m_aspect = (float)width()/height();
+  m_camera->m_aspect = (float)width()/height();
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -413,32 +367,41 @@ void NGLScene::loadMatricesToShader()
   shaderLib->setShaderParamFromMat4("M",M);
 }
 
+//----------------------------------------------------------------------------------------------------------------------
 void NGLScene::toggleWireframe(bool _state)
 {
   m_wireframe=_state;
   update();
 }
+
+//----------------------------------------------------------------------------------------------------------------------
 void NGLScene::toggleNormals(bool _state)
 {
   m_drawNormals=_state;
   update();
 }
+
+//----------------------------------------------------------------------------------------------------------------------
 void NGLScene::toggleGrid(bool _state)
 {
   m_drawGrid=_state;
   update();
 }
+
+//----------------------------------------------------------------------------------------------------------------------
 void NGLScene::toggleAxis(bool _state)
 {
   m_toggleAxis=_state;
   update();
 }
 
+//----------------------------------------------------------------------------------------------------------------------
 void NGLScene::setNormalSize(int _size)
 {
   m_normalSize=_size/100.0f;
   update();
 }
+
 //----------------------------------------------------------------------------------------------------------------------
 void NGLScene::mouseMoveEvent ( QMouseEvent * _event )
 {
@@ -483,7 +446,7 @@ void NGLScene::mouseMoveEvent ( QMouseEvent * _event )
         m_modelPos.m_y -= INCREMENT * diffY;break;
     }
     update();
-   }
+  }
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -516,7 +479,7 @@ void NGLScene::mouseReleaseEvent(QMouseEvent * _event)
   {
     m_rotate=false;
   }
-        // right mouse translate mode
+  // right mouse translate mode
   if (_event->button() == Qt::RightButton)
   {
     m_translate=false;
@@ -530,57 +493,56 @@ void NGLScene::wheelEvent ( QWheelEvent * _event )
   // check the diff of the wheel position (0 means no change)
   if(_event->delta() > 0)
   {
-      switch(m_cameraIndex){
-      case 0:
-          m_modelPos.m_z+=ZOOM;
-          m_modelPos.m_x+=ZOOM; break;
-      case 1:
-          m_modelPos.m_y+=ZOOM; break;
-      case 2:
-          m_modelPos.m_y-=ZOOM; break;
-      case 3:
-          m_modelPos.m_z-=ZOOM; break;
-      case 4:
-          m_modelPos.m_z+=ZOOM; break;
-      }
+    switch(m_cameraIndex){
+    case 0:
+      m_modelPos.m_z+=ZOOM;
+      m_modelPos.m_x+=ZOOM; break;
+    case 1:
+      m_modelPos.m_y+=ZOOM; break;
+    case 2:
+      m_modelPos.m_y-=ZOOM; break;
+    case 3:
+      m_modelPos.m_z-=ZOOM; break;
+    case 4:
+      m_modelPos.m_z+=ZOOM; break;
+    }
   }
   else if(_event->delta() < 0)
   {
-      switch(m_cameraIndex){
-      case 0:
-          m_modelPos.m_z-=ZOOM;
-          m_modelPos.m_x-=ZOOM; break;
-      case 1:
-          m_modelPos.m_y-=ZOOM; break;
-      case 2:
-          m_modelPos.m_y+=ZOOM; break;
-      case 3:
-          m_modelPos.m_z+=ZOOM; break;
-      case 4:
-          m_modelPos.m_z-=ZOOM; break;
-      }
+    switch(m_cameraIndex){
+    case 0:
+      m_modelPos.m_z-=ZOOM;
+      m_modelPos.m_x-=ZOOM; break;
+    case 1:
+      m_modelPos.m_y-=ZOOM; break;
+    case 2:
+      m_modelPos.m_y+=ZOOM; break;
+    case 3:
+      m_modelPos.m_z+=ZOOM; break;
+    case 4:
+      m_modelPos.m_z-=ZOOM; break;
+    }
   }
   update();
 }
+
 //----------------------------------------------------------------------------------------------------------------------
 void NGLScene::keyPressEvent(QKeyEvent *_event)
 {
   switch (_event->key())
   {
-    default : break ;
+  default : break ;
   }
   update();
 }
 
-
+//----------------------------------------------------------------------------------------------------------------------
 void NGLScene::compileShader(QString _vertSource, QString _fragSource)
 {
   m_shaderManager->compileShader(_vertSource, _fragSource);
   m_window->setTerminalText(parseErrorLog(m_shaderManager->getErrorLog()));
   update();
   m_parser->assignAllData();
-
-
 }
 
 //------------------------------------------------------------------------------
@@ -720,13 +682,3 @@ void NGLScene::drawAxis(ngl::Vec3 _pos)
   prim->draw("cube");
   m_transform.reset();
 }
-
-
-
-////----------------------------------------------------------------------------------------------------------------------
-//// Sets the view of the camera (persp, top, bottom, side).
-//void NGLScene::setCameraShape(QString _view)
-//{
-//}
-
-

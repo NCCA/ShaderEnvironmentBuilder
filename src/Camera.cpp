@@ -29,19 +29,19 @@ void Camera::createCameras()
     ngl::Vec3 perspUp(0.0f,1.0f,0.0f);
 
     ngl::Vec3 topEye(0.0f,1.0f,0.0f);
-    ngl::Vec3 topLook=(0,0,0);
+    ngl::Vec3 topLook(0,0,0);
     ngl::Vec3 topUp(0.0f,0.0f,1.0f);
 
     ngl::Vec3 bottomEye(0.0f,-1.0f,0.0f);
-    ngl::Vec3 bottomLook=(0,0,0);
+    ngl::Vec3 bottomLook(0,0,0);
     ngl::Vec3 bottomUp(0.0f,0.0f,1.0f);
 
     ngl::Vec3 leftEye(0.0f,0.0f,-1.0f);
-    ngl::Vec3 leftLook=(0,0,0);
+    ngl::Vec3 leftLook(0,0,0);
     ngl::Vec3 leftUp(0.0f,1.0f,0.0f);
 
     ngl::Vec3 rightEye(0.0f,0.0f,1.0f);
-    ngl::Vec3 rightLook=(0,0,0);
+    ngl::Vec3 rightLook(0,0,0);
     ngl::Vec3 rightUp(0.0f,1.0f,0.0f);
 
     // Applies the camera positions and sets their shapes, then pushes to the vector of cameras.

@@ -30,19 +30,22 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   // Setup ui from form creator (MainWindow.ui)
   m_ui->setupUi(this);
 
+  m_shaderManager = new ShaderManager();
   // create parser in main window
-  m_parForButton = new ParserLib;
+  m_parForButton = new ParserLib(m_shaderManager);
 
   // Create openGl and qsci widgets, pass in the parser
-  m_gl=new  NGLScene(this, m_parForButton);
+  m_gl=new  NGLScene(this, m_parForButton, m_shaderManager);
 
   m_ui->m_sldr_cameraFov->setValue(65.0f);
   m_ui->m_nearClip->setValue(0.5f);
   m_ui->m_farClip->setValue(150.0f);
 
+  // Use the temp layout in the designer to set the size
   m_gl->setSizePolicy(m_ui->m_f_gl_temp->sizePolicy());
   m_gl->setMinimumSize(m_ui->m_f_gl_temp->minimumSize());
 
+  // Align the camera settings to the top of the widget
   m_ui->m_vl_tab_camera->setAlignment(Qt::AlignTop);
 
   // add the openGl window to the interface
@@ -51,10 +54,10 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   // Delete the template frame from the form designer
   delete(m_ui->m_f_gl_temp);
 
-  // Widget 1 (vertex)
+  // Text Widget 1 (vertex)
   m_vertQsci = createQsciWidget(m_ui->m_tab_qsci_1);
 
-  // Widget 2 (fragment)
+  // Text Widget 2 (fragment)
   m_fragQsci = createQsciWidget(m_ui->m_tab_qsci_2);
 
   // Camera settings
@@ -85,9 +88,6 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   // switching to .obj files
   connect(m_ui->m_actionLoad_Obj,SIGNAL(triggered()),this,SLOT(objOpened()));
 
-  // switching to .jpg files
-  connect(m_ui->m_actionLoad_Texture,SIGNAL(triggered()),this,SLOT(on_m_actionLoad_Texture_triggered()));
-
   // Prints the active uniforms
   connect(m_ui->m_exportUniforms,SIGNAL(clicked()),m_gl,SLOT(exportUniform()));
   connect(m_ui->m_printUniforms ,SIGNAL(clicked()),this,SLOT(printUniforms()));
@@ -105,19 +105,33 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   connect(m_gl,SIGNAL(createLineMarker(QString,int)),this,SLOT(addError(QString,int)));
   connect(m_gl,SIGNAL(initializeGL()), this, SLOT(on_m_btn_compileShader_clicked()));
 
+  connect(m_vertQsci, SIGNAL(textChanged()), this, SLOT(fileModified()));
+
+
   update();
 
-  this->setGeometry(
-        QStyle::alignedRect(
-          Qt::LeftToRight,
-          Qt::AlignCenter,
-          this->size(),
-          qApp->desktop()->availableGeometry()
-          )
-        );
+  centreWindow();
 
   m_startDialog = new StartupDialog(this);
 
+  m_fileChange=false;
+
+  updateTitle();
+
+}
+
+//------------------------------------------------------------------------------
+void MainWindow::fileModified()
+{
+  m_fileChange = true;
+  updateTitle();
+}
+
+//------------------------------------------------------------------------------
+void MainWindow::updateTitle()
+{
+  setWindowTitle(QString("%1[*] - C(S)hader Environment Builder").arg(m_project->getName().c_str()));
+  setWindowModified(m_fileChange);
 }
 
 //------------------------------------------------------------------------------
@@ -161,7 +175,7 @@ Cebitor *MainWindow::createQsciWidget(QWidget *_parent)
   qsci->setSearchLineEdit(qsciSearch);
 
   // Connect search widget signals to editor slots
-  connect(qsciSearch,SIGNAL(textChanged()),qsci,SLOT(highlightAllSearch()));
+  connect(qsciSearch,SIGNAL(textChanged(const QString&)),qsci,SLOT(highlightAllSearch(const QString&)));
   connect(qsciSearch,SIGNAL(returnPressed()),qsci,SLOT(searchNext()));
   connect(searchNextBtn,SIGNAL(pressed()),qsci,SLOT(searchNext()));
   connect(searchPrevBtn,SIGNAL(pressed()),qsci,SLOT(searchPrev()));
@@ -262,15 +276,40 @@ void MainWindow::showStartDialog()
   m_startDialog->show();
 }
 
+int MainWindow::unsavedChanges()
+{
+  int ret;
+  if (m_fileChange)
+  {
+    QMessageBox msgBox;
+    msgBox.setIcon(QMessageBox::Warning);
+    msgBox.setText("There are still unsaved changes in your current project");
+    msgBox.setInformativeText("Do you want to save the project?");
+    msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+    msgBox.setDefaultButton(QMessageBox::Save);
+    ret = msgBox.exec();
+  }
+  else
+  {
+    ret = QMessageBox::Save;
+  }
+
+  if (ret == QMessageBox::Save)
+  {
+    on_actionSaveProject_triggered();
+  }
+  return ret;
+}
+
 //------------------------------------------------------------------------------
 bool MainWindow::newProjectWiz(QWidget* _parent)
 {
   NewProjectWizard *projectWiz = new NewProjectWizard(_parent);
   bool success = projectWiz->exec();
-  if (success)
+  if (success && unsavedChanges() != QMessageBox::Cancel)
   {
     const OutputData *output = projectWiz->getOutput();
-    m_project->set(output->m_projectName, output->m_projectDir, false);
+    m_project->set(output->m_projectName, output->m_projectDir, true, true);
     m_vertQsci->setText(output->m_vertSource);
     m_fragQsci->setText(output->m_fragSource);
     QString vertSource, fragSource;
@@ -281,7 +320,7 @@ bool MainWindow::newProjectWiz(QWidget* _parent)
   }
   else
   {
-    // qDebug() << "FAIL";
+    success = false;
   }
   delete projectWiz;
   return success;
@@ -297,12 +336,16 @@ void MainWindow::on_actionNew_triggered()
 void MainWindow::keyPressEvent(QKeyEvent *_event)
 {
   // this method is called every time the main window recives a key event.
-  switch (_event->key())
+  Qt::KeyboardModifiers m = _event->modifiers();
+  if (m == Qt::NoModifier)
   {
-    case Qt::Key_W : {m_ui->m_showWireframe->toggle(); break;}
-    case Qt::Key_N : {m_ui->m_showNormals->toggle();   break;}
-    case Qt::Key_G : {m_ui->m_showGrid->toggle();      break;}
-    case Qt::Key_F : {m_gl->resetObjPos();             break;}
+    switch (_event->key())
+    {
+      case Qt::Key_W : {m_ui->m_showWireframe->toggle(); break;}
+      case Qt::Key_N : {m_ui->m_showNormals->toggle();   break;}
+      case Qt::Key_G : {m_ui->m_showGrid->toggle();      break;}
+      case Qt::Key_F : {m_gl->resetObjPos();             break;}
+    }
   }
   update();
 }
@@ -310,13 +353,26 @@ void MainWindow::keyPressEvent(QKeyEvent *_event)
 //------------------------------------------------------------------------------
 void MainWindow::on_actionSaveProject_triggered()
 {
-  m_project->save(m_vertQsci->text(), m_fragQsci->text());
+  if (m_fileChange)
+  {
+    bool success = m_project->save(m_vertQsci->text(), m_fragQsci->text());
+    if (success)
+    {
+      m_fileChange = false;
+    }
+  }
+  updateTitle();
 }
 
 //------------------------------------------------------------------------------
 void MainWindow::on_actionSaveProjectAs_triggered()
 {
-  m_project->saveAs(m_vertQsci->text(), m_fragQsci->text());
+  bool success = m_project->saveAs(m_vertQsci->text(), m_fragQsci->text());
+  if (success)
+  {
+    m_fileChange = false;
+  }
+  updateTitle();
 }
 
 //------------------------------------------------------------------------------
@@ -327,18 +383,22 @@ void MainWindow::on_actionOpen_triggered()
                                                tr("Open Project"),
                                                "0Features-0BugsCVA3/",
                                                tr("XML Files (*.xml)"));
-  string fileDirectory = "";
+
   if( !fileDir.isEmpty() )
   {
-     QString vertSource, fragSource;
-     fileDirectory = fileDir.toStdString();
-     // load project data
-     m_project->load(fileDirectory, vertSource, fragSource);
-     // set the text editor strings
-     m_vertQsci->setText(vertSource);
-     m_fragQsci->setText(fragSource);
-     // set proect data in scene for shader manager
-     m_gl->setProject(m_project->getName(), vertSource,fragSource);
+    if (unsavedChanges() != QMessageBox::Cancel)
+    {
+      std::string fileDirectory = "";
+      QString vertSource, fragSource;
+      fileDirectory = fileDir.toStdString();
+      // load project data
+      m_project->load(fileDirectory, vertSource, fragSource);
+      // set the text editor strings
+      m_vertQsci->setText(vertSource);
+      m_fragQsci->setText(fragSource);
+      // set proect data in scene for shader manager
+      m_gl->setProject(m_project->getName(), vertSource,fragSource);
+    }
   }
 }
 
@@ -361,13 +421,13 @@ void MainWindow::on_actionExport_triggered()
 }
 
 //------------------------------------------------------------------------------
-void MainWindow::on_m_actionLoad_Texture_triggered()
+void MainWindow::on_m_actionLoad_Tex_triggered()
 {
   // Open a file dialog and return a file directory
   QString fileName=QFileDialog::getOpenFileName(this,
-                                              tr("Open Texture Map"),
-                                              "0Features-0BugsCVA3/",
-                                              tr("Image Files (*.jpg)"));
+                                                tr("Open Texture Map"),
+                                                "0Features-0BugsCVA3/",
+                                                tr("Image Files (*.jpg)"));
   // load texture map to OBJ
   std::string importName=fileName.toStdString();
   m_gl->importTextureMap(importName);
@@ -396,14 +456,13 @@ MainWindow::~MainWindow()
 }
 
 //------------------------------------------------------------------------------
-
 void MainWindow::on_actionImport_Vertex_Shader_triggered()
 {
   //Open a dialog box
   QString fileName=QFileDialog::getOpenFileName(this,
-                                              tr("Import Vertex Shader"),
-                                              "0Features-0BugsCVA3/",
-                                              tr("GLSL Files (*.glsl)"));
+                                                tr("Import Vertex Shader"),
+                                                "0Features-0BugsCVA3/",
+                                                tr("GLSL Files (*.glsl)"));
   //If its not empty...
   if(!fileName.isEmpty())
   {
@@ -444,14 +503,13 @@ void MainWindow::on_actionImport_Vertex_Shader_triggered()
 }
 
 //------------------------------------------------------------------------------
-
 void MainWindow::on_actionImport_Fragment_Shader_triggered()
 {
   //Open a dialog box
   QString fileName=QFileDialog::getOpenFileName(this,
-                                              tr("Import Fragment Shader"),
-                                              "0Features-0BugsCVA3/",
-                                              tr("GLSL Files (*.glsl)"));
+                                                tr("Import Fragment Shader"),
+                                                "0Features-0BugsCVA3/",
+                                                tr("GLSL Files (*.glsl)"));
 
   //If selected file directory is not empty...
   if(!fileName.isEmpty())
@@ -489,5 +547,12 @@ void MainWindow::on_actionImport_Fragment_Shader_triggered()
       return;
     }
   }
+}
 
+//------------------------------------------------------------------------------
+void MainWindow::centreWindow()
+{
+  this->setGeometry(QStyle::alignedRect(Qt::LeftToRight,Qt::AlignCenter,
+                                        this->size(),
+                                        qApp->desktop()->availableGeometry()));
 }

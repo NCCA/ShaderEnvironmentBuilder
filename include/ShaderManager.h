@@ -45,9 +45,9 @@ public:
   void createShaderProgram(std::string _name);
   //------------------------------------------------------------------------------------------------------------------------
   /// @brief method to set OpenGL to use the current shader program
-  /// @param shaderType int to switch to normals shader
+  /// @param _shaderType int to switch to normals shader
   //------------------------------------------------------------------------------------------------------------------------
-  void use(uint shaderType);
+  void use(uint _shaderType);
   //------------------------------------------------------------------------------------------------------------------------
   /// @brief method called when 1st opening program to initialise the default phong shader
   //------------------------------------------------------------------------------------------------------------------------
@@ -80,6 +80,11 @@ public:
     {m_data.m_name = _name;
      m_data.m_vert = _vert;
      m_data.m_frag = _frag;}
+  //------------------------------------------------------------------------------------------------------------------------
+  /// @brief get the current data from the shader manager
+  /// @returns the shader data
+  //------------------------------------------------------------------------------------------------------------------------
+  inline shaderProgramData getData() {return m_data;}
 
 private:
   //------------------------------------------------------------------------------------------------------------------------

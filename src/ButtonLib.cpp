@@ -63,15 +63,15 @@ void ButtonLib::updateButtons()
     createButtons();
     for(auto uniform: m_buttonList)
     {
-      for(int i=0; i<_buttonDup.size(); ++i)
+      for(uint i=0; i<_buttonDup.size(); ++i)
       {
         if(uniform->getName()==_buttonDup[i]->getName() && uniform->getTypeEnum()==_buttonDup[i]->getTypeEnum())
         {
-          int uniformID=uniform->getID();
+          //int uniformID=uniform->getID();
           if(uniform->getTypeEnum()==GL_FLOAT_VEC4)
           {
             //qDebug()<<"\nUniform name:"<<uniform->getName()<<"\nTemp: "<<_buttonDup[i]->getName();
-            QColor display = _buttonDup[i]->getColourQ();
+            //QColor display = _buttonDup[i]->getColourQ();
             //qDebug()<<"\nDuplicate vals: "<<display.redF()<<", "<<display.greenF()<<", "<<display.blueF()<<"\n";
             uniform->setColour(_buttonDup[i]->getColourQ());
           }

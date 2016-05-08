@@ -212,7 +212,7 @@
                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;CameraSettings&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                  </property>
                  <property name="currentIndex">
-                  <number>2</number>
+                  <number>0</number>
                  </property>
                  <property name="documentMode">
                   <bool>false</bool>
@@ -526,6 +526,9 @@
                                <verstretch>0</verstretch>
                               </sizepolicy>
                              </property>
+                             <property name="decimals">
+                              <number>3</number>
+                             </property>
                              <property name="minimum">
                               <double>0.100000000000000</double>
                              </property>
@@ -563,6 +566,9 @@
                                <horstretch>0</horstretch>
                                <verstretch>0</verstretch>
                               </sizepolicy>
+                             </property>
+                             <property name="decimals">
+                              <number>3</number>
                              </property>
                              <property name="minimum">
                               <double>2.000000000000000</double>
@@ -919,14 +925,14 @@
     <addaction name="separator"/>
     <addaction name="menuImport_Shaders"/>
     <addaction name="actionExport"/>
-    <addaction name="actionStartup_Window"/>
     <addaction name="separator"/>
+    <addaction name="separator"/>
+    <addaction name="actionStartup_Window"/>
    </widget>
    <widget class="QMenu" name="shapesMenu">
     <property name="title">
      <string>Load Shapes</string>
     </property>
-    <addaction name="m_actionLoad_Obj"/>
     <addaction name="m_actionLoad_Sphere"/>
     <addaction name="m_actionLoad_Cube"/>
     <addaction name="m_actionLoad_Torus"/>
@@ -934,25 +940,42 @@
     <addaction name="m_actionLoad_Troll"/>
     <addaction name="m_actionLoad_Dragon"/>
     <addaction name="m_actionLoad_Bunny"/>
-    <addaction name="m_actionLoad_Texture"/>
+    <addaction name="separator"/>
+    <addaction name="m_actionLoad_Obj"/>
+   </widget>
+   <widget class="QMenu" name="menuLoad_Texture">
+    <property name="title">
+     <string>Load Texture</string>
+    </property>
+    <addaction name="m_actionLoad_Tex"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="shapesMenu"/>
+   <addaction name="menuLoad_Texture"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionNew">
    <property name="text">
-    <string>New File or Project...</string>
+    <string>New Project...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
    </property>
   </action>
   <action name="actionOpen">
    <property name="text">
-    <string>Open File or Project...</string>
+    <string>Open Project...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
    </property>
   </action>
   <action name="actionSaveProject">
    <property name="text">
-    <string>Save Project...</string>
+    <string>Save Project</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
    </property>
   </action>
   <action name="actionSaveProjectAs">
@@ -962,10 +985,16 @@
    <property name="toolTip">
     <string>Save Project As</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+S</string>
+   </property>
   </action>
   <action name="actionStartup_Window">
    <property name="text">
     <string>Startup Window</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+N</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
@@ -975,65 +1004,96 @@
    <property name="text">
     <string>Import OBJ</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+I</string>
+   </property>
   </action>
   <action name="m_actionLoad_Sphere">
    <property name="text">
     <string>Load Sphere</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+1</string>
    </property>
   </action>
   <action name="m_actionLoad_Cube">
    <property name="text">
     <string>Load Cube</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+2</string>
+   </property>
   </action>
   <action name="m_actionLoad_Torus">
    <property name="text">
     <string>Load Torus</string>
    </property>
-  </action>
-  <action name="actionLoad_Cone">
-   <property name="text">
-    <string>Load Cone</string>
+   <property name="shortcut">
+    <string>Ctrl+3</string>
    </property>
   </action>
   <action name="m_actionLoad_Teapot">
    <property name="text">
     <string>Load Teapot</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+4</string>
+   </property>
   </action>
   <action name="m_actionLoad_Troll">
    <property name="text">
     <string>Load Troll</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+5</string>
    </property>
   </action>
   <action name="m_actionLoad_Dragon">
    <property name="text">
     <string>Load Dragon</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+6</string>
+   </property>
   </action>
   <action name="m_actionLoad_Bunny">
    <property name="text">
     <string>Load Bunny</string>
    </property>
-  </action>
-  <action name="m_actionLoad_Texture">
-   <property name="text">
-    <string>Load Texture</string>
+   <property name="shortcut">
+    <string>Ctrl+7</string>
    </property>
   </action>
   <action name="actionExport">
    <property name="text">
-    <string>Export Shaders</string>
+    <string>Export Shaders...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+E</string>
+   </property>
+  </action>
+  <action name="m_actionLoad_Tex">
+   <property name="text">
+    <string>Load Texture...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+T</string>
    </property>
   </action>
   <action name="actionImport_Vertex_Shader">
    <property name="text">
-    <string>Import Vertex Shader</string>
+    <string>Import Vertex Shader...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+V</string>
    </property>
   </action>
   <action name="actionImport_Fragment_Shader">
    <property name="text">
-    <string>Import Fragment Shader</string>
+    <string>Import Fragment Shader...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+F</string>
    </property>
   </action>
  </widget>

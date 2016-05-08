@@ -138,6 +138,12 @@ void Cebitor::searchPrev()
 
 //------------------------------------------------------------------------------
 
+void Cebitor::highlightAllSearch(const QString &_text)
+{
+  highlightAllSearch();
+}
+
+//------------------------------------------------------------------------------
 void Cebitor::highlightAllSearch()
 {
   clearIndicatorRange(0,0,lines(),text(lines()).length(),m_searchIndicator);
