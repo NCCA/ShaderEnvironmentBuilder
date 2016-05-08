@@ -557,11 +557,3 @@ void MainWindow::centreWindow()
                                         qApp->desktop()->availableGeometry()));
 }
 
-void MainWindow::on_m_exportUniforms_clicked()
-{
-  QMessageBox exportedNotice;
-  exportedNotice.setWindowTitle("Successfully Exported Uniforms");
-  exportedNotice.setText("Uniform data has been exported to\n /0Features-0BugsCVA3/tempFiles/ParsingOutput.txt");
-  exportedNotice.setStandardButtons(QMessageBox::Ok);
-  exportedNotice.exec();
-}
