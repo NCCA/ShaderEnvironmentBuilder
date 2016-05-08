@@ -140,14 +140,14 @@ void ParserLib::assignAllData()
 //------------------------------------------------------------------------------
 void ParserLib::printUniforms()
 {
-  std::cout<<"__________________________________Uniform Information: Starts//n";
-  std::cout<<"There are "<<m_num<<" Uniforms/n";
+  std::cout<<"__________________________________Uniform Information: Starts/\n";
+  std::cout<<"There are "<<m_num<<" Uniforms\n";
 
   // print information
   for (uint i=0; i<m_num; i++)
   {
     std::cout << "Name: "<<m_uniformList[i]->getName();
-    std::cout << ";  Location: "<<m_uniformList[i]->getName()<<" ("<<i<<")";
+    std::cout << ";  Location: "<<" ("<<i<<")";
     std::cout << ";  Type: "<<m_uniformList[i]->getTypeEnum()<<"; ";
     std::cout <<m_uniformList[i]->getTypeName()<<std::endl;
 
@@ -197,6 +197,7 @@ void ParserLib::printUniforms()
       }
     }
   }
+
   std::cout<<"___________________________________Uniform Information: Ends//\n";
 
 }
