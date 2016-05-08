@@ -53,13 +53,13 @@ public:
   /// @param _vertSource the vertex shader source code to save
   /// @param _fragSource the fragment shader source code to save
   //----------------------------------------------------------------------------
-  void save(QString _vertSource, QString _fragSource);
+  bool save(QString _vertSource, QString _fragSource);
   //----------------------------------------------------------------------------
   /// @brief method for saving the current project as a new project
   /// @param _vertSource the vertex shader source code to save
   /// @param _fragSource the fragment shader source code to save
   //----------------------------------------------------------------------------
-  void saveAs(QString _vertSource, QString _fragSource);
+  bool saveAs(QString _vertSource, QString _fragSource);
   //----------------------------------------------------------------------------
   /// @brief method to load in a project from an xml file
   /// @param _loadedFileDirectory the directory of the loaded file

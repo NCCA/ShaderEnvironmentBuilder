@@ -27,7 +27,7 @@ Project::~Project()
 
 //----------------------------------------------------------------------------
 
-void Project::save(QString _vertSource, QString _fragSource)
+bool Project::save(QString _vertSource, QString _fragSource)
 {
   QString fileName;
 
@@ -45,7 +45,10 @@ void Project::save(QString _vertSource, QString _fragSource)
       // set project data fromt eh dialog and set m_saved to true
       set(finfo.baseName().toStdString(), finfo.absolutePath().toStdString(), true);
     }
-
+    else
+    {
+      return false;
+    }
   }
   std::cout<<"Saving project..."<<std::endl;
 
@@ -60,15 +63,16 @@ void Project::save(QString _vertSource, QString _fragSource)
   m_xml->writeProject(m_projectName, m_projectDir, vertSource_c, fragSource_c);
 
   std::cout<<"Saved project: \nName: "<<m_projectName<<"  Directory: "<<m_projectDir<<std::endl;
+  return true;
 }
 
 //----------------------------------------------------------------------------
 
-void Project::saveAs(QString vertSource, QString _fragSource)
+bool Project::saveAs(QString vertSource, QString _fragSource)
 {
   // set save state to false then call save function
   m_saved = false;
-  save(vertSource, _fragSource);
+  return save(vertSource, _fragSource);
 }
 
 //----------------------------------------------------------------------------
@@ -169,21 +173,21 @@ bool Project::exportProject(std::string _targetDir, QString _vertSource, QString
 void Project::load(std::string _loadedFileDirectory, QString &o_vertSource, QString &o_fragSource)
 {
 
-   std::cout<<"Opening: "<<_loadedFileDirectory<<std::endl;
-   std::string vertSource = "";
-   std::string fragSource = "";
-   std::string fileName = "";
-   std::string fileDirectory = "";
+  std::cout<<"Opening: "<<_loadedFileDirectory<<std::endl;
+  std::string vertSource = "";
+  std::string fragSource = "";
+  std::string fileName = "";
+  std::string fileDirectory = "";
 
-   // read project from XML file storing data in variables.
-   m_xml->readProjectXML(fileName, fileDirectory, _loadedFileDirectory, vertSource, fragSource);
+  // read project from XML file storing data in variables.
+  m_xml->readProjectXML(fileName, fileDirectory, _loadedFileDirectory, vertSource, fragSource);
 
-   // set the project data
-   set(fileName, fileDirectory, true);
+  // set the project data
+  set(fileName, fileDirectory, true);
 
-   // set output shader source strings
-   o_vertSource = QString::fromStdString(vertSource);
-   o_fragSource = QString::fromStdString(fragSource);
+  // set output shader source strings
+  o_vertSource = QString::fromStdString(vertSource);
+  o_fragSource = QString::fromStdString(fragSource);
 
 }
 

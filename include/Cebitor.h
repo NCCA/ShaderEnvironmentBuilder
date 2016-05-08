@@ -68,9 +68,13 @@ public slots:
   //----------------------------------------------------------------------------
   /// @brief sets indicator for each search result
   //----------------------------------------------------------------------------
-  void highlightAllSearch(const QString &_text);
+  void highlightAllSearch();
   //----------------------------------------------------------------------------
-
+  /// @brief sets indicator for each search result
+  /// @param[in] _text the text that has been changed
+  //----------------------------------------------------------------------------
+  void highlightAllSearch(const QString& _text);
+  //----------------------------------------------------------------------------
 protected:
   //----------------------------------------------------------------------------
   /// @brief widget containing the searchbar

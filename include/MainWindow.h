@@ -145,8 +145,14 @@ private:
   //----------------------------------------------------------------------------
   Ui::MainWindow*       m_ui;
   //----------------------------------------------------------------------------
+  /// @brief The button library used for the uniform buttons that are generated
   //----------------------------------------------------------------------------
   ButtonLib*            m_buttonLibrary;
+  //----------------------------------------------------------------------------
+  /// @brief The button library used for the uniform buttons that are generated
+  //----------------------------------------------------------------------------
+  bool                  m_fileChange;
+  //----------------------------------------------------------------------------
   //----------------------------------------------------------------------------
   /// @brief create QsciScintilla widget in the style of sublime defaults
   /// @param [in] _parent the parent widget to fill with the new Qsci Widget
@@ -167,6 +173,10 @@ private:
   /// @brief Centres the window to the monitor's resolution
   //----------------------------------------------------------------------------
   void                  centreWindow();
+  //----------------------------------------------------------------------------
+  /// @brief Update the title of the window
+  //----------------------------------------------------------------------------
+  void                  updateTitle();
   //----------------------------------------------------------------------------
   //----------------------------------------------------------------------------
 private slots:
@@ -215,6 +225,10 @@ private slots:
   /// @brief Called when Import Fragment Shader is clicked
   //----------------------------------------------------------------------------
   void                  on_actionImport_Fragment_Shader_triggered();
+  //----------------------------------------------------------------------------
+  /// @brief Called when a file has been modified and not saved
+  //----------------------------------------------------------------------------
+  void                  fileModified();
   
 };
 
