@@ -283,7 +283,7 @@ bool MainWindow::newProjectWiz(QWidget* _parent)
   if (success)
   {
     const OutputData *output = projectWiz->getOutput();
-    m_project->set(output->m_projectName, output->m_projectDir, false);
+    m_project->set(output->m_projectName, output->m_projectDir, false, true);
     m_vertQsci->setText(output->m_vertSource);
     m_fragQsci->setText(output->m_fragSource);
     QString vertSource, fragSource;
@@ -333,9 +333,9 @@ void MainWindow::on_actionSaveProject_triggered()
     if (success)
     {
       m_fileChange = false;
-      updateTitle();
     }
   }
+  updateTitle();
 }
 
 //------------------------------------------------------------------------------
@@ -345,8 +345,8 @@ void MainWindow::on_actionSaveProjectAs_triggered()
   if (success)
   {
     m_fileChange = false;
-    updateTitle();
   }
+  updateTitle();
 }
 
 //------------------------------------------------------------------------------

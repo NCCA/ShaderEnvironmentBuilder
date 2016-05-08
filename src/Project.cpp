@@ -16,6 +16,7 @@ Project::Project()
   m_projectDir = "";
   m_xml = new IO_XML;
   m_saved = false;
+  m_firstSave = true;
 }
 
 //----------------------------------------------------------------------------
@@ -43,13 +44,14 @@ bool Project::save(QString _vertSource, QString _fragSource)
       fileName = dialog.selectedFiles().at(0);
       QFileInfo finfo = QFileInfo(fileName);
       // set project data fromt eh dialog and set m_saved to true
-      set(finfo.baseName().toStdString(), finfo.absolutePath().toStdString(), true);
+      set(finfo.baseName().toStdString(), finfo.absolutePath().toStdString(), true, true);
     }
     else
     {
       return false;
     }
   }
+
   std::cout<<"Saving project..."<<std::endl;
 
   // convert QStrings to c strings.
@@ -60,10 +62,16 @@ bool Project::save(QString _vertSource, QString _fragSource)
   const char * fragSource_c = fragSourceString.c_str();
 
   //write project to XML
-  m_xml->writeProject(m_projectName, m_projectDir, vertSource_c, fragSource_c);
+  bool success = m_xml->writeProject(m_projectName, m_projectDir, vertSource_c,
+                                     fragSource_c, !m_firstSave);
 
-  std::cout<<"Saved project: \nName: "<<m_projectName<<"  Directory: "<<m_projectDir<<std::endl;
-  return true;
+  if (success)
+  {
+    std::cout<<"Saved project: \nName: "<<m_projectName<<"  Directory: "<<m_projectDir<<std::endl;
+    m_firstSave=false;
+  }
+
+  return success;
 }
 
 //----------------------------------------------------------------------------
@@ -183,7 +191,7 @@ void Project::load(std::string _loadedFileDirectory, QString &o_vertSource, QStr
   m_xml->readProjectXML(fileName, fileDirectory, _loadedFileDirectory, vertSource, fragSource);
 
   // set the project data
-  set(fileName, fileDirectory, true);
+  set(fileName, fileDirectory, true, false);
 
   // set output shader source strings
   o_vertSource = QString::fromStdString(vertSource);

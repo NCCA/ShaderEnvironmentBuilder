@@ -7,6 +7,7 @@
 #include <vector>
 #include <stdio.h>
 #include <string.h>
+#include <QString>
 #include "ngl/XMLSerializer.h"
 #include "ngl/rapidxml/rapidxml_print.hpp"
 
@@ -38,8 +39,11 @@ public:
     /// @param [in] _dir the directory of the saved project file
     /// @param [in] _vertSource the vertex shader source code
     /// @param [in] _fragSource the fragment shader source code
+    /// @returns true false if it saved or not
     //----------------------------------------------------------------------------------------------------------------------
-    void writeProject(std::string _name, std::string _dir, std::string _vertSource, std::string _fragSource);
+    bool writeProject(std::string _name, std::string _dir,
+                      std::string _vertSource, std::string _fragSource,
+                      bool _overwrite);
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief Saves data
     /// @param [in] _shaderProgramName Name of the shader program
@@ -58,6 +62,12 @@ public:
     /// @param [in] _value data value
     //----------------------------------------------------------------------------------------------------------------------
     void writeDataXML(std::string _name, std::string _type, int _value);
+private:
+    //----------------------------------------------------------------------------
+    /// @brief method to confirm overwriting exported files
+    /// @param[in] _filePath the path of the file to overwrite
+    //----------------------------------------------------------------------------
+    int confirmOverwrite(QString _filePath);
 };
 
 #endif // IO_XML_H
