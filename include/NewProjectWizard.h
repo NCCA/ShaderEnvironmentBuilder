@@ -358,9 +358,9 @@ private:
 
 
 //------------------------------------------------------------------------------
-/// @class ProjectInfoPage
-/// @brief The project wizard page with info on the project name, version,
-/// directory etc.
+/// @class ConclusionPage
+/// @brief The final project wizard page that asks for confirmation to generate
+/// project
 //------------------------------------------------------------------------------
 class ConclusionPage : public QWizardPage
 {

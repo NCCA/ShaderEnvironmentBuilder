@@ -1,12 +1,11 @@
-/*
-//----------------------------------------------------------------------------------------------------------------------
-/// @file GlslLexer.lex
-/// @brief Flex definitions for generating the GLSL lexer
-/// @author Phil Rouse
-/// @version 1.0
-/// @date 07/05/2016
-//----------------------------------------------------------------------------------------------------------------------
-*/
+/*! @file GlslLexer.lex
+ * @brief Flex definitions for generating the GLSL lexer
+ * @author Phil Rouse
+ * @version 1.0
+ * @date 07/05/2016
+ */
+
+
 
 %option c++
 
