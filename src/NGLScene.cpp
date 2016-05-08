@@ -13,6 +13,7 @@
 #include <typeinfo>
 #include <QColorDialog>
 #include <QString>
+#include <QFileDialog>
 #include <ngl/Texture.h>
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -627,7 +628,20 @@ void NGLScene::setProject(std::string _name, QString _vertSource, QString _fragS
 //------------------------------------------------------------------------------
 void NGLScene::exportUniform()
 {
-  m_parser->exportUniforms();
+  QString fileName = QFileDialog::getSaveFileName(m_window,
+                                                  tr("Export Uniforms"),
+                                                  QDir::homePath(),
+                                                  tr("Text File (*.txt)"));
+  if (fileName != "")
+  {
+    if (m_parser->exportUniforms(fileName))
+    {
+      QMessageBox msgBox;
+      msgBox.setText("Uniforms successfully exported");
+      msgBox.setWindowTitle("Successfully Exported");
+      msgBox.exec();
+    }
+  }
 }
 
 //------------------------------------------------------------------------------
