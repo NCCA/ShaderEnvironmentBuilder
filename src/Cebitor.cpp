@@ -124,7 +124,6 @@ void Cebitor::searchNext()
 void Cebitor::searchPrev()
 {
   QString searchTerm = m_searchLineEdit->text();
-  std::cout<<searchTerm.length()<<"\n";
   bool found;
   found = findFirst(searchTerm, false, false, false, true, false);
   if(found)
