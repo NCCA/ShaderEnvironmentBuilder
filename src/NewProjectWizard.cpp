@@ -51,40 +51,59 @@ NewProjectWizard::NewProjectWizard(QWidget *parent): QWizard(parent)
 //------------------------------------------------------------------------------
 void NewProjectWizard::accept()
 {
+  // get project name and directory
   m_output->m_projectName = field("projectName").toString().toStdString();
   m_output->m_projectDir = field("projectDirectory").toString().toStdString();
+
+  // create glsl version string
   QString ver = QString("#version %1 %2\n\n")
                 .arg(field("glslVersion").toString(),
                      field("glslProfile").toString());
 
+  // get the selected rows from the vertex and fragment selection models used
+  // with the treeviews
   QModelIndexList vertFiles = m_vertexSelectModel->selectedRows();
   QModelIndexList fragFiles = m_fragmentSelectModel->selectedRows();
 
+  // Get the glsl order page
   GlslOrderPage* glslOrderPg = static_cast<GlslOrderPage*>(page(3));
 
+  // Setup variables for getting the correct order of the files
+  // ordered filenames (from the qlistwidgets)
   QStringList vertexOrderFileNames, fragmentOrderFileNames;
+  // unordered filenames (from the qtreeviews)
   QStringList vertFileNames, fragFileNames;
 
+  // get the list of ordered files from the list widgets
   const QListWidget* vertFilesOrder = glslOrderPg->getVertListWidget();
   const QListWidget* fragFilesOrder = glslOrderPg->getFragListWidget();
 
+  // create the unordered and ordered file name lists for vertex
   for (int i=0; i<vertFilesOrder->count(); ++i)
   {
     vertFileNames.append(m_fileModel->fileInfo(vertFiles.at(i)).fileName());
     vertexOrderFileNames.append(vertFilesOrder->item(i)->text());
   }
 
+  // create the unordered and ordered file name lists for fragment
   for (int i=0; i<fragFilesOrder->count(); ++i)
   {
     fragFileNames.append(m_fileModel->fileInfo(fragFiles.at(i)).fileName());
     fragmentOrderFileNames.append(fragFilesOrder->item(i)->text());
   }
 
+  // the final vertex and fragment strings
   QString vertexFilesString, fragmentFilesString;
+
+  // Now find the correct index from the ordered list using the ordered and
+  // un-ordered file name lists and get the file value from the file model
   for (int i=0; i<vertFileNames.length(); ++i)
   {
+    // getting the correct index from the ordered file list
     int index = vertFileNames.indexOf(vertexOrderFileNames[i]);
+    // get the file at the correct index from the selected rows in the QTreeView
     QFile vFile(m_fileModel->fileInfo(vertFiles.at(index)).absoluteFilePath());
+    // open the file
     if (!vFile.open(QIODevice::ReadOnly | QIODevice::Text))
     {
       // Raise an error if failed
@@ -92,15 +111,22 @@ void NewProjectWizard::accept()
                             m_fileModel->fileInfo(vertFiles.at(index))
                                                            .absoluteFilePath());
     }
+    // append the file to a single string
     QTextStream in(&vFile);
     vertexFilesString.append(in.readAll());
     vertexFilesString.append("\n");
   }
 
+  // REPEAT above again
+  // Now find the correct index from the ordered list using the ordered and
+  // un-ordered file name lists and get the file value from the file model
   for (int i=0; i<fragFileNames.length(); ++i)
   {
+    // getting the correct index from the ordered file list
     int index = fragFileNames.indexOf(fragmentOrderFileNames[i]);
+    // get the file at the correct index from the selected rows in the QTreeView
     QFile fFile(m_fileModel->fileInfo(fragFiles.at(index)).absoluteFilePath());
+    // open the file
     if (!fFile.open(QIODevice::ReadOnly | QIODevice::Text))
     {
       // Raise an error if failed
@@ -108,25 +134,28 @@ void NewProjectWizard::accept()
                             m_fileModel->fileInfo(fragFiles.at(index))
                                                            .absoluteFilePath());
     }
+    // append the file to a single string
     QTextStream in(&fFile);
     fragmentFilesString.append(in.readAll());
     fragmentFilesString.append("\n");
   }
 
-
+  // check if each of the file strings already contains a version. If it doesn't
+  // then push to front
   if(!vertexFilesString.contains("#version"))
   {
     vertexFilesString.push_front(ver+"\n");
   }
-
+  // same as above
   if(!fragmentFilesString.contains("#version"))
   {
     fragmentFilesString.push_front(ver+"\n");
   }
-
+  // store in output
   m_output->m_vertSource = vertexFilesString;
   m_output->m_fragSource = fragmentFilesString;
 
+  // accept the dialog
   QDialog::accept();
 }
 
@@ -157,7 +186,7 @@ ProjectInfoPage::ProjectInfoPage(QWidget *parent)
   setTitle(tr("Project Information"));
   setSubTitle(tr("Specify basic information about the project for which you "
                  "want to generate."));
-
+  // project name
   m_l_projectName = new QLabel(tr("Project name:"));
   m_le_projectName = new QLineEdit();
   m_l_projectName->setBuddy(m_le_projectName);
@@ -167,6 +196,7 @@ ProjectInfoPage::ProjectInfoPage(QWidget *parent)
   m_le_projectDirectory = new QLineEdit();
   m_l_projectDirectory->setBuddy(m_le_projectDirectory);
 
+  // create a sperator
   QFrame *line = new QFrame();
   line->setObjectName(QString::fromUtf8("line"));
   line->setFrameShape(QFrame::HLine);
@@ -185,6 +215,7 @@ ProjectInfoPage::ProjectInfoPage(QWidget *parent)
   m_cb_glslProfile = new QComboBox();
   m_cb_glslProfile->addItems({"core", "compatibility"});
 
+  // register the fields so that the wizard can read the values at the end
   registerField("projectName*", m_le_projectName);
   registerField("projectDirectory*", m_le_projectDirectory);
   registerField("glslVersion", m_cb_glslVersion, "currentText",
@@ -192,6 +223,7 @@ ProjectInfoPage::ProjectInfoPage(QWidget *parent)
   registerField("glslProfile", m_cb_glslProfile,"currentText",
                 "currentIndexChanged");
 
+  // add all the widgets to the layout
   QGridLayout *layout = new QGridLayout;
   layout->addWidget(m_l_projectName, 0, 0);
   layout->addWidget(m_le_projectName, 0, 1, 1, 2);
@@ -205,6 +237,7 @@ ProjectInfoPage::ProjectInfoPage(QWidget *parent)
   layout->addWidget(m_cb_glslProfile, 4,1,1,2);
   setLayout(layout);
 
+  // connect the browse button to open file dialog
   connect(m_b_browseDirectory, SIGNAL (clicked()),this,
           SLOT(setProjectDirectory()));
 }
@@ -262,7 +295,7 @@ GlslFilesPage::GlslFilesPage(QWidget *parent)
   m_l_fragmentSelectFiles = new QLabel(tr("Fragment Files:"));
 
   /// @todo Make the two tree views into a single function since a lot of values
-  /// are set the same. Just done this for the time being for speed and testing.
+  /// are set the same. Just done this for the time being for speed.
   m_tv_vertexSelectFiles = new QTreeView;
   m_tv_fragmentSelectFiles = new QTreeView;
 
@@ -272,16 +305,20 @@ GlslFilesPage::GlslFilesPage(QWidget *parent)
   for (auto tv: tViews)
   {
     tv->setModel(m_wizard->m_fileModel);
+    // set directory to show
     tv->setRootIndex(m_wizard->m_fileModel->index(shadersPath));
     tv->setSelectionMode(QAbstractItemView::MultiSelection);
+    // show only file name
     tv->setColumnHidden(1,true);
     tv->setColumnHidden(2,true);
     tv->setColumnHidden(3,true);
   }
 
+  // store the selection models
   m_wizard->m_vertexSelectModel = m_tv_vertexSelectFiles->selectionModel();
   m_wizard->m_fragmentSelectModel = m_tv_fragmentSelectFiles->selectionModel();
 
+  // setup selection connections for de-selecting folders
   connect(m_wizard->m_vertexSelectModel,
           SIGNAL(selectionChanged(const QItemSelection&,
                                   const QItemSelection&)),
@@ -295,9 +332,11 @@ GlslFilesPage::GlslFilesPage(QWidget *parent)
           SLOT(fragmentSelectChanged(const QItemSelection&,
                                      const QItemSelection&)));
 
+  // register fileds for wizard
   registerField("vertexFileName*", m_le_vertexName);
   registerField("fragmentFileName*", m_le_fragmentName);
 
+  //layouts
   m_gb_glslFiles = new QGroupBox(tr("Select GLSL Files"));
   m_gb_glslFiles->setMinimumHeight(300);
   QGridLayout *groupBoxLayout = new QGridLayout;
@@ -346,6 +385,8 @@ void GlslFilesPage::deselectDir(const QItemSelection &_selected,
   QModelIndexList items = _selected.indexes();
   for (auto index: items)
   {
+    // check if the selected item is a folder, if it is deselect it
+    // we only want files
     QFileInfo info = m_wizard->m_fileModel->fileInfo(index);
     if (info.isDir())
     {
@@ -366,6 +407,7 @@ GlslOrderPage::GlslOrderPage(QWidget *parent)
   m_l_vertexOrder = new QLabel(tr("Vertex File Order:"));
   m_l_fragmentOrder = new QLabel(tr("Fragment File Order:"));
 
+  // create list widgets and allow dragging and dropping
   m_ls_vertFilesOrder = new QListWidget();
   m_ls_vertFilesOrder->setDragDropMode(QAbstractItemView::InternalMove);
   m_ls_fragFilesOrder = new QListWidget();
@@ -385,6 +427,8 @@ void GlslOrderPage::initializePage()
   m_ls_vertFilesOrder->clear();
   m_ls_fragFilesOrder->clear();
 
+  // fill the list widgets with the selected items from the previous pages
+  // QTreeViews
   QModelIndexList indexes = m_wizard->m_vertexSelectModel->selectedRows();
   QStringList vertexNames, fragmentNames;
   for (auto i: indexes)
@@ -393,6 +437,8 @@ void GlslOrderPage::initializePage()
   }
   m_ls_vertFilesOrder->addItems(vertexNames);
 
+  // fill the list widgets with the selected items from the previous pages
+  // QTreeViews
   indexes = m_wizard->m_fragmentSelectModel->selectedRows();
   for (auto i: indexes)
   {
