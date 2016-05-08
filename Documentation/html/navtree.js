@@ -1,6 +1,11 @@
 var NAVTREE =
 [
   [ "CEB - 'C'(S)hader Environment Builder", "index.html", [
+    [ "Welcome to the documentation!", "index.html", [
+      [ "Introduction", "index.html#intro_sec", null ],
+      [ "Authors", "index.html#author_sec", null ],
+      [ "How to use", "index.html#howto_sec", null ]
+    ] ],
     [ "Todo List", "todo.html", null ],
     [ "Bug List", "bug.html", null ],
     [ "Namespaces", null, [
