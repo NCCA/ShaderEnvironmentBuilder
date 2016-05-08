@@ -40,9 +40,11 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   m_ui->m_nearClip->setValue(0.5f);
   m_ui->m_farClip->setValue(150.0f);
 
+  // Use the temp layout in the designer to set the size
   m_gl->setSizePolicy(m_ui->m_f_gl_temp->sizePolicy());
   m_gl->setMinimumSize(m_ui->m_f_gl_temp->minimumSize());
 
+  // Align the camera settings to the top of the widget
   m_ui->m_vl_tab_camera->setAlignment(Qt::AlignTop);
 
   // add the openGl window to the interface
@@ -51,10 +53,10 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   // Delete the template frame from the form designer
   delete(m_ui->m_f_gl_temp);
 
-  // Widget 1 (vertex)
+  // Text Widget 1 (vertex)
   m_vertQsci = createQsciWidget(m_ui->m_tab_qsci_1);
 
-  // Widget 2 (fragment)
+  // Text Widget 2 (fragment)
   m_fragQsci = createQsciWidget(m_ui->m_tab_qsci_2);
 
   // Camera settings
@@ -84,9 +86,6 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
 
   // switching to .obj files
   connect(m_ui->m_actionLoad_Obj,SIGNAL(triggered()),this,SLOT(objOpened()));
-
-  // switching to .jpg files
-//  connect(m_ui->m_actionLoad_Texture,SIGNAL(triggered()),this,SLOT(on_m_actionLoad_Texture_triggered()));
 
   // Prints the active uniforms
   connect(m_ui->m_exportUniforms,SIGNAL(clicked()),m_gl,SLOT(exportUniform()));
@@ -290,12 +289,16 @@ void MainWindow::on_actionNew_triggered()
 void MainWindow::keyPressEvent(QKeyEvent *_event)
 {
   // this method is called every time the main window recives a key event.
-  switch (_event->key())
+  Qt::KeyboardModifiers m = _event->modifiers();
+  if (m == Qt::NoModifier)
   {
-    case Qt::Key_W : {m_ui->m_showWireframe->toggle(); break;}
-    case Qt::Key_N : {m_ui->m_showNormals->toggle();   break;}
-    case Qt::Key_G : {m_ui->m_showGrid->toggle();      break;}
-    case Qt::Key_F : {m_gl->resetObjPos();             break;}
+    switch (_event->key())
+    {
+      case Qt::Key_W : {m_ui->m_showWireframe->toggle(); break;}
+      case Qt::Key_N : {m_ui->m_showNormals->toggle();   break;}
+      case Qt::Key_G : {m_ui->m_showGrid->toggle();      break;}
+      case Qt::Key_F : {m_gl->resetObjPos();             break;}
+    }
   }
   update();
 }
@@ -382,11 +385,107 @@ void MainWindow::addError(QString _shaderName, int _lineNum)
 }
 
 //------------------------------------------------------------------------------
+
 MainWindow::~MainWindow()
 {
   delete m_ui;
 }
 
+//------------------------------------------------------------------------------
+void MainWindow::on_actionImport_Vertex_Shader_triggered()
+{
+  //Open a dialog box
+  QString fileName=QFileDialog::getOpenFileName(this,
+                                              tr("Import Vertex Shader"),
+                                              "0Features-0BugsCVA3/",
+                                              tr("GLSL Files (*.glsl)"));
+  //If its not empty...
+  if(!fileName.isEmpty())
+  {
+    //Open the selected File
+    QFile shaderFile(fileName);
+    if(!shaderFile.open(QFile::ReadOnly | QFile::Text))
+    {
+      //If it failed to open return an error and return
+      std::cout<<"Error opening file: "<<fileName.toStdString()<<std::endl;
+      return;
+    }
+
+    //Otherwise create a message box to confirm overwriting the current shader
+    QMessageBox confirmBox;
+    confirmBox.setWindowTitle("Import Vertex Shader");
+    confirmBox.setText("Current shader will be overwritten. \nAre you sure you want to continue?");
+    confirmBox.setStandardButtons(QMessageBox::Yes);
+    confirmBox.addButton(QMessageBox::No);
+    confirmBox.setDefaultButton(QMessageBox::No);
+    if(confirmBox.exec() == QMessageBox::Yes)
+    {
+      //If confirmed read the file into a QString
+      QTextStream inVert(&shaderFile);
+      QString vertSource;
+      vertSource = inVert.readAll();
+      // Set the text in the text editor
+      m_vertQsci->setText(vertSource);
+      shaderFile.close();
+    }
+    else
+    {
+      //Else close the file and return
+      shaderFile.close();
+      return;
+    }
+  }
+
+}
+
+//------------------------------------------------------------------------------
+void MainWindow::on_actionImport_Fragment_Shader_triggered()
+{
+  //Open a dialog box
+  QString fileName=QFileDialog::getOpenFileName(this,
+                                              tr("Import Fragment Shader"),
+                                              "0Features-0BugsCVA3/",
+                                              tr("GLSL Files (*.glsl)"));
+
+  //If selected file directory is not empty...
+  if(!fileName.isEmpty())
+  {
+    //Open the selected File
+    QFile shaderFile(fileName);
+    if(!shaderFile.open(QFile::ReadOnly | QFile::Text))
+    {
+      //If it failed to open return an error and return
+      std::cout<<"Error opening file: "<<fileName.toStdString()<<std::endl;
+      return;
+    }
+
+    //Otherwise create a message box to confirm overwriting the current shader
+    QMessageBox confirmBox;
+    confirmBox.setWindowTitle("Import Fragment Shader");
+    confirmBox.setText("Current shader will be overwritten. \nAre you sure you want to continue?");
+    confirmBox.setStandardButtons(QMessageBox::Yes);
+    confirmBox.addButton(QMessageBox::No);
+    confirmBox.setDefaultButton(QMessageBox::No);
+    if(confirmBox.exec() == QMessageBox::Yes)
+    {
+      //If confirmed read the file into a QString
+      QTextStream inFrag(&shaderFile);
+      QString fragSource;
+      fragSource = inFrag.readAll();
+      // Set the text in the text editor
+      m_fragQsci->setText(fragSource);
+      shaderFile.close();
+    }
+    else
+    {
+      //Else close the file and return
+      shaderFile.close();
+      return;
+    }
+  }
+}
+
+//------------------------------------------------------------------------------
 void MainWindow::centreWindow()
 {
   this->setGeometry(QStyle::alignedRect(Qt::LeftToRight,Qt::AlignCenter,
