@@ -84,7 +84,7 @@ public:
   /// @brief get the current data from the shader manager
   /// @returns the shader data
   //------------------------------------------------------------------------------------------------------------------------
-  inline shaderProgramData getData() {return m_data;}
+  inline ShaderProgramData getData() {return m_data;}
 
 private:
   //------------------------------------------------------------------------------------------------------------------------
