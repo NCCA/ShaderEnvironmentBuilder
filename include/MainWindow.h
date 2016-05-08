@@ -229,7 +229,10 @@ private slots:
   /// @brief Called when a file has been modified and not saved
   //----------------------------------------------------------------------------
   void                  fileModified();
-  
+  //----------------------------------------------------------------------------
+  /// @brief Called when Export Uniforms is clicked
+  //----------------------------------------------------------------------------
+  void                  on_m_exportUniforms_clicked();
 };
 
 #endif // _MAINWINDOW_H_
