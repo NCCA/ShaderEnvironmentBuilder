@@ -19,7 +19,7 @@
 //----------------------------------------------------------------------------------------------------------------------
 /// @brief the increment for x/y translation with mouse movement
 //----------------------------------------------------------------------------------------------------------------------
-const static float INCREMENT=0.01f;
+const static float INCREMENT=0.005f;
 //----------------------------------------------------------------------------------------------------------------------
 /// @brief the increment for the wheel zoom
 //----------------------------------------------------------------------------------------------------------------------
@@ -34,8 +34,9 @@ NGLScene::NGLScene( QWidget *_parent, ParserLib *_libParent,
   // re-size the widget to that of the parent (in that case the GLFrame passed in on construction)
   m_rotate=false;
   // mouse rotation values set to 0
-  m_spinXFace=0.0f;
-  m_spinYFace=0.0f;
+  m_spinXFace = 0.0f;
+  m_spinYFace = 0.0f;
+  m_spinZFace = 0.0;
   m_parser= _libParent; //DONT CHANGE THIS
   m_shapeType=6;
   m_toggleObj=false;
@@ -117,7 +118,7 @@ void NGLScene::importMeshName(const std::string &_name)
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-void NGLScene::importTextureMap(const string &_name)
+void NGLScene::importTextureMap(const std::string &_name)
 {
   std::ifstream textureSource(_name.c_str());
   ngl::Texture texture (_name);
@@ -209,11 +210,13 @@ void NGLScene::paintGL()
   // Rotation based on the mouse position for our global transform
   ngl::Mat4 rotX;
   ngl::Mat4 rotY;
+  ngl::Mat4 rotZ;
   // create the rotation matrices
   rotX.rotateX(m_spinXFace);
   rotY.rotateY(m_spinYFace);
+  rotZ.rotateZ(m_spinZFace);
   // multiply the rotations
-  m_mouseGlobalTX=rotY*rotX;
+  m_mouseGlobalTX=rotY*rotX*rotZ;
   // add the translations
   m_mouseGlobalTX.m_m[3][0] = m_modelPos.m_x;
   m_mouseGlobalTX.m_m[3][1] = m_modelPos.m_y;
@@ -410,12 +413,30 @@ void NGLScene::mouseMoveEvent ( QMouseEvent * _event )
   {
     int diffx=_event->x()-m_origX;
     int diffy=_event->y()-m_origY;
-    m_spinXFace += (float) 0.5f * diffy;
-    m_spinYFace += (float) 0.5f * diffx;
     m_origX = _event->x();
     m_origY = _event->y();
-    update();
 
+    // Changes viewport rotation depending on camera view.
+    switch(m_cameraIndex){
+      case 0:
+        m_spinZFace -= (float) 0.5f * diffy;
+        m_spinXFace += (float) 0.5f * diffy;
+        m_spinYFace += (float) 1.0f * diffx;
+        break;
+      case 1:
+        m_spinXFace -= diffy;
+        m_spinZFace += diffx; break;
+      case 2:
+        m_spinXFace += diffy;
+        m_spinZFace += diffx; break;
+      case 3:
+        m_spinXFace -= diffy;
+        m_spinYFace += diffx; break;
+      case 4:
+        m_spinXFace += diffy;
+        m_spinYFace += diffx; break;
+    }
+    update();
   }
   else if(m_translate && _event->buttons() == Qt::RightButton)
   {
@@ -623,6 +644,7 @@ void NGLScene::resetObjPos()
   m_modelPos.m_z = 0;
   m_spinXFace = 0;
   m_spinYFace = 0;
+  m_spinZFace = 0;
 
   m_camera->cameraRoll(0.00);
   m_camera->cameraYaw(0.00);

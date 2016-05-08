@@ -24,7 +24,6 @@
 /// use the Json file to load whichever shader chosen, by replacing the name of the shader in the json file to direct to
 /// the correct vertex and fragment shaders.
 //------------------------------------------------------------------------------------------------
-using namespace std;
 
 class Json
 {
@@ -44,13 +43,13 @@ public:
     /// @param[in] _oldWord Word to be replaced
     /// @param[in] _newWord Replaced word
     //------------------------------------------------------------------------------
-    void replaceWord(string _oldWord, string _newWord);
+    void replaceWord(std::string _oldWord, std::string _newWord);
     //------------------------------------------------------------------------------
     /// @brief Writes to a file (This was replaces by an XML method).
     /// @param[in] _fileName specifies the name of the file to be written
     /// @param[in] _stringData The data to be written to the file
     //------------------------------------------------------------------------------
-    void writeFile(string _fileName, string _stringData);
+    void writeFile(std::string _fileName, std::string _stringData);
     //------------------------------------------------------------------------------
     /// @brief Reads from a file
     /// @param[in] _fileName specifies the name of the file to be read
@@ -62,7 +61,7 @@ public:
     /// @param[in] _type Type of data
     /// @param[in] _value Value of data
     //------------------------------------------------------------------------------
-    void addShaderData(string _name, string _type, double _value);
+    void addShaderData(std::string _name, std::string _type, double _value);
     //------------------------------------------------------------------------------
     /// @brief Destructor
     //------------------------------------------------------------------------------
