@@ -183,6 +183,8 @@ bool Cebitor::autoClose(const QString _close)
   getCursorPosition(&cursorLine, &cursorIndex);
   length = lineLength(cursorLine);
 
+  // special case for if cursor is last position in file
+  if (cursorLine == lines()-1) { length++; }
   // insert closing character if cursor is at EOL or the next character is space
   if(cursorIndex == length-1 ||
      text(cursorLine).at(cursorIndex).toLatin1() == ' ')
@@ -201,6 +203,13 @@ bool Cebitor::closing(const QString _close)
   int cursorLine;
   getCursorPosition(&cursorLine, &cursorIndex);
 
+  int length = lineLength(cursorLine);
+
+  // special case for if cursor is last position in file
+  if(cursorLine == lines()-1 && length == cursorIndex)
+  {
+    return false;
+  }
   // remove duplicate if next character is the same as _close
   if(text(cursorLine).at(cursorIndex) == _close.at(0))
   {
