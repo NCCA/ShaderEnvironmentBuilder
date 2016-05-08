@@ -317,6 +317,8 @@ bool MainWindow::newProjectWiz(QWidget* _parent)
     fragSource = m_fragQsci->text();
     std::cout<<m_project->getName()<<std::endl;
     m_gl->setProject(m_project->getName(), vertSource,fragSource);
+    m_buttonLibrary->updateButtons();
+    m_buttonLibrary->updateShaderValues();
   }
   else
   {
