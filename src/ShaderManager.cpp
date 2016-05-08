@@ -20,7 +20,7 @@ ShaderManager::ShaderManager()
 void ShaderManager::createShaderProgram(std::string _name)
 {
   //set our data
-  setData(_name, _name+"Vertex", _name+"fragment");
+  setData(_name, _name+"Vertex", _name+"Fragment");
   //grab an instance of the shader lib
   ngl::ShaderLib *shaderLib = ngl::ShaderLib::instance();
   //create an empty shader program
