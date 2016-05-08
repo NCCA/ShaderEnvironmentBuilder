@@ -1,22 +1,10 @@
 #include <Json.h>
 
-// Only need boost for creating directories
-#include <boost/filesystem.hpp>
-
-//using namespace rapidxml;
 using namespace rapidjson;
 using namespace std;
 using json = nlohmann::json;
 
-// ----------------------------------------------------------------------------------------------------------------------
-Json::Json()
-{
-  // Ensure the location of files for temp output. REMOVE IN FINAL VERSION
-  boost::filesystem::path dir("./");
-  boost::filesystem::create_directories(dir);
-}
-
-// ----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Writes an input string into to a file
 void Json::writeFile(std::string _fileName, std::string _stringData)
 {              
@@ -26,7 +14,7 @@ void Json::writeFile(std::string _fileName, std::string _stringData)
     fileName.close();
 }
 
-// ----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Reads an input file name and prints the file contents.
 void Json::readFile(std::string _fileName)
 {
@@ -39,8 +27,8 @@ void Json::readFile(std::string _fileName)
     std::cout << "File contents \n " << jsonFile;
 }
 
-// ----------------------------------------------------------------------------------------------------------------------
-// Builds the shader in json format
+//------------------------------------------------------------------------------
+// Builds the shader in a default json format.
 void Json::defaultShader()
 {
     auto shaderProgramJson = R"(
@@ -72,7 +60,7 @@ void Json::defaultShader()
     writeFile("jsonString.json", shaderProgramJson.dump(1));
 }
 
-// ----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Appends shader data (name, type, value).
 void Json::addShaderData(string _name, string _type, double _value)
 {
@@ -82,7 +70,7 @@ void Json::addShaderData(string _name, string _type, double _value)
     writeFile("shaderData.json", shaderDataJson.dump(1));
 }
 
-// ----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // Reads through the Json string, finds a word and replaces with a new word.
 void Json::replaceWord(std::string _oldWord, std::string _newWord)
 {

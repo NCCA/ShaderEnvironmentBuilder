@@ -59,7 +59,7 @@ void Project::save(QString _vertSource, QString _fragSource)
   //write project to XML
   m_xml->writeProject(m_projectName, m_projectDir, vertSource_c, fragSource_c);
 
-  std::cout<<"Saved project: \n Name: "<<m_projectName<<"  Directory: "<<m_projectDir<<std::endl;
+  std::cout<<"Saved project: \nName: "<<m_projectName<<"  Directory: "<<m_projectDir<<std::endl;
 }
 
 //----------------------------------------------------------------------------

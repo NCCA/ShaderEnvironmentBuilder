@@ -23,6 +23,16 @@ class IO_XML
 public:
     IO_XML();
     //----------------------------------------------------------------------------------------------------------------------
+    /// @brief Will read the project file data
+    /// @param [in] &_name reference to current working file name
+    /// @param [in] &_dir reference to current working directory
+    /// @param [in] _loadedFileDirectory Name of loaded file directory selected by UI.
+    /// @param [in] &_vertSource Reference of vertex string read then returned to project
+    /// @param [in] &_fragSource Reference of fragment string read then returned to project
+    //----------------------------------------------------------------------------------------------------------------------
+    void readProjectXML(std::string &_name, std::string &_dir, std::string _loadedFileDirectory,
+                        std::string& _vertSource, std::string& _fragSource);
+    //----------------------------------------------------------------------------------------------------------------------
     /// @brief Saves the project name, vertex and fragment data in set directory
     /// @param [in] _name the name of the saved project file
     /// @param [in] _dir the directory of the saved project file
@@ -42,21 +52,12 @@ public:
                     const char *_vertexShaderGlsl, const char *_fragmentShaderName,
                     const char *_fragmentShaderGlsl);
     //----------------------------------------------------------------------------------------------------------------------
-    /// @brief Will read the project file data
-    /// @param [in] &_name reference to current working file name
-    /// @param [in] &_dir reference to current working directory
-    /// @param [in] _loadedFileDirectory Name of loaded file directory selected by UI.
-    /// @param [in] &_vertSource Reference of vertex string read then returned to project
-    /// @param [in] &_fragSource Reference of fragment string read then returned to project
-    //----------------------------------------------------------------------------------------------------------------------
-    void readProjectXML(std::string &_name, std::string &_dir, std::string _loadedFileDirectory, std::string& _vertSource, std::string& _fragSource);
-    //----------------------------------------------------------------------------------------------------------------------
     /// @brief (unused) Writes name, type and value for passed data.
     /// @param [in] _name Used to identify data
     /// @param [in] _type Material type
     /// @param [in] _value data value
     //----------------------------------------------------------------------------------------------------------------------
-    void writeXML(std::string _name, std::string _type, int _value);
+    void writeDataXML(std::string _name, std::string _type, int _value);
 };
 
 #endif // IO_XML_H
