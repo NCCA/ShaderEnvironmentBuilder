@@ -26,19 +26,20 @@ bool CebApplication::notify(QObject *_reciever, QEvent *_event)
   catch (std::exception &e)
   {
     // Create and show messagebox
-    QMessageBox *mBox = createErrorMsgBox(&e, _reciever, _event,
+    QMessageBox* mBox = createErrorMsgBox(&e, _reciever, _event,
                                           QMessageBox::Critical);
     mBox->exec();
-    // Cleanup
+
     delete mBox;
   }
-  catch (...) {
+  catch (...)
+  {
     // Create unknown error message then create and show messagebox
     CEBError::unknownError e = CEBError::unknownError();
-    QMessageBox *mBox = createErrorMsgBox(&e, _reciever, _event,
+    QMessageBox* mBox = createErrorMsgBox(&e, _reciever, _event,
                                           QMessageBox::Critical);
     mBox->exec();
-    // Cleanup
+
     delete mBox;
   }
 
@@ -55,11 +56,12 @@ QMessageBox* CebApplication::createErrorMsgBox(std::exception *_e,
   QString msg = QString("%1 Error").arg(m_errorLvl[static_cast<int>(_errLvl)]);
   // Create informative text message
   QString iMsg = QString(_e->what());
+  // create de
+  QString dMsg = QString("Sending event '%1' to object '%2' (%3)")
+      .arg(typeid(*_event).name(),
+           qPrintable(_reciever->objectName()),
+           typeid(*_reciever).name());
 
-  QString dMsg = QString("Sending event "
-                         "'%1' to object '%2' (%3)").arg(typeid(*_event).name(),
-                                                         qPrintable(_reciever->objectName()),
-                                                         typeid(*_reciever).name());
   // Output to console for extra logging
   std::cerr << msg.toUtf8().constData() << std::endl
             << iMsg.toUtf8().constData() << std::endl;

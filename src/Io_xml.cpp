@@ -21,7 +21,7 @@ void IO_XML::readProjectXML(std::string& _fileName, std::string& _fileDirectory,
 
     // Throws an error if it's the wrong format, otherwise opens and passed vertex, fragment, name and dir
     // data back to Project.
-    xml_node<> *firstNode = doc.first_node();
+    //xml_node<> *firstNode = doc.first_node();
     if (!(doc.first_node("Shader_Data")))
     {
         std::cout<< "Error: Incorrect XML file. Open a previously saved project file and try again."<<std::endl;

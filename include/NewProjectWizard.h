@@ -64,15 +64,15 @@ public:
   //----------------------------------------------------------------------------
   /// @brief The vertex selection model for the vertex treeview.
   //----------------------------------------------------------------------------
-  QItemSelectionModel *m_vertexSelectModel;
+  QItemSelectionModel* m_vertexSelectModel;
   //----------------------------------------------------------------------------
   /// @brief The fragment selection model for the fragment treeview.
   //----------------------------------------------------------------------------
-  QItemSelectionModel *m_fragmentSelectModel;
+  QItemSelectionModel* m_fragmentSelectModel;
   //----------------------------------------------------------------------------
   /// @brief The file model used for both of the vertex and fragment treeviews.
   //----------------------------------------------------------------------------
-  QFileSystemModel    *m_fileModel;
+  QFileSystemModel*    m_fileModel;
   //----------------------------------------------------------------------------
   //----------------------------------------------------------------------------
   /// @brief Constructor, passing a child of parent.

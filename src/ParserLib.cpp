@@ -513,7 +513,7 @@ void ParserLib::assignUniformValues()
 }
 
 //------------------------------------------------------------------------------
-void ParserLib::sendUniformsToShader(ngl::ShaderLib *shader)
+void ParserLib::sendUniformsToShader(ngl::ShaderLib *_shader)
 {
 
   // set shader values depending on it's data type
@@ -523,19 +523,19 @@ void ParserLib::sendUniformsToShader(ngl::ShaderLib *shader)
     {
       case GL_BOOL:
       {
-        shader->setShaderParam1i(m_uniformList[i]->getName(),
+        _shader->setShaderParam1i(m_uniformList[i]->getName(),
                                  m_uniformList[i]->getBool());
         break;
       }
       case GL_FLOAT:
       {
-        shader->setShaderParam1f(m_uniformList[i]->getName(),
+        _shader->setShaderParam1f(m_uniformList[i]->getName(),
                                  m_uniformList[i]->getFloat());
         break;
       }
       case GL_INT:
       {
-        shader->setShaderParam1i(m_uniformList[i]->getName(),
+        _shader->setShaderParam1i(m_uniformList[i]->getName(),
                                  m_uniformList[i]->getInt());
         break;
       }
@@ -546,25 +546,25 @@ void ParserLib::sendUniformsToShader(ngl::ShaderLib *shader)
         newVec3.m_y=m_uniformList[i]->getVec3().m_y;
         newVec3.m_z=m_uniformList[i]->getVec3().m_z;
         newVec3.m_w=1;
-        shader->setShaderParamFromVec4(m_uniformList[i]->getName(),
+        _shader->setShaderParamFromVec4(m_uniformList[i]->getName(),
                                        newVec3);
         break;
       }
       case GL_FLOAT_VEC4:
       {
-        shader->setShaderParamFromVec4(m_uniformList[i]->getName(),
+        _shader->setShaderParamFromVec4(m_uniformList[i]->getName(),
                                        m_uniformList[i]->getVec4());
         break;
       }
       case GL_FLOAT_MAT3:
       {
-        shader->setShaderParamFromMat3(m_uniformList[i]->getName(),
+        _shader->setShaderParamFromMat3(m_uniformList[i]->getName(),
                                        m_uniformList[i]->getMat3());
         break;
       }
       case GL_FLOAT_MAT4:
       {
-        shader->setShaderParamFromMat4(m_uniformList[i]->getName(),
+        _shader->setShaderParamFromMat4(m_uniformList[i]->getName(),
                                        m_uniformList[i]->getMat4());
         break;
       }

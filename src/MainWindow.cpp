@@ -86,7 +86,7 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
   connect(m_ui->m_actionLoad_Obj,SIGNAL(triggered()),this,SLOT(objOpened()));
 
   // switching to .jpg files
-  connect(m_ui->m_actionLoad_Texture,SIGNAL(triggered()),this,SLOT(on_m_actionLoad_Texture_triggered()));
+//  connect(m_ui->m_actionLoad_Texture,SIGNAL(triggered()),this,SLOT(on_m_actionLoad_Texture_triggered()));
 
   // Prints the active uniforms
   connect(m_ui->m_exportUniforms,SIGNAL(clicked()),m_gl,SLOT(exportUniform()));
@@ -107,14 +107,7 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent),
 
   update();
 
-  this->setGeometry(
-        QStyle::alignedRect(
-          Qt::LeftToRight,
-          Qt::AlignCenter,
-          this->size(),
-          qApp->desktop()->availableGeometry()
-          )
-        );
+  centreWindow();
 
   m_startDialog = new StartupDialog(this);
 
@@ -161,7 +154,7 @@ Cebitor *MainWindow::createQsciWidget(QWidget *_parent)
   qsci->setSearchLineEdit(qsciSearch);
 
   // Connect search widget signals to editor slots
-  connect(qsciSearch,SIGNAL(textChanged()),qsci,SLOT(highlightAllSearch()));
+  connect(qsciSearch,SIGNAL(textChanged(const QString&)),qsci,SLOT(highlightAllSearch(const QString&)));
   connect(qsciSearch,SIGNAL(returnPressed()),qsci,SLOT(searchNext()));
   connect(searchNextBtn,SIGNAL(pressed()),qsci,SLOT(searchNext()));
   connect(searchPrevBtn,SIGNAL(pressed()),qsci,SLOT(searchPrev()));
@@ -361,7 +354,7 @@ void MainWindow::on_actionExport_triggered()
 }
 
 //------------------------------------------------------------------------------
-void MainWindow::on_m_actionLoad_Texture_triggered()
+void MainWindow::on_m_actionLoad_Tex_triggered()
 {
   // Open a file dialog and return a file directory
   QString fileName=QFileDialog::getOpenFileName(this,
@@ -392,4 +385,11 @@ void MainWindow::addError(QString _shaderName, int _lineNum)
 MainWindow::~MainWindow()
 {
   delete m_ui;
+}
+
+void MainWindow::centreWindow()
+{
+  this->setGeometry(QStyle::alignedRect(Qt::LeftToRight,Qt::AlignCenter,
+                                        this->size(),
+                                        qApp->desktop()->availableGeometry()));
 }

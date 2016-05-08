@@ -43,13 +43,13 @@ void ShaderManager::createShaderProgram(std::string _name)
 
 //------------------------------------------------------------------------------------------------------------------------
 
-void ShaderManager::use(uint shaderType)
+void ShaderManager::use(uint _shaderType)
 {
   //grab an instance of shaderLib
   ngl::ShaderLib *shaderLib = ngl::ShaderLib::instance(); 
   enum shader{objectShader=0,objectNormals=1};
   //choose which shader to use
-  switch(shaderType)
+  switch(_shaderType)
   {
     case objectShader :  {  shaderLib->use(m_data.m_name); break;  }
     case objectNormals:  {  (*shaderLib)["normalShader"]->use();break;  }

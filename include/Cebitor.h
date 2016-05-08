@@ -68,7 +68,7 @@ public slots:
   //----------------------------------------------------------------------------
   /// @brief sets indicator for each search result
   //----------------------------------------------------------------------------
-  void highlightAllSearch();
+  void highlightAllSearch(const QString &_text);
   //----------------------------------------------------------------------------
 
 protected:

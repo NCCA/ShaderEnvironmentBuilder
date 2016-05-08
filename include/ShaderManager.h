@@ -45,9 +45,9 @@ public:
   void createShaderProgram(std::string _name);
   //------------------------------------------------------------------------------------------------------------------------
   /// @brief method to set OpenGL to use the current shader program
-  /// @param shaderType int to switch to normals shader
+  /// @param _shaderType int to switch to normals shader
   //------------------------------------------------------------------------------------------------------------------------
-  void use(uint shaderType);
+  void use(uint _shaderType);
   //------------------------------------------------------------------------------------------------------------------------
   /// @brief method called when 1st opening program to initialise the default phong shader
   //------------------------------------------------------------------------------------------------------------------------
