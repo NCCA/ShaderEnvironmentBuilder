@@ -298,6 +298,7 @@ void NGLScene::objectTransform(uint _type)
   {
     m_transform.setScale(0.1,0.1,0.1);
     m_transform.setPosition(0,-0.5,0);
+    m_transform.setRotation(0,90,0);
     loadMatricesToShader();
     break;
     // Moved the dragon to be the same relative shape and position

@@ -24,7 +24,7 @@ void Camera::createCameras()
     ngl::Camera Rcam;
 
     // Sets the eye, look, up position vectors of the cameras.
-    ngl::Vec3 perspEye(-1.0f, 1.0f,1.0f);
+    ngl::Vec3 perspEye(1.0f, 1.0f,1.0f);
     ngl::Vec3 perspLook(0,0,0);
     ngl::Vec3 perspUp(0.0f,1.0f,0.0f);
 
