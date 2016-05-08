@@ -1,6 +1,7 @@
-#include "Button.h"
 #include <cstdlib>
 #include <iostream>
+
+#include "Button.h"
 
 //----------------------------------------------------------------------------------------------------------------------
 /// @file button.cpp
@@ -28,30 +29,23 @@ Button::Button(QString _buttonName, GLenum _buttonType, QLayout *_layout, GLuint
 
 void Button::createButtonBox(QString _buttonName)
 {
-//  m_buttonBox = new QDialogButtonBox;
-
   m_button = new QPushButton();
   m_button->setText(_buttonName);
-
   connect(m_button, SIGNAL(clicked()), this, SLOT(openBox()));
 }
 
 void Button::printValues()
 {
-  //qDebug()<<"Name:"<<m_buttonName<<"\nID: "<<m_id;
+  qDebug()<<"Name:"<<m_buttonName<<"\nID: "<<m_id;
 }
 
-void colourButton::printAttributes()
+void ColourButton::printAttributes()
 {
   std::cout<<"R: "<<m_colour.m_x<<"\nG: "<<m_colour.m_y<<"\nB: "<<m_colour.m_z<<std::endl;
 }
 
-void colourButton::openBox()
+void ColourButton::openBox()
 {
-  //QPushButton *ok_Button = new QPushButton("OK", myWidget);
-  //ok_Button->setDefault(1);
-
-
   //these are set so when the colour picker is opened the current colour is opened
   m_colourPicked.setRedF(m_colour.m_x);
   m_colourPicked.setGreenF(m_colour.m_y);
@@ -72,7 +66,7 @@ void colourButton::openBox()
 
 }
 
-void colourButton::setColour(QColor _col)
+void ColourButton::setColour(QColor _col)
 {
   m_colourPicked=_col;
   m_colour.set(_col.redF(),
@@ -81,7 +75,7 @@ void colourButton::setColour(QColor _col)
                _col.alphaF());
 }
 
-void colourButton::setColour(ngl::Vec4 _col)
+void ColourButton::setColour(ngl::Vec4 _col)
 {
   m_colour=_col;
   m_colourPicked.setRgbF(m_colour.m_x,
@@ -90,15 +84,13 @@ void colourButton::setColour(ngl::Vec4 _col)
                          m_colour.m_w);
 }
 
-void floatButton::openBox()
+void FloatButton::openBox()
 {
-  //m_window = new QDialog;
   double val = QInputDialog::getDouble(
         m_parent, tr("Input"), tr("Input"),m_value,-2147483647,2147483647,5);
   m_value=val;
   m_libParent->updateShaderValues();
   m_sceneParent->update();
-  //printValues();
 }
 
 void VecButton::setUpButton(ngl::Vec3 _vector)
@@ -154,7 +146,6 @@ void VecButton::openBox()
   m_ySpinBox->setValue(m_value.m_y);
   m_zSpinBox->setValue(m_value.m_z);
   m_vecWindow->exec();
-  //std::cout<<"My widget state: "<<myWidget->result()<<std::endl;
   if (m_vecWindow->result() == 1)
   {
     m_value.set(m_xSpinBox->value(),
@@ -163,18 +154,4 @@ void VecButton::openBox()
     m_libParent->updateShaderValues();
     m_sceneParent->update();
   }
-  //printValues();
 }
-
-/*colourButton& colourButton::operator=(colourButton &_rhs)
-{
-  this->m_colour=_rhs.m_colour;
-  this->m_colourPicked=_rhs.m_colourPicked;
-  return *this;
-}
-
-floatButton& floatButton::operator=(floatButton &_rhs)
-{
-  this->m_value=_rhs.m_value;
-  return *this;
-}*/

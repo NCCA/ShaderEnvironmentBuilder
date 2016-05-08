@@ -1,11 +1,11 @@
-#ifndef BUTTONLIB_H_
-#define BUTTONLIB_H_
+#ifndef _BUTTONLIB_H__
+#define _BUTTONLIB_H__
+
+#include <QDebug>
 
 #include "ParserLib.h"
 #include "Button.h"
 #include "NGLScene.h"
-
-#include <QDebug>
 
 //----------------------------------------------------------------------------------------------------------------------
 /// @file ButtonLib.h
@@ -74,4 +74,4 @@ private:
   std::vector<Button*> m_buttonList;
 };
 
-#endif
+#endif //_BUTTONLIB_H__
