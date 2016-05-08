@@ -560,18 +560,6 @@ void NGLScene::compileShader(QString _vertSource, QString _fragSource)
 {
   m_shaderManager->compileShader(_vertSource, _fragSource);
   m_window->setTerminalText(parseErrorLog(m_shaderManager->getErrorLog()));
-  ngl::Light light(ngl::Vec3(2,2,2),ngl::Colour(1,1,1,1),ngl::Colour(1,1,1,1),ngl::LightModes::POINTLIGHT);
-  // now create our light this is done after the camera so we can pass the
-  // transpose of the projection matrix to the light to do correct eye space
-  // transformations
-  ngl::Mat4 iv=m_cam.getViewMatrix();
-  iv.transpose();
-
-  light.setTransform(iv);
-  light.setAttenuation(1,0,0);
-  light.enable();
-  // load these values to the shader as well
-  light.loadToShader("light");
   update();
   m_parser->assignAllData();
 
