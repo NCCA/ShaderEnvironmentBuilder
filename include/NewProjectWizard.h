@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-/// @file NewProjectWizard
+/// @file NewProjectWizard.h
 /// @brief The new Project Wizard that is used to create a new project.
 /// @author Jonathan Flynn
 /// @version 1.0

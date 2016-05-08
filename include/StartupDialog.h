@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-/// @file StartupDialog
+/// @file StartupDialog.h
 /// @brief the StatupDialog to do commonly used tasks
 /// @author Jonathan Flynn
 /// @version 1.0

@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-/// @file CebAppplication
+/// @file CebAppplication.h
 /// @brief the CEB implementation of QApplication to allow for error handling
 /// @author Jonathan Flynn
 /// @version 1.0

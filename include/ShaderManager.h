@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------------------------------------------------
-/// @file ShaderManager
+/// @file ShaderManager.h
 /// @brief Class for managing and updating data for GLSL shaders in the IDE
 /// @author Alexander La Tourelle
 /// @author Anand Hotwani
