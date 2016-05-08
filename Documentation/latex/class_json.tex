@@ -1,0 +1,299 @@
+\section{Json Class Reference}
+\label{class_json}\index{Json@{Json}}
+
+
+Reads and writes project data to json files.  
+
+
+
+
+{\ttfamily \#include $<$Json.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\bf Json} ()
+\begin{DoxyCompactList}\small\item\em ctor for the json class \end{DoxyCompactList}\item 
+void {\bf default\-Shader} ()
+\begin{DoxyCompactList}\small\item\em Uses auto \doxyref{Json}{p.}{class_json} to build a default json structure to be read. \end{DoxyCompactList}\item 
+void {\bf replace\-Word} (std\-::string \-\_\-old\-Word, std\-::string \-\_\-new\-Word)
+\begin{DoxyCompactList}\small\item\em Reads the file as a string and replaces a word. This would have been used to replace the shader's name (e.\-g. 'Phong') with another shader, such as toon, in the json file which would then redirect to the vertex and fragment shader. \end{DoxyCompactList}\item 
+void {\bf write\-File} (std\-::string \-\_\-file\-Name, std\-::string \-\_\-string\-Data)
+\begin{DoxyCompactList}\small\item\em Writes to a file (This was replaces by an X\-M\-L method). \end{DoxyCompactList}\item 
+void {\bf read\-File} (std\-::string \-\_\-file\-Name)
+\begin{DoxyCompactList}\small\item\em Reads from a file. \end{DoxyCompactList}\item 
+void {\bf add\-Shader\-Data} (std\-::string \-\_\-name, std\-::string \-\_\-type, double \-\_\-value)
+\begin{DoxyCompactList}\small\item\em Appends shader data. (This was replaced by an X\-M\-L method) \end{DoxyCompactList}\item 
+{\bf $\sim$\-Json} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Reads and writes project data to json files. 
+
+This class isn't used in the final I\-D\-E for two reasons\-: firstly X\-M\-L was chosen instead to load the vertex and fragment shader data because it was easily customisable with sets of tags to support schemas and namespaces; and secondly, the load\-Shader\-From\-Json() wasn't used in the \doxyref{Shader\-Manager}{p.}{class_shader_manager} as an alternate method was used. The aim was to use the \doxyref{Json}{p.}{class_json} file to load whichever shader chosen, by replacing the name of the shader in the json file to direct to the correct vertex and fragment shaders. 
+
+Definition at line 32 of file Json.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Json@{Json}!Json@{Json}}
+\index{Json@{Json}!Json@{Json}}
+\subsubsection[{Json}]{\setlength{\rightskip}{0pt plus 5cm}Json\-::\-Json (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_json_a8e4495481320c71ce2a4122a7a2b165b}
+
+
+ctor for the json class 
+
+\index{Json@{Json}!$\sim$\-Json@{$\sim$\-Json}}
+\index{$\sim$\-Json@{$\sim$\-Json}!Json@{Json}}
+\subsubsection[{$\sim$\-Json}]{\setlength{\rightskip}{0pt plus 5cm}Json\-::$\sim$\-Json (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_json_ae447c0674b8d639acb5137fabfeacfd2}
+
+
+Destructor. 
+
+
+
+Definition at line 101 of file Json.\-cpp.
+
+
+\begin{DoxyCode}
+102 \{\}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{Json@{Json}!add\-Shader\-Data@{add\-Shader\-Data}}
+\index{add\-Shader\-Data@{add\-Shader\-Data}!Json@{Json}}
+\subsubsection[{add\-Shader\-Data}]{\setlength{\rightskip}{0pt plus 5cm}void Json\-::add\-Shader\-Data (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{\-\_\-name, }
+\item[{std\-::string}]{\-\_\-type, }
+\item[{double}]{\-\_\-value}
+\end{DoxyParamCaption}
+)}\label{class_json_a690dc4fdbad0badf57e702619ecf9610}
+
+
+Appends shader data. (This was replaced by an X\-M\-L method) 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-name} & Name for data \\
+\hline
+\mbox{\tt in}  & {\em \-\_\-type} & Type of data \\
+\hline
+\mbox{\tt in}  & {\em \-\_\-value} & Value of data \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 65 of file Json.\-cpp.
+
+
+\begin{DoxyCode}
+66 \{
+67     nlohmann::json shaderDataJson;
+68 
+69     shaderDataJson[\_name]=\{\{\textcolor{stringliteral}{"Name"}, \_name\}, \{\textcolor{stringliteral}{"Type"}, \_value\}, \{\textcolor{stringliteral}{"Value"}, \_value\}\};
+70     writeFile(\textcolor{stringliteral}{"shaderData.json"}, shaderDataJson.dump(1));
+71 \}
+\end{DoxyCode}
+\index{Json@{Json}!default\-Shader@{default\-Shader}}
+\index{default\-Shader@{default\-Shader}!Json@{Json}}
+\subsubsection[{default\-Shader}]{\setlength{\rightskip}{0pt plus 5cm}void Json\-::default\-Shader (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_json_a0be45fad9b9044b41d9739d103801ef8}
+
+
+Uses auto \doxyref{Json}{p.}{class_json} to build a default json structure to be read. 
+
+
+
+Definition at line 31 of file Json.\-cpp.
+
+
+
+References write\-File().
+
+
+\begin{DoxyCode}
+32 \{
+33     \textcolor{keyword}{auto} shaderProgramJson = R\textcolor{stringliteral}{"(
+    \{
+      "ShaderProgram": \{
+        "name": "Phong",
+        "debug" : true,
+      "Shaders"  : [
+        \{
+          "type": "Vertex",
+          "name": "PhongVertex",
+          "path" : ["shaders/version.glsl",
+                    "shaders/common.glsl",
+                    "shaders/PhongVertex.glsl"]
+
+        \},
+        \{
+          "type": "Fragment",
+          "name": "PhongFragment",
+          "path" : ["shaders/version.glsl",
+                    "shaders/common.glsl",
+                    "shaders/noise3D2.glsl",
+                    "shaders/PhongFragment.glsl"]
+        \}
+      ]
+     \}
+    \}
+    )"\_json;}
+34 \textcolor{stringliteral}{    writeFile(}\textcolor{stringliteral}{"jsonString.json"}, shaderProgramJson.dump(1));
+35 \}
+36 \end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=260pt]{class_json_a0be45fad9b9044b41d9739d103801ef8_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{Json@{Json}!read\-File@{read\-File}}
+\index{read\-File@{read\-File}!Json@{Json}}
+\subsubsection[{read\-File}]{\setlength{\rightskip}{0pt plus 5cm}void Json\-::read\-File (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{\-\_\-file\-Name}
+\end{DoxyParamCaption}
+)}\label{class_json_a2793757f6e5831050e7df3e58f07309c}
+
+
+Reads from a file. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-file\-Name} & specifies the name of the file to be read \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 17 of file Json.\-cpp.
+
+
+\begin{DoxyCode}
+18 \{
+19     std::ifstream jsonFile(\textcolor{stringliteral}{"./tempFiles/"}+\_fileName+\textcolor{stringliteral}{".json"});
+20     \textcolor{keywordflow}{if}(!jsonFile)
+21     \{
+22         std::cout<<\textcolor{stringliteral}{"Unable to open file."}<<std::endl;
+23         exit(1);
+24     \}
+25     std::cout << \textcolor{stringliteral}{"File contents \(\backslash\)n "} << jsonFile;
+26 \}
+\end{DoxyCode}
+\index{Json@{Json}!replace\-Word@{replace\-Word}}
+\index{replace\-Word@{replace\-Word}!Json@{Json}}
+\subsubsection[{replace\-Word}]{\setlength{\rightskip}{0pt plus 5cm}void Json\-::replace\-Word (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{\-\_\-old\-Word, }
+\item[{std\-::string}]{\-\_\-new\-Word}
+\end{DoxyParamCaption}
+)}\label{class_json_a6850db78b9976469289ede18683983c1}
+
+
+Reads the file as a string and replaces a word. This would have been used to replace the shader's name (e.\-g. 'Phong') with another shader, such as toon, in the json file which would then redirect to the vertex and fragment shader. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-old\-Word} & Word to be replaced \\
+\hline
+\mbox{\tt in}  & {\em \-\_\-new\-Word} & Replaced word \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 76 of file Json.\-cpp.
+
+
+\begin{DoxyCode}
+77 \{
+78     std::ifstream jsonFile(\textcolor{stringliteral}{"./tempFiles/jsonString.json"});
+79     std::string lineRead;
+80     \textcolor{keywordtype}{size\_t} pos;
+81     std::string foundWord;
+82     \textcolor{keywordflow}{while} (jsonFile.good())
+83     \{
+84         getline(jsonFile, lineRead);
+85         pos=lineRead.find(\_oldWord);
+86         \textcolor{keywordflow}{if}(pos!=std::string::npos)              \textcolor{comment}{//reads through the line}
+87         \{
+88             lineRead.replace(pos, \_oldWord.length(), \_newWord);
+89             \textcolor{keywordflow}{break};
+90         \}
+91     \}
+92     jsonFile.close();
+93     std::ofstream jsonFileNew(\textcolor{stringliteral}{"./tempFiles/jsonString.json"});
+94     std::cout<<\textcolor{stringliteral}{"\(\backslash\)nNew file: \(\backslash\)n"}<<lineRead << std::endl;
+95     \textcolor{keywordflow}{if} (jsonFileNew.is\_open())
+96         jsonFileNew << lineRead << std::endl;
+97     jsonFileNew.close();
+98 \}
+\end{DoxyCode}
+\index{Json@{Json}!write\-File@{write\-File}}
+\index{write\-File@{write\-File}!Json@{Json}}
+\subsubsection[{write\-File}]{\setlength{\rightskip}{0pt plus 5cm}void Json\-::write\-File (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{\-\_\-file\-Name, }
+\item[{std\-::string}]{\-\_\-string\-Data}
+\end{DoxyParamCaption}
+)}\label{class_json_a2dbded71bc7b5caf80d61920c5e734ed}
+
+
+Writes to a file (This was replaces by an X\-M\-L method). 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-file\-Name} & specifies the name of the file to be written \\
+\hline
+\mbox{\tt in}  & {\em \-\_\-string\-Data} & The data to be written to the file \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 6 of file Json.\-cpp.
+
+
+\begin{DoxyCode}
+7 \{              
+8     std::ofstream fileName(\textcolor{stringliteral}{"./tempFiles/"}+\_fileName);   \textcolor{comment}{// ofstream jsonFile("./tempFiles/shader.json");}
+9     \textcolor{keywordflow}{if} (fileName.is\_open())
+10         fileName << \_stringData << std::endl;
+11     fileName.close();
+12 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=260pt]{class_json_a2dbded71bc7b5caf80d61920c5e734ed_icgraph}
+\end{center}
+\end{figure}
+
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+{\bf Json.\-h}\item 
+{\bf Json.\-cpp}\end{DoxyCompactItemize}

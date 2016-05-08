@@ -1,0 +1,127 @@
+\section{C\-E\-B\-Error\-:\-:file\-Error Class Reference}
+\label{class_c_e_b_error_1_1file_error}\index{C\-E\-B\-Error\-::file\-Error@{C\-E\-B\-Error\-::file\-Error}}
+
+
+base class which is raised for file errors  
+
+
+
+
+{\ttfamily \#include $<$Ceb\-Errors.\-h$>$}
+
+
+
+Inheritance diagram for C\-E\-B\-Error\-:\-:file\-Error\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_c_e_b_error_1_1file_error__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for C\-E\-B\-Error\-:\-:file\-Error\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=144pt]{class_c_e_b_error_1_1file_error__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\bf file\-Error} (Q\-String \-\_\-path)
+\begin{DoxyCompactList}\small\item\em Constructor for file error. \end{DoxyCompactList}\item 
+virtual const char $\ast$ {\bf what} () const   throw ()
+\begin{DoxyCompactList}\small\item\em returns an explanatory string \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+base class which is raised for file errors 
+
+Definition at line 129 of file Ceb\-Errors.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{C\-E\-B\-Error\-::file\-Error@{C\-E\-B\-Error\-::file\-Error}!file\-Error@{file\-Error}}
+\index{file\-Error@{file\-Error}!CEBError::fileError@{C\-E\-B\-Error\-::file\-Error}}
+\subsubsection[{file\-Error}]{\setlength{\rightskip}{0pt plus 5cm}C\-E\-B\-Error\-::file\-Error\-::file\-Error (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{\-\_\-path}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_c_e_b_error_1_1file_error_a9de13a4c47fc8276cb668b79f1d122f6}
+
+
+Constructor for file error. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-path} & the location of the file \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 138 of file Ceb\-Errors.\-h.
+
+
+
+References C\-E\-B\-Error\-::base\-Error\-::m\-\_\-txt.
+
+
+\begin{DoxyCode}
+138 \{m_txt = \_path;\}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{C\-E\-B\-Error\-::file\-Error@{C\-E\-B\-Error\-::file\-Error}!what@{what}}
+\index{what@{what}!CEBError::fileError@{C\-E\-B\-Error\-::file\-Error}}
+\subsubsection[{what}]{\setlength{\rightskip}{0pt plus 5cm}virtual const char$\ast$ C\-E\-B\-Error\-::file\-Error\-::what (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const throw  ) \hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\label{class_c_e_b_error_1_1file_error_ace162f612f8039db81cfd5f33a581483}
+
+
+returns an explanatory string 
+
+
+
+Reimplemented from {\bf C\-E\-B\-Error\-::base\-Error} \doxyref{}{p.}{class_c_e_b_error_1_1base_error_aaebf355e6b7b5c89d333fd258eefdaa8}.
+
+
+
+Reimplemented in {\bf C\-E\-B\-Error\-::file\-Copy\-Error} \doxyref{}{p.}{class_c_e_b_error_1_1file_copy_error_a0222f2bec1c517def68ab5a68bea8d22}, {\bf C\-E\-B\-Error\-::file\-Permissions\-Error} \doxyref{}{p.}{class_c_e_b_error_1_1file_permissions_error_a5d2198d1bd04e1bb0d1fd21b443247b5}, {\bf C\-E\-B\-Error\-::file\-Resize\-Error} \doxyref{}{p.}{class_c_e_b_error_1_1file_resize_error_a10cb33967f1c4c0f5c2a6092986d74ee}, {\bf C\-E\-B\-Error\-::file\-Position\-Error} \doxyref{}{p.}{class_c_e_b_error_1_1file_position_error_a16d57a675c34aa9223b41c23396120d5}, {\bf C\-E\-B\-Error\-::file\-Rename\-Error} \doxyref{}{p.}{class_c_e_b_error_1_1file_rename_error_a8e3e40fe64af2d371292f0b7870b48dc}, {\bf C\-E\-B\-Error\-::file\-Remove\-Error} \doxyref{}{p.}{class_c_e_b_error_1_1file_remove_error_ab0d8b96b77fa71a987a2b615d4c3ed6f}, {\bf C\-E\-B\-Error\-::file\-Unspecified\-Error} \doxyref{}{p.}{class_c_e_b_error_1_1file_unspecified_error_a5fd01a2dc4466c05771c747d77f8c1c8}, {\bf C\-E\-B\-Error\-::file\-Time\-Out\-Error} \doxyref{}{p.}{class_c_e_b_error_1_1file_time_out_error_a3faa61ff4b2957c8e8378a5469d1e555}, {\bf C\-E\-B\-Error\-::file\-Abort\-Error} \doxyref{}{p.}{class_c_e_b_error_1_1file_abort_error_aef6252c26fcec135375d31e180531a0b}, {\bf C\-E\-B\-Error\-::file\-Open\-Error} \doxyref{}{p.}{class_c_e_b_error_1_1file_open_error_a8b5a6e948a1579231e43900e10007e28}, {\bf C\-E\-B\-Error\-::file\-Resource\-Error} \doxyref{}{p.}{class_c_e_b_error_1_1file_resource_error_aa93a3ccb45a83aa3a2a22470e8158ab2}, {\bf C\-E\-B\-Error\-::file\-Fatal\-Error} \doxyref{}{p.}{class_c_e_b_error_1_1file_fatal_error_a2ce424f4c875db18e474dfde511ef994}, {\bf C\-E\-B\-Error\-::file\-Write\-Error} \doxyref{}{p.}{class_c_e_b_error_1_1file_write_error_a94080ee76fa9870cae6e2f8af8d0ca94}, and {\bf C\-E\-B\-Error\-::file\-Read\-Error} \doxyref{}{p.}{class_c_e_b_error_1_1file_read_error_aedb4744aa826bd1aeabc060e9aab86f4}.
+
+
+
+Definition at line 142 of file Ceb\-Errors.\-h.
+
+
+
+References C\-E\-B\-Error\-::base\-Error\-::generate\-Msg().
+
+
+\begin{DoxyCode}
+143   \{
+144     \textcolor{keywordflow}{return} generateMsg(\textcolor{stringliteral}{"An error occured with the file"});
+145   \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=276pt]{class_c_e_b_error_1_1file_error_ace162f612f8039db81cfd5f33a581483_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+{\bf Ceb\-Errors.\-h}\end{DoxyCompactItemize}

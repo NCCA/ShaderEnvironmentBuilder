@@ -1,0 +1,28 @@
+<map id="MainWindow::on_actionOpen_triggered" name="MainWindow::on_actionOpen_triggered">
+<area shape="rect" id="node2" href="$class_project.html#ae785bfeb9544bfe228eebe9014331493" title="method to return the name of the current project " alt="" coords="1037,5,1158,32"/>
+<area shape="rect" id="node3" href="$class_project.html#a99c421332307568f0f03ab50a962cf76" title="method to load in a project from an xml file " alt="" coords="296,132,389,159"/>
+<area shape="rect" id="node6" href="$class_n_g_l_scene.html#a7e70f3230a69f5f593a50ca16d723349" title="Creates a new project for the shader. " alt="" coords="268,241,417,268"/>
+<area shape="rect" id="node22" href="$class_main_window.html#aff24d2c1c190cbeb892e0f74879091f5" title="Check if you want to close or open new file (loose changes) " alt="" coords="243,77,442,104"/>
+<area shape="rect" id="node4" href="$class_i_o___x_m_l.html#ac9748a44ad55bb8c3c52e1e5952b23a3" title="Will read the project file data. " alt="" coords="505,183,674,209"/>
+<area shape="rect" id="node5" href="$class_project.html#ace11706afa0348c2e6cb0151285167e9" title="method to set the data for the project " alt="" coords="1054,132,1141,159"/>
+<area shape="rect" id="node7" href="$class_shader_manager.html#aed13243851b7441a686ca490d08c19a2" title="method to create a new shader program object " alt="" coords="491,234,687,275"/>
+<area shape="rect" id="node10" href="$class_n_g_l_scene.html#a141eaaa05e2637a0f844ba4beefd74e3" title="loads and compiles a shader from Qstrings passed from the text editor " alt="" coords="501,368,678,395"/>
+<area shape="rect" id="node8" href="$class_shader_manager.html#aa4ef5235b1be61c38872a6c865d740bc" title="method to set the data for the current shader " alt="" coords="757,241,920,268"/>
+<area shape="rect" id="node9" href="$class_shader_manager.html#a04c9fb67f7fa4995ae678f64f5b4985b" title="method to set OpenGL to use the current shader program " alt="" coords="769,191,908,217"/>
+<area shape="rect" id="node11" href="$class_shader_manager.html#a2f344ea91238f6a7a34fe26f5d2bdfd0" title="method called to compile the currently active shader " alt="" coords="736,343,941,369"/>
+<area shape="rect" id="node14" href="$class_main_window.html#a1fc3e7c122b246d3cacbaaccfe490724" title="set terminal text " alt="" coords="742,393,935,420"/>
+<area shape="rect" id="node15" href="$class_n_g_l_scene.html#af6e2fbc572f1ec3021f2b73fc87ab430" title="Stores a QString. Used to edit the error log message. " alt="" coords="753,444,924,471"/>
+<area shape="rect" id="node16" href="$class_shader_manager.html#a1e32b97729d0eddce1de9b51a8c3d19a" title="method to return the most recent error log " alt="" coords="746,495,931,521"/>
+<area shape="rect" id="node17" href="$class_parser_lib.html#a0327fd1d07a49f918cd5ff1ed54d74a2" title="assigns all appropriate values, locations, data types, names " alt="" coords="759,292,919,319"/>
+<area shape="rect" id="node12" href="$class_shader_manager.html#acf0d69f6515e8438ba04330a04264931" title="method to check compiling errors for all shader objects attached " alt="" coords="989,350,1205,391"/>
+<area shape="rect" id="node13" href="$class_shader_manager.html#aec181009461227ed7ec70fca29111985" title="method to check compiling errors for a single shader object " alt="" coords="1254,350,1455,391"/>
+<area shape="rect" id="node18" href="$class_parser_lib.html#ab82a4570c99e2844e6ffe3bd1b3dbcf2" title="finds number of active uniforms and stores the data in blocks called uniformData. This then stores it..." alt="" coords="997,233,1197,260"/>
+<area shape="rect" id="node21" href="$class_parser_lib.html#ae5e796d35c2b62f2099ea0a9b4cde4cc" title="sets default values for the active uniforms " alt="" coords="1016,285,1179,326"/>
+<area shape="rect" id="node19" href="$class_shader_manager.html#ac7f57e1b3e623ef4693389b009c44089" title="get the current data from the shader manager " alt="" coords="1505,233,1669,260"/>
+<area shape="rect" id="node20" href="$class_parser_lib.html#a748612fadf3a391ead34306bd3f39f77" title="used to translate the data type name from a number into a name. e.g. 35676 &#45;&gt; mat4 The following sect..." alt="" coords="1261,259,1448,285"/>
+<area shape="rect" id="node23" href="$class_main_window.html#ae388e93dca3e29f2036901982af7e7ac" title="Called when Save Project button is triggered in File Menu bar. " alt="" coords="496,66,683,107"/>
+<area shape="rect" id="node24" href="$class_project.html#af285ceb406be688b3c81cdd445a159e6" title="method for saving the current project " alt="" coords="791,81,886,108"/>
+<area shape="rect" id="node27" href="$class_main_window.html#ac62839f0a6f642f68f06729f351893e3" title="Update the title of the window. " alt="" coords="756,31,921,57"/>
+<area shape="rect" id="node25" href="$class_i_o___x_m_l.html#a4f26762e4ee76461a097ce109127be21" title="Saves the project name, vertex and fragment data in set directory. " alt="" coords="1025,81,1169,108"/>
+<area shape="rect" id="node26" href="$class_i_o___x_m_l.html#a6e72454ab3699ff26cfefe078ebe8890" title="method to confirm overwriting exported files " alt="" coords="1269,81,1441,108"/>
+</map>

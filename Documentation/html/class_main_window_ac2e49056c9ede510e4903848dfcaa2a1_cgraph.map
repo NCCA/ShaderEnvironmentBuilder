@@ -1,0 +1,9 @@
+<map id="MainWindow::on_actionSaveProjectAs_triggered" name="MainWindow::on_actionSaveProjectAs_triggered">
+<area shape="rect" id="node2" href="$class_project.html#a4573371ef661570f74282d62193a01e2" title="method for saving the current project as a new project " alt="" coords="267,31,378,57"/>
+<area shape="rect" id="node7" href="$class_main_window.html#ac62839f0a6f642f68f06729f351893e3" title="Update the title of the window. " alt="" coords="240,81,405,108"/>
+<area shape="rect" id="node3" href="$class_project.html#af285ceb406be688b3c81cdd445a159e6" title="method for saving the current project " alt="" coords="467,31,562,57"/>
+<area shape="rect" id="node4" href="$class_project.html#ace11706afa0348c2e6cb0151285167e9" title="method to set the data for the project " alt="" coords="653,5,739,32"/>
+<area shape="rect" id="node5" href="$class_i_o___x_m_l.html#a4f26762e4ee76461a097ce109127be21" title="Saves the project name, vertex and fragment data in set directory. " alt="" coords="624,56,768,83"/>
+<area shape="rect" id="node6" href="$class_i_o___x_m_l.html#a6e72454ab3699ff26cfefe078ebe8890" title="method to confirm overwriting exported files " alt="" coords="817,56,989,83"/>
+<area shape="rect" id="node8" href="$class_project.html#ae785bfeb9544bfe228eebe9014331493" title="method to return the name of the current project " alt="" coords="454,81,575,108"/>
+</map>

@@ -1,0 +1,9 @@
+<map id="UniformData" name="UniformData">
+<area shape="rect" id="node2" href="$class_uniform_data_bool.html" title="Stores individual uniform data for bool data. " alt="" coords="151,5,271,32"/>
+<area shape="rect" id="node3" href="$class_uniform_data_float.html" title="Stores individual uniform data for float data. " alt="" coords="149,56,272,83"/>
+<area shape="rect" id="node4" href="$class_uniform_data_int.html" title="Stores individual uniform data for int data. " alt="" coords="156,107,265,133"/>
+<area shape="rect" id="node5" href="$class_uniform_data_m3.html" title="Stores individual uniform data for Mat3 data. " alt="" coords="155,157,267,184"/>
+<area shape="rect" id="node6" href="$class_uniform_data_m4.html" title="Stores individual uniform data for Mat4 data. " alt="" coords="155,208,267,235"/>
+<area shape="rect" id="node7" href="$class_uniform_data_v3.html" title="Stores individual uniform data for Vec3 data. " alt="" coords="156,259,265,285"/>
+<area shape="rect" id="node8" href="$class_uniform_data_v4.html" title="Stores individual uniform data for Vec4 data. " alt="" coords="156,309,265,336"/>
+</map>

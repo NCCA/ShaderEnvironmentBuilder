@@ -1,0 +1,191 @@
+\section{Uniform\-Data\-V4 Class Reference}
+\label{class_uniform_data_v4}\index{Uniform\-Data\-V4@{Uniform\-Data\-V4}}
+
+
+Stores individual uniform data for Vec4 data.  
+
+
+
+
+{\ttfamily \#include $<$Uniform\-Data.\-h$>$}
+
+
+
+Inheritance diagram for Uniform\-Data\-V4\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=126pt]{class_uniform_data_v4__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Uniform\-Data\-V4\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=126pt]{class_uniform_data_v4__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\bf $\sim$\-Uniform\-Data\-V4} ()
+\begin{DoxyCompactList}\small\item\em dtor for the uniform\-Data\-V4 \end{DoxyCompactList}\item 
+void {\bf set\-Vec4} (ngl\-::\-Vec4 \-\_\-value)
+\begin{DoxyCompactList}\small\item\em this assigns the \-\_\-value to the uniform\-Data m\-\_\-vec4 \end{DoxyCompactList}\item 
+void {\bf set\-Vec4} (float \-\_\-value)
+\begin{DoxyCompactList}\small\item\em this assigns the \-\_\-value to the uniform\-Data m\-\_\-vec4 \end{DoxyCompactList}\item 
+ngl\-::\-Vec4 {\bf get\-Vec4} ()
+\begin{DoxyCompactList}\small\item\em this returns the m\-\_\-vec4 value of this uniform\-Data \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+ngl\-::\-Vec4 {\bf m\-\_\-vec4} =\{0.\-5,0.\-5,0.\-5,1\}
+\begin{DoxyCompactList}\small\item\em used to store the vec4 value \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Stores individual uniform data for Vec4 data. 
+
+Definition at line 247 of file Uniform\-Data.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Uniform\-Data\-V4@{Uniform\-Data\-V4}!$\sim$\-Uniform\-Data\-V4@{$\sim$\-Uniform\-Data\-V4}}
+\index{$\sim$\-Uniform\-Data\-V4@{$\sim$\-Uniform\-Data\-V4}!UniformDataV4@{Uniform\-Data\-V4}}
+\subsubsection[{$\sim$\-Uniform\-Data\-V4}]{\setlength{\rightskip}{0pt plus 5cm}Uniform\-Data\-V4\-::$\sim$\-Uniform\-Data\-V4 (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_uniform_data_v4_ad02d6e0239b36ee17ae44e2688962cb4}
+
+
+dtor for the uniform\-Data\-V4 
+
+
+
+\subsection{Member Function Documentation}
+\index{Uniform\-Data\-V4@{Uniform\-Data\-V4}!get\-Vec4@{get\-Vec4}}
+\index{get\-Vec4@{get\-Vec4}!UniformDataV4@{Uniform\-Data\-V4}}
+\subsubsection[{get\-Vec4}]{\setlength{\rightskip}{0pt plus 5cm}ngl\-::\-Vec4 Uniform\-Data\-V4\-::get\-Vec4 (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\label{class_uniform_data_v4_ae5a24be8a1946f00e18b2d1d37f5b6c0}
+
+
+this returns the m\-\_\-vec4 value of this uniform\-Data 
+
+\begin{DoxyReturn}{Returns}
+m\-\_\-vec4 
+\end{DoxyReturn}
+
+
+Reimplemented from {\bf Uniform\-Data} \doxyref{}{p.}{class_uniform_data_a0390dc5e56a29ec92771cfde79016837}.
+
+
+
+Definition at line 277 of file Uniform\-Data.\-h.
+
+
+
+References m\-\_\-vec4.
+
+
+\begin{DoxyCode}
+277 \{\textcolor{keywordflow}{return} m_vec4;\}
+\end{DoxyCode}
+\index{Uniform\-Data\-V4@{Uniform\-Data\-V4}!set\-Vec4@{set\-Vec4}}
+\index{set\-Vec4@{set\-Vec4}!UniformDataV4@{Uniform\-Data\-V4}}
+\subsubsection[{set\-Vec4}]{\setlength{\rightskip}{0pt plus 5cm}void Uniform\-Data\-V4\-::set\-Vec4 (
+\begin{DoxyParamCaption}
+\item[{ngl\-::\-Vec4}]{\-\_\-value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_uniform_data_v4_a74cecae3d79eb10563b575b3c2bdef3a}
+
+
+this assigns the \-\_\-value to the uniform\-Data m\-\_\-vec4 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-value} & is the value to change m\-\_\-vec4 into \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from {\bf Uniform\-Data} \doxyref{}{p.}{class_uniform_data_abf988ea796a50543604e28ab7a48137f}.
+
+
+
+Definition at line 73 of file Uniform\-Data.\-cpp.
+
+
+
+References m\-\_\-vec4.
+
+
+\begin{DoxyCode}
+74 \{
+75   m_vec4=\_value;
+76 \}
+\end{DoxyCode}
+\index{Uniform\-Data\-V4@{Uniform\-Data\-V4}!set\-Vec4@{set\-Vec4}}
+\index{set\-Vec4@{set\-Vec4}!UniformDataV4@{Uniform\-Data\-V4}}
+\subsubsection[{set\-Vec4}]{\setlength{\rightskip}{0pt plus 5cm}void Uniform\-Data\-V4\-::set\-Vec4 (
+\begin{DoxyParamCaption}
+\item[{float}]{\-\_\-value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_uniform_data_v4_afc1e49ce1568deef9a343a3b24a2070b}
+
+
+this assigns the \-\_\-value to the uniform\-Data m\-\_\-vec4 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-value} & is the value to change all m\-\_\-vec4 componenets into \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from {\bf Uniform\-Data} \doxyref{}{p.}{class_uniform_data_a6ee0b9e3fcd356052304df953f67e0c4}.
+
+
+
+Definition at line 64 of file Uniform\-Data.\-cpp.
+
+
+
+References m\-\_\-vec4.
+
+
+\begin{DoxyCode}
+65 \{
+66   m_vec4.m\_x=\_value;
+67   m_vec4.m\_z=\_value;
+68   m_vec4.m\_y=\_value;
+69   m_vec4.m\_w=1;
+70 \}
+\end{DoxyCode}
+
+
+\subsection{Member Data Documentation}
+\index{Uniform\-Data\-V4@{Uniform\-Data\-V4}!m\-\_\-vec4@{m\-\_\-vec4}}
+\index{m\-\_\-vec4@{m\-\_\-vec4}!UniformDataV4@{Uniform\-Data\-V4}}
+\subsubsection[{m\-\_\-vec4}]{\setlength{\rightskip}{0pt plus 5cm}ngl\-::\-Vec4 Uniform\-Data\-V4\-::m\-\_\-vec4 =\{0.\-5,0.\-5,0.\-5,1\}\hspace{0.3cm}{\ttfamily [private]}}\label{class_uniform_data_v4_a6a3c7db5f862167a4dbddd4367d554d6}
+
+
+used to store the vec4 value 
+
+
+
+Definition at line 253 of file Uniform\-Data.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+{\bf Uniform\-Data.\-h}\item 
+{\bf Uniform\-Data.\-cpp}\end{DoxyCompactItemize}

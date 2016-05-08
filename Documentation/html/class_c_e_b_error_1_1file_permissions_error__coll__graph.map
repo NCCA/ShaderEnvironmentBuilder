@@ -1,0 +1,4 @@
+<map id="CEBError::filePermissionsError" name="CEBError::filePermissionsError">
+<area shape="rect" id="node2" href="$class_c_e_b_error_1_1file_error.html" title="base class which is raised for file errors " alt="" coords="26,155,149,181"/>
+<area shape="rect" id="node3" href="$class_c_e_b_error_1_1base_error.html" title="an unknown error which is raised when a throw is not based from a normal exception ..." alt="" coords="21,80,155,107"/>
+</map>

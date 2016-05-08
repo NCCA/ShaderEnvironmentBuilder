@@ -1,0 +1,129 @@
+\section{C\-E\-B\-Raise Namespace Reference}
+\label{namespace_c_e_b_raise}\index{C\-E\-B\-Raise@{C\-E\-B\-Raise}}
+
+
+Used to raise errors in the program.  
+
+
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void {\bf Qt\-File\-Error} (Q\-File\-Device\-::\-File\-Error \-\_\-e, Q\-String \-\_\-path)
+\item 
+void {\bf Gl\-Error} ({\bf gl\-Error\-Codes} \-\_\-e, Q\-String \-\_\-msg)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Used to raise errors in the program. 
+
+\subsection{Function Documentation}
+\index{C\-E\-B\-Raise@{C\-E\-B\-Raise}!Gl\-Error@{Gl\-Error}}
+\index{Gl\-Error@{Gl\-Error}!CEBRaise@{C\-E\-B\-Raise}}
+\subsubsection[{Gl\-Error}]{\setlength{\rightskip}{0pt plus 5cm}void C\-E\-B\-Raise\-::\-Gl\-Error (
+\begin{DoxyParamCaption}
+\item[{{\bf gl\-Error\-Codes}}]{\-\_\-e, }
+\item[{Q\-String}]{\-\_\-msg}
+\end{DoxyParamCaption}
+)}\label{namespace_c_e_b_raise_a29498ebf95b2767b59b1a699bfd9d271}
+\index{C\-E\-B\-Raise@{C\-E\-B\-Raise}!Qt\-File\-Error@{Qt\-File\-Error}}
+\index{Qt\-File\-Error@{Qt\-File\-Error}!CEBRaise@{C\-E\-B\-Raise}}
+\subsubsection[{Qt\-File\-Error}]{\setlength{\rightskip}{0pt plus 5cm}void C\-E\-B\-Raise\-::\-Qt\-File\-Error (
+\begin{DoxyParamCaption}
+\item[{Q\-File\-Device\-::\-File\-Error}]{\-\_\-e, }
+\item[{Q\-String}]{\-\_\-path}
+\end{DoxyParamCaption}
+)}\label{namespace_c_e_b_raise_a664ab19610a5a1b25b082ca8bdf51e7b}
+
+
+Definition at line 90 of file Ceb\-Errors.\-cpp.
+
+
+\begin{DoxyCode}
+91 \{
+92   \textcolor{keywordflow}{switch}(\_e)
+93   \{
+94     \textcolor{keywordflow}{case} QFileDevice::ReadError:
+95     \{
+96       \textcolor{keywordflow}{throw} CEBError::fileReadError(\_path);
+97       \textcolor{keywordflow}{break};
+98     \}
+99     \textcolor{keywordflow}{case} QFileDevice::WriteError:
+100     \{
+101       \textcolor{keywordflow}{throw} CEBError::fileWriteError(\_path);
+102       \textcolor{keywordflow}{break};
+103     \}
+104     \textcolor{keywordflow}{case} QFileDevice::FatalError:
+105     \{
+106       \textcolor{keywordflow}{throw} CEBError::fileFatalError(\_path);
+107       \textcolor{keywordflow}{break};
+108     \}
+109     \textcolor{keywordflow}{case} QFileDevice::ResourceError:
+110     \{
+111       \textcolor{keywordflow}{throw} CEBError::fileResourceError(\_path);
+112       \textcolor{keywordflow}{break};
+113     \}
+114     \textcolor{keywordflow}{case} QFileDevice::OpenError:
+115     \{
+116       \textcolor{keywordflow}{throw} CEBError::fileOpenError(\_path);
+117       \textcolor{keywordflow}{break};
+118     \}
+119     \textcolor{keywordflow}{case} QFileDevice::AbortError:
+120     \{
+121       \textcolor{keywordflow}{throw} CEBError::fileAbortError(\_path);
+122       \textcolor{keywordflow}{break};
+123     \}
+124     \textcolor{keywordflow}{case} QFileDevice::TimeOutError:
+125     \{
+126       \textcolor{keywordflow}{throw} CEBError::fileTimeOutError(\_path);
+127       \textcolor{keywordflow}{break};
+128     \}
+129     \textcolor{keywordflow}{case} QFileDevice::UnspecifiedError:
+130     \{
+131       \textcolor{keywordflow}{throw} CEBError::fileUnspecifiedError(\_path);
+132       \textcolor{keywordflow}{break};
+133     \}
+134     \textcolor{keywordflow}{case} QFileDevice::RemoveError:
+135     \{
+136       \textcolor{keywordflow}{throw} CEBError::fileRemoveError(\_path);
+137       \textcolor{keywordflow}{break};
+138     \}
+139     \textcolor{keywordflow}{case} QFileDevice::RenameError:
+140     \{
+141       \textcolor{keywordflow}{throw} CEBError::fileRenameError(\_path); \textcolor{keywordflow}{break};
+142     \}
+143     \textcolor{keywordflow}{case} QFileDevice::PositionError:
+144     \{
+145       \textcolor{keywordflow}{throw} CEBError::filePositionError(\_path); \textcolor{keywordflow}{break};
+146     \}
+147     \textcolor{keywordflow}{case} QFileDevice::ResizeError:
+148     \{
+149       \textcolor{keywordflow}{throw} CEBError::fileResizeError(\_path); \textcolor{keywordflow}{break};
+150     \}
+151     \textcolor{keywordflow}{case} QFileDevice::PermissionsError:
+152     \{
+153       \textcolor{keywordflow}{throw} CEBError::filePermissionsError(\_path); \textcolor{keywordflow}{break};
+154     \}
+155     \textcolor{keywordflow}{case} QFileDevice::CopyError:
+156     \{
+157       \textcolor{keywordflow}{throw} CEBError::fileCopyError(\_path); \textcolor{keywordflow}{break};
+158     \}
+159     \textcolor{keywordflow}{default}:
+160     \{
+161       \textcolor{keywordflow}{throw} CEBError::unknownError();
+162       \textcolor{keywordflow}{break};
+163     \}
+164   \}
+165 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespace_c_e_b_raise_a664ab19610a5a1b25b082ca8bdf51e7b_icgraph}
+\end{center}
+\end{figure}
+
+

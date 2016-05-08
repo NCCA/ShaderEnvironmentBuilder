@@ -1,0 +1,4 @@
+<map id="CEBError::fileResourceError" name="CEBError::fileResourceError">
+<area shape="rect" id="node2" href="$class_c_e_b_error_1_1file_error.html" title="base class which is raised for file errors " alt="" coords="33,155,156,181"/>
+<area shape="rect" id="node3" href="$class_c_e_b_error_1_1base_error.html" title="an unknown error which is raised when a throw is not based from a normal exception ..." alt="" coords="27,80,161,107"/>
+</map>

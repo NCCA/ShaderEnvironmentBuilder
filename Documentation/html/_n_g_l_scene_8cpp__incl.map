@@ -1,0 +1,11 @@
+<map id="NGLScene.cpp" name="NGLScene.cpp">
+<area shape="rect" id="node2" href="$_n_g_l_scene_8h.html" title="a modified Qt GL widget class for " alt="" coords="1879,80,1973,107"/>
+<area shape="rect" id="node34" href="$_parser_lib_8h.html" title="the parsing library, used to manage all the uniform data. " alt="" coords="1609,229,1695,256"/>
+<area shape="rect" id="node39" href="$_ceb_errors_8h.html" title="Contains all the code for generating and handling errors for CEB. " alt="" coords="2717,80,2805,107"/>
+<area shape="rect" id="node14" href="$_camera_8h.html" title="Creates the camera used for NGLScene. " alt="" coords="2196,229,2273,256"/>
+<area shape="rect" id="node19" href="$_io__xml_8h.html" title="Creates xml files to store project data by the user. The data can then be read for futher use..." alt="" coords="1050,229,1120,256"/>
+<area shape="rect" id="node26" href="$_json_8h.html" title="Creates a json file to then load shader data to the shader manager. " alt="" coords="507,229,565,256"/>
+<area shape="rect" id="node31" href="$_main_window_8h.html" title="the MainWindow, GUI for our program " alt="" coords="1965,155,2069,181"/>
+<area shape="rect" id="node38" href="$_shader_manager_8h.html" title="ShaderManager.h" alt="" coords="1755,312,1877,339"/>
+<area shape="rect" id="node37" href="$_uniform_data_8h.html" title="the UniformData stores individual uniform data per data type. " alt="" coords="1475,312,1579,339"/>
+</map>

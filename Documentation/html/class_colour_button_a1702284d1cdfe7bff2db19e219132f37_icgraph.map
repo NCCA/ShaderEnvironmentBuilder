@@ -1,0 +1,10 @@
+<map id="ColourButton::setColour" name="ColourButton::setColour">
+<area shape="rect" id="node2" href="$class_button_lib.html#a88d97d584a95e601067ec420c4380f2d" title="call to a function to create the buttons in the gui " alt="" coords="211,31,373,57"/>
+<area shape="rect" id="node3" href="$class_button_lib.html#aac3bfeb47972aa42c950c8bd0d4c69a5" title="constructor to create the button library " alt="" coords="436,5,575,32"/>
+<area shape="rect" id="node4" href="$class_button_lib.html#a0b78f1baf6ff415f7f80852592fc457b" title="call to update the buttons " alt="" coords="422,56,589,83"/>
+<area shape="rect" id="node5" href="$class_main_window.html#a2e3b4eed95c7d485479adcdd71174b42" title="activated when Compile Shader button is clicked " alt="" coords="649,19,812,61"/>
+<area shape="rect" id="node7" href="$class_main_window.html#a4010b4118e9d4f0deffa97f7072e5018" title="Creates a new project wizard. " alt="" coords="637,85,824,112"/>
+<area shape="rect" id="node6" href="$class_main_window.html#a93cfdcac35db98baf6a7d2c2738a2006" title="Constructor for the MainWindow. " alt="" coords="877,27,1051,53"/>
+<area shape="rect" id="node8" href="$class_main_window.html#aed8d4c16aaa87ae02a2de2edd5fc91c7" title="Called when New button is triggered in File Menu bar. " alt="" coords="873,78,1055,119"/>
+<area shape="rect" id="node9" href="$class_startup_dialog.html#ac983df992c57b71b8f9207c357601a4e" title="Runs whenever NewProject button is clicked. " alt="" coords="895,143,1033,185"/>
+</map>

@@ -1,0 +1,12 @@
+<map id="ButtonLib" name="ButtonLib">
+<area shape="rect" id="node9" href="$class_main_window.html" title="our main window class used for holding all the GUI Qt widgets " alt="" coords="643,381,737,408"/>
+<area shape="rect" id="node2" href="$class_parser_lib.html" title="Parsing library used to manage all the uniform data. " alt="" coords="320,187,396,213"/>
+<area shape="rect" id="node5" href="$class_n_g_l_scene.html" title="our main gl widget for NGL applications all drawing elements are put in this file ..." alt="" coords="317,472,402,499"/>
+<area shape="rect" id="node3" href="$class_shader_manager.html" title="Handles creation and compilation of shaders via modified NGL ShaderLib. " alt="" coords="902,96,1014,123"/>
+<area shape="rect" id="node4" href="$struct_shader_program_data.html" title="structure containing currently active shader data " alt="" coords="889,5,1028,32"/>
+<area shape="rect" id="node7" href="$class_camera.html" title="Manages using multiple cameras in NGLScene. " alt="" coords="482,277,549,304"/>
+<area shape="rect" id="node15" href="$class_startup_dialog.html" title="The startup dialog which has commonly used tasks used on startup. " alt="" coords="754,472,853,499"/>
+<area shape="rect" id="node11" href="$class_cebitor.html" title="CEB text editor class inherits from QsciScintilla. " alt="" coords="840,277,902,304"/>
+<area shape="rect" id="node13" href="$class_project.html" title="stores the name and directory of the current project as well as " alt="" coords="754,277,816,304"/>
+<area shape="rect" id="node14" href="$class_i_o___x_m_l.html" title="Reads and writes project data to xml files. " alt="" coords="658,187,728,213"/>
+</map>

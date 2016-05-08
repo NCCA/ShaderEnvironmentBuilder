@@ -1,0 +1,7 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node2" href="$class_button.html" title="Parent class of different button types to set uniform values. " alt="" coords="143,56,203,83"/>
+<area shape="rect" id="node6" href="$class_startup_dialog.html" title="The startup dialog which has commonly used tasks used on startup. " alt="" coords="123,107,223,133"/>
+<area shape="rect" id="node3" href="$class_colour_button.html" title="Button to set colour uniform values. " alt="" coords="273,5,370,32"/>
+<area shape="rect" id="node4" href="$class_float_button.html" title="Button to set float uniform values. " alt="" coords="277,56,366,83"/>
+<area shape="rect" id="node5" href="$class_vec_button.html" title="Button to set vec3 and positional values. " alt="" coords="280,107,363,133"/>
+</map>

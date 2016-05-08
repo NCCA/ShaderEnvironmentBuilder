@@ -1,0 +1,15 @@
+<map id="ShaderManager::getData" name="ShaderManager::getData">
+<area shape="rect" id="node2" href="$class_parser_lib.html#ab82a4570c99e2844e6ffe3bd1b3dbcf2" title="finds number of active uniforms and stores the data in blocks called uniformData. This then stores it..." alt="" coords="219,40,419,67"/>
+<area shape="rect" id="node3" href="$class_button_lib.html#a0b78f1baf6ff415f7f80852592fc457b" title="call to update the buttons " alt="" coords="467,15,634,41"/>
+<area shape="rect" id="node6" href="$class_parser_lib.html#a0327fd1d07a49f918cd5ff1ed54d74a2" title="assigns all appropriate values, locations, data types, names " alt="" coords="471,65,631,92"/>
+<area shape="rect" id="node4" href="$class_main_window.html#a2e3b4eed95c7d485479adcdd71174b42" title="activated when Compile Shader button is clicked " alt="" coords="909,5,1072,46"/>
+<area shape="rect" id="node5" href="$class_main_window.html#a93cfdcac35db98baf6a7d2c2738a2006" title="Constructor for the MainWindow. " alt="" coords="1127,12,1302,39"/>
+<area shape="rect" id="node7" href="$class_n_g_l_scene.html#a40efee086fe1c2c956e6d66774d9d18f" title="the initialize class is called once when the window is created and we have a valid GL context use thi..." alt="" coords="709,117,835,144"/>
+<area shape="rect" id="node9" href="$class_n_g_l_scene.html#a141eaaa05e2637a0f844ba4beefd74e3" title="loads and compiles a shader from Qstrings passed from the text editor " alt="" coords="683,65,861,92"/>
+<area shape="rect" id="node8" href="$class_n_g_l_scene.html#a6285f61227606fab03e138db7b6e097d" title="Constructor for GLWindow. " alt="" coords="913,121,1068,148"/>
+<area shape="rect" id="node10" href="$class_n_g_l_scene.html#a7e70f3230a69f5f593a50ca16d723349" title="Creates a new project for the shader. " alt="" coords="916,71,1065,97"/>
+<area shape="rect" id="node11" href="$class_main_window.html#a4010b4118e9d4f0deffa97f7072e5018" title="Creates a new project wizard. " alt="" coords="1121,129,1308,156"/>
+<area shape="rect" id="node14" href="$class_main_window.html#a48ed0a16f674e38e0e2a24274852a9af" title="Called when Open button is triggered in File Menu bar. " alt="" coords="1121,63,1309,105"/>
+<area shape="rect" id="node12" href="$class_main_window.html#aed8d4c16aaa87ae02a2de2edd5fc91c7" title="Called when New button is triggered in File Menu bar. " alt="" coords="1358,89,1541,130"/>
+<area shape="rect" id="node13" href="$class_startup_dialog.html#ac983df992c57b71b8f9207c357601a4e" title="Runs whenever NewProject button is clicked. " alt="" coords="1380,154,1519,195"/>
+</map>

@@ -1,0 +1,11 @@
+<map id="ShaderManager::setData" name="ShaderManager::setData">
+<area shape="rect" id="node2" href="$class_shader_manager.html#aed13243851b7441a686ca490d08c19a2" title="method to create a new shader program object " alt="" coords="217,97,413,138"/>
+<area shape="rect" id="node8" href="$class_shader_manager.html#a476be257abd4b3057ce3be7acb05e178" title="method called when 1st opening program to initialise the default phong shader " alt="" coords="232,163,397,189"/>
+<area shape="rect" id="node3" href="$class_n_g_l_scene.html#a7e70f3230a69f5f593a50ca16d723349" title="Creates a new project for the shader. " alt="" coords="461,104,611,131"/>
+<area shape="rect" id="node4" href="$class_main_window.html#a4010b4118e9d4f0deffa97f7072e5018" title="Creates a new project wizard. " alt="" coords="660,45,847,72"/>
+<area shape="rect" id="node7" href="$class_main_window.html#a48ed0a16f674e38e0e2a24274852a9af" title="Called when Open button is triggered in File Menu bar. " alt="" coords="659,97,847,138"/>
+<area shape="rect" id="node5" href="$class_main_window.html#aed8d4c16aaa87ae02a2de2edd5fc91c7" title="Called when New button is triggered in File Menu bar. " alt="" coords="897,5,1079,46"/>
+<area shape="rect" id="node6" href="$class_startup_dialog.html#ac983df992c57b71b8f9207c357601a4e" title="Runs whenever NewProject button is clicked. " alt="" coords="919,70,1057,111"/>
+<area shape="rect" id="node9" href="$class_n_g_l_scene.html#a40efee086fe1c2c956e6d66774d9d18f" title="the initialize class is called once when the window is created and we have a valid GL context use thi..." alt="" coords="473,163,599,189"/>
+<area shape="rect" id="node10" href="$class_n_g_l_scene.html#a6285f61227606fab03e138db7b6e097d" title="Constructor for GLWindow. " alt="" coords="676,163,831,189"/>
+</map>

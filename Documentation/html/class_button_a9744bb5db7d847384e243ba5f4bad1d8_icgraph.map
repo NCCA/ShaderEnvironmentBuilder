@@ -1,0 +1,4 @@
+<map id="Button::openBox" name="Button::openBox">
+<area shape="rect" id="node2" href="$class_button.html#a10293cc4dcea650ad6b858430bb2a488" title="function to create the button box for the pop up " alt="" coords="171,5,333,32"/>
+<area shape="rect" id="node3" href="$class_button.html#a87565544cd9fbee675f6b6d61a319efd" title="default constructor to create the button " alt="" coords="381,5,485,32"/>
+</map>

@@ -1,0 +1,224 @@
+\section{Startup\-Dialog Class Reference}
+\label{class_startup_dialog}\index{Startup\-Dialog@{Startup\-Dialog}}
+
+
+The startup dialog which has commonly used tasks used on startup.  
+
+
+
+
+{\ttfamily \#include $<$Startup\-Dialog.\-h$>$}
+
+
+
+Inheritance diagram for Startup\-Dialog\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=118pt]{class_startup_dialog__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Startup\-Dialog\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_startup_dialog__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\bf Startup\-Dialog} (Q\-Widget $\ast$parent=0)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+{\bf $\sim$\-Startup\-Dialog} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Slots}
+\begin{DoxyCompactItemize}
+\item 
+void {\bf on\-\_\-m\-\_\-b\-\_\-open\-Proj\-\_\-clicked} ()
+\begin{DoxyCompactList}\small\item\em Runs whenever Open\-Project button is clicked. \end{DoxyCompactList}\item 
+void {\bf on\-\_\-m\-\_\-b\-\_\-new\-Proj\-\_\-clicked} ()
+\begin{DoxyCompactList}\small\item\em Runs whenever New\-Project button is clicked. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Ui\-::\-Startup\-Dialog $\ast$ {\bf m\-\_\-ui}
+\begin{DoxyCompactList}\small\item\em the generated widgets created from the form using ui\-\_\-\-Startup\-Dialog.\-h \end{DoxyCompactList}\item 
+{\bf Main\-Window} $\ast$ {\bf m\-\_\-main\-Win}
+\begin{DoxyCompactList}\small\item\em pointer to the main window stored from the parent passed to the dialog \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The startup dialog which has commonly used tasks used on startup. 
+
+Definition at line 42 of file Startup\-Dialog.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Startup\-Dialog@{Startup\-Dialog}!Startup\-Dialog@{Startup\-Dialog}}
+\index{Startup\-Dialog@{Startup\-Dialog}!StartupDialog@{Startup\-Dialog}}
+\subsubsection[{Startup\-Dialog}]{\setlength{\rightskip}{0pt plus 5cm}Startup\-Dialog\-::\-Startup\-Dialog (
+\begin{DoxyParamCaption}
+\item[{Q\-Widget $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [explicit]}}\label{class_startup_dialog_a3c0a01937001d3d82ec0ce98d7da084e}
+
+
+Constructor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-parent} & the parent window to create the \doxyref{Startup\-Dialog}{p.}{class_startup_dialog} in \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 19 of file Startup\-Dialog.\-cpp.
+
+
+
+References m\-\_\-main\-Win, and m\-\_\-ui.
+
+
+\begin{DoxyCode}
+19                                             :
+20   QDialog(parent),
+21   m_ui(\textcolor{keyword}{new} Ui::StartupDialog)
+22 \{
+23   m_ui->setupUi(\textcolor{keyword}{this});
+24   m_mainWin = \textcolor{keyword}{static\_cast<}MainWindow*\textcolor{keyword}{>}(parent);
+25 \}
+\end{DoxyCode}
+\index{Startup\-Dialog@{Startup\-Dialog}!$\sim$\-Startup\-Dialog@{$\sim$\-Startup\-Dialog}}
+\index{$\sim$\-Startup\-Dialog@{$\sim$\-Startup\-Dialog}!StartupDialog@{Startup\-Dialog}}
+\subsubsection[{$\sim$\-Startup\-Dialog}]{\setlength{\rightskip}{0pt plus 5cm}Startup\-Dialog\-::$\sim$\-Startup\-Dialog (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_startup_dialog_a21e41329a66a0ceb4aae21baba78bd0d}
+
+
+Destructor. 
+
+
+
+Definition at line 28 of file Startup\-Dialog.\-cpp.
+
+
+
+References m\-\_\-ui.
+
+
+\begin{DoxyCode}
+29 \{
+30   \textcolor{keyword}{delete} m_ui;
+31   qDebug() << \textcolor{stringliteral}{"Destroyed"};
+32 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{Startup\-Dialog@{Startup\-Dialog}!on\-\_\-m\-\_\-b\-\_\-new\-Proj\-\_\-clicked@{on\-\_\-m\-\_\-b\-\_\-new\-Proj\-\_\-clicked}}
+\index{on\-\_\-m\-\_\-b\-\_\-new\-Proj\-\_\-clicked@{on\-\_\-m\-\_\-b\-\_\-new\-Proj\-\_\-clicked}!StartupDialog@{Startup\-Dialog}}
+\subsubsection[{on\-\_\-m\-\_\-b\-\_\-new\-Proj\-\_\-clicked}]{\setlength{\rightskip}{0pt plus 5cm}void Startup\-Dialog\-::on\-\_\-m\-\_\-b\-\_\-new\-Proj\-\_\-clicked (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}\label{class_startup_dialog_ac983df992c57b71b8f9207c357601a4e}
+
+
+Runs whenever New\-Project button is clicked. 
+
+
+
+Definition at line 49 of file Startup\-Dialog.\-cpp.
+
+
+
+References m\-\_\-main\-Win, and Main\-Window\-::new\-Project\-Wiz().
+
+
+\begin{DoxyCode}
+50 \{
+51   \textcolor{keywordflow}{if} (m_mainWin->newProjectWiz(\textcolor{keyword}{this}))
+52   \{
+53     this->hide();
+54   \}
+55 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_startup_dialog_ac983df992c57b71b8f9207c357601a4e_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{Startup\-Dialog@{Startup\-Dialog}!on\-\_\-m\-\_\-b\-\_\-open\-Proj\-\_\-clicked@{on\-\_\-m\-\_\-b\-\_\-open\-Proj\-\_\-clicked}}
+\index{on\-\_\-m\-\_\-b\-\_\-open\-Proj\-\_\-clicked@{on\-\_\-m\-\_\-b\-\_\-open\-Proj\-\_\-clicked}!StartupDialog@{Startup\-Dialog}}
+\subsubsection[{on\-\_\-m\-\_\-b\-\_\-open\-Proj\-\_\-clicked}]{\setlength{\rightskip}{0pt plus 5cm}void Startup\-Dialog\-::on\-\_\-m\-\_\-b\-\_\-open\-Proj\-\_\-clicked (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}\label{class_startup_dialog_a53b5332dcf0d5eb5a0c1adbfab4d1e40}
+
+
+Runs whenever Open\-Project button is clicked. 
+
+
+
+Definition at line 35 of file Startup\-Dialog.\-cpp.
+
+
+\begin{DoxyCode}
+36 \{
+37   QFileDialog dialog(\textcolor{keyword}{this}, tr(\textcolor{stringliteral}{"Open Project"}), \textcolor{stringliteral}{"~/"},
+38                      tr(\textcolor{stringliteral}{"Project Files (*.json);; All Files (*.*)"}));
+39   dialog.setFileMode(QFileDialog::AnyFile);
+40   QStringList fileNames;
+41   \textcolor{keywordflow}{if} (dialog.exec())
+42   \{
+43     fileNames = dialog.selectedFiles();
+44     this->hide();
+45   \}
+46 \}
+\end{DoxyCode}
+
+
+\subsection{Member Data Documentation}
+\index{Startup\-Dialog@{Startup\-Dialog}!m\-\_\-main\-Win@{m\-\_\-main\-Win}}
+\index{m\-\_\-main\-Win@{m\-\_\-main\-Win}!StartupDialog@{Startup\-Dialog}}
+\subsubsection[{m\-\_\-main\-Win}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Main\-Window}$\ast$ Startup\-Dialog\-::m\-\_\-main\-Win\hspace{0.3cm}{\ttfamily [private]}}\label{class_startup_dialog_aba89e3a0b63959abfbcbfdc8023206d9}
+
+
+pointer to the main window stored from the parent passed to the dialog 
+
+
+
+Definition at line 80 of file Startup\-Dialog.\-h.
+
+\index{Startup\-Dialog@{Startup\-Dialog}!m\-\_\-ui@{m\-\_\-ui}}
+\index{m\-\_\-ui@{m\-\_\-ui}!StartupDialog@{Startup\-Dialog}}
+\subsubsection[{m\-\_\-ui}]{\setlength{\rightskip}{0pt plus 5cm}Ui\-::\-Startup\-Dialog$\ast$ Startup\-Dialog\-::m\-\_\-ui\hspace{0.3cm}{\ttfamily [private]}}\label{class_startup_dialog_af183edbd6b8101458410976098ccb477}
+
+
+the generated widgets created from the form using ui\-\_\-\-Startup\-Dialog.\-h 
+
+
+
+Definition at line 75 of file Startup\-Dialog.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+{\bf Startup\-Dialog.\-h}\item 
+{\bf Startup\-Dialog.\-cpp}\end{DoxyCompactItemize}

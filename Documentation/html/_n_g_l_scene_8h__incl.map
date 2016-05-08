@@ -1,0 +1,15 @@
+<map id="NGLScene.h" name="NGLScene.h">
+<area shape="rect" id="node13" href="$_camera_8h.html" title="Creates the camera used for NGLScene. " alt="" coords="1063,229,1140,256"/>
+<area shape="rect" id="node18" href="$_io__xml_8h.html" title="Creates xml files to store project data by the user. The data can then be read for futher use..." alt="" coords="1803,229,1873,256"/>
+<area shape="rect" id="node25" href="$_json_8h.html" title="Creates a json file to then load shader data to the shader manager. " alt="" coords="513,229,572,256"/>
+<area shape="rect" id="node30" href="$_main_window_8h.html" title="the MainWindow, GUI for our program " alt="" coords="2201,80,2305,107"/>
+<area shape="rect" id="node35" href="$_parser_lib_8h.html" title="the parsing library, used to manage all the uniform data. " alt="" coords="2201,229,2287,256"/>
+<area shape="rect" id="node39" href="$_shader_manager_8h.html" title="ShaderManager.h" alt="" coords="2200,312,2323,339"/>
+<area shape="rect" id="node33" href="$_button_lib_8h.html" title="this class creates a button library to store buttons and set uniform values " alt="" coords="2201,155,2287,181"/>
+<area shape="rect" id="node41" href="$_button_8h.html" title="this class creates a button with a pop up widget that can create modifiable attributes ..." alt="" coords="2851,229,2921,256"/>
+<area shape="rect" id="node47" href="$_cebitor_8h.html" title="CEB text editor, implementation of QScintilla. " alt="" coords="2627,155,2700,181"/>
+<area shape="rect" id="node48" href="$_new_project_wizard_8h.html" title="NewProjectWizard.h" alt="" coords="2725,155,2861,181"/>
+<area shape="rect" id="node49" href="$_project_8h.html" title="Project.h" alt="" coords="2001,155,2073,181"/>
+<area shape="rect" id="node50" href="$_startup_dialog_8h.html" title="StartupDialog.h" alt="" coords="2363,155,2473,181"/>
+<area shape="rect" id="node38" href="$_uniform_data_8h.html" title="the UniformData stores individual uniform data per data type. " alt="" coords="2347,312,2451,339"/>
+</map>

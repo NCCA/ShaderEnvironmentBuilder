@@ -1,0 +1,5 @@
+<map id="NGLScene::resetObjPos" name="NGLScene::resetObjPos">
+<area shape="rect" id="node2" href="$class_camera.html#a0c0d93f08f72642a944eb7514d81c0d8" title="Sets camera Pitch. " alt="" coords="216,5,363,32"/>
+<area shape="rect" id="node3" href="$class_camera.html#ab78d1a3c0f1d2260fcf962cc5589f8b4" title="Sets camera roll. " alt="" coords="220,56,359,83"/>
+<area shape="rect" id="node4" href="$class_camera.html#a5f14cfea1ff576e947bddae2139ca078" title="Sets camera Yaw. " alt="" coords="219,107,360,133"/>
+</map>

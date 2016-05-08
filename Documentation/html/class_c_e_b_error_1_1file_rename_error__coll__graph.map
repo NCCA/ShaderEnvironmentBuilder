@@ -1,0 +1,4 @@
+<map id="CEBError::fileRenameError" name="CEBError::fileRenameError">
+<area shape="rect" id="node2" href="$class_c_e_b_error_1_1file_error.html" title="base class which is raised for file errors " alt="" coords="29,155,152,181"/>
+<area shape="rect" id="node3" href="$class_c_e_b_error_1_1base_error.html" title="an unknown error which is raised when a throw is not based from a normal exception ..." alt="" coords="23,80,157,107"/>
+</map>

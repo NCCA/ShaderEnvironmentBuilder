@@ -1,0 +1,548 @@
+\section{Qsci\-Lexer\-G\-L\-S\-L Class Reference}
+\label{class_qsci_lexer_g_l_s_l}\index{Qsci\-Lexer\-G\-L\-S\-L@{Qsci\-Lexer\-G\-L\-S\-L}}
+
+
+Custom Q\-Scintilla lexer for G\-L\-S\-L.  
+
+
+
+
+{\ttfamily \#include $<$Qsci\-Lexer\-Glsl.\-h$>$}
+
+
+
+Inheritance diagram for Qsci\-Lexer\-G\-L\-S\-L\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=136pt]{class_qsci_lexer_g_l_s_l__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Qsci\-Lexer\-G\-L\-S\-L\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=136pt]{class_qsci_lexer_g_l_s_l__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum {\bf Style\-Type} \{ \\*
+{\bf N\-O\-N\-E}, 
+{\bf D\-E\-F\-A\-U\-L\-T}, 
+{\bf N\-U\-M\-B\-E\-R}, 
+{\bf K\-E\-Y\-W\-O\-R\-D}, 
+\\*
+{\bf F\-U\-N\-C\-T\-I\-O\-N}, 
+{\bf S\-T\-R\-I\-N\-G}, 
+{\bf C\-O\-M\-M\-E\-N\-T}, 
+{\bf O\-P\-E\-R\-A\-T\-O\-R}, 
+\\*
+{\bf W\-H\-I\-T\-E\-S\-P\-A\-C\-E}, 
+{\bf D\-A\-T\-A\-T\-Y\-P\-E}, 
+{\bf H\-A\-S\-H\-C\-O\-M\-M\-E\-N\-T}, 
+{\bf I\-L\-L\-E\-G\-A\-L}
+ \}
+\begin{DoxyCompactList}\small\item\em enum for supported style types \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\bf Qsci\-Lexer\-G\-L\-S\-L} (Qsci\-Scintilla $\ast$\-\_\-parent=0)
+\begin{DoxyCompactList}\small\item\em \doxyref{Qsci\-Lexer\-G\-L\-S\-L}{p.}{class_qsci_lexer_g_l_s_l} constructor. \end{DoxyCompactList}\item 
+virtual {\bf $\sim$\-Qsci\-Lexer\-G\-L\-S\-L} ()
+\begin{DoxyCompactList}\small\item\em \doxyref{Qsci\-Lexer\-G\-L\-S\-L}{p.}{class_qsci_lexer_g_l_s_l} destructor. \end{DoxyCompactList}\item 
+virtual void {\bf style\-Text} (const int \-\_\-start, const int \-\_\-end)
+\begin{DoxyCompactList}\small\item\em virtual function reimplemented from Qsci\-Lexer\-Custom. \end{DoxyCompactList}\item 
+virtual const char $\ast$ {\bf language} () const 
+\begin{DoxyCompactList}\small\item\em virtual function reimplemented from Qsci\-Lexer. \end{DoxyCompactList}\item 
+virtual Q\-Color {\bf default\-Color} (const int \-\_\-style) const 
+\begin{DoxyCompactList}\small\item\em virtual function reimplemented from Qsci\-Lexer. \end{DoxyCompactList}\item 
+virtual Q\-Color {\bf default\-Paper} (const int \-\_\-style) const 
+\begin{DoxyCompactList}\small\item\em virtual function reimplemented from Qsci\-Lexer. \end{DoxyCompactList}\item 
+virtual Q\-Font {\bf default\-Font} (const int \-\_\-style) const 
+\begin{DoxyCompactList}\small\item\em virtual function reimplemented from Qsci\-Lexer. \end{DoxyCompactList}\item 
+virtual Q\-String {\bf description} (const int \-\_\-style) const 
+\begin{DoxyCompactList}\small\item\em virtual function reimplemented from Qsci\-Lexer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\bf Qsci\-Lexer\-G\-L\-S\-L} (const {\bf Qsci\-Lexer\-G\-L\-S\-L} \&)
+\begin{DoxyCompactList}\small\item\em copy constructor \end{DoxyCompactList}\item 
+{\bf Qsci\-Lexer\-G\-L\-S\-L} \& {\bf operator=} (const {\bf Qsci\-Lexer\-G\-L\-S\-L} \&)
+\begin{DoxyCompactList}\small\item\em assignment operator \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Qsci\-Scintilla $\ast$ {\bf m\-\_\-parent}
+\begin{DoxyCompactList}\small\item\em parent Q\-Scintilla instance \end{DoxyCompactList}\item 
+Qsci\-A\-P\-Is $\ast$ {\bf m\-\_\-\-A\-P\-I}
+\begin{DoxyCompactList}\small\item\em G\-L\-S\-L A\-P\-I instance. \end{DoxyCompactList}\item 
+Flex\-Lexer $\ast$ {\bf m\-\_\-flex\-Scanner}
+\begin{DoxyCompactList}\small\item\em flex lexer instance \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Custom Q\-Scintilla lexer for G\-L\-S\-L. 
+
+Inherits from Qsci\-Lexer\-Custom to provide formatting specific to G\-L\-S\-L files 
+
+Definition at line 30 of file Qsci\-Lexer\-Glsl.\-h.
+
+
+
+\subsection{Member Enumeration Documentation}
+\index{Qsci\-Lexer\-G\-L\-S\-L@{Qsci\-Lexer\-G\-L\-S\-L}!Style\-Type@{Style\-Type}}
+\index{Style\-Type@{Style\-Type}!QsciLexerGLSL@{Qsci\-Lexer\-G\-L\-S\-L}}
+\subsubsection[{Style\-Type}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Qsci\-Lexer\-G\-L\-S\-L\-::\-Style\-Type}}\label{class_qsci_lexer_g_l_s_l_a6e484d907d0428fbd91c605d1d876eee}
+
+
+enum for supported style types 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{N\-O\-N\-E@{N\-O\-N\-E}!Qsci\-Lexer\-G\-L\-S\-L@{Qsci\-Lexer\-G\-L\-S\-L}}\index{Qsci\-Lexer\-G\-L\-S\-L@{Qsci\-Lexer\-G\-L\-S\-L}!N\-O\-N\-E@{N\-O\-N\-E}}\item[{\em 
+N\-O\-N\-E\label{class_qsci_lexer_g_l_s_l_a6e484d907d0428fbd91c605d1d876eeeab63d2b82fa271760b4b13a93e8278116}
+}]No styling. \index{D\-E\-F\-A\-U\-L\-T@{D\-E\-F\-A\-U\-L\-T}!Qsci\-Lexer\-G\-L\-S\-L@{Qsci\-Lexer\-G\-L\-S\-L}}\index{Qsci\-Lexer\-G\-L\-S\-L@{Qsci\-Lexer\-G\-L\-S\-L}!D\-E\-F\-A\-U\-L\-T@{D\-E\-F\-A\-U\-L\-T}}\item[{\em 
+D\-E\-F\-A\-U\-L\-T\label{class_qsci_lexer_g_l_s_l_a6e484d907d0428fbd91c605d1d876eeea61da6b428efe33ae29f65f14617792e2}
+}]Default. \index{N\-U\-M\-B\-E\-R@{N\-U\-M\-B\-E\-R}!Qsci\-Lexer\-G\-L\-S\-L@{Qsci\-Lexer\-G\-L\-S\-L}}\index{Qsci\-Lexer\-G\-L\-S\-L@{Qsci\-Lexer\-G\-L\-S\-L}!N\-U\-M\-B\-E\-R@{N\-U\-M\-B\-E\-R}}\item[{\em 
+N\-U\-M\-B\-E\-R\label{class_qsci_lexer_g_l_s_l_a6e484d907d0428fbd91c605d1d876eeeac36bf41ca563444e2b024395bc366747}
+}]Numbers. \index{K\-E\-Y\-W\-O\-R\-D@{K\-E\-Y\-W\-O\-R\-D}!Qsci\-Lexer\-G\-L\-S\-L@{Qsci\-Lexer\-G\-L\-S\-L}}\index{Qsci\-Lexer\-G\-L\-S\-L@{Qsci\-Lexer\-G\-L\-S\-L}!K\-E\-Y\-W\-O\-R\-D@{K\-E\-Y\-W\-O\-R\-D}}\item[{\em 
+K\-E\-Y\-W\-O\-R\-D\label{class_qsci_lexer_g_l_s_l_a6e484d907d0428fbd91c605d1d876eeea6263408b600b3d48b18a79880b0c95ec}
+}]G\-L\-S\-L Keywords. \index{F\-U\-N\-C\-T\-I\-O\-N@{F\-U\-N\-C\-T\-I\-O\-N}!Qsci\-Lexer\-G\-L\-S\-L@{Qsci\-Lexer\-G\-L\-S\-L}}\index{Qsci\-Lexer\-G\-L\-S\-L@{Qsci\-Lexer\-G\-L\-S\-L}!F\-U\-N\-C\-T\-I\-O\-N@{F\-U\-N\-C\-T\-I\-O\-N}}\item[{\em 
+F\-U\-N\-C\-T\-I\-O\-N\label{class_qsci_lexer_g_l_s_l_a6e484d907d0428fbd91c605d1d876eeea67120b8f27c2faa5c10e9f533deb6a1a}
+}]Functions. \index{S\-T\-R\-I\-N\-G@{S\-T\-R\-I\-N\-G}!Qsci\-Lexer\-G\-L\-S\-L@{Qsci\-Lexer\-G\-L\-S\-L}}\index{Qsci\-Lexer\-G\-L\-S\-L@{Qsci\-Lexer\-G\-L\-S\-L}!S\-T\-R\-I\-N\-G@{S\-T\-R\-I\-N\-G}}\item[{\em 
+S\-T\-R\-I\-N\-G\label{class_qsci_lexer_g_l_s_l_a6e484d907d0428fbd91c605d1d876eeea114fffafd027fcc6e1a43abf6e0392b5}
+}]Strings. \index{C\-O\-M\-M\-E\-N\-T@{C\-O\-M\-M\-E\-N\-T}!Qsci\-Lexer\-G\-L\-S\-L@{Qsci\-Lexer\-G\-L\-S\-L}}\index{Qsci\-Lexer\-G\-L\-S\-L@{Qsci\-Lexer\-G\-L\-S\-L}!C\-O\-M\-M\-E\-N\-T@{C\-O\-M\-M\-E\-N\-T}}\item[{\em 
+C\-O\-M\-M\-E\-N\-T\label{class_qsci_lexer_g_l_s_l_a6e484d907d0428fbd91c605d1d876eeeabb66b9fd524443ff4c7fce457c1b6f22}
+}]Comments. \index{O\-P\-E\-R\-A\-T\-O\-R@{O\-P\-E\-R\-A\-T\-O\-R}!Qsci\-Lexer\-G\-L\-S\-L@{Qsci\-Lexer\-G\-L\-S\-L}}\index{Qsci\-Lexer\-G\-L\-S\-L@{Qsci\-Lexer\-G\-L\-S\-L}!O\-P\-E\-R\-A\-T\-O\-R@{O\-P\-E\-R\-A\-T\-O\-R}}\item[{\em 
+O\-P\-E\-R\-A\-T\-O\-R\label{class_qsci_lexer_g_l_s_l_a6e484d907d0428fbd91c605d1d876eeea1ae99eb9ee9055b6c904561829de0740}
+}]Operators. \index{W\-H\-I\-T\-E\-S\-P\-A\-C\-E@{W\-H\-I\-T\-E\-S\-P\-A\-C\-E}!Qsci\-Lexer\-G\-L\-S\-L@{Qsci\-Lexer\-G\-L\-S\-L}}\index{Qsci\-Lexer\-G\-L\-S\-L@{Qsci\-Lexer\-G\-L\-S\-L}!W\-H\-I\-T\-E\-S\-P\-A\-C\-E@{W\-H\-I\-T\-E\-S\-P\-A\-C\-E}}\item[{\em 
+W\-H\-I\-T\-E\-S\-P\-A\-C\-E\label{class_qsci_lexer_g_l_s_l_a6e484d907d0428fbd91c605d1d876eeea43f671ba10058296e8837bd8ececa161}
+}]Whitespace. \index{D\-A\-T\-A\-T\-Y\-P\-E@{D\-A\-T\-A\-T\-Y\-P\-E}!Qsci\-Lexer\-G\-L\-S\-L@{Qsci\-Lexer\-G\-L\-S\-L}}\index{Qsci\-Lexer\-G\-L\-S\-L@{Qsci\-Lexer\-G\-L\-S\-L}!D\-A\-T\-A\-T\-Y\-P\-E@{D\-A\-T\-A\-T\-Y\-P\-E}}\item[{\em 
+D\-A\-T\-A\-T\-Y\-P\-E\label{class_qsci_lexer_g_l_s_l_a6e484d907d0428fbd91c605d1d876eeea45dd7685b693ba1e34e5dfb052ac220f}
+}]G\-L\-S\-L datatypes. \index{H\-A\-S\-H\-C\-O\-M\-M\-E\-N\-T@{H\-A\-S\-H\-C\-O\-M\-M\-E\-N\-T}!Qsci\-Lexer\-G\-L\-S\-L@{Qsci\-Lexer\-G\-L\-S\-L}}\index{Qsci\-Lexer\-G\-L\-S\-L@{Qsci\-Lexer\-G\-L\-S\-L}!H\-A\-S\-H\-C\-O\-M\-M\-E\-N\-T@{H\-A\-S\-H\-C\-O\-M\-M\-E\-N\-T}}\item[{\em 
+H\-A\-S\-H\-C\-O\-M\-M\-E\-N\-T\label{class_qsci_lexer_g_l_s_l_a6e484d907d0428fbd91c605d1d876eeeabcf72d24aab315b129e67ce06c4aa485}
+}]Preprocessor commands starting with \#. \index{I\-L\-L\-E\-G\-A\-L@{I\-L\-L\-E\-G\-A\-L}!Qsci\-Lexer\-G\-L\-S\-L@{Qsci\-Lexer\-G\-L\-S\-L}}\index{Qsci\-Lexer\-G\-L\-S\-L@{Qsci\-Lexer\-G\-L\-S\-L}!I\-L\-L\-E\-G\-A\-L@{I\-L\-L\-E\-G\-A\-L}}\item[{\em 
+I\-L\-L\-E\-G\-A\-L\label{class_qsci_lexer_g_l_s_l_a6e484d907d0428fbd91c605d1d876eeeacf7fc7d7008f0bd6473bca8f9257fb44}
+}]Illegal G\-L\-S\-L characters. \end{description}
+\end{Desc}
+
+
+Definition at line 36 of file Qsci\-Lexer\-Glsl.\-h.
+
+
+\begin{DoxyCode}
+37   \{
+38     NONE,         
+39     DEFAULT,      
+40     NUMBER,       
+41     KEYWORD,      
+42     FUNCTION,     
+43     STRING,       
+44     COMMENT,      
+45     OPERATOR,     
+46     WHITESPACE,   
+47     DATATYPE,     
+48     HASHCOMMENT,  
+49     ILLEGAL       
+50   \};
+\end{DoxyCode}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Qsci\-Lexer\-G\-L\-S\-L@{Qsci\-Lexer\-G\-L\-S\-L}!Qsci\-Lexer\-G\-L\-S\-L@{Qsci\-Lexer\-G\-L\-S\-L}}
+\index{Qsci\-Lexer\-G\-L\-S\-L@{Qsci\-Lexer\-G\-L\-S\-L}!QsciLexerGLSL@{Qsci\-Lexer\-G\-L\-S\-L}}
+\subsubsection[{Qsci\-Lexer\-G\-L\-S\-L}]{\setlength{\rightskip}{0pt plus 5cm}Qsci\-Lexer\-G\-L\-S\-L\-::\-Qsci\-Lexer\-G\-L\-S\-L (
+\begin{DoxyParamCaption}
+\item[{Qsci\-Scintilla $\ast$}]{\-\_\-parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}\label{class_qsci_lexer_g_l_s_l_a2b928b6c2ff57fb5e8e776093a21e526}
+
+
+\doxyref{Qsci\-Lexer\-G\-L\-S\-L}{p.}{class_qsci_lexer_g_l_s_l} constructor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-parent} & Parent Qsci\-Scintilla instance \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 17 of file Qsci\-Lexer\-Glsl.\-cpp.
+
+
+
+References m\-\_\-\-A\-P\-I, m\-\_\-flex\-Scanner, and m\-\_\-parent.
+
+
+\begin{DoxyCode}
+17                                                    : QsciLexerCustom(\_parent)
+18 \{
+19   m_parent = \_parent;
+20   m_API = \textcolor{keyword}{new} QsciAPIs(\textcolor{keyword}{this});
+21   QString apiPath(\textcolor{stringliteral}{"./src/glsl.api"});
+22   setAPIs(m_API);
+23   m_API->load(apiPath);
+24   m_API->prepare();
+25   m_parent->setAutoCompletionThreshold(2);
+26   m_parent->setAutoCompletionFillupsEnabled(\textcolor{keyword}{true});
+27   m_parent->setAutoCompletionSource(QsciScintilla::AcsAPIs);
+28   m_parent->setSelectionBackgroundColor(QColor(61,61,52));
+29   m_parent->resetSelectionForegroundColor();
+30 
+31   m_flexScanner = \textcolor{keyword}{new} yyFlexLexer;
+32 \}
+\end{DoxyCode}
+\index{Qsci\-Lexer\-G\-L\-S\-L@{Qsci\-Lexer\-G\-L\-S\-L}!$\sim$\-Qsci\-Lexer\-G\-L\-S\-L@{$\sim$\-Qsci\-Lexer\-G\-L\-S\-L}}
+\index{$\sim$\-Qsci\-Lexer\-G\-L\-S\-L@{$\sim$\-Qsci\-Lexer\-G\-L\-S\-L}!QsciLexerGLSL@{Qsci\-Lexer\-G\-L\-S\-L}}
+\subsubsection[{$\sim$\-Qsci\-Lexer\-G\-L\-S\-L}]{\setlength{\rightskip}{0pt plus 5cm}Qsci\-Lexer\-G\-L\-S\-L\-::$\sim$\-Qsci\-Lexer\-G\-L\-S\-L (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_qsci_lexer_g_l_s_l_a4378f6932ba06103f11c10fc0c5733bc}
+
+
+\doxyref{Qsci\-Lexer\-G\-L\-S\-L}{p.}{class_qsci_lexer_g_l_s_l} destructor. 
+
+
+
+Definition at line 35 of file Qsci\-Lexer\-Glsl.\-cpp.
+
+
+
+References m\-\_\-\-A\-P\-I, and m\-\_\-flex\-Scanner.
+
+
+\begin{DoxyCode}
+36 \{
+37   \textcolor{keyword}{delete} m_API;
+38   \textcolor{keyword}{delete} m_flexScanner;
+39   \textcolor{keywordflow}{return};
+40 \}
+\end{DoxyCode}
+\index{Qsci\-Lexer\-G\-L\-S\-L@{Qsci\-Lexer\-G\-L\-S\-L}!Qsci\-Lexer\-G\-L\-S\-L@{Qsci\-Lexer\-G\-L\-S\-L}}
+\index{Qsci\-Lexer\-G\-L\-S\-L@{Qsci\-Lexer\-G\-L\-S\-L}!QsciLexerGLSL@{Qsci\-Lexer\-G\-L\-S\-L}}
+\subsubsection[{Qsci\-Lexer\-G\-L\-S\-L}]{\setlength{\rightskip}{0pt plus 5cm}Qsci\-Lexer\-G\-L\-S\-L\-::\-Qsci\-Lexer\-G\-L\-S\-L (
+\begin{DoxyParamCaption}
+\item[{const {\bf Qsci\-Lexer\-G\-L\-S\-L} \&}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\label{class_qsci_lexer_g_l_s_l_aa10fcbf7265067ee8dd8347919b700b7}
+
+
+copy constructor 
+
+
+
+\subsection{Member Function Documentation}
+\index{Qsci\-Lexer\-G\-L\-S\-L@{Qsci\-Lexer\-G\-L\-S\-L}!default\-Color@{default\-Color}}
+\index{default\-Color@{default\-Color}!QsciLexerGLSL@{Qsci\-Lexer\-G\-L\-S\-L}}
+\subsubsection[{default\-Color}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Color Qsci\-Lexer\-G\-L\-S\-L\-::default\-Color (
+\begin{DoxyParamCaption}
+\item[{const int}]{\-\_\-style}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_qsci_lexer_g_l_s_l_a6a4304df1128a441abfe626aefbeeaca}
+
+
+virtual function reimplemented from Qsci\-Lexer. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-style} & style number. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Default colour for style {\itshape \-\_\-style}. 
+\end{DoxyReturn}
+
+
+Definition at line 84 of file Qsci\-Lexer\-Glsl.\-cpp.
+
+
+\begin{DoxyCode}
+85 \{
+86   \textcolor{keywordflow}{switch}(style)
+87   \{
+88     \textcolor{keywordflow}{case} StyleType::DEFAULT:    \{ \textcolor{keywordflow}{return} QColor(247, 247, 241); \}
+89     \textcolor{keywordflow}{case} StyleType::KEYWORD:    \{ \textcolor{keywordflow}{return} QColor(249, 38, 114); \}
+90     \textcolor{keywordflow}{case} StyleType::DATATYPE:   \{ \textcolor{keywordflow}{return} QColor(102, 216, 238); \}
+91     \textcolor{keywordflow}{case} StyleType::NUMBER:     \{ \textcolor{keywordflow}{return} QColor(174, 129, 255); \}
+92     \textcolor{keywordflow}{case} StyleType::OPERATOR:   \{ \textcolor{keywordflow}{return} QColor(249, 38, 114); \}
+93     \textcolor{keywordflow}{case} StyleType::STRING:     \{ \textcolor{keywordflow}{return} QColor(230, 219, 116); \}
+94     \textcolor{keywordflow}{case} StyleType::FUNCTION:   \{ \textcolor{keywordflow}{return} QColor(166, 226, 46); \}
+95     \textcolor{keywordflow}{case} StyleType::COMMENT:    \{ \textcolor{keywordflow}{return} QColor(117, 113, 94); \}
+96     \textcolor{keywordflow}{case} StyleType::HASHCOMMENT:\{ \textcolor{keywordflow}{return} QColor(174, 129, 255); \}
+97     \textcolor{keywordflow}{default}:                    \{ \textcolor{keywordflow}{return} QColor(247,247,241); \}
+98   \}
+99 \}
+\end{DoxyCode}
+\index{Qsci\-Lexer\-G\-L\-S\-L@{Qsci\-Lexer\-G\-L\-S\-L}!default\-Font@{default\-Font}}
+\index{default\-Font@{default\-Font}!QsciLexerGLSL@{Qsci\-Lexer\-G\-L\-S\-L}}
+\subsubsection[{default\-Font}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Font Qsci\-Lexer\-G\-L\-S\-L\-::default\-Font (
+\begin{DoxyParamCaption}
+\item[{const int}]{\-\_\-style}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_qsci_lexer_g_l_s_l_ac4e8f4b07faece655c767ade357334f1}
+
+
+virtual function reimplemented from Qsci\-Lexer. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-style} & style number. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Default font for style {\itshape \-\_\-style}. 
+\end{DoxyReturn}
+
+
+Definition at line 112 of file Qsci\-Lexer\-Glsl.\-cpp.
+
+
+\begin{DoxyCode}
+113 \{
+114   \textcolor{keywordtype}{int} weight = 50;
+115   \textcolor{keywordtype}{int} size = 12;
+116   \textcolor{keywordtype}{bool} italic = 0;
+117   \textcolor{keywordflow}{switch}(style)
+118   \{
+119     \textcolor{keywordflow}{case} StyleType::DEFAULT:
+120     \{
+121       weight = 50;
+122       size = 12;
+123       \textcolor{keywordflow}{break};
+124     \}
+125     \textcolor{keywordflow}{case} StyleType::DATATYPE:
+126     \{
+127       italic = \textcolor{keyword}{true};
+128       \textcolor{keywordflow}{break};
+129     \}
+130   \}
+131 
+132   \textcolor{keywordflow}{return} QFont(\textcolor{stringliteral}{"Monospace"}, size,weight,italic);
+133 \}
+\end{DoxyCode}
+\index{Qsci\-Lexer\-G\-L\-S\-L@{Qsci\-Lexer\-G\-L\-S\-L}!default\-Paper@{default\-Paper}}
+\index{default\-Paper@{default\-Paper}!QsciLexerGLSL@{Qsci\-Lexer\-G\-L\-S\-L}}
+\subsubsection[{default\-Paper}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Color Qsci\-Lexer\-G\-L\-S\-L\-::default\-Paper (
+\begin{DoxyParamCaption}
+\item[{const int}]{\-\_\-style}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_qsci_lexer_g_l_s_l_a4b8030348067261e571af400ae89ed09}
+
+
+virtual function reimplemented from Qsci\-Lexer. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-style} & style number. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Default paper colour for style {\itshape \-\_\-style}. 
+\end{DoxyReturn}
+
+
+Definition at line 102 of file Qsci\-Lexer\-Glsl.\-cpp.
+
+
+\begin{DoxyCode}
+103 \{
+104   \textcolor{keywordflow}{switch}(style)
+105   \{
+106     \textcolor{keywordflow}{case} StyleType::ILLEGAL:  \{ \textcolor{keywordflow}{return} QColor(249, 38, 114); \}
+107     \textcolor{keywordflow}{default}:                  \{ \textcolor{keywordflow}{return} QColor(39,40,34); \}
+108   \}
+109 \}
+\end{DoxyCode}
+\index{Qsci\-Lexer\-G\-L\-S\-L@{Qsci\-Lexer\-G\-L\-S\-L}!description@{description}}
+\index{description@{description}!QsciLexerGLSL@{Qsci\-Lexer\-G\-L\-S\-L}}
+\subsubsection[{description}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Qsci\-Lexer\-G\-L\-S\-L\-::description (
+\begin{DoxyParamCaption}
+\item[{const int}]{\-\_\-style}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_qsci_lexer_g_l_s_l_a7bd7e355225e736adee08582f0611d13}
+
+
+virtual function reimplemented from Qsci\-Lexer. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-style} & style number. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Descriptive for style {\itshape \-\_\-style}. 
+\end{DoxyReturn}
+
+
+Definition at line 136 of file Qsci\-Lexer\-Glsl.\-cpp.
+
+
+\begin{DoxyCode}
+137 \{
+138   \textcolor{keywordflow}{switch}(style)
+139   \{
+140     \textcolor{keywordflow}{case} StyleType::NONE:       \{\textcolor{keywordflow}{return} \textcolor{stringliteral}{"NONE"};\}
+141     \textcolor{keywordflow}{case} StyleType::DEFAULT:    \{\textcolor{keywordflow}{return} \textcolor{stringliteral}{"DEFAULT"};\}
+142     \textcolor{keywordflow}{case} StyleType::NUMBER:     \{\textcolor{keywordflow}{return} \textcolor{stringliteral}{"NUMBER"};\}
+143     \textcolor{keywordflow}{case} StyleType::KEYWORD:    \{\textcolor{keywordflow}{return} \textcolor{stringliteral}{"KEYWORD"};\}
+144     \textcolor{keywordflow}{case} StyleType::FUNCTION:   \{\textcolor{keywordflow}{return} \textcolor{stringliteral}{"FUNCTION"};\}
+145     \textcolor{keywordflow}{case} StyleType::STRING:     \{\textcolor{keywordflow}{return} \textcolor{stringliteral}{"STRING"};\}
+146     \textcolor{keywordflow}{case} StyleType::COMMENT:    \{\textcolor{keywordflow}{return} \textcolor{stringliteral}{"COMMENT"};\}
+147     \textcolor{keywordflow}{case} StyleType::OPERATOR:   \{\textcolor{keywordflow}{return} \textcolor{stringliteral}{"OPERATOR"};\}
+148     \textcolor{keywordflow}{case} StyleType::WHITESPACE: \{\textcolor{keywordflow}{return} \textcolor{stringliteral}{"WHITESPACE"};\}
+149     \textcolor{keywordflow}{case} StyleType::DATATYPE:   \{\textcolor{keywordflow}{return} \textcolor{stringliteral}{"DATATYPE"};\}
+150     \textcolor{keywordflow}{default}:                    \{\textcolor{keywordflow}{return} QString(style);\}
+151   \}
+152 \}
+\end{DoxyCode}
+\index{Qsci\-Lexer\-G\-L\-S\-L@{Qsci\-Lexer\-G\-L\-S\-L}!language@{language}}
+\index{language@{language}!QsciLexerGLSL@{Qsci\-Lexer\-G\-L\-S\-L}}
+\subsubsection[{language}]{\setlength{\rightskip}{0pt plus 5cm}const char $\ast$ Qsci\-Lexer\-G\-L\-S\-L\-::language (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_qsci_lexer_g_l_s_l_a3825604333b4b2fb8fa45ec6ea273010}
+
+
+virtual function reimplemented from Qsci\-Lexer. 
+
+\begin{DoxyReturn}{Returns}
+lexer language. 
+\end{DoxyReturn}
+
+
+Definition at line 155 of file Qsci\-Lexer\-Glsl.\-cpp.
+
+
+\begin{DoxyCode}
+156 \{
+157   \textcolor{keywordflow}{return} \textcolor{stringliteral}{"GLSL"};
+158 \}
+\end{DoxyCode}
+\index{Qsci\-Lexer\-G\-L\-S\-L@{Qsci\-Lexer\-G\-L\-S\-L}!operator=@{operator=}}
+\index{operator=@{operator=}!QsciLexerGLSL@{Qsci\-Lexer\-G\-L\-S\-L}}
+\subsubsection[{operator=}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Qsci\-Lexer\-G\-L\-S\-L}\& Qsci\-Lexer\-G\-L\-S\-L\-::operator= (
+\begin{DoxyParamCaption}
+\item[{const {\bf Qsci\-Lexer\-G\-L\-S\-L} \&}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\label{class_qsci_lexer_g_l_s_l_a3810dd7ced8cc397e698241ebcac10b5}
+
+
+assignment operator 
+
+\index{Qsci\-Lexer\-G\-L\-S\-L@{Qsci\-Lexer\-G\-L\-S\-L}!style\-Text@{style\-Text}}
+\index{style\-Text@{style\-Text}!QsciLexerGLSL@{Qsci\-Lexer\-G\-L\-S\-L}}
+\subsubsection[{style\-Text}]{\setlength{\rightskip}{0pt plus 5cm}void Qsci\-Lexer\-G\-L\-S\-L\-::style\-Text (
+\begin{DoxyParamCaption}
+\item[{const int}]{\-\_\-start, }
+\item[{const int}]{\-\_\-end}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_qsci_lexer_g_l_s_l_a436cdbec0ace79c275b7635ee4dec212}
+
+
+virtual function reimplemented from Qsci\-Lexer\-Custom. 
+
+This is called when text needs to be styled. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-start} & Start position of text to be styled. \\
+\hline
+\mbox{\tt in}  & {\em \-\_\-end} & End position of text to be styleed. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 43 of file Qsci\-Lexer\-Glsl.\-cpp.
+
+
+
+References m\-\_\-flex\-Scanner, and m\-\_\-parent.
+
+
+\begin{DoxyCode}
+44 \{
+45   m_parent->autoCompleteFromAPIs();
+46   \textcolor{comment}{//return if no QsciScintilla editor}
+47   \textcolor{keywordflow}{if}(!editor()) \{ \textcolor{keywordflow}{return}; \}
+48   \textcolor{comment}{//return if no text to be styled}
+49   \textcolor{keywordflow}{if}(start == end) \{ \textcolor{keywordflow}{return}; \}
+50 
+51   \textcolor{keywordtype}{char} * data = \textcolor{keyword}{new} \textcolor{keywordtype}{char}[end - start +1];
+52 
+53   \textcolor{comment}{//get text to be styled}
+54   editor()->SendScintilla(QsciScintilla::SCI\_GETTEXTRANGE, start, end, data);
+55   std::istringstream istr (data);
+56   \textcolor{keyword}{delete} [] data;
+57 
+58   \textcolor{comment}{//style keywords}
+59 
+60   \textcolor{keywordtype}{int} tok;
+61   \textcolor{keywordtype}{int} loc=0;
+62 
+63   std::vector<int> tokens;
+64   tok = m_flexScanner->yylex(&istr);
+65 
+66   \textcolor{keywordflow}{while} (tok>0)
+67   \{
+68     tokens.push\_back(tok);
+69     tokens.push\_back(loc);
+70     tokens.push\_back(m_flexScanner->YYLeng());
+71     loc = loc + m_flexScanner->YYLeng();
+72     tok = m_flexScanner->yylex();
+73   \}
+74 
+75   \textcolor{keywordtype}{int} tokensCount = tokens.size();
+76   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i<tokensCount; i=i+3)
+77   \{
+78     startStyling(start+tokens[i+1]);
+79     setStyling(tokens[i+2],tokens[i]);
+80   \}
+81 \}
+\end{DoxyCode}
+
+
+\subsection{Member Data Documentation}
+\index{Qsci\-Lexer\-G\-L\-S\-L@{Qsci\-Lexer\-G\-L\-S\-L}!m\-\_\-\-A\-P\-I@{m\-\_\-\-A\-P\-I}}
+\index{m\-\_\-\-A\-P\-I@{m\-\_\-\-A\-P\-I}!QsciLexerGLSL@{Qsci\-Lexer\-G\-L\-S\-L}}
+\subsubsection[{m\-\_\-\-A\-P\-I}]{\setlength{\rightskip}{0pt plus 5cm}Qsci\-A\-P\-Is$\ast$ Qsci\-Lexer\-G\-L\-S\-L\-::m\-\_\-\-A\-P\-I\hspace{0.3cm}{\ttfamily [protected]}}\label{class_qsci_lexer_g_l_s_l_a5a8b79017f87e93544b310e141117f19}
+
+
+G\-L\-S\-L A\-P\-I instance. 
+
+
+
+Definition at line 106 of file Qsci\-Lexer\-Glsl.\-h.
+
+\index{Qsci\-Lexer\-G\-L\-S\-L@{Qsci\-Lexer\-G\-L\-S\-L}!m\-\_\-flex\-Scanner@{m\-\_\-flex\-Scanner}}
+\index{m\-\_\-flex\-Scanner@{m\-\_\-flex\-Scanner}!QsciLexerGLSL@{Qsci\-Lexer\-G\-L\-S\-L}}
+\subsubsection[{m\-\_\-flex\-Scanner}]{\setlength{\rightskip}{0pt plus 5cm}Flex\-Lexer$\ast$ Qsci\-Lexer\-G\-L\-S\-L\-::m\-\_\-flex\-Scanner\hspace{0.3cm}{\ttfamily [protected]}}\label{class_qsci_lexer_g_l_s_l_a5c56095cc12e9169a48df868861ee2bc}
+
+
+flex lexer instance 
+
+
+
+Definition at line 110 of file Qsci\-Lexer\-Glsl.\-h.
+
+\index{Qsci\-Lexer\-G\-L\-S\-L@{Qsci\-Lexer\-G\-L\-S\-L}!m\-\_\-parent@{m\-\_\-parent}}
+\index{m\-\_\-parent@{m\-\_\-parent}!QsciLexerGLSL@{Qsci\-Lexer\-G\-L\-S\-L}}
+\subsubsection[{m\-\_\-parent}]{\setlength{\rightskip}{0pt plus 5cm}Qsci\-Scintilla$\ast$ Qsci\-Lexer\-G\-L\-S\-L\-::m\-\_\-parent\hspace{0.3cm}{\ttfamily [protected]}}\label{class_qsci_lexer_g_l_s_l_a1e4ae5504f8c213a198b86e166b38ab5}
+
+
+parent Q\-Scintilla instance 
+
+
+
+Definition at line 102 of file Qsci\-Lexer\-Glsl.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+{\bf Qsci\-Lexer\-Glsl.\-h}\item 
+{\bf Qsci\-Lexer\-Glsl.\-cpp}\end{DoxyCompactItemize}

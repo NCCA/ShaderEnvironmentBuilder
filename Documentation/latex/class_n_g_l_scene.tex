@@ -1,0 +1,2247 @@
+\section{N\-G\-L\-Scene Class Reference}
+\label{class_n_g_l_scene}\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}}
+
+
+our main gl widget for N\-G\-L applications all drawing elements are put in this file  
+
+
+
+
+{\ttfamily \#include $<$N\-G\-L\-Scene.\-h$>$}
+
+
+
+Inheritance diagram for N\-G\-L\-Scene\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=134pt]{class_n_g_l_scene__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for N\-G\-L\-Scene\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_n_g_l_scene__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void {\bf init\-G\-L} ()
+\begin{DoxyCompactList}\small\item\em the initialize class is called once when the window is created and we have a valid G\-L context use this to setup any default G\-L stuff \end{DoxyCompactList}\item 
+void {\bf set\-Shape\-Type} (int \-\_\-type)
+\begin{DoxyCompactList}\small\item\em sets the shape type \end{DoxyCompactList}\item 
+void {\bf toggle\-Wireframe} (bool \-\_\-state)
+\begin{DoxyCompactList}\small\item\em toggles the wireframe visibility \end{DoxyCompactList}\item 
+void {\bf toggle\-Normals} (bool \-\_\-state)
+\begin{DoxyCompactList}\small\item\em toggles the normals visibility \end{DoxyCompactList}\item 
+void {\bf toggle\-Axis} (bool \-\_\-state)
+\begin{DoxyCompactList}\small\item\em toggles the axis visibility \end{DoxyCompactList}\item 
+void {\bf toggle\-Grid} (bool \-\_\-state)
+\begin{DoxyCompactList}\small\item\em toggles the grid visibility \end{DoxyCompactList}\item 
+void {\bf set\-Normal\-Size} (int \-\_\-size)
+\begin{DoxyCompactList}\small\item\em sets the normal size \end{DoxyCompactList}\item 
+void {\bf export\-Uniform} ()
+\begin{DoxyCompactList}\small\item\em exports the uniforms and writes them to the file Parsing\-Output.\-txt \end{DoxyCompactList}\item 
+void {\bf reset\-Obj\-Pos} ()
+\begin{DoxyCompactList}\small\item\em resets the position of the active O\-B\-J in the Open\-G\-L context \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+void {\bf create\-Line\-Marker} (Q\-String \-\_\-shader\-Name, int \-\_\-line\-Num)
+\begin{DoxyCompactList}\small\item\em signal to create a line marker \end{DoxyCompactList}\item 
+void {\bf initialize\-G\-L} ()
+\begin{DoxyCompactList}\small\item\em the signal for initialize G\-L \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\bf N\-G\-L\-Scene} (Q\-Widget $\ast$\-\_\-parent, {\bf Parser\-Lib} $\ast$\-\_\-lib\-Parent, {\bf Shader\-Manager} $\ast$\-\_\-manager)
+\begin{DoxyCompactList}\small\item\em Constructor for G\-L\-Window. \end{DoxyCompactList}\item 
+{\bf $\sim$\-N\-G\-L\-Scene} ()
+\begin{DoxyCompactList}\small\item\em dtor must close down ngl and release Open\-G\-L resources \end{DoxyCompactList}\item 
+void {\bf paint\-G\-L} ()
+\begin{DoxyCompactList}\small\item\em this is called everytime we want to draw the scene \end{DoxyCompactList}\item 
+void {\bf resize\-G\-L} (Q\-Resize\-Event $\ast$\-\_\-event)
+\begin{DoxyCompactList}\small\item\em this is called everytime we resize the scene note\-: Qt 5.\-5.\-1 must have this implemented and uses it \end{DoxyCompactList}\item 
+void {\bf resize\-G\-L} (int \-\_\-w, int \-\_\-h)
+\begin{DoxyCompactList}\small\item\em this is called everytime we resize the scene note\-: Qt 5.\-x uses this instead! {\tt http\-://doc.\-qt.\-io/qt-\/5/qopenglwindow.\-html\#resize\-G\-L} \end{DoxyCompactList}\item 
+void {\bf compile\-Shader} (Q\-String \-\_\-vert\-Source, Q\-String \-\_\-frag\-Source)
+\begin{DoxyCompactList}\small\item\em loads and compiles a shader from Qstrings passed from the text editor \end{DoxyCompactList}\item 
+void {\bf set\-Mesh\-Location} (std\-::string \-\_\-mesh\-Directory)
+\begin{DoxyCompactList}\small\item\em sets the file location you of a mesh \end{DoxyCompactList}\item 
+void {\bf set\-Project} (std\-::string \-\_\-name, Q\-String \-\_\-vert\-Source, Q\-String \-\_\-frag\-Source)
+\begin{DoxyCompactList}\small\item\em Creates a new project for the shader. \end{DoxyCompactList}\item 
+void {\bf import\-Mesh\-Name} (const std\-::string \&\-\_\-name)
+\begin{DoxyCompactList}\small\item\em Changes the name of the m\-\_\-mesh object directory. \end{DoxyCompactList}\item 
+void {\bf import\-Texture\-Map} (const std\-::string \&\-\_\-name)
+\begin{DoxyCompactList}\small\item\em loads in a texture map and directly applies it to the O\-B\-J. (Requires U\-Vs) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+{\bf Parser\-Lib} $\ast$ {\bf m\-\_\-parser}
+\begin{DoxyCompactList}\small\item\em the parser to deal with all the uniform values stored in the shader \end{DoxyCompactList}\item 
+{\bf Camera} $\ast$ {\bf m\-\_\-camera}
+\begin{DoxyCompactList}\small\item\em Pointer to inherit camera class. This is public for signal/slot access. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void {\bf mouse\-Move\-Event} (Q\-Mouse\-Event $\ast$\-\_\-event)
+\begin{DoxyCompactList}\small\item\em this method is called every time a mouse is moved \end{DoxyCompactList}\item 
+void {\bf mouse\-Press\-Event} (Q\-Mouse\-Event $\ast$\-\_\-event)
+\begin{DoxyCompactList}\small\item\em this method is called everytime the mouse button is pressed inherited from Q\-Object and overridden here. \end{DoxyCompactList}\item 
+void {\bf mouse\-Release\-Event} (Q\-Mouse\-Event $\ast$\-\_\-event)
+\begin{DoxyCompactList}\small\item\em this method is called everytime the mouse button is released inherited from Q\-Object and overridden here. \end{DoxyCompactList}\item 
+void {\bf load\-Matrices\-To\-Shader} ()
+\begin{DoxyCompactList}\small\item\em method to load transform matrices to the shader \end{DoxyCompactList}\item 
+void {\bf wheel\-Event} (Q\-Wheel\-Event $\ast$\-\_\-event)
+\begin{DoxyCompactList}\small\item\em this method is called everytime the mouse wheel is moved inherited from Q\-Object and overridden here. \end{DoxyCompactList}\item 
+void {\bf key\-Press\-Event} (Q\-Key\-Event $\ast$\-\_\-event)
+\begin{DoxyCompactList}\small\item\em this method should be called every time a keyboard button is pressed. Inherited from Q\-Object and overridden here. \end{DoxyCompactList}\item 
+void {\bf object\-Transform} (uint \-\_\-type)
+\begin{DoxyCompactList}\small\item\em Set object transformations depending on the shape type. \end{DoxyCompactList}\item 
+Q\-String {\bf parse\-Error\-Log} (Q\-String)
+\begin{DoxyCompactList}\small\item\em Stores a Q\-String. Used to edit the error log message. \end{DoxyCompactList}\item 
+void {\bf draw\-Axis} (ngl\-::\-Vec3 \-\_\-pos)
+\begin{DoxyCompactList}\small\item\em Draw a xyz axis. \end{DoxyCompactList}\item 
+void {\bf draw\-Object} (uint \-\_\-type)
+\begin{DoxyCompactList}\small\item\em draw an object based on the m\-\_\-shape\-Type; e.\-g. 0=mesh, 1=sphere, etc \end{DoxyCompactList}\item 
+void {\bf toggle\-Obj} ()
+\begin{DoxyCompactList}\small\item\em Activate the m\-\_\-mesh .obj. \end{DoxyCompactList}\item 
+void {\bf create\-Camera} ()
+\begin{DoxyCompactList}\small\item\em set the camera shape in the scene \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool {\bf m\-\_\-rotate}
+\begin{DoxyCompactList}\small\item\em flag to indicate if the mouse button is pressed when dragging \end{DoxyCompactList}\item 
+int {\bf m\-\_\-spin\-X\-Face}
+\begin{DoxyCompactList}\small\item\em used to store the x rotation mouse value \end{DoxyCompactList}\item 
+int {\bf m\-\_\-spin\-Y\-Face}
+\begin{DoxyCompactList}\small\item\em used to store the y rotation mouse value \end{DoxyCompactList}\item 
+int {\bf m\-\_\-spin\-Z\-Face}
+\begin{DoxyCompactList}\small\item\em used to store the z rotation mouse value \end{DoxyCompactList}\item 
+ngl\-::\-Vec3 {\bf m\-\_\-rotation}
+\begin{DoxyCompactList}\small\item\em rotation of the teapot \end{DoxyCompactList}\item 
+bool {\bf m\-\_\-translate}
+\begin{DoxyCompactList}\small\item\em flag to indicate if the Right mouse button is pressed when dragging \end{DoxyCompactList}\item 
+int {\bf m\-\_\-orig\-X}
+\begin{DoxyCompactList}\small\item\em the previous x mouse value \end{DoxyCompactList}\item 
+int {\bf m\-\_\-orig\-Y}
+\begin{DoxyCompactList}\small\item\em the previous y mouse value \end{DoxyCompactList}\item 
+int {\bf m\-\_\-orig\-X\-Pos}
+\begin{DoxyCompactList}\small\item\em the previous x mouse value for Position changes \end{DoxyCompactList}\item 
+int {\bf m\-\_\-orig\-Y\-Pos}
+\begin{DoxyCompactList}\small\item\em the previous y mouse value for Position changes \end{DoxyCompactList}\item 
+ngl\-::\-Mat4 {\bf m\-\_\-mouse\-Global\-T\-X}
+\begin{DoxyCompactList}\small\item\em used to store the global mouse transforms \end{DoxyCompactList}\item 
+ngl\-::\-Camera {\bf m\-\_\-cam}
+\begin{DoxyCompactList}\small\item\em The camera. \end{DoxyCompactList}\item 
+ngl\-::\-Vec3 {\bf m\-\_\-model\-Pos}
+\begin{DoxyCompactList}\small\item\em the model position for mouse movement \end{DoxyCompactList}\item 
+ngl\-::\-Transformation {\bf m\-\_\-transform}
+\begin{DoxyCompactList}\small\item\em transformation stack for the gl transformations etc \end{DoxyCompactList}\item 
+bool {\bf m\-\_\-wireframe}
+\begin{DoxyCompactList}\small\item\em set the view to show wireframe \end{DoxyCompactList}\item 
+{\bf I\-O\-\_\-\-X\-M\-L} $\ast$ {\bf m\-\_\-read\-From\-X\-M\-L}
+\begin{DoxyCompactList}\small\item\em read from xml file \end{DoxyCompactList}\item 
+{\bf Main\-Window} $\ast$ {\bf m\-\_\-window}
+\begin{DoxyCompactList}\small\item\em the main window that is the G\-U\-I \end{DoxyCompactList}\item 
+uint {\bf m\-\_\-shape\-Type}
+\begin{DoxyCompactList}\small\item\em defines the mesh type \end{DoxyCompactList}\item 
+bool {\bf m\-\_\-toggle\-Obj}
+\begin{DoxyCompactList}\small\item\em A toggle used to import the .obj m\-\_\-mesh. \end{DoxyCompactList}\item 
+bool {\bf m\-\_\-toggle\-Axis}
+\begin{DoxyCompactList}\small\item\em A toggle used to turn axis on and off. \end{DoxyCompactList}\item 
+bool {\bf m\-\_\-draw\-Normals}
+\begin{DoxyCompactList}\small\item\em A toggle used to draw normals. \end{DoxyCompactList}\item 
+bool {\bf m\-\_\-draw\-Grid}
+\begin{DoxyCompactList}\small\item\em A toggle used to draw a grid. \end{DoxyCompactList}\item 
+float {\bf m\-\_\-normal\-Size}
+\begin{DoxyCompactList}\small\item\em Stores the size of the normal. \end{DoxyCompactList}\item 
+G\-Luint {\bf m\-\_\-texture\-Name}
+\begin{DoxyCompactList}\small\item\em stores the texture name \end{DoxyCompactList}\item 
+bool {\bf m\-\_\-shader\-Error}
+\begin{DoxyCompactList}\small\item\em If there is a shader error or not. \end{DoxyCompactList}\item 
+{\bf Shader\-Manager} $\ast$ {\bf m\-\_\-shader\-Manager}
+\begin{DoxyCompactList}\small\item\em Stores the shader manager which handles the setup and maintenance of shaders. \end{DoxyCompactList}\item 
+int {\bf m\-\_\-camera\-Index}
+\begin{DoxyCompactList}\small\item\em An index to access the cameras. \end{DoxyCompactList}\item 
+std\-::string {\bf m\-\_\-mesh\-Loc}
+\begin{DoxyCompactList}\small\item\em A string to store the .obj m\-\_\-mesh directory. \end{DoxyCompactList}\item 
+std\-::unique\-\_\-ptr$<$ ngl\-::\-Obj $>$ {\bf m\-\_\-mesh}
+\begin{DoxyCompactList}\small\item\em Pointer to the V\-A\-O m\-\_\-mesh. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+our main gl widget for N\-G\-L applications all drawing elements are put in this file 
+
+Definition at line 57 of file N\-G\-L\-Scene.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!N\-G\-L\-Scene@{N\-G\-L\-Scene}}
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{N\-G\-L\-Scene}]{\setlength{\rightskip}{0pt plus 5cm}N\-G\-L\-Scene\-::\-N\-G\-L\-Scene (
+\begin{DoxyParamCaption}
+\item[{Q\-Widget $\ast$}]{\-\_\-parent, }
+\item[{{\bf Parser\-Lib} $\ast$}]{\-\_\-lib\-Parent, }
+\item[{{\bf Shader\-Manager} $\ast$}]{\-\_\-manager}
+\end{DoxyParamCaption}
+)}\label{class_n_g_l_scene_a6285f61227606fab03e138db7b6e097d}
+
+
+Constructor for G\-L\-Window. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-parent} & the parent window to create the G\-L context in \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 30 of file N\-G\-L\-Scene.\-cpp.
+
+
+
+References Camera\-::create\-Cameras(), init\-G\-L(), initialize\-G\-L(), m\-\_\-cam, m\-\_\-camera, m\-\_\-draw\-Grid, m\-\_\-draw\-Normals, Camera\-::m\-\_\-main\-Camera, m\-\_\-mesh\-Loc, m\-\_\-normal\-Size, m\-\_\-parser, m\-\_\-rotate, m\-\_\-shader\-Manager, m\-\_\-shape\-Type, m\-\_\-spin\-X\-Face, m\-\_\-spin\-Y\-Face, m\-\_\-spin\-Z\-Face, m\-\_\-toggle\-Axis, m\-\_\-toggle\-Obj, m\-\_\-window, and m\-\_\-wireframe.
+
+
+\begin{DoxyCode}
+32   : QOpenGLWidget( \_parent )
+33 \{
+34   \textcolor{comment}{// re-size the widget to that of the parent (in that case the GLFrame passed in on construction)}
+35   m_rotate=\textcolor{keyword}{false};
+36   \textcolor{comment}{// mouse rotation values set to 0}
+37   m_spinXFace = 0.0f;
+38   m_spinYFace = 0.0f;
+39   m_spinZFace = 0.0;
+40   m_parser= \_libParent; \textcolor{comment}{//DONT CHANGE THIS}
+41   m_shapeType=6;
+42   m_toggleObj=\textcolor{keyword}{false};
+43   m_toggleAxis=\textcolor{keyword}{false};
+44   m_meshLoc=\textcolor{stringliteral}{"./models/Suzanne.obj"};
+45   m_drawNormals=\textcolor{keyword}{false};
+46   m_drawGrid=\textcolor{keyword}{false};
+47   m_normalSize=0.1;
+48   \textcolor{comment}{// Store main window to send data from compile errors}
+49   m_window = \textcolor{keyword}{dynamic\_cast<}MainWindow*\textcolor{keyword}{>}(\_parent);
+50   \textcolor{comment}{// re-size the widget to that of the parent (in this case the GLFrame passed in on construction)}
+51   this->resize(\_parent->size());
+52   m_wireframe=\textcolor{keyword}{false};
+53   m_shaderManager = \_manager;
+54   m_camera = \textcolor{keyword}{new} Camera();
+55   m_camera->createCameras();
+56   m_cam = m_camera->m_mainCamera;
+57 
+58   \textcolor{comment}{// set this widget to have the initial keyboard focus}
+59   setFocus();
+60   connect(\textcolor{keyword}{this}, SIGNAL(initializeGL()), \textcolor{keyword}{this}, SLOT(initGL()));
+61 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_n_g_l_scene_a6285f61227606fab03e138db7b6e097d_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!$\sim$\-N\-G\-L\-Scene@{$\sim$\-N\-G\-L\-Scene}}
+\index{$\sim$\-N\-G\-L\-Scene@{$\sim$\-N\-G\-L\-Scene}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{$\sim$\-N\-G\-L\-Scene}]{\setlength{\rightskip}{0pt plus 5cm}N\-G\-L\-Scene\-::$\sim$\-N\-G\-L\-Scene (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_n_g_l_scene_abda05d130945833bfbb6bad8d619f7f5}
+
+
+dtor must close down ngl and release Open\-G\-L resources 
+
+
+
+Definition at line 64 of file N\-G\-L\-Scene.\-cpp.
+
+
+
+References m\-\_\-parser, m\-\_\-shader\-Manager, and m\-\_\-texture\-Name.
+
+
+\begin{DoxyCode}
+65 \{
+66   \textcolor{comment}{//delete m\_readFromXML;}
+67   \textcolor{keyword}{delete} m_parser;
+68   \textcolor{keyword}{delete} m_shaderManager;
+69 
+70   \textcolor{comment}{//Clear any existing texture maps}
+71   glDeleteTextures(1,&m_textureName);
+72 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!compile\-Shader@{compile\-Shader}}
+\index{compile\-Shader@{compile\-Shader}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{compile\-Shader}]{\setlength{\rightskip}{0pt plus 5cm}void N\-G\-L\-Scene\-::compile\-Shader (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{\-\_\-vert\-Source, }
+\item[{Q\-String}]{\-\_\-frag\-Source}
+\end{DoxyParamCaption}
+)}\label{class_n_g_l_scene_a141eaaa05e2637a0f844ba4beefd74e3}
+
+
+loads and compiles a shader from Qstrings passed from the text editor 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-vert\-Source} & the Qstring containing the vertex shader source code \\
+\hline
+\mbox{\tt in}  & {\em \-\_\-frag\-Source} & the Qstring containing the fragment shader source code \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 562 of file N\-G\-L\-Scene.\-cpp.
+
+
+
+References Parser\-Lib\-::assign\-All\-Data(), Shader\-Manager\-::compile\-Shader(), Shader\-Manager\-::get\-Error\-Log(), m\-\_\-parser, m\-\_\-shader\-Manager, m\-\_\-window, parse\-Error\-Log(), and Main\-Window\-::set\-Terminal\-Text().
+
+
+\begin{DoxyCode}
+563 \{
+564   m_shaderManager->compileShader(\_vertSource, \_fragSource);
+565   m_window->setTerminalText(parseErrorLog(m_shaderManager->getErrorLog()));
+566   update();
+567   m_parser->assignAllData();
+568 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_n_g_l_scene_a141eaaa05e2637a0f844ba4beefd74e3_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_n_g_l_scene_a141eaaa05e2637a0f844ba4beefd74e3_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!create\-Camera@{create\-Camera}}
+\index{create\-Camera@{create\-Camera}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{create\-Camera}]{\setlength{\rightskip}{0pt plus 5cm}void N\-G\-L\-Scene\-::create\-Camera (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}\label{class_n_g_l_scene_ab9633269ab79024b72a3c15deae9d57d}
+
+
+set the camera shape in the scene 
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!create\-Line\-Marker@{create\-Line\-Marker}}
+\index{create\-Line\-Marker@{create\-Line\-Marker}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{create\-Line\-Marker}]{\setlength{\rightskip}{0pt plus 5cm}void N\-G\-L\-Scene\-::create\-Line\-Marker (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{\-\_\-shader\-Name, }
+\item[{int}]{\-\_\-line\-Num}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}\label{class_n_g_l_scene_ab208776d44ea03cd265ef69c865ff774}
+
+
+signal to create a line marker 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-shader\-Name} & the shader name of the error in the G\-L\-S\-L file \\
+\hline
+\mbox{\tt in}  & {\em \-\_\-line\-Num} & the line number of the error in the G\-L\-S\-L file \\
+\hline
+\end{DoxyParams}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_n_g_l_scene_ab208776d44ea03cd265ef69c865ff774_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!draw\-Axis@{draw\-Axis}}
+\index{draw\-Axis@{draw\-Axis}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{draw\-Axis}]{\setlength{\rightskip}{0pt plus 5cm}void N\-G\-L\-Scene\-::draw\-Axis (
+\begin{DoxyParamCaption}
+\item[{ngl\-::\-Vec3}]{\-\_\-pos}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}\label{class_n_g_l_scene_a3fc824ff4a9140812b9ea473cdd9b2c5}
+
+
+Draw a xyz axis. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \-\_\-pos} & is the position that the axis is drawn relative to the origin \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 687 of file N\-G\-L\-Scene.\-cpp.
+
+
+
+References load\-Matrices\-To\-Shader(), m\-\_\-shader\-Manager, m\-\_\-transform, and Shader\-Manager\-::use().
+
+
+\begin{DoxyCode}
+688 \{
+689   \textcolor{comment}{// Instance the Shader}
+690   ngl::ShaderLib *shaderLib=ngl::ShaderLib::instance();
+691   m_shaderManager->use(0);
+692   ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
+693 
+694   \textcolor{comment}{// Move the Y AXIS geo}
+695   m_transform.setScale(0.05,0.5,0.05);
+696   m_transform.setPosition(0,0.3,0);
+697   m_transform.addPosition(\_pos);
+698   loadMatricesToShader();
+699   shaderLib->setShaderParam4f(\textcolor{stringliteral}{"Colour"},0,1,0,1); \textcolor{comment}{//Not entirely sure if this is the best way, as the name
+       "Colour" could be changed....}
+700   prim->draw(\textcolor{stringliteral}{"cube"});
+701   m_transform.reset();
+702 
+703   \textcolor{comment}{// Move the X AXIS geo}
+704   m_transform.setScale(0.5,0.05,0.05);
+705   m_transform.setPosition(0.3,0,0);
+706   m_transform.addPosition(\_pos);
+707   loadMatricesToShader();
+708   shaderLib->setShaderParam4f(\textcolor{stringliteral}{"Colour"},1,0,0,1); \textcolor{comment}{//Not entirely sure if this is the best way, as the name
+       "Colour" could be changed....}
+709   prim->draw(\textcolor{stringliteral}{"cube"});
+710   m_transform.reset();
+711 
+712   \textcolor{comment}{// Move the Z AXIS geo}
+713   m_transform.setScale(0.05,0.05,0.5);
+714   m_transform.setPosition(0,0,0.3);
+715   m_transform.addPosition(\_pos);
+716   loadMatricesToShader();
+717   shaderLib->setShaderParam4f(\textcolor{stringliteral}{"Colour"},0,0,1,1); \textcolor{comment}{//Not entirely sure if this is the best way, as the name
+       "Colour" could be changed....}
+718   prim->draw(\textcolor{stringliteral}{"cube"});
+719   m_transform.reset();
+720 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_n_g_l_scene_a3fc824ff4a9140812b9ea473cdd9b2c5_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=290pt]{class_n_g_l_scene_a3fc824ff4a9140812b9ea473cdd9b2c5_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!draw\-Object@{draw\-Object}}
+\index{draw\-Object@{draw\-Object}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{draw\-Object}]{\setlength{\rightskip}{0pt plus 5cm}void N\-G\-L\-Scene\-::draw\-Object (
+\begin{DoxyParamCaption}
+\item[{uint}]{\-\_\-type}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}\label{class_n_g_l_scene_a64725fd4dbe80bbdb67dcc9041486933}
+
+
+draw an object based on the m\-\_\-shape\-Type; e.\-g. 0=mesh, 1=sphere, etc 
+
+
+
+Definition at line 318 of file N\-G\-L\-Scene.\-cpp.
+
+
+
+References m\-\_\-mesh.
+
+
+\begin{DoxyCode}
+319 \{
+320   ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
+321   \textcolor{keyword}{enum} geo \{input=0,sphere=1,cube=2,torus=3,teapot=4,troll=5,dragon=6,bunny=7\};
+322 
+323   \textcolor{comment}{// Draw different objects depending on the input value}
+324   \textcolor{keywordflow}{switch}(\_type)
+325   \{
+326   \textcolor{keywordflow}{case} input : \{ m_mesh->draw();      \textcolor{keywordflow}{break}; \}
+327   \textcolor{keywordflow}{case} sphere: \{ prim->draw(\textcolor{stringliteral}{"sphere"});\textcolor{keywordflow}{break}; \}
+328   \textcolor{keywordflow}{case} cube  : \{ prim->draw(\textcolor{stringliteral}{"cube"});  \textcolor{keywordflow}{break}; \}
+329   \textcolor{keywordflow}{case} torus : \{ prim->draw(\textcolor{stringliteral}{"torus"}); \textcolor{keywordflow}{break}; \}
+330   \textcolor{keywordflow}{case} teapot: \{ prim->draw(\textcolor{stringliteral}{"teapot"});\textcolor{keywordflow}{break}; \}
+331   \textcolor{keywordflow}{case} troll : \{ prim->draw(\textcolor{stringliteral}{"troll"}); \textcolor{keywordflow}{break}; \}
+332   \textcolor{keywordflow}{case} dragon: \{ prim->draw(\textcolor{stringliteral}{"dragon"});\textcolor{keywordflow}{break}; \}
+333   \textcolor{keywordflow}{case} bunny : \{ prim->draw(\textcolor{stringliteral}{"bunny"}); \textcolor{keywordflow}{break}; \}
+334   \textcolor{keywordflow}{default}    : std::cerr<<\textcolor{stringliteral}{"unrecognised shape type value\(\backslash\)n"}; \textcolor{keywordflow}{break};
+335   \}
+336 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=300pt]{class_n_g_l_scene_a64725fd4dbe80bbdb67dcc9041486933_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!export\-Uniform@{export\-Uniform}}
+\index{export\-Uniform@{export\-Uniform}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{export\-Uniform}]{\setlength{\rightskip}{0pt plus 5cm}void N\-G\-L\-Scene\-::export\-Uniform (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}\label{class_n_g_l_scene_a25ef28bf1707273f7968ea88900c16a2}
+
+
+exports the uniforms and writes them to the file Parsing\-Output.\-txt 
+
+
+
+Definition at line 668 of file N\-G\-L\-Scene.\-cpp.
+
+
+
+References Parser\-Lib\-::export\-Uniforms(), m\-\_\-parser, and m\-\_\-window.
+
+
+\begin{DoxyCode}
+669 \{
+670   QString fileName = QFileDialog::getSaveFileName(m_window,
+671                                                   tr(\textcolor{stringliteral}{"Export Uniforms"}),
+672                                                   QDir::homePath(),
+673                                                   tr(\textcolor{stringliteral}{"Text File (*.txt)"}));
+674   \textcolor{keywordflow}{if} (fileName != \textcolor{stringliteral}{""})
+675   \{
+676     \textcolor{keywordflow}{if} (m_parser->exportUniforms(fileName))
+677     \{
+678       QMessageBox msgBox;
+679       msgBox.setText(\textcolor{stringliteral}{"Uniforms successfully exported"});
+680       msgBox.setWindowTitle(\textcolor{stringliteral}{"Successfully Exported"});
+681       msgBox.exec();
+682     \}
+683   \}
+684 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=334pt]{class_n_g_l_scene_a25ef28bf1707273f7968ea88900c16a2_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!import\-Mesh\-Name@{import\-Mesh\-Name}}
+\index{import\-Mesh\-Name@{import\-Mesh\-Name}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{import\-Mesh\-Name}]{\setlength{\rightskip}{0pt plus 5cm}void N\-G\-L\-Scene\-::import\-Mesh\-Name (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{\-\_\-name}
+\end{DoxyParamCaption}
+)}\label{class_n_g_l_scene_aa483e1f8441744ddf3eb9b8587a67e84}
+
+
+Changes the name of the m\-\_\-mesh object directory. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em the} & new directory used to draw m\-\_\-mesh \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 93 of file N\-G\-L\-Scene.\-cpp.
+
+
+
+References m\-\_\-toggle\-Obj, set\-Mesh\-Location(), and set\-Shape\-Type().
+
+
+\begin{DoxyCode}
+94 \{
+95   \textcolor{comment}{// If the CANCEL button is clicked, then don't update the shapetype or location}
+96   std::ifstream shaderSource(\_name.c\_str());
+97   \textcolor{keywordflow}{if} (!shaderSource.is\_open())
+98   \{
+99     \textcolor{keywordflow}{if}(\_name.length()==0)
+100     \{
+101       std::cerr<<\textcolor{stringliteral}{"Import Cancelled"}<<std::endl;
+102       \textcolor{comment}{//exit(EXIT\_FAILURE);}
+103     \}
+104     \textcolor{keywordflow}{else}
+105     \{
+106       std::cerr<<\textcolor{stringliteral}{"File not found"}<<\_name.c\_str()<<std::endl;
+107       \textcolor{comment}{//exit(EXIT\_FAILURE);}
+108     \}
+109   \}
+110   \textcolor{keywordflow}{else}
+111   \{
+112     setMeshLocation(\_name);
+113     setShapeType(0);
+114     m_toggleObj=\textcolor{keyword}{true};
+115   \}
+116 
+117 
+118 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_n_g_l_scene_aa483e1f8441744ddf3eb9b8587a67e84_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_n_g_l_scene_aa483e1f8441744ddf3eb9b8587a67e84_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!import\-Texture\-Map@{import\-Texture\-Map}}
+\index{import\-Texture\-Map@{import\-Texture\-Map}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{import\-Texture\-Map}]{\setlength{\rightskip}{0pt plus 5cm}void N\-G\-L\-Scene\-::import\-Texture\-Map (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{\-\_\-name}
+\end{DoxyParamCaption}
+)}\label{class_n_g_l_scene_a4c14b592cb935dbc524170d3e9fad5a9}
+
+
+loads in a texture map and directly applies it to the O\-B\-J. (Requires U\-Vs) 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em the} & desired directory of the texture map \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 121 of file N\-G\-L\-Scene.\-cpp.
+
+
+
+References m\-\_\-texture\-Name.
+
+
+\begin{DoxyCode}
+122 \{
+123   std::ifstream textureSource(\_name.c\_str());
+124   ngl::Texture texture (\_name);
+125   m_textureName=texture.setTextureGL();
+126   update();
+127 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_n_g_l_scene_a4c14b592cb935dbc524170d3e9fad5a9_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!init\-G\-L@{init\-G\-L}}
+\index{init\-G\-L@{init\-G\-L}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{init\-G\-L}]{\setlength{\rightskip}{0pt plus 5cm}void N\-G\-L\-Scene\-::init\-G\-L (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}\label{class_n_g_l_scene_a40efee086fe1c2c956e6d66774d9d18f}
+
+
+the initialize class is called once when the window is created and we have a valid G\-L context use this to setup any default G\-L stuff 
+
+
+
+Definition at line 135 of file N\-G\-L\-Scene.\-cpp.
+
+
+
+References clear\-All\-Gl\-Errors(), Shader\-Manager\-::compile\-Status(), Shader\-Manager\-::get\-Error\-Log(), Shader\-Manager\-::initialize(), Shader\-Manager\-::is\-Init(), m\-\_\-cam, m\-\_\-mesh, m\-\_\-mesh\-Loc, m\-\_\-shader\-Manager, m\-\_\-texture\-Name, m\-\_\-window, parse\-Error\-Log(), and Main\-Window\-::set\-Terminal\-Text().
+
+
+\begin{DoxyCode}
+136 \{
+137   ngl::NGLInit::instance();
+138   clearAllGlErrors();
+139 
+140   glClearColor(0.4f, 0.4f, 0.4f, 1.0f);        \textcolor{comment}{// Grey Background}
+141   \textcolor{comment}{// enable depth testing for drawing}
+142   glEnable(GL\_DEPTH\_TEST);
+143   \textcolor{comment}{// enable multisampling for smoother drawing}
+144   glEnable(GL\_MULTISAMPLE);
+145 
+146   \textcolor{comment}{// now to load the shader and set the values}
+147   \textcolor{comment}{// grab an instance of shader manager}
+148   m_shaderManager->initialize();
+149 
+150   ngl::Texture texture (\textcolor{stringliteral}{"textures/metalTexture.jpg"});
+151   m_textureName=texture.setTextureGL();
+152 
+153 
+154   \textcolor{keywordflow}{if}(!m_shaderManager->compileStatus())
+155   \{
+156     m_window->setTerminalText(parseErrorLog(m_shaderManager->getErrorLog()));
+157   \}
+158   \textcolor{keywordflow}{if}(m_shaderManager->isInit())
+159   \{
+160     ngl::Mat4 iv=m_cam.getViewMatrix();
+161     iv.transpose();
+162     \textcolor{comment}{//m\_parser->assignAllData();}
+163   \}
+164 
+165   \textcolor{comment}{// Create mesh VAO}
+166   m_mesh = std::unique\_ptr<ngl::Obj> (\textcolor{keyword}{new} ngl::Obj(m_meshLoc));
+167   m_mesh->createVAO();
+168 
+169   \textcolor{comment}{// Create some default shapes}
+170   ngl::VAOPrimitives::instance()->createSphere(\textcolor{stringliteral}{"sphere"},0.7,30);
+171   ngl::VAOPrimitives::instance()->createTorus(\textcolor{stringliteral}{"torus"},0.3,0.7,20,20);
+172   ngl::VAOPrimitives::instance()->createLineGrid(\textcolor{stringliteral}{"Grid"},10,10,10);
+173 
+174 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_n_g_l_scene_a40efee086fe1c2c956e6d66774d9d18f_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=290pt]{class_n_g_l_scene_a40efee086fe1c2c956e6d66774d9d18f_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!initialize\-G\-L@{initialize\-G\-L}}
+\index{initialize\-G\-L@{initialize\-G\-L}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{initialize\-G\-L}]{\setlength{\rightskip}{0pt plus 5cm}void N\-G\-L\-Scene\-::initialize\-G\-L (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}\label{class_n_g_l_scene_aab2b866db534d286a56cc2240ed98790}
+
+
+the signal for initialize G\-L 
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=312pt]{class_n_g_l_scene_aab2b866db534d286a56cc2240ed98790_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!key\-Press\-Event@{key\-Press\-Event}}
+\index{key\-Press\-Event@{key\-Press\-Event}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{key\-Press\-Event}]{\setlength{\rightskip}{0pt plus 5cm}void N\-G\-L\-Scene\-::key\-Press\-Event (
+\begin{DoxyParamCaption}
+\item[{Q\-Key\-Event $\ast$}]{\-\_\-event}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}\label{class_n_g_l_scene_a7a03bd8f485d27c4de72d24139ed8f8a}
+
+
+this method should be called every time a keyboard button is pressed. Inherited from Q\-Object and overridden here. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \-\_\-event} & the Qt Event structure \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 552 of file N\-G\-L\-Scene.\-cpp.
+
+
+\begin{DoxyCode}
+553 \{
+554   \textcolor{keywordflow}{switch} (\_event->key())
+555   \{
+556   \textcolor{keywordflow}{default} : break ;
+557   \}
+558   update();
+559 \}
+\end{DoxyCode}
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!load\-Matrices\-To\-Shader@{load\-Matrices\-To\-Shader}}
+\index{load\-Matrices\-To\-Shader@{load\-Matrices\-To\-Shader}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{load\-Matrices\-To\-Shader}]{\setlength{\rightskip}{0pt plus 5cm}void N\-G\-L\-Scene\-::load\-Matrices\-To\-Shader (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}\label{class_n_g_l_scene_a9149c8d164b007df5bf114c8a896e635}
+
+
+method to load transform matrices to the shader 
+
+
+
+Definition at line 351 of file N\-G\-L\-Scene.\-cpp.
+
+
+
+References m\-\_\-cam, m\-\_\-mouse\-Global\-T\-X, m\-\_\-parser, m\-\_\-shader\-Manager, m\-\_\-transform, Parser\-Lib\-::send\-Uniforms\-To\-Shader(), and Shader\-Manager\-::use().
+
+
+\begin{DoxyCode}
+352 \{
+353   ngl::ShaderLib *shaderLib=ngl::ShaderLib::instance();
+354   m_shaderManager->use(0);
+355 
+356   ngl::Mat4 MV;
+357   ngl::Mat4 MVP;
+358   ngl::Mat3 normalMatrix;
+359   ngl::Mat4 M;
+360 
+361   M=m_transform.getMatrix()*m_mouseGlobalTX;
+362   MV=  M*m_cam.getViewMatrix();
+363   MVP= M*m_cam.getVPMatrix();
+364   normalMatrix=MV;
+365   normalMatrix.inverse();
+366 
+367   m_parser->sendUniformsToShader(shaderLib);
+368   shaderLib->setShaderParamFromMat4(\textcolor{stringliteral}{"MV"},MV);
+369   shaderLib->setShaderParamFromMat4(\textcolor{stringliteral}{"MVP"},MVP);
+370   shaderLib->setShaderParamFromMat3(\textcolor{stringliteral}{"normalMatrix"},normalMatrix);
+371   shaderLib->setShaderParamFromMat4(\textcolor{stringliteral}{"M"},M);
+372 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=346pt]{class_n_g_l_scene_a9149c8d164b007df5bf114c8a896e635_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_n_g_l_scene_a9149c8d164b007df5bf114c8a896e635_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!mouse\-Move\-Event@{mouse\-Move\-Event}}
+\index{mouse\-Move\-Event@{mouse\-Move\-Event}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{mouse\-Move\-Event}]{\setlength{\rightskip}{0pt plus 5cm}void N\-G\-L\-Scene\-::mouse\-Move\-Event (
+\begin{DoxyParamCaption}
+\item[{Q\-Mouse\-Event $\ast$}]{\-\_\-event}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}\label{class_n_g_l_scene_aa9822d94cb9c93a666fef86d86d2cf6c}
+
+
+this method is called every time a mouse is moved 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \-\_\-event} & the Qt Event structure \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 410 of file N\-G\-L\-Scene.\-cpp.
+
+
+
+References I\-N\-C\-R\-E\-M\-E\-N\-T, m\-\_\-camera\-Index, m\-\_\-model\-Pos, m\-\_\-orig\-X, m\-\_\-orig\-X\-Pos, m\-\_\-orig\-Y, m\-\_\-orig\-Y\-Pos, m\-\_\-rotate, m\-\_\-spin\-X\-Face, m\-\_\-spin\-Y\-Face, m\-\_\-spin\-Z\-Face, and m\-\_\-translate.
+
+
+\begin{DoxyCode}
+411 \{
+412   \textcolor{keywordflow}{if}(m_rotate && \_event->buttons() == Qt::LeftButton)
+413   \{
+414     \textcolor{keywordtype}{int} diffx=\_event->x()-m_origX;
+415     \textcolor{keywordtype}{int} diffy=\_event->y()-m_origY;
+416     m_origX = \_event->x();
+417     m_origY = \_event->y();
+418 
+419     \textcolor{comment}{// Changes viewport rotation depending on camera view.}
+420     \textcolor{keywordflow}{switch}(m_cameraIndex)\{
+421       \textcolor{keywordflow}{case} 0:
+422         m_spinZFace -= (float) 0.5f * diffy;
+423         m_spinXFace += (float) 0.5f * diffy;
+424         m_spinYFace += (float) 1.0f * diffx;
+425         \textcolor{keywordflow}{break};
+426       \textcolor{keywordflow}{case} 1:
+427         m_spinXFace -= diffy;
+428         m_spinZFace += diffx; \textcolor{keywordflow}{break};
+429       \textcolor{keywordflow}{case} 2:
+430         m_spinXFace += diffy;
+431         m_spinZFace += diffx; \textcolor{keywordflow}{break};
+432       \textcolor{keywordflow}{case} 3:
+433         m_spinXFace -= diffy;
+434         m_spinYFace += diffx; \textcolor{keywordflow}{break};
+435       \textcolor{keywordflow}{case} 4:
+436         m_spinXFace += diffy;
+437         m_spinYFace += diffx; \textcolor{keywordflow}{break};
+438     \}
+439     update();
+440   \}
+441   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(m_translate && \_event->buttons() == Qt::RightButton)
+442   \{
+443     \textcolor{keywordtype}{int} diffX = (int)(\_event->x() - m_origXPos);
+444     \textcolor{keywordtype}{int} diffY = (int)(\_event->y() - m_origYPos);
+445     m_origXPos=\_event->x();
+446     m_origYPos=\_event->y();
+447 
+448     \textcolor{comment}{// Switch used to change how modelPos translates depending on camera.}
+449     \textcolor{keywordflow}{switch}(m_cameraIndex)\{
+450     \textcolor{keywordflow}{case} 0:
+451         m_modelPos.m\_y -= INCREMENT * diffY;
+452         m_modelPos.m\_x += INCREMENT * diffY/2;
+453         m_modelPos.m\_z += INCREMENT * diffY/2;
+454 
+455         m_modelPos.m\_x += INCREMENT * diffX/2;
+456         m_modelPos.m\_z -= INCREMENT * diffX/2; \textcolor{keywordflow}{break};
+457     \textcolor{keywordflow}{case} 1:
+458         m_modelPos.m\_z -= INCREMENT * diffY;
+459         m_modelPos.m\_x -= INCREMENT * diffX;\textcolor{keywordflow}{break};
+460     \textcolor{keywordflow}{case} 2:
+461         m_modelPos.m\_z -= INCREMENT * diffY;
+462         m_modelPos.m\_x += INCREMENT * diffX;\textcolor{keywordflow}{break};
+463     \textcolor{keywordflow}{case} 3:
+464         m_modelPos.m\_x -= INCREMENT * diffX;
+465         m_modelPos.m\_y -= INCREMENT * diffY;\textcolor{keywordflow}{break};
+466     \textcolor{keywordflow}{case} 4:
+467         m_modelPos.m\_x += INCREMENT * diffX;
+468         m_modelPos.m\_y -= INCREMENT * diffY;\textcolor{keywordflow}{break};
+469     \}
+470     update();
+471   \}
+472 \}
+\end{DoxyCode}
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!mouse\-Press\-Event@{mouse\-Press\-Event}}
+\index{mouse\-Press\-Event@{mouse\-Press\-Event}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{mouse\-Press\-Event}]{\setlength{\rightskip}{0pt plus 5cm}void N\-G\-L\-Scene\-::mouse\-Press\-Event (
+\begin{DoxyParamCaption}
+\item[{Q\-Mouse\-Event $\ast$}]{\-\_\-event}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}\label{class_n_g_l_scene_a8ead414be695622f8ace373628a25727}
+
+
+this method is called everytime the mouse button is pressed inherited from Q\-Object and overridden here. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \-\_\-event} & the Qt Event structure \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 475 of file N\-G\-L\-Scene.\-cpp.
+
+
+
+References m\-\_\-orig\-X, m\-\_\-orig\-X\-Pos, m\-\_\-orig\-Y, m\-\_\-orig\-Y\-Pos, m\-\_\-rotate, and m\-\_\-translate.
+
+
+\begin{DoxyCode}
+476 \{
+477   \textcolor{comment}{// left mouse rotate mode}
+478   \textcolor{keywordflow}{if}(\_event->button() == Qt::LeftButton)
+479   \{
+480     m_origX = \_event->x();
+481     m_origY = \_event->y();
+482     m_rotate =\textcolor{keyword}{true};
+483   \}
+484   \textcolor{comment}{// right mouse translate mode}
+485   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(\_event->button() == Qt::RightButton)
+486   \{
+487     m_origXPos = \_event->x();
+488     m_origYPos = \_event->y();
+489 
+490     m_translate=\textcolor{keyword}{true};
+491   \}
+492   update();
+493 \}
+\end{DoxyCode}
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!mouse\-Release\-Event@{mouse\-Release\-Event}}
+\index{mouse\-Release\-Event@{mouse\-Release\-Event}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{mouse\-Release\-Event}]{\setlength{\rightskip}{0pt plus 5cm}void N\-G\-L\-Scene\-::mouse\-Release\-Event (
+\begin{DoxyParamCaption}
+\item[{Q\-Mouse\-Event $\ast$}]{\-\_\-event}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}\label{class_n_g_l_scene_a6f363e63153342d91bafd3bdaf271c20}
+
+
+this method is called everytime the mouse button is released inherited from Q\-Object and overridden here. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \-\_\-event} & the Qt Event structure \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 496 of file N\-G\-L\-Scene.\-cpp.
+
+
+
+References m\-\_\-rotate, and m\-\_\-translate.
+
+
+\begin{DoxyCode}
+497 \{
+498   \textcolor{comment}{// that event is called when the mouse button is released}
+499   \textcolor{comment}{// we then set Rotate to false}
+500   \textcolor{keywordflow}{if} (\_event->button() == Qt::LeftButton)
+501   \{
+502     m_rotate=\textcolor{keyword}{false};
+503   \}
+504   \textcolor{comment}{// right mouse translate mode}
+505   \textcolor{keywordflow}{if} (\_event->button() == Qt::RightButton)
+506   \{
+507     m_translate=\textcolor{keyword}{false};
+508   \}
+509 \}
+\end{DoxyCode}
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!object\-Transform@{object\-Transform}}
+\index{object\-Transform@{object\-Transform}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{object\-Transform}]{\setlength{\rightskip}{0pt plus 5cm}void N\-G\-L\-Scene\-::object\-Transform (
+\begin{DoxyParamCaption}
+\item[{uint}]{\-\_\-type}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}\label{class_n_g_l_scene_ae3e8dc1c180d89afa997104c3dd707a0}
+
+
+Set object transformations depending on the shape type. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \-\_\-event} & the Qt Event structure \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 277 of file N\-G\-L\-Scene.\-cpp.
+
+
+
+References load\-Matrices\-To\-Shader(), and m\-\_\-transform.
+
+
+\begin{DoxyCode}
+278 \{
+279   \textcolor{keyword}{enum} geo \{input=0,sphere=1,cube=2,torus=3,teapot=4,troll=5,dragon=6,bunny=7\};
+280 
+281   \textcolor{comment}{// Transform differently depending on the object being drawn}
+282   \textcolor{comment}{// Used to make all default shapes a similar size}
+283   \textcolor{keywordflow}{switch}(\_type)
+284   \{
+285   \textcolor{keywordflow}{case} input : \textcolor{keywordflow}{break};
+286   \textcolor{keywordflow}{case} sphere: \textcolor{keywordflow}{break};
+287   \textcolor{keywordflow}{case} cube  : \textcolor{keywordflow}{break};
+288   \textcolor{keywordflow}{case} torus : \textcolor{keywordflow}{break};
+289   \textcolor{keywordflow}{case} teapot: \textcolor{keywordflow}{break};
+290   \textcolor{keywordflow}{case} troll :
+291   \{
+292     m_transform.setScale(1.5,1.5,1.5);
+293     loadMatricesToShader();
+294     \textcolor{keywordflow}{break};
+295     \textcolor{comment}{// Moved the troll to be the same relative shape and position}
+296   \}
+297   \textcolor{keywordflow}{case} dragon:
+298   \{
+299     m_transform.setScale(0.1,0.1,0.1);
+300     m_transform.setPosition(0,-0.5,0);
+301     loadMatricesToShader();
+302     \textcolor{keywordflow}{break};
+303     \textcolor{comment}{// Moved the dragon to be the same relative shape and position}
+304   \}
+305   \textcolor{keywordflow}{case} bunny:
+306   \{
+307     m_transform.setScale(0.15,0.15,0.15);
+308     m_transform.setPosition(0,-0.5,0);
+309     loadMatricesToShader();
+310     \textcolor{keywordflow}{break};
+311     \textcolor{comment}{// Moved the bunny to be the same relative shape and position}
+312   \}
+313   \textcolor{keywordflow}{default}: std::cerr<<\textcolor{stringliteral}{"unrecognised shape type value\(\backslash\)n"}; \textcolor{keywordflow}{break};
+314   \}
+315 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_n_g_l_scene_ae3e8dc1c180d89afa997104c3dd707a0_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=320pt]{class_n_g_l_scene_ae3e8dc1c180d89afa997104c3dd707a0_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!paint\-G\-L@{paint\-G\-L}}
+\index{paint\-G\-L@{paint\-G\-L}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{paint\-G\-L}]{\setlength{\rightskip}{0pt plus 5cm}void N\-G\-L\-Scene\-::paint\-G\-L (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_n_g_l_scene_a37bec65bfba7b7a717d803d369221e2d}
+
+
+this is called everytime we want to draw the scene 
+
+
+
+Definition at line 194 of file N\-G\-L\-Scene.\-cpp.
+
+
+
+References draw\-Axis(), draw\-Object(), load\-Matrices\-To\-Shader(), Camera\-::m\-\_\-aspect, m\-\_\-cam, m\-\_\-camera, Camera\-::m\-\_\-camera\-Index, m\-\_\-camera\-Index, m\-\_\-draw\-Grid, m\-\_\-draw\-Normals, Camera\-::m\-\_\-main\-Camera, m\-\_\-model\-Pos, m\-\_\-mouse\-Global\-T\-X, m\-\_\-normal\-Size, m\-\_\-shader\-Manager, m\-\_\-shape\-Type, m\-\_\-spin\-X\-Face, m\-\_\-spin\-Y\-Face, m\-\_\-spin\-Z\-Face, m\-\_\-texture\-Name, m\-\_\-toggle\-Axis, m\-\_\-toggle\-Obj, m\-\_\-transform, m\-\_\-wireframe, object\-Transform(), Camera\-::set\-Shape\-Cam(), toggle\-Obj(), and Shader\-Manager\-::use().
+
+
+\begin{DoxyCode}
+195 \{
+196   glClear(GL\_COLOR\_BUFFER\_BIT | GL\_DEPTH\_BUFFER\_BIT);
+197   \textcolor{keywordflow}{if}(m_wireframe == \textcolor{keyword}{true})
+198   \{
+199     glPolygonMode(GL\_FRONT\_AND\_BACK,GL\_LINE);
+200   \}
+201   \textcolor{keywordflow}{else}
+202   \{
+203     \textcolor{comment}{//glBindTexture(GL\_TEXTURE\_2D, m\_textureName);}
+204     glPolygonMode(GL\_FRONT\_AND\_BACK,GL\_FILL);
+205   \}
+206   ngl::ShaderLib *shaderLib=ngl::ShaderLib::instance();
+207 
+208   m_shaderManager->use(0);
+209 
+210   \textcolor{comment}{// Rotation based on the mouse position for our global transform}
+211   ngl::Mat4 rotX;
+212   ngl::Mat4 rotY;
+213   ngl::Mat4 rotZ;
+214   \textcolor{comment}{// create the rotation matrices}
+215   rotX.rotateX(m_spinXFace);
+216   rotY.rotateY(m_spinYFace);
+217   rotZ.rotateZ(m_spinZFace);
+218   \textcolor{comment}{// multiply the rotations}
+219   m_mouseGlobalTX=rotY*rotX*rotZ;
+220   \textcolor{comment}{// add the translations}
+221   m_mouseGlobalTX.m\_m[3][0] = m_modelPos.m\_x;
+222   m_mouseGlobalTX.m\_m[3][1] = m_modelPos.m\_y;
+223   m_mouseGlobalTX.m\_m[3][2] = m_modelPos.m\_z;
+224 
+225   \textcolor{comment}{//draw initial texture map}
+226   glBindTexture(GL\_TEXTURE\_2D, m_textureName);
+227   m_shaderManager->use(0);
+228 
+229   ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
+230 
+231   m_camera->m_aspect = (float)width()/height();
+232   m_camera->setShapeCam();
+233   m_cam = m_camera->m_mainCamera;
+234   m_cameraIndex = m_camera->m_cameraIndex;
+235 
+236   m_transform.reset();
+237 
+238   \textcolor{keywordflow}{if} (m_toggleAxis)
+239   \{
+240     ngl::Vec3 pos=\{-1,-0.5,-1\};
+241     drawAxis(pos);
+242   \}
+243   loadMatricesToShader();
+244 
+245   \textcolor{keywordflow}{if} (m_drawGrid)
+246   \{
+247     \textcolor{comment}{// Draw a grid}
+248     prim->draw(\textcolor{stringliteral}{"Grid"});
+249   \}
+250   \textcolor{keywordflow}{if} (m_toggleObj)
+251   \{
+252     \textcolor{comment}{// Activate Obj}
+253     toggleObj();
+254   \}
+255 
+256   \textcolor{comment}{// Set object transformation and draw}
+257   objectTransform(m_shapeType);
+258   drawObject(m_shapeType);
+259   \textcolor{keywordflow}{if}(m_drawNormals)
+260   \{
+261     \textcolor{comment}{// set the shader to use the normalShader}
+262     m_shaderManager->use(1);
+263     ngl::Mat4 MV;
+264     ngl::Mat4 MVP;
+265     MV=m_transform.getMatrix()*m_mouseGlobalTX*m_cam.getViewMatrix();
+266     MVP=MV*m_cam.getProjectionMatrix();
+267     \textcolor{comment}{// set the uniform to use the current transformations}
+268     shaderLib->setUniform(\textcolor{stringliteral}{"MVP"},MVP);
+269     \textcolor{comment}{// set the normalSize}
+270     shaderLib->setUniform(\textcolor{stringliteral}{"normalSize"},m_normalSize);
+271     \textcolor{comment}{//draw the object normals}
+272     drawObject(m_shapeType);
+273   \}
+274 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_n_g_l_scene_a37bec65bfba7b7a717d803d369221e2d_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!parse\-Error\-Log@{parse\-Error\-Log}}
+\index{parse\-Error\-Log@{parse\-Error\-Log}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{parse\-Error\-Log}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String N\-G\-L\-Scene\-::parse\-Error\-Log (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{\-\_\-string}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}\label{class_n_g_l_scene_af6e2fbc572f1ec3021f2b73fc87ab430}
+
+
+Stores a Q\-String. Used to edit the error log message. 
+
+
+
+Definition at line 572 of file N\-G\-L\-Scene.\-cpp.
+
+
+
+References create\-Line\-Marker().
+
+
+\begin{DoxyCode}
+573 \{
+574   \textcolor{comment}{// Declare a string to output}
+575   \textcolor{comment}{// And a list of integer to be used for line error highlighting}
+576   QString outputErrors;
+577 
+578   QString shaderName;
+579 
+580   \textcolor{comment}{// Separate the input \_string into separate lines.}
+581   QRegExp separateLines(\textcolor{stringliteral}{"\(\backslash\)n"});
+582   QStringList lines=\_string.split(separateLines);
+583 
+584   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i=0;i<lines.length();i++)
+585   \{
+586     \textcolor{comment}{// Split each line using braces; "(" and ")"}
+587     QRegExp separateNumbers(\textcolor{stringliteral}{"(\(\backslash\)\(\backslash\)(|\(\backslash\)\(\backslash\)))"});
+588     QStringList pieces=lines.value(i).split(separateNumbers);
+589 
+590     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j=0;j<pieces.length();j++)
+591     \{
+592       \textcolor{comment}{// This is the how to get the Title (Shader file)}
+593       \textcolor{keywordflow}{if} (pieces.length()==1 && pieces[j]!=\textcolor{stringliteral}{""})
+594       \{
+595         \textcolor{comment}{// Split the line using the "Remove Colon"}
+596         \textcolor{keywordflow}{if}(pieces.value(j).endsWith(\textcolor{stringliteral}{"Vertex:"}))
+597         \{
+598           shaderName=QString(\textcolor{stringliteral}{"Vertex"});
+599         \}
+600         \textcolor{keywordflow}{if}(pieces.value(j).endsWith(\textcolor{stringliteral}{"Fragment:"}))
+601         \{
+602           shaderName=QString(\textcolor{stringliteral}{"Fragment"});
+603         \}
+604       \}
+605       \textcolor{comment}{// If the first segment of the line is 0...}
+606       \textcolor{comment}{// remove it and replace it with "Line"}
+607       \textcolor{keywordflow}{if}(pieces[j].length()==1 && j==0)
+608       \{
+609         outputErrors.append(\textcolor{stringliteral}{"Line "});
+610       \}
+611 
+612       \textcolor{comment}{// Add the rest of the string to the list}
+613       \textcolor{keywordflow}{else}
+614       \{
+615         outputErrors.append(pieces.value(j));
+616 
+617 
+618         \textcolor{comment}{// Add the second part of the line fragment as that is the line error number.}
+619         \textcolor{comment}{// This can be returned as a list of integers}
+620         \textcolor{keywordflow}{if} (j==1)
+621         \{
+622           \textcolor{keywordtype}{int} lineNumber = pieces.value(j).toInt();
+623           emit createLineMarker(shaderName,lineNumber-1);
+624         \}
+625       \}
+626     \}
+627     \textcolor{comment}{// If it is the last line, add a new line to the string}
+628     \textcolor{keywordtype}{int} finalLine =lines.length()-1;
+629     \textcolor{keywordflow}{if} (i!=finalLine)
+630     \{
+631       outputErrors.append(\textcolor{stringliteral}{"\(\backslash\)n"});
+632     \}
+633   \}
+634 
+635   \textcolor{keywordflow}{return} outputErrors;
+636 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_n_g_l_scene_af6e2fbc572f1ec3021f2b73fc87ab430_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!reset\-Obj\-Pos@{reset\-Obj\-Pos}}
+\index{reset\-Obj\-Pos@{reset\-Obj\-Pos}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{reset\-Obj\-Pos}]{\setlength{\rightskip}{0pt plus 5cm}void N\-G\-L\-Scene\-::reset\-Obj\-Pos (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}\label{class_n_g_l_scene_ab6ce5125254ab7fecf2e6d1c87a73a97}
+
+
+resets the position of the active O\-B\-J in the Open\-G\-L context 
+
+
+
+Definition at line 639 of file N\-G\-L\-Scene.\-cpp.
+
+
+
+References Camera\-::camera\-Pitch(), Camera\-::camera\-Roll(), Camera\-::camera\-Yaw(), m\-\_\-camera, Camera\-::m\-\_\-far\-Clip, Camera\-::m\-\_\-fov, m\-\_\-model\-Pos, Camera\-::m\-\_\-near\-Clip, m\-\_\-spin\-X\-Face, m\-\_\-spin\-Y\-Face, and m\-\_\-spin\-Z\-Face.
+
+
+\begin{DoxyCode}
+640 \{
+641   \textcolor{comment}{//move camera back to default}
+642   m_modelPos.m\_x = 0;
+643   m_modelPos.m\_y = 0;
+644   m_modelPos.m\_z = 0;
+645   m_spinXFace = 0;
+646   m_spinYFace = 0;
+647   m_spinZFace = 0;
+648 
+649   m_camera->cameraRoll(0.00);
+650   m_camera->cameraYaw(0.00);
+651   m_camera->cameraPitch(0.00);
+652   m_camera->m_fov = 60.0;
+653   m_camera->m_nearClip = 0.5;
+654   m_camera->m_farClip = 150.0;
+655 
+656   update();
+657 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=312pt]{class_n_g_l_scene_ab6ce5125254ab7fecf2e6d1c87a73a97_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=342pt]{class_n_g_l_scene_ab6ce5125254ab7fecf2e6d1c87a73a97_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!resize\-G\-L@{resize\-G\-L}}
+\index{resize\-G\-L@{resize\-G\-L}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{resize\-G\-L}]{\setlength{\rightskip}{0pt plus 5cm}void N\-G\-L\-Scene\-::resize\-G\-L (
+\begin{DoxyParamCaption}
+\item[{Q\-Resize\-Event $\ast$}]{\-\_\-event}
+\end{DoxyParamCaption}
+)}\label{class_n_g_l_scene_a39f61e86b1e5a6c8125e3a762ea3f7f7}
+
+
+this is called everytime we resize the scene note\-: Qt 5.\-5.\-1 must have this implemented and uses it 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-event} & the Qt Event structure \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 339 of file N\-G\-L\-Scene.\-cpp.
+
+
+
+References Camera\-::m\-\_\-aspect, and m\-\_\-camera.
+
+
+\begin{DoxyCode}
+340 \{
+341   m_camera->m_aspect = (float)width()/height();
+342 \}
+\end{DoxyCode}
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!resize\-G\-L@{resize\-G\-L}}
+\index{resize\-G\-L@{resize\-G\-L}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{resize\-G\-L}]{\setlength{\rightskip}{0pt plus 5cm}void N\-G\-L\-Scene\-::resize\-G\-L (
+\begin{DoxyParamCaption}
+\item[{int}]{\-\_\-w, }
+\item[{int}]{\-\_\-h}
+\end{DoxyParamCaption}
+)}\label{class_n_g_l_scene_a7505fac688fe82b4f99e601043eb7764}
+
+
+this is called everytime we resize the scene note\-: Qt 5.\-x uses this instead! {\tt http\-://doc.\-qt.\-io/qt-\/5/qopenglwindow.\-html\#resize\-G\-L} 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-event} & the Qt Event structure \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 345 of file N\-G\-L\-Scene.\-cpp.
+
+
+
+References Camera\-::m\-\_\-aspect, and m\-\_\-camera.
+
+
+\begin{DoxyCode}
+346 \{
+347   m_camera->m_aspect = (float)width()/height();
+348 \}
+\end{DoxyCode}
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!set\-Mesh\-Location@{set\-Mesh\-Location}}
+\index{set\-Mesh\-Location@{set\-Mesh\-Location}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{set\-Mesh\-Location}]{\setlength{\rightskip}{0pt plus 5cm}void N\-G\-L\-Scene\-::set\-Mesh\-Location (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{\-\_\-mesh\-Directory}
+\end{DoxyParamCaption}
+)}\label{class_n_g_l_scene_a7180ddad77162d10c44690888eefddac}
+
+
+sets the file location you of a mesh 
+
+
+
+Definition at line 75 of file N\-G\-L\-Scene.\-cpp.
+
+
+
+References m\-\_\-mesh\-Loc.
+
+
+\begin{DoxyCode}
+76 \{
+77   m_meshLoc=\_meshDirectory;
+78   \textcolor{comment}{//std::cout<<"Imported file:  "<<\_meshDirectory<<std::endl;}
+79 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_n_g_l_scene_a7180ddad77162d10c44690888eefddac_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!set\-Normal\-Size@{set\-Normal\-Size}}
+\index{set\-Normal\-Size@{set\-Normal\-Size}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{set\-Normal\-Size}]{\setlength{\rightskip}{0pt plus 5cm}void N\-G\-L\-Scene\-::set\-Normal\-Size (
+\begin{DoxyParamCaption}
+\item[{int}]{\-\_\-size}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}\label{class_n_g_l_scene_af2d8f2a1f1113fcc63eda8b099d8c64d}
+
+
+sets the normal size 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-size} & the normal size.....the normal size will be divided by 100 \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 403 of file N\-G\-L\-Scene.\-cpp.
+
+
+
+References m\-\_\-normal\-Size.
+
+
+\begin{DoxyCode}
+404 \{
+405   m_normalSize=\_size/100.0f;
+406   update();
+407 \}
+\end{DoxyCode}
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!set\-Project@{set\-Project}}
+\index{set\-Project@{set\-Project}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{set\-Project}]{\setlength{\rightskip}{0pt plus 5cm}void N\-G\-L\-Scene\-::set\-Project (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{\-\_\-name, }
+\item[{Q\-String}]{\-\_\-vert\-Source, }
+\item[{Q\-String}]{\-\_\-frag\-Source}
+\end{DoxyParamCaption}
+)}\label{class_n_g_l_scene_a7e70f3230a69f5f593a50ca16d723349}
+
+
+Creates a new project for the shader. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-name} & the name of the project \\
+\hline
+\mbox{\tt in}  & {\em \-\_\-vert\-Source} & the text that makes of the vertex shader \\
+\hline
+\mbox{\tt in}  & {\em \-\_\-frag\-Source} & The text that makes up the fragment shader \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 661 of file N\-G\-L\-Scene.\-cpp.
+
+
+
+References compile\-Shader(), Shader\-Manager\-::create\-Shader\-Program(), and m\-\_\-shader\-Manager.
+
+
+\begin{DoxyCode}
+662 \{
+663   m_shaderManager->createShaderProgram(\_name);
+664   compileShader(\_vertSource, \_fragSource);
+665 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_n_g_l_scene_a7e70f3230a69f5f593a50ca16d723349_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_n_g_l_scene_a7e70f3230a69f5f593a50ca16d723349_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!set\-Shape\-Type@{set\-Shape\-Type}}
+\index{set\-Shape\-Type@{set\-Shape\-Type}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{set\-Shape\-Type}]{\setlength{\rightskip}{0pt plus 5cm}void N\-G\-L\-Scene\-::set\-Shape\-Type (
+\begin{DoxyParamCaption}
+\item[{int}]{\-\_\-type}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}\label{class_n_g_l_scene_a3666aae79d69e047c04ae10c7614ff7b}
+
+
+sets the shape type 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-type} & is the type of object drawn \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 177 of file N\-G\-L\-Scene.\-cpp.
+
+
+
+References m\-\_\-shape\-Type.
+
+
+\begin{DoxyCode}
+178 \{
+179   \textcolor{keywordflow}{if} (\_type<=7 && \_type>=0)
+180   \{
+181     m_shapeType=\_type;
+182   \}
+183   \textcolor{keywordflow}{else}
+184   \{
+185     \textcolor{comment}{//std::cout<<"Invalid shape type"<<std::endl;}
+186   \}
+187   update();
+188 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_n_g_l_scene_a3666aae79d69e047c04ae10c7614ff7b_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!toggle\-Axis@{toggle\-Axis}}
+\index{toggle\-Axis@{toggle\-Axis}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{toggle\-Axis}]{\setlength{\rightskip}{0pt plus 5cm}void N\-G\-L\-Scene\-::toggle\-Axis (
+\begin{DoxyParamCaption}
+\item[{bool}]{\-\_\-state}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}\label{class_n_g_l_scene_a89e64e9f46e9e5aebd4d0846ee50153b}
+
+
+toggles the axis visibility 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-state} & true=on false=off \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 396 of file N\-G\-L\-Scene.\-cpp.
+
+
+
+References m\-\_\-toggle\-Axis.
+
+
+\begin{DoxyCode}
+397 \{
+398   m_toggleAxis=\_state;
+399   update();
+400 \}
+\end{DoxyCode}
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!toggle\-Grid@{toggle\-Grid}}
+\index{toggle\-Grid@{toggle\-Grid}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{toggle\-Grid}]{\setlength{\rightskip}{0pt plus 5cm}void N\-G\-L\-Scene\-::toggle\-Grid (
+\begin{DoxyParamCaption}
+\item[{bool}]{\-\_\-state}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}\label{class_n_g_l_scene_aca261cac1f24d327b5685301af20d66f}
+
+
+toggles the grid visibility 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-state} & true=on false=off \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 389 of file N\-G\-L\-Scene.\-cpp.
+
+
+
+References m\-\_\-draw\-Grid.
+
+
+\begin{DoxyCode}
+390 \{
+391   m_drawGrid=\_state;
+392   update();
+393 \}
+\end{DoxyCode}
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!toggle\-Normals@{toggle\-Normals}}
+\index{toggle\-Normals@{toggle\-Normals}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{toggle\-Normals}]{\setlength{\rightskip}{0pt plus 5cm}void N\-G\-L\-Scene\-::toggle\-Normals (
+\begin{DoxyParamCaption}
+\item[{bool}]{\-\_\-state}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}\label{class_n_g_l_scene_aa99f9c2fbc38ebda54c122ecec0493d2}
+
+
+toggles the normals visibility 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-state} & true=on false=off \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 382 of file N\-G\-L\-Scene.\-cpp.
+
+
+
+References m\-\_\-draw\-Normals.
+
+
+\begin{DoxyCode}
+383 \{
+384   m_drawNormals=\_state;
+385   update();
+386 \}
+\end{DoxyCode}
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!toggle\-Obj@{toggle\-Obj}}
+\index{toggle\-Obj@{toggle\-Obj}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{toggle\-Obj}]{\setlength{\rightskip}{0pt plus 5cm}void N\-G\-L\-Scene\-::toggle\-Obj (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}\label{class_n_g_l_scene_adfcc583c9226e008f9ed6e752e412844}
+
+
+Activate the m\-\_\-mesh .obj. 
+
+
+
+Definition at line 81 of file N\-G\-L\-Scene.\-cpp.
+
+
+
+References m\-\_\-mesh, m\-\_\-mesh\-Loc, and m\-\_\-toggle\-Obj.
+
+
+\begin{DoxyCode}
+82 \{
+83   \textcolor{keywordflow}{if}(m_toggleObj==\textcolor{keyword}{true})
+84   \{
+85     m_mesh = std::unique\_ptr<ngl::Obj> (\textcolor{keyword}{new} ngl::Obj(m_meshLoc));
+86     m_mesh->createVAO();
+87     m_toggleObj=\textcolor{keyword}{false};
+88   \}
+89 
+90 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=292pt]{class_n_g_l_scene_adfcc583c9226e008f9ed6e752e412844_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!toggle\-Wireframe@{toggle\-Wireframe}}
+\index{toggle\-Wireframe@{toggle\-Wireframe}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{toggle\-Wireframe}]{\setlength{\rightskip}{0pt plus 5cm}void N\-G\-L\-Scene\-::toggle\-Wireframe (
+\begin{DoxyParamCaption}
+\item[{bool}]{\-\_\-state}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}\label{class_n_g_l_scene_a7d60493b76ad5087ee394f2839837f60}
+
+
+toggles the wireframe visibility 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-state} & true=on false=off \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 375 of file N\-G\-L\-Scene.\-cpp.
+
+
+
+References m\-\_\-wireframe.
+
+
+\begin{DoxyCode}
+376 \{
+377   m_wireframe=\_state;
+378   update();
+379 \}
+\end{DoxyCode}
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!wheel\-Event@{wheel\-Event}}
+\index{wheel\-Event@{wheel\-Event}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{wheel\-Event}]{\setlength{\rightskip}{0pt plus 5cm}void N\-G\-L\-Scene\-::wheel\-Event (
+\begin{DoxyParamCaption}
+\item[{Q\-Wheel\-Event $\ast$}]{\-\_\-event}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}\label{class_n_g_l_scene_a5ea289b6eb36df76da5e6e39be04c779}
+
+
+this method is called everytime the mouse wheel is moved inherited from Q\-Object and overridden here. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \-\_\-event} & the Qt Event structure \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 512 of file N\-G\-L\-Scene.\-cpp.
+
+
+
+References m\-\_\-camera\-Index, m\-\_\-model\-Pos, and Z\-O\-O\-M.
+
+
+\begin{DoxyCode}
+513 \{
+514 
+515   \textcolor{comment}{// check the diff of the wheel position (0 means no change)}
+516   \textcolor{keywordflow}{if}(\_event->delta() > 0)
+517   \{
+518     \textcolor{keywordflow}{switch}(m_cameraIndex)\{
+519     \textcolor{keywordflow}{case} 0:
+520       m_modelPos.m\_z+=ZOOM;
+521       m_modelPos.m\_x+=ZOOM; \textcolor{keywordflow}{break};
+522     \textcolor{keywordflow}{case} 1:
+523       m_modelPos.m\_y+=ZOOM; \textcolor{keywordflow}{break};
+524     \textcolor{keywordflow}{case} 2:
+525       m_modelPos.m\_y-=ZOOM; \textcolor{keywordflow}{break};
+526     \textcolor{keywordflow}{case} 3:
+527       m_modelPos.m\_z-=ZOOM; \textcolor{keywordflow}{break};
+528     \textcolor{keywordflow}{case} 4:
+529       m_modelPos.m\_z+=ZOOM; \textcolor{keywordflow}{break};
+530     \}
+531   \}
+532   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(\_event->delta() < 0)
+533   \{
+534     \textcolor{keywordflow}{switch}(m_cameraIndex)\{
+535     \textcolor{keywordflow}{case} 0:
+536       m_modelPos.m\_z-=ZOOM;
+537       m_modelPos.m\_x-=ZOOM; \textcolor{keywordflow}{break};
+538     \textcolor{keywordflow}{case} 1:
+539       m_modelPos.m\_y-=ZOOM; \textcolor{keywordflow}{break};
+540     \textcolor{keywordflow}{case} 2:
+541       m_modelPos.m\_y+=ZOOM; \textcolor{keywordflow}{break};
+542     \textcolor{keywordflow}{case} 3:
+543       m_modelPos.m\_z+=ZOOM; \textcolor{keywordflow}{break};
+544     \textcolor{keywordflow}{case} 4:
+545       m_modelPos.m\_z-=ZOOM; \textcolor{keywordflow}{break};
+546     \}
+547   \}
+548   update();
+549 \}
+\end{DoxyCode}
+
+
+\subsection{Member Data Documentation}
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!m\-\_\-cam@{m\-\_\-cam}}
+\index{m\-\_\-cam@{m\-\_\-cam}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{m\-\_\-cam}]{\setlength{\rightskip}{0pt plus 5cm}ngl\-::\-Camera N\-G\-L\-Scene\-::m\-\_\-cam\hspace{0.3cm}{\ttfamily [private]}}\label{class_n_g_l_scene_a4faea2adadeaad479ff774e8345815e6}
+
+
+The camera. 
+
+
+
+Definition at line 245 of file N\-G\-L\-Scene.\-h.
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!m\-\_\-camera@{m\-\_\-camera}}
+\index{m\-\_\-camera@{m\-\_\-camera}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{m\-\_\-camera}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Camera}$\ast$ N\-G\-L\-Scene\-::m\-\_\-camera}\label{class_n_g_l_scene_a427beb908d9628726e8e29316e055fb0}
+
+
+Pointer to inherit camera class. This is public for signal/slot access. 
+
+
+
+Definition at line 72 of file N\-G\-L\-Scene.\-h.
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!m\-\_\-camera\-Index@{m\-\_\-camera\-Index}}
+\index{m\-\_\-camera\-Index@{m\-\_\-camera\-Index}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{m\-\_\-camera\-Index}]{\setlength{\rightskip}{0pt plus 5cm}int N\-G\-L\-Scene\-::m\-\_\-camera\-Index\hspace{0.3cm}{\ttfamily [private]}}\label{class_n_g_l_scene_ab303cb530fdbb47beab36770b695b834}
+
+
+An index to access the cameras. 
+
+
+
+Definition at line 306 of file N\-G\-L\-Scene.\-h.
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!m\-\_\-draw\-Grid@{m\-\_\-draw\-Grid}}
+\index{m\-\_\-draw\-Grid@{m\-\_\-draw\-Grid}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{m\-\_\-draw\-Grid}]{\setlength{\rightskip}{0pt plus 5cm}bool N\-G\-L\-Scene\-::m\-\_\-draw\-Grid\hspace{0.3cm}{\ttfamily [private]}}\label{class_n_g_l_scene_a2fc7ca367a266021b9e625ac4c16b6a7}
+
+
+A toggle used to draw a grid. 
+
+
+
+Definition at line 285 of file N\-G\-L\-Scene.\-h.
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!m\-\_\-draw\-Normals@{m\-\_\-draw\-Normals}}
+\index{m\-\_\-draw\-Normals@{m\-\_\-draw\-Normals}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{m\-\_\-draw\-Normals}]{\setlength{\rightskip}{0pt plus 5cm}bool N\-G\-L\-Scene\-::m\-\_\-draw\-Normals\hspace{0.3cm}{\ttfamily [private]}}\label{class_n_g_l_scene_a03d4d58046629f535022578a9a03217d}
+
+
+A toggle used to draw normals. 
+
+
+
+Definition at line 281 of file N\-G\-L\-Scene.\-h.
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!m\-\_\-mesh@{m\-\_\-mesh}}
+\index{m\-\_\-mesh@{m\-\_\-mesh}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{m\-\_\-mesh}]{\setlength{\rightskip}{0pt plus 5cm}std\-::unique\-\_\-ptr$<$ngl\-::\-Obj$>$ N\-G\-L\-Scene\-::m\-\_\-mesh\hspace{0.3cm}{\ttfamily [private]}}\label{class_n_g_l_scene_aa6e6165f7bc8e4ddc6e25aaaeda5ad73}
+
+
+Pointer to the V\-A\-O m\-\_\-mesh. 
+
+
+
+Definition at line 314 of file N\-G\-L\-Scene.\-h.
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!m\-\_\-mesh\-Loc@{m\-\_\-mesh\-Loc}}
+\index{m\-\_\-mesh\-Loc@{m\-\_\-mesh\-Loc}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{m\-\_\-mesh\-Loc}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string N\-G\-L\-Scene\-::m\-\_\-mesh\-Loc\hspace{0.3cm}{\ttfamily [private]}}\label{class_n_g_l_scene_a2442ac60e1c5200ea2107ff8fc44e844}
+
+
+A string to store the .obj m\-\_\-mesh directory. 
+
+
+
+Definition at line 310 of file N\-G\-L\-Scene.\-h.
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!m\-\_\-model\-Pos@{m\-\_\-model\-Pos}}
+\index{m\-\_\-model\-Pos@{m\-\_\-model\-Pos}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{m\-\_\-model\-Pos}]{\setlength{\rightskip}{0pt plus 5cm}ngl\-::\-Vec3 N\-G\-L\-Scene\-::m\-\_\-model\-Pos\hspace{0.3cm}{\ttfamily [private]}}\label{class_n_g_l_scene_aafe232ffe5c4f03ea3095665d91c2ab3}
+
+
+the model position for mouse movement 
+
+
+
+Definition at line 249 of file N\-G\-L\-Scene.\-h.
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!m\-\_\-mouse\-Global\-T\-X@{m\-\_\-mouse\-Global\-T\-X}}
+\index{m\-\_\-mouse\-Global\-T\-X@{m\-\_\-mouse\-Global\-T\-X}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{m\-\_\-mouse\-Global\-T\-X}]{\setlength{\rightskip}{0pt plus 5cm}ngl\-::\-Mat4 N\-G\-L\-Scene\-::m\-\_\-mouse\-Global\-T\-X\hspace{0.3cm}{\ttfamily [private]}}\label{class_n_g_l_scene_a205162fdc65f45b4a4d956fdc60e8a4d}
+
+
+used to store the global mouse transforms 
+
+
+
+Definition at line 241 of file N\-G\-L\-Scene.\-h.
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!m\-\_\-normal\-Size@{m\-\_\-normal\-Size}}
+\index{m\-\_\-normal\-Size@{m\-\_\-normal\-Size}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{m\-\_\-normal\-Size}]{\setlength{\rightskip}{0pt plus 5cm}float N\-G\-L\-Scene\-::m\-\_\-normal\-Size\hspace{0.3cm}{\ttfamily [private]}}\label{class_n_g_l_scene_ae297e9f420ecb154eae3d08e5a413536}
+
+
+Stores the size of the normal. 
+
+
+
+Definition at line 289 of file N\-G\-L\-Scene.\-h.
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!m\-\_\-orig\-X@{m\-\_\-orig\-X}}
+\index{m\-\_\-orig\-X@{m\-\_\-orig\-X}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{m\-\_\-orig\-X}]{\setlength{\rightskip}{0pt plus 5cm}int N\-G\-L\-Scene\-::m\-\_\-orig\-X\hspace{0.3cm}{\ttfamily [private]}}\label{class_n_g_l_scene_a645f3969c21294f5c76168bf6d3b9b51}
+
+
+the previous x mouse value 
+
+
+
+Definition at line 225 of file N\-G\-L\-Scene.\-h.
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!m\-\_\-orig\-X\-Pos@{m\-\_\-orig\-X\-Pos}}
+\index{m\-\_\-orig\-X\-Pos@{m\-\_\-orig\-X\-Pos}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{m\-\_\-orig\-X\-Pos}]{\setlength{\rightskip}{0pt plus 5cm}int N\-G\-L\-Scene\-::m\-\_\-orig\-X\-Pos\hspace{0.3cm}{\ttfamily [private]}}\label{class_n_g_l_scene_a3a98c0d84c61feb12b2a2ec00270727b}
+
+
+the previous x mouse value for Position changes 
+
+
+
+Definition at line 233 of file N\-G\-L\-Scene.\-h.
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!m\-\_\-orig\-Y@{m\-\_\-orig\-Y}}
+\index{m\-\_\-orig\-Y@{m\-\_\-orig\-Y}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{m\-\_\-orig\-Y}]{\setlength{\rightskip}{0pt plus 5cm}int N\-G\-L\-Scene\-::m\-\_\-orig\-Y\hspace{0.3cm}{\ttfamily [private]}}\label{class_n_g_l_scene_ae3e8e838aeefc97bb241aaaec0769931}
+
+
+the previous y mouse value 
+
+
+
+Definition at line 229 of file N\-G\-L\-Scene.\-h.
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!m\-\_\-orig\-Y\-Pos@{m\-\_\-orig\-Y\-Pos}}
+\index{m\-\_\-orig\-Y\-Pos@{m\-\_\-orig\-Y\-Pos}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{m\-\_\-orig\-Y\-Pos}]{\setlength{\rightskip}{0pt plus 5cm}int N\-G\-L\-Scene\-::m\-\_\-orig\-Y\-Pos\hspace{0.3cm}{\ttfamily [private]}}\label{class_n_g_l_scene_a8222af8d2460d216d9cf0a008c6d5a53}
+
+
+the previous y mouse value for Position changes 
+
+
+
+Definition at line 237 of file N\-G\-L\-Scene.\-h.
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!m\-\_\-parser@{m\-\_\-parser}}
+\index{m\-\_\-parser@{m\-\_\-parser}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{m\-\_\-parser}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Parser\-Lib}$\ast$ N\-G\-L\-Scene\-::m\-\_\-parser}\label{class_n_g_l_scene_afd08c33ef57873bcc49635971a5d94f8}
+
+
+the parser to deal with all the uniform values stored in the shader 
+
+\begin{DoxyRefDesc}{Todo}
+\item[{\bf Todo}]Should be private and have get method \end{DoxyRefDesc}
+
+
+Definition at line 67 of file N\-G\-L\-Scene.\-h.
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!m\-\_\-read\-From\-X\-M\-L@{m\-\_\-read\-From\-X\-M\-L}}
+\index{m\-\_\-read\-From\-X\-M\-L@{m\-\_\-read\-From\-X\-M\-L}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{m\-\_\-read\-From\-X\-M\-L}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I\-O\-\_\-\-X\-M\-L}$\ast$ N\-G\-L\-Scene\-::m\-\_\-read\-From\-X\-M\-L\hspace{0.3cm}{\ttfamily [private]}}\label{class_n_g_l_scene_a2ef5cf8adbe0058a2524d8b98dfbe6c8}
+
+
+read from xml file 
+
+
+
+Definition at line 261 of file N\-G\-L\-Scene.\-h.
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!m\-\_\-rotate@{m\-\_\-rotate}}
+\index{m\-\_\-rotate@{m\-\_\-rotate}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{m\-\_\-rotate}]{\setlength{\rightskip}{0pt plus 5cm}bool N\-G\-L\-Scene\-::m\-\_\-rotate\hspace{0.3cm}{\ttfamily [private]}}\label{class_n_g_l_scene_a8e46cb82cac8a56250a272081af233b2}
+
+
+flag to indicate if the mouse button is pressed when dragging 
+
+
+
+Definition at line 201 of file N\-G\-L\-Scene.\-h.
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!m\-\_\-rotation@{m\-\_\-rotation}}
+\index{m\-\_\-rotation@{m\-\_\-rotation}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{m\-\_\-rotation}]{\setlength{\rightskip}{0pt plus 5cm}ngl\-::\-Vec3 N\-G\-L\-Scene\-::m\-\_\-rotation\hspace{0.3cm}{\ttfamily [private]}}\label{class_n_g_l_scene_a20803b11d0eebe2b6ffe248ce5181e94}
+
+
+rotation of the teapot 
+
+
+
+Definition at line 217 of file N\-G\-L\-Scene.\-h.
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!m\-\_\-shader\-Error@{m\-\_\-shader\-Error}}
+\index{m\-\_\-shader\-Error@{m\-\_\-shader\-Error}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{m\-\_\-shader\-Error}]{\setlength{\rightskip}{0pt plus 5cm}bool N\-G\-L\-Scene\-::m\-\_\-shader\-Error\hspace{0.3cm}{\ttfamily [private]}}\label{class_n_g_l_scene_ab06691a468105f0224f7e302bf0c0b21}
+
+
+If there is a shader error or not. 
+
+
+
+Definition at line 297 of file N\-G\-L\-Scene.\-h.
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!m\-\_\-shader\-Manager@{m\-\_\-shader\-Manager}}
+\index{m\-\_\-shader\-Manager@{m\-\_\-shader\-Manager}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{m\-\_\-shader\-Manager}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Shader\-Manager}$\ast$ N\-G\-L\-Scene\-::m\-\_\-shader\-Manager\hspace{0.3cm}{\ttfamily [private]}}\label{class_n_g_l_scene_a32e22d00fcb0209be75d6b62b08c86c1}
+
+
+Stores the shader manager which handles the setup and maintenance of shaders. 
+
+
+
+Definition at line 302 of file N\-G\-L\-Scene.\-h.
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!m\-\_\-shape\-Type@{m\-\_\-shape\-Type}}
+\index{m\-\_\-shape\-Type@{m\-\_\-shape\-Type}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{m\-\_\-shape\-Type}]{\setlength{\rightskip}{0pt plus 5cm}uint N\-G\-L\-Scene\-::m\-\_\-shape\-Type\hspace{0.3cm}{\ttfamily [private]}}\label{class_n_g_l_scene_ade87529130d937657630ead75f8adabf}
+
+
+defines the mesh type 
+
+
+
+Definition at line 269 of file N\-G\-L\-Scene.\-h.
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!m\-\_\-spin\-X\-Face@{m\-\_\-spin\-X\-Face}}
+\index{m\-\_\-spin\-X\-Face@{m\-\_\-spin\-X\-Face}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{m\-\_\-spin\-X\-Face}]{\setlength{\rightskip}{0pt plus 5cm}int N\-G\-L\-Scene\-::m\-\_\-spin\-X\-Face\hspace{0.3cm}{\ttfamily [private]}}\label{class_n_g_l_scene_a6d944b2d4d36500b2170bc9e7f48cd3e}
+
+
+used to store the x rotation mouse value 
+
+
+
+Definition at line 205 of file N\-G\-L\-Scene.\-h.
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!m\-\_\-spin\-Y\-Face@{m\-\_\-spin\-Y\-Face}}
+\index{m\-\_\-spin\-Y\-Face@{m\-\_\-spin\-Y\-Face}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{m\-\_\-spin\-Y\-Face}]{\setlength{\rightskip}{0pt plus 5cm}int N\-G\-L\-Scene\-::m\-\_\-spin\-Y\-Face\hspace{0.3cm}{\ttfamily [private]}}\label{class_n_g_l_scene_adba42c61d2ebee4a72f56563f8f62899}
+
+
+used to store the y rotation mouse value 
+
+
+
+Definition at line 209 of file N\-G\-L\-Scene.\-h.
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!m\-\_\-spin\-Z\-Face@{m\-\_\-spin\-Z\-Face}}
+\index{m\-\_\-spin\-Z\-Face@{m\-\_\-spin\-Z\-Face}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{m\-\_\-spin\-Z\-Face}]{\setlength{\rightskip}{0pt plus 5cm}int N\-G\-L\-Scene\-::m\-\_\-spin\-Z\-Face\hspace{0.3cm}{\ttfamily [private]}}\label{class_n_g_l_scene_a5d4b48f3cb86d13383da46506e3181ca}
+
+
+used to store the z rotation mouse value 
+
+
+
+Definition at line 213 of file N\-G\-L\-Scene.\-h.
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!m\-\_\-texture\-Name@{m\-\_\-texture\-Name}}
+\index{m\-\_\-texture\-Name@{m\-\_\-texture\-Name}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{m\-\_\-texture\-Name}]{\setlength{\rightskip}{0pt plus 5cm}G\-Luint N\-G\-L\-Scene\-::m\-\_\-texture\-Name\hspace{0.3cm}{\ttfamily [private]}}\label{class_n_g_l_scene_ae06af2529f536464173b6f50aa546f28}
+
+
+stores the texture name 
+
+
+
+Definition at line 293 of file N\-G\-L\-Scene.\-h.
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!m\-\_\-toggle\-Axis@{m\-\_\-toggle\-Axis}}
+\index{m\-\_\-toggle\-Axis@{m\-\_\-toggle\-Axis}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{m\-\_\-toggle\-Axis}]{\setlength{\rightskip}{0pt plus 5cm}bool N\-G\-L\-Scene\-::m\-\_\-toggle\-Axis\hspace{0.3cm}{\ttfamily [private]}}\label{class_n_g_l_scene_a26a414b533b258de1770678af6998782}
+
+
+A toggle used to turn axis on and off. 
+
+
+
+Definition at line 277 of file N\-G\-L\-Scene.\-h.
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!m\-\_\-toggle\-Obj@{m\-\_\-toggle\-Obj}}
+\index{m\-\_\-toggle\-Obj@{m\-\_\-toggle\-Obj}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{m\-\_\-toggle\-Obj}]{\setlength{\rightskip}{0pt plus 5cm}bool N\-G\-L\-Scene\-::m\-\_\-toggle\-Obj\hspace{0.3cm}{\ttfamily [private]}}\label{class_n_g_l_scene_a206b1a3e59941328d1f86c9ee9f7ad7c}
+
+
+A toggle used to import the .obj m\-\_\-mesh. 
+
+
+
+Definition at line 273 of file N\-G\-L\-Scene.\-h.
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!m\-\_\-transform@{m\-\_\-transform}}
+\index{m\-\_\-transform@{m\-\_\-transform}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{m\-\_\-transform}]{\setlength{\rightskip}{0pt plus 5cm}ngl\-::\-Transformation N\-G\-L\-Scene\-::m\-\_\-transform\hspace{0.3cm}{\ttfamily [private]}}\label{class_n_g_l_scene_a563c07219c925adf79d1b939a540469f}
+
+
+transformation stack for the gl transformations etc 
+
+
+
+Definition at line 253 of file N\-G\-L\-Scene.\-h.
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!m\-\_\-translate@{m\-\_\-translate}}
+\index{m\-\_\-translate@{m\-\_\-translate}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{m\-\_\-translate}]{\setlength{\rightskip}{0pt plus 5cm}bool N\-G\-L\-Scene\-::m\-\_\-translate\hspace{0.3cm}{\ttfamily [private]}}\label{class_n_g_l_scene_afb8014abc76ccaa76994ac2ae2ab13e2}
+
+
+flag to indicate if the Right mouse button is pressed when dragging 
+
+
+
+Definition at line 221 of file N\-G\-L\-Scene.\-h.
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!m\-\_\-window@{m\-\_\-window}}
+\index{m\-\_\-window@{m\-\_\-window}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{m\-\_\-window}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Main\-Window}$\ast$ N\-G\-L\-Scene\-::m\-\_\-window\hspace{0.3cm}{\ttfamily [private]}}\label{class_n_g_l_scene_ab2e3e9c8faefad16c5f57ca2242d9b04}
+
+
+the main window that is the G\-U\-I 
+
+
+
+Definition at line 265 of file N\-G\-L\-Scene.\-h.
+
+\index{N\-G\-L\-Scene@{N\-G\-L\-Scene}!m\-\_\-wireframe@{m\-\_\-wireframe}}
+\index{m\-\_\-wireframe@{m\-\_\-wireframe}!NGLScene@{N\-G\-L\-Scene}}
+\subsubsection[{m\-\_\-wireframe}]{\setlength{\rightskip}{0pt plus 5cm}bool N\-G\-L\-Scene\-::m\-\_\-wireframe\hspace{0.3cm}{\ttfamily [private]}}\label{class_n_g_l_scene_a3fbe1d021368703df44093b8f6794226}
+
+
+set the view to show wireframe 
+
+
+
+Definition at line 257 of file N\-G\-L\-Scene.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+{\bf N\-G\-L\-Scene.\-h}\item 
+{\bf N\-G\-L\-Scene.\-cpp}\end{DoxyCompactItemize}

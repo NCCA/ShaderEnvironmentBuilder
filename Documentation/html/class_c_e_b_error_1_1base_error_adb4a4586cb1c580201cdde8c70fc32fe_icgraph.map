@@ -1,0 +1,18 @@
+<map id="CEBError::baseError::generateMsg" name="CEBError::baseError::generateMsg">
+<area shape="rect" id="node2" href="$class_c_e_b_error_1_1base_error.html#aaebf355e6b7b5c89d333fd258eefdaa8" title="returns an explanatory string " alt="" coords="211,5,346,46"/>
+<area shape="rect" id="node3" href="$class_c_e_b_error_1_1file_error.html#ace162f612f8039db81cfd5f33a581483" title="returns an explanatory string " alt="" coords="217,70,341,111"/>
+<area shape="rect" id="node4" href="$class_c_e_b_error_1_1file_read_error.html#aedb4744aa826bd1aeabc060e9aab86f4" title="returns an explanatory string " alt="" coords="201,135,356,177"/>
+<area shape="rect" id="node5" href="$class_c_e_b_error_1_1file_write_error.html#a94080ee76fa9870cae6e2f8af8d0ca94" title="returns an explanatory string " alt="" coords="201,201,356,242"/>
+<area shape="rect" id="node6" href="$class_c_e_b_error_1_1file_fatal_error.html#a2ce424f4c875db18e474dfde511ef994" title="returns an explanatory string " alt="" coords="202,266,355,307"/>
+<area shape="rect" id="node7" href="$class_c_e_b_error_1_1file_resource_error.html#aa93a3ccb45a83aa3a2a22470e8158ab2" title="returns an explanatory string " alt="" coords="189,331,368,373"/>
+<area shape="rect" id="node8" href="$class_c_e_b_error_1_1file_open_error.html#a8b5a6e948a1579231e43900e10007e28" title="returns an explanatory string " alt="" coords="201,397,356,438"/>
+<area shape="rect" id="node9" href="$class_c_e_b_error_1_1file_abort_error.html#aef6252c26fcec135375d31e180531a0b" title="returns an explanatory string " alt="" coords="201,462,356,503"/>
+<area shape="rect" id="node10" href="$class_c_e_b_error_1_1file_time_out_error.html#a3faa61ff4b2957c8e8378a5469d1e555" title="returns an explanatory string " alt="" coords="191,527,366,569"/>
+<area shape="rect" id="node11" href="$class_c_e_b_error_1_1file_unspecified_error.html#a5fd01a2dc4466c05771c747d77f8c1c8" title="returns an explanatory string " alt="" coords="197,593,360,634"/>
+<area shape="rect" id="node12" href="$class_c_e_b_error_1_1file_remove_error.html#ab0d8b96b77fa71a987a2b615d4c3ed6f" title="returns an explanatory string " alt="" coords="193,658,364,699"/>
+<area shape="rect" id="node13" href="$class_c_e_b_error_1_1file_rename_error.html#a8e3e40fe64af2d371292f0b7870b48dc" title="returns an explanatory string " alt="" coords="193,723,365,765"/>
+<area shape="rect" id="node14" href="$class_c_e_b_error_1_1file_position_error.html#a16d57a675c34aa9223b41c23396120d5" title="returns an explanatory string " alt="" coords="193,789,364,830"/>
+<area shape="rect" id="node15" href="$class_c_e_b_error_1_1file_resize_error.html#a10cb33967f1c4c0f5c2a6092986d74ee" title="returns an explanatory string " alt="" coords="197,854,360,895"/>
+<area shape="rect" id="node16" href="$class_c_e_b_error_1_1file_permissions_error.html#a5d2198d1bd04e1bb0d1fd21b443247b5" title="returns an explanatory string " alt="" coords="195,919,362,961"/>
+<area shape="rect" id="node17" href="$class_c_e_b_error_1_1file_copy_error.html#a0222f2bec1c517def68ab5a68bea8d22" title="returns an explanatory string " alt="" coords="202,985,355,1026"/>
+</map>

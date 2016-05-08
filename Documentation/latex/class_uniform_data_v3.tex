@@ -1,0 +1,190 @@
+\section{Uniform\-Data\-V3 Class Reference}
+\label{class_uniform_data_v3}\index{Uniform\-Data\-V3@{Uniform\-Data\-V3}}
+
+
+Stores individual uniform data for Vec3 data.  
+
+
+
+
+{\ttfamily \#include $<$Uniform\-Data.\-h$>$}
+
+
+
+Inheritance diagram for Uniform\-Data\-V3\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=126pt]{class_uniform_data_v3__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Uniform\-Data\-V3\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=126pt]{class_uniform_data_v3__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\bf $\sim$\-Uniform\-Data\-V3} ()
+\begin{DoxyCompactList}\small\item\em dtor for the uniform\-Data\-V3 \end{DoxyCompactList}\item 
+void {\bf set\-Vec3} (ngl\-::\-Vec3 \-\_\-value)
+\begin{DoxyCompactList}\small\item\em this assigns the \-\_\-value to the uniform\-Data m\-\_\-vec3 \end{DoxyCompactList}\item 
+void {\bf set\-Vec3} (float \-\_\-value)
+\begin{DoxyCompactList}\small\item\em this assigns the \-\_\-value to the uniform\-Data m\-\_\-vec4 \end{DoxyCompactList}\item 
+ngl\-::\-Vec3 {\bf get\-Vec3} ()
+\begin{DoxyCompactList}\small\item\em this returns the m\-\_\-vec3 value of this uniform\-Data \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+ngl\-::\-Vec3 {\bf m\-\_\-vec3} =\{0,0,0\}
+\begin{DoxyCompactList}\small\item\em used to store the vec3 value \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Stores individual uniform data for Vec3 data. 
+
+Definition at line 284 of file Uniform\-Data.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Uniform\-Data\-V3@{Uniform\-Data\-V3}!$\sim$\-Uniform\-Data\-V3@{$\sim$\-Uniform\-Data\-V3}}
+\index{$\sim$\-Uniform\-Data\-V3@{$\sim$\-Uniform\-Data\-V3}!UniformDataV3@{Uniform\-Data\-V3}}
+\subsubsection[{$\sim$\-Uniform\-Data\-V3}]{\setlength{\rightskip}{0pt plus 5cm}Uniform\-Data\-V3\-::$\sim$\-Uniform\-Data\-V3 (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_uniform_data_v3_ab317e9c1e9ca4872fe1e3ae001db02de}
+
+
+dtor for the uniform\-Data\-V3 
+
+
+
+\subsection{Member Function Documentation}
+\index{Uniform\-Data\-V3@{Uniform\-Data\-V3}!get\-Vec3@{get\-Vec3}}
+\index{get\-Vec3@{get\-Vec3}!UniformDataV3@{Uniform\-Data\-V3}}
+\subsubsection[{get\-Vec3}]{\setlength{\rightskip}{0pt plus 5cm}ngl\-::\-Vec3 Uniform\-Data\-V3\-::get\-Vec3 (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\label{class_uniform_data_v3_a60ddd23298b167fa5fb8c8e948512ef1}
+
+
+this returns the m\-\_\-vec3 value of this uniform\-Data 
+
+\begin{DoxyReturn}{Returns}
+m\-\_\-vec3 
+\end{DoxyReturn}
+
+
+Reimplemented from {\bf Uniform\-Data} \doxyref{}{p.}{class_uniform_data_a0e8768a7e3bbc90aeb4e82293585a37f}.
+
+
+
+Definition at line 314 of file Uniform\-Data.\-h.
+
+
+
+References m\-\_\-vec3.
+
+
+\begin{DoxyCode}
+314 \{\textcolor{keywordflow}{return} m_vec3;\}
+\end{DoxyCode}
+\index{Uniform\-Data\-V3@{Uniform\-Data\-V3}!set\-Vec3@{set\-Vec3}}
+\index{set\-Vec3@{set\-Vec3}!UniformDataV3@{Uniform\-Data\-V3}}
+\subsubsection[{set\-Vec3}]{\setlength{\rightskip}{0pt plus 5cm}void Uniform\-Data\-V3\-::set\-Vec3 (
+\begin{DoxyParamCaption}
+\item[{ngl\-::\-Vec3}]{\-\_\-value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_uniform_data_v3_a11d3ba47fc337ca38620bdd9239c0dc9}
+
+
+this assigns the \-\_\-value to the uniform\-Data m\-\_\-vec3 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-value} & is the value to change m\-\_\-vec3 into \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from {\bf Uniform\-Data} \doxyref{}{p.}{class_uniform_data_ad0ab662f52c9426d910b43d2f00ba6ed}.
+
+
+
+Definition at line 58 of file Uniform\-Data.\-cpp.
+
+
+
+References m\-\_\-vec3.
+
+
+\begin{DoxyCode}
+59 \{
+60   m_vec3=\_value;
+61 \}
+\end{DoxyCode}
+\index{Uniform\-Data\-V3@{Uniform\-Data\-V3}!set\-Vec3@{set\-Vec3}}
+\index{set\-Vec3@{set\-Vec3}!UniformDataV3@{Uniform\-Data\-V3}}
+\subsubsection[{set\-Vec3}]{\setlength{\rightskip}{0pt plus 5cm}void Uniform\-Data\-V3\-::set\-Vec3 (
+\begin{DoxyParamCaption}
+\item[{float}]{\-\_\-value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_uniform_data_v3_af676a09aea22513493ed36850998db39}
+
+
+this assigns the \-\_\-value to the uniform\-Data m\-\_\-vec4 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-value} & is the value to change all m\-\_\-vec3 componenets into \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from {\bf Uniform\-Data} \doxyref{}{p.}{class_uniform_data_ad1680bd04183933446215e21129c392b}.
+
+
+
+Definition at line 50 of file Uniform\-Data.\-cpp.
+
+
+
+References m\-\_\-vec3.
+
+
+\begin{DoxyCode}
+51 \{
+52   m_vec3.m\_x=\_value;
+53   m_vec3.m\_z=\_value;
+54   m_vec3.m\_y=\_value;
+55 \}
+\end{DoxyCode}
+
+
+\subsection{Member Data Documentation}
+\index{Uniform\-Data\-V3@{Uniform\-Data\-V3}!m\-\_\-vec3@{m\-\_\-vec3}}
+\index{m\-\_\-vec3@{m\-\_\-vec3}!UniformDataV3@{Uniform\-Data\-V3}}
+\subsubsection[{m\-\_\-vec3}]{\setlength{\rightskip}{0pt plus 5cm}ngl\-::\-Vec3 Uniform\-Data\-V3\-::m\-\_\-vec3 =\{0,0,0\}\hspace{0.3cm}{\ttfamily [private]}}\label{class_uniform_data_v3_a0ef67441ad4093558b7fcd18b529872c}
+
+
+used to store the vec3 value 
+
+
+
+Definition at line 290 of file Uniform\-Data.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+{\bf Uniform\-Data.\-h}\item 
+{\bf Uniform\-Data.\-cpp}\end{DoxyCompactItemize}

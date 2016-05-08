@@ -1,0 +1,511 @@
+\section{Glsl\-Files\-Page Class Reference}
+\label{class_glsl_files_page}\index{Glsl\-Files\-Page@{Glsl\-Files\-Page}}
+
+
+The project wizard page for selecting glsl files in.  
+
+
+
+
+{\ttfamily \#include $<$New\-Project\-Wizard.\-h$>$}
+
+
+
+Inheritance diagram for Glsl\-Files\-Page\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=120pt]{class_glsl_files_page__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Glsl\-Files\-Page\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=258pt]{class_glsl_files_page__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\bf Glsl\-Files\-Page} (Q\-Widget $\ast$parent=0)
+\begin{DoxyCompactList}\small\item\em Constructor, passing a child of parent. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void {\bf initialize\-Page} () Q\-\_\-\-D\-E\-C\-L\-\_\-\-O\-V\-E\-R\-R\-I\-D\-E
+\begin{DoxyCompactList}\small\item\em Used to prepare the Wizard page before it is shown and set default values. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Slots}
+\begin{DoxyCompactItemize}
+\item 
+void {\bf vertex\-Select\-Changed} (const Q\-Item\-Selection \&\-\_\-selected, const Q\-Item\-Selection \&\-\_\-deselected)
+\begin{DoxyCompactList}\small\item\em Activated when an object in the Vertex Treeview is changed. \end{DoxyCompactList}\item 
+void {\bf fragment\-Select\-Changed} (const Q\-Item\-Selection \&\-\_\-selected, const Q\-Item\-Selection \&\-\_\-deselected)
+\begin{DoxyCompactList}\small\item\em Activated when an object in the Fragment Treeview is changed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void {\bf deselect\-Dir} (const Q\-Item\-Selection \&\-\_\-selected, Q\-Item\-Selection\-Model $\ast$\-\_\-select\-Model)
+\begin{DoxyCompactList}\small\item\em Deselects selected directories so only files can be selected in the treeviews. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+{\bf New\-Project\-Wizard} $\ast$ {\bf m\-\_\-wizard}
+\begin{DoxyCompactList}\small\item\em The new project wizard that this page is a part of (the parent) \end{DoxyCompactList}\item 
+Q\-Group\-Box $\ast$ {\bf m\-\_\-gb\-\_\-glsl\-Files}
+\begin{DoxyCompactList}\small\item\em Group box for the glsl files. \end{DoxyCompactList}\item 
+Q\-Label $\ast$ {\bf m\-\_\-l\-\_\-fragment\-Name}
+\begin{DoxyCompactList}\small\item\em Label for the fragment name. \end{DoxyCompactList}\item 
+Q\-Label $\ast$ {\bf m\-\_\-l\-\_\-vertex\-Name}
+\begin{DoxyCompactList}\small\item\em Label for the vertex name. \end{DoxyCompactList}\item 
+Q\-Line\-Edit $\ast$ {\bf m\-\_\-le\-\_\-fragment\-Name}
+\begin{DoxyCompactList}\small\item\em Line edit for the fragment name. \end{DoxyCompactList}\item 
+Q\-Line\-Edit $\ast$ {\bf m\-\_\-le\-\_\-vertex\-Name}
+\begin{DoxyCompactList}\small\item\em Line edit for the vertex name. \end{DoxyCompactList}\item 
+Q\-Label $\ast$ {\bf m\-\_\-l\-\_\-fragment\-Select\-Files}
+\begin{DoxyCompactList}\small\item\em Label for the fragment select files. \end{DoxyCompactList}\item 
+Q\-Label $\ast$ {\bf m\-\_\-l\-\_\-vertex\-Select\-Files}
+\begin{DoxyCompactList}\small\item\em Label fro the vertex select files. \end{DoxyCompactList}\item 
+Q\-Tree\-View $\ast$ {\bf m\-\_\-tv\-\_\-fragment\-Select\-Files}
+\begin{DoxyCompactList}\small\item\em Treeview for selecting fragment files. \end{DoxyCompactList}\item 
+Q\-Tree\-View $\ast$ {\bf m\-\_\-tv\-\_\-vertex\-Select\-Files}
+\begin{DoxyCompactList}\small\item\em Treeview for selecting vertex files. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The project wizard page for selecting glsl files in. 
+
+\begin{DoxyRefDesc}{Todo}
+\item[{\bf Todo}]Make an inherited Q\-Wizard\-Page class that takes the parent (being q\-Wizard) and storing it as a member. Currenlty just repeating this for \doxyref{Glsl\-Files\-Page}{p.}{class_glsl_files_page} and \doxyref{Glsl\-Order\-Page}{p.}{class_glsl_order_page} \end{DoxyRefDesc}
+
+
+Definition at line 207 of file New\-Project\-Wizard.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Glsl\-Files\-Page@{Glsl\-Files\-Page}!Glsl\-Files\-Page@{Glsl\-Files\-Page}}
+\index{Glsl\-Files\-Page@{Glsl\-Files\-Page}!GlslFilesPage@{Glsl\-Files\-Page}}
+\subsubsection[{Glsl\-Files\-Page}]{\setlength{\rightskip}{0pt plus 5cm}Glsl\-Files\-Page\-::\-Glsl\-Files\-Page (
+\begin{DoxyParamCaption}
+\item[{Q\-Widget $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}\label{class_glsl_files_page_a51fd44ed50c86c11f2fa8fcbeb7e95a3}
+
+
+Constructor, passing a child of parent. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em parent} & The parent for which this will be the child of. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyRefDesc}{Todo}
+\item[{\bf Todo}]Make the two tree views into a single function since a lot of values are set the same. Just done this for the time being for speed and testing. \end{DoxyRefDesc}
+
+
+Definition at line 244 of file New\-Project\-Wizard.\-cpp.
+
+
+
+References fragment\-Select\-Changed(), New\-Project\-Wizard\-::m\-\_\-file\-Model, New\-Project\-Wizard\-::m\-\_\-fragment\-Select\-Model, m\-\_\-gb\-\_\-glsl\-Files, m\-\_\-l\-\_\-fragment\-Name, m\-\_\-l\-\_\-fragment\-Select\-Files, m\-\_\-l\-\_\-vertex\-Name, m\-\_\-l\-\_\-vertex\-Select\-Files, m\-\_\-le\-\_\-fragment\-Name, m\-\_\-le\-\_\-vertex\-Name, m\-\_\-tv\-\_\-fragment\-Select\-Files, m\-\_\-tv\-\_\-vertex\-Select\-Files, New\-Project\-Wizard\-::m\-\_\-vertex\-Select\-Model, m\-\_\-wizard, and vertex\-Select\-Changed().
+
+
+\begin{DoxyCode}
+245   : QWizardPage(parent)
+246 \{
+247   m_wizard = \textcolor{keyword}{static\_cast<}NewProjectWizard*\textcolor{keyword}{>}(parent);
+248   QString shadersPath = QDir::currentPath() + \textcolor{stringliteral}{"/shaders/files"};
+249   setTitle(tr(\textcolor{stringliteral}{"Shaders & GLSL Files"}));
+250   setSubTitle(tr(\textcolor{stringliteral}{"Specify the name of the Vertex and Fragment shaders as well "}
+251                  \textcolor{stringliteral}{"what GLSL files will be linked."}));
+252 
+253   m_l_vertexName = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"Vertex Name:"}));
+254   m_le_vertexName = \textcolor{keyword}{new} QLineEdit();
+255   m_l_vertexName->setBuddy(m_le_vertexName);
+256 
+257   m_l_fragmentName = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"Fragment Name:"}));
+258   m_le_fragmentName = \textcolor{keyword}{new} QLineEdit();
+259   m_l_fragmentName->setBuddy(m_le_fragmentName);
+260 
+261   m_l_vertexSelectFiles = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"Vertex Files:"}));
+262   m_l_fragmentSelectFiles = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"Fragment Files:"}));
+263 
+266   m_tv_vertexSelectFiles = \textcolor{keyword}{new} QTreeView;
+267   m_tv_fragmentSelectFiles = \textcolor{keyword}{new} QTreeView;
+268 
+269   std::vector<QTreeView*> tViews = \{m_tv_vertexSelectFiles,
+270                                     m_tv_fragmentSelectFiles\};
+271 
+272   \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} tv: tViews)
+273   \{
+274     tv->setModel(m_wizard->m_fileModel);
+275     tv->setRootIndex(m_wizard->m_fileModel->index(shadersPath));
+276     tv->setSelectionMode(QAbstractItemView::MultiSelection);
+277     tv->setColumnHidden(1,\textcolor{keyword}{true});
+278     tv->setColumnHidden(2,\textcolor{keyword}{true});
+279     tv->setColumnHidden(3,\textcolor{keyword}{true});
+280   \}
+281 
+282   m_wizard->m_vertexSelectModel = m_tv_vertexSelectFiles->selectionModel();
+283   m_wizard->m_fragmentSelectModel = m_tv_fragmentSelectFiles->selectionModel();
+284 
+285   connect(m_wizard->m_vertexSelectModel,
+286           SIGNAL(selectionChanged(\textcolor{keyword}{const} QItemSelection&,
+287                                   \textcolor{keyword}{const} QItemSelection&)),
+288           \textcolor{keyword}{this},
+289           SLOT(vertexSelectChanged(\textcolor{keyword}{const} QItemSelection&,
+290                                    \textcolor{keyword}{const} QItemSelection&)));
+291   connect(m_wizard->m_fragmentSelectModel,
+292           SIGNAL(selectionChanged(\textcolor{keyword}{const} QItemSelection&,
+293                                   \textcolor{keyword}{const} QItemSelection&)),
+294           \textcolor{keyword}{this},
+295           SLOT(fragmentSelectChanged(\textcolor{keyword}{const} QItemSelection&,
+296                                      \textcolor{keyword}{const} QItemSelection&)));
+297 
+298   registerField(\textcolor{stringliteral}{"vertexFileName*"}, m_le_vertexName);
+299   registerField(\textcolor{stringliteral}{"fragmentFileName*"}, m_le_fragmentName);
+300 
+301   m_gb_glslFiles = \textcolor{keyword}{new} QGroupBox(tr(\textcolor{stringliteral}{"Select GLSL Files"}));
+302   m_gb_glslFiles->setMinimumHeight(300);
+303   QGridLayout *groupBoxLayout = \textcolor{keyword}{new} QGridLayout;
+304   groupBoxLayout->addWidget(m_l_vertexSelectFiles, 0, 0);
+305   groupBoxLayout->addWidget(m_l_fragmentSelectFiles, 0, 1);
+306   groupBoxLayout->addWidget(m_tv_vertexSelectFiles, 1, 0);
+307   groupBoxLayout->addWidget(m_tv_fragmentSelectFiles, 1, 1);
+308 
+309   m_gb_glslFiles->setLayout(groupBoxLayout);
+310 
+311   QGridLayout *layout = \textcolor{keyword}{new} QGridLayout;
+312   layout->addWidget(m_l_vertexName, 0, 0);
+313   layout->addWidget(m_le_vertexName, 0, 1);
+314   layout->addWidget(m_l_fragmentName, 1, 0);
+315   layout->addWidget(m_le_fragmentName, 1, 1);
+316   layout->addWidget(m_gb_glslFiles, 2, 0, 1, 2);
+317   setLayout(layout);
+318 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_glsl_files_page_a51fd44ed50c86c11f2fa8fcbeb7e95a3_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsection{Member Function Documentation}
+\index{Glsl\-Files\-Page@{Glsl\-Files\-Page}!deselect\-Dir@{deselect\-Dir}}
+\index{deselect\-Dir@{deselect\-Dir}!GlslFilesPage@{Glsl\-Files\-Page}}
+\subsubsection[{deselect\-Dir}]{\setlength{\rightskip}{0pt plus 5cm}void Glsl\-Files\-Page\-::deselect\-Dir (
+\begin{DoxyParamCaption}
+\item[{const Q\-Item\-Selection \&}]{\-\_\-selected, }
+\item[{Q\-Item\-Selection\-Model $\ast$}]{\-\_\-select\-Model}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}\label{class_glsl_files_page_a1283ff00079fac89bed1e0b34c572a4b}
+
+
+Deselects selected directories so only files can be selected in the treeviews. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-selected} & The items selected in the treeview \\
+\hline
+\mbox{\tt in}  & {\em \-\_\-select\-Model} & The selection model used with the selections treeview \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 343 of file New\-Project\-Wizard.\-cpp.
+
+
+
+References New\-Project\-Wizard\-::m\-\_\-file\-Model, and m\-\_\-wizard.
+
+
+\begin{DoxyCode}
+345 \{
+346   QModelIndexList items = \_selected.indexes();
+347   \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} index: items)
+348   \{
+349     QFileInfo info = m_wizard->m_fileModel->fileInfo(index);
+350     \textcolor{keywordflow}{if} (info.isDir())
+351     \{
+352       \_selectModel->select(index, QItemSelectionModel::Deselect);
+353     \}
+354   \}
+355 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_glsl_files_page_a1283ff00079fac89bed1e0b34c572a4b_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Glsl\-Files\-Page@{Glsl\-Files\-Page}!fragment\-Select\-Changed@{fragment\-Select\-Changed}}
+\index{fragment\-Select\-Changed@{fragment\-Select\-Changed}!GlslFilesPage@{Glsl\-Files\-Page}}
+\subsubsection[{fragment\-Select\-Changed}]{\setlength{\rightskip}{0pt plus 5cm}void Glsl\-Files\-Page\-::fragment\-Select\-Changed (
+\begin{DoxyParamCaption}
+\item[{const Q\-Item\-Selection \&}]{\-\_\-selected, }
+\item[{const Q\-Item\-Selection \&}]{\-\_\-deselected}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}\label{class_glsl_files_page_a1de9fd34445970730d18513c7abe7e02}
+
+
+Activated when an object in the Fragment Treeview is changed. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-selected} & the objects that have been selected in the treeview \\
+\hline
+\mbox{\tt in}  & {\em \-\_\-deselected} & the objects that have been deselected in the treeview \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 336 of file New\-Project\-Wizard.\-cpp.
+
+
+
+References deselect\-Dir(), New\-Project\-Wizard\-::m\-\_\-fragment\-Select\-Model, and m\-\_\-wizard.
+
+
+\begin{DoxyCode}
+338 \{
+339   deselectDir(\_selected, m_wizard->m_fragmentSelectModel);
+340 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_glsl_files_page_a1de9fd34445970730d18513c7abe7e02_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_glsl_files_page_a1de9fd34445970730d18513c7abe7e02_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Glsl\-Files\-Page@{Glsl\-Files\-Page}!initialize\-Page@{initialize\-Page}}
+\index{initialize\-Page@{initialize\-Page}!GlslFilesPage@{Glsl\-Files\-Page}}
+\subsubsection[{initialize\-Page}]{\setlength{\rightskip}{0pt plus 5cm}void Glsl\-Files\-Page\-::initialize\-Page (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\label{class_glsl_files_page_a00aaad6fd8a6fa5a40dc1203cd9efaa6}
+
+
+Used to prepare the Wizard page before it is shown and set default values. 
+
+
+
+Definition at line 321 of file New\-Project\-Wizard.\-cpp.
+
+
+
+References m\-\_\-le\-\_\-fragment\-Name, and m\-\_\-le\-\_\-vertex\-Name.
+
+
+\begin{DoxyCode}
+322 \{
+323   QString projectName = field(\textcolor{stringliteral}{"projectName"}).toString();
+324   m_le_vertexName->setText(projectName + \textcolor{stringliteral}{"Vertex"});
+325   m_le_fragmentName->setText(projectName + \textcolor{stringliteral}{"Fragment"});
+326 \}
+\end{DoxyCode}
+\index{Glsl\-Files\-Page@{Glsl\-Files\-Page}!vertex\-Select\-Changed@{vertex\-Select\-Changed}}
+\index{vertex\-Select\-Changed@{vertex\-Select\-Changed}!GlslFilesPage@{Glsl\-Files\-Page}}
+\subsubsection[{vertex\-Select\-Changed}]{\setlength{\rightskip}{0pt plus 5cm}void Glsl\-Files\-Page\-::vertex\-Select\-Changed (
+\begin{DoxyParamCaption}
+\item[{const Q\-Item\-Selection \&}]{\-\_\-selected, }
+\item[{const Q\-Item\-Selection \&}]{\-\_\-deselected}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}\label{class_glsl_files_page_ac98a2eb6c7d298d9b7b43fc0c13b0784}
+
+
+Activated when an object in the Vertex Treeview is changed. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-selected} & the objects that have been selected in the treeview \\
+\hline
+\mbox{\tt in}  & {\em \-\_\-deselected} & the objects that have been deselected in the treeview \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 329 of file New\-Project\-Wizard.\-cpp.
+
+
+
+References deselect\-Dir(), New\-Project\-Wizard\-::m\-\_\-vertex\-Select\-Model, and m\-\_\-wizard.
+
+
+\begin{DoxyCode}
+331 \{
+332   deselectDir(\_selected, m_wizard->m_vertexSelectModel);
+333 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=342pt]{class_glsl_files_page_ac98a2eb6c7d298d9b7b43fc0c13b0784_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_glsl_files_page_ac98a2eb6c7d298d9b7b43fc0c13b0784_icgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsection{Member Data Documentation}
+\index{Glsl\-Files\-Page@{Glsl\-Files\-Page}!m\-\_\-gb\-\_\-glsl\-Files@{m\-\_\-gb\-\_\-glsl\-Files}}
+\index{m\-\_\-gb\-\_\-glsl\-Files@{m\-\_\-gb\-\_\-glsl\-Files}!GlslFilesPage@{Glsl\-Files\-Page}}
+\subsubsection[{m\-\_\-gb\-\_\-glsl\-Files}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Group\-Box$\ast$ Glsl\-Files\-Page\-::m\-\_\-gb\-\_\-glsl\-Files\hspace{0.3cm}{\ttfamily [private]}}\label{class_glsl_files_page_a4d3bf0abd5f42e0ea1c7a1d19a05d87d}
+
+
+Group box for the glsl files. 
+
+
+
+Definition at line 228 of file New\-Project\-Wizard.\-h.
+
+\index{Glsl\-Files\-Page@{Glsl\-Files\-Page}!m\-\_\-l\-\_\-fragment\-Name@{m\-\_\-l\-\_\-fragment\-Name}}
+\index{m\-\_\-l\-\_\-fragment\-Name@{m\-\_\-l\-\_\-fragment\-Name}!GlslFilesPage@{Glsl\-Files\-Page}}
+\subsubsection[{m\-\_\-l\-\_\-fragment\-Name}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Label$\ast$ Glsl\-Files\-Page\-::m\-\_\-l\-\_\-fragment\-Name\hspace{0.3cm}{\ttfamily [private]}}\label{class_glsl_files_page_a8a77573243866040cf93f1ac8ff6e2f9}
+
+
+Label for the fragment name. 
+
+
+
+Definition at line 232 of file New\-Project\-Wizard.\-h.
+
+\index{Glsl\-Files\-Page@{Glsl\-Files\-Page}!m\-\_\-l\-\_\-fragment\-Select\-Files@{m\-\_\-l\-\_\-fragment\-Select\-Files}}
+\index{m\-\_\-l\-\_\-fragment\-Select\-Files@{m\-\_\-l\-\_\-fragment\-Select\-Files}!GlslFilesPage@{Glsl\-Files\-Page}}
+\subsubsection[{m\-\_\-l\-\_\-fragment\-Select\-Files}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Label$\ast$ Glsl\-Files\-Page\-::m\-\_\-l\-\_\-fragment\-Select\-Files\hspace{0.3cm}{\ttfamily [private]}}\label{class_glsl_files_page_aaf6745fda343a9d179e9da5a1bbb4ada}
+
+
+Label for the fragment select files. 
+
+
+
+Definition at line 248 of file New\-Project\-Wizard.\-h.
+
+\index{Glsl\-Files\-Page@{Glsl\-Files\-Page}!m\-\_\-l\-\_\-vertex\-Name@{m\-\_\-l\-\_\-vertex\-Name}}
+\index{m\-\_\-l\-\_\-vertex\-Name@{m\-\_\-l\-\_\-vertex\-Name}!GlslFilesPage@{Glsl\-Files\-Page}}
+\subsubsection[{m\-\_\-l\-\_\-vertex\-Name}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Label$\ast$ Glsl\-Files\-Page\-::m\-\_\-l\-\_\-vertex\-Name\hspace{0.3cm}{\ttfamily [private]}}\label{class_glsl_files_page_a58fb271994fb4eb53763ab2de9576628}
+
+
+Label for the vertex name. 
+
+
+
+Definition at line 236 of file New\-Project\-Wizard.\-h.
+
+\index{Glsl\-Files\-Page@{Glsl\-Files\-Page}!m\-\_\-l\-\_\-vertex\-Select\-Files@{m\-\_\-l\-\_\-vertex\-Select\-Files}}
+\index{m\-\_\-l\-\_\-vertex\-Select\-Files@{m\-\_\-l\-\_\-vertex\-Select\-Files}!GlslFilesPage@{Glsl\-Files\-Page}}
+\subsubsection[{m\-\_\-l\-\_\-vertex\-Select\-Files}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Label$\ast$ Glsl\-Files\-Page\-::m\-\_\-l\-\_\-vertex\-Select\-Files\hspace{0.3cm}{\ttfamily [private]}}\label{class_glsl_files_page_a56e33554c079b7cc69db64aa2cb69164}
+
+
+Label fro the vertex select files. 
+
+
+
+Definition at line 252 of file New\-Project\-Wizard.\-h.
+
+\index{Glsl\-Files\-Page@{Glsl\-Files\-Page}!m\-\_\-le\-\_\-fragment\-Name@{m\-\_\-le\-\_\-fragment\-Name}}
+\index{m\-\_\-le\-\_\-fragment\-Name@{m\-\_\-le\-\_\-fragment\-Name}!GlslFilesPage@{Glsl\-Files\-Page}}
+\subsubsection[{m\-\_\-le\-\_\-fragment\-Name}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Line\-Edit$\ast$ Glsl\-Files\-Page\-::m\-\_\-le\-\_\-fragment\-Name\hspace{0.3cm}{\ttfamily [private]}}\label{class_glsl_files_page_ab16ac60ab94e8c3ad97be5a10b214f3e}
+
+
+Line edit for the fragment name. 
+
+
+
+Definition at line 240 of file New\-Project\-Wizard.\-h.
+
+\index{Glsl\-Files\-Page@{Glsl\-Files\-Page}!m\-\_\-le\-\_\-vertex\-Name@{m\-\_\-le\-\_\-vertex\-Name}}
+\index{m\-\_\-le\-\_\-vertex\-Name@{m\-\_\-le\-\_\-vertex\-Name}!GlslFilesPage@{Glsl\-Files\-Page}}
+\subsubsection[{m\-\_\-le\-\_\-vertex\-Name}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Line\-Edit$\ast$ Glsl\-Files\-Page\-::m\-\_\-le\-\_\-vertex\-Name\hspace{0.3cm}{\ttfamily [private]}}\label{class_glsl_files_page_a93fddac963a82e02c2a8cc57485196de}
+
+
+Line edit for the vertex name. 
+
+
+
+Definition at line 244 of file New\-Project\-Wizard.\-h.
+
+\index{Glsl\-Files\-Page@{Glsl\-Files\-Page}!m\-\_\-tv\-\_\-fragment\-Select\-Files@{m\-\_\-tv\-\_\-fragment\-Select\-Files}}
+\index{m\-\_\-tv\-\_\-fragment\-Select\-Files@{m\-\_\-tv\-\_\-fragment\-Select\-Files}!GlslFilesPage@{Glsl\-Files\-Page}}
+\subsubsection[{m\-\_\-tv\-\_\-fragment\-Select\-Files}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Tree\-View$\ast$ Glsl\-Files\-Page\-::m\-\_\-tv\-\_\-fragment\-Select\-Files\hspace{0.3cm}{\ttfamily [private]}}\label{class_glsl_files_page_a669fcdbc3ad2c419deea2f9446595598}
+
+
+Treeview for selecting fragment files. 
+
+
+
+Definition at line 256 of file New\-Project\-Wizard.\-h.
+
+\index{Glsl\-Files\-Page@{Glsl\-Files\-Page}!m\-\_\-tv\-\_\-vertex\-Select\-Files@{m\-\_\-tv\-\_\-vertex\-Select\-Files}}
+\index{m\-\_\-tv\-\_\-vertex\-Select\-Files@{m\-\_\-tv\-\_\-vertex\-Select\-Files}!GlslFilesPage@{Glsl\-Files\-Page}}
+\subsubsection[{m\-\_\-tv\-\_\-vertex\-Select\-Files}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Tree\-View$\ast$ Glsl\-Files\-Page\-::m\-\_\-tv\-\_\-vertex\-Select\-Files\hspace{0.3cm}{\ttfamily [private]}}\label{class_glsl_files_page_abcaf571f3edd6f4ec28990a0ef6a672b}
+
+
+Treeview for selecting vertex files. 
+
+
+
+Definition at line 260 of file New\-Project\-Wizard.\-h.
+
+\index{Glsl\-Files\-Page@{Glsl\-Files\-Page}!m\-\_\-wizard@{m\-\_\-wizard}}
+\index{m\-\_\-wizard@{m\-\_\-wizard}!GlslFilesPage@{Glsl\-Files\-Page}}
+\subsubsection[{m\-\_\-wizard}]{\setlength{\rightskip}{0pt plus 5cm}{\bf New\-Project\-Wizard}$\ast$ Glsl\-Files\-Page\-::m\-\_\-wizard\hspace{0.3cm}{\ttfamily [private]}}\label{class_glsl_files_page_a4463ca9f24074bcd495a8fef3ae06964}
+
+
+The new project wizard that this page is a part of (the parent) 
+
+
+
+Definition at line 224 of file New\-Project\-Wizard.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+{\bf New\-Project\-Wizard.\-h}\item 
+{\bf New\-Project\-Wizard.\-cpp}\end{DoxyCompactItemize}

@@ -1,0 +1,12 @@
+<map id="ShaderManager::use" name="ShaderManager::use">
+<area shape="rect" id="node2" href="$class_n_g_l_scene.html#a37bec65bfba7b7a717d803d369221e2d" title="this is called everytime we want to draw the scene " alt="" coords="696,32,832,58"/>
+<area shape="rect" id="node3" href="$class_n_g_l_scene.html#a9149c8d164b007df5bf114c8a896e635" title="method to load transform matrices to the shader " alt="" coords="201,42,380,83"/>
+<area shape="rect" id="node5" href="$class_n_g_l_scene.html#a3fc824ff4a9140812b9ea473cdd9b2c5" title="Draw a xyz axis. " alt="" coords="458,108,601,134"/>
+<area shape="rect" id="node6" href="$class_shader_manager.html#aed13243851b7441a686ca490d08c19a2" title="method to create a new shader program object " alt="" coords="193,159,389,200"/>
+<area shape="rect" id="node4" href="$class_n_g_l_scene.html#ae3e8dc1c180d89afa997104c3dd707a0" title="Set object transformations depending on the shape type. " alt="" coords="437,57,621,84"/>
+<area shape="rect" id="node7" href="$class_n_g_l_scene.html#a7e70f3230a69f5f593a50ca16d723349" title="Creates a new project for the shader. " alt="" coords="455,166,604,193"/>
+<area shape="rect" id="node8" href="$class_main_window.html#a4010b4118e9d4f0deffa97f7072e5018" title="Creates a new project wizard. " alt="" coords="671,137,857,164"/>
+<area shape="rect" id="node11" href="$class_main_window.html#a48ed0a16f674e38e0e2a24274852a9af" title="Called when Open button is triggered in File Menu bar. " alt="" coords="670,188,858,230"/>
+<area shape="rect" id="node9" href="$class_main_window.html#aed8d4c16aaa87ae02a2de2edd5fc91c7" title="Called when New button is triggered in File Menu bar. " alt="" coords="907,96,1090,138"/>
+<area shape="rect" id="node10" href="$class_startup_dialog.html#ac983df992c57b71b8f9207c357601a4e" title="Runs whenever NewProject button is clicked. " alt="" coords="929,162,1068,203"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="Button" name="Button">
+<area shape="rect" id="node3" href="$class_colour_button.html" title="Button to set colour uniform values. " alt="" coords="5,155,101,181"/>
+<area shape="rect" id="node4" href="$class_float_button.html" title="Button to set float uniform values. " alt="" coords="126,155,215,181"/>
+<area shape="rect" id="node5" href="$class_vec_button.html" title="Button to set vec3 and positional values. " alt="" coords="240,155,323,181"/>
+</map>

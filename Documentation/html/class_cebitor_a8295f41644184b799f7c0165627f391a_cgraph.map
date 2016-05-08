@@ -1,0 +1,10 @@
+<map id="Cebitor::Cebitor" name="Cebitor::Cebitor">
+<area shape="rect" id="node2" href="$class_cebitor.html#a68848533a814f6a1fd5702713a1a2a68" title="called when a character is added " alt="" coords="192,56,323,83"/>
+<area shape="rect" id="node6" href="$class_cebitor.html#a024169eef080f400c6c9384d8229f983" title="comment out all selected lines " alt="" coords="196,107,319,133"/>
+<area shape="rect" id="node7" href="$class_cebitor.html#a0e98f0691da34de6b4ab1c14d9eea63d" title="reset the highlighting colour " alt="" coords="165,157,349,184"/>
+<area shape="rect" id="node8" href="$class_cebitor.html#a7d1825b3c849b79a9e7c559c312dd92a" title="toggle search widget " alt="" coords="174,208,341,235"/>
+<area shape="rect" id="node3" href="$class_cebitor.html#af4b61a42d87ff45b28200523e4b71a65" title="adds closing character for braces and quotes " alt="" coords="421,5,547,32"/>
+<area shape="rect" id="node4" href="$class_cebitor.html#a759c7d4cb58cc46c43e203f26320a2aa" title="removes duplicates of closing braces and quotes " alt="" coords="429,56,539,83"/>
+<area shape="rect" id="node5" href="$class_cebitor.html#af923411a34a12c7deb9698a10d5b6c38" title="adds indentation after newline following a &quot;{&quot; " alt="" coords="415,107,553,133"/>
+<area shape="rect" id="node9" href="$class_cebitor.html#a1ba2c5c83f98d668f130caeaabac4b63" title="sets indicator for each search result " alt="" coords="397,208,571,235"/>
+</map>

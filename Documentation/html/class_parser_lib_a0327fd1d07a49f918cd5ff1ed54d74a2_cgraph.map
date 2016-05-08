@@ -1,0 +1,6 @@
+<map id="ParserLib::assignAllData" name="ParserLib::assignAllData">
+<area shape="rect" id="node2" href="$class_parser_lib.html#ae5e796d35c2b62f2099ea0a9b4cde4cc" title="sets default values for the active uniforms " alt="" coords="232,5,395,46"/>
+<area shape="rect" id="node3" href="$class_parser_lib.html#ab82a4570c99e2844e6ffe3bd1b3dbcf2" title="finds number of active uniforms and stores the data in blocks called uniformData. This then stores it..." alt="" coords="213,71,413,97"/>
+<area shape="rect" id="node4" href="$class_shader_manager.html#ac7f57e1b3e623ef4693389b009c44089" title="get the current data from the shader manager " alt="" coords="697,71,861,97"/>
+<area shape="rect" id="node5" href="$class_parser_lib.html#a748612fadf3a391ead34306bd3f39f77" title="used to translate the data type name from a number into a name. e.g. 35676 &#45;&gt; mat4 The following sect..." alt="" coords="461,96,648,123"/>
+</map>

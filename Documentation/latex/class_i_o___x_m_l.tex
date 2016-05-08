@@ -1,0 +1,419 @@
+\section{I\-O\-\_\-\-X\-M\-L Class Reference}
+\label{class_i_o___x_m_l}\index{I\-O\-\_\-\-X\-M\-L@{I\-O\-\_\-\-X\-M\-L}}
+
+
+Reads and writes project data to xml files.  
+
+
+
+
+{\ttfamily \#include $<$Io\-\_\-xml.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\bf I\-O\-\_\-\-X\-M\-L} ()
+\item 
+void {\bf read\-Project\-X\-M\-L} (std\-::string \&\-\_\-name, std\-::string \&\-\_\-dir, std\-::string \-\_\-loaded\-File\-Directory, std\-::string \&\-\_\-vert\-Source, std\-::string \&\-\_\-frag\-Source)
+\begin{DoxyCompactList}\small\item\em Will read the project file data. \end{DoxyCompactList}\item 
+bool {\bf write\-Project} (std\-::string \-\_\-name, std\-::string \-\_\-dir, std\-::string \-\_\-vert\-Source, std\-::string \-\_\-frag\-Source, bool \-\_\-overwrite)
+\begin{DoxyCompactList}\small\item\em Saves the project name, vertex and fragment data in set directory. \end{DoxyCompactList}\item 
+void {\bf shader\-Data} (const char $\ast$\-\_\-shader\-Program\-Name, const char $\ast$\-\_\-vertex\-Shader\-Name, const char $\ast$\-\_\-vertex\-Shader\-Glsl, const char $\ast$\-\_\-fragment\-Shader\-Name, const char $\ast$\-\_\-fragment\-Shader\-Glsl)
+\begin{DoxyCompactList}\small\item\em Saves data. \end{DoxyCompactList}\item 
+void {\bf write\-Data\-X\-M\-L} (std\-::string \-\_\-name, std\-::string \-\_\-type, int \-\_\-value)
+\begin{DoxyCompactList}\small\item\em (unused) Writes name, type and value for passed data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int {\bf confirm\-Overwrite} (Q\-String \-\_\-file\-Path)
+\begin{DoxyCompactList}\small\item\em method to confirm overwriting exported files \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Reads and writes project data to xml files. 
+
+Definition at line 26 of file Io\-\_\-xml.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{I\-O\-\_\-\-X\-M\-L@{I\-O\-\_\-\-X\-M\-L}!I\-O\-\_\-\-X\-M\-L@{I\-O\-\_\-\-X\-M\-L}}
+\index{I\-O\-\_\-\-X\-M\-L@{I\-O\-\_\-\-X\-M\-L}!IO_XML@{I\-O\-\_\-\-X\-M\-L}}
+\subsubsection[{I\-O\-\_\-\-X\-M\-L}]{\setlength{\rightskip}{0pt plus 5cm}I\-O\-\_\-\-X\-M\-L\-::\-I\-O\-\_\-\-X\-M\-L (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_i_o___x_m_l_a77e1aa76b6a8b27498fe1fa980fec58d}
+
+
+Definition at line 5 of file Io\-\_\-xml.\-cpp.
+
+
+\begin{DoxyCode}
+6 \{\}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{I\-O\-\_\-\-X\-M\-L@{I\-O\-\_\-\-X\-M\-L}!confirm\-Overwrite@{confirm\-Overwrite}}
+\index{confirm\-Overwrite@{confirm\-Overwrite}!IO_XML@{I\-O\-\_\-\-X\-M\-L}}
+\subsubsection[{confirm\-Overwrite}]{\setlength{\rightskip}{0pt plus 5cm}int I\-O\-\_\-\-X\-M\-L\-::confirm\-Overwrite (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{\-\_\-file\-Path}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}\label{class_i_o___x_m_l_a6e72454ab3699ff26cfefe078ebe8890}
+
+
+method to confirm overwriting exported files 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-file\-Path} & the path of the file to overwrite \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 49 of file Io\-\_\-xml.\-cpp.
+
+
+\begin{DoxyCode}
+50 \{
+51   QMessageBox msgBox;
+52   msgBox.setIcon(QMessageBox::Warning);
+53   msgBox.setText(\textcolor{stringliteral}{"The file you have specified already exists: "} + \_filePath);
+54   msgBox.setInformativeText(\textcolor{stringliteral}{"Do you want to overwrite the file?"});
+55   msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+56   msgBox.setDefaultButton(QMessageBox::Save);
+57   \textcolor{keywordflow}{return} msgBox.exec();
+58 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_i_o___x_m_l_a6e72454ab3699ff26cfefe078ebe8890_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{I\-O\-\_\-\-X\-M\-L@{I\-O\-\_\-\-X\-M\-L}!read\-Project\-X\-M\-L@{read\-Project\-X\-M\-L}}
+\index{read\-Project\-X\-M\-L@{read\-Project\-X\-M\-L}!IO_XML@{I\-O\-\_\-\-X\-M\-L}}
+\subsubsection[{read\-Project\-X\-M\-L}]{\setlength{\rightskip}{0pt plus 5cm}void I\-O\-\_\-\-X\-M\-L\-::read\-Project\-X\-M\-L (
+\begin{DoxyParamCaption}
+\item[{std\-::string \&}]{\-\_\-name, }
+\item[{std\-::string \&}]{\-\_\-dir, }
+\item[{std\-::string}]{\-\_\-loaded\-File\-Directory, }
+\item[{std\-::string \&}]{\-\_\-vert\-Source, }
+\item[{std\-::string \&}]{\-\_\-frag\-Source}
+\end{DoxyParamCaption}
+)}\label{class_i_o___x_m_l_ac9748a44ad55bb8c3c52e1e5952b23a3}
+
+
+Will read the project file data. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \&\-\_\-name} & reference to current working file name \\
+\hline
+\mbox{\tt in}  & {\em \&\-\_\-dir} & reference to current working directory \\
+\hline
+\mbox{\tt in}  & {\em \-\_\-loaded\-File\-Directory} & Name of loaded file directory selected by U\-I. \\
+\hline
+\mbox{\tt in}  & {\em \&\-\_\-vert\-Source} & Reference of vertex string read then returned to project \\
+\hline
+\mbox{\tt in}  & {\em \&\-\_\-frag\-Source} & Reference of fragment string read then returned to project \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 12 of file Io\-\_\-xml.\-cpp.
+
+
+\begin{DoxyCode}
+15 \{
+16   \textcolor{comment}{// Loads the XML file then parses through}
+17   rapidxml::xml\_document<> doc;
+18   std::ifstream file(\_loadedFileDirectory);
+19   std::vector<char> buffer((std::istreambuf\_iterator<char>(file)), std::istreambuf\_iterator<char>( ));
+20   buffer.push\_back(\textcolor{charliteral}{'\(\backslash\)0'});
+21   doc.parse<0>(&buffer[0]);
+22 
+23   \textcolor{comment}{// Throws an error if it's the wrong format, otherwise opens and passed vertex, fragment, name and dir}
+24   \textcolor{comment}{// data back to Project.}
+25   \textcolor{comment}{//xml\_node<> *firstNode = doc.first\_node();}
+26   \textcolor{keywordflow}{if} (!(doc.first\_node(\textcolor{stringliteral}{"Shader\_Data"})))
+27   \{
+28     std::cout<< \textcolor{stringliteral}{"Error: Incorrect XML file. Open a previously saved project file and try again."}<<std::endl
+      ;
+29   \}
+30   \textcolor{keywordflow}{else}
+31   \{
+32     rapidxml::xml\_node<> *current\_node = doc.first\_node(\textcolor{stringliteral}{"Shader\_Data"});
+33     rapidxml::xml\_node<> *vertex\_node = current\_node->first\_node(\textcolor{stringliteral}{"Vertex"});
+34     rapidxml::xml\_node<> *fragment\_node = current\_node->first\_node(\textcolor{stringliteral}{"Fragment"});
+35     std::cout<<\textcolor{stringliteral}{"Opened project '"}<<current\_node->first\_attribute(\textcolor{stringliteral}{"Name"})->value()<<\textcolor{stringliteral}{"' at "}
+36              <<current\_node->first\_attribute(\textcolor{stringliteral}{"Dir"})->value()<<\textcolor{stringliteral}{" successfully."}<<std::endl;
+37 
+38     \_vertSource = vertex\_node->first\_attribute(\textcolor{stringliteral}{"VtxData"})->value();
+39     \_fragSource = fragment\_node->first\_attribute(\textcolor{stringliteral}{"FragData"})->value();
+40     \_fileName = current\_node->first\_attribute(\textcolor{stringliteral}{"Name"})->value();
+41     \_fileDirectory = current\_node->first\_attribute(\textcolor{stringliteral}{"Dir"})->value();
+42   \}
+43   \textcolor{keywordflow}{return};
+44 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_i_o___x_m_l_ac9748a44ad55bb8c3c52e1e5952b23a3_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{I\-O\-\_\-\-X\-M\-L@{I\-O\-\_\-\-X\-M\-L}!shader\-Data@{shader\-Data}}
+\index{shader\-Data@{shader\-Data}!IO_XML@{I\-O\-\_\-\-X\-M\-L}}
+\subsubsection[{shader\-Data}]{\setlength{\rightskip}{0pt plus 5cm}void I\-O\-\_\-\-X\-M\-L\-::shader\-Data (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{\-\_\-shader\-Program\-Name, }
+\item[{const char $\ast$}]{\-\_\-vertex\-Shader\-Name, }
+\item[{const char $\ast$}]{\-\_\-vertex\-Shader\-Glsl, }
+\item[{const char $\ast$}]{\-\_\-fragment\-Shader\-Name, }
+\item[{const char $\ast$}]{\-\_\-fragment\-Shader\-Glsl}
+\end{DoxyParamCaption}
+)}\label{class_i_o___x_m_l_a888bdfcf974c362b5ddd079cede32418}
+
+
+Saves data. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-shader\-Program\-Name} & Name of the shader program \\
+\hline
+\mbox{\tt in}  & {\em \-\_\-vertex\-Shader\-Name} & Name of the vertex shader \\
+\hline
+\mbox{\tt in}  & {\em \-\_\-vertex\-Shader\-Glsl} & Vertex data \\
+\hline
+\mbox{\tt in}  & {\em \-\_\-fragment\-Shader\-Name} & Fragment data \\
+\hline
+\mbox{\tt in}  & {\em \-\_\-fragment\-Shader\-Glsl} & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 126 of file Io\-\_\-xml.\-cpp.
+
+
+\begin{DoxyCode}
+129 \{
+130   rapidxml::xml\_document<> doc;
+131   std::ifstream file(\textcolor{stringliteral}{"./shaders/shaderData.xml"});
+132   std::vector<char> buffer((std::istreambuf\_iterator<char>(file)), std::istreambuf\_iterator<char>( ));
+133   buffer.push\_back(\textcolor{charliteral}{'\(\backslash\)0'});
+134   doc.parse<0>(&buffer[0]);
+135 
+136   rapidxml::xml\_node<> *current\_node = doc.first\_node(\textcolor{stringliteral}{"ShaderProgram"});
+137   rapidxml::xml\_node<> *vertex\_node = current\_node->first\_node(\textcolor{stringliteral}{"VertexData"});
+138   rapidxml::xml\_node<> *fragment\_node = current\_node->first\_node(\textcolor{stringliteral}{"FragmentData"});
+139 
+140   vertex\_node->first\_attribute(\textcolor{stringliteral}{"name"})->value(\_vertexShaderName);
+141   vertex\_node->first\_attribute(\textcolor{stringliteral}{"vertexPath"})->value(\_vertexShaderGlsl);
+142 
+143   fragment\_node->first\_attribute(\textcolor{stringliteral}{"name"})->value(\_fragmentShaderName);
+144   fragment\_node->first\_attribute(\textcolor{stringliteral}{"customPath"})->value(\_fragmentShaderGlsl);
+145 
+146   std::ofstream newfile;
+147   newfile.open(\textcolor{stringliteral}{"./shaders/shaderData.xml"});
+148   newfile << doc;
+149 \}
+\end{DoxyCode}
+\index{I\-O\-\_\-\-X\-M\-L@{I\-O\-\_\-\-X\-M\-L}!write\-Data\-X\-M\-L@{write\-Data\-X\-M\-L}}
+\index{write\-Data\-X\-M\-L@{write\-Data\-X\-M\-L}!IO_XML@{I\-O\-\_\-\-X\-M\-L}}
+\subsubsection[{write\-Data\-X\-M\-L}]{\setlength{\rightskip}{0pt plus 5cm}void I\-O\-\_\-\-X\-M\-L\-::write\-Data\-X\-M\-L (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{\-\_\-name, }
+\item[{std\-::string}]{\-\_\-type, }
+\item[{int}]{\-\_\-value}
+\end{DoxyParamCaption}
+)}\label{class_i_o___x_m_l_a7832e43b26a9d3e0a6484df124cff4df}
+
+
+(unused) Writes name, type and value for passed data. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-name} & Used to identify data \\
+\hline
+\mbox{\tt in}  & {\em \-\_\-type} & Material type \\
+\hline
+\mbox{\tt in}  & {\em \-\_\-value} & data value \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 156 of file Io\-\_\-xml.\-cpp.
+
+
+\begin{DoxyCode}
+157 \{
+158   \textcolor{comment}{// Converts strings to type const char* for rapidXML functions}
+159   \textcolor{keyword}{const} \textcolor{keywordtype}{char} * name =\_name.c\_str();
+160   \textcolor{keyword}{const} \textcolor{keywordtype}{char} * type = \_type.c\_str();
+161   std::string tempValue = std::to\_string(\_value);
+162   \textcolor{keyword}{const} \textcolor{keywordtype}{char} * value = tempValue.c\_str();
+163 
+164   \textcolor{comment}{// Organises data into name, type, value.}
+165   std::cout<<\textcolor{stringliteral}{"Input name = "}<<\_name<<\textcolor{stringliteral}{"\(\backslash\)tInput value = "}<<\_type<<\textcolor{stringliteral}{"\(\backslash\)tInput value = "}<<\_value<<std::endl;
+166   rapidxml::xml\_document<> doc;
+167   std::ifstream file(\textcolor{stringliteral}{"./XMLfiles/readFrom.xml"});
+168   std::vector<char> buffer((std::istreambuf\_iterator<char>(file)), std::istreambuf\_iterator<char>( ));
+169   buffer.push\_back(\textcolor{charliteral}{'\(\backslash\)0'});
+170   doc.parse<0>(&buffer[0]);
+171 
+172   \textcolor{comment}{// Set default version and encoding}
+173   rapidxml::xml\_node<>* decl = doc.allocate\_node(rapidxml::node\_declaration);
+174   decl->append\_attribute(doc.allocate\_attribute(\textcolor{stringliteral}{"version"}, \textcolor{stringliteral}{"1.0"}));
+175   decl->append\_attribute(doc.allocate\_attribute(\textcolor{stringliteral}{"encoding"}, \textcolor{stringliteral}{"utf-8"}));
+176   doc.append\_node(decl);
+177 
+178   \textcolor{comment}{// Creating root node with name and directory}
+179   rapidxml::xml\_node<>* root = doc.allocate\_node(rapidxml::node\_element, \textcolor{stringliteral}{"Data"});
+180   root->append\_attribute(doc.allocate\_attribute(\textcolor{stringliteral}{"Name"}, name));
+181   root->append\_attribute(doc.allocate\_attribute(\textcolor{stringliteral}{"Type"}, type));
+182   root->append\_attribute(doc.allocate\_attribute(\textcolor{stringliteral}{"Value"}, value));
+183   doc.append\_node(root);
+184 
+185   \textcolor{comment}{// Save to file}
+186   std::ofstream file\_stored(\textcolor{stringliteral}{"./shaders/objectData.xml"});
+187   file\_stored << doc;
+188   file\_stored.close();
+189   doc.clear();
+190 \}
+\end{DoxyCode}
+\index{I\-O\-\_\-\-X\-M\-L@{I\-O\-\_\-\-X\-M\-L}!write\-Project@{write\-Project}}
+\index{write\-Project@{write\-Project}!IO_XML@{I\-O\-\_\-\-X\-M\-L}}
+\subsubsection[{write\-Project}]{\setlength{\rightskip}{0pt plus 5cm}bool I\-O\-\_\-\-X\-M\-L\-::write\-Project (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{\-\_\-name, }
+\item[{std\-::string}]{\-\_\-dir, }
+\item[{std\-::string}]{\-\_\-vert\-Source, }
+\item[{std\-::string}]{\-\_\-frag\-Source, }
+\item[{bool}]{\-\_\-overwrite}
+\end{DoxyParamCaption}
+)}\label{class_i_o___x_m_l_a4f26762e4ee76461a097ce109127be21}
+
+
+Saves the project name, vertex and fragment data in set directory. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-name} & the name of the saved project file \\
+\hline
+\mbox{\tt in}  & {\em \-\_\-dir} & the directory of the saved project file \\
+\hline
+\mbox{\tt in}  & {\em \-\_\-vert\-Source} & the vertex shader source code \\
+\hline
+\mbox{\tt in}  & {\em \-\_\-frag\-Source} & the fragment shader source code \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true false if it saved or not 
+\end{DoxyReturn}
+
+
+Definition at line 63 of file Io\-\_\-xml.\-cpp.
+
+
+
+References confirm\-Overwrite().
+
+
+\begin{DoxyCode}
+66 \{
+67   QString filePath = QString((\_dir+\textcolor{stringliteral}{"/"}+\_name+\textcolor{stringliteral}{".xml"}).c\_str());
+68   \textcolor{keywordflow}{if} (!\_overwrite)
+69   \{
+70     QFileInfo checkPath(filePath);
+71 
+72     \textcolor{keywordflow}{if} (checkPath.exists() && checkPath.isFile())
+73     \{
+74       \textcolor{keywordtype}{int} state = confirmOverwrite(filePath);
+75       \textcolor{keywordflow}{if} (state != QMessageBox::Yes)
+76       \{
+77         \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+78       \}
+79     \}
+80   \}
+81 
+82   \textcolor{comment}{// Converts strings to type const char* for rapidXML functions}
+83   \textcolor{keyword}{const} \textcolor{keywordtype}{char} * projectName =\_name.c\_str();
+84   \textcolor{keyword}{const} \textcolor{keywordtype}{char} * projectDir = \_dir.c\_str();
+85   \textcolor{keyword}{const} \textcolor{keywordtype}{char} * vertSource = \_vertSource.c\_str();
+86   \textcolor{keyword}{const} \textcolor{keywordtype}{char} * fragSource = \_fragSource.c\_str();
+87 
+88   \textcolor{comment}{// Creating XML document}
+89   rapidxml::xml\_document<> saveProject;
+90 
+91   \textcolor{comment}{// Set default version and encoding}
+92   rapidxml::xml\_node<>* decl = saveProject.allocate\_node(rapidxml::node\_declaration);
+93   decl->append\_attribute(saveProject.allocate\_attribute(\textcolor{stringliteral}{"version"}, \textcolor{stringliteral}{"1.0"}));
+94   decl->append\_attribute(saveProject.allocate\_attribute(\textcolor{stringliteral}{"encoding"}, \textcolor{stringliteral}{"utf-8"}));
+95   saveProject.append\_node(decl);
+96 
+97   \textcolor{comment}{// Creating root node with name and directory}
+98   rapidxml::xml\_node<>* root = saveProject.allocate\_node(rapidxml::node\_element, \textcolor{stringliteral}{"Shader\_Data"});
+99   root->append\_attribute(saveProject.allocate\_attribute(\textcolor{stringliteral}{"Name"}, projectName));
+100   root->append\_attribute(saveProject.allocate\_attribute(\textcolor{stringliteral}{"Dir"},projectDir));
+101   saveProject.append\_node(root);
+102 
+103   \textcolor{comment}{// Creating child nodes containing input vertex and fragment shader data}
+104   rapidxml::xml\_node<>* child = saveProject.allocate\_node(rapidxml::node\_element, \textcolor{stringliteral}{"Vertex"});
+105   root->append\_node(child);
+106   child->append\_attribute(saveProject.allocate\_attribute(\textcolor{stringliteral}{"VtxData"}, vertSource));
+107 
+108   rapidxml::xml\_node<>* child2 = saveProject.allocate\_node(rapidxml::node\_element, \textcolor{stringliteral}{"Fragment"});
+109   root->append\_node(child2);
+110   child2->append\_attribute(saveProject.allocate\_attribute(\textcolor{stringliteral}{"FragData"}, fragSource));
+111 
+112   \textcolor{comment}{// Save to file}
+113   std::ofstream file\_stored(filePath.toStdString().c\_str());
+114   file\_stored << saveProject;
+115   file\_stored.close();
+116   saveProject.clear();
+117 
+118   std::cout<<\textcolor{stringliteral}{"Written "}<<\_name<<\textcolor{stringliteral}{".xml"}<<\textcolor{stringliteral}{" to "}<<\_dir<<std::endl;
+119   \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+120 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=318pt]{class_i_o___x_m_l_a4f26762e4ee76461a097ce109127be21_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_i_o___x_m_l_a4f26762e4ee76461a097ce109127be21_icgraph}
+\end{center}
+\end{figure}
+
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+{\bf Io\-\_\-xml.\-h}\item 
+{\bf Io\-\_\-xml.\-cpp}\end{DoxyCompactItemize}

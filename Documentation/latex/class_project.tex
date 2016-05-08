@@ -1,0 +1,710 @@
+\section{Project Class Reference}
+\label{class_project}\index{Project@{Project}}
+
+
+stores the name and directory of the current project as well as  
+
+
+
+
+{\ttfamily \#include $<$Project.\-h$>$}
+
+
+
+Collaboration diagram for Project\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=101pt]{class_project__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\bf Project} ()
+\begin{DoxyCompactList}\small\item\em default constructor for project class \end{DoxyCompactList}\item 
+{\bf $\sim$\-Project} ()
+\begin{DoxyCompactList}\small\item\em default destructor for the project class \end{DoxyCompactList}\item 
+void {\bf set} (std\-::string \-\_\-name, std\-::string \-\_\-dir, bool \-\_\-save\-State, bool \-\_\-first\-Save)
+\begin{DoxyCompactList}\small\item\em method to set the data for the project \end{DoxyCompactList}\item 
+bool {\bf save} (Q\-String \-\_\-vert\-Source, Q\-String \-\_\-frag\-Source)
+\begin{DoxyCompactList}\small\item\em method for saving the current project \end{DoxyCompactList}\item 
+bool {\bf save\-As} (Q\-String \-\_\-vert\-Source, Q\-String \-\_\-frag\-Source)
+\begin{DoxyCompactList}\small\item\em method for saving the current project as a new project \end{DoxyCompactList}\item 
+void {\bf load} (std\-::string \-\_\-loaded\-File\-Directory, Q\-String \&o\-\_\-vert\-Source, Q\-String \&o\-\_\-frag\-Source)
+\begin{DoxyCompactList}\small\item\em method to load in a project from an xml file \end{DoxyCompactList}\item 
+bool {\bf export\-Project} (std\-::string \-\_\-target\-Dir, Q\-String \-\_\-vert\-Source, Q\-String \-\_\-frag\-Source)
+\begin{DoxyCompactList}\small\item\em method for exporting the vertex and fragment shaders \end{DoxyCompactList}\item 
+std\-::string {\bf get\-Name} ()
+\begin{DoxyCompactList}\small\item\em method to return the name of the current project \end{DoxyCompactList}\item 
+std\-::string {\bf get\-Dir} ()
+\begin{DoxyCompactList}\small\item\em method to return the directory of the current project \end{DoxyCompactList}\item 
+int {\bf confirm\-Overwrite} (Q\-String \-\_\-file\-Path)
+\begin{DoxyCompactList}\small\item\em method to confirm overwriting exported files \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\-::string {\bf m\-\_\-project\-Name}
+\begin{DoxyCompactList}\small\item\em the name of the current project \end{DoxyCompactList}\item 
+std\-::string {\bf m\-\_\-project\-Dir}
+\begin{DoxyCompactList}\small\item\em the directory of the current project \end{DoxyCompactList}\item 
+bool {\bf m\-\_\-saved}
+\begin{DoxyCompactList}\small\item\em flag storing whether the current project has been previously saved \end{DoxyCompactList}\item 
+bool {\bf m\-\_\-first\-Save}
+\begin{DoxyCompactList}\small\item\em flag storing whether the current project is being saved for the first time \end{DoxyCompactList}\item 
+{\bf I\-O\-\_\-\-X\-M\-L} $\ast$ {\bf m\-\_\-xml}
+\begin{DoxyCompactList}\small\item\em used to save and load project information from xml file \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+stores the name and directory of the current project as well as 
+
+providing methods for saving and loading projects to xml files and exporting the porject's shaders to glsl files. 
+
+Definition at line 26 of file Project.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Project@{Project}!Project@{Project}}
+\index{Project@{Project}!Project@{Project}}
+\subsubsection[{Project}]{\setlength{\rightskip}{0pt plus 5cm}Project\-::\-Project (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_project_aa007ecd17d5bc800e7a956cf666eea21}
+
+
+default constructor for project class 
+
+
+
+Definition at line 13 of file Project.\-cpp.
+
+
+
+References m\-\_\-first\-Save, m\-\_\-project\-Dir, m\-\_\-project\-Name, m\-\_\-saved, and m\-\_\-xml.
+
+
+\begin{DoxyCode}
+14 \{
+15   m_projectName = \textcolor{stringliteral}{"untitled"};
+16   m_projectDir = \textcolor{stringliteral}{""};
+17   m_xml = \textcolor{keyword}{new} IO_XML;
+18   m_saved = \textcolor{keyword}{false};
+19   m_firstSave = \textcolor{keyword}{true};
+20 \}
+\end{DoxyCode}
+\index{Project@{Project}!$\sim$\-Project@{$\sim$\-Project}}
+\index{$\sim$\-Project@{$\sim$\-Project}!Project@{Project}}
+\subsubsection[{$\sim$\-Project}]{\setlength{\rightskip}{0pt plus 5cm}Project\-::$\sim$\-Project (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_project_ad165d61b76ee86ee9c27fd987a2a7b9e}
+
+
+default destructor for the project class 
+
+
+
+Definition at line 24 of file Project.\-cpp.
+
+
+
+References m\-\_\-xml.
+
+
+\begin{DoxyCode}
+25 \{
+26   \textcolor{keyword}{delete} m_xml;
+27 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{Project@{Project}!confirm\-Overwrite@{confirm\-Overwrite}}
+\index{confirm\-Overwrite@{confirm\-Overwrite}!Project@{Project}}
+\subsubsection[{confirm\-Overwrite}]{\setlength{\rightskip}{0pt plus 5cm}int Project\-::confirm\-Overwrite (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{\-\_\-file\-Path}
+\end{DoxyParamCaption}
+)}\label{class_project_a25eb54e64cabce7906a84572f41fe15c}
+
+
+method to confirm overwriting exported files 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-file\-Path} & the path of the file to overwrite \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 88 of file Project.\-cpp.
+
+
+\begin{DoxyCode}
+89 \{
+90   QMessageBox msgBox;
+91   msgBox.setIcon(QMessageBox::Warning);
+92   msgBox.setText(\textcolor{stringliteral}{"The file you have specified already exists: "} + \_filePath);
+93   msgBox.setInformativeText(\textcolor{stringliteral}{"Do you want to overwrite the file?"});
+94   msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::No | QMessageBox::Cancel);
+95   msgBox.setDefaultButton(QMessageBox::Save);
+96   \textcolor{keywordtype}{int} ret = msgBox.exec();
+97   \textcolor{keywordflow}{return} ret;
+98 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_project_a25eb54e64cabce7906a84572f41fe15c_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Project@{Project}!export\-Project@{export\-Project}}
+\index{export\-Project@{export\-Project}!Project@{Project}}
+\subsubsection[{export\-Project}]{\setlength{\rightskip}{0pt plus 5cm}bool Project\-::export\-Project (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{\-\_\-target\-Dir, }
+\item[{Q\-String}]{\-\_\-vert\-Source, }
+\item[{Q\-String}]{\-\_\-frag\-Source}
+\end{DoxyParamCaption}
+)}\label{class_project_a2087652c0f020adafbb26d3126d45981}
+
+
+method for exporting the vertex and fragment shaders 
+
+from the current project for G\-L\-S\-L files 
+\begin{DoxyParams}{Parameters}
+{\em \-\_\-target\-Dir} & the directory to save the G\-L\-S\-L files in \\
+\hline
+{\em \-\_\-vert\-Source} & the vertex shader source code to save \\
+\hline
+{\em \-\_\-frag\-Source} & the fragment shader source code to save \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 102 of file Project.\-cpp.
+
+
+
+References confirm\-Overwrite(), m\-\_\-project\-Name, and C\-E\-B\-Raise\-::\-Qt\-File\-Error().
+
+
+\begin{DoxyCode}
+103 \{
+104 
+105   \_targetDir.append(\textcolor{stringliteral}{"/"});
+106 
+107   QString detOutput;
+108   \textcolor{comment}{//create path to vertex.glsl in target directory}
+109   QString vFilePath = QString::fromStdString(\_targetDir + m_projectName + \textcolor{stringliteral}{"Vertex.glsl"});
+110   qDebug() << vFilePath;
+111 
+112   \textcolor{comment}{//create qfile object assiciated with the file name}
+113   QFile vertFile(vFilePath);
+114   QFileInfo checkPath(vFilePath);
+115 
+116   \textcolor{keywordtype}{int} state = QMessageBox::Save;
+117   \textcolor{keywordflow}{if} (checkPath.exists() && checkPath.isFile())
+118   \{
+119     state = confirmOverwrite(vFilePath);
+120     \textcolor{keywordflow}{if} (state == QMessageBox::Cancel)
+121     \{
+122       \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+123     \}
+124   \}
+125 
+126   \textcolor{keywordflow}{if} (state == QMessageBox::Save)
+127   \{
+128     \textcolor{comment}{//try to open the file for writing, if it doesnt exist the open() method will create it.}
+129     \textcolor{keywordflow}{if}(!vertFile.open(QIODevice::WriteOnly | QIODevice::Text))
+130     \{
+131       CEBRaise::QtFileError(vertFile.error(), vFilePath);
+132       \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+133     \}
+134 
+135     \textcolor{comment}{// write vertex source into Vertex.glsl file}
+136     QTextStream outVert(&vertFile);
+137     outVert << \_vertSource;
+138     vertFile.close();
+139     detOutput.append(\textcolor{stringliteral}{"Vertex File: "} + vFilePath + \textcolor{stringliteral}{"\(\backslash\)n"});
+140   \}
+141 
+142   \textcolor{comment}{//now do the same for fragment.glsl}
+143   QString fFilePath = QString::fromStdString(\_targetDir + m_projectName + \textcolor{stringliteral}{"Fragment.glsl"});
+144   qDebug() << fFilePath;
+145   QFile fragFile(fFilePath);
+146   checkPath = QFileInfo(fFilePath);
+147 
+148   state = QMessageBox::Save;
+149   \textcolor{keywordflow}{if} (checkPath.exists() && checkPath.isFile())
+150   \{
+151     state = confirmOverwrite(fFilePath);
+152     \textcolor{keywordflow}{if} (state == QMessageBox::Cancel)
+153     \{
+154       \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+155     \}
+156   \}
+157 
+158   \textcolor{keywordflow}{if} (state == QMessageBox::Save)
+159   \{
+160     \textcolor{keywordflow}{if}(!fragFile.open(QIODevice::WriteOnly | QIODevice::Text))
+161     \{
+162       CEBRaise::QtFileError(fragFile.error(), fFilePath);
+163       \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+164     \}
+165 
+166     QTextStream outFrag(&fragFile);
+167     outFrag << \_fragSource;
+168     fragFile.close();
+169     detOutput.append(\textcolor{stringliteral}{"Fragment File: "} + vFilePath + \textcolor{stringliteral}{"\(\backslash\)n"});
+170   \}
+171 
+172   QMessageBox msgBox;
+173   msgBox.setText(\textcolor{stringliteral}{"The file(s) have been successfully saved"});
+174   msgBox.setDetailedText(detOutput);
+175   msgBox.exec();
+176   \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+177 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=314pt]{class_project_a2087652c0f020adafbb26d3126d45981_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=336pt]{class_project_a2087652c0f020adafbb26d3126d45981_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Project@{Project}!get\-Dir@{get\-Dir}}
+\index{get\-Dir@{get\-Dir}!Project@{Project}}
+\subsubsection[{get\-Dir}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string Project\-::get\-Dir (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_project_a29d3e2974a76b56884395a3d353e1b9b}
+
+
+method to return the directory of the current project 
+
+
+
+Definition at line 87 of file Project.\-h.
+
+
+
+References m\-\_\-project\-Dir.
+
+
+\begin{DoxyCode}
+87 \{\textcolor{keywordflow}{return} m_projectDir;\}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=304pt]{class_project_a29d3e2974a76b56884395a3d353e1b9b_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Project@{Project}!get\-Name@{get\-Name}}
+\index{get\-Name@{get\-Name}!Project@{Project}}
+\subsubsection[{get\-Name}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string Project\-::get\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_project_ae785bfeb9544bfe228eebe9014331493}
+
+
+method to return the name of the current project 
+
+
+
+Definition at line 83 of file Project.\-h.
+
+
+
+References m\-\_\-project\-Name.
+
+
+\begin{DoxyCode}
+83 \{\textcolor{keywordflow}{return} m_projectName;\}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_project_ae785bfeb9544bfe228eebe9014331493_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Project@{Project}!load@{load}}
+\index{load@{load}!Project@{Project}}
+\subsubsection[{load}]{\setlength{\rightskip}{0pt plus 5cm}void Project\-::load (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{\-\_\-loaded\-File\-Directory, }
+\item[{Q\-String \&}]{o\-\_\-vert\-Source, }
+\item[{Q\-String \&}]{o\-\_\-frag\-Source}
+\end{DoxyParamCaption}
+)}\label{class_project_a99c421332307568f0f03ab50a962cf76}
+
+
+method to load in a project from an xml file 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \-\_\-loaded\-File\-Directory} & the directory of the loaded file \\
+\hline
+{\em o\-\_\-vert\-Source} & output vertex shader source code from loaded project \\
+\hline
+{\em o\-\_\-frag\-Source} & output fragment shader source code from loaded project \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 181 of file Project.\-cpp.
+
+
+
+References m\-\_\-xml, I\-O\-\_\-\-X\-M\-L\-::read\-Project\-X\-M\-L(), and set().
+
+
+\begin{DoxyCode}
+182 \{
+183 
+184   std::cout<<\textcolor{stringliteral}{"Opening: "}<<\_loadedFileDirectory<<std::endl;
+185   std::string vertSource = \textcolor{stringliteral}{""};
+186   std::string fragSource = \textcolor{stringliteral}{""};
+187   std::string fileName = \textcolor{stringliteral}{""};
+188   std::string fileDirectory = \textcolor{stringliteral}{""};
+189 
+190   \textcolor{comment}{// read project from XML file storing data in variables.}
+191   m_xml->readProjectXML(fileName, fileDirectory, \_loadedFileDirectory, vertSource, fragSource);
+192 
+193   \textcolor{comment}{// set the project data}
+194   set(fileName, fileDirectory, \textcolor{keyword}{true}, \textcolor{keyword}{false});
+195 
+196   \textcolor{comment}{// set output shader source strings}
+197   o\_vertSource = QString::fromStdString(vertSource);
+198   o\_fragSource = QString::fromStdString(fragSource);
+199 
+200 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=278pt]{class_project_a99c421332307568f0f03ab50a962cf76_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=292pt]{class_project_a99c421332307568f0f03ab50a962cf76_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Project@{Project}!save@{save}}
+\index{save@{save}!Project@{Project}}
+\subsubsection[{save}]{\setlength{\rightskip}{0pt plus 5cm}bool Project\-::save (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{\-\_\-vert\-Source, }
+\item[{Q\-String}]{\-\_\-frag\-Source}
+\end{DoxyParamCaption}
+)}\label{class_project_af285ceb406be688b3c81cdd445a159e6}
+
+
+method for saving the current project 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \-\_\-vert\-Source} & the vertex shader source code to save \\
+\hline
+{\em \-\_\-frag\-Source} & the fragment shader source code to save \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 31 of file Project.\-cpp.
+
+
+
+References m\-\_\-first\-Save, m\-\_\-project\-Dir, m\-\_\-project\-Name, m\-\_\-saved, m\-\_\-xml, set(), and I\-O\-\_\-\-X\-M\-L\-::write\-Project().
+
+
+\begin{DoxyCode}
+32 \{
+33   QString fileName;
+34 
+35   \textcolor{comment}{// if the project has not been saved before then open the QFile Dialog}
+36   \textcolor{keywordflow}{if}(!m_saved)
+37   \{
+38     QFileDialog dialog;
+39     dialog.setFileMode(QFileDialog::AnyFile);
+40     dialog.setAcceptMode(QFileDialog::AcceptSave);
+41     \textcolor{keywordflow}{if} (dialog.exec())
+42     \{
+43 
+44       fileName = dialog.selectedFiles().at(0);
+45       QFileInfo finfo = QFileInfo(fileName);
+46       \textcolor{comment}{// set project data fromt eh dialog and set m\_saved to true}
+47       set(finfo.baseName().toStdString(), finfo.absolutePath().toStdString(), \textcolor{keyword}{true}, \textcolor{keyword}{true});
+48     \}
+49     \textcolor{keywordflow}{else}
+50     \{
+51       \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+52     \}
+53   \}
+54 
+55   std::cout<<\textcolor{stringliteral}{"Saving project..."}<<std::endl;
+56 
+57   \textcolor{comment}{// convert QStrings to c strings.}
+58   std::string vertSourceString = \_vertSource.toStdString();
+59   std::string fragSourceString = \_fragSource.toStdString();
+60 
+61   \textcolor{keyword}{const} \textcolor{keywordtype}{char} * vertSource\_c = vertSourceString.c\_str();
+62   \textcolor{keyword}{const} \textcolor{keywordtype}{char} * fragSource\_c = fragSourceString.c\_str();
+63 
+64   \textcolor{comment}{//write project to XML}
+65   \textcolor{keywordtype}{bool} success = m_xml->writeProject(m_projectName, m_projectDir, vertSource\_c,
+66                                      fragSource\_c, !m_firstSave);
+67 
+68   \textcolor{keywordflow}{if} (success)
+69   \{
+70     std::cout<<\textcolor{stringliteral}{"Saved project: \(\backslash\)nName: "}<<m_projectName<<\textcolor{stringliteral}{"  Directory: "}<<
+      m_projectDir<<std::endl;
+71     m_firstSave=\textcolor{keyword}{false};
+72   \}
+73 
+74   \textcolor{keywordflow}{return} success;
+75 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_project_af285ceb406be688b3c81cdd445a159e6_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_project_af285ceb406be688b3c81cdd445a159e6_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Project@{Project}!save\-As@{save\-As}}
+\index{save\-As@{save\-As}!Project@{Project}}
+\subsubsection[{save\-As}]{\setlength{\rightskip}{0pt plus 5cm}bool Project\-::save\-As (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{\-\_\-vert\-Source, }
+\item[{Q\-String}]{\-\_\-frag\-Source}
+\end{DoxyParamCaption}
+)}\label{class_project_a4573371ef661570f74282d62193a01e2}
+
+
+method for saving the current project as a new project 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \-\_\-vert\-Source} & the vertex shader source code to save \\
+\hline
+{\em \-\_\-frag\-Source} & the fragment shader source code to save \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 79 of file Project.\-cpp.
+
+
+
+References m\-\_\-saved, and save().
+
+
+\begin{DoxyCode}
+80 \{
+81   \textcolor{comment}{// set save state to false then call save function}
+82   m_saved = \textcolor{keyword}{false};
+83   \textcolor{keywordflow}{return} save(vertSource, \_fragSource);
+84 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_project_a4573371ef661570f74282d62193a01e2_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=304pt]{class_project_a4573371ef661570f74282d62193a01e2_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Project@{Project}!set@{set}}
+\index{set@{set}!Project@{Project}}
+\subsubsection[{set}]{\setlength{\rightskip}{0pt plus 5cm}void Project\-::set (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{\-\_\-name, }
+\item[{std\-::string}]{\-\_\-dir, }
+\item[{bool}]{\-\_\-save\-State, }
+\item[{bool}]{\-\_\-first\-Save}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_project_ace11706afa0348c2e6cb0151285167e9}
+
+
+method to set the data for the project 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \-\_\-name} & the name of the project \\
+\hline
+{\em \-\_\-dir} & the directory of the project \\
+\hline
+{\em \-\_\-save\-State} & flag for whether the project has previsouly been saved \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 45 of file Project.\-h.
+
+
+
+References m\-\_\-first\-Save, m\-\_\-project\-Dir, m\-\_\-project\-Name, and m\-\_\-saved.
+
+
+\begin{DoxyCode}
+47   \{
+48     m_projectName = \_name;
+49     m_projectDir = \_dir;
+50     m_saved = \_saveState;
+51     m_firstSave = \_firstSave;
+52   \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_project_ace11706afa0348c2e6cb0151285167e9_icgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsection{Member Data Documentation}
+\index{Project@{Project}!m\-\_\-first\-Save@{m\-\_\-first\-Save}}
+\index{m\-\_\-first\-Save@{m\-\_\-first\-Save}!Project@{Project}}
+\subsubsection[{m\-\_\-first\-Save}]{\setlength{\rightskip}{0pt plus 5cm}bool Project\-::m\-\_\-first\-Save\hspace{0.3cm}{\ttfamily [private]}}\label{class_project_a29e0d478a805788272a0a8ef989db922}
+
+
+flag storing whether the current project is being saved for the first time 
+
+
+
+Definition at line 111 of file Project.\-h.
+
+\index{Project@{Project}!m\-\_\-project\-Dir@{m\-\_\-project\-Dir}}
+\index{m\-\_\-project\-Dir@{m\-\_\-project\-Dir}!Project@{Project}}
+\subsubsection[{m\-\_\-project\-Dir}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string Project\-::m\-\_\-project\-Dir\hspace{0.3cm}{\ttfamily [private]}}\label{class_project_afb87863a3abb8ecf0e39371f41b34588}
+
+
+the directory of the current project 
+
+
+
+Definition at line 102 of file Project.\-h.
+
+\index{Project@{Project}!m\-\_\-project\-Name@{m\-\_\-project\-Name}}
+\index{m\-\_\-project\-Name@{m\-\_\-project\-Name}!Project@{Project}}
+\subsubsection[{m\-\_\-project\-Name}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string Project\-::m\-\_\-project\-Name\hspace{0.3cm}{\ttfamily [private]}}\label{class_project_ac07cb04143a5541e4ea37cdc6269f826}
+
+
+the name of the current project 
+
+
+
+Definition at line 98 of file Project.\-h.
+
+\index{Project@{Project}!m\-\_\-saved@{m\-\_\-saved}}
+\index{m\-\_\-saved@{m\-\_\-saved}!Project@{Project}}
+\subsubsection[{m\-\_\-saved}]{\setlength{\rightskip}{0pt plus 5cm}bool Project\-::m\-\_\-saved\hspace{0.3cm}{\ttfamily [private]}}\label{class_project_a535613b06e2e019be57ca5d8bb335e7d}
+
+
+flag storing whether the current project has been previously saved 
+
+
+
+Definition at line 106 of file Project.\-h.
+
+\index{Project@{Project}!m\-\_\-xml@{m\-\_\-xml}}
+\index{m\-\_\-xml@{m\-\_\-xml}!Project@{Project}}
+\subsubsection[{m\-\_\-xml}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I\-O\-\_\-\-X\-M\-L}$\ast$ Project\-::m\-\_\-xml\hspace{0.3cm}{\ttfamily [private]}}\label{class_project_a6c567e3ef8fee5be922143d0a7348b48}
+
+
+used to save and load project information from xml file 
+
+
+
+Definition at line 115 of file Project.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+{\bf Project.\-h}\item 
+{\bf Project.\-cpp}\end{DoxyCompactItemize}

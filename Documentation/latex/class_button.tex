@@ -1,0 +1,757 @@
+\section{Button Class Reference}
+\label{class_button}\index{Button@{Button}}
+
+
+Parent class of different button types to set uniform values.  
+
+
+
+
+{\ttfamily \#include $<$Button.\-h$>$}
+
+
+
+Inheritance diagram for Button\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=282pt]{class_button__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Button\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_button__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\bf Button} (Q\-Widget $\ast$parent=0)
+\begin{DoxyCompactList}\small\item\em default constructor to create the button \end{DoxyCompactList}\item 
+{\bf Button} (Q\-String \-\_\-button\-Name, G\-Lenum \-\_\-button\-Type, Q\-Layout $\ast$\-\_\-layout, G\-Luint \-\_\-id, {\bf Button\-Lib} $\ast$\-\_\-lib\-Parent, {\bf N\-G\-L\-Scene} $\ast$\-\_\-scene\-Parent, Q\-Widget $\ast$parent=0)
+\begin{DoxyCompactList}\small\item\em constructor to create the button, custom variables can also be assigned \end{DoxyCompactList}\item 
+Q\-String {\bf get\-Name} ()
+\begin{DoxyCompactList}\small\item\em returns the current button name \end{DoxyCompactList}\item 
+G\-Lenum {\bf get\-Type\-Enum} ()
+\begin{DoxyCompactList}\small\item\em returns the current button type \end{DoxyCompactList}\item 
+void {\bf set\-I\-D} (unsigned int \-\_\-id)
+\begin{DoxyCompactList}\small\item\em sets the current I\-D for the button, from its' shader location \end{DoxyCompactList}\item 
+G\-Luint {\bf get\-I\-D} ()
+\begin{DoxyCompactList}\small\item\em returns the button I\-D, this will change based on shader location \end{DoxyCompactList}\item 
+virtual void {\bf set\-Colour} (ngl\-::\-Vec4 \-\_\-col)
+\begin{DoxyCompactList}\small\item\em sets the colour to be used by colour buttons \end{DoxyCompactList}\item 
+virtual void {\bf set\-Colour} (Q\-Color \-\_\-col)
+\begin{DoxyCompactList}\small\item\em overloaded function to set the colour \end{DoxyCompactList}\item 
+virtual ngl\-::\-Vec4 {\bf get\-Colour} ()
+\begin{DoxyCompactList}\small\item\em returns the colour, stored by the button \end{DoxyCompactList}\item 
+virtual Q\-Color {\bf get\-Colour\-Q} ()
+\begin{DoxyCompactList}\small\item\em returns the Q\-Colour, stored by the button \end{DoxyCompactList}\item 
+virtual void {\bf set\-Value} (float \-\_\-val)
+\begin{DoxyCompactList}\small\item\em sets the value to be for float attributes \end{DoxyCompactList}\item 
+virtual float {\bf get\-Value} ()
+\begin{DoxyCompactList}\small\item\em returns the value, stored by the button \end{DoxyCompactList}\item 
+virtual void {\bf print\-Values} ()
+\begin{DoxyCompactList}\small\item\em prints the button attribute values \end{DoxyCompactList}\item 
+virtual ngl\-::\-Vec4 {\bf get\-Vec} ()
+\begin{DoxyCompactList}\small\item\em returns the Vec4 held by the vector button class \end{DoxyCompactList}\item 
+virtual void {\bf set\-Vec} (ngl\-::\-Vec4 \-\_\-value)
+\begin{DoxyCompactList}\small\item\em sets the vector value for Vec3s or positions \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+{\bf Button\-Lib} $\ast$ {\bf m\-\_\-lib\-Parent}
+\begin{DoxyCompactList}\small\item\em pointer to the button library parent \end{DoxyCompactList}\item 
+{\bf N\-G\-L\-Scene} $\ast$ {\bf m\-\_\-scene\-Parent}
+\begin{DoxyCompactList}\small\item\em pointer to the scene so that update can be called \end{DoxyCompactList}\item 
+Q\-Widget $\ast$ {\bf m\-\_\-parent}
+\begin{DoxyCompactList}\small\item\em pointer to the parent window to know where to attach to \end{DoxyCompactList}\item 
+Q\-Push\-Button $\ast$ {\bf m\-\_\-button}
+\begin{DoxyCompactList}\small\item\em button object to be pressed by user to open relevant widget \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Slots}
+\begin{DoxyCompactItemize}
+\item 
+virtual void {\bf open\-Box} ()
+\begin{DoxyCompactList}\small\item\em a slot to open a widget upon button press event \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void {\bf create\-Button\-Box} (Q\-String \-\_\-button\-Name=\char`\"{}Select \&Colour\char`\"{})
+\begin{DoxyCompactList}\small\item\em function to create the button box for the pop up \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Q\-String {\bf m\-\_\-button\-Name}
+\begin{DoxyCompactList}\small\item\em string to hold button's name \end{DoxyCompactList}\item 
+G\-Lenum {\bf m\-\_\-button\-Type}
+\begin{DoxyCompactList}\small\item\em enum for the button type, used for defining type \end{DoxyCompactList}\item 
+unsigned int {\bf m\-\_\-id}
+\begin{DoxyCompactList}\small\item\em id to access specific buttons and shader locations \end{DoxyCompactList}\item 
+Q\-Dialog\-Button\-Box $\ast$ {\bf m\-\_\-button\-Box}
+\begin{DoxyCompactList}\small\item\em button box used to activate the opening of the widget \end{DoxyCompactList}\item 
+Q\-Grid\-Layout $\ast$ {\bf m\-\_\-grid\-Layout}
+\begin{DoxyCompactList}\small\item\em layout for the button box to be stored within \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Parent class of different button types to set uniform values. 
+
+Definition at line 47 of file Button.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Button@{Button}!Button@{Button}}
+\index{Button@{Button}!Button@{Button}}
+\subsubsection[{Button}]{\setlength{\rightskip}{0pt plus 5cm}Button\-::\-Button (
+\begin{DoxyParamCaption}
+\item[{Q\-Widget $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}\label{class_button_a87565544cd9fbee675f6b6d61a319efd}
+
+
+default constructor to create the button 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em the} & parent window is defaulted to nothing \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 13 of file Button.\-cpp.
+
+
+
+References create\-Button\-Box().
+
+
+\begin{DoxyCode}
+13                               : QDialog(parent)
+14 \{
+15   createButtonBox();
+16 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_button_a87565544cd9fbee675f6b6d61a319efd_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{Button@{Button}!Button@{Button}}
+\index{Button@{Button}!Button@{Button}}
+\subsubsection[{Button}]{\setlength{\rightskip}{0pt plus 5cm}Button\-::\-Button (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{\-\_\-button\-Name, }
+\item[{G\-Lenum}]{\-\_\-button\-Type, }
+\item[{Q\-Layout $\ast$}]{\-\_\-layout, }
+\item[{G\-Luint}]{\-\_\-id, }
+\item[{{\bf Button\-Lib} $\ast$}]{\-\_\-lib\-Parent, }
+\item[{{\bf N\-G\-L\-Scene} $\ast$}]{\-\_\-scene\-Parent, }
+\item[{Q\-Widget $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}\label{class_button_a6a5d637d5786edca41de726b76e034a2}
+
+
+constructor to create the button, custom variables can also be assigned 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em name} & of the button to be used \\
+\hline
+\mbox{\tt in}  & {\em the} & layout environment for the button to be attached to \\
+\hline
+\mbox{\tt in}  & {\em the} & id used to access the button information \\
+\hline
+\mbox{\tt in}  & {\em the} & parent window is defaulted to nothing \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 18 of file Button.\-cpp.
+
+
+
+References create\-Button\-Box(), m\-\_\-button, m\-\_\-button\-Name, m\-\_\-button\-Type, m\-\_\-id, m\-\_\-lib\-Parent, m\-\_\-parent, and m\-\_\-scene\-Parent.
+
+
+\begin{DoxyCode}
+18                                                                                                            
+                                               : QDialog(parent)
+19 \{
+20   m_buttonName = \_buttonName;
+21   m_buttonType = \_buttonType;
+22   m_id=\_id;
+23   createButtonBox(\_buttonName);
+24   m_libParent=\_libParent;
+25   m_sceneParent=\_sceneParent;
+26   m_parent=parent;
+27   \_layout->addWidget(m_button);
+28 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_button_a6a5d637d5786edca41de726b76e034a2_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsection{Member Function Documentation}
+\index{Button@{Button}!create\-Button\-Box@{create\-Button\-Box}}
+\index{create\-Button\-Box@{create\-Button\-Box}!Button@{Button}}
+\subsubsection[{create\-Button\-Box}]{\setlength{\rightskip}{0pt plus 5cm}void Button\-::create\-Button\-Box (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{\-\_\-button\-Name = {\ttfamily \char`\"{}Select~\&Colour\char`\"{}}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}\label{class_button_a10293cc4dcea650ad6b858430bb2a488}
+
+
+function to create the button box for the pop up 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em button} & name \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 30 of file Button.\-cpp.
+
+
+
+References m\-\_\-button, and open\-Box().
+
+
+\begin{DoxyCode}
+31 \{
+32   m_button = \textcolor{keyword}{new} QPushButton();
+33   m_button->setText(\_buttonName);
+34   connect(m_button, SIGNAL(clicked()), \textcolor{keyword}{this}, SLOT(openBox()));
+35 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=290pt]{class_button_a10293cc4dcea650ad6b858430bb2a488_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=280pt]{class_button_a10293cc4dcea650ad6b858430bb2a488_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Button@{Button}!get\-Colour@{get\-Colour}}
+\index{get\-Colour@{get\-Colour}!Button@{Button}}
+\subsubsection[{get\-Colour}]{\setlength{\rightskip}{0pt plus 5cm}virtual ngl\-::\-Vec4 Button\-::get\-Colour (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\label{class_button_a70975849d59dca023bd95047dfd0771e}
+
+
+returns the colour, stored by the button 
+
+\begin{DoxyReturn}{Returns}
+m\-\_\-colour 
+\end{DoxyReturn}
+
+
+Reimplemented in {\bf Colour\-Button} \doxyref{}{p.}{class_colour_button_ab16ef6ea899d28e8b8a8500d95a5d188}.
+
+
+
+Definition at line 121 of file Button.\-h.
+
+
+\begin{DoxyCode}
+121 \{\textcolor{keywordflow}{return} ngl::Vec4();\}
+\end{DoxyCode}
+\index{Button@{Button}!get\-Colour\-Q@{get\-Colour\-Q}}
+\index{get\-Colour\-Q@{get\-Colour\-Q}!Button@{Button}}
+\subsubsection[{get\-Colour\-Q}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-Color Button\-::get\-Colour\-Q (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\label{class_button_aca34c082733f62c47cee7e278b3ae876}
+
+
+returns the Q\-Colour, stored by the button 
+
+\begin{DoxyReturn}{Returns}
+m\-\_\-colour 
+\end{DoxyReturn}
+
+
+Reimplemented in {\bf Colour\-Button} \doxyref{}{p.}{class_colour_button_a3063b9d295eb8f9f0a0f69726f2c9449}.
+
+
+
+Definition at line 125 of file Button.\-h.
+
+
+\begin{DoxyCode}
+125 \{\textcolor{keywordflow}{return} QColor();\}
+\end{DoxyCode}
+\index{Button@{Button}!get\-I\-D@{get\-I\-D}}
+\index{get\-I\-D@{get\-I\-D}!Button@{Button}}
+\subsubsection[{get\-I\-D}]{\setlength{\rightskip}{0pt plus 5cm}G\-Luint Button\-::get\-I\-D (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_button_acc98380319a334fba0eb04e3fcb022aa}
+
+
+returns the button I\-D, this will change based on shader location 
+
+\begin{DoxyReturn}{Returns}
+m\-\_\-id 
+\end{DoxyReturn}
+
+
+Definition at line 106 of file Button.\-h.
+
+
+
+References m\-\_\-id.
+
+
+\begin{DoxyCode}
+106 \{\textcolor{keywordflow}{return} m_id;\}
+\end{DoxyCode}
+\index{Button@{Button}!get\-Name@{get\-Name}}
+\index{get\-Name@{get\-Name}!Button@{Button}}
+\subsubsection[{get\-Name}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Button\-::get\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_button_a3b2ba90ccc29decb2e75364bab067d40}
+
+
+returns the current button name 
+
+\begin{DoxyReturn}{Returns}
+m\-\_\-button\-Name 
+\end{DoxyReturn}
+
+
+Definition at line 91 of file Button.\-h.
+
+
+
+References m\-\_\-button\-Name.
+
+
+\begin{DoxyCode}
+91 \{\textcolor{keywordflow}{return} m_buttonName;\}
+\end{DoxyCode}
+\index{Button@{Button}!get\-Type\-Enum@{get\-Type\-Enum}}
+\index{get\-Type\-Enum@{get\-Type\-Enum}!Button@{Button}}
+\subsubsection[{get\-Type\-Enum}]{\setlength{\rightskip}{0pt plus 5cm}G\-Lenum Button\-::get\-Type\-Enum (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_button_aa4937ca8b719215bd439908cb81ff2b4}
+
+
+returns the current button type 
+
+\begin{DoxyReturn}{Returns}
+m\-\_\-button\-Type 
+\end{DoxyReturn}
+
+
+Definition at line 96 of file Button.\-h.
+
+
+
+References m\-\_\-button\-Type.
+
+
+\begin{DoxyCode}
+96 \{\textcolor{keywordflow}{return} m_buttonType;\}
+\end{DoxyCode}
+\index{Button@{Button}!get\-Value@{get\-Value}}
+\index{get\-Value@{get\-Value}!Button@{Button}}
+\subsubsection[{get\-Value}]{\setlength{\rightskip}{0pt plus 5cm}virtual float Button\-::get\-Value (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\label{class_button_a324f19659d882f3a505a128dab9473e6}
+
+
+returns the value, stored by the button 
+
+\begin{DoxyReturn}{Returns}
+m\-\_\-value 
+\end{DoxyReturn}
+
+
+Reimplemented in {\bf Float\-Button} \doxyref{}{p.}{class_float_button_ae83f81998a5ad1cff31bdb4a0a9250fd}.
+
+
+
+Definition at line 135 of file Button.\-h.
+
+
+\begin{DoxyCode}
+135 \{\textcolor{keywordflow}{return} float();\}
+\end{DoxyCode}
+\index{Button@{Button}!get\-Vec@{get\-Vec}}
+\index{get\-Vec@{get\-Vec}!Button@{Button}}
+\subsubsection[{get\-Vec}]{\setlength{\rightskip}{0pt plus 5cm}virtual ngl\-::\-Vec4 Button\-::get\-Vec (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\label{class_button_a5d3781edfd3746dcc604737cf6e5cbf2}
+
+
+returns the Vec4 held by the vector button class 
+
+\begin{DoxyReturn}{Returns}
+m\-\_\-value 
+\end{DoxyReturn}
+
+
+Reimplemented in {\bf Vec\-Button} \doxyref{}{p.}{class_vec_button_a41dbe6736fcc2ff329accae19bd9657f}.
+
+
+
+Definition at line 144 of file Button.\-h.
+
+
+\begin{DoxyCode}
+144 \{\textcolor{keywordflow}{return} ngl::Vec4();\}
+\end{DoxyCode}
+\index{Button@{Button}!open\-Box@{open\-Box}}
+\index{open\-Box@{open\-Box}!Button@{Button}}
+\subsubsection[{open\-Box}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Button\-::open\-Box (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}, {\ttfamily [virtual]}, {\ttfamily [slot]}}\label{class_button_a9744bb5db7d847384e243ba5f4bad1d8}
+
+
+a slot to open a widget upon button press event 
+
+
+
+Definition at line 183 of file Button.\-h.
+
+
+\begin{DoxyCode}
+183 \{\textcolor{keywordflow}{return};\}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_button_a9744bb5db7d847384e243ba5f4bad1d8_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Button@{Button}!print\-Values@{print\-Values}}
+\index{print\-Values@{print\-Values}!Button@{Button}}
+\subsubsection[{print\-Values}]{\setlength{\rightskip}{0pt plus 5cm}void Button\-::print\-Values (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{class_button_a9821ae14c606648a3dcd195714e30f3c}
+
+
+prints the button attribute values 
+
+
+
+Definition at line 37 of file Button.\-cpp.
+
+
+
+References m\-\_\-button\-Name, and m\-\_\-id.
+
+
+\begin{DoxyCode}
+38 \{
+39   qDebug()<<\textcolor{stringliteral}{"Name:"}<<m_buttonName<<\textcolor{stringliteral}{"\(\backslash\)nID: "}<<m_id;
+40 \}
+\end{DoxyCode}
+\index{Button@{Button}!set\-Colour@{set\-Colour}}
+\index{set\-Colour@{set\-Colour}!Button@{Button}}
+\subsubsection[{set\-Colour}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Button\-::set\-Colour (
+\begin{DoxyParamCaption}
+\item[{ngl\-::\-Vec4}]{\-\_\-col}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\label{class_button_a339347e88020f2c961e08a530407d083}
+
+
+sets the colour to be used by colour buttons 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em the} & colour to be set within the colour\-Button class \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented in {\bf Colour\-Button} \doxyref{}{p.}{class_colour_button_abb4011f8d6d85856a2ee155817b52135}.
+
+
+
+Definition at line 111 of file Button.\-h.
+
+
+\begin{DoxyCode}
+111 \{\textcolor{keywordflow}{return};\}
+\end{DoxyCode}
+\index{Button@{Button}!set\-Colour@{set\-Colour}}
+\index{set\-Colour@{set\-Colour}!Button@{Button}}
+\subsubsection[{set\-Colour}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Button\-::set\-Colour (
+\begin{DoxyParamCaption}
+\item[{Q\-Color}]{\-\_\-col}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\label{class_button_a174b05c6f309a46db10530052cf8388a}
+
+
+overloaded function to set the colour 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em the} & colour to be set within the colour\-Button class \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented in {\bf Colour\-Button} \doxyref{}{p.}{class_colour_button_a1702284d1cdfe7bff2db19e219132f37}.
+
+
+
+Definition at line 116 of file Button.\-h.
+
+
+\begin{DoxyCode}
+116 \{\textcolor{keywordflow}{return};\}
+\end{DoxyCode}
+\index{Button@{Button}!set\-I\-D@{set\-I\-D}}
+\index{set\-I\-D@{set\-I\-D}!Button@{Button}}
+\subsubsection[{set\-I\-D}]{\setlength{\rightskip}{0pt plus 5cm}void Button\-::set\-I\-D (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{\-\_\-id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_button_a96d07509fe660457624a9d5b00d139e6}
+
+
+sets the current I\-D for the button, from its' shader location 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em the} & location I\-D for the button id \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 101 of file Button.\-h.
+
+
+
+References m\-\_\-id.
+
+
+\begin{DoxyCode}
+101 \{m_id=\_id;\}
+\end{DoxyCode}
+\index{Button@{Button}!set\-Value@{set\-Value}}
+\index{set\-Value@{set\-Value}!Button@{Button}}
+\subsubsection[{set\-Value}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Button\-::set\-Value (
+\begin{DoxyParamCaption}
+\item[{float}]{\-\_\-val}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\label{class_button_aac9f26f6c9a02dd1c9dfa47c71b0495d}
+
+
+sets the value to be for float attributes 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em the} & value to be set within the float\-Button class \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented in {\bf Float\-Button} \doxyref{}{p.}{class_float_button_a7878ecb2411a54c76e297f0988bfef6a}.
+
+
+
+Definition at line 130 of file Button.\-h.
+
+
+\begin{DoxyCode}
+130 \{\textcolor{keywordflow}{return};\}
+\end{DoxyCode}
+\index{Button@{Button}!set\-Vec@{set\-Vec}}
+\index{set\-Vec@{set\-Vec}!Button@{Button}}
+\subsubsection[{set\-Vec}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Button\-::set\-Vec (
+\begin{DoxyParamCaption}
+\item[{ngl\-::\-Vec4}]{\-\_\-value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\label{class_button_a796b8d995b90901474020afe94db2670}
+
+
+sets the vector value for Vec3s or positions 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-value} & to be set within the \doxyref{Vec\-Button}{p.}{class_vec_button} class \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented in {\bf Vec\-Button} \doxyref{}{p.}{class_vec_button_ad6031636201b20b40bdab28e90a4f427}.
+
+
+
+Definition at line 149 of file Button.\-h.
+
+
+\begin{DoxyCode}
+149 \{\textcolor{keywordflow}{return};\}
+\end{DoxyCode}
+
+
+\subsection{Member Data Documentation}
+\index{Button@{Button}!m\-\_\-button@{m\-\_\-button}}
+\index{m\-\_\-button@{m\-\_\-button}!Button@{Button}}
+\subsubsection[{m\-\_\-button}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Push\-Button$\ast$ Button\-::m\-\_\-button}\label{class_button_a4b94df529b727db6a5855159f2e7b46b}
+
+
+button object to be pressed by user to open relevant widget 
+
+
+
+Definition at line 67 of file Button.\-h.
+
+\index{Button@{Button}!m\-\_\-button\-Box@{m\-\_\-button\-Box}}
+\index{m\-\_\-button\-Box@{m\-\_\-button\-Box}!Button@{Button}}
+\subsubsection[{m\-\_\-button\-Box}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Dialog\-Button\-Box$\ast$ Button\-::m\-\_\-button\-Box\hspace{0.3cm}{\ttfamily [private]}}\label{class_button_a799f1a86591ad30d77c91682d4b17d0f}
+
+
+button box used to activate the opening of the widget 
+
+
+
+Definition at line 167 of file Button.\-h.
+
+\index{Button@{Button}!m\-\_\-button\-Name@{m\-\_\-button\-Name}}
+\index{m\-\_\-button\-Name@{m\-\_\-button\-Name}!Button@{Button}}
+\subsubsection[{m\-\_\-button\-Name}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Button\-::m\-\_\-button\-Name\hspace{0.3cm}{\ttfamily [private]}}\label{class_button_a8709a2ba9cc9c26c44e34920cec1e10c}
+
+
+string to hold button's name 
+
+
+
+Definition at line 155 of file Button.\-h.
+
+\index{Button@{Button}!m\-\_\-button\-Type@{m\-\_\-button\-Type}}
+\index{m\-\_\-button\-Type@{m\-\_\-button\-Type}!Button@{Button}}
+\subsubsection[{m\-\_\-button\-Type}]{\setlength{\rightskip}{0pt plus 5cm}G\-Lenum Button\-::m\-\_\-button\-Type\hspace{0.3cm}{\ttfamily [private]}}\label{class_button_af796dcbe5e14a93916cc8be1d6fd2c0e}
+
+
+enum for the button type, used for defining type 
+
+
+
+Definition at line 159 of file Button.\-h.
+
+\index{Button@{Button}!m\-\_\-grid\-Layout@{m\-\_\-grid\-Layout}}
+\index{m\-\_\-grid\-Layout@{m\-\_\-grid\-Layout}!Button@{Button}}
+\subsubsection[{m\-\_\-grid\-Layout}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Grid\-Layout$\ast$ Button\-::m\-\_\-grid\-Layout\hspace{0.3cm}{\ttfamily [private]}}\label{class_button_a601e932697cae4bbe108b14fac80cd1a}
+
+
+layout for the button box to be stored within 
+
+
+
+Definition at line 171 of file Button.\-h.
+
+\index{Button@{Button}!m\-\_\-id@{m\-\_\-id}}
+\index{m\-\_\-id@{m\-\_\-id}!Button@{Button}}
+\subsubsection[{m\-\_\-id}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int Button\-::m\-\_\-id\hspace{0.3cm}{\ttfamily [private]}}\label{class_button_a57231848f1cddc86a85cdb01a8e41ed2}
+
+
+id to access specific buttons and shader locations 
+
+
+
+Definition at line 163 of file Button.\-h.
+
+\index{Button@{Button}!m\-\_\-lib\-Parent@{m\-\_\-lib\-Parent}}
+\index{m\-\_\-lib\-Parent@{m\-\_\-lib\-Parent}!Button@{Button}}
+\subsubsection[{m\-\_\-lib\-Parent}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Button\-Lib}$\ast$ Button\-::m\-\_\-lib\-Parent}\label{class_button_a5ffdc2d1347d0633328e03801ee9ce69}
+
+
+pointer to the button library parent 
+
+
+
+Definition at line 55 of file Button.\-h.
+
+\index{Button@{Button}!m\-\_\-parent@{m\-\_\-parent}}
+\index{m\-\_\-parent@{m\-\_\-parent}!Button@{Button}}
+\subsubsection[{m\-\_\-parent}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Widget$\ast$ Button\-::m\-\_\-parent}\label{class_button_a4e649c5f7b62db1da6a57467e743b1b5}
+
+
+pointer to the parent window to know where to attach to 
+
+
+
+Definition at line 63 of file Button.\-h.
+
+\index{Button@{Button}!m\-\_\-scene\-Parent@{m\-\_\-scene\-Parent}}
+\index{m\-\_\-scene\-Parent@{m\-\_\-scene\-Parent}!Button@{Button}}
+\subsubsection[{m\-\_\-scene\-Parent}]{\setlength{\rightskip}{0pt plus 5cm}{\bf N\-G\-L\-Scene}$\ast$ Button\-::m\-\_\-scene\-Parent}\label{class_button_aa3ce7a1873a2d1b14d05e6381b900fb7}
+
+
+pointer to the scene so that update can be called 
+
+
+
+Definition at line 59 of file Button.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+{\bf Button.\-h}\item 
+{\bf Button.\-cpp}\end{DoxyCompactItemize}

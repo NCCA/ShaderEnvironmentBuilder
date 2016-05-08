@@ -1,0 +1,592 @@
+%!PS-Adobe-3.0
+%%Creator: graphviz version 2.30.1 (20140821.0912)
+%%Title: QsciLexerGlsl.cpp
+%%Pages: (atend)
+%%BoundingBox: (atend)
+%%EndComments
+save
+%%BeginProlog
+/DotDict 200 dict def
+DotDict begin
+
+/setupLatin1 {
+mark
+/EncodingVector 256 array def
+ EncodingVector 0
+
+ISOLatin1Encoding 0 255 getinterval putinterval
+EncodingVector 45 /hyphen put
+
+% Set up ISO Latin 1 character encoding
+/starnetISO {
+        dup dup findfont dup length dict begin
+        { 1 index /FID ne { def }{ pop pop } ifelse
+        } forall
+        /Encoding EncodingVector def
+        currentdict end definefont
+} def
+/Times-Roman starnetISO def
+/Times-Italic starnetISO def
+/Times-Bold starnetISO def
+/Times-BoldItalic starnetISO def
+/Helvetica starnetISO def
+/Helvetica-Oblique starnetISO def
+/Helvetica-Bold starnetISO def
+/Helvetica-BoldOblique starnetISO def
+/Courier starnetISO def
+/Courier-Oblique starnetISO def
+/Courier-Bold starnetISO def
+/Courier-BoldOblique starnetISO def
+cleartomark
+} bind def
+
+%%BeginResource: procset graphviz 0 0
+/coord-font-family /Times-Roman def
+/default-font-family /Times-Roman def
+/coordfont coord-font-family findfont 8 scalefont def
+
+/InvScaleFactor 1.0 def
+/set_scale {
+       dup 1 exch div /InvScaleFactor exch def
+       scale
+} bind def
+
+% styles
+/solid { [] 0 setdash } bind def
+/dashed { [9 InvScaleFactor mul dup ] 0 setdash } bind def
+/dotted { [1 InvScaleFactor mul 6 InvScaleFactor mul] 0 setdash } bind def
+/invis {/fill {newpath} def /stroke {newpath} def /show {pop newpath} def} bind def
+/bold { 2 setlinewidth } bind def
+/filled { } bind def
+/unfilled { } bind def
+/rounded { } bind def
+/diagonals { } bind def
+/tapered { } bind def
+
+% hooks for setting color 
+/nodecolor { sethsbcolor } bind def
+/edgecolor { sethsbcolor } bind def
+/graphcolor { sethsbcolor } bind def
+/nopcolor {pop pop pop} bind def
+
+/beginpage {	% i j npages
+	/npages exch def
+	/j exch def
+	/i exch def
+	/str 10 string def
+	npages 1 gt {
+		gsave
+			coordfont setfont
+			0 0 moveto
+			(\() show i str cvs show (,) show j str cvs show (\)) show
+		grestore
+	} if
+} bind def
+
+/set_font {
+	findfont exch
+	scalefont setfont
+} def
+
+% draw text fitted to its expected width
+/alignedtext {			% width text
+	/text exch def
+	/width exch def
+	gsave
+		width 0 gt {
+			[] 0 setdash
+			text stringwidth pop width exch sub text length div 0 text ashow
+		} if
+	grestore
+} def
+
+/boxprim {				% xcorner ycorner xsize ysize
+		4 2 roll
+		moveto
+		2 copy
+		exch 0 rlineto
+		0 exch rlineto
+		pop neg 0 rlineto
+		closepath
+} bind def
+
+/ellipse_path {
+	/ry exch def
+	/rx exch def
+	/y exch def
+	/x exch def
+	matrix currentmatrix
+	newpath
+	x y translate
+	rx ry scale
+	0 0 1 0 360 arc
+	setmatrix
+} bind def
+
+/endpage { showpage } bind def
+/showpage { } def
+
+/layercolorseq
+	[	% layer color sequence - darkest to lightest
+		[0 0 0]
+		[.2 .8 .8]
+		[.4 .8 .8]
+		[.6 .8 .8]
+		[.8 .8 .8]
+	]
+def
+
+/layerlen layercolorseq length def
+
+/setlayer {/maxlayer exch def /curlayer exch def
+	layercolorseq curlayer 1 sub layerlen mod get
+	aload pop sethsbcolor
+	/nodecolor {nopcolor} def
+	/edgecolor {nopcolor} def
+	/graphcolor {nopcolor} def
+} bind def
+
+/onlayer { curlayer ne {invis} if } def
+
+/onlayers {
+	/myupper exch def
+	/mylower exch def
+	curlayer mylower lt
+	curlayer myupper gt
+	or
+	{invis} if
+} def
+
+/curlayer 0 def
+
+%%EndResource
+%%EndProlog
+%%BeginSetup
+14 default-font-family set_font
+1 setmiterlimit
+% /arrowlength 10 def
+% /arrowwidth 5 def
+
+% make sure pdfmark is harmless for PS-interpreters other than Distiller
+/pdfmark where {pop} {userdict /pdfmark /cleartomark load put} ifelse
+% make '<<' and '>>' safe on PS Level 1 devices
+/languagelevel where {pop languagelevel}{1} ifelse
+2 lt {
+    userdict (<<) cvn ([) cvn load put
+    userdict (>>) cvn ([) cvn load put
+} if
+
+%%EndSetup
+setupLatin1
+%%Page: 1 1
+%%PageBoundingBox: 36 36 514 176
+%%PageOrientation: Portrait
+0 0 1 beginpage
+gsave
+36 36 478 140 boxprim clip newpath
+1 1 set_scale 0 rotate 40 41 translate
+% Node1
+gsave
+0 0 0.74902 nodecolor
+newpath 139 112.5 moveto
+139 131.5 lineto
+233 131.5 lineto
+233 112.5 lineto
+closepath fill
+1 setlinewidth
+filled
+0 0 0 nodecolor
+newpath 139 112.5 moveto
+139 131.5 lineto
+233 131.5 lineto
+233 112.5 lineto
+closepath stroke
+0 0 0 nodecolor
+10 /FreeSans set_font
+147 119.5 moveto 78 (QsciLexerGlsl.cpp) alignedtext
+grestore
+% Node2
+gsave
+0 0 1 nodecolor
+newpath 4.5 56.5 moveto
+4.5 75.5 lineto
+57.5 75.5 lineto
+57.5 56.5 lineto
+closepath fill
+1 setlinewidth
+filled
+0 0 0.74902 nodecolor
+newpath 4.5 56.5 moveto
+4.5 75.5 lineto
+57.5 75.5 lineto
+57.5 56.5 lineto
+closepath stroke
+0 0 0 nodecolor
+10 /FreeSans set_font
+12.5 63.5 moveto 37 (iostream) alignedtext
+grestore
+% Node1->Node2
+gsave
+1 setlinewidth
+solid
+0.66667 0.77647 0.43922 edgecolor
+newpath 161.44 112.44 moveto
+135.48 103.4 94.33 89.06 65.2 78.92 curveto
+stroke
+0.66667 0.77647 0.43922 edgecolor
+newpath 66.04 75.5 moveto
+55.45 75.52 lineto
+63.74 82.11 lineto
+closepath fill
+1 setlinewidth
+solid
+0.66667 0.77647 0.43922 edgecolor
+newpath 66.04 75.5 moveto
+55.45 75.52 lineto
+63.74 82.11 lineto
+closepath stroke
+grestore
+% Node3
+gsave
+0 0 1 nodecolor
+newpath 76 56.5 moveto
+76 75.5 lineto
+126 75.5 lineto
+126 56.5 lineto
+closepath fill
+1 setlinewidth
+filled
+0 0 0.74902 nodecolor
+newpath 76 56.5 moveto
+76 75.5 lineto
+126 75.5 lineto
+126 56.5 lineto
+closepath stroke
+0 0 0 nodecolor
+10 /FreeSans set_font
+84 63.5 moveto 34 (sstream) alignedtext
+grestore
+% Node1->Node3
+gsave
+1 setlinewidth
+solid
+0.66667 0.77647 0.43922 edgecolor
+newpath 172.34 112.32 moveto
+159.08 103.9 138.73 90.97 123.15 81.07 curveto
+stroke
+0.66667 0.77647 0.43922 edgecolor
+newpath 124.94 78.06 moveto
+114.62 75.65 lineto
+121.19 83.97 lineto
+closepath fill
+1 setlinewidth
+solid
+0.66667 0.77647 0.43922 edgecolor
+newpath 124.94 78.06 moveto
+114.62 75.65 lineto
+121.19 83.97 lineto
+closepath stroke
+grestore
+% Node4
+gsave
+[ /Rect [ 144.5 56 227 76 ]
+  /Border [ 0 0 0 ]
+  /Action << /Subtype /URI /URI ($_qsci_lexer_glsl_8h.html) >>
+  /Subtype /Link
+/ANN pdfmark
+0 0 1 nodecolor
+newpath 144.5 56.5 moveto
+144.5 75.5 lineto
+227.5 75.5 lineto
+227.5 56.5 lineto
+closepath fill
+1 setlinewidth
+filled
+0 0 0 nodecolor
+newpath 144.5 56.5 moveto
+144.5 75.5 lineto
+227.5 75.5 lineto
+227.5 56.5 lineto
+closepath stroke
+0 0 0 nodecolor
+10 /FreeSans set_font
+152.5 63.5 moveto 67 (QsciLexerGlsl.h) alignedtext
+grestore
+% Node1->Node4
+gsave
+1 setlinewidth
+solid
+0.66667 0.77647 0.43922 edgecolor
+newpath 186 112.08 moveto
+186 105.01 186 94.86 186 85.99 curveto
+stroke
+0.66667 0.77647 0.43922 edgecolor
+newpath 189.5 85.75 moveto
+186 75.75 lineto
+182.5 85.75 lineto
+closepath fill
+1 setlinewidth
+solid
+0.66667 0.77647 0.43922 edgecolor
+newpath 189.5 85.75 moveto
+186 75.75 lineto
+182.5 85.75 lineto
+closepath stroke
+grestore
+% Node9
+gsave
+0 0 1 nodecolor
+newpath 246 56.5 moveto
+246 75.5 lineto
+342 75.5 lineto
+342 56.5 lineto
+closepath fill
+1 setlinewidth
+filled
+0 0 0.74902 nodecolor
+newpath 246 56.5 moveto
+246 75.5 lineto
+342 75.5 lineto
+342 56.5 lineto
+closepath stroke
+0 0 0 nodecolor
+10 /FreeSans set_font
+254 63.5 moveto 80 (Qsci/qsciscintilla.h) alignedtext
+grestore
+% Node1->Node9
+gsave
+1 setlinewidth
+solid
+0.66667 0.77647 0.43922 edgecolor
+newpath 203.35 112.32 moveto
+220.67 103.66 247.52 90.24 267.5 80.25 curveto
+stroke
+0.66667 0.77647 0.43922 edgecolor
+newpath 269.31 83.26 moveto
+276.69 75.65 lineto
+266.18 77 lineto
+closepath fill
+1 setlinewidth
+solid
+0.66667 0.77647 0.43922 edgecolor
+newpath 269.31 83.26 moveto
+276.69 75.65 lineto
+266.18 77 lineto
+closepath stroke
+grestore
+% Node10
+gsave
+0 0 1 nodecolor
+newpath 360 56.5 moveto
+360 75.5 lineto
+470 75.5 lineto
+470 56.5 lineto
+closepath fill
+1 setlinewidth
+filled
+0 0 0.74902 nodecolor
+newpath 360 56.5 moveto
+360 75.5 lineto
+470 75.5 lineto
+470 56.5 lineto
+closepath stroke
+0 0 0 nodecolor
+10 /FreeSans set_font
+368 63.5 moveto 94 (generated/GlslLexer.h) alignedtext
+grestore
+% Node1->Node10
+gsave
+1 setlinewidth
+solid
+0.66667 0.77647 0.43922 edgecolor
+newpath 222.29 112.44 moveto
+261.98 103.08 325.71 88.06 368.91 77.87 curveto
+stroke
+0.66667 0.77647 0.43922 edgecolor
+newpath 369.95 81.22 moveto
+378.88 75.52 lineto
+368.35 74.41 lineto
+closepath fill
+1 setlinewidth
+solid
+0.66667 0.77647 0.43922 edgecolor
+newpath 369.95 81.22 moveto
+378.88 75.52 lineto
+368.35 74.41 lineto
+closepath stroke
+grestore
+% Node5
+gsave
+0 0 1 nodecolor
+newpath -.5 .5 moveto
+-.5 19.5 lineto
+50.5 19.5 lineto
+50.5 .5 lineto
+closepath fill
+1 setlinewidth
+filled
+0 0 0.74902 nodecolor
+newpath -.5 .5 moveto
+-.5 19.5 lineto
+50.5 19.5 lineto
+50.5 .5 lineto
+closepath stroke
+0 0 0 nodecolor
+10 /FreeSans set_font
+7.5 7.5 moveto 35 (memory) alignedtext
+grestore
+% Node4->Node5
+gsave
+1 setlinewidth
+solid
+0.66667 0.77647 0.43922 edgecolor
+newpath 160.49 56.44 moveto
+133.4 47.36 90.41 32.94 60.13 22.78 curveto
+stroke
+0.66667 0.77647 0.43922 edgecolor
+newpath 60.99 19.38 moveto
+50.39 19.52 lineto
+58.76 26.01 lineto
+closepath fill
+1 setlinewidth
+solid
+0.66667 0.77647 0.43922 edgecolor
+newpath 60.99 19.38 moveto
+50.39 19.52 lineto
+58.76 26.01 lineto
+closepath stroke
+grestore
+% Node6
+gsave
+0 0 1 nodecolor
+newpath 69 .5 moveto
+69 19.5 lineto
+185 19.5 lineto
+185 .5 lineto
+closepath fill
+1 setlinewidth
+filled
+0 0 0.74902 nodecolor
+newpath 69 .5 moveto
+69 19.5 lineto
+185 19.5 lineto
+185 .5 lineto
+closepath stroke
+0 0 0 nodecolor
+10 /FreeSans set_font
+77 7.5 moveto 100 (Qsci/qscilexercustom.h) alignedtext
+grestore
+% Node4->Node6
+gsave
+1 setlinewidth
+solid
+0.66667 0.77647 0.43922 edgecolor
+newpath 176.52 56.32 moveto
+167.8 48.34 154.66 36.31 144.1 26.65 curveto
+stroke
+0.66667 0.77647 0.43922 edgecolor
+newpath 146.39 24 moveto
+136.65 19.83 lineto
+141.67 29.17 lineto
+closepath fill
+1 setlinewidth
+solid
+0.66667 0.77647 0.43922 edgecolor
+newpath 146.39 24 moveto
+136.65 19.83 lineto
+141.67 29.17 lineto
+closepath stroke
+grestore
+% Node7
+gsave
+0 0 1 nodecolor
+newpath 203.5 .5 moveto
+203.5 19.5 lineto
+286.5 19.5 lineto
+286.5 .5 lineto
+closepath fill
+1 setlinewidth
+filled
+0 0 0.74902 nodecolor
+newpath 203.5 .5 moveto
+203.5 19.5 lineto
+286.5 19.5 lineto
+286.5 .5 lineto
+closepath stroke
+0 0 0 nodecolor
+10 /FreeSans set_font
+211.5 7.5 moveto 67 (Qsci/qscistyle.h) alignedtext
+grestore
+% Node4->Node7
+gsave
+1 setlinewidth
+solid
+0.66667 0.77647 0.43922 edgecolor
+newpath 195.48 56.32 moveto
+204.2 48.34 217.34 36.31 227.9 26.65 curveto
+stroke
+0.66667 0.77647 0.43922 edgecolor
+newpath 230.33 29.17 moveto
+235.35 19.83 lineto
+225.61 24 lineto
+closepath fill
+1 setlinewidth
+solid
+0.66667 0.77647 0.43922 edgecolor
+newpath 230.33 29.17 moveto
+235.35 19.83 lineto
+225.61 24 lineto
+closepath stroke
+grestore
+% Node8
+gsave
+0 0 1 nodecolor
+newpath 304.5 .5 moveto
+304.5 19.5 lineto
+385.5 19.5 lineto
+385.5 .5 lineto
+closepath fill
+1 setlinewidth
+filled
+0 0 0.74902 nodecolor
+newpath 304.5 .5 moveto
+304.5 19.5 lineto
+385.5 19.5 lineto
+385.5 .5 lineto
+closepath stroke
+0 0 0 nodecolor
+10 /FreeSans set_font
+312.5 7.5 moveto 65 (Qsci/qsciapis.h) alignedtext
+grestore
+% Node4->Node8
+gsave
+1 setlinewidth
+solid
+0.66667 0.77647 0.43922 edgecolor
+newpath 211.19 56.44 moveto
+237.94 47.36 280.4 32.94 310.31 22.78 curveto
+stroke
+0.66667 0.77647 0.43922 edgecolor
+newpath 311.58 26.05 moveto
+319.92 19.52 lineto
+309.33 19.42 lineto
+closepath fill
+1 setlinewidth
+solid
+0.66667 0.77647 0.43922 edgecolor
+newpath 311.58 26.05 moveto
+319.92 19.52 lineto
+309.33 19.42 lineto
+closepath stroke
+grestore
+endpage
+showpage
+grestore
+%%PageTrailer
+%%EndPage: 1
+%%Trailer
+%%Pages: 1
+%%BoundingBox: 36 36 514 176
+end
+restore
+%%EOF

@@ -1,0 +1,323 @@
+\section{colour\-Button Class Reference}
+\label{classcolour_button}\index{colour\-Button@{colour\-Button}}
+
+
+{\ttfamily \#include $<$Button.\-h$>$}
+
+
+
+Inheritance diagram for colour\-Button\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=114pt]{classcolour_button__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for colour\-Button\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classcolour_button__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void {\bf set\-Colour} (Q\-Color \-\_\-col)
+\begin{DoxyCompactList}\small\item\em sets the picked colour and colour attribute to the colour input \end{DoxyCompactList}\item 
+void {\bf set\-Colour} (ngl\-::\-Vec4 \-\_\-col)
+\begin{DoxyCompactList}\small\item\em sets the colour attribute to the colour input \end{DoxyCompactList}\item 
+ngl\-::\-Vec4 {\bf get\-Colour} ()
+\begin{DoxyCompactList}\small\item\em returns the colour, stored by the button \end{DoxyCompactList}\item 
+Q\-Color {\bf get\-Colour\-Q} ()
+\item 
+void {\bf print\-Attributes} ()
+\begin{DoxyCompactList}\small\item\em print the attribute data stored within the colour attriubte for debugging \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Slots}
+\begin{DoxyCompactItemize}
+\item 
+void {\bf open\-Box} ()
+\begin{DoxyCompactList}\small\item\em a slot to open a colour widget upon button press event \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+ngl\-::\-Vec4 {\bf m\-\_\-colour}
+\begin{DoxyCompactList}\small\item\em vector to store colour attributes for easy accessibility \end{DoxyCompactList}\item 
+Q\-Color {\bf m\-\_\-colour\-Picked}
+\begin{DoxyCompactList}\small\item\em colour used to store attributes coming out from colour picker \end{DoxyCompactList}\item 
+Q\-Color\-Dialog $\ast$ {\bf m\-\_\-colour\-Group\-Box}
+\begin{DoxyCompactList}\small\item\em colour box to select colours \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 164 of file Button.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\index{colour\-Button@{colour\-Button}!get\-Colour@{get\-Colour}}
+\index{get\-Colour@{get\-Colour}!colourButton@{colour\-Button}}
+\subsubsection[{get\-Colour}]{\setlength{\rightskip}{0pt plus 5cm}ngl\-::\-Vec4 colour\-Button\-::get\-Colour (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\label{classcolour_button_ade4698b54bd163f7fd4b39e920aacca8}
+
+
+returns the colour, stored by the button 
+
+\begin{DoxyReturn}{Returns}
+m\-\_\-colour 
+\end{DoxyReturn}
+
+
+Reimplemented from {\bf Button} \doxyref{}{p.}{class_button_a70975849d59dca023bd95047dfd0771e}.
+
+
+
+Definition at line 208 of file Button.\-h.
+
+
+
+References m\-\_\-colour.
+
+
+\begin{DoxyCode}
+208 \{\textcolor{keywordflow}{return} m_colour;\}
+\end{DoxyCode}
+\index{colour\-Button@{colour\-Button}!get\-Colour\-Q@{get\-Colour\-Q}}
+\index{get\-Colour\-Q@{get\-Colour\-Q}!colourButton@{colour\-Button}}
+\subsubsection[{get\-Colour\-Q}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Color colour\-Button\-::get\-Colour\-Q (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\label{classcolour_button_a04e57cf04297ff9a285574f69833e746}
+
+
+Reimplemented from {\bf Button} \doxyref{}{p.}{class_button_aca34c082733f62c47cee7e278b3ae876}.
+
+
+
+Definition at line 209 of file Button.\-h.
+
+
+
+References m\-\_\-colour\-Picked.
+
+
+\begin{DoxyCode}
+209 \{\textcolor{keywordflow}{return} m_colourPicked;\}
+\end{DoxyCode}
+\index{colour\-Button@{colour\-Button}!open\-Box@{open\-Box}}
+\index{open\-Box@{open\-Box}!colourButton@{colour\-Button}}
+\subsubsection[{open\-Box}]{\setlength{\rightskip}{0pt plus 5cm}void colour\-Button\-::open\-Box (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}\label{classcolour_button_a27abb0dfc3bf29411d85fb02e5c9f8aa}
+
+
+a slot to open a colour widget upon button press event 
+
+
+
+Definition at line 49 of file Button.\-cpp.
+
+
+
+References m\-\_\-colour, m\-\_\-colour\-Group\-Box, m\-\_\-colour\-Picked, Button\-::m\-\_\-lib\-Parent, Button\-::m\-\_\-parent, Button\-::m\-\_\-scene\-Parent, and Button\-Lib\-::update\-Shader\-Values().
+
+
+\begin{DoxyCode}
+50 \{
+51   \textcolor{comment}{//these are set so when the colour picker is opened the current colour is opened}
+52   m_colourPicked.setRedF(m_colour.m\_x);
+53   m_colourPicked.setGreenF(m_colour.m\_y);
+54   m_colourPicked.setBlueF(m_colour.m\_z);
+55   m_colourPicked=m_colourGroupBox->getColor(m_colourPicked,
+56                                             m_parent,
+57                                             \textcolor{stringliteral}{"Pick a colour"},
+58                                             0);
+59   \textcolor{keywordflow}{if}(m_colourPicked.spec()!=QColor::Spec::Invalid)
+60   \{
+61     m_colour.set(m_colourPicked.redF(),
+62                  m_colourPicked.greenF(),
+63                  m_colourPicked.blueF(),
+64                  m_colourPicked.alphaF());
+65     m_libParent->updateShaderValues();
+66     m_sceneParent->update();
+67   \}
+68   \textcolor{comment}{//printValues();}
+69 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=346pt]{classcolour_button_a27abb0dfc3bf29411d85fb02e5c9f8aa_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{colour\-Button@{colour\-Button}!print\-Attributes@{print\-Attributes}}
+\index{print\-Attributes@{print\-Attributes}!colourButton@{colour\-Button}}
+\subsubsection[{print\-Attributes}]{\setlength{\rightskip}{0pt plus 5cm}void colour\-Button\-::print\-Attributes (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classcolour_button_a85febe1f24d937efab8b5a7b45b58737}
+
+
+print the attribute data stored within the colour attriubte for debugging 
+
+
+
+Definition at line 44 of file Button.\-cpp.
+
+
+
+References m\-\_\-colour.
+
+
+\begin{DoxyCode}
+45 \{
+46   std::cout<<\textcolor{stringliteral}{"R: "}<<m_colour.m\_x<<\textcolor{stringliteral}{"\(\backslash\)nG: "}<<m_colour.m\_y<<\textcolor{stringliteral}{"\(\backslash\)nB: "}<<m_colour.m\_z<<std::endl;
+47 \}
+\end{DoxyCode}
+\index{colour\-Button@{colour\-Button}!set\-Colour@{set\-Colour}}
+\index{set\-Colour@{set\-Colour}!colourButton@{colour\-Button}}
+\subsubsection[{set\-Colour}]{\setlength{\rightskip}{0pt plus 5cm}void colour\-Button\-::set\-Colour (
+\begin{DoxyParamCaption}
+\item[{Q\-Color}]{\-\_\-col}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{classcolour_button_a863d47b71e20fa707520854265e167d8}
+
+
+sets the picked colour and colour attribute to the colour input 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em colour} & value \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from {\bf Button} \doxyref{}{p.}{class_button_a174b05c6f309a46db10530052cf8388a}.
+
+
+
+Definition at line 71 of file Button.\-cpp.
+
+
+
+References m\-\_\-colour, and m\-\_\-colour\-Picked.
+
+
+\begin{DoxyCode}
+72 \{
+73   m_colourPicked=\_col;
+74   m_colour.set(\_col.redF(),
+75                \_col.greenF(),
+76                \_col.blueF(),
+77                \_col.alphaF());
+78 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classcolour_button_a863d47b71e20fa707520854265e167d8_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{colour\-Button@{colour\-Button}!set\-Colour@{set\-Colour}}
+\index{set\-Colour@{set\-Colour}!colourButton@{colour\-Button}}
+\subsubsection[{set\-Colour}]{\setlength{\rightskip}{0pt plus 5cm}void colour\-Button\-::set\-Colour (
+\begin{DoxyParamCaption}
+\item[{ngl\-::\-Vec4}]{\-\_\-col}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{classcolour_button_ada4411dfd839a0262fc3ea13c05c6719}
+
+
+sets the colour attribute to the colour input 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em colour} & value \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from {\bf Button} \doxyref{}{p.}{class_button_a339347e88020f2c961e08a530407d083}.
+
+
+
+Definition at line 80 of file Button.\-cpp.
+
+
+
+References m\-\_\-colour, and m\-\_\-colour\-Picked.
+
+
+\begin{DoxyCode}
+81 \{
+82   m_colour=\_col;
+83   m_colourPicked.setRgbF(m_colour.m\_x,
+84                          m_colour.m\_y,
+85                          m_colour.m\_z,
+86                          m_colour.m\_w);
+87 \}
+\end{DoxyCode}
+
+
+\subsection{Member Data Documentation}
+\index{colour\-Button@{colour\-Button}!m\-\_\-colour@{m\-\_\-colour}}
+\index{m\-\_\-colour@{m\-\_\-colour}!colourButton@{colour\-Button}}
+\subsubsection[{m\-\_\-colour}]{\setlength{\rightskip}{0pt plus 5cm}ngl\-::\-Vec4 colour\-Button\-::m\-\_\-colour\hspace{0.3cm}{\ttfamily [private]}}\label{classcolour_button_a350fe5652713b8993fd7c5e4202a1065}
+
+
+vector to store colour attributes for easy accessibility 
+
+
+
+Definition at line 172 of file Button.\-h.
+
+\index{colour\-Button@{colour\-Button}!m\-\_\-colour\-Group\-Box@{m\-\_\-colour\-Group\-Box}}
+\index{m\-\_\-colour\-Group\-Box@{m\-\_\-colour\-Group\-Box}!colourButton@{colour\-Button}}
+\subsubsection[{m\-\_\-colour\-Group\-Box}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Color\-Dialog$\ast$ colour\-Button\-::m\-\_\-colour\-Group\-Box\hspace{0.3cm}{\ttfamily [private]}}\label{classcolour_button_a66e206a9582c11e60c59893a203e1282}
+
+
+colour box to select colours 
+
+
+
+Definition at line 180 of file Button.\-h.
+
+\index{colour\-Button@{colour\-Button}!m\-\_\-colour\-Picked@{m\-\_\-colour\-Picked}}
+\index{m\-\_\-colour\-Picked@{m\-\_\-colour\-Picked}!colourButton@{colour\-Button}}
+\subsubsection[{m\-\_\-colour\-Picked}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Color colour\-Button\-::m\-\_\-colour\-Picked\hspace{0.3cm}{\ttfamily [private]}}\label{classcolour_button_adcdfb3a1269029bd853fc4f0029e85cd}
+
+
+colour used to store attributes coming out from colour picker 
+
+
+
+Definition at line 176 of file Button.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+{\bf Button.\-h}\item 
+{\bf Button.\-cpp}\end{DoxyCompactItemize}

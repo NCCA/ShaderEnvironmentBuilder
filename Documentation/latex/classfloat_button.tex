@@ -1,0 +1,235 @@
+\section{float\-Button Class Reference}
+\label{classfloat_button}\index{float\-Button@{float\-Button}}
+
+
+{\ttfamily \#include $<$Button.\-h$>$}
+
+
+
+Inheritance diagram for float\-Button\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=106pt]{classfloat_button__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for float\-Button\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classfloat_button__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void {\bf set\-Value} (float \-\_\-val)
+\begin{DoxyCompactList}\small\item\em sets the value of the float \end{DoxyCompactList}\item 
+float {\bf get\-Value} ()
+\begin{DoxyCompactList}\small\item\em returns the value, stored by the button \end{DoxyCompactList}\item 
+void {\bf print\-Attributes} ()
+\begin{DoxyCompactList}\small\item\em print the attribute data stored within the float attriubte for debugging \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Slots}
+\begin{DoxyCompactItemize}
+\item 
+void {\bf open\-Box} ()
+\begin{DoxyCompactList}\small\item\em a slot to open float widget upon button press event \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+float {\bf m\-\_\-value}
+\begin{DoxyCompactList}\small\item\em float to store attribute for easy accessibility \end{DoxyCompactList}\item 
+Q\-Dialog $\ast$ {\bf m\-\_\-window}
+\begin{DoxyCompactList}\small\item\em window to hold float slider \end{DoxyCompactList}\item 
+Q\-Group\-Box $\ast$ {\bf m\-\_\-slider\-Group\-Box}
+\begin{DoxyCompactList}\small\item\em creates a frame with a tile to hold float slider \end{DoxyCompactList}\item 
+Q\-Grid\-Layout $\ast$ {\bf m\-\_\-slider\-Layout}
+\begin{DoxyCompactList}\small\item\em layout to hold float slider widget \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 222 of file Button.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\index{float\-Button@{float\-Button}!get\-Value@{get\-Value}}
+\index{get\-Value@{get\-Value}!floatButton@{float\-Button}}
+\subsubsection[{get\-Value}]{\setlength{\rightskip}{0pt plus 5cm}float float\-Button\-::get\-Value (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\label{classfloat_button_aadd52969a92644b71b7b2a27e1ba0aa5}
+
+
+returns the value, stored by the button 
+
+\begin{DoxyReturn}{Returns}
+m\-\_\-value 
+\end{DoxyReturn}
+
+
+Reimplemented from {\bf Button} \doxyref{}{p.}{class_button_a324f19659d882f3a505a128dab9473e6}.
+
+
+
+Definition at line 258 of file Button.\-h.
+
+
+
+References m\-\_\-value.
+
+
+\begin{DoxyCode}
+258 \{\textcolor{keywordflow}{return} m_value;\}
+\end{DoxyCode}
+\index{float\-Button@{float\-Button}!open\-Box@{open\-Box}}
+\index{open\-Box@{open\-Box}!floatButton@{float\-Button}}
+\subsubsection[{open\-Box}]{\setlength{\rightskip}{0pt plus 5cm}void float\-Button\-::open\-Box (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}\label{classfloat_button_a6f74331e513c1bfc5b6a043e35c78dc2}
+
+
+a slot to open float widget upon button press event 
+
+
+
+Definition at line 89 of file Button.\-cpp.
+
+
+
+References Button\-::m\-\_\-lib\-Parent, Button\-::m\-\_\-parent, Button\-::m\-\_\-scene\-Parent, m\-\_\-value, and Button\-Lib\-::update\-Shader\-Values().
+
+
+\begin{DoxyCode}
+90 \{
+91   \textcolor{comment}{//m\_window = new QDialog;}
+92   \textcolor{keywordtype}{double} val = QInputDialog::getDouble(
+93         m_parent, tr(\textcolor{stringliteral}{"Input"}), tr(\textcolor{stringliteral}{"Input"}),m_value,-2147483647,2147483647,5);
+94   m_value=val;
+95   m_libParent->updateShaderValues();
+96   m_sceneParent->update();
+97   \textcolor{comment}{//printValues();}
+98 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=338pt]{classfloat_button_a6f74331e513c1bfc5b6a043e35c78dc2_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{float\-Button@{float\-Button}!print\-Attributes@{print\-Attributes}}
+\index{print\-Attributes@{print\-Attributes}!floatButton@{float\-Button}}
+\subsubsection[{print\-Attributes}]{\setlength{\rightskip}{0pt plus 5cm}void float\-Button\-::print\-Attributes (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classfloat_button_a13fd2e3f5aa280b8e3b282fec02de1f1}
+
+
+print the attribute data stored within the float attriubte for debugging 
+
+\index{float\-Button@{float\-Button}!set\-Value@{set\-Value}}
+\index{set\-Value@{set\-Value}!floatButton@{float\-Button}}
+\subsubsection[{set\-Value}]{\setlength{\rightskip}{0pt plus 5cm}void float\-Button\-::set\-Value (
+\begin{DoxyParamCaption}
+\item[{float}]{\-\_\-val}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\label{classfloat_button_af4c25f4cbac2807c91b800054b2b36ac}
+
+
+sets the value of the float 
+
+
+
+Reimplemented from {\bf Button} \doxyref{}{p.}{class_button_aac9f26f6c9a02dd1c9dfa47c71b0495d}.
+
+
+
+Definition at line 253 of file Button.\-h.
+
+
+
+References m\-\_\-value.
+
+
+\begin{DoxyCode}
+253 \{m_value=\_val;\}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classfloat_button_af4c25f4cbac2807c91b800054b2b36ac_icgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsection{Member Data Documentation}
+\index{float\-Button@{float\-Button}!m\-\_\-slider\-Group\-Box@{m\-\_\-slider\-Group\-Box}}
+\index{m\-\_\-slider\-Group\-Box@{m\-\_\-slider\-Group\-Box}!floatButton@{float\-Button}}
+\subsubsection[{m\-\_\-slider\-Group\-Box}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Group\-Box$\ast$ float\-Button\-::m\-\_\-slider\-Group\-Box\hspace{0.3cm}{\ttfamily [private]}}\label{classfloat_button_af95f68712b6290763b6b5d019e8b3960}
+
+
+creates a frame with a tile to hold float slider 
+
+
+
+Definition at line 238 of file Button.\-h.
+
+\index{float\-Button@{float\-Button}!m\-\_\-slider\-Layout@{m\-\_\-slider\-Layout}}
+\index{m\-\_\-slider\-Layout@{m\-\_\-slider\-Layout}!floatButton@{float\-Button}}
+\subsubsection[{m\-\_\-slider\-Layout}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Grid\-Layout$\ast$ float\-Button\-::m\-\_\-slider\-Layout\hspace{0.3cm}{\ttfamily [private]}}\label{classfloat_button_a9f42e2731b063c9ef94f51e5ac9fb7e7}
+
+
+layout to hold float slider widget 
+
+
+
+Definition at line 242 of file Button.\-h.
+
+\index{float\-Button@{float\-Button}!m\-\_\-value@{m\-\_\-value}}
+\index{m\-\_\-value@{m\-\_\-value}!floatButton@{float\-Button}}
+\subsubsection[{m\-\_\-value}]{\setlength{\rightskip}{0pt plus 5cm}float float\-Button\-::m\-\_\-value\hspace{0.3cm}{\ttfamily [private]}}\label{classfloat_button_a58e01d4998a8bef07fcd0d2206f8ec3b}
+
+
+float to store attribute for easy accessibility 
+
+
+
+Definition at line 230 of file Button.\-h.
+
+\index{float\-Button@{float\-Button}!m\-\_\-window@{m\-\_\-window}}
+\index{m\-\_\-window@{m\-\_\-window}!floatButton@{float\-Button}}
+\subsubsection[{m\-\_\-window}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Dialog$\ast$ float\-Button\-::m\-\_\-window\hspace{0.3cm}{\ttfamily [private]}}\label{classfloat_button_a03cd87a781f9153b7e9f35b553066113}
+
+
+window to hold float slider 
+
+
+
+Definition at line 234 of file Button.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+{\bf Button.\-h}\item 
+{\bf Button.\-cpp}\end{DoxyCompactItemize}

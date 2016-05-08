@@ -1,0 +1,111 @@
+\section{Intro\-Page Class Reference}
+\label{class_intro_page}\index{Intro\-Page@{Intro\-Page}}
+
+
+The intro wizard page. Only contains just an into label.  
+
+
+
+
+{\ttfamily \#include $<$New\-Project\-Wizard.\-h$>$}
+
+
+
+Inheritance diagram for Intro\-Page\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=120pt]{class_intro_page__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Intro\-Page\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=120pt]{class_intro_page__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\bf Intro\-Page} (Q\-Widget $\ast$parent=0)
+\begin{DoxyCompactList}\small\item\em Constructor, passing a child of parent. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Q\-Label $\ast$ {\bf m\-\_\-label}
+\begin{DoxyCompactList}\small\item\em The text label for the intro. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The intro wizard page. Only contains just an into label. 
+
+Definition at line 105 of file New\-Project\-Wizard.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Intro\-Page@{Intro\-Page}!Intro\-Page@{Intro\-Page}}
+\index{Intro\-Page@{Intro\-Page}!IntroPage@{Intro\-Page}}
+\subsubsection[{Intro\-Page}]{\setlength{\rightskip}{0pt plus 5cm}Intro\-Page\-::\-Intro\-Page (
+\begin{DoxyParamCaption}
+\item[{Q\-Widget $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}\label{class_intro_page_a1542ddeba40ea1e6d5f968829876c95d}
+
+
+Constructor, passing a child of parent. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em parent} & The parent for which this will be the child of. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 135 of file New\-Project\-Wizard.\-cpp.
+
+
+
+References m\-\_\-label.
+
+
+\begin{DoxyCode}
+136   : QWizardPage(parent)
+137 \{
+138   setTitle(tr(\textcolor{stringliteral}{"Introduction"}));
+139 
+140   m_label = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"This wizard will generate a CEB project "}
+141                           \textcolor{stringliteral}{"definition. You simply "}
+142                           \textcolor{stringliteral}{"need to specify the project name and set a few "}
+143                           \textcolor{stringliteral}{"options to produce a json project file "}
+144                           \textcolor{stringliteral}{"implementation for your new OpenGL shader."}));
+145   m_label->setWordWrap(\textcolor{keyword}{true});
+146 
+147   QVBoxLayout *layout = \textcolor{keyword}{new} QVBoxLayout;
+148   layout->addWidget(m_label);
+149   setLayout(layout);
+150 \}
+\end{DoxyCode}
+
+
+\subsection{Member Data Documentation}
+\index{Intro\-Page@{Intro\-Page}!m\-\_\-label@{m\-\_\-label}}
+\index{m\-\_\-label@{m\-\_\-label}!IntroPage@{Intro\-Page}}
+\subsubsection[{m\-\_\-label}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Label$\ast$ Intro\-Page\-::m\-\_\-label\hspace{0.3cm}{\ttfamily [private]}}\label{class_intro_page_aac34d1db888c41e6f28c563049aaf071}
+
+
+The text label for the intro. 
+
+
+
+Definition at line 122 of file New\-Project\-Wizard.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+{\bf New\-Project\-Wizard.\-h}\item 
+{\bf New\-Project\-Wizard.\-cpp}\end{DoxyCompactItemize}

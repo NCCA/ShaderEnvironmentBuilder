@@ -1,0 +1,1003 @@
+\section{Cebitor Class Reference}
+\label{class_cebitor}\index{Cebitor@{Cebitor}}
+
+
+C\-E\-B text editor class inherits from Qsci\-Scintilla.  
+
+
+
+
+{\ttfamily \#include $<$Cebitor.\-h$>$}
+
+
+
+Inheritance diagram for Cebitor\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=114pt]{class_cebitor__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Cebitor\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=114pt]{class_cebitor__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum {\bf Marker\-Type} \{ {\bf E\-R\-R\-O\-R}, 
+{\bf W\-A\-R\-N\-I\-N\-G}
+ \}
+\begin{DoxyCompactList}\small\item\em Enum for supported marker types. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void {\bf clear\-Errors} ()
+\begin{DoxyCompactList}\small\item\em Removes all error and warning line markers. \end{DoxyCompactList}\item 
+void {\bf search\-Next} ()
+\begin{DoxyCompactList}\small\item\em Search for next occurance. \end{DoxyCompactList}\item 
+void {\bf search\-Prev} ()
+\begin{DoxyCompactList}\small\item\em Search for previous occurance. \end{DoxyCompactList}\item 
+void {\bf highlight\-All\-Search} ()
+\begin{DoxyCompactList}\small\item\em sets indicator for each search result \end{DoxyCompactList}\item 
+void {\bf highlight\-All\-Search} (const Q\-String \&\-\_\-text)
+\begin{DoxyCompactList}\small\item\em sets indicator for each search result \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\bf Cebitor} (Q\-Widget $\ast$\-\_\-parent)
+\begin{DoxyCompactList}\small\item\em \doxyref{Cebitor}{p.}{class_cebitor} constructor, initialises default values. \end{DoxyCompactList}\item 
+void {\bf set\-Search\-Widget} (Q\-Widget $\ast$\-\_\-search\-Widget)
+\begin{DoxyCompactList}\small\item\em stores widget containing the searchbar \end{DoxyCompactList}\item 
+void {\bf set\-Search\-Line\-Edit} (Q\-Line\-Edit $\ast$\-\_\-search\-Line\-Edit)
+\begin{DoxyCompactList}\small\item\em stores Q\-Line\-Edit widget from the searchbar \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void {\bf comment} ()
+\begin{DoxyCompactList}\small\item\em comment out all selected lines \end{DoxyCompactList}\item 
+void {\bf toggle\-Search\-Box} ()
+\begin{DoxyCompactList}\small\item\em toggle search widget \end{DoxyCompactList}\item 
+void {\bf char\-Added} (const int \-\_\-c)
+\begin{DoxyCompactList}\small\item\em called when a character is added \end{DoxyCompactList}\item 
+void {\bf reset\-Highlight\-Colour} ()
+\begin{DoxyCompactList}\small\item\em reset the highlighting colour \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool {\bf auto\-Close} (const Q\-String \-\_\-close)
+\begin{DoxyCompactList}\small\item\em adds closing character for braces and quotes \end{DoxyCompactList}\item 
+bool {\bf closing} (const Q\-String \-\_\-close)
+\begin{DoxyCompactList}\small\item\em removes duplicates of closing braces and quotes \end{DoxyCompactList}\item 
+void {\bf brace\-Indent} ()
+\begin{DoxyCompactList}\small\item\em adds indentation after newline following a \char`\"{}\{\char`\"{} \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Q\-Widget $\ast$ {\bf m\-\_\-search\-Widget}
+\begin{DoxyCompactList}\small\item\em widget containing the searchbar \end{DoxyCompactList}\item 
+Q\-Line\-Edit $\ast$ {\bf m\-\_\-search\-Line\-Edit}
+\begin{DoxyCompactList}\small\item\em searchbar Q\-Line\-Edit widget \end{DoxyCompactList}\item 
+std\-::vector$<$ int $>$ {\bf m\-\_\-file\-Markers}
+\begin{DoxyCompactList}\small\item\em vector of all line markers \end{DoxyCompactList}\item 
+int {\bf m\-\_\-search\-Indicator}
+\begin{DoxyCompactList}\small\item\em indicator used to highlight all search terms \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+C\-E\-B text editor class inherits from Qsci\-Scintilla. 
+
+Definition at line 22 of file Cebitor.\-h.
+
+
+
+\subsection{Member Enumeration Documentation}
+\index{Cebitor@{Cebitor}!Marker\-Type@{Marker\-Type}}
+\index{Marker\-Type@{Marker\-Type}!Cebitor@{Cebitor}}
+\subsubsection[{Marker\-Type}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Cebitor\-::\-Marker\-Type}}\label{class_cebitor_af43f4242de6e469e6d6c61bdd4093446}
+
+
+Enum for supported marker types. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{E\-R\-R\-O\-R@{E\-R\-R\-O\-R}!Cebitor@{Cebitor}}\index{Cebitor@{Cebitor}!E\-R\-R\-O\-R@{E\-R\-R\-O\-R}}\item[{\em 
+E\-R\-R\-O\-R\label{class_cebitor_af43f4242de6e469e6d6c61bdd4093446a49f150e78b6812cea262ccb80eebdeb5}
+}]Symbol marker for Errors. \index{W\-A\-R\-N\-I\-N\-G@{W\-A\-R\-N\-I\-N\-G}!Cebitor@{Cebitor}}\index{Cebitor@{Cebitor}!W\-A\-R\-N\-I\-N\-G@{W\-A\-R\-N\-I\-N\-G}}\item[{\em 
+W\-A\-R\-N\-I\-N\-G\label{class_cebitor_af43f4242de6e469e6d6c61bdd4093446a5d9f8a9512323adcfb3a5586b3867183}
+}]Symbol marker for warnings. \end{description}
+\end{Desc}
+
+
+Definition at line 30 of file Cebitor.\-h.
+
+
+\begin{DoxyCode}
+31   \{
+32     ERROR,    
+33     WARNING,  
+34   \};
+\end{DoxyCode}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Cebitor@{Cebitor}!Cebitor@{Cebitor}}
+\index{Cebitor@{Cebitor}!Cebitor@{Cebitor}}
+\subsubsection[{Cebitor}]{\setlength{\rightskip}{0pt plus 5cm}Cebitor\-::\-Cebitor (
+\begin{DoxyParamCaption}
+\item[{Q\-Widget $\ast$}]{\-\_\-parent}
+\end{DoxyParamCaption}
+)}\label{class_cebitor_a8295f41644184b799f7c0165627f391a}
+
+
+\doxyref{Cebitor}{p.}{class_cebitor} constructor, initialises default values. 
+
+\begin{DoxyRefDesc}{Bug}
+\item[{\bf Bug}]brace matching matches \char`\"{}$<$\char`\"{} and \char`\"{}$>$\char`\"{} characters \end{DoxyRefDesc}
+
+
+Definition at line 23 of file Cebitor.\-cpp.
+
+
+
+References char\-Added(), comment(), m\-\_\-search\-Indicator, reset\-Highlight\-Colour(), and toggle\-Search\-Box().
+
+
+\begin{DoxyCode}
+23                                  : QsciScintilla(\_parent)
+24 \{
+25   setMinimumHeight(300);
+26 
+27   \textcolor{comment}{// Create and assign the lexer}
+28   QsciLexer* lex = \textcolor{keyword}{new} QsciLexerGLSL(\textcolor{keyword}{this});
+29   setLexer(lex);
+30 
+31   \textcolor{comment}{// Set the margin defaults}
+32   setMarginType(0,MarginType::NumberMargin);
+33   setMarginWidth(0,\textcolor{stringliteral}{" 012"});
+34   setMarginsForegroundColor(QColor(128, 128, 128));
+35   \textcolor{comment}{// Set the symbol margin defaults}
+36   setMarginType(1,MarginType::SymbolMargin);
+37   setMarginWidth(1,12);
+38   setMarginMarkerMask(1,
+39                       1 << MarkerType::ERROR |
+40                       1 << MarkerType::WARNING
+41                       );
+42 
+43   \textcolor{comment}{// Set the caret defaults}
+44   setCaretForegroundColor(QColor(247, 247, 241));
+45   setCaretWidth(2);
+46   \textcolor{comment}{// Set the brace defaults}
+47   \textcolor{comment}{//----------------------------------------------------------------------------}
+49 \textcolor{comment}{}  \textcolor{comment}{//----------------------------------------------------------------------------}
+50   setBraceMatching(BraceMatch::SloppyBraceMatch);
+51   setMatchedBraceBackgroundColor(QColor(62, 61, 50));
+52   setUnmatchedBraceBackgroundColor(QColor(249, 38, 114));
+53 
+54   \textcolor{comment}{// Set auto-indent}
+55   setAutoIndent(\textcolor{keyword}{true});
+56   setIndentationsUseTabs(\textcolor{keyword}{false});
+57   setIndentationWidth(2);
+58 
+59   \textcolor{comment}{// Enable scroll width tracking and set the scroll width to a low number}
+60   \textcolor{comment}{// Scintilla doesn't track line length, so if we wanted automated scrollbar}
+61   \textcolor{comment}{// to appear we would need to implement a line length checking}
+62   SendScintilla(QsciScintillaBase::SCI\_SETSCROLLWIDTHTRACKING, 1);
+63   SendScintilla(QsciScintillaBase::SCI\_SETSCROLLWIDTH, 5);
+64 
+65   \textcolor{comment}{// set up line markers}
+66   QIcon errorIcon = QIcon::fromTheme(QString(\textcolor{stringliteral}{"dialog-error"}));
+67   QIcon warnIcon = QIcon::fromTheme(QString(\textcolor{stringliteral}{"dialog-warning"}));
+68 
+69   markerDefine(errorIcon.pixmap(10,10), MarkerType::ERROR);
+70   markerDefine(warnIcon.pixmap(10,10), MarkerType::WARNING);
+71 
+72   \textcolor{comment}{// unbind CTRL-/ keyboard shortcut}
+73   standardCommands()->boundTo(Qt::Key\_Slash | Qt::CTRL)->setKey(0);
+74 
+75   \textcolor{comment}{// rebind CTRL-/ to comment function}
+76   QAction *commentAction = \textcolor{keyword}{new} QAction(\textcolor{keyword}{this});
+77   commentAction->setShortcut(Qt::Key\_Slash | Qt::CTRL);
+78 
+79   connect(commentAction, SIGNAL(triggered()), \textcolor{keyword}{this}, SLOT(comment()));
+80   addAction(commentAction);
+81 
+82   \textcolor{comment}{// bind CTRL-F to search function}
+83   QAction *searchAction = \textcolor{keyword}{new} QAction(\textcolor{keyword}{this});
+84   searchAction->setShortcut(Qt::Key\_F | Qt::CTRL);
+85 
+86   connect(searchAction, SIGNAL(triggered()), \textcolor{keyword}{this}, SLOT(toggleSearchBox()));
+87   addAction(searchAction);
+88 
+89   \textcolor{comment}{// define search indicator}
+90   m_searchIndicator = indicatorDefine(IndicatorStyle::PlainIndicator, -1);
+91   setIndicatorDrawUnder(\textcolor{keyword}{true}, m_searchIndicator);
+92   setIndicatorForegroundColor(QColor(142,143,137,0));
+93   setIndicatorOutlineColor(QColor(142,143,137,255));
+94 
+95   \textcolor{comment}{// connect char added signals and slots}
+96   connect(\textcolor{keyword}{this}, SIGNAL(SCN\_CHARADDED(\textcolor{keywordtype}{int})), \textcolor{keyword}{this}, SLOT(charAdded(\textcolor{keywordtype}{int})));
+97 
+98   \textcolor{comment}{// work-around since using built-in focusInEvent causes caret to be invisible}
+99   connect(\textcolor{keyword}{this}, SIGNAL(SCN\_FOCUSIN()), \textcolor{keyword}{this}, SLOT(resetHighlightColour()));
+100 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_cebitor_a8295f41644184b799f7c0165627f391a_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsection{Member Function Documentation}
+\index{Cebitor@{Cebitor}!auto\-Close@{auto\-Close}}
+\index{auto\-Close@{auto\-Close}!Cebitor@{Cebitor}}
+\subsubsection[{auto\-Close}]{\setlength{\rightskip}{0pt plus 5cm}bool Cebitor\-::auto\-Close (
+\begin{DoxyParamCaption}
+\item[{const Q\-String}]{\-\_\-close}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\label{class_cebitor_af4b61a42d87ff45b28200523e4b71a65}
+
+
+adds closing character for braces and quotes 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-close} & closing character \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if closing character is added 
+\end{DoxyReturn}
+
+
+Definition at line 177 of file Cebitor.\-cpp.
+
+
+\begin{DoxyCode}
+178 \{
+179   \textcolor{keywordtype}{int} cursorIndex;
+180   \textcolor{keywordtype}{int} cursorLine;
+181   \textcolor{keywordtype}{int} length;
+182   getCursorPosition(&cursorLine, &cursorIndex);
+183   length = lineLength(cursorLine);
+184 
+185   \textcolor{comment}{// special case for if cursor is on last line since in has no EOL}
+186   \textcolor{keywordflow}{if} (cursorLine == lines()-1) \{ length++; \}
+187   \textcolor{comment}{// insert closing character if cursor is at EOL or the next character is space}
+188   \textcolor{keywordflow}{if}(cursorIndex == length-1 ||
+189      text(cursorLine).at(cursorIndex).toLatin1() == \textcolor{charliteral}{' '})
+190   \{
+191     insert(\_close);
+192     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+193   \}
+194   \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+195 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_cebitor_af4b61a42d87ff45b28200523e4b71a65_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Cebitor@{Cebitor}!brace\-Indent@{brace\-Indent}}
+\index{brace\-Indent@{brace\-Indent}!Cebitor@{Cebitor}}
+\subsubsection[{brace\-Indent}]{\setlength{\rightskip}{0pt plus 5cm}void Cebitor\-::brace\-Indent (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\label{class_cebitor_af923411a34a12c7deb9698a10d5b6c38}
+
+
+adds indentation after newline following a \char`\"{}\{\char`\"{} 
+
+
+
+Definition at line 323 of file Cebitor.\-cpp.
+
+
+\begin{DoxyCode}
+324 \{
+325   \textcolor{keywordtype}{int} cursorIndex;
+326   \textcolor{keywordtype}{int} cursorLine;
+327   QString currentLine;
+328   QString previousLine;
+329   getCursorPosition(&cursorLine, &cursorIndex);
+330   currentLine = text(cursorLine);
+331   previousLine = text(cursorLine-1);
+332 
+333   \textcolor{comment}{// indent if previous line ends with "\{"}
+334   \textcolor{keywordflow}{if}(previousLine.endsWith(\textcolor{stringliteral}{"\{\(\backslash\)n"}))
+335   \{
+336     \textcolor{keywordtype}{int} indentSize;
+337     indentSize = indentation(cursorLine-1);
+338     setIndentation(cursorLine, indentSize+indentationWidth());
+339     cursorIndex = cursorIndex+indentationWidth();
+340     setCursorPosition(cursorLine, cursorIndex);
+341     currentLine = text(cursorLine);
+342     \textcolor{comment}{// extra newline to separate "\{\}"}
+343     \textcolor{keywordflow}{if}(currentLine.indexOf(\textcolor{stringliteral}{"\}"}) == cursorIndex)
+344     \{
+345       insert(QString(\textcolor{stringliteral}{"\(\backslash\)n"}));
+346     \}
+347   \}
+348 
+349   \textcolor{comment}{// unindent if "\}" after cursor}
+350   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(currentLine.indexOf(\textcolor{stringliteral}{"\}"}) == cursorIndex)
+351   \{
+352     \textcolor{keywordtype}{int} indentSize;
+353     indentSize = indentation(cursorLine)-indentationWidth();
+354     \textcolor{keywordflow}{if}( indentSize < 0 )
+355     \{
+356       indentSize = 0;
+357     \}
+358     setIndentation(cursorLine, indentSize);
+359   \}
+360 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_cebitor_af923411a34a12c7deb9698a10d5b6c38_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Cebitor@{Cebitor}!char\-Added@{char\-Added}}
+\index{char\-Added@{char\-Added}!Cebitor@{Cebitor}}
+\subsubsection[{char\-Added}]{\setlength{\rightskip}{0pt plus 5cm}void Cebitor\-::char\-Added (
+\begin{DoxyParamCaption}
+\item[{const int}]{\-\_\-c}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}\label{class_cebitor_a68848533a814f6a1fd5702713a1a2a68}
+
+
+called when a character is added 
+
+
+
+Definition at line 364 of file Cebitor.\-cpp.
+
+
+
+References auto\-Close(), brace\-Indent(), and closing().
+
+
+\begin{DoxyCode}
+365 \{
+366   \textcolor{keywordflow}{switch}(\_c)
+367   \{
+368     \textcolor{keywordflow}{case} (\textcolor{keywordtype}{int}) \textcolor{charliteral}{'('}: \{ autoClose(QString(\textcolor{charliteral}{')'})); \textcolor{keywordflow}{break}; \}
+369     \textcolor{keywordflow}{case} (\textcolor{keywordtype}{int}) \textcolor{charliteral}{'\{'}: \{ autoClose(QString(\textcolor{charliteral}{'\}'})); \textcolor{keywordflow}{break}; \}
+370     \textcolor{keywordflow}{case} (\textcolor{keywordtype}{int}) \textcolor{charliteral}{'['}: \{ autoClose(QString(\textcolor{charliteral}{']'})); \textcolor{keywordflow}{break}; \}
+371 
+372     \textcolor{keywordflow}{case} (\textcolor{keywordtype}{int}) \textcolor{charliteral}{')'}: \{ closing(QString(\textcolor{charliteral}{')'})); \textcolor{keywordflow}{break}; \}
+373     \textcolor{keywordflow}{case} (\textcolor{keywordtype}{int}) \textcolor{charliteral}{'\}'}: \{ closing(QString(\textcolor{charliteral}{'\}'})); \textcolor{keywordflow}{break}; \}
+374     \textcolor{keywordflow}{case} (\textcolor{keywordtype}{int}) \textcolor{charliteral}{']'}: \{ closing(QString(\textcolor{charliteral}{']'})); \textcolor{keywordflow}{break}; \}
+375 
+376     \textcolor{comment}{// special case since " opens and closes}
+377     \textcolor{keywordflow}{case} (\textcolor{keywordtype}{int}) \textcolor{charliteral}{'"'}:
+378     \{
+379       \textcolor{keywordflow}{if}(!closing(QString(\textcolor{charliteral}{'"'})))
+380       \{
+381         autoClose(QString(\textcolor{charliteral}{'"'}));
+382       \}
+383       \textcolor{keywordflow}{break};
+384     \}
+385 
+386     \textcolor{comment}{// auto indent for braces}
+387     \textcolor{keywordflow}{case} (\textcolor{keywordtype}{int}) \textcolor{charliteral}{'\(\backslash\)n'}: \{ braceIndent(); \textcolor{keywordflow}{break}; \}
+388   \}
+389 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=282pt]{class_cebitor_a68848533a814f6a1fd5702713a1a2a68_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=262pt]{class_cebitor_a68848533a814f6a1fd5702713a1a2a68_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Cebitor@{Cebitor}!clear\-Errors@{clear\-Errors}}
+\index{clear\-Errors@{clear\-Errors}!Cebitor@{Cebitor}}
+\subsubsection[{clear\-Errors}]{\setlength{\rightskip}{0pt plus 5cm}void Cebitor\-::clear\-Errors (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}\label{class_cebitor_aef8e5eebfe92c418aacd15fc83f8799b}
+
+
+Removes all error and warning line markers. 
+
+
+
+Definition at line 104 of file Cebitor.\-cpp.
+
+
+\begin{DoxyCode}
+105 \{
+106   markerDeleteAll(MarkerType::ERROR);
+107   markerDeleteAll(MarkerType::WARNING);
+108 \}
+\end{DoxyCode}
+\index{Cebitor@{Cebitor}!closing@{closing}}
+\index{closing@{closing}!Cebitor@{Cebitor}}
+\subsubsection[{closing}]{\setlength{\rightskip}{0pt plus 5cm}bool Cebitor\-::closing (
+\begin{DoxyParamCaption}
+\item[{const Q\-String}]{\-\_\-close}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\label{class_cebitor_a759c7d4cb58cc46c43e203f26320a2aa}
+
+
+removes duplicates of closing braces and quotes 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-close} & closing character \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if duplicate character is replaced 
+\end{DoxyReturn}
+
+
+Definition at line 199 of file Cebitor.\-cpp.
+
+
+\begin{DoxyCode}
+200 \{
+201   \textcolor{keywordtype}{int} cursorIndex;
+202   \textcolor{keywordtype}{int} cursorLine;
+203   getCursorPosition(&cursorLine, &cursorIndex);
+204 
+205   \textcolor{keywordtype}{int} length = lineLength(cursorLine);
+206 
+207   \textcolor{comment}{// special case for if cursor is last position in file}
+208   \textcolor{keywordflow}{if}(cursorLine == lines()-1 && length == cursorIndex)
+209   \{
+210     \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+211   \}
+212   \textcolor{comment}{// remove duplicate if next character is the same as \_close}
+213   \textcolor{keywordflow}{if}(text(cursorLine).at(cursorIndex) == \_close.at(0))
+214   \{
+215     setSelection(cursorLine, cursorIndex, cursorLine, cursorIndex+1);
+216     removeSelectedText();
+217     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+218   \}
+219   \textcolor{comment}{// auto unindent "\}"}
+220   \textcolor{keywordflow}{if}( \_close == QString(\textcolor{charliteral}{'\}'}) && cursorIndex == indentation(cursorLine)+1 )
+221   \{
+222     \textcolor{keywordtype}{int} indentSize;
+223     indentSize = indentation(cursorLine)-indentationWidth();
+224     \textcolor{keywordflow}{if}( indentSize < 0 )
+225     \{
+226       indentSize = 0;
+227     \}
+228     setIndentation(cursorLine, indentSize);
+229   \}
+230   \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+231 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_cebitor_a759c7d4cb58cc46c43e203f26320a2aa_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Cebitor@{Cebitor}!comment@{comment}}
+\index{comment@{comment}!Cebitor@{Cebitor}}
+\subsubsection[{comment}]{\setlength{\rightskip}{0pt plus 5cm}void Cebitor\-::comment (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}\label{class_cebitor_a024169eef080f400c6c9384d8229f983}
+
+
+comment out all selected lines 
+
+
+
+Definition at line 235 of file Cebitor.\-cpp.
+
+
+\begin{DoxyCode}
+236 \{
+237   beginUndoAction();
+238   \textcolor{keywordtype}{int} lineFrom;
+239   \textcolor{keywordtype}{int} indexFrom;
+240   \textcolor{keywordtype}{int} lineTo;
+241   \textcolor{keywordtype}{int} indexTo;
+242   \textcolor{comment}{// get selected lines or current line if no text is selected}
+243   \textcolor{keywordflow}{if}(hasSelectedText())
+244   \{
+245     getSelection(&lineFrom, &indexFrom, &lineTo, &indexTo);
+246   \}
+247   \textcolor{keywordflow}{else}
+248   \{
+249     getCursorPosition(&lineFrom, &indexFrom);
+250     lineTo = lineFrom;
+251     indexTo = indexFrom;
+252   \}
+253 
+254   \textcolor{comment}{// check if selected lines are already commented}
+255   \textcolor{keywordtype}{bool} alreadyCommented = \textcolor{keyword}{true};
+256   \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=lineFrom; i<=lineTo; i++)
+257   \{
+258     QString lineText = text(i);
+259     \textcolor{keywordflow}{if}(!lineText.startsWith(\textcolor{stringliteral}{"//"}))
+260     \{
+261       alreadyCommented = \textcolor{keyword}{false};
+262     \}
+263   \}
+264 
+265   \textcolor{comment}{// remove "//" from each line if they are already commented}
+266   \textcolor{keywordflow}{if}(alreadyCommented)
+267   \{
+268     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=lineFrom; i<=lineTo; i++)
+269     \{
+270       setSelection(i,0,i,2);
+271       removeSelectedText();
+272     \}
+273     \textcolor{comment}{//offset original selection for reselecting text}
+274     indexTo -= 2;
+275     \textcolor{keywordflow}{if}(indexFrom > 1)
+276     \{
+277       indexFrom -= 2;
+278     \}
+279   \}
+280 
+281   \textcolor{comment}{// insert "//" at the start of each line}
+282   \textcolor{keywordflow}{else}
+283   \{
+284     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=lineFrom; i<=lineTo; i++)
+285     \{
+286       insertAt(QString(\textcolor{stringliteral}{"//"}),i,0);
+287     \}
+288     \textcolor{comment}{//offset original selection for reselecting text}
+289     indexTo += 2;
+290     \textcolor{keywordflow}{if}(indexFrom != 0)
+291     \{
+292       indexFrom += 2;
+293     \}
+294   \}
+295 
+296   \textcolor{comment}{// reselect to match original selection}
+297   setSelection(lineFrom,indexFrom,lineTo,indexTo);
+298   endUndoAction();
+299 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=256pt]{class_cebitor_a024169eef080f400c6c9384d8229f983_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Cebitor@{Cebitor}!highlight\-All\-Search@{highlight\-All\-Search}}
+\index{highlight\-All\-Search@{highlight\-All\-Search}!Cebitor@{Cebitor}}
+\subsubsection[{highlight\-All\-Search}]{\setlength{\rightskip}{0pt plus 5cm}void Cebitor\-::highlight\-All\-Search (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}\label{class_cebitor_a1ba2c5c83f98d668f130caeaabac4b63}
+
+
+sets indicator for each search result 
+
+
+
+Definition at line 146 of file Cebitor.\-cpp.
+
+
+
+References m\-\_\-search\-Indicator, and m\-\_\-search\-Line\-Edit.
+
+
+\begin{DoxyCode}
+147 \{
+148   clearIndicatorRange(0,0,lines(),text(lines()).length(),m_searchIndicator);
+149   \textcolor{keywordtype}{int} line;
+150   \textcolor{keywordtype}{int} indexFrom;
+151   \textcolor{keywordtype}{int} indexTo;
+152   QString searchTerm = m_searchLineEdit->text();
+153   \textcolor{keywordflow}{if}(searchTerm.length()==0)
+154   \{
+155     \textcolor{keywordflow}{return};
+156   \}
+157   \textcolor{keywordtype}{int} current;
+158   current = text().indexOf(
+159         searchTerm,
+160         0,
+161         Qt::CaseSensitivity::CaseInsensitive
+162         );
+163   \textcolor{keywordflow}{while}(current!= -1)
+164   \{
+165     lineIndexFromPosition(current,&line,&indexFrom);
+166     indexTo = indexFrom + searchTerm.length();
+167     fillIndicatorRange(line,indexFrom,line,indexTo,m_searchIndicator);
+168     current = text().indexOf(searchTerm,
+169                              current+1,
+170                              Qt::CaseSensitivity::CaseInsensitive
+171                              );
+172   \}
+173 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_cebitor_a1ba2c5c83f98d668f130caeaabac4b63_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Cebitor@{Cebitor}!highlight\-All\-Search@{highlight\-All\-Search}}
+\index{highlight\-All\-Search@{highlight\-All\-Search}!Cebitor@{Cebitor}}
+\subsubsection[{highlight\-All\-Search}]{\setlength{\rightskip}{0pt plus 5cm}void Cebitor\-::highlight\-All\-Search (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{\-\_\-text}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}\label{class_cebitor_a8eef8da0f000bcfa07ea7b7b780e970d}
+
+
+sets indicator for each search result 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-text} & the text that has been changed \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 140 of file Cebitor.\-cpp.
+
+
+
+References highlight\-All\-Search().
+
+
+\begin{DoxyCode}
+141 \{
+142   highlightAllSearch();
+143 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=340pt]{class_cebitor_a8eef8da0f000bcfa07ea7b7b780e970d_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{Cebitor@{Cebitor}!reset\-Highlight\-Colour@{reset\-Highlight\-Colour}}
+\index{reset\-Highlight\-Colour@{reset\-Highlight\-Colour}!Cebitor@{Cebitor}}
+\subsubsection[{reset\-Highlight\-Colour}]{\setlength{\rightskip}{0pt plus 5cm}void Cebitor\-::reset\-Highlight\-Colour (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}\label{class_cebitor_a0e98f0691da34de6b4ab1c14d9eea63d}
+
+
+reset the highlighting colour 
+
+
+
+Definition at line 393 of file Cebitor.\-cpp.
+
+
+\begin{DoxyCode}
+394 \{
+395   setSelectionBackgroundColor(QColor(61,61,52));
+396   resetSelectionForegroundColor();
+397 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=302pt]{class_cebitor_a0e98f0691da34de6b4ab1c14d9eea63d_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Cebitor@{Cebitor}!search\-Next@{search\-Next}}
+\index{search\-Next@{search\-Next}!Cebitor@{Cebitor}}
+\subsubsection[{search\-Next}]{\setlength{\rightskip}{0pt plus 5cm}void Cebitor\-::search\-Next (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}\label{class_cebitor_af195ffc78cfe979bcc72ad93f9236a6c}
+
+
+Search for next occurance. 
+
+
+
+Definition at line 110 of file Cebitor.\-cpp.
+
+
+
+References m\-\_\-search\-Line\-Edit.
+
+
+\begin{DoxyCode}
+111 \{
+112   QString searchTerm = m_searchLineEdit->text();
+113   \textcolor{keywordtype}{bool} found;
+114   found = findFirst(searchTerm, \textcolor{keyword}{false}, \textcolor{keyword}{false}, \textcolor{keyword}{false}, \textcolor{keyword}{true});
+115   \textcolor{keywordflow}{if}(found)
+116   \{
+117     setSelectionBackgroundColor(QColor(230, 219, 116));
+118     setSelectionForegroundColor(QColor(39,40,34));
+119   \}
+120 \}
+\end{DoxyCode}
+\index{Cebitor@{Cebitor}!search\-Prev@{search\-Prev}}
+\index{search\-Prev@{search\-Prev}!Cebitor@{Cebitor}}
+\subsubsection[{search\-Prev}]{\setlength{\rightskip}{0pt plus 5cm}void Cebitor\-::search\-Prev (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}\label{class_cebitor_a54eb5c2c26fbecf66ad80f95cdbb32c7}
+
+
+Search for previous occurance. 
+
+
+
+Definition at line 124 of file Cebitor.\-cpp.
+
+
+
+References m\-\_\-search\-Line\-Edit.
+
+
+\begin{DoxyCode}
+125 \{
+126   QString searchTerm = m_searchLineEdit->text();
+127   \textcolor{keywordtype}{bool} found;
+128   found = findFirst(searchTerm, \textcolor{keyword}{false}, \textcolor{keyword}{false}, \textcolor{keyword}{false}, \textcolor{keyword}{true}, \textcolor{keyword}{false});
+129   \textcolor{keywordflow}{if}(found)
+130   \{
+131     findNext();
+132     setSelectionBackgroundColor(QColor(230, 219, 116));
+133     setSelectionForegroundColor(QColor(39,40,34));
+134   \}
+135   findNext();
+136 \}
+\end{DoxyCode}
+\index{Cebitor@{Cebitor}!set\-Search\-Line\-Edit@{set\-Search\-Line\-Edit}}
+\index{set\-Search\-Line\-Edit@{set\-Search\-Line\-Edit}!Cebitor@{Cebitor}}
+\subsubsection[{set\-Search\-Line\-Edit}]{\setlength{\rightskip}{0pt plus 5cm}void Cebitor\-::set\-Search\-Line\-Edit (
+\begin{DoxyParamCaption}
+\item[{Q\-Line\-Edit $\ast$}]{\-\_\-search\-Line\-Edit}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_cebitor_a395cc168f396df26fd1fa20ae88dd44c}
+
+
+stores Q\-Line\-Edit widget from the searchbar 
+
+
+
+Definition at line 49 of file Cebitor.\-h.
+
+
+
+References m\-\_\-search\-Line\-Edit.
+
+
+\begin{DoxyCode}
+50                                 \{
+51                                   m_searchLineEdit = \_searchLineEdit;
+52                                 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_cebitor_a395cc168f396df26fd1fa20ae88dd44c_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Cebitor@{Cebitor}!set\-Search\-Widget@{set\-Search\-Widget}}
+\index{set\-Search\-Widget@{set\-Search\-Widget}!Cebitor@{Cebitor}}
+\subsubsection[{set\-Search\-Widget}]{\setlength{\rightskip}{0pt plus 5cm}void Cebitor\-::set\-Search\-Widget (
+\begin{DoxyParamCaption}
+\item[{Q\-Widget $\ast$}]{\-\_\-search\-Widget}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_cebitor_a1b38824f5bba6001688107ae901c14e7}
+
+
+stores widget containing the searchbar 
+
+
+
+Definition at line 42 of file Cebitor.\-h.
+
+
+
+References m\-\_\-search\-Widget.
+
+
+\begin{DoxyCode}
+43                               \{
+44                                 m_searchWidget = \_searchWidget;
+45                               \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_cebitor_a1b38824f5bba6001688107ae901c14e7_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Cebitor@{Cebitor}!toggle\-Search\-Box@{toggle\-Search\-Box}}
+\index{toggle\-Search\-Box@{toggle\-Search\-Box}!Cebitor@{Cebitor}}
+\subsubsection[{toggle\-Search\-Box}]{\setlength{\rightskip}{0pt plus 5cm}void Cebitor\-::toggle\-Search\-Box (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [slot]}}\label{class_cebitor_a7d1825b3c849b79a9e7c559c312dd92a}
+
+
+toggle search widget 
+
+
+
+Definition at line 303 of file Cebitor.\-cpp.
+
+
+
+References highlight\-All\-Search(), m\-\_\-search\-Indicator, m\-\_\-search\-Line\-Edit, and m\-\_\-search\-Widget.
+
+
+\begin{DoxyCode}
+304 \{
+305   \textcolor{keywordtype}{bool} searchFocus = m_searchLineEdit->hasFocus();
+306   \textcolor{keywordflow}{if}(!searchFocus)
+307   \{
+308     connect(\textcolor{keyword}{this},SIGNAL(textChanged()),\textcolor{keyword}{this},SLOT(highlightAllSearch()));
+309     m_searchWidget->show();
+310     m_searchLineEdit->setFocus();
+311   \}
+312   \textcolor{keywordflow}{else}
+313   \{
+314     disconnect(\textcolor{keyword}{this},SIGNAL(textChanged()),\textcolor{keyword}{this},SLOT(highlightAllSearch()));
+315     m_searchWidget->hide();
+316     setFocus();
+317     clearIndicatorRange(0,0,lines(),text(lines()).length(),m_searchIndicator);
+318   \}
+319 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=336pt]{class_cebitor_a7d1825b3c849b79a9e7c559c312dd92a_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=290pt]{class_cebitor_a7d1825b3c849b79a9e7c559c312dd92a_icgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsection{Member Data Documentation}
+\index{Cebitor@{Cebitor}!m\-\_\-file\-Markers@{m\-\_\-file\-Markers}}
+\index{m\-\_\-file\-Markers@{m\-\_\-file\-Markers}!Cebitor@{Cebitor}}
+\subsubsection[{m\-\_\-file\-Markers}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$int$>$ Cebitor\-::m\-\_\-file\-Markers\hspace{0.3cm}{\ttfamily [protected]}}\label{class_cebitor_a13801a0fbdb375f7eab12003a6fd0dfc}
+
+
+vector of all line markers 
+
+
+
+Definition at line 90 of file Cebitor.\-h.
+
+\index{Cebitor@{Cebitor}!m\-\_\-search\-Indicator@{m\-\_\-search\-Indicator}}
+\index{m\-\_\-search\-Indicator@{m\-\_\-search\-Indicator}!Cebitor@{Cebitor}}
+\subsubsection[{m\-\_\-search\-Indicator}]{\setlength{\rightskip}{0pt plus 5cm}int Cebitor\-::m\-\_\-search\-Indicator\hspace{0.3cm}{\ttfamily [protected]}}\label{class_cebitor_abc185ddfb53d0479826e995157dd559b}
+
+
+indicator used to highlight all search terms 
+
+
+
+Definition at line 94 of file Cebitor.\-h.
+
+\index{Cebitor@{Cebitor}!m\-\_\-search\-Line\-Edit@{m\-\_\-search\-Line\-Edit}}
+\index{m\-\_\-search\-Line\-Edit@{m\-\_\-search\-Line\-Edit}!Cebitor@{Cebitor}}
+\subsubsection[{m\-\_\-search\-Line\-Edit}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Line\-Edit$\ast$ Cebitor\-::m\-\_\-search\-Line\-Edit\hspace{0.3cm}{\ttfamily [protected]}}\label{class_cebitor_a6e8510e102fc4e2796b5f115c5141469}
+
+
+searchbar Q\-Line\-Edit widget 
+
+
+
+Definition at line 86 of file Cebitor.\-h.
+
+\index{Cebitor@{Cebitor}!m\-\_\-search\-Widget@{m\-\_\-search\-Widget}}
+\index{m\-\_\-search\-Widget@{m\-\_\-search\-Widget}!Cebitor@{Cebitor}}
+\subsubsection[{m\-\_\-search\-Widget}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Widget$\ast$ Cebitor\-::m\-\_\-search\-Widget\hspace{0.3cm}{\ttfamily [protected]}}\label{class_cebitor_ae864f4361408ef8db8c4e91e8c464524}
+
+
+widget containing the searchbar 
+
+
+
+Definition at line 82 of file Cebitor.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+{\bf Cebitor.\-h}\item 
+{\bf Cebitor.\-cpp}\end{DoxyCompactItemize}

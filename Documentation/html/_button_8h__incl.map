@@ -1,0 +1,11 @@
+<map id="Button.h" name="Button.h">
+<area shape="rect" id="node14" href="$_button_lib_8h.html" title="this class creates a button library to store buttons and set uniform values " alt="" coords="2154,80,2240,107"/>
+<area shape="rect" id="node26" href="$_n_g_l_scene_8h.html" title="a modified Qt GL widget class for " alt="" coords="1623,155,1717,181"/>
+<area shape="rect" id="node16" href="$_parser_lib_8h.html" title="the parsing library, used to manage all the uniform data. " alt="" coords="2171,304,2257,331"/>
+<area shape="rect" id="node22" href="$_uniform_data_8h.html" title="the UniformData stores individual uniform data per data type. " alt="" coords="2296,387,2400,413"/>
+<area shape="rect" id="node23" href="$_shader_manager_8h.html" title="ShaderManager.h" alt="" coords="2149,387,2272,413"/>
+<area shape="rect" id="node35" href="$_camera_8h.html" title="Creates the camera used for NGLScene. " alt="" coords="1593,304,1671,331"/>
+<area shape="rect" id="node39" href="$_io__xml_8h.html" title="Creates xml files to store project data by the user. The data can then be read for futher use..." alt="" coords="481,304,551,331"/>
+<area shape="rect" id="node45" href="$_json_8h.html" title="Creates a json file to then load shader data to the shader manager. " alt="" coords="1139,304,1197,331"/>
+<area shape="rect" id="node50" href="$_main_window_8h.html" title="the MainWindow, GUI for our program " alt="" coords="2167,229,2272,256"/>
+</map>

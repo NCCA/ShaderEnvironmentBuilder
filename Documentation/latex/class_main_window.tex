@@ -1,0 +1,1747 @@
+\section{Main\-Window Class Reference}
+\label{class_main_window}\index{Main\-Window@{Main\-Window}}
+
+
+our main window class used for holding all the G\-U\-I Qt widgets  
+
+
+
+
+{\ttfamily \#include $<$Main\-Window.\-h$>$}
+
+
+
+Inheritance diagram for Main\-Window\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=122pt]{class_main_window__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Main\-Window\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_main_window__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void {\bf add\-Error} (Q\-String \-\_\-shader\-Name, int \-\_\-line\-Num)
+\begin{DoxyCompactList}\small\item\em adds line marker to text editor for \-\_\-shader\-Name at line\-Num \end{DoxyCompactList}\item 
+void {\bf on\-\_\-action\-Open\-\_\-triggered} ()
+\begin{DoxyCompactList}\small\item\em Called when Open button is triggered in File Menu bar. \end{DoxyCompactList}\item 
+void {\bf on\-\_\-action\-Export\-\_\-triggered} ()
+\begin{DoxyCompactList}\small\item\em Called when Export button is triggered in File Menu bar. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void {\bf create\-Buttons} ()
+\begin{DoxyCompactList}\small\item\em Create buttons for the uniforms. \end{DoxyCompactList}\item 
+void {\bf update\-Shader\-Values} ()
+\begin{DoxyCompactList}\small\item\em Update shader values from the buttons. \end{DoxyCompactList}\item 
+{\bf Main\-Window} (Q\-Widget $\ast$\-\_\-parent=0)
+\begin{DoxyCompactList}\small\item\em Constructor for the \doxyref{Main\-Window}{p.}{class_main_window}. \end{DoxyCompactList}\item 
+{\bf $\sim$\-Main\-Window} ()
+\begin{DoxyCompactList}\small\item\em dtor must close down ngl and release Open\-G\-L resources \end{DoxyCompactList}\item 
+void {\bf set\-Terminal\-Text} (Q\-String \-\_\-txt)
+\begin{DoxyCompactList}\small\item\em set terminal text \end{DoxyCompactList}\item 
+void {\bf clear\-Terminal\-Text} ()
+\begin{DoxyCompactList}\small\item\em clear terminal text \end{DoxyCompactList}\item 
+void {\bf show\-Start\-Dialog} ()
+\begin{DoxyCompactList}\small\item\em show startup dialog \end{DoxyCompactList}\item 
+bool {\bf new\-Project\-Wiz} (Q\-Widget $\ast$\-\_\-parent=0)
+\begin{DoxyCompactList}\small\item\em Creates a new project wizard. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Slots}
+\begin{DoxyCompactItemize}
+\item 
+void {\bf on\-\_\-m\-\_\-btn\-\_\-compile\-Shader\-\_\-clicked} ()
+\begin{DoxyCompactList}\small\item\em activated when Compile Shader button is clicked \end{DoxyCompactList}\item 
+void {\bf shape\-Triggered} ()
+\begin{DoxyCompactList}\small\item\em Called when a shape action has been triggered to change the render mesh. \end{DoxyCompactList}\item 
+void {\bf obj\-Opened} ()
+\begin{DoxyCompactList}\small\item\em Called when Import Mesh is called to change the render mesh. \end{DoxyCompactList}\item 
+void {\bf on\-\_\-action\-Startup\-\_\-\-Window\-\_\-triggered} ()
+\begin{DoxyCompactList}\small\item\em Called when Startup Window button is triggered in File Menu bar. \end{DoxyCompactList}\item 
+void {\bf on\-\_\-action\-New\-\_\-triggered} ()
+\begin{DoxyCompactList}\small\item\em Called when New button is triggered in File Menu bar. \end{DoxyCompactList}\item 
+void {\bf on\-\_\-action\-Save\-Project\-\_\-triggered} ()
+\begin{DoxyCompactList}\small\item\em Called when Save \doxyref{Project}{p.}{class_project} button is triggered in File Menu bar. \end{DoxyCompactList}\item 
+void {\bf on\-\_\-action\-Save\-Project\-As\-\_\-triggered} ()
+\begin{DoxyCompactList}\small\item\em Called when Startup \doxyref{Project}{p.}{class_project} as button is triggered in File Menu bar. \end{DoxyCompactList}\item 
+void {\bf print\-Uniforms} ()
+\begin{DoxyCompactList}\small\item\em Prints the uniforms and their current values to the terminal. \end{DoxyCompactList}\item 
+void {\bf on\-\_\-m\-\_\-action\-Load\-\_\-\-Tex\-\_\-triggered} ()
+\begin{DoxyCompactList}\small\item\em Called when Load Texture is clicked. \end{DoxyCompactList}\item 
+void {\bf on\-\_\-action\-Import\-\_\-\-Vertex\-\_\-\-Shader\-\_\-triggered} ()
+\begin{DoxyCompactList}\small\item\em Called when Import Vertex Shader is clicked. \end{DoxyCompactList}\item 
+void {\bf on\-\_\-action\-Import\-\_\-\-Fragment\-\_\-\-Shader\-\_\-triggered} ()
+\begin{DoxyCompactList}\small\item\em Called when Import Fragment Shader is clicked. \end{DoxyCompactList}\item 
+void {\bf file\-Modified} ()
+\begin{DoxyCompactList}\small\item\em Called when a file has been modified and not saved. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\bf Cebitor} $\ast$ {\bf create\-Qsci\-Widget} (Q\-Widget $\ast$\-\_\-parent=0)
+\begin{DoxyCompactList}\small\item\em create Qsci\-Scintilla widget in the style of sublime defaults \end{DoxyCompactList}\item 
+bool {\bf load\-Text\-File\-To\-Tab} (Q\-String \-\_\-path, {\bf Cebitor} \&\-\_\-qsci)
+\begin{DoxyCompactList}\small\item\em loads a text file from a path to a tab \end{DoxyCompactList}\item 
+void {\bf key\-Press\-Event} (Q\-Key\-Event $\ast$\-\_\-event)
+\begin{DoxyCompactList}\small\item\em Qt Event called when a key is pressed. \end{DoxyCompactList}\item 
+void {\bf centre\-Window} ()
+\begin{DoxyCompactList}\small\item\em Centres the window to the monitor's resolution. \end{DoxyCompactList}\item 
+void {\bf update\-Title} ()
+\begin{DoxyCompactList}\small\item\em Update the title of the window. \end{DoxyCompactList}\item 
+int {\bf unsaved\-Changes} ()
+\begin{DoxyCompactList}\small\item\em Check if you want to close or open new file (loose changes) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+{\bf Cebitor} $\ast$ {\bf m\-\_\-vert\-Qsci}
+\begin{DoxyCompactList}\small\item\em our Q\-Scintilla widget1 (vertex) \end{DoxyCompactList}\item 
+{\bf Cebitor} $\ast$ {\bf m\-\_\-frag\-Qsci}
+\begin{DoxyCompactList}\small\item\em our Q\-Scintilla widget2 (fragment) \end{DoxyCompactList}\item 
+{\bf N\-G\-L\-Scene} $\ast$ {\bf m\-\_\-gl}
+\begin{DoxyCompactList}\small\item\em our open\-G\-L widget using \doxyref{N\-G\-L\-Scene}{p.}{class_n_g_l_scene} \end{DoxyCompactList}\item 
+{\bf Startup\-Dialog} $\ast$ {\bf m\-\_\-start\-Dialog}
+\begin{DoxyCompactList}\small\item\em startup Dialog \end{DoxyCompactList}\item 
+{\bf Parser\-Lib} $\ast$ {\bf m\-\_\-parser}
+\begin{DoxyCompactList}\small\item\em The parser library used for the uniform buttons. \end{DoxyCompactList}\item 
+{\bf Project} $\ast$ {\bf m\-\_\-project}
+\begin{DoxyCompactList}\small\item\em The project that is used for storing name, directory etc. \end{DoxyCompactList}\item 
+{\bf Camera} $\ast$ {\bf m\-\_\-camera}
+\begin{DoxyCompactList}\small\item\em The camera settings. \end{DoxyCompactList}\item 
+Ui\-::\-Main\-Window $\ast$ {\bf m\-\_\-ui}
+\begin{DoxyCompactList}\small\item\em the generated widgets created from the form using ui\-\_\-\-Main\-Window.\-h \end{DoxyCompactList}\item 
+{\bf Button\-Lib} $\ast$ {\bf m\-\_\-button\-Library}
+\begin{DoxyCompactList}\small\item\em The button library used for the uniform buttons that are generated. \end{DoxyCompactList}\item 
+{\bf Shader\-Manager} $\ast$ {\bf m\-\_\-shader\-Manager}
+\begin{DoxyCompactList}\small\item\em The shader manager used to handle the switching of shader programs. \end{DoxyCompactList}\item 
+bool {\bf m\-\_\-file\-Change}
+\begin{DoxyCompactList}\small\item\em The button library used for the uniform buttons that are generated. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+our main window class used for holding all the G\-U\-I Qt widgets 
+
+Definition at line 56 of file Main\-Window.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Main\-Window@{Main\-Window}!Main\-Window@{Main\-Window}}
+\index{Main\-Window@{Main\-Window}!MainWindow@{Main\-Window}}
+\subsubsection[{Main\-Window}]{\setlength{\rightskip}{0pt plus 5cm}Main\-Window\-::\-Main\-Window (
+\begin{DoxyParamCaption}
+\item[{Q\-Widget $\ast$}]{\-\_\-parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [explicit]}}\label{class_main_window_a93cfdcac35db98baf6a7d2c2738a2006}
+
+
+Constructor for the \doxyref{Main\-Window}{p.}{class_main_window}. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-parent} & the parent window to create the \doxyref{Main\-Window}{p.}{class_main_window} in \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 24 of file Main\-Window.\-cpp.
+
+
+
+References add\-Error(), centre\-Window(), create\-Qsci\-Widget(), file\-Modified(), load\-Text\-File\-To\-Tab(), m\-\_\-button\-Library, N\-G\-L\-Scene\-::m\-\_\-camera, m\-\_\-camera, m\-\_\-file\-Change, m\-\_\-frag\-Qsci, m\-\_\-gl, m\-\_\-parser, m\-\_\-project, m\-\_\-shader\-Manager, m\-\_\-start\-Dialog, m\-\_\-ui, m\-\_\-vert\-Qsci, obj\-Opened(), on\-\_\-m\-\_\-btn\-\_\-compile\-Shader\-\_\-clicked(), print\-Uniforms(), shape\-Triggered(), and update\-Title().
+
+
+\begin{DoxyCode}
+24                                        : QMainWindow(\_parent),
+25   m_ui(\textcolor{keyword}{new} Ui::MainWindow)
+26 \{
+27   m_project = \textcolor{keyword}{new} Project;
+28   m_camera = \textcolor{keyword}{new} Camera;
+29 
+30   \textcolor{comment}{// Setup ui from form creator (MainWindow.ui)}
+31   m_ui->setupUi(\textcolor{keyword}{this});
+32 
+33   m_shaderManager = \textcolor{keyword}{new} ShaderManager();
+34   \textcolor{comment}{// create parser in main window}
+35   m_parser = \textcolor{keyword}{new} ParserLib(m_shaderManager);
+36 
+37   \textcolor{comment}{// Create openGl and qsci widgets, pass in the parser}
+38   m_gl=\textcolor{keyword}{new}  NGLScene(\textcolor{keyword}{this}, m_parser, m_shaderManager);
+39 
+40   m_ui->m\_sldr\_cameraFov->setValue(65.0f);
+41   m_ui->m\_nearClip->setValue(0.5f);
+42   m_ui->m\_farClip->setValue(150.0f);
+43 
+44   \textcolor{comment}{// Use the temp layout in the designer to set the size}
+45   m_gl->setSizePolicy(m_ui->m\_f\_gl\_temp->sizePolicy());
+46   m_gl->setMinimumSize(m_ui->m\_f\_gl\_temp->minimumSize());
+47 
+48   \textcolor{comment}{// Align the camera settings to the top of the widget}
+49   m_ui->m\_vl\_tab\_camera->setAlignment(Qt::AlignTop);
+50 
+51   \textcolor{comment}{// add the openGl window to the interface}
+52   m_ui->m\_splitH\_editContext->insertWidget(0, m_gl);
+53 
+54   \textcolor{comment}{// Delete the template frame from the form designer}
+55   \textcolor{keyword}{delete}(m_ui->m\_f\_gl\_temp);
+56 
+57   \textcolor{comment}{// Text Widget 1 (vertex)}
+58   m_vertQsci = createQsciWidget(m_ui->m\_tab\_qsci\_1);
+59 
+60   \textcolor{comment}{// Text Widget 2 (fragment)}
+61   m_fragQsci = createQsciWidget(m_ui->m\_tab\_qsci\_2);
+62 
+63   \textcolor{comment}{// Camera settings}
+64   connect(m_ui->m\_nearClip, SIGNAL(valueChanged(\textcolor{keywordtype}{double})), m_gl->m_camera, SLOT(setCamNearClip(\textcolor{keywordtype}{double})));
+65   connect(m_ui->m\_farClip, SIGNAL(valueChanged(\textcolor{keywordtype}{double})), m_gl->m_camera, SLOT(setCamFarClip(\textcolor{keywordtype}{double})));
+66   connect(m_ui->m\_cameraRoll, SIGNAL(valueChanged(\textcolor{keywordtype}{double})), m_gl->m_camera, SLOT(cameraRoll(\textcolor{keywordtype}{double})));
+67   connect(m_ui->m\_cameraYaw, SIGNAL(valueChanged(\textcolor{keywordtype}{double})), m_gl->m_camera, SLOT(cameraYaw(\textcolor{keywordtype}{double})));
+68   connect(m_ui->m\_cameraPitch, SIGNAL(valueChanged(\textcolor{keywordtype}{double})), m_gl->m_camera, SLOT(cameraPitch(\textcolor{keywordtype}{double})));
+69   connect(m_ui->m\_sldr\_cameraFov, SIGNAL(valueChanged(\textcolor{keywordtype}{int})), m_gl->m_camera, SLOT(setCameraFocalLength(\textcolor{keywordtype}{int})
+      ));
+70   connect(m_ui->m\_comboBox\_view, SIGNAL(currentTextChanged(QString)), m_gl->
+      m_camera, SLOT(setCameraShape(QString)));
+71   connect(m_gl->m_camera, SIGNAL(updateSignal()), m_gl, SLOT(update()));
+72   connect(m_ui->m\_resetCam,SIGNAL(clicked()),m_gl,SLOT(resetObjPos()));
+73 
+74   \textcolor{comment}{// Load the text files into the corresponding tabs}
+75   loadTextFileToTab(\textcolor{stringliteral}{"shaders/PhongVertex.glsl"}, *m_vertQsci);
+76   loadTextFileToTab(\textcolor{stringliteral}{"shaders/PhongFragment.glsl"}, *m_fragQsci);
+77   m_buttonLibrary = \textcolor{keyword}{new} ButtonLib(m_parser, m_ui->vl\_uniforms, m_gl, m_ui->m\_w\_uniforms);
+78 
+79   \textcolor{comment}{// switching between shapes}
+80   connect(m_ui->m\_actionLoad\_Sphere,SIGNAL(triggered()),\textcolor{keyword}{this},SLOT(shapeTriggered()));
+81   connect(m_ui->m\_actionLoad\_Cube,SIGNAL(triggered()),\textcolor{keyword}{this},SLOT(shapeTriggered()));
+82   connect(m_ui->m\_actionLoad\_Torus,SIGNAL(triggered()),\textcolor{keyword}{this},SLOT(shapeTriggered()));
+83   connect(m_ui->m\_actionLoad\_Teapot ,SIGNAL(triggered()),\textcolor{keyword}{this},SLOT(
+      shapeTriggered()));
+84   connect(m_ui->m\_actionLoad\_Troll,SIGNAL(triggered()),\textcolor{keyword}{this},SLOT(shapeTriggered()));
+85   connect(m_ui->m\_actionLoad\_Dragon,SIGNAL(triggered()),\textcolor{keyword}{this},SLOT(shapeTriggered()));
+86   connect(m_ui->m\_actionLoad\_Bunny,SIGNAL(triggered()),\textcolor{keyword}{this},SLOT(shapeTriggered()));
+87 
+88   \textcolor{comment}{// switching to .obj files}
+89   connect(m_ui->m\_actionLoad\_Obj,SIGNAL(triggered()),\textcolor{keyword}{this},SLOT(objOpened()));
+90 
+91   \textcolor{comment}{// Prints the active uniforms}
+92   connect(m_ui->m\_exportUniforms,SIGNAL(clicked()),m_gl,SLOT(exportUniform()));
+93   connect(m_ui->m\_printUniforms ,SIGNAL(clicked()),\textcolor{keyword}{this},SLOT(printUniforms()));
+94 
+95   \textcolor{comment}{// Obj features}
+96   connect(m_ui->m\_showNormals,SIGNAL(toggled(\textcolor{keywordtype}{bool})),m_gl,SLOT(toggleNormals(\textcolor{keywordtype}{bool})));
+97   connect(m_ui->m\_showWireframe,SIGNAL(toggled(\textcolor{keywordtype}{bool})),m_gl,SLOT(toggleWireframe(\textcolor{keywordtype}{bool})));
+98   connect(m_ui->m\_showGrid,SIGNAL(toggled(\textcolor{keywordtype}{bool})),m_gl,SLOT(toggleGrid(\textcolor{keywordtype}{bool})));
+99   connect(m_ui->m\_showAxis,SIGNAL(toggled(\textcolor{keywordtype}{bool})),m_gl,SLOT(toggleAxis(\textcolor{keywordtype}{bool})));
+100   connect(m_ui->m\_normalSize,SIGNAL(valueChanged(\textcolor{keywordtype}{int})),m_gl,SLOT(setNormalSize(\textcolor{keywordtype}{int})));
+101 
+102   \textcolor{comment}{// line marker connections}
+103   connect(m_ui->m\_btn\_compileShader,SIGNAL(pressed()),m_vertQsci,SLOT(clearErrors()));
+104   connect(m_ui->m\_btn\_compileShader,SIGNAL(pressed()),m_fragQsci,SLOT(clearErrors()));
+105   connect(m_gl,SIGNAL(createLineMarker(QString,\textcolor{keywordtype}{int})),\textcolor{keyword}{this},SLOT(addError(QString,\textcolor{keywordtype}{int})));
+106   connect(m_gl,SIGNAL(initializeGL()), \textcolor{keyword}{this}, SLOT(on_m_btn_compileShader_clicked()));
+107 
+108   connect(m_vertQsci, SIGNAL(textChanged()), \textcolor{keyword}{this}, SLOT(fileModified()));
+109   connect(m_fragQsci, SIGNAL(textChanged()), \textcolor{keyword}{this}, SLOT(fileModified()));
+110 
+111   update();
+112 
+113   centreWindow();
+114 
+115   m_startDialog = \textcolor{keyword}{new} StartupDialog(\textcolor{keyword}{this});
+116 
+117   m_fileChange=\textcolor{keyword}{false};
+118 
+119   updateTitle();
+120 
+121 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_main_window_a93cfdcac35db98baf6a7d2c2738a2006_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{Main\-Window@{Main\-Window}!$\sim$\-Main\-Window@{$\sim$\-Main\-Window}}
+\index{$\sim$\-Main\-Window@{$\sim$\-Main\-Window}!MainWindow@{Main\-Window}}
+\subsubsection[{$\sim$\-Main\-Window}]{\setlength{\rightskip}{0pt plus 5cm}Main\-Window\-::$\sim$\-Main\-Window (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_main_window_ae98d00a93bc118200eeef9f9bba1dba7}
+
+
+dtor must close down ngl and release Open\-G\-L resources 
+
+
+
+Definition at line 455 of file Main\-Window.\-cpp.
+
+
+
+References m\-\_\-ui.
+
+
+\begin{DoxyCode}
+456 \{
+457   \textcolor{keyword}{delete} m_ui;
+458 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{Main\-Window@{Main\-Window}!add\-Error@{add\-Error}}
+\index{add\-Error@{add\-Error}!MainWindow@{Main\-Window}}
+\subsubsection[{add\-Error}]{\setlength{\rightskip}{0pt plus 5cm}void Main\-Window\-::add\-Error (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{\-\_\-shader\-Name, }
+\item[{int}]{\-\_\-line\-Num}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}\label{class_main_window_aa25fbd330d953bec7aaa70265e776789}
+
+
+adds line marker to text editor for \-\_\-shader\-Name at line\-Num 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-shader\-Name} & Name of the shader type \\
+\hline
+\mbox{\tt in}  & {\em \-\_\-line\-Num} & line to add error symbol at \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 439 of file Main\-Window.\-cpp.
+
+
+
+References m\-\_\-frag\-Qsci, and m\-\_\-vert\-Qsci.
+
+
+\begin{DoxyCode}
+440 \{
+441   Cebitor * cebitorInstance;
+442   \textcolor{keywordflow}{if}(\_shaderName==QString(\textcolor{stringliteral}{"Vertex"}))
+443   \{
+444     cebitorInstance = m_vertQsci;
+445   \}
+446   \textcolor{keywordflow}{if}(\_shaderName==QString(\textcolor{stringliteral}{"Fragment"}))
+447   \{
+448     cebitorInstance = m_fragQsci;
+449   \}
+450   cebitorInstance->markerAdd(\_lineNum,Cebitor::MarkerType::ERROR);
+451 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=324pt]{class_main_window_aa25fbd330d953bec7aaa70265e776789_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Main\-Window@{Main\-Window}!centre\-Window@{centre\-Window}}
+\index{centre\-Window@{centre\-Window}!MainWindow@{Main\-Window}}
+\subsubsection[{centre\-Window}]{\setlength{\rightskip}{0pt plus 5cm}void Main\-Window\-::centre\-Window (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}\label{class_main_window_a315c9993fd1d2a02b87d89df54914c36}
+
+
+Centres the window to the monitor's resolution. 
+
+
+
+Definition at line 555 of file Main\-Window.\-cpp.
+
+
+\begin{DoxyCode}
+556 \{
+557   this->setGeometry(QStyle::alignedRect(Qt::LeftToRight,Qt::AlignCenter,
+558                                         this->size(),
+559                                         qApp->desktop()->availableGeometry()));
+560 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_main_window_a315c9993fd1d2a02b87d89df54914c36_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Main\-Window@{Main\-Window}!clear\-Terminal\-Text@{clear\-Terminal\-Text}}
+\index{clear\-Terminal\-Text@{clear\-Terminal\-Text}!MainWindow@{Main\-Window}}
+\subsubsection[{clear\-Terminal\-Text}]{\setlength{\rightskip}{0pt plus 5cm}void Main\-Window\-::clear\-Terminal\-Text (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_main_window_ae5ab3c6f41fb9481146dc5f7fbc274ce}
+
+
+clear terminal text 
+
+
+
+Definition at line 262 of file Main\-Window.\-cpp.
+
+
+
+References m\-\_\-ui.
+
+
+\begin{DoxyCode}
+263 \{
+264   m_ui->m\_pte\_terminal->clear();
+265 \}
+\end{DoxyCode}
+\index{Main\-Window@{Main\-Window}!create\-Buttons@{create\-Buttons}}
+\index{create\-Buttons@{create\-Buttons}!MainWindow@{Main\-Window}}
+\subsubsection[{create\-Buttons}]{\setlength{\rightskip}{0pt plus 5cm}void Main\-Window\-::create\-Buttons (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_main_window_a3a5152074fdfc6e75c6f86e55fcba28d}
+
+
+Create buttons for the uniforms. 
+
+\index{Main\-Window@{Main\-Window}!create\-Qsci\-Widget@{create\-Qsci\-Widget}}
+\index{create\-Qsci\-Widget@{create\-Qsci\-Widget}!MainWindow@{Main\-Window}}
+\subsubsection[{create\-Qsci\-Widget}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Cebitor} $\ast$ Main\-Window\-::create\-Qsci\-Widget (
+\begin{DoxyParamCaption}
+\item[{Q\-Widget $\ast$}]{\-\_\-parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}\label{class_main_window_a9c79edf3a98e36a5a02be662440b56d2}
+
+
+create Qsci\-Scintilla widget in the style of sublime defaults 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-parent} & the parent widget to fill with the new Qsci Widget \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 160 of file Main\-Window.\-cpp.
+
+
+
+References Cebitor\-::set\-Search\-Line\-Edit(), and Cebitor\-::set\-Search\-Widget().
+
+
+\begin{DoxyCode}
+161 \{
+162   \textcolor{comment}{// Create the QsciScintilla widget}
+163   Cebitor* qsci = \textcolor{keyword}{new} Cebitor(\_parent);
+164   QBoxLayout *layout = \textcolor{keyword}{new} QVBoxLayout;
+165   layout->addWidget(qsci);
+166 
+167   \textcolor{comment}{// Create search bar widget}
+168   QWidget *searchWidget = \textcolor{keyword}{new} QWidget(\_parent);
+169   QBoxLayout *searchLayout = \textcolor{keyword}{new} QVBoxLayout(searchWidget);
+170   searchLayout->setMargin(0);
+171   QLineEdit *qsciSearch = \textcolor{keyword}{new} QLineEdit(searchWidget);
+172   QPushButton *searchNextBtn = \textcolor{keyword}{new} QPushButton(QString(\textcolor{stringliteral}{"Find Next"}),searchWidget);
+173   QPushButton *searchPrevBtn = \textcolor{keyword}{new} QPushButton(QString(\textcolor{stringliteral}{"Find Previous"}),searchWidget);
+174   qsci->setSearchWidget(searchWidget);
+175   qsci->setSearchLineEdit(qsciSearch);
+176 
+177   \textcolor{comment}{// Connect search widget signals to editor slots}
+178   connect(qsciSearch,SIGNAL(textChanged(\textcolor{keyword}{const} QString&)),qsci,SLOT(highlightAllSearch(\textcolor{keyword}{const} QString&)));
+179   connect(qsciSearch,SIGNAL(returnPressed()),qsci,SLOT(searchNext()));
+180   connect(searchNextBtn,SIGNAL(pressed()),qsci,SLOT(searchNext()));
+181   connect(searchPrevBtn,SIGNAL(pressed()),qsci,SLOT(searchPrev()));
+182 
+183   QAction *escAction = \textcolor{keyword}{new} QAction(\textcolor{keyword}{this});
+184   escAction->setShortcut(Qt::Key\_Escape);
+185   connect(escAction, SIGNAL(triggered()), qsci, SLOT(toggleSearchBox()));
+186   qsciSearch->addAction(escAction);
+187 
+188   searchLayout->setDirection(QBoxLayout::Direction::LeftToRight);
+189   searchLayout->addWidget(qsciSearch);
+190   searchLayout->addWidget(searchNextBtn);
+191   searchLayout->addWidget(searchPrevBtn);
+192 
+193   layout->addWidget(searchWidget);
+194 
+195   searchWidget->hide();
+196 
+197   \_parent->setLayout(layout);
+198 
+199   \textcolor{keywordflow}{return} qsci;
+200 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_main_window_a9c79edf3a98e36a5a02be662440b56d2_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_main_window_a9c79edf3a98e36a5a02be662440b56d2_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Main\-Window@{Main\-Window}!file\-Modified@{file\-Modified}}
+\index{file\-Modified@{file\-Modified}!MainWindow@{Main\-Window}}
+\subsubsection[{file\-Modified}]{\setlength{\rightskip}{0pt plus 5cm}void Main\-Window\-::file\-Modified (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}\label{class_main_window_ab55e9902695bcdf55f13881b67faf54b}
+
+
+Called when a file has been modified and not saved. 
+
+
+
+Definition at line 124 of file Main\-Window.\-cpp.
+
+
+
+References m\-\_\-file\-Change, and update\-Title().
+
+
+\begin{DoxyCode}
+125 \{
+126   m_fileChange = \textcolor{keyword}{true};
+127   updateTitle();
+128 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_main_window_ab55e9902695bcdf55f13881b67faf54b_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=336pt]{class_main_window_ab55e9902695bcdf55f13881b67faf54b_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Main\-Window@{Main\-Window}!key\-Press\-Event@{key\-Press\-Event}}
+\index{key\-Press\-Event@{key\-Press\-Event}!MainWindow@{Main\-Window}}
+\subsubsection[{key\-Press\-Event}]{\setlength{\rightskip}{0pt plus 5cm}void Main\-Window\-::key\-Press\-Event (
+\begin{DoxyParamCaption}
+\item[{Q\-Key\-Event $\ast$}]{\-\_\-event}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}\label{class_main_window_a3c2e352934c6318d405c3d2b0e07729c}
+
+
+Qt Event called when a key is pressed. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-event} & the Qt event to query for size etc \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 338 of file Main\-Window.\-cpp.
+
+
+
+References m\-\_\-gl, m\-\_\-ui, and N\-G\-L\-Scene\-::reset\-Obj\-Pos().
+
+
+\begin{DoxyCode}
+339 \{
+340   \textcolor{comment}{// this method is called every time the main window recives a key event.}
+341   Qt::KeyboardModifiers m = \_event->modifiers();
+342   \textcolor{keywordflow}{if} (m == Qt::NoModifier)
+343   \{
+344     \textcolor{keywordflow}{switch} (\_event->key())
+345     \{
+346       \textcolor{keywordflow}{case} Qt::Key\_W : \{m_ui->m\_showWireframe->toggle(); \textcolor{keywordflow}{break};\}
+347       \textcolor{keywordflow}{case} Qt::Key\_N : \{m_ui->m\_showNormals->toggle();   \textcolor{keywordflow}{break};\}
+348       \textcolor{keywordflow}{case} Qt::Key\_G : \{m_ui->m\_showGrid->toggle();      \textcolor{keywordflow}{break};\}
+349       \textcolor{keywordflow}{case} Qt::Key\_F : \{m_gl->resetObjPos();             \textcolor{keywordflow}{break};\}
+350     \}
+351   \}
+352   update();
+353 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_main_window_a3c2e352934c6318d405c3d2b0e07729c_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{Main\-Window@{Main\-Window}!load\-Text\-File\-To\-Tab@{load\-Text\-File\-To\-Tab}}
+\index{load\-Text\-File\-To\-Tab@{load\-Text\-File\-To\-Tab}!MainWindow@{Main\-Window}}
+\subsubsection[{load\-Text\-File\-To\-Tab}]{\setlength{\rightskip}{0pt plus 5cm}bool Main\-Window\-::load\-Text\-File\-To\-Tab (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{\-\_\-path, }
+\item[{{\bf Cebitor} \&}]{\-\_\-qsci}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}\label{class_main_window_accebd26a396472209614ebdaa8153178}
+
+
+loads a text file from a path to a tab 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-path} & the location of the file \\
+\hline
+\mbox{\tt in}  & {\em \-\_\-qsci} & the Qsci\-Scintilla tab to be filled with the file \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 203 of file Main\-Window.\-cpp.
+
+
+
+References C\-E\-B\-Raise\-::\-Qt\-File\-Error().
+
+
+\begin{DoxyCode}
+204 \{
+205   QString text;
+206   QFile file(\_path);
+207 
+208   \textcolor{comment}{// Open the file as readonly and text and ensure it loaded correctly}
+209   \textcolor{keywordflow}{if} (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+210   \{
+211     \textcolor{comment}{// Raise an error if failed}
+212     CEBRaise::QtFileError(file.error(), \_path);
+213     \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+214   \}
+215 
+216   \textcolor{comment}{// Fead the text into the tab if successful}
+217   QTextStream in(&file);
+218   text = in.readAll();
+219   \_qsci.setText(text);
+220 
+221   \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+222 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=320pt]{class_main_window_accebd26a396472209614ebdaa8153178_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=340pt]{class_main_window_accebd26a396472209614ebdaa8153178_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Main\-Window@{Main\-Window}!new\-Project\-Wiz@{new\-Project\-Wiz}}
+\index{new\-Project\-Wiz@{new\-Project\-Wiz}!MainWindow@{Main\-Window}}
+\subsubsection[{new\-Project\-Wiz}]{\setlength{\rightskip}{0pt plus 5cm}bool Main\-Window\-::new\-Project\-Wiz (
+\begin{DoxyParamCaption}
+\item[{Q\-Widget $\ast$}]{\-\_\-parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}\label{class_main_window_a4010b4118e9d4f0deffa97f7072e5018}
+
+
+Creates a new project wizard. 
+
+
+
+Definition at line 305 of file Main\-Window.\-cpp.
+
+
+
+References Project\-::get\-Name(), New\-Project\-Wizard\-::get\-Output(), m\-\_\-button\-Library, m\-\_\-frag\-Qsci, Output\-Data\-::m\-\_\-frag\-Source, m\-\_\-gl, m\-\_\-project, Output\-Data\-::m\-\_\-project\-Dir, Output\-Data\-::m\-\_\-project\-Name, m\-\_\-vert\-Qsci, Output\-Data\-::m\-\_\-vert\-Source, Project\-::set(), N\-G\-L\-Scene\-::set\-Project(), unsaved\-Changes(), Button\-Lib\-::update\-Buttons(), and Button\-Lib\-::update\-Shader\-Values().
+
+
+\begin{DoxyCode}
+306 \{
+307   NewProjectWizard *projectWiz = \textcolor{keyword}{new} NewProjectWizard(\_parent);
+308   \textcolor{keywordtype}{bool} success = projectWiz->exec();
+309   \textcolor{keywordflow}{if} (success && unsavedChanges() != QMessageBox::Cancel)
+310   \{
+311     \textcolor{keyword}{const} OutputData *output = projectWiz->getOutput();
+312     m_project->set(output->m_projectName, output->m_projectDir, \textcolor{keyword}{true}, \textcolor{keyword}{true});
+313     m_vertQsci->setText(output->m_vertSource);
+314     m_fragQsci->setText(output->m_fragSource);
+315     QString vertSource, fragSource;
+316     vertSource = m_vertQsci->text();
+317     fragSource = m_fragQsci->text();
+318     std::cout<<m_project->getName()<<std::endl;
+319     m_gl->setProject(m_project->getName(), vertSource,fragSource);
+320     m_buttonLibrary->updateButtons();
+321     m_buttonLibrary->updateShaderValues();
+322   \}
+323   \textcolor{keywordflow}{else}
+324   \{
+325     success = \textcolor{keyword}{false};
+326   \}
+327   \textcolor{keyword}{delete} projectWiz;
+328   \textcolor{keywordflow}{return} success;
+329 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_main_window_a4010b4118e9d4f0deffa97f7072e5018_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_main_window_a4010b4118e9d4f0deffa97f7072e5018_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Main\-Window@{Main\-Window}!obj\-Opened@{obj\-Opened}}
+\index{obj\-Opened@{obj\-Opened}!MainWindow@{Main\-Window}}
+\subsubsection[{obj\-Opened}]{\setlength{\rightskip}{0pt plus 5cm}void Main\-Window\-::obj\-Opened (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}\label{class_main_window_a0ee54d90ea9cd6f8899563e12f1155d7}
+
+
+Called when Import Mesh is called to change the render mesh. 
+
+
+
+Definition at line 225 of file Main\-Window.\-cpp.
+
+
+
+References N\-G\-L\-Scene\-::import\-Mesh\-Name(), and m\-\_\-gl.
+
+
+\begin{DoxyCode}
+226 \{
+227   \textcolor{comment}{// Open a file dialog and return a file directory}
+228   QString fileName=QFileDialog::getOpenFileName(\textcolor{keyword}{this},
+229                                                 tr(\textcolor{stringliteral}{"Open Mesh"}),
+230                                                 \textcolor{stringliteral}{"0Features-0BugsCVA3/"},
+231                                                 tr(\textcolor{stringliteral}{"OBJ Files (*.obj)"}));
+232   std::string importName=fileName.toStdString();
+233   \textcolor{comment}{// Import the mesh}
+234   m_gl->importMeshName(importName);
+235 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_main_window_a0ee54d90ea9cd6f8899563e12f1155d7_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=334pt]{class_main_window_a0ee54d90ea9cd6f8899563e12f1155d7_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Main\-Window@{Main\-Window}!on\-\_\-action\-Export\-\_\-triggered@{on\-\_\-action\-Export\-\_\-triggered}}
+\index{on\-\_\-action\-Export\-\_\-triggered@{on\-\_\-action\-Export\-\_\-triggered}!MainWindow@{Main\-Window}}
+\subsubsection[{on\-\_\-action\-Export\-\_\-triggered}]{\setlength{\rightskip}{0pt plus 5cm}void Main\-Window\-::on\-\_\-action\-Export\-\_\-triggered (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}\label{class_main_window_a7df050ed9d3ca5f73a3ed852b35fc736}
+
+
+Called when Export button is triggered in File Menu bar. 
+
+
+
+Definition at line 408 of file Main\-Window.\-cpp.
+
+
+
+References Project\-::export\-Project(), Project\-::get\-Dir(), m\-\_\-frag\-Qsci, m\-\_\-project, and m\-\_\-vert\-Qsci.
+
+
+\begin{DoxyCode}
+409 \{
+410   QFileDialog dialog(\textcolor{keyword}{this});
+411   dialog.setFileMode(QFileDialog::Directory);
+412   dialog.setOption(QFileDialog::ShowDirsOnly);
+413   dialog.setDirectory(QString(m_project->getDir().c\_str()));
+414   QStringList dirNames;
+415   \textcolor{keywordflow}{if} (dialog.exec())
+416   \{
+417     dirNames = dialog.selectedFiles();
+418     m_project->exportProject(dirNames.at(0).toStdString(),
+419                              m_vertQsci->text(),
+420                              m_fragQsci->text());
+421   \}
+422 
+423 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_main_window_a7df050ed9d3ca5f73a3ed852b35fc736_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{Main\-Window@{Main\-Window}!on\-\_\-action\-Import\-\_\-\-Fragment\-\_\-\-Shader\-\_\-triggered@{on\-\_\-action\-Import\-\_\-\-Fragment\-\_\-\-Shader\-\_\-triggered}}
+\index{on\-\_\-action\-Import\-\_\-\-Fragment\-\_\-\-Shader\-\_\-triggered@{on\-\_\-action\-Import\-\_\-\-Fragment\-\_\-\-Shader\-\_\-triggered}!MainWindow@{Main\-Window}}
+\subsubsection[{on\-\_\-action\-Import\-\_\-\-Fragment\-\_\-\-Shader\-\_\-triggered}]{\setlength{\rightskip}{0pt plus 5cm}void Main\-Window\-::on\-\_\-action\-Import\-\_\-\-Fragment\-\_\-\-Shader\-\_\-triggered (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}\label{class_main_window_a7d0378caa64973f6e17ed50474096556}
+
+
+Called when Import Fragment Shader is clicked. 
+
+
+
+Definition at line 508 of file Main\-Window.\-cpp.
+
+
+
+References m\-\_\-frag\-Qsci.
+
+
+\begin{DoxyCode}
+509 \{
+510   \textcolor{comment}{//Open a dialog box}
+511   QString fileName=QFileDialog::getOpenFileName(\textcolor{keyword}{this},
+512                                                 tr(\textcolor{stringliteral}{"Import Fragment Shader"}),
+513                                                 \textcolor{stringliteral}{"0Features-0BugsCVA3/"},
+514                                                 tr(\textcolor{stringliteral}{"GLSL Files (*.glsl)"}));
+515 
+516   \textcolor{comment}{//If selected file directory is not empty...}
+517   \textcolor{keywordflow}{if}(!fileName.isEmpty())
+518   \{
+519     \textcolor{comment}{//Open the selected File}
+520     QFile shaderFile(fileName);
+521     \textcolor{keywordflow}{if}(!shaderFile.open(QFile::ReadOnly | QFile::Text))
+522     \{
+523       \textcolor{comment}{//If it failed to open return an error and return}
+524       std::cout<<\textcolor{stringliteral}{"Error opening file: "}<<fileName.toStdString()<<std::endl;
+525       \textcolor{keywordflow}{return};
+526     \}
+527 
+528     \textcolor{comment}{//Otherwise create a message box to confirm overwriting the current shader}
+529     QMessageBox confirmBox;
+530     confirmBox.setWindowTitle(\textcolor{stringliteral}{"Import Fragment Shader"});
+531     confirmBox.setText(\textcolor{stringliteral}{"Current shader will be overwritten. \(\backslash\)nAre you sure you want to continue?"});
+532     confirmBox.setStandardButtons(QMessageBox::Yes);
+533     confirmBox.addButton(QMessageBox::No);
+534     confirmBox.setDefaultButton(QMessageBox::No);
+535     \textcolor{keywordflow}{if}(confirmBox.exec() == QMessageBox::Yes)
+536     \{
+537       \textcolor{comment}{//If confirmed read the file into a QString}
+538       QTextStream inFrag(&shaderFile);
+539       QString fragSource;
+540       fragSource = inFrag.readAll();
+541       \textcolor{comment}{// Set the text in the text editor}
+542       m_fragQsci->setText(fragSource);
+543       shaderFile.close();
+544     \}
+545     \textcolor{keywordflow}{else}
+546     \{
+547       \textcolor{comment}{//Else close the file and return}
+548       shaderFile.close();
+549       \textcolor{keywordflow}{return};
+550     \}
+551   \}
+552 \}
+\end{DoxyCode}
+\index{Main\-Window@{Main\-Window}!on\-\_\-action\-Import\-\_\-\-Vertex\-\_\-\-Shader\-\_\-triggered@{on\-\_\-action\-Import\-\_\-\-Vertex\-\_\-\-Shader\-\_\-triggered}}
+\index{on\-\_\-action\-Import\-\_\-\-Vertex\-\_\-\-Shader\-\_\-triggered@{on\-\_\-action\-Import\-\_\-\-Vertex\-\_\-\-Shader\-\_\-triggered}!MainWindow@{Main\-Window}}
+\subsubsection[{on\-\_\-action\-Import\-\_\-\-Vertex\-\_\-\-Shader\-\_\-triggered}]{\setlength{\rightskip}{0pt plus 5cm}void Main\-Window\-::on\-\_\-action\-Import\-\_\-\-Vertex\-\_\-\-Shader\-\_\-triggered (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}\label{class_main_window_abdf64cfdd7044f10138b70c3a3987c4e}
+
+
+Called when Import Vertex Shader is clicked. 
+
+
+
+Definition at line 461 of file Main\-Window.\-cpp.
+
+
+
+References m\-\_\-vert\-Qsci.
+
+
+\begin{DoxyCode}
+462 \{
+463   \textcolor{comment}{//Open a dialog box}
+464   QString fileName=QFileDialog::getOpenFileName(\textcolor{keyword}{this},
+465                                                 tr(\textcolor{stringliteral}{"Import Vertex Shader"}),
+466                                                 \textcolor{stringliteral}{"0Features-0BugsCVA3/"},
+467                                                 tr(\textcolor{stringliteral}{"GLSL Files (*.glsl)"}));
+468   \textcolor{comment}{//If its not empty...}
+469   \textcolor{keywordflow}{if}(!fileName.isEmpty())
+470   \{
+471     \textcolor{comment}{//Open the selected File}
+472     QFile shaderFile(fileName);
+473     \textcolor{keywordflow}{if}(!shaderFile.open(QFile::ReadOnly | QFile::Text))
+474     \{
+475       \textcolor{comment}{//If it failed to open return an error and return}
+476       std::cout<<\textcolor{stringliteral}{"Error opening file: "}<<fileName.toStdString()<<std::endl;
+477       \textcolor{keywordflow}{return};
+478     \}
+479 
+480     \textcolor{comment}{//Otherwise create a message box to confirm overwriting the current shader}
+481     QMessageBox confirmBox;
+482     confirmBox.setWindowTitle(\textcolor{stringliteral}{"Import Vertex Shader"});
+483     confirmBox.setText(\textcolor{stringliteral}{"Current shader will be overwritten. \(\backslash\)nAre you sure you want to continue?"});
+484     confirmBox.setStandardButtons(QMessageBox::Yes);
+485     confirmBox.addButton(QMessageBox::No);
+486     confirmBox.setDefaultButton(QMessageBox::No);
+487     \textcolor{keywordflow}{if}(confirmBox.exec() == QMessageBox::Yes)
+488     \{
+489       \textcolor{comment}{//If confirmed read the file into a QString}
+490       QTextStream inVert(&shaderFile);
+491       QString vertSource;
+492       vertSource = inVert.readAll();
+493       \textcolor{comment}{// Set the text in the text editor}
+494       m_vertQsci->setText(vertSource);
+495       shaderFile.close();
+496     \}
+497     \textcolor{keywordflow}{else}
+498     \{
+499       \textcolor{comment}{//Else close the file and return}
+500       shaderFile.close();
+501       \textcolor{keywordflow}{return};
+502     \}
+503   \}
+504 
+505 \}
+\end{DoxyCode}
+\index{Main\-Window@{Main\-Window}!on\-\_\-action\-New\-\_\-triggered@{on\-\_\-action\-New\-\_\-triggered}}
+\index{on\-\_\-action\-New\-\_\-triggered@{on\-\_\-action\-New\-\_\-triggered}!MainWindow@{Main\-Window}}
+\subsubsection[{on\-\_\-action\-New\-\_\-triggered}]{\setlength{\rightskip}{0pt plus 5cm}void Main\-Window\-::on\-\_\-action\-New\-\_\-triggered (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}\label{class_main_window_aed8d4c16aaa87ae02a2de2edd5fc91c7}
+
+
+Called when New button is triggered in File Menu bar. 
+
+
+
+Definition at line 332 of file Main\-Window.\-cpp.
+
+
+
+References new\-Project\-Wiz().
+
+
+\begin{DoxyCode}
+333 \{
+334   newProjectWiz(\textcolor{keyword}{this});
+335 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_main_window_aed8d4c16aaa87ae02a2de2edd5fc91c7_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{Main\-Window@{Main\-Window}!on\-\_\-action\-Open\-\_\-triggered@{on\-\_\-action\-Open\-\_\-triggered}}
+\index{on\-\_\-action\-Open\-\_\-triggered@{on\-\_\-action\-Open\-\_\-triggered}!MainWindow@{Main\-Window}}
+\subsubsection[{on\-\_\-action\-Open\-\_\-triggered}]{\setlength{\rightskip}{0pt plus 5cm}void Main\-Window\-::on\-\_\-action\-Open\-\_\-triggered (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}\label{class_main_window_a48ed0a16f674e38e0e2a24274852a9af}
+
+
+Called when Open button is triggered in File Menu bar. 
+
+
+
+Definition at line 381 of file Main\-Window.\-cpp.
+
+
+
+References Project\-::get\-Name(), Project\-::load(), m\-\_\-frag\-Qsci, m\-\_\-gl, m\-\_\-project, m\-\_\-vert\-Qsci, N\-G\-L\-Scene\-::set\-Project(), and unsaved\-Changes().
+
+
+\begin{DoxyCode}
+382 \{
+383   \textcolor{comment}{// read file directory from dialog}
+384   QString fileDir=QFileDialog::getOpenFileName(\textcolor{keyword}{this},
+385                                                tr(\textcolor{stringliteral}{"Open Project"}),
+386                                                \textcolor{stringliteral}{"0Features-0BugsCVA3/"},
+387                                                tr(\textcolor{stringliteral}{"XML Files (*.xml)"}));
+388 
+389   \textcolor{keywordflow}{if}( !fileDir.isEmpty() )
+390   \{
+391     \textcolor{keywordflow}{if} (unsavedChanges() != QMessageBox::Cancel)
+392     \{
+393       std::string fileDirectory = \textcolor{stringliteral}{""};
+394       QString vertSource, fragSource;
+395       fileDirectory = fileDir.toStdString();
+396       \textcolor{comment}{// load project data}
+397       m_project->load(fileDirectory, vertSource, fragSource);
+398       \textcolor{comment}{// set the text editor strings}
+399       m_vertQsci->setText(vertSource);
+400       m_fragQsci->setText(fragSource);
+401       \textcolor{comment}{// set proect data in scene for shader manager}
+402       m_gl->setProject(m_project->getName(), vertSource,fragSource);
+403     \}
+404   \}
+405 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_main_window_a48ed0a16f674e38e0e2a24274852a9af_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{Main\-Window@{Main\-Window}!on\-\_\-action\-Save\-Project\-\_\-triggered@{on\-\_\-action\-Save\-Project\-\_\-triggered}}
+\index{on\-\_\-action\-Save\-Project\-\_\-triggered@{on\-\_\-action\-Save\-Project\-\_\-triggered}!MainWindow@{Main\-Window}}
+\subsubsection[{on\-\_\-action\-Save\-Project\-\_\-triggered}]{\setlength{\rightskip}{0pt plus 5cm}void Main\-Window\-::on\-\_\-action\-Save\-Project\-\_\-triggered (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}\label{class_main_window_ae388e93dca3e29f2036901982af7e7ac}
+
+
+Called when Save \doxyref{Project}{p.}{class_project} button is triggered in File Menu bar. 
+
+
+
+Definition at line 356 of file Main\-Window.\-cpp.
+
+
+
+References m\-\_\-file\-Change, m\-\_\-frag\-Qsci, m\-\_\-project, m\-\_\-vert\-Qsci, Project\-::save(), and update\-Title().
+
+
+\begin{DoxyCode}
+357 \{
+358   \textcolor{keywordflow}{if} (m_fileChange)
+359   \{
+360     \textcolor{keywordtype}{bool} success = m_project->save(m_vertQsci->text(), m_fragQsci->text());
+361     \textcolor{keywordflow}{if} (success)
+362     \{
+363       m_fileChange = \textcolor{keyword}{false};
+364     \}
+365   \}
+366   updateTitle();
+367 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_main_window_ae388e93dca3e29f2036901982af7e7ac_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_main_window_ae388e93dca3e29f2036901982af7e7ac_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Main\-Window@{Main\-Window}!on\-\_\-action\-Save\-Project\-As\-\_\-triggered@{on\-\_\-action\-Save\-Project\-As\-\_\-triggered}}
+\index{on\-\_\-action\-Save\-Project\-As\-\_\-triggered@{on\-\_\-action\-Save\-Project\-As\-\_\-triggered}!MainWindow@{Main\-Window}}
+\subsubsection[{on\-\_\-action\-Save\-Project\-As\-\_\-triggered}]{\setlength{\rightskip}{0pt plus 5cm}void Main\-Window\-::on\-\_\-action\-Save\-Project\-As\-\_\-triggered (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}\label{class_main_window_ac2e49056c9ede510e4903848dfcaa2a1}
+
+
+Called when Startup \doxyref{Project}{p.}{class_project} as button is triggered in File Menu bar. 
+
+
+
+Definition at line 370 of file Main\-Window.\-cpp.
+
+
+
+References m\-\_\-file\-Change, m\-\_\-frag\-Qsci, m\-\_\-project, m\-\_\-vert\-Qsci, Project\-::save\-As(), and update\-Title().
+
+
+\begin{DoxyCode}
+371 \{
+372   \textcolor{keywordtype}{bool} success = m_project->saveAs(m_vertQsci->text(), m_fragQsci->text());
+373   \textcolor{keywordflow}{if} (success)
+374   \{
+375     m_fileChange = \textcolor{keyword}{false};
+376   \}
+377   updateTitle();
+378 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_main_window_ac2e49056c9ede510e4903848dfcaa2a1_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{Main\-Window@{Main\-Window}!on\-\_\-action\-Startup\-\_\-\-Window\-\_\-triggered@{on\-\_\-action\-Startup\-\_\-\-Window\-\_\-triggered}}
+\index{on\-\_\-action\-Startup\-\_\-\-Window\-\_\-triggered@{on\-\_\-action\-Startup\-\_\-\-Window\-\_\-triggered}!MainWindow@{Main\-Window}}
+\subsubsection[{on\-\_\-action\-Startup\-\_\-\-Window\-\_\-triggered}]{\setlength{\rightskip}{0pt plus 5cm}void Main\-Window\-::on\-\_\-action\-Startup\-\_\-\-Window\-\_\-triggered (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}\label{class_main_window_a88ae6b1261eb24d1f778ce3c6678d195}
+
+
+Called when Startup Window button is triggered in File Menu bar. 
+
+
+
+Definition at line 268 of file Main\-Window.\-cpp.
+
+
+
+References m\-\_\-start\-Dialog.
+
+
+\begin{DoxyCode}
+269 \{
+270   m_startDialog->show();
+271 \}
+\end{DoxyCode}
+\index{Main\-Window@{Main\-Window}!on\-\_\-m\-\_\-action\-Load\-\_\-\-Tex\-\_\-triggered@{on\-\_\-m\-\_\-action\-Load\-\_\-\-Tex\-\_\-triggered}}
+\index{on\-\_\-m\-\_\-action\-Load\-\_\-\-Tex\-\_\-triggered@{on\-\_\-m\-\_\-action\-Load\-\_\-\-Tex\-\_\-triggered}!MainWindow@{Main\-Window}}
+\subsubsection[{on\-\_\-m\-\_\-action\-Load\-\_\-\-Tex\-\_\-triggered}]{\setlength{\rightskip}{0pt plus 5cm}void Main\-Window\-::on\-\_\-m\-\_\-action\-Load\-\_\-\-Tex\-\_\-triggered (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}\label{class_main_window_ad34ce870e5f38b67bed31ddd0b00c04c}
+
+
+Called when Load Texture is clicked. 
+
+
+
+Definition at line 426 of file Main\-Window.\-cpp.
+
+
+
+References N\-G\-L\-Scene\-::import\-Texture\-Map(), and m\-\_\-gl.
+
+
+\begin{DoxyCode}
+427 \{
+428   \textcolor{comment}{// Open a file dialog and return a file directory}
+429   QString fileName=QFileDialog::getOpenFileName(\textcolor{keyword}{this},
+430                                                 tr(\textcolor{stringliteral}{"Open Texture Map"}),
+431                                                 \textcolor{stringliteral}{"0Features-0BugsCVA3/"},
+432                                                 tr(\textcolor{stringliteral}{"Image Files (*.jpg)"}));
+433   \textcolor{comment}{// load texture map to OBJ}
+434   std::string importName=fileName.toStdString();
+435   m_gl->importTextureMap(importName);
+436 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_main_window_ad34ce870e5f38b67bed31ddd0b00c04c_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{Main\-Window@{Main\-Window}!on\-\_\-m\-\_\-btn\-\_\-compile\-Shader\-\_\-clicked@{on\-\_\-m\-\_\-btn\-\_\-compile\-Shader\-\_\-clicked}}
+\index{on\-\_\-m\-\_\-btn\-\_\-compile\-Shader\-\_\-clicked@{on\-\_\-m\-\_\-btn\-\_\-compile\-Shader\-\_\-clicked}!MainWindow@{Main\-Window}}
+\subsubsection[{on\-\_\-m\-\_\-btn\-\_\-compile\-Shader\-\_\-clicked}]{\setlength{\rightskip}{0pt plus 5cm}void Main\-Window\-::on\-\_\-m\-\_\-btn\-\_\-compile\-Shader\-\_\-clicked (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}\label{class_main_window_a2e3b4eed95c7d485479adcdd71174b42}
+
+
+activated when Compile Shader button is clicked 
+
+
+
+Definition at line 138 of file Main\-Window.\-cpp.
+
+
+
+References N\-G\-L\-Scene\-::compile\-Shader(), m\-\_\-button\-Library, m\-\_\-frag\-Qsci, m\-\_\-gl, m\-\_\-vert\-Qsci, Button\-Lib\-::update\-Buttons(), and Button\-Lib\-::update\-Shader\-Values().
+
+
+\begin{DoxyCode}
+139 \{
+140   \textcolor{comment}{// read new vertex and fragment source code from text editor}
+141   QString vertSource, fragSource;
+142   vertSource = m_vertQsci->text();
+143   fragSource = m_fragQsci->text();
+144 
+145   \textcolor{comment}{// compile shader with new vertex and fragment source code}
+146   m_gl->compileShader(vertSource,fragSource);
+147 
+148   \textcolor{comment}{// update uniform buttons}
+149   m_buttonLibrary->updateButtons();
+150   m_buttonLibrary->updateShaderValues();
+151 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_main_window_a2e3b4eed95c7d485479adcdd71174b42_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=334pt]{class_main_window_a2e3b4eed95c7d485479adcdd71174b42_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Main\-Window@{Main\-Window}!print\-Uniforms@{print\-Uniforms}}
+\index{print\-Uniforms@{print\-Uniforms}!MainWindow@{Main\-Window}}
+\subsubsection[{print\-Uniforms}]{\setlength{\rightskip}{0pt plus 5cm}void Main\-Window\-::print\-Uniforms (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}\label{class_main_window_afee21a956014cbd1633b4d0ee7132a93}
+
+
+Prints the uniforms and their current values to the terminal. 
+
+
+
+Definition at line 154 of file Main\-Window.\-cpp.
+
+
+
+References m\-\_\-parser, and Parser\-Lib\-::print\-Uniforms().
+
+
+\begin{DoxyCode}
+155 \{
+156   m_parser->printUniforms();
+157 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=334pt]{class_main_window_afee21a956014cbd1633b4d0ee7132a93_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=346pt]{class_main_window_afee21a956014cbd1633b4d0ee7132a93_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Main\-Window@{Main\-Window}!set\-Terminal\-Text@{set\-Terminal\-Text}}
+\index{set\-Terminal\-Text@{set\-Terminal\-Text}!MainWindow@{Main\-Window}}
+\subsubsection[{set\-Terminal\-Text}]{\setlength{\rightskip}{0pt plus 5cm}void Main\-Window\-::set\-Terminal\-Text (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{\-\_\-txt}
+\end{DoxyParamCaption}
+)}\label{class_main_window_a1fc3e7c122b246d3cacbaaccfe490724}
+
+
+set terminal text 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-txt} & the text to set in the terminal \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 256 of file Main\-Window.\-cpp.
+
+
+
+References m\-\_\-ui.
+
+
+\begin{DoxyCode}
+257 \{
+258   m_ui->m\_pte\_terminal->setPlainText(\_txt);
+259 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_main_window_a1fc3e7c122b246d3cacbaaccfe490724_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Main\-Window@{Main\-Window}!shape\-Triggered@{shape\-Triggered}}
+\index{shape\-Triggered@{shape\-Triggered}!MainWindow@{Main\-Window}}
+\subsubsection[{shape\-Triggered}]{\setlength{\rightskip}{0pt plus 5cm}void Main\-Window\-::shape\-Triggered (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}\label{class_main_window_a1ee3c30d4bdbcff576458d97931495e2}
+
+
+Called when a shape action has been triggered to change the render mesh. 
+
+
+
+Definition at line 238 of file Main\-Window.\-cpp.
+
+
+
+References m\-\_\-gl, m\-\_\-ui, and N\-G\-L\-Scene\-::set\-Shape\-Type().
+
+
+\begin{DoxyCode}
+239 \{
+240   \textcolor{comment}{//get the action}
+241   QAction *action = \textcolor{keyword}{static\_cast<}QAction*\textcolor{keyword}{>}(sender());
+242   \textcolor{keywordtype}{int} a=0;
+243   \textcolor{comment}{// apply a different shape depending on the button clicked}
+244   \textcolor{keywordflow}{if} (action==m_ui->m\_actionLoad\_Sphere)  \{   a=1;  \}
+245   \textcolor{keywordflow}{if} (action==m_ui->m\_actionLoad\_Cube)    \{   a=2;  \}
+246   \textcolor{keywordflow}{if} (action==m_ui->m\_actionLoad\_Torus)   \{   a=3;  \}
+247   \textcolor{keywordflow}{if} (action==m_ui->m\_actionLoad\_Teapot)  \{   a=4;  \}
+248   \textcolor{keywordflow}{if} (action==m_ui->m\_actionLoad\_Troll)   \{   a=5;  \}
+249   \textcolor{keywordflow}{if} (action==m_ui->m\_actionLoad\_Dragon)  \{   a=6;  \}
+250   \textcolor{keywordflow}{if} (action==m_ui->m\_actionLoad\_Bunny)   \{   a=7;  \}
+251   \textcolor{comment}{//set the shape}
+252   m_gl->setShapeType(a);
+253 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_main_window_a1ee3c30d4bdbcff576458d97931495e2_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_main_window_a1ee3c30d4bdbcff576458d97931495e2_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Main\-Window@{Main\-Window}!show\-Start\-Dialog@{show\-Start\-Dialog}}
+\index{show\-Start\-Dialog@{show\-Start\-Dialog}!MainWindow@{Main\-Window}}
+\subsubsection[{show\-Start\-Dialog}]{\setlength{\rightskip}{0pt plus 5cm}void Main\-Window\-::show\-Start\-Dialog (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_main_window_a2200590b133ed12ffd8dc3fec0885992}
+
+
+show startup dialog 
+
+
+
+Definition at line 274 of file Main\-Window.\-cpp.
+
+
+
+References m\-\_\-start\-Dialog.
+
+
+\begin{DoxyCode}
+275 \{
+276   m_startDialog->show();
+277 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=264pt]{class_main_window_a2200590b133ed12ffd8dc3fec0885992_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Main\-Window@{Main\-Window}!unsaved\-Changes@{unsaved\-Changes}}
+\index{unsaved\-Changes@{unsaved\-Changes}!MainWindow@{Main\-Window}}
+\subsubsection[{unsaved\-Changes}]{\setlength{\rightskip}{0pt plus 5cm}int Main\-Window\-::unsaved\-Changes (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}\label{class_main_window_aff24d2c1c190cbeb892e0f74879091f5}
+
+
+Check if you want to close or open new file (loose changes) 
+
+
+
+Definition at line 279 of file Main\-Window.\-cpp.
+
+
+
+References m\-\_\-file\-Change, and on\-\_\-action\-Save\-Project\-\_\-triggered().
+
+
+\begin{DoxyCode}
+280 \{
+281   \textcolor{keywordtype}{int} ret;
+282   \textcolor{keywordflow}{if} (m_fileChange)
+283   \{
+284     QMessageBox msgBox;
+285     msgBox.setIcon(QMessageBox::Warning);
+286     msgBox.setText(\textcolor{stringliteral}{"There are still unsaved changes in your current project"});
+287     msgBox.setInformativeText(\textcolor{stringliteral}{"Do you want to save the project?"});
+288     msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+289     msgBox.setDefaultButton(QMessageBox::Save);
+290     ret = msgBox.exec();
+291   \}
+292   \textcolor{keywordflow}{else}
+293   \{
+294     ret = QMessageBox::Save;
+295   \}
+296 
+297   \textcolor{keywordflow}{if} (ret == QMessageBox::Save)
+298   \{
+299     on_actionSaveProject_triggered();
+300   \}
+301   \textcolor{keywordflow}{return} ret;
+302 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_main_window_aff24d2c1c190cbeb892e0f74879091f5_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_main_window_aff24d2c1c190cbeb892e0f74879091f5_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Main\-Window@{Main\-Window}!update\-Shader\-Values@{update\-Shader\-Values}}
+\index{update\-Shader\-Values@{update\-Shader\-Values}!MainWindow@{Main\-Window}}
+\subsubsection[{update\-Shader\-Values}]{\setlength{\rightskip}{0pt plus 5cm}void Main\-Window\-::update\-Shader\-Values (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_main_window_a8321debf732a6e17e2fa45b52a3899f1}
+
+
+Update shader values from the buttons. 
+
+\index{Main\-Window@{Main\-Window}!update\-Title@{update\-Title}}
+\index{update\-Title@{update\-Title}!MainWindow@{Main\-Window}}
+\subsubsection[{update\-Title}]{\setlength{\rightskip}{0pt plus 5cm}void Main\-Window\-::update\-Title (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}\label{class_main_window_ac62839f0a6f642f68f06729f351893e3}
+
+
+Update the title of the window. 
+
+
+
+Definition at line 131 of file Main\-Window.\-cpp.
+
+
+
+References Project\-::get\-Name(), m\-\_\-file\-Change, and m\-\_\-project.
+
+
+\begin{DoxyCode}
+132 \{
+133   setWindowTitle(QString(\textcolor{stringliteral}{"%1[*] - C(S)hader Environment Builder"}).arg(m_project->
+      getName().c\_str()));
+134   setWindowModified(m_fileChange);
+135 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=296pt]{class_main_window_ac62839f0a6f642f68f06729f351893e3_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_main_window_ac62839f0a6f642f68f06729f351893e3_icgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsection{Member Data Documentation}
+\index{Main\-Window@{Main\-Window}!m\-\_\-button\-Library@{m\-\_\-button\-Library}}
+\index{m\-\_\-button\-Library@{m\-\_\-button\-Library}!MainWindow@{Main\-Window}}
+\subsubsection[{m\-\_\-button\-Library}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Button\-Lib}$\ast$ Main\-Window\-::m\-\_\-button\-Library\hspace{0.3cm}{\ttfamily [private]}}\label{class_main_window_aa6cd7892316324e2f07e13042ee20f9e}
+
+
+The button library used for the uniform buttons that are generated. 
+
+
+
+Definition at line 152 of file Main\-Window.\-h.
+
+\index{Main\-Window@{Main\-Window}!m\-\_\-camera@{m\-\_\-camera}}
+\index{m\-\_\-camera@{m\-\_\-camera}!MainWindow@{Main\-Window}}
+\subsubsection[{m\-\_\-camera}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Camera}$\ast$ Main\-Window\-::m\-\_\-camera\hspace{0.3cm}{\ttfamily [private]}}\label{class_main_window_ab13d899482b79a56f88d4a5ea936cd51}
+
+
+The camera settings. 
+
+
+
+Definition at line 144 of file Main\-Window.\-h.
+
+\index{Main\-Window@{Main\-Window}!m\-\_\-file\-Change@{m\-\_\-file\-Change}}
+\index{m\-\_\-file\-Change@{m\-\_\-file\-Change}!MainWindow@{Main\-Window}}
+\subsubsection[{m\-\_\-file\-Change}]{\setlength{\rightskip}{0pt plus 5cm}bool Main\-Window\-::m\-\_\-file\-Change\hspace{0.3cm}{\ttfamily [private]}}\label{class_main_window_a1dfd7b0c406ec9fb147b59094ab3a46d}
+
+
+The button library used for the uniform buttons that are generated. 
+
+
+
+Definition at line 160 of file Main\-Window.\-h.
+
+\index{Main\-Window@{Main\-Window}!m\-\_\-frag\-Qsci@{m\-\_\-frag\-Qsci}}
+\index{m\-\_\-frag\-Qsci@{m\-\_\-frag\-Qsci}!MainWindow@{Main\-Window}}
+\subsubsection[{m\-\_\-frag\-Qsci}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Cebitor}$\ast$ Main\-Window\-::m\-\_\-frag\-Qsci\hspace{0.3cm}{\ttfamily [private]}}\label{class_main_window_a1baf69a1bca803d041c2b1473bdf57cd}
+
+
+our Q\-Scintilla widget2 (fragment) 
+
+
+
+Definition at line 124 of file Main\-Window.\-h.
+
+\index{Main\-Window@{Main\-Window}!m\-\_\-gl@{m\-\_\-gl}}
+\index{m\-\_\-gl@{m\-\_\-gl}!MainWindow@{Main\-Window}}
+\subsubsection[{m\-\_\-gl}]{\setlength{\rightskip}{0pt plus 5cm}{\bf N\-G\-L\-Scene}$\ast$ Main\-Window\-::m\-\_\-gl\hspace{0.3cm}{\ttfamily [private]}}\label{class_main_window_a83b3be518e4d0aa9f7e67d2fb6f02b35}
+
+
+our open\-G\-L widget using \doxyref{N\-G\-L\-Scene}{p.}{class_n_g_l_scene} 
+
+
+
+Definition at line 128 of file Main\-Window.\-h.
+
+\index{Main\-Window@{Main\-Window}!m\-\_\-parser@{m\-\_\-parser}}
+\index{m\-\_\-parser@{m\-\_\-parser}!MainWindow@{Main\-Window}}
+\subsubsection[{m\-\_\-parser}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Parser\-Lib}$\ast$ Main\-Window\-::m\-\_\-parser\hspace{0.3cm}{\ttfamily [private]}}\label{class_main_window_aa2d6906f66747ff13f64ba8b5efad43c}
+
+
+The parser library used for the uniform buttons. 
+
+
+
+Definition at line 136 of file Main\-Window.\-h.
+
+\index{Main\-Window@{Main\-Window}!m\-\_\-project@{m\-\_\-project}}
+\index{m\-\_\-project@{m\-\_\-project}!MainWindow@{Main\-Window}}
+\subsubsection[{m\-\_\-project}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Project}$\ast$ Main\-Window\-::m\-\_\-project\hspace{0.3cm}{\ttfamily [private]}}\label{class_main_window_a67835e8b7ae8b4e79f848a748d4cfbbc}
+
+
+The project that is used for storing name, directory etc. 
+
+
+
+Definition at line 140 of file Main\-Window.\-h.
+
+\index{Main\-Window@{Main\-Window}!m\-\_\-shader\-Manager@{m\-\_\-shader\-Manager}}
+\index{m\-\_\-shader\-Manager@{m\-\_\-shader\-Manager}!MainWindow@{Main\-Window}}
+\subsubsection[{m\-\_\-shader\-Manager}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Shader\-Manager}$\ast$ Main\-Window\-::m\-\_\-shader\-Manager\hspace{0.3cm}{\ttfamily [private]}}\label{class_main_window_a16d7134eefd519ece6800c4ce2837019}
+
+
+The shader manager used to handle the switching of shader programs. 
+
+
+
+Definition at line 156 of file Main\-Window.\-h.
+
+\index{Main\-Window@{Main\-Window}!m\-\_\-start\-Dialog@{m\-\_\-start\-Dialog}}
+\index{m\-\_\-start\-Dialog@{m\-\_\-start\-Dialog}!MainWindow@{Main\-Window}}
+\subsubsection[{m\-\_\-start\-Dialog}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Startup\-Dialog}$\ast$ Main\-Window\-::m\-\_\-start\-Dialog\hspace{0.3cm}{\ttfamily [private]}}\label{class_main_window_aad3a500ec89c49b4d383bdb6f1a36dee}
+
+
+startup Dialog 
+
+
+
+Definition at line 132 of file Main\-Window.\-h.
+
+\index{Main\-Window@{Main\-Window}!m\-\_\-ui@{m\-\_\-ui}}
+\index{m\-\_\-ui@{m\-\_\-ui}!MainWindow@{Main\-Window}}
+\subsubsection[{m\-\_\-ui}]{\setlength{\rightskip}{0pt plus 5cm}Ui\-::\-Main\-Window$\ast$ Main\-Window\-::m\-\_\-ui\hspace{0.3cm}{\ttfamily [private]}}\label{class_main_window_a5a3eb262660797d9a4d52ed16edb6d11}
+
+
+the generated widgets created from the form using ui\-\_\-\-Main\-Window.\-h 
+
+
+
+Definition at line 148 of file Main\-Window.\-h.
+
+\index{Main\-Window@{Main\-Window}!m\-\_\-vert\-Qsci@{m\-\_\-vert\-Qsci}}
+\index{m\-\_\-vert\-Qsci@{m\-\_\-vert\-Qsci}!MainWindow@{Main\-Window}}
+\subsubsection[{m\-\_\-vert\-Qsci}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Cebitor}$\ast$ Main\-Window\-::m\-\_\-vert\-Qsci\hspace{0.3cm}{\ttfamily [private]}}\label{class_main_window_aac052ca9526950042c59aa8d6a2b04ea}
+
+
+our Q\-Scintilla widget1 (vertex) 
+
+
+
+Definition at line 120 of file Main\-Window.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+{\bf Main\-Window.\-h}\item 
+{\bf Main\-Window.\-cpp}\end{DoxyCompactItemize}

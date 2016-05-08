@@ -1,0 +1,4 @@
+<map id="ParserLib" name="ParserLib">
+<area shape="rect" id="node2" href="$class_shader_manager.html" title="Handles creation and compilation of shaders via modified NGL ShaderLib. " alt="" coords="18,96,131,123"/>
+<area shape="rect" id="node3" href="$struct_shader_program_data.html" title="structure containing currently active shader data " alt="" coords="5,5,144,32"/>
+</map>

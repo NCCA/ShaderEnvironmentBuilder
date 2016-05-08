@@ -1,0 +1,5 @@
+<map id="Cebitor::charAdded" name="Cebitor::charAdded">
+<area shape="rect" id="node2" href="$class_cebitor.html#af4b61a42d87ff45b28200523e4b71a65" title="adds closing character for braces and quotes " alt="" coords="190,5,317,32"/>
+<area shape="rect" id="node3" href="$class_cebitor.html#af923411a34a12c7deb9698a10d5b6c38" title="adds indentation after newline following a &quot;{&quot; " alt="" coords="185,56,322,83"/>
+<area shape="rect" id="node4" href="$class_cebitor.html#a759c7d4cb58cc46c43e203f26320a2aa" title="removes duplicates of closing braces and quotes " alt="" coords="199,107,308,133"/>
+</map>

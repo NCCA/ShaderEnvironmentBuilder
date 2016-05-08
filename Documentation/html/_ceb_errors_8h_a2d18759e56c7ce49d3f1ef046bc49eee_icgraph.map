@@ -1,0 +1,4 @@
+<map id="clearAllGlErrors" name="clearAllGlErrors">
+<area shape="rect" id="node2" href="$class_n_g_l_scene.html#a40efee086fe1c2c956e6d66774d9d18f" title="the initialize class is called once when the window is created and we have a valid GL context use thi..." alt="" coords="165,5,291,32"/>
+<area shape="rect" id="node3" href="$class_n_g_l_scene.html#a6285f61227606fab03e138db7b6e097d" title="Constructor for GLWindow. " alt="" coords="339,5,493,32"/>
+</map>
