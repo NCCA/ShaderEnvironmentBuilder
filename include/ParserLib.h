@@ -86,7 +86,10 @@ public:
   /// queried for its uniforms
   //----------------------------------------------------------------------------
   ShaderManager* m_shaderManager;
-
+  //----------------------------------------------------------------------------
+  /// @brief List of uniform IDs that are incompatible with the button uniforms
+  /// we have created
+  //----------------------------------------------------------------------------
   std::vector<int> m_ignoreUniformIDs;
 
 };

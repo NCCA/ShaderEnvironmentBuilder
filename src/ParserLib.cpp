@@ -133,8 +133,6 @@ void ParserLib::initializeUniformData()
 
       }
     }
-
-
   }
   m_num -= m_ignoreUniformIDs.size();
   uniformDataTypes();
