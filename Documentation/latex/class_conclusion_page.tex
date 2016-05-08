@@ -70,7 +70,7 @@ Constructor, passing a child of parent.
 \end{DoxyParams}
 
 
-Definition at line 406 of file New\-Project\-Wizard.\-cpp.
+Definition at line 452 of file New\-Project\-Wizard.\-cpp.
 
 
 
@@ -78,17 +78,17 @@ References m\-\_\-label.
 
 
 \begin{DoxyCode}
-407   : QWizardPage(parent)
-408 \{
-409   setTitle(tr(\textcolor{stringliteral}{"Conclusion"}));
-410 
-411   m_label = \textcolor{keyword}{new} QLabel;
-412   m_label->setWordWrap(\textcolor{keyword}{true});
-413 
-414   QVBoxLayout *layout = \textcolor{keyword}{new} QVBoxLayout;
-415   layout->addWidget(m_label);
-416   setLayout(layout);
-417 \}
+453   : QWizardPage(parent)
+454 \{
+455   setTitle(tr(\textcolor{stringliteral}{"Conclusion"}));
+456 
+457   m_label = \textcolor{keyword}{new} QLabel;
+458   m_label->setWordWrap(\textcolor{keyword}{true});
+459 
+460   QVBoxLayout *layout = \textcolor{keyword}{new} QVBoxLayout;
+461   layout->addWidget(m_label);
+462   setLayout(layout);
+463 \}
 \end{DoxyCode}
 
 
@@ -106,7 +106,7 @@ Used to prepare the Wizard page before it is shown and set default values.
 
 
 
-Definition at line 420 of file New\-Project\-Wizard.\-cpp.
+Definition at line 466 of file New\-Project\-Wizard.\-cpp.
 
 
 
@@ -114,12 +114,12 @@ References m\-\_\-label.
 
 
 \begin{DoxyCode}
-421 \{
-422   QString finishText = wizard()->buttonText(QWizard::FinishButton);
-423   finishText.remove(\textcolor{charliteral}{'&'});
-424   m_label->setText(tr(\textcolor{stringliteral}{"Click %1 to generate the project."})
-425                    .arg(finishText));
-426 \}
+467 \{
+468   QString finishText = wizard()->buttonText(QWizard::FinishButton);
+469   finishText.remove(\textcolor{charliteral}{'&'});
+470   m_label->setText(tr(\textcolor{stringliteral}{"Click %1 to generate the project."})
+471                    .arg(finishText));
+472 \}
 \end{DoxyCode}
 
 

@@ -181,20 +181,20 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="_new_project_wizard_8cpp_source.html#l00406">406</a> of file <a class="el" href="_new_project_wizard_8cpp_source.html">NewProjectWizard.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_new_project_wizard_8cpp_source.html#l00452">452</a> of file <a class="el" href="_new_project_wizard_8cpp_source.html">NewProjectWizard.cpp</a>.</p>
 
 <p>References <a class="el" href="_new_project_wizard_8h_source.html#l00390">m_label</a>.</p>
-<div class="fragment"><div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;  : QWizardPage(parent)</div>
-<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;{</div>
-<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;  setTitle(tr(<span class="stringliteral">&quot;Conclusion&quot;</span>));</div>
-<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;</div>
-<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;  <a class="code" href="class_conclusion_page.html#a620202ebfe08196b9f0b803562c81447">m_label</a> = <span class="keyword">new</span> QLabel;</div>
-<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;  <a class="code" href="class_conclusion_page.html#a620202ebfe08196b9f0b803562c81447">m_label</a>-&gt;setWordWrap(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;</div>
-<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;  QVBoxLayout *layout = <span class="keyword">new</span> QVBoxLayout;</div>
-<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;  layout-&gt;addWidget(<a class="code" href="class_conclusion_page.html#a620202ebfe08196b9f0b803562c81447">m_label</a>);</div>
-<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;  setLayout(layout);</div>
-<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;}</div>
+<div class="fragment"><div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;  : QWizardPage(parent)</div>
+<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;{</div>
+<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;  setTitle(tr(<span class="stringliteral">&quot;Conclusion&quot;</span>));</div>
+<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;</div>
+<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;  <a class="code" href="class_conclusion_page.html#a620202ebfe08196b9f0b803562c81447">m_label</a> = <span class="keyword">new</span> QLabel;</div>
+<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;  <a class="code" href="class_conclusion_page.html#a620202ebfe08196b9f0b803562c81447">m_label</a>-&gt;setWordWrap(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;</div>
+<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;  QVBoxLayout *layout = <span class="keyword">new</span> QVBoxLayout;</div>
+<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;  layout-&gt;addWidget(<a class="code" href="class_conclusion_page.html#a620202ebfe08196b9f0b803562c81447">m_label</a>);</div>
+<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;  setLayout(layout);</div>
+<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;}</div>
 <div class="ttc" id="class_conclusion_page_html_a620202ebfe08196b9f0b803562c81447"><div class="ttname"><a href="class_conclusion_page.html#a620202ebfe08196b9f0b803562c81447">ConclusionPage::m_label</a></div><div class="ttdeci">QLabel * m_label</div><div class="ttdoc">The text label for the intro. </div><div class="ttdef"><b>Definition:</b> <a href="_new_project_wizard_8h_source.html#l00390">NewProjectWizard.h:390</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -223,15 +223,15 @@ Private Attributes</h2></td></tr>
 
 <p>Used to prepare the Wizard page before it is shown and set default values. </p>
 
-<p>Definition at line <a class="el" href="_new_project_wizard_8cpp_source.html#l00420">420</a> of file <a class="el" href="_new_project_wizard_8cpp_source.html">NewProjectWizard.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_new_project_wizard_8cpp_source.html#l00466">466</a> of file <a class="el" href="_new_project_wizard_8cpp_source.html">NewProjectWizard.cpp</a>.</p>
 
 <p>References <a class="el" href="_new_project_wizard_8h_source.html#l00390">m_label</a>.</p>
-<div class="fragment"><div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;{</div>
-<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;  QString finishText = wizard()-&gt;buttonText(QWizard::FinishButton);</div>
-<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;  finishText.remove(<span class="charliteral">&#39;&amp;&#39;</span>);</div>
-<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;  <a class="code" href="class_conclusion_page.html#a620202ebfe08196b9f0b803562c81447">m_label</a>-&gt;setText(tr(<span class="stringliteral">&quot;Click %1 to generate the project.&quot;</span>)</div>
-<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;                   .arg(finishText));</div>
-<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;}</div>
+<div class="fragment"><div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;{</div>
+<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;  QString finishText = wizard()-&gt;buttonText(QWizard::FinishButton);</div>
+<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;  finishText.remove(<span class="charliteral">&#39;&amp;&#39;</span>);</div>
+<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;  <a class="code" href="class_conclusion_page.html#a620202ebfe08196b9f0b803562c81447">m_label</a>-&gt;setText(tr(<span class="stringliteral">&quot;Click %1 to generate the project.&quot;</span>)</div>
+<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;                   .arg(finishText));</div>
+<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;}</div>
 <div class="ttc" id="class_conclusion_page_html_a620202ebfe08196b9f0b803562c81447"><div class="ttname"><a href="class_conclusion_page.html#a620202ebfe08196b9f0b803562c81447">ConclusionPage::m_label</a></div><div class="ttdeci">QLabel * m_label</div><div class="ttdoc">The text label for the intro. </div><div class="ttdef"><b>Definition:</b> <a href="_new_project_wizard_8h_source.html#l00390">NewProjectWizard.h:390</a></div></div>
 </div><!-- fragment -->
 </div>

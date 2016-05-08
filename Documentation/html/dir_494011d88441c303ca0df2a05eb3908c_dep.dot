@@ -1,0 +1,15 @@
+digraph "0Features-0BugsCVA3" {
+  compound=true
+  node [ fontsize="10", fontname="FreeSans"];
+  edge [ labelfontsize="10", labelfontname="FreeSans"];
+  subgraph clusterdir_2574d9408e4f5346b90b61e8927cd493 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="GitHub" fontname="FreeSans", fontsize="10", URL="dir_2574d9408e4f5346b90b61e8927cd493.html"]
+  subgraph clusterdir_494011d88441c303ca0df2a05eb3908c {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_494011d88441c303ca0df2a05eb3908c.html"];
+    dir_494011d88441c303ca0df2a05eb3908c [shape=plaintext label="0Features-0BugsCVA3"];
+    dir_c25995846b196189a07e09f9cbd77f31 [shape=box label="include" color="black" fillcolor="white" style="filled" URL="dir_c25995846b196189a07e09f9cbd77f31.html"];
+    dir_fcefb6d2fb2367449d4de06b2efb8d92 [shape=box label="src" color="black" fillcolor="white" style="filled" URL="dir_fcefb6d2fb2367449d4de06b2efb8d92.html"];
+  }
+  }
+  dir_fcefb6d2fb2367449d4de06b2efb8d92->dir_c25995846b196189a07e09f9cbd77f31 [headlabel="32", labeldistance=1.5 headhref="dir_000004_000005.html"];
+}

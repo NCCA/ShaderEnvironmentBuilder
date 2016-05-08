@@ -131,84 +131,113 @@ References Glsl\-Order\-Page\-::get\-Frag\-List\-Widget(), Glsl\-Order\-Page\-::
 
 \begin{DoxyCode}
 53 \{
-54   m_output->m_projectName = field(\textcolor{stringliteral}{"projectName"}).toString().toStdString();
-55   m_output->m_projectDir = field(\textcolor{stringliteral}{"projectDirectory"}).toString().toStdString();
-56   QString ver = QString(\textcolor{stringliteral}{"#version %1 %2\(\backslash\)n\(\backslash\)n"})
-57                 .arg(field(\textcolor{stringliteral}{"glslVersion"}).toString(),
-58                      field(\textcolor{stringliteral}{"glslProfile"}).toString());
-59 
-60   QModelIndexList vertFiles = m_vertexSelectModel->selectedRows();
-61   QModelIndexList fragFiles = m_fragmentSelectModel->selectedRows();
+54   \textcolor{comment}{// get project name and directory}
+55   m_output->m_projectName = field(\textcolor{stringliteral}{"projectName"}).toString().toStdString();
+56   m_output->m_projectDir = field(\textcolor{stringliteral}{"projectDirectory"}).toString().toStdString();
+57 
+58   \textcolor{comment}{// create glsl version string}
+59   QString ver = QString(\textcolor{stringliteral}{"#version %1 %2\(\backslash\)n\(\backslash\)n"})
+60                 .arg(field(\textcolor{stringliteral}{"glslVersion"}).toString(),
+61                      field(\textcolor{stringliteral}{"glslProfile"}).toString());
 62 
-63   GlslOrderPage* glslOrderPg = \textcolor{keyword}{static\_cast<}GlslOrderPage*\textcolor{keyword}{>}(page(3));
-64 
-65   QStringList vertexOrderFileNames, fragmentOrderFileNames;
-66   QStringList vertFileNames, fragFileNames;
+63   \textcolor{comment}{// get the selected rows from the vertex and fragment selection models used}
+64   \textcolor{comment}{// with the treeviews}
+65   QModelIndexList vertFiles = m_vertexSelectModel->selectedRows();
+66   QModelIndexList fragFiles = m_fragmentSelectModel->selectedRows();
 67 
-68   \textcolor{keyword}{const} QListWidget* vertFilesOrder = glslOrderPg->getVertListWidget();
-69   \textcolor{keyword}{const} QListWidget* fragFilesOrder = glslOrderPg->getFragListWidget();
+68   \textcolor{comment}{// Get the glsl order page}
+69   GlslOrderPage* glslOrderPg = \textcolor{keyword}{static\_cast<}GlslOrderPage*\textcolor{keyword}{>}(page(3));
 70 
-71   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i=0; i<vertFilesOrder->count(); ++i)
-72   \{
-73     vertFileNames.append(m_fileModel->fileInfo(vertFiles.at(i)).fileName());
-74     vertexOrderFileNames.append(vertFilesOrder->item(i)->text());
-75   \}
+71   \textcolor{comment}{// Setup variables for getting the correct order of the files}
+72   \textcolor{comment}{// ordered filenames (from the qlistwidgets)}
+73   QStringList vertexOrderFileNames, fragmentOrderFileNames;
+74   \textcolor{comment}{// unordered filenames (from the qtreeviews)}
+75   QStringList vertFileNames, fragFileNames;
 76 
-77   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i=0; i<fragFilesOrder->count(); ++i)
-78   \{
-79     fragFileNames.append(m_fileModel->fileInfo(fragFiles.at(i)).fileName());
-80     fragmentOrderFileNames.append(fragFilesOrder->item(i)->text());
-81   \}
-82 
-83   QString vertexFilesString, fragmentFilesString;
-84   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i=0; i<vertFileNames.length(); ++i)
-85   \{
-86     \textcolor{keywordtype}{int} index = vertFileNames.indexOf(vertexOrderFileNames[i]);
-87     QFile vFile(m_fileModel->fileInfo(vertFiles.at(index)).absoluteFilePath());
-88     \textcolor{keywordflow}{if} (!vFile.open(QIODevice::ReadOnly | QIODevice::Text))
-89     \{
-90       \textcolor{comment}{// Raise an error if failed}
-91       CEBRaise::QtFileError(vFile.error(),
-92                             m_fileModel->fileInfo(vertFiles.at(index))
-93                                                            .absoluteFilePath());
-94     \}
-95     QTextStream in(&vFile);
-96     vertexFilesString.append(in.readAll());
-97     vertexFilesString.append(\textcolor{stringliteral}{"\(\backslash\)n"});
-98   \}
-99 
-100   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i=0; i<fragFileNames.length(); ++i)
+77   \textcolor{comment}{// get the list of ordered files from the list widgets}
+78   \textcolor{keyword}{const} QListWidget* vertFilesOrder = glslOrderPg->getVertListWidget();
+79   \textcolor{keyword}{const} QListWidget* fragFilesOrder = glslOrderPg->getFragListWidget();
+80 
+81   \textcolor{comment}{// create the unordered and ordered file name lists for vertex}
+82   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i=0; i<vertFilesOrder->count(); ++i)
+83   \{
+84     vertFileNames.append(m_fileModel->fileInfo(vertFiles.at(i)).fileName());
+85     vertexOrderFileNames.append(vertFilesOrder->item(i)->text());
+86   \}
+87 
+88   \textcolor{comment}{// create the unordered and ordered file name lists for fragment}
+89   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i=0; i<fragFilesOrder->count(); ++i)
+90   \{
+91     fragFileNames.append(m_fileModel->fileInfo(fragFiles.at(i)).fileName());
+92     fragmentOrderFileNames.append(fragFilesOrder->item(i)->text());
+93   \}
+94 
+95   \textcolor{comment}{// the final vertex and fragment strings}
+96   QString vertexFilesString, fragmentFilesString;
+97 
+98   \textcolor{comment}{// Now find the correct index from the ordered list using the ordered and}
+99   \textcolor{comment}{// un-ordered file name lists and get the file value from the file model}
+100   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i=0; i<vertFileNames.length(); ++i)
 101   \{
-102     \textcolor{keywordtype}{int} index = fragFileNames.indexOf(fragmentOrderFileNames[i]);
-103     QFile fFile(m_fileModel->fileInfo(fragFiles.at(index)).absoluteFilePath());
-104     \textcolor{keywordflow}{if} (!fFile.open(QIODevice::ReadOnly | QIODevice::Text))
-105     \{
-106       \textcolor{comment}{// Raise an error if failed}
-107       CEBRaise::QtFileError(fFile.error(),
-108                             m_fileModel->fileInfo(fragFiles.at(index))
-109                                                            .absoluteFilePath());
-110     \}
-111     QTextStream in(&fFile);
-112     fragmentFilesString.append(in.readAll());
-113     fragmentFilesString.append(\textcolor{stringliteral}{"\(\backslash\)n"});
-114   \}
-115 
-116 
-117   \textcolor{keywordflow}{if}(!vertexFilesString.contains(\textcolor{stringliteral}{"#version"}))
-118   \{
-119     vertexFilesString.push\_front(ver+\textcolor{stringliteral}{"\(\backslash\)n"});
-120   \}
-121 
-122   \textcolor{keywordflow}{if}(!fragmentFilesString.contains(\textcolor{stringliteral}{"#version"}))
-123   \{
-124     fragmentFilesString.push\_front(ver+\textcolor{stringliteral}{"\(\backslash\)n"});
-125   \}
-126 
-127   m_output->m_vertSource = vertexFilesString;
-128   m_output->m_fragSource = fragmentFilesString;
-129 
-130   QDialog::accept();
-131 \}
+102     \textcolor{comment}{// getting the correct index from the ordered file list}
+103     \textcolor{keywordtype}{int} index = vertFileNames.indexOf(vertexOrderFileNames[i]);
+104     \textcolor{comment}{// get the file at the correct index from the selected rows in the QTreeView}
+105     QFile vFile(m_fileModel->fileInfo(vertFiles.at(index)).absoluteFilePath());
+106     \textcolor{comment}{// open the file}
+107     \textcolor{keywordflow}{if} (!vFile.open(QIODevice::ReadOnly | QIODevice::Text))
+108     \{
+109       \textcolor{comment}{// Raise an error if failed}
+110       CEBRaise::QtFileError(vFile.error(),
+111                             m_fileModel->fileInfo(vertFiles.at(index))
+112                                                            .absoluteFilePath());
+113     \}
+114     \textcolor{comment}{// append the file to a single string}
+115     QTextStream in(&vFile);
+116     vertexFilesString.append(in.readAll());
+117     vertexFilesString.append(\textcolor{stringliteral}{"\(\backslash\)n"});
+118   \}
+119 
+120   \textcolor{comment}{// REPEAT above again}
+121   \textcolor{comment}{// Now find the correct index from the ordered list using the ordered and}
+122   \textcolor{comment}{// un-ordered file name lists and get the file value from the file model}
+123   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i=0; i<fragFileNames.length(); ++i)
+124   \{
+125     \textcolor{comment}{// getting the correct index from the ordered file list}
+126     \textcolor{keywordtype}{int} index = fragFileNames.indexOf(fragmentOrderFileNames[i]);
+127     \textcolor{comment}{// get the file at the correct index from the selected rows in the QTreeView}
+128     QFile fFile(m_fileModel->fileInfo(fragFiles.at(index)).absoluteFilePath());
+129     \textcolor{comment}{// open the file}
+130     \textcolor{keywordflow}{if} (!fFile.open(QIODevice::ReadOnly | QIODevice::Text))
+131     \{
+132       \textcolor{comment}{// Raise an error if failed}
+133       CEBRaise::QtFileError(fFile.error(),
+134                             m_fileModel->fileInfo(fragFiles.at(index))
+135                                                            .absoluteFilePath());
+136     \}
+137     \textcolor{comment}{// append the file to a single string}
+138     QTextStream in(&fFile);
+139     fragmentFilesString.append(in.readAll());
+140     fragmentFilesString.append(\textcolor{stringliteral}{"\(\backslash\)n"});
+141   \}
+142 
+143   \textcolor{comment}{// check if each of the file strings already contains a version. If it doesn't}
+144   \textcolor{comment}{// then push to front}
+145   \textcolor{keywordflow}{if}(!vertexFilesString.contains(\textcolor{stringliteral}{"#version"}))
+146   \{
+147     vertexFilesString.push\_front(ver+\textcolor{stringliteral}{"\(\backslash\)n"});
+148   \}
+149   \textcolor{comment}{// same as above}
+150   \textcolor{keywordflow}{if}(!fragmentFilesString.contains(\textcolor{stringliteral}{"#version"}))
+151   \{
+152     fragmentFilesString.push\_front(ver+\textcolor{stringliteral}{"\(\backslash\)n"});
+153   \}
+154   \textcolor{comment}{// store in output}
+155   m_output->m_vertSource = vertexFilesString;
+156   m_output->m_fragSource = fragmentFilesString;
+157 
+158   \textcolor{comment}{// accept the dialog}
+159   QDialog::accept();
+160 \}
 \end{DoxyCode}
 
 

@@ -65,7 +65,7 @@ Constructor, passing a child of parent.
 \end{DoxyParams}
 
 
-Definition at line 135 of file New\-Project\-Wizard.\-cpp.
+Definition at line 164 of file New\-Project\-Wizard.\-cpp.
 
 
 
@@ -73,21 +73,21 @@ References m\-\_\-label.
 
 
 \begin{DoxyCode}
-136   : QWizardPage(parent)
-137 \{
-138   setTitle(tr(\textcolor{stringliteral}{"Introduction"}));
-139 
-140   m_label = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"This wizard will generate a CEB project "}
-141                           \textcolor{stringliteral}{"definition. You simply "}
-142                           \textcolor{stringliteral}{"need to specify the project name and set a few "}
-143                           \textcolor{stringliteral}{"options to produce a json project file "}
-144                           \textcolor{stringliteral}{"implementation for your new OpenGL shader."}));
-145   m_label->setWordWrap(\textcolor{keyword}{true});
-146 
-147   QVBoxLayout *layout = \textcolor{keyword}{new} QVBoxLayout;
-148   layout->addWidget(m_label);
-149   setLayout(layout);
-150 \}
+165   : QWizardPage(parent)
+166 \{
+167   setTitle(tr(\textcolor{stringliteral}{"Introduction"}));
+168 
+169   m_label = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"This wizard will generate a CEB project "}
+170                           \textcolor{stringliteral}{"definition. You simply "}
+171                           \textcolor{stringliteral}{"need to specify the project name and set a few "}
+172                           \textcolor{stringliteral}{"options to produce a json project file "}
+173                           \textcolor{stringliteral}{"implementation for your new OpenGL shader."}));
+174   m_label->setWordWrap(\textcolor{keyword}{true});
+175 
+176   QVBoxLayout *layout = \textcolor{keyword}{new} QVBoxLayout;
+177   layout->addWidget(m_label);
+178   setLayout(layout);
+179 \}
 \end{DoxyCode}
 
 

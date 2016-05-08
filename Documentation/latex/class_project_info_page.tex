@@ -91,7 +91,7 @@ Constructor, passing a child of parent.
 \end{DoxyParams}
 
 
-Definition at line 154 of file New\-Project\-Wizard.\-cpp.
+Definition at line 183 of file New\-Project\-Wizard.\-cpp.
 
 
 
@@ -99,62 +99,66 @@ References m\-\_\-b\-\_\-browse\-Directory, m\-\_\-cb\-\_\-glsl\-Profile, m\-\_\
 
 
 \begin{DoxyCode}
-155   : QWizardPage(parent)
-156 \{
-157   setTitle(tr(\textcolor{stringliteral}{"Project Information"}));
-158   setSubTitle(tr(\textcolor{stringliteral}{"Specify basic information about the project for which you "}
-159                  \textcolor{stringliteral}{"want to generate."}));
-160 
-161   m_l_projectName = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"Project name:"}));
-162   m_le_projectName = \textcolor{keyword}{new} QLineEdit();
-163   m_l_projectName->setBuddy(m_le_projectName);
-164 
-165   m_l_projectDirectory = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"Project Directory:"}));
-166   m_b_browseDirectory = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"Browse..."}));
-167   m_le_projectDirectory = \textcolor{keyword}{new} QLineEdit();
-168   m_l_projectDirectory->setBuddy(m_le_projectDirectory);
-169 
-170   QFrame *line = \textcolor{keyword}{new} QFrame();
-171   line->setObjectName(QString::fromUtf8(\textcolor{stringliteral}{"line"}));
-172   line->setFrameShape(QFrame::HLine);
-173   line->setFrameShadow(QFrame::Sunken);
-174 
-175   m_l_glslVersion = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"GLSL Version:"}));
-176   m_cb_glslVersion = \textcolor{keyword}{new} QComboBox();
-177   QStringList glslVer = \{\textcolor{stringliteral}{"110"}, \textcolor{stringliteral}{"120"}, \textcolor{stringliteral}{"130"}, \textcolor{stringliteral}{"140"}, \textcolor{stringliteral}{"150"}, \textcolor{stringliteral}{"330"}, \textcolor{stringliteral}{"400"},
-178                          \textcolor{stringliteral}{"410"}, \textcolor{stringliteral}{"420"}, \textcolor{stringliteral}{"430"}, \textcolor{stringliteral}{"430"}, \textcolor{stringliteral}{"440"}, \textcolor{stringliteral}{"450"}\};
-179   std::reverse(glslVer.begin(), glslVer.end());
-180   m_cb_glslVersion->addItems(glslVer);
-181   m_cb_glslVersion->setEditable(\textcolor{keyword}{true});
-182   m_cb_glslVersion->setInsertPolicy(QComboBox::InsertAtTop);
-183 
-184   m_l_glslProfile = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"GLSL Profile:"}));
-185   m_cb_glslProfile = \textcolor{keyword}{new} QComboBox();
-186   m_cb_glslProfile->addItems(\{\textcolor{stringliteral}{"core"}, \textcolor{stringliteral}{"compatibility"}\});
-187 
-188   registerField(\textcolor{stringliteral}{"projectName*"}, m_le_projectName);
-189   registerField(\textcolor{stringliteral}{"projectDirectory*"}, m_le_projectDirectory);
-190   registerField(\textcolor{stringliteral}{"glslVersion"}, m_cb_glslVersion, \textcolor{stringliteral}{"currentText"},
-191                 \textcolor{stringliteral}{"currentIndexChanged"});
-192   registerField(\textcolor{stringliteral}{"glslProfile"}, m_cb_glslProfile,\textcolor{stringliteral}{"currentText"},
-193                 \textcolor{stringliteral}{"currentIndexChanged"});
-194 
-195   QGridLayout *layout = \textcolor{keyword}{new} QGridLayout;
-196   layout->addWidget(m_l_projectName, 0, 0);
-197   layout->addWidget(m_le_projectName, 0, 1, 1, 2);
-198   layout->addWidget(m_l_projectDirectory, 1, 0);
-199   layout->addWidget(m_le_projectDirectory, 1, 1);
-200   layout->addWidget(m_b_browseDirectory, 1, 2);
-201   layout->addWidget(line, 2,0,1,3);
-202   layout->addWidget(m_l_glslVersion, 3,0);
-203   layout->addWidget(m_cb_glslVersion, 3,1,1,2);
-204   layout->addWidget(m_l_glslProfile, 4,0);
-205   layout->addWidget(m_cb_glslProfile, 4,1,1,2);
-206   setLayout(layout);
-207 
-208   connect(m_b_browseDirectory, SIGNAL (clicked()),\textcolor{keyword}{this},
-209           SLOT(setProjectDirectory()));
-210 \}
+184   : QWizardPage(parent)
+185 \{
+186   setTitle(tr(\textcolor{stringliteral}{"Project Information"}));
+187   setSubTitle(tr(\textcolor{stringliteral}{"Specify basic information about the project for which you "}
+188                  \textcolor{stringliteral}{"want to generate."}));
+189   \textcolor{comment}{// project name}
+190   m_l_projectName = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"Project name:"}));
+191   m_le_projectName = \textcolor{keyword}{new} QLineEdit();
+192   m_l_projectName->setBuddy(m_le_projectName);
+193 
+194   m_l_projectDirectory = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"Project Directory:"}));
+195   m_b_browseDirectory = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"Browse..."}));
+196   m_le_projectDirectory = \textcolor{keyword}{new} QLineEdit();
+197   m_l_projectDirectory->setBuddy(m_le_projectDirectory);
+198 
+199   \textcolor{comment}{// create a sperator}
+200   QFrame *line = \textcolor{keyword}{new} QFrame();
+201   line->setObjectName(QString::fromUtf8(\textcolor{stringliteral}{"line"}));
+202   line->setFrameShape(QFrame::HLine);
+203   line->setFrameShadow(QFrame::Sunken);
+204 
+205   m_l_glslVersion = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"GLSL Version:"}));
+206   m_cb_glslVersion = \textcolor{keyword}{new} QComboBox();
+207   QStringList glslVer = \{\textcolor{stringliteral}{"110"}, \textcolor{stringliteral}{"120"}, \textcolor{stringliteral}{"130"}, \textcolor{stringliteral}{"140"}, \textcolor{stringliteral}{"150"}, \textcolor{stringliteral}{"330"}, \textcolor{stringliteral}{"400"},
+208                          \textcolor{stringliteral}{"410"}, \textcolor{stringliteral}{"420"}, \textcolor{stringliteral}{"430"}, \textcolor{stringliteral}{"430"}, \textcolor{stringliteral}{"440"}, \textcolor{stringliteral}{"450"}\};
+209   std::reverse(glslVer.begin(), glslVer.end());
+210   m_cb_glslVersion->addItems(glslVer);
+211   m_cb_glslVersion->setEditable(\textcolor{keyword}{true});
+212   m_cb_glslVersion->setInsertPolicy(QComboBox::InsertAtTop);
+213 
+214   m_l_glslProfile = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"GLSL Profile:"}));
+215   m_cb_glslProfile = \textcolor{keyword}{new} QComboBox();
+216   m_cb_glslProfile->addItems(\{\textcolor{stringliteral}{"core"}, \textcolor{stringliteral}{"compatibility"}\});
+217 
+218   \textcolor{comment}{// register the fields so that the wizard can read the values at the end}
+219   registerField(\textcolor{stringliteral}{"projectName*"}, m_le_projectName);
+220   registerField(\textcolor{stringliteral}{"projectDirectory*"}, m_le_projectDirectory);
+221   registerField(\textcolor{stringliteral}{"glslVersion"}, m_cb_glslVersion, \textcolor{stringliteral}{"currentText"},
+222                 \textcolor{stringliteral}{"currentIndexChanged"});
+223   registerField(\textcolor{stringliteral}{"glslProfile"}, m_cb_glslProfile,\textcolor{stringliteral}{"currentText"},
+224                 \textcolor{stringliteral}{"currentIndexChanged"});
+225 
+226   \textcolor{comment}{// add all the widgets to the layout}
+227   QGridLayout *layout = \textcolor{keyword}{new} QGridLayout;
+228   layout->addWidget(m_l_projectName, 0, 0);
+229   layout->addWidget(m_le_projectName, 0, 1, 1, 2);
+230   layout->addWidget(m_l_projectDirectory, 1, 0);
+231   layout->addWidget(m_le_projectDirectory, 1, 1);
+232   layout->addWidget(m_b_browseDirectory, 1, 2);
+233   layout->addWidget(line, 2,0,1,3);
+234   layout->addWidget(m_l_glslVersion, 3,0);
+235   layout->addWidget(m_cb_glslVersion, 3,1,1,2);
+236   layout->addWidget(m_l_glslProfile, 4,0);
+237   layout->addWidget(m_cb_glslProfile, 4,1,1,2);
+238   setLayout(layout);
+239 
+240   \textcolor{comment}{// connect the browse button to open file dialog}
+241   connect(m_b_browseDirectory, SIGNAL (clicked()),\textcolor{keyword}{this},
+242           SLOT(setProjectDirectory()));
+243 \}
 \end{DoxyCode}
 
 
@@ -183,7 +187,7 @@ Used to prepare the Wizard page before it is shown and set default values.
 
 
 
-Definition at line 213 of file New\-Project\-Wizard.\-cpp.
+Definition at line 246 of file New\-Project\-Wizard.\-cpp.
 
 
 
@@ -191,18 +195,18 @@ References m\-\_\-cb\-\_\-glsl\-Profile, m\-\_\-cb\-\_\-glsl\-Version, m\-\_\-le
 
 
 \begin{DoxyCode}
-214 \{
-215   m_le_projectName->setText(\textcolor{stringliteral}{"Phong"});
-216   m_le_projectDirectory->setText(QDir::homePath());
-217 
-218   \textcolor{comment}{// get the shader version and set the combobox to the highest compatible}
-219   \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}* glv = glGetString(GL\_SHADING\_LANGUAGE\_VERSION);
-220   QString glVerStrConvert = QString((\textcolor{keyword}{const} \textcolor{keywordtype}{char}* ) glv);
-221   QString glVerStr = glVerStrConvert.left(1) + glVerStrConvert.mid(2,2);
-222 
-223   m_cb_glslVersion->setCurrentText(glVerStr);
-224   m_cb_glslProfile->setCurrentIndex(0);
-225 \}
+247 \{
+248   m_le_projectName->setText(\textcolor{stringliteral}{"Phong"});
+249   m_le_projectDirectory->setText(QDir::homePath());
+250 
+251   \textcolor{comment}{// get the shader version and set the combobox to the highest compatible}
+252   \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}* glv = glGetString(GL\_SHADING\_LANGUAGE\_VERSION);
+253   QString glVerStrConvert = QString((\textcolor{keyword}{const} \textcolor{keywordtype}{char}* ) glv);
+254   QString glVerStr = glVerStrConvert.left(1) + glVerStrConvert.mid(2,2);
+255 
+256   m_cb_glslVersion->setCurrentText(glVerStr);
+257   m_cb_glslProfile->setCurrentIndex(0);
+258 \}
 \end{DoxyCode}
 \index{Project\-Info\-Page@{Project\-Info\-Page}!set\-Project\-Directory@{set\-Project\-Directory}}
 \index{set\-Project\-Directory@{set\-Project\-Directory}!ProjectInfoPage@{Project\-Info\-Page}}
@@ -217,7 +221,7 @@ Used to fill the project directory line edit by opening a file dialog.
 
 
 
-Definition at line 228 of file New\-Project\-Wizard.\-cpp.
+Definition at line 261 of file New\-Project\-Wizard.\-cpp.
 
 
 
@@ -225,18 +229,18 @@ References m\-\_\-le\-\_\-project\-Directory.
 
 
 \begin{DoxyCode}
-229 \{
-230   QFileDialog dialog(\textcolor{keyword}{this});
-231   dialog.setFileMode(QFileDialog::Directory);
-232   dialog.setOption(QFileDialog::ShowDirsOnly, \textcolor{keyword}{true});
-233   QStringList folderNames;
-234   \textcolor{keywordflow}{if} (dialog.exec())
-235   \{
-236     folderNames = dialog.selectedFiles();
-237     qDebug() << folderNames;
-238   \}
-239   m_le_projectDirectory->setText(folderNames.first());
-240 \}
+262 \{
+263   QFileDialog dialog(\textcolor{keyword}{this});
+264   dialog.setFileMode(QFileDialog::Directory);
+265   dialog.setOption(QFileDialog::ShowDirsOnly, \textcolor{keyword}{true});
+266   QStringList folderNames;
+267   \textcolor{keywordflow}{if} (dialog.exec())
+268   \{
+269     folderNames = dialog.selectedFiles();
+270     qDebug() << folderNames;
+271   \}
+272   m_le_projectDirectory->setText(folderNames.first());
+273 \}
 \end{DoxyCode}
 
 

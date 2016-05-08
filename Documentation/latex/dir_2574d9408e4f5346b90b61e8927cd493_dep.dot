@@ -1,0 +1,13 @@
+digraph "GitHub" {
+  compound=true
+  node [ fontsize="10", fontname="FreeSans"];
+  edge [ labelfontsize="10", labelfontname="FreeSans"];
+  subgraph clusterdir_bdc778f2532979b14047db746cff355e {
+    graph [ bgcolor="#ddddee", pencolor="black", label="jflynn" fontname="FreeSans", fontsize="10", URL="dir_bdc778f2532979b14047db746cff355e.html"]
+  subgraph clusterdir_2574d9408e4f5346b90b61e8927cd493 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_2574d9408e4f5346b90b61e8927cd493.html"];
+    dir_2574d9408e4f5346b90b61e8927cd493 [shape=plaintext label="GitHub"];
+    dir_494011d88441c303ca0df2a05eb3908c [shape=box label="0Features-0BugsCVA3" color="red" fillcolor="white" style="filled" URL="dir_494011d88441c303ca0df2a05eb3908c.html"];
+  }
+  }
+}

@@ -82,7 +82,7 @@ Constructor, passing a child of parent.
 \end{DoxyParams}
 
 
-Definition at line 358 of file New\-Project\-Wizard.\-cpp.
+Definition at line 399 of file New\-Project\-Wizard.\-cpp.
 
 
 
@@ -90,28 +90,29 @@ References m\-\_\-l\-\_\-fragment\-Order, m\-\_\-l\-\_\-vertex\-Order, m\-\_\-ls
 
 
 \begin{DoxyCode}
-359   : QWizardPage(parent)
-360 \{
-361   m_wizard = \textcolor{keyword}{static\_cast<}NewProjectWizard*\textcolor{keyword}{>}(parent);
-362   setTitle(tr(\textcolor{stringliteral}{"GLSL File Order"}));
-363   setSubTitle(tr(\textcolor{stringliteral}{"Specify the order in which the GLSL files will be loaded "}
-364                  \textcolor{stringliteral}{"into the shader program."}));
-365 
-366   m_l_vertexOrder = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"Vertex File Order:"}));
-367   m_l_fragmentOrder = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"Fragment File Order:"}));
-368 
-369   m_ls_vertFilesOrder = \textcolor{keyword}{new} QListWidget();
-370   m_ls_vertFilesOrder->setDragDropMode(QAbstractItemView::InternalMove);
-371   m_ls_fragFilesOrder = \textcolor{keyword}{new} QListWidget();
-372   m_ls_fragFilesOrder->setDragDropMode(QAbstractItemView::InternalMove);
-373 
-374   QGridLayout *layout = \textcolor{keyword}{new} QGridLayout();
-375   layout->addWidget(m_l_vertexOrder, 0,0);
-376   layout->addWidget(m_l_fragmentOrder, 0,1);
-377   layout->addWidget(m_ls_vertFilesOrder, 1,0);
-378   layout->addWidget(m_ls_fragFilesOrder, 1,1);
-379   setLayout(layout);
-380 \}
+400   : QWizardPage(parent)
+401 \{
+402   m_wizard = \textcolor{keyword}{static\_cast<}NewProjectWizard*\textcolor{keyword}{>}(parent);
+403   setTitle(tr(\textcolor{stringliteral}{"GLSL File Order"}));
+404   setSubTitle(tr(\textcolor{stringliteral}{"Specify the order in which the GLSL files will be loaded "}
+405                  \textcolor{stringliteral}{"into the shader program."}));
+406 
+407   m_l_vertexOrder = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"Vertex File Order:"}));
+408   m_l_fragmentOrder = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"Fragment File Order:"}));
+409 
+410   \textcolor{comment}{// create list widgets and allow dragging and dropping}
+411   m_ls_vertFilesOrder = \textcolor{keyword}{new} QListWidget();
+412   m_ls_vertFilesOrder->setDragDropMode(QAbstractItemView::InternalMove);
+413   m_ls_fragFilesOrder = \textcolor{keyword}{new} QListWidget();
+414   m_ls_fragFilesOrder->setDragDropMode(QAbstractItemView::InternalMove);
+415 
+416   QGridLayout *layout = \textcolor{keyword}{new} QGridLayout();
+417   layout->addWidget(m_l_vertexOrder, 0,0);
+418   layout->addWidget(m_l_fragmentOrder, 0,1);
+419   layout->addWidget(m_ls_vertFilesOrder, 1,0);
+420   layout->addWidget(m_ls_fragFilesOrder, 1,1);
+421   setLayout(layout);
+422 \}
 \end{DoxyCode}
 
 
@@ -195,7 +196,7 @@ Used to prepare the Wizard page before it is shown and set default values.
 
 
 
-Definition at line 383 of file New\-Project\-Wizard.\-cpp.
+Definition at line 425 of file New\-Project\-Wizard.\-cpp.
 
 
 
@@ -203,25 +204,29 @@ References New\-Project\-Wizard\-::m\-\_\-file\-Model, New\-Project\-Wizard\-::m
 
 
 \begin{DoxyCode}
-384 \{
-385   m_ls_vertFilesOrder->clear();
-386   m_ls_fragFilesOrder->clear();
-387 
-388   QModelIndexList indexes = m_wizard->m_vertexSelectModel->selectedRows();
-389   QStringList vertexNames, fragmentNames;
-390   \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i: indexes)
-391   \{
-392     vertexNames.append(m_wizard->m_fileModel->fileInfo(i).fileName());
-393   \}
-394   m_ls_vertFilesOrder->addItems(vertexNames);
-395 
-396   indexes = m_wizard->m_fragmentSelectModel->selectedRows();
-397   \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i: indexes)
-398   \{
-399     fragmentNames.append(m_wizard->m_fileModel->fileInfo(i).fileName());
-400   \}
-401   m_ls_fragFilesOrder->addItems(fragmentNames);
-402 \}
+426 \{
+427   m_ls_vertFilesOrder->clear();
+428   m_ls_fragFilesOrder->clear();
+429 
+430   \textcolor{comment}{// fill the list widgets with the selected items from the previous pages}
+431   \textcolor{comment}{// QTreeViews}
+432   QModelIndexList indexes = m_wizard->m_vertexSelectModel->selectedRows();
+433   QStringList vertexNames, fragmentNames;
+434   \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i: indexes)
+435   \{
+436     vertexNames.append(m_wizard->m_fileModel->fileInfo(i).fileName());
+437   \}
+438   m_ls_vertFilesOrder->addItems(vertexNames);
+439 
+440   \textcolor{comment}{// fill the list widgets with the selected items from the previous pages}
+441   \textcolor{comment}{// QTreeViews}
+442   indexes = m_wizard->m_fragmentSelectModel->selectedRows();
+443   \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i: indexes)
+444   \{
+445     fragmentNames.append(m_wizard->m_fileModel->fileInfo(i).fileName());
+446   \}
+447   m_ls_fragFilesOrder->addItems(fragmentNames);
+448 \}
 \end{DoxyCode}
 
 
