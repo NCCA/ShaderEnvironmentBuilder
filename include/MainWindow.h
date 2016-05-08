@@ -41,7 +41,9 @@ class NGLScene;
 class StartupDialog;
 class ButtonLib;
 //------------------------------------------------------------------------------
-// Used to inherit the MainWindow from the generated form file ui_MainWindow.h
+/// @namespace Ui
+/// @brief Used to inherit the MainWindow from the generated form file
+/// ui_MainWindow.h
 //------------------------------------------------------------------------------
 namespace Ui {
 class MainWindow;

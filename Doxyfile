@@ -783,6 +783,7 @@ FILE_PATTERNS          = *.c \
                          *.hpp \
                          *.h++ \
                          *.idl \
+                         *.lex \
                          *.odl \
                          *.cs \
                          *.php \
