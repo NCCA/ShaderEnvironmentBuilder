@@ -2,7 +2,7 @@
 ## **CEB - C(S)hader Environment Builder**
 
 For our project, we created an OpenGL Shading Language(glsl) Interactive Development Environment(IDE).   
-Video: [![ScreenShot](http://i.imgur.com/qKyLgGT.png)](https://youtu.be/TqwFSnDcB7A)
+Video: [![ScreenShot](http://i.imgur.com/BuiTzTB.png?1)](https://youtu.be/TqwFSnDcB7A)
 
 The user can load shaders such as 'toon', 'basic metal', 'Phong' and more, then visualise and edit the vertex and fragment shader data using the IDE. Below are some screenshots:
 
