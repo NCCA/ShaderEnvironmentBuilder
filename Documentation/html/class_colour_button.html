@@ -21,7 +21,6 @@
   $(document).ready(function() { searchBox.OnSelectItem(0); });
 </script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
-<link href="mystyle.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -29,7 +28,6 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
-  <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CEB - &#39;C&#39;(S)hader Environment Builder
    &#160;<span id="projectnumber">1.0</span>
@@ -325,7 +323,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="_button_8cpp_source.html#l00047">47</a> of file <a class="el" href="_button_8cpp_source.html">Button.cpp</a>.</p>
 
-<p>References <a class="el" href="_button_8h_source.html#l00229">m_colour</a>, <a class="el" href="_button_8h_source.html#l00237">m_colourGroupBox</a>, <a class="el" href="_button_8h_source.html#l00233">m_colourPicked</a>, <a class="el" href="_button_8h_source.html#l00055">Button::m_libParent</a>, <a class="el" href="_button_8h_source.html#l00063">Button::m_parent</a>, <a class="el" href="_button_8h_source.html#l00059">Button::m_sceneParent</a>, and <a class="el" href="_button_lib_8cpp_source.html#l00099">ButtonLib::updateShaderValues()</a>.</p>
+<p>References <a class="el" href="_button_8h_source.html#l00229">m_colour</a>, <a class="el" href="_button_8h_source.html#l00237">m_colourGroupBox</a>, <a class="el" href="_button_8h_source.html#l00233">m_colourPicked</a>, <a class="el" href="_button_8h_source.html#l00055">Button::m_libParent</a>, <a class="el" href="_button_8h_source.html#l00063">Button::m_parent</a>, <a class="el" href="_button_8h_source.html#l00059">Button::m_sceneParent</a>, and <a class="el" href="_button_lib_8cpp_source.html#l00105">ButtonLib::updateShaderValues()</a>.</p>
 <div class="fragment"><div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;{</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  <span class="comment">//these are set so when the colour picker is opened the current colour is opened</span></div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  <a class="code" href="class_colour_button.html#a9105f23e49c6995233d42d3d028dd18a">m_colourPicked</a>.setRedF(<a class="code" href="class_colour_button.html#a40e0abfcdadcd7b2c249d275595c25a3">m_colour</a>.m_x);</div>
@@ -349,7 +347,7 @@ Additional Inherited Members</h2></td></tr>
 <div class="ttc" id="class_button_html_a4e649c5f7b62db1da6a57467e743b1b5"><div class="ttname"><a href="class_button.html#a4e649c5f7b62db1da6a57467e743b1b5">Button::m_parent</a></div><div class="ttdeci">QWidget * m_parent</div><div class="ttdoc">pointer to the parent window to know where to attach to </div><div class="ttdef"><b>Definition:</b> <a href="_button_8h_source.html#l00063">Button.h:63</a></div></div>
 <div class="ttc" id="class_colour_button_html_a9105f23e49c6995233d42d3d028dd18a"><div class="ttname"><a href="class_colour_button.html#a9105f23e49c6995233d42d3d028dd18a">ColourButton::m_colourPicked</a></div><div class="ttdeci">QColor m_colourPicked</div><div class="ttdoc">colour used to store attributes from colour picker </div><div class="ttdef"><b>Definition:</b> <a href="_button_8h_source.html#l00233">Button.h:233</a></div></div>
 <div class="ttc" id="class_button_html_a5ffdc2d1347d0633328e03801ee9ce69"><div class="ttname"><a href="class_button.html#a5ffdc2d1347d0633328e03801ee9ce69">Button::m_libParent</a></div><div class="ttdeci">ButtonLib * m_libParent</div><div class="ttdoc">pointer to the button library parent </div><div class="ttdef"><b>Definition:</b> <a href="_button_8h_source.html#l00055">Button.h:55</a></div></div>
-<div class="ttc" id="class_button_lib_html_ae2644c88c1e6846a9f55b4af96dcffb9"><div class="ttname"><a href="class_button_lib.html#ae2644c88c1e6846a9f55b4af96dcffb9">ButtonLib::updateShaderValues</a></div><div class="ttdeci">void updateShaderValues()</div><div class="ttdoc">sets the shader values from the button values </div><div class="ttdef"><b>Definition:</b> <a href="_button_lib_8cpp_source.html#l00099">ButtonLib.cpp:99</a></div></div>
+<div class="ttc" id="class_button_lib_html_ae2644c88c1e6846a9f55b4af96dcffb9"><div class="ttname"><a href="class_button_lib.html#ae2644c88c1e6846a9f55b4af96dcffb9">ButtonLib::updateShaderValues</a></div><div class="ttdeci">void updateShaderValues()</div><div class="ttdoc">sets the shader values from the button values </div><div class="ttdef"><b>Definition:</b> <a href="_button_lib_8cpp_source.html#l00105">ButtonLib.cpp:105</a></div></div>
 <div class="ttc" id="class_button_html_aa3ce7a1873a2d1b14d05e6381b900fb7"><div class="ttname"><a href="class_button.html#aa3ce7a1873a2d1b14d05e6381b900fb7">Button::m_sceneParent</a></div><div class="ttdeci">NGLScene * m_sceneParent</div><div class="ttdoc">pointer to the scene so that update can be called </div><div class="ttdef"><b>Definition:</b> <a href="_button_8h_source.html#l00059">Button.h:59</a></div></div>
 <div class="ttc" id="class_colour_button_html_a40e0abfcdadcd7b2c249d275595c25a3"><div class="ttname"><a href="class_colour_button.html#a40e0abfcdadcd7b2c249d275595c25a3">ColourButton::m_colour</a></div><div class="ttdeci">ngl::Vec4 m_colour</div><div class="ttdoc">vector to store colour attributes </div><div class="ttdef"><b>Definition:</b> <a href="_button_8h_source.html#l00229">Button.h:229</a></div></div>
 <div class="ttc" id="class_colour_button_html_af654f70a6788a906c396d049cc85d628"><div class="ttname"><a href="class_colour_button.html#af654f70a6788a906c396d049cc85d628">ColourButton::m_colourGroupBox</a></div><div class="ttdeci">QColorDialog * m_colourGroupBox</div><div class="ttdoc">colour box to select colours </div><div class="ttdef"><b>Definition:</b> <a href="_button_8h_source.html#l00237">Button.h:237</a></div></div>

@@ -47,7 +47,9 @@ void {\bf set\-Data} (std\-::string \-\_\-name, std\-::string \-\_\-vert, std\-:
 bool {\bf check\-Compile\-Error} (std\-::string \-\_\-shader\-Name, Q\-String $\ast$o\-\_\-log)
 \begin{DoxyCompactList}\small\item\em method to check compiling errors for a single shader object \end{DoxyCompactList}\item 
 bool {\bf check\-All\-Compile\-Error} (Q\-String $\ast$o\-\_\-log)
-\begin{DoxyCompactList}\small\item\em method to check compiling errors for all shader objects attached \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em method to check compiling errors for all shader objects attached \end{DoxyCompactList}\item 
+bool {\bf check\-Link\-Error} (Q\-String $\ast$o\-\_\-log)
+\begin{DoxyCompactList}\small\item\em method to check link error \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Private Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -122,7 +124,7 @@ to currently active shader program
 \end{DoxyParams}
 
 
-Definition at line 218 of file Shader\-Manager.\-cpp.
+Definition at line 254 of file Shader\-Manager.\-cpp.
 
 
 
@@ -130,24 +132,25 @@ References check\-Compile\-Error(), m\-\_\-data, Shader\-Program\-Data\-::m\-\_\
 
 
 \begin{DoxyCode}
-219 \{
-220   GLint isAllCompiled = GL\_TRUE;
-221   QString temp\_log;
-222   std::vector <std::string> shaderPrograms = \{m_data.m_vert, m_data.m_frag\};
-223 
-224   \textcolor{comment}{// Iterate between vertex and fragment shaders to check compile errors}
-225   \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} shaderProg: shaderPrograms)
-226   \{
-227     GLint isCompiled = checkCompileError(shaderProg, &temp\_log);
-228     \textcolor{keywordflow}{if} (!isCompiled)
-229     \{
-230       o\_log->append(QString(\textcolor{stringliteral}{"%1:\(\backslash\)n"}).arg(shaderProg.c\_str()));
-231       o\_log->append(temp\_log);
-232     \}
-233     isAllCompiled &= isCompiled;
-234   \}
-235   \textcolor{keywordflow}{return} isAllCompiled;
-236 \}
+255 \{
+256   GLint isAllCompiled = GL\_TRUE;
+257   QString temp\_log;
+258   std::vector <std::string> shaderPrograms = \{m_data.m_vert, m_data.m_frag\};
+259 
+260   \textcolor{comment}{// Iterate between vertex and fragment shaders to check compile errors}
+261   \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} shaderProg: shaderPrograms)
+262   \{
+263     GLint isCompiled = checkCompileError(shaderProg, &temp\_log);
+264     \textcolor{keywordflow}{if} (!isCompiled)
+265     \{
+266       o\_log->append(QString(\textcolor{stringliteral}{"%1:\(\backslash\)n"}).arg(shaderProg.c\_str()));
+267       o\_log->append(temp\_log);
+268     \}
+269     \textcolor{keywordflow}{if} (isCompiled == GL\_FALSE)
+270       isAllCompiled = isCompiled;
+271   \}
+272   \textcolor{keywordflow}{return} isAllCompiled;
+273 \}
 \end{DoxyCode}
 
 
@@ -192,39 +195,36 @@ method to check compiling errors for a single shader object
 \end{DoxyParams}
 
 
-Definition at line 185 of file Shader\-Manager.\-cpp.
+Definition at line 195 of file Shader\-Manager.\-cpp.
 
 
 \begin{DoxyCode}
-186 \{
-187   GLint isCompiled = 0;
-188   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
-189   GLuint shaderId = shader->getShaderID(\_shaderName);
-190 
-191   \textcolor{comment}{// Get compile status of shader}
-192   glGetShaderiv(shaderId, GL\_COMPILE\_STATUS, &isCompiled);
-193   \textcolor{keywordflow}{if}(isCompiled == GL\_FALSE)
-194   \{
-195     \textcolor{comment}{// Receive info log}
-196     GLint maxLength = 0;
-197     glGetShaderiv(shaderId, GL\_INFO\_LOG\_LENGTH, &maxLength);
-198 
-199     \textcolor{comment}{// The maxLength includes the NULL character}
-200     std::vector<GLchar> errorLog(maxLength);
-201     glGetShaderInfoLog(shaderId, maxLength, &maxLength, &errorLog[0]);
-202 
-203     \textcolor{comment}{//  Write error log to an std::string to be output at QString}
-204     std::string s(errorLog.begin(), errorLog.end());
-205 
-206     QString errLog = QString(s.c\_str());
-207 
-208     *o\_log = errLog;
-209 
-210     \textcolor{comment}{// Provide the infolog in whatever manor you deem best.}
-211     \textcolor{comment}{//throw ceb\_error::openGL\_list\_error(\_shaderProgName, errLog);}
-212   \}
-213   \textcolor{keywordflow}{return} isCompiled;
-214 \}
+196 \{
+197   GLint isCompiled = GL\_FALSE;
+198   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
+199   GLuint shaderId = shader->getShaderID(\_shaderName);
+200 
+201   \textcolor{comment}{// Get compile status of shader}
+202   glGetShaderiv(shaderId, GL\_COMPILE\_STATUS, &isCompiled);
+203   \textcolor{keywordflow}{if}(isCompiled == GL\_FALSE)
+204   \{
+205     \textcolor{comment}{// Receive info log}
+206     GLint maxLength = 0;
+207     glGetShaderiv(shaderId, GL\_INFO\_LOG\_LENGTH, &maxLength);
+208 
+209     \textcolor{comment}{// The maxLength includes the NULL character}
+210     std::vector<GLchar> errorLog(maxLength);
+211     glGetShaderInfoLog(shaderId, maxLength, &maxLength, &errorLog[0]);
+212 
+213     \textcolor{comment}{//  Write error log to an std::string to be output at QString}
+214     std::string s(errorLog.begin(), errorLog.end());
+215 
+216     QString errLog = QString(s.c\_str());
+217 
+218     *o\_log = errLog;
+219   \}
+220   \textcolor{keywordflow}{return} isCompiled;
+221 \}
 \end{DoxyCode}
 
 
@@ -233,6 +233,72 @@ Here is the caller graph for this function\-:\nopagebreak
 \begin{center}
 \leavevmode
 \includegraphics[width=350pt]{class_shader_manager_aec181009461227ed7ec70fca29111985_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Shader\-Manager@{Shader\-Manager}!check\-Link\-Error@{check\-Link\-Error}}
+\index{check\-Link\-Error@{check\-Link\-Error}!ShaderManager@{Shader\-Manager}}
+\subsubsection[{check\-Link\-Error}]{\setlength{\rightskip}{0pt plus 5cm}bool Shader\-Manager\-::check\-Link\-Error (
+\begin{DoxyParamCaption}
+\item[{Q\-String $\ast$}]{o\-\_\-log}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}\label{class_shader_manager_a733004d489eea80446ca07b3c11b7ede}
+
+
+method to check link error 
+
+
+\begin{DoxyParams}{Parameters}
+{\em o\-\_\-log} & the output error log \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 223 of file Shader\-Manager.\-cpp.
+
+
+
+References m\-\_\-data, and Shader\-Program\-Data\-::m\-\_\-name.
+
+
+\begin{DoxyCode}
+224 \{
+225   GLint isCompiled = GL\_FALSE;
+226   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
+227   GLuint progId = shader->getProgramID(m_data.m_name);
+228   GLint infologLength = 0;
+229 
+230   glGetProgramiv(progId,GL\_INFO\_LOG\_LENGTH,&infologLength);
+231 
+232   \textcolor{keywordflow}{if}(infologLength > 0)
+233   \{
+234     GLint charsWritten  = 0;
+235     std::vector<GLchar> errorLog(infologLength);
+236     glGetProgramInfoLog(progId, infologLength, &charsWritten, &errorLog[0]);
+237 
+238     \textcolor{comment}{//  Write error log to an std::string to be output at QString}
+239     std::string s(errorLog.begin(), errorLog.end());
+240     QString errLog = QString(s.c\_str());
+241 
+242     glGetProgramiv(progId, GL\_LINK\_STATUS, &isCompiled);
+243     o\_log->append(errLog);
+244     \textcolor{keywordflow}{if}( infologLength == GL\_FALSE)
+245     \{
+246       std::cerr<<\textcolor{stringliteral}{"Program link failed \(\backslash\)n"};
+247     \}
+248   \}
+249   \textcolor{keywordflow}{return} isCompiled;
+250 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_shader_manager_a733004d489eea80446ca07b3c11b7ede_icgraph}
 \end{center}
 \end{figure}
 
@@ -262,7 +328,7 @@ Definition at line 143 of file Shader\-Manager.\-cpp.
 
 
 
-References check\-All\-Compile\-Error(), m\-\_\-compile\-Status, m\-\_\-data, m\-\_\-error\-Log, Shader\-Program\-Data\-::m\-\_\-frag, Shader\-Program\-Data\-::m\-\_\-name, m\-\_\-texture\-Name, and Shader\-Program\-Data\-::m\-\_\-vert.
+References check\-All\-Compile\-Error(), check\-Link\-Error(), m\-\_\-compile\-Status, m\-\_\-data, m\-\_\-error\-Log, Shader\-Program\-Data\-::m\-\_\-frag, Shader\-Program\-Data\-::m\-\_\-name, m\-\_\-texture\-Name, and Shader\-Program\-Data\-::m\-\_\-vert.
 
 
 \begin{DoxyCode}
@@ -290,7 +356,7 @@ References check\-All\-Compile\-Error(), m\-\_\-compile\-Status, m\-\_\-data, m\
 165   \textcolor{keywordflow}{else}
 166   \{
 167     m_compileStatus = \textcolor{keyword}{true};
-168     m_errorLog.append(\textcolor{stringliteral}{"No Errors"});
+168 
 169     \textcolor{comment}{// add them to the program}
 170     shaderLib->attachShaderToProgram(m_data.m_name,m_data.m_vert);
 171     shaderLib->attachShaderToProgram(m_data.m_name,m_data.m_frag);
@@ -300,14 +366,25 @@ References check\-All\-Compile\-Error(), m\-\_\-compile\-Status, m\-\_\-data, m\
 175 
 176     \textcolor{comment}{// use the shader program}
 177     (*shaderLib)[m_data.m_name]->use();
-178     ngl::Texture texture(\textcolor{stringliteral}{"textures/rustTexture.jpg"});
-179     m_textureName=texture.setTextureGL();
-180   \}
-181 \}
+178     \textcolor{keywordflow}{if} (!checkLinkError(&m_errorLog))
+179     \{
+180       \textcolor{comment}{// output any compile errors to user}
+181       std::cout << m_errorLog.toUtf8().constData();
+182       m_compileStatus = \textcolor{keyword}{false};
+183     \}
+184     \textcolor{keywordflow}{else}
+185     \{
+186       m_errorLog.append(\textcolor{stringliteral}{"No Errors"});
+187     \}
+188     ngl::Texture texture(\textcolor{stringliteral}{"textures/rustTexture.jpg"});
+189     m_textureName=texture.setTextureGL();
+190   \}
+191 \}
 \end{DoxyCode}
 
 
-Here is the call graph for this function\-:\nopagebreak
+Here is the call graph for this function\-:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -731,7 +808,7 @@ References m\-\_\-data, and Shader\-Program\-Data\-::m\-\_\-name.
 \begin{DoxyCode}
 47 \{
 48   \textcolor{comment}{//grab an instance of shaderLib}
-49   ngl::ShaderLib *shaderLib = ngl::ShaderLib::instance(); 
+49   ngl::ShaderLib *shaderLib = ngl::ShaderLib::instance();
 50   \textcolor{keyword}{enum} shader\{objectShader=0,objectNormals=1\};
 51   \textcolor{comment}{//choose which shader to use}
 52   \textcolor{keywordflow}{switch}(\_shaderType)
@@ -776,7 +853,7 @@ structure containing names for currently actuve shader program
 
 
 
-Definition at line 117 of file Shader\-Manager.\-h.
+Definition at line 122 of file Shader\-Manager.\-h.
 
 \index{Shader\-Manager@{Shader\-Manager}!m\-\_\-error\-Log@{m\-\_\-error\-Log}}
 \index{m\-\_\-error\-Log@{m\-\_\-error\-Log}!ShaderManager@{Shader\-Manager}}
@@ -809,7 +886,7 @@ variable holding the identity of the bound texture map
 
 
 
-Definition at line 121 of file Shader\-Manager.\-h.
+Definition at line 126 of file Shader\-Manager.\-h.
 
 
 

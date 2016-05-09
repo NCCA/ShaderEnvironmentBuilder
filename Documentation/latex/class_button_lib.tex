@@ -258,20 +258,26 @@ References create\-Buttons(), and m\-\_\-button\-List.
 82           \textcolor{keywordflow}{if}(uniform->getTypeEnum()==GL\_FLOAT\_VEC4)
 83           \{
 84             uniform->setColour(\_buttonDup[i]->getColourQ());
-85           \}
-86           \textcolor{keywordflow}{if}(uniform->getTypeEnum()==GL\_FLOAT)
-87           \{
-88             uniform->setValue(\_buttonDup[i]->getValue());
-89           \}
-90           \textcolor{keywordflow}{if}(uniform->getTypeEnum()==GL\_FLOAT\_VEC3)
-91           \{
-92             uniform->setVec(\_buttonDup[i]->getVec());
+85             \_buttonDup.erase(\_buttonDup.begin()+i);
+86             \textcolor{keywordflow}{break};
+87           \}
+88           \textcolor{keywordflow}{if}(uniform->getTypeEnum()==GL\_FLOAT)
+89           \{
+90             uniform->setValue(\_buttonDup[i]->getValue());
+91             \_buttonDup.erase(\_buttonDup.begin()+i);
+92             \textcolor{keywordflow}{break};
 93           \}
-94         \}
-95       \}
-96     \}
-97   \}
-98 \}
+94           \textcolor{keywordflow}{if}(uniform->getTypeEnum()==GL\_FLOAT\_VEC3)
+95           \{
+96             uniform->setVec(\_buttonDup[i]->getVec());
+97             \_buttonDup.erase(\_buttonDup.begin()+i);
+98             \textcolor{keywordflow}{break};
+99           \}
+100         \}
+101       \}
+102     \}
+103   \}
+104 \}
 \end{DoxyCode}
 
 
@@ -308,7 +314,7 @@ sets the shader values from the button values
 
 
 
-Definition at line 99 of file Button\-Lib.\-cpp.
+Definition at line 105 of file Button\-Lib.\-cpp.
 
 
 
@@ -316,50 +322,49 @@ References m\-\_\-button\-List, m\-\_\-parser, and Parser\-Lib\-::m\-\_\-uniform
 
 
 \begin{DoxyCode}
-100 \{
-101   \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} uniform: m_parser->m_uniformList)
-102   \{
-103     \textcolor{keywordflow}{if}(uniform->getTypeEnum()==GL\_FLOAT\_VEC4)
-104     \{
-105       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} button: m_buttonList)
-106       \{
-107         \textcolor{keywordflow}{if}(uniform->getLocation()==button->getID())
-108         \{
-109           ngl::Vec4 temp = button->getColour();
-110           uniform->setVec4(temp);
-111           \textcolor{keywordflow}{break};
-112         \}
-113       \}
-114     \}
-115     \textcolor{keywordflow}{if}(uniform->getTypeEnum()==GL\_FLOAT)
-116     \{
-117       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} button: m\_buttonList)
-118       \{
-119         \textcolor{keywordflow}{if}(uniform->getLocation()==button->getID())
-120         \{
-121           \textcolor{keywordtype}{float} temp = button->getValue();
-122           uniform->setFloat(temp);
-123           \textcolor{keywordflow}{break};
-124         \}
-125       \}
-126     \}
-127     \textcolor{keywordflow}{if}(uniform->getTypeEnum()==GL\_FLOAT\_VEC3)
-128     \{
-129       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} button: m\_buttonList)
-130       \{
-131         \textcolor{keywordflow}{if}(uniform->getLocation()==button->getID())
-132         \{
-133           ngl::Vec4 temp = button->getVec();
-134           uniform->setVec3(ngl::Vec3(temp.m\_x,
-135                                      temp.m\_y,
-136                                      temp.m\_z));
-137           ngl::Vec3 newV = uniform->getVec3();
-138           \textcolor{keywordflow}{break};
-139         \}
-140       \}
-141     \}
-142   \}
-143 \}
+106 \{
+107   \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} uniform: m_parser->m_uniformList)
+108   \{
+109     \textcolor{keywordflow}{if}(uniform->getTypeEnum()==GL\_FLOAT\_VEC4)
+110     \{
+111       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} button: m_buttonList)
+112       \{
+113         \textcolor{keywordflow}{if}(uniform->getLocation()==button->getID())
+114         \{
+115           ngl::Vec4 temp = button->getColour();
+116           uniform->setVec4(temp);
+117           \textcolor{keywordflow}{break};
+118         \}
+119       \}
+120     \}
+121     \textcolor{keywordflow}{if}(uniform->getTypeEnum()==GL\_FLOAT)
+122     \{
+123       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} button: m\_buttonList)
+124       \{
+125         \textcolor{keywordflow}{if}(uniform->getLocation()==button->getID())
+126         \{
+127           \textcolor{keywordtype}{float} temp = button->getValue();
+128           uniform->setFloat(temp);
+129           \textcolor{keywordflow}{break};
+130         \}
+131       \}
+132     \}
+133     \textcolor{keywordflow}{if}(uniform->getTypeEnum()==GL\_FLOAT\_VEC3)
+134     \{
+135       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} button: m\_buttonList)
+136       \{
+137         \textcolor{keywordflow}{if}(uniform->getLocation()==button->getID())
+138         \{
+139           ngl::Vec4 temp = button->getVec();
+140           uniform->setVec3(ngl::Vec3(temp.m\_x,
+141                                      temp.m\_y,
+142                                      temp.m\_z));
+143           \textcolor{keywordflow}{break};
+144         \}
+145       \}
+146     \}
+147   \}
+148 \}
 \end{DoxyCode}
 
 

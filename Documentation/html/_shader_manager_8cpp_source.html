@@ -21,7 +21,6 @@
   $(document).ready(function() { searchBox.OnSelectItem(0); });
 </script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
-<link href="mystyle.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -29,7 +28,6 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
-  <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CEB - &#39;C&#39;(S)hader Environment Builder
    &#160;<span id="projectnumber">1.0</span>
@@ -158,7 +156,7 @@ $(document).ready(function(){initNavTree('_shader_manager_8cpp_source.html','');
 <div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="class_shader_manager.html#a04c9fb67f7fa4995ae678f64f5b4985b">   46</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="class_shader_manager.html#a04c9fb67f7fa4995ae678f64f5b4985b">ShaderManager::use</a>(uint _shaderType)</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;{</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <span class="comment">//grab an instance of shaderLib</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  ngl::ShaderLib *shaderLib = ngl::ShaderLib::instance(); </div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  ngl::ShaderLib *shaderLib = ngl::ShaderLib::instance();</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  <span class="keyword">enum</span> shader{objectShader=0,objectNormals=1};</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  <span class="comment">//choose which shader to use</span></div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  <span class="keywordflow">switch</span>(_shaderType)</div>
@@ -273,7 +271,7 @@ $(document).ready(function(){initNavTree('_shader_manager_8cpp_source.html','');
 <div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;  <span class="keywordflow">else</span></div>
 <div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;  {</div>
 <div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    <a class="code" href="class_shader_manager.html#ad494cdd36221d819c94db0235771210b">m_compileStatus</a> = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;    <a class="code" href="class_shader_manager.html#a61a8df66700598d467666cfe871a6aaf">m_errorLog</a>.append(<span class="stringliteral">&quot;No Errors&quot;</span>);</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;</div>
 <div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    <span class="comment">// add them to the program</span></div>
 <div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;    shaderLib-&gt;attachShaderToProgram(<a class="code" href="class_shader_manager.html#a05efb41429a70f6456ff5dc54d4eb4a2">m_data</a>.<a class="code" href="struct_shader_program_data.html#a729c4f0580b704113d9b897fe4165ad6">m_name</a>,<a class="code" href="class_shader_manager.html#a05efb41429a70f6456ff5dc54d4eb4a2">m_data</a>.<a class="code" href="struct_shader_program_data.html#a2afca420d01ef8d62dc762dbd922a9d0">m_vert</a>);</div>
 <div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    shaderLib-&gt;attachShaderToProgram(<a class="code" href="class_shader_manager.html#a05efb41429a70f6456ff5dc54d4eb4a2">m_data</a>.<a class="code" href="struct_shader_program_data.html#a729c4f0580b704113d9b897fe4165ad6">m_name</a>,<a class="code" href="class_shader_manager.html#a05efb41429a70f6456ff5dc54d4eb4a2">m_data</a>.<a class="code" href="struct_shader_program_data.html#ac7673d1c2fa7552e408a428ad7084913">m_frag</a>);</div>
@@ -283,79 +281,117 @@ $(document).ready(function(){initNavTree('_shader_manager_8cpp_source.html','');
 <div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;</div>
 <div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;    <span class="comment">// use the shader program</span></div>
 <div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    (*shaderLib)[<a class="code" href="class_shader_manager.html#a05efb41429a70f6456ff5dc54d4eb4a2">m_data</a>.<a class="code" href="struct_shader_program_data.html#a729c4f0580b704113d9b897fe4165ad6">m_name</a>]-&gt;use();</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    ngl::Texture texture(<span class="stringliteral">&quot;textures/rustTexture.jpg&quot;</span>);</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    <a class="code" href="class_shader_manager.html#aef4d678011050d86703985eb51a8986d">m_textureName</a>=texture.setTextureGL();</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;  }</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;}</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;<span class="comment">//------------------------------------------------------------------------------------------------------------------------</span></div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;</div>
-<div class="line"><a name="l00185"></a><span class="lineno"><a class="line" href="class_shader_manager.html#aec181009461227ed7ec70fca29111985">  185</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="class_shader_manager.html#aec181009461227ed7ec70fca29111985">ShaderManager::checkCompileError</a>(std::string _shaderName, QString *o_log)</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;{</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;  GLint isCompiled = 0;</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;  ngl::ShaderLib *shader=ngl::ShaderLib::instance();</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;  GLuint shaderId = shader-&gt;getShaderID(_shaderName);</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;  <span class="comment">// Get compile status of shader</span></div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;  glGetShaderiv(shaderId, GL_COMPILE_STATUS, &amp;isCompiled);</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;  <span class="keywordflow">if</span>(isCompiled == GL_FALSE)</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;  {</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;    <span class="comment">// Receive info log</span></div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;    GLint maxLength = 0;</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;    glGetShaderiv(shaderId, GL_INFO_LOG_LENGTH, &amp;maxLength);</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;    <span class="comment">// The maxLength includes the NULL character</span></div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;    std::vector&lt;GLchar&gt; errorLog(maxLength);</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;    glGetShaderInfoLog(shaderId, maxLength, &amp;maxLength, &amp;errorLog[0]);</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;    <span class="comment">//  Write error log to an std::string to be output at QString</span></div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;    std::string s(errorLog.begin(), errorLog.end());</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;</div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;    QString errLog = QString(s.c_str());</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;    *o_log = errLog;</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;    <span class="comment">// Provide the infolog in whatever manor you deem best.</span></div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;    <span class="comment">//throw ceb_error::openGL_list_error(_shaderProgName, errLog);</span></div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;  }</div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;  <span class="keywordflow">return</span> isCompiled;</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;}</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    <span class="keywordflow">if</span> (!<a class="code" href="class_shader_manager.html#a733004d489eea80446ca07b3c11b7ede">checkLinkError</a>(&amp;<a class="code" href="class_shader_manager.html#a61a8df66700598d467666cfe871a6aaf">m_errorLog</a>))</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    {</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;      <span class="comment">// output any compile errors to user</span></div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;      std::cout &lt;&lt; <a class="code" href="class_shader_manager.html#a61a8df66700598d467666cfe871a6aaf">m_errorLog</a>.toUtf8().constData();</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;      <a class="code" href="class_shader_manager.html#ad494cdd36221d819c94db0235771210b">m_compileStatus</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    }</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    {</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;      <a class="code" href="class_shader_manager.html#a61a8df66700598d467666cfe871a6aaf">m_errorLog</a>.append(<span class="stringliteral">&quot;No Errors&quot;</span>);</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;    }</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;    ngl::Texture texture(<span class="stringliteral">&quot;textures/rustTexture.jpg&quot;</span>);</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;    <a class="code" href="class_shader_manager.html#aef4d678011050d86703985eb51a8986d">m_textureName</a>=texture.setTextureGL();</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;  }</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;}</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;<span class="comment">//------------------------------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;</div>
+<div class="line"><a name="l00195"></a><span class="lineno"><a class="line" href="class_shader_manager.html#aec181009461227ed7ec70fca29111985">  195</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="class_shader_manager.html#aec181009461227ed7ec70fca29111985">ShaderManager::checkCompileError</a>(std::string _shaderName, QString *o_log)</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;{</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;  GLint isCompiled = GL_FALSE;</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;  ngl::ShaderLib *shader=ngl::ShaderLib::instance();</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;  GLuint shaderId = shader-&gt;getShaderID(_shaderName);</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;  <span class="comment">// Get compile status of shader</span></div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;  glGetShaderiv(shaderId, GL_COMPILE_STATUS, &amp;isCompiled);</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;  <span class="keywordflow">if</span>(isCompiled == GL_FALSE)</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;  {</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;    <span class="comment">// Receive info log</span></div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;    GLint maxLength = 0;</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;    glGetShaderiv(shaderId, GL_INFO_LOG_LENGTH, &amp;maxLength);</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;    <span class="comment">// The maxLength includes the NULL character</span></div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;    std::vector&lt;GLchar&gt; errorLog(maxLength);</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;    glGetShaderInfoLog(shaderId, maxLength, &amp;maxLength, &amp;errorLog[0]);</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;    <span class="comment">//  Write error log to an std::string to be output at QString</span></div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;    std::string s(errorLog.begin(), errorLog.end());</div>
 <div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;<span class="comment">//------------------------------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;    QString errLog = QString(s.c_str());</div>
 <div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;</div>
-<div class="line"><a name="l00218"></a><span class="lineno"><a class="line" href="class_shader_manager.html#acf0d69f6515e8438ba04330a04264931">  218</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="class_shader_manager.html#acf0d69f6515e8438ba04330a04264931">ShaderManager::checkAllCompileError</a>(QString *o_log)</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;{</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;  GLint isAllCompiled = GL_TRUE;</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;  QString temp_log;</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;  std::vector &lt;std::string&gt; shaderPrograms = {<a class="code" href="class_shader_manager.html#a05efb41429a70f6456ff5dc54d4eb4a2">m_data</a>.<a class="code" href="struct_shader_program_data.html#a2afca420d01ef8d62dc762dbd922a9d0">m_vert</a>, <a class="code" href="class_shader_manager.html#a05efb41429a70f6456ff5dc54d4eb4a2">m_data</a>.<a class="code" href="struct_shader_program_data.html#ac7673d1c2fa7552e408a428ad7084913">m_frag</a>};</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;  <span class="comment">// Iterate between vertex and fragment shaders to check compile errors</span></div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;  <span class="keywordflow">for</span> (<span class="keyword">auto</span> shaderProg: shaderPrograms)</div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;  {</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;    GLint isCompiled = <a class="code" href="class_shader_manager.html#aec181009461227ed7ec70fca29111985">checkCompileError</a>(shaderProg, &amp;temp_log);</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;    <span class="keywordflow">if</span> (!isCompiled)</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    {</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;      o_log-&gt;append(QString(<span class="stringliteral">&quot;%1:\n&quot;</span>).arg(shaderProg.c_str()));</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;      o_log-&gt;append(temp_log);</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;    }</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;    isAllCompiled &amp;= isCompiled;</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;  }</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;  <span class="keywordflow">return</span> isAllCompiled;</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;}</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;    *o_log = errLog;</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;  }</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;  <span class="keywordflow">return</span> isCompiled;</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;}</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;</div>
+<div class="line"><a name="l00223"></a><span class="lineno"><a class="line" href="class_shader_manager.html#a733004d489eea80446ca07b3c11b7ede">  223</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="class_shader_manager.html#a733004d489eea80446ca07b3c11b7ede">ShaderManager::checkLinkError</a>( QString *o_log)</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;{</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;  GLint isCompiled = GL_FALSE;</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;  ngl::ShaderLib *shader=ngl::ShaderLib::instance();</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;  GLuint progId = shader-&gt;getProgramID(<a class="code" href="class_shader_manager.html#a05efb41429a70f6456ff5dc54d4eb4a2">m_data</a>.<a class="code" href="struct_shader_program_data.html#a729c4f0580b704113d9b897fe4165ad6">m_name</a>);</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;  GLint infologLength = 0;</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;  glGetProgramiv(progId,GL_INFO_LOG_LENGTH,&amp;infologLength);</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;  <span class="keywordflow">if</span>(infologLength &gt; 0)</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;  {</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;    GLint charsWritten  = 0;</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;    std::vector&lt;GLchar&gt; errorLog(infologLength);</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;    glGetProgramInfoLog(progId, infologLength, &amp;charsWritten, &amp;errorLog[0]);</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;    <span class="comment">//  Write error log to an std::string to be output at QString</span></div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;    std::string s(errorLog.begin(), errorLog.end());</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;    QString errLog = QString(s.c_str());</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;    glGetProgramiv(progId, GL_LINK_STATUS, &amp;isCompiled);</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;    o_log-&gt;append(errLog);</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;    <span class="keywordflow">if</span>( infologLength == GL_FALSE)</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;    {</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;      std::cerr&lt;&lt;<span class="stringliteral">&quot;Program link failed \n&quot;</span>;</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;    }</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;  }</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;  <span class="keywordflow">return</span> isCompiled;</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;}</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;<span class="comment">//------------------------------------------------------------------------------------------------------------------------</span></div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;</div>
+<div class="line"><a name="l00254"></a><span class="lineno"><a class="line" href="class_shader_manager.html#acf0d69f6515e8438ba04330a04264931">  254</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="class_shader_manager.html#acf0d69f6515e8438ba04330a04264931">ShaderManager::checkAllCompileError</a>(QString *o_log)</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;{</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;  GLint isAllCompiled = GL_TRUE;</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;  QString temp_log;</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;  std::vector &lt;std::string&gt; shaderPrograms = {<a class="code" href="class_shader_manager.html#a05efb41429a70f6456ff5dc54d4eb4a2">m_data</a>.<a class="code" href="struct_shader_program_data.html#a2afca420d01ef8d62dc762dbd922a9d0">m_vert</a>, <a class="code" href="class_shader_manager.html#a05efb41429a70f6456ff5dc54d4eb4a2">m_data</a>.<a class="code" href="struct_shader_program_data.html#ac7673d1c2fa7552e408a428ad7084913">m_frag</a>};</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;  <span class="comment">// Iterate between vertex and fragment shaders to check compile errors</span></div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;  <span class="keywordflow">for</span> (<span class="keyword">auto</span> shaderProg: shaderPrograms)</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;  {</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;    GLint isCompiled = <a class="code" href="class_shader_manager.html#aec181009461227ed7ec70fca29111985">checkCompileError</a>(shaderProg, &amp;temp_log);</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;    <span class="keywordflow">if</span> (!isCompiled)</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;    {</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;      o_log-&gt;append(QString(<span class="stringliteral">&quot;%1:\n&quot;</span>).arg(shaderProg.c_str()));</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;      o_log-&gt;append(temp_log);</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;    }</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;    <span class="keywordflow">if</span> (isCompiled == GL_FALSE)</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;      isAllCompiled = isCompiled;</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;  }</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;  <span class="keywordflow">return</span> isAllCompiled;</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;}</div>
 <div class="ttc" id="class_shader_manager_html_aca25f81fd10a02b3e97e9c459b864186"><div class="ttname"><a href="class_shader_manager.html#aca25f81fd10a02b3e97e9c459b864186">ShaderManager::ShaderManager</a></div><div class="ttdeci">ShaderManager()</div><div class="ttdoc">default constructor for ShaderManager class </div><div class="ttdef"><b>Definition:</b> <a href="_shader_manager_8cpp_source.html#l00010">ShaderManager.cpp:10</a></div></div>
 <div class="ttc" id="_shader_manager_8h_html"><div class="ttname"><a href="_shader_manager_8h.html">ShaderManager.h</a></div><div class="ttdoc">Class for managing and updating data for GLSL shaders in the IDE. </div></div>
-<div class="ttc" id="class_shader_manager_html_aec181009461227ed7ec70fca29111985"><div class="ttname"><a href="class_shader_manager.html#aec181009461227ed7ec70fca29111985">ShaderManager::checkCompileError</a></div><div class="ttdeci">bool checkCompileError(std::string _shaderName, QString *o_log)</div><div class="ttdoc">method to check compiling errors for a single shader object </div><div class="ttdef"><b>Definition:</b> <a href="_shader_manager_8cpp_source.html#l00185">ShaderManager.cpp:185</a></div></div>
+<div class="ttc" id="class_shader_manager_html_aec181009461227ed7ec70fca29111985"><div class="ttname"><a href="class_shader_manager.html#aec181009461227ed7ec70fca29111985">ShaderManager::checkCompileError</a></div><div class="ttdeci">bool checkCompileError(std::string _shaderName, QString *o_log)</div><div class="ttdoc">method to check compiling errors for a single shader object </div><div class="ttdef"><b>Definition:</b> <a href="_shader_manager_8cpp_source.html#l00195">ShaderManager.cpp:195</a></div></div>
 <div class="ttc" id="class_shader_manager_html_a476be257abd4b3057ce3be7acb05e178"><div class="ttname"><a href="class_shader_manager.html#a476be257abd4b3057ce3be7acb05e178">ShaderManager::initialize</a></div><div class="ttdeci">void initialize()</div><div class="ttdoc">method called when 1st opening program to initialise the default phong shader </div><div class="ttdef"><b>Definition:</b> <a href="_shader_manager_8cpp_source.html#l00062">ShaderManager.cpp:62</a></div></div>
 <div class="ttc" id="class_shader_manager_html_aa4ef5235b1be61c38872a6c865d740bc"><div class="ttname"><a href="class_shader_manager.html#aa4ef5235b1be61c38872a6c865d740bc">ShaderManager::setData</a></div><div class="ttdeci">void setData(std::string _name, std::string _vert, std::string _frag)</div><div class="ttdoc">method to set the data for the current shader </div><div class="ttdef"><b>Definition:</b> <a href="_shader_manager_8h_source.html#l00079">ShaderManager.h:79</a></div></div>
 <div class="ttc" id="class_shader_manager_html_a61a8df66700598d467666cfe871a6aaf"><div class="ttname"><a href="class_shader_manager.html#a61a8df66700598d467666cfe871a6aaf">ShaderManager::m_errorLog</a></div><div class="ttdeci">QString m_errorLog</div><div class="ttdoc">error log for storing compiling errors </div><div class="ttdef"><b>Definition:</b> <a href="_shader_manager_8h_source.html#l00101">ShaderManager.h:101</a></div></div>
-<div class="ttc" id="class_shader_manager_html_a05efb41429a70f6456ff5dc54d4eb4a2"><div class="ttname"><a href="class_shader_manager.html#a05efb41429a70f6456ff5dc54d4eb4a2">ShaderManager::m_data</a></div><div class="ttdeci">ShaderProgramData m_data</div><div class="ttdoc">structure containing names for currently actuve shader program </div><div class="ttdef"><b>Definition:</b> <a href="_shader_manager_8h_source.html#l00117">ShaderManager.h:117</a></div></div>
+<div class="ttc" id="class_shader_manager_html_a05efb41429a70f6456ff5dc54d4eb4a2"><div class="ttname"><a href="class_shader_manager.html#a05efb41429a70f6456ff5dc54d4eb4a2">ShaderManager::m_data</a></div><div class="ttdeci">ShaderProgramData m_data</div><div class="ttdoc">structure containing names for currently actuve shader program </div><div class="ttdef"><b>Definition:</b> <a href="_shader_manager_8h_source.html#l00122">ShaderManager.h:122</a></div></div>
 <div class="ttc" id="struct_shader_program_data_html_a2afca420d01ef8d62dc762dbd922a9d0"><div class="ttname"><a href="struct_shader_program_data.html#a2afca420d01ef8d62dc762dbd922a9d0">ShaderProgramData::m_vert</a></div><div class="ttdeci">std::string m_vert</div><div class="ttdef"><b>Definition:</b> <a href="_shader_manager_8h_source.html#l00025">ShaderManager.h:25</a></div></div>
 <div class="ttc" id="struct_shader_program_data_html_a729c4f0580b704113d9b897fe4165ad6"><div class="ttname"><a href="struct_shader_program_data.html#a729c4f0580b704113d9b897fe4165ad6">ShaderProgramData::m_name</a></div><div class="ttdeci">std::string m_name</div><div class="ttdef"><b>Definition:</b> <a href="_shader_manager_8h_source.html#l00024">ShaderManager.h:24</a></div></div>
-<div class="ttc" id="class_shader_manager_html_aef4d678011050d86703985eb51a8986d"><div class="ttname"><a href="class_shader_manager.html#aef4d678011050d86703985eb51a8986d">ShaderManager::m_textureName</a></div><div class="ttdeci">GLuint m_textureName</div><div class="ttdoc">variable holding the identity of the bound texture map </div><div class="ttdef"><b>Definition:</b> <a href="_shader_manager_8h_source.html#l00121">ShaderManager.h:121</a></div></div>
+<div class="ttc" id="class_shader_manager_html_aef4d678011050d86703985eb51a8986d"><div class="ttname"><a href="class_shader_manager.html#aef4d678011050d86703985eb51a8986d">ShaderManager::m_textureName</a></div><div class="ttdeci">GLuint m_textureName</div><div class="ttdoc">variable holding the identity of the bound texture map </div><div class="ttdef"><b>Definition:</b> <a href="_shader_manager_8h_source.html#l00126">ShaderManager.h:126</a></div></div>
 <div class="ttc" id="struct_shader_program_data_html_ac7673d1c2fa7552e408a428ad7084913"><div class="ttname"><a href="struct_shader_program_data.html#ac7673d1c2fa7552e408a428ad7084913">ShaderProgramData::m_frag</a></div><div class="ttdeci">std::string m_frag</div><div class="ttdef"><b>Definition:</b> <a href="_shader_manager_8h_source.html#l00026">ShaderManager.h:26</a></div></div>
 <div class="ttc" id="class_shader_manager_html_a04c9fb67f7fa4995ae678f64f5b4985b"><div class="ttname"><a href="class_shader_manager.html#a04c9fb67f7fa4995ae678f64f5b4985b">ShaderManager::use</a></div><div class="ttdeci">void use(uint _shaderType)</div><div class="ttdoc">method to set OpenGL to use the current shader program </div><div class="ttdef"><b>Definition:</b> <a href="_shader_manager_8cpp_source.html#l00046">ShaderManager.cpp:46</a></div></div>
 <div class="ttc" id="class_shader_manager_html_aed13243851b7441a686ca490d08c19a2"><div class="ttname"><a href="class_shader_manager.html#aed13243851b7441a686ca490d08c19a2">ShaderManager::createShaderProgram</a></div><div class="ttdeci">void createShaderProgram(std::string _name)</div><div class="ttdoc">method to create a new shader program object </div><div class="ttdef"><b>Definition:</b> <a href="_shader_manager_8cpp_source.html#l00020">ShaderManager.cpp:20</a></div></div>
-<div class="ttc" id="class_shader_manager_html_acf0d69f6515e8438ba04330a04264931"><div class="ttname"><a href="class_shader_manager.html#acf0d69f6515e8438ba04330a04264931">ShaderManager::checkAllCompileError</a></div><div class="ttdeci">bool checkAllCompileError(QString *o_log)</div><div class="ttdoc">method to check compiling errors for all shader objects attached </div><div class="ttdef"><b>Definition:</b> <a href="_shader_manager_8cpp_source.html#l00218">ShaderManager.cpp:218</a></div></div>
+<div class="ttc" id="class_shader_manager_html_acf0d69f6515e8438ba04330a04264931"><div class="ttname"><a href="class_shader_manager.html#acf0d69f6515e8438ba04330a04264931">ShaderManager::checkAllCompileError</a></div><div class="ttdeci">bool checkAllCompileError(QString *o_log)</div><div class="ttdoc">method to check compiling errors for all shader objects attached </div><div class="ttdef"><b>Definition:</b> <a href="_shader_manager_8cpp_source.html#l00254">ShaderManager.cpp:254</a></div></div>
+<div class="ttc" id="class_shader_manager_html_a733004d489eea80446ca07b3c11b7ede"><div class="ttname"><a href="class_shader_manager.html#a733004d489eea80446ca07b3c11b7ede">ShaderManager::checkLinkError</a></div><div class="ttdeci">bool checkLinkError(QString *o_log)</div><div class="ttdoc">method to check link error </div><div class="ttdef"><b>Definition:</b> <a href="_shader_manager_8cpp_source.html#l00223">ShaderManager.cpp:223</a></div></div>
 <div class="ttc" id="class_shader_manager_html_a2f344ea91238f6a7a34fe26f5d2bdfd0"><div class="ttname"><a href="class_shader_manager.html#a2f344ea91238f6a7a34fe26f5d2bdfd0">ShaderManager::compileShader</a></div><div class="ttdeci">void compileShader(QString _vertSource, QString _fragSource)</div><div class="ttdoc">method called to compile the currently active shader </div><div class="ttdef"><b>Definition:</b> <a href="_shader_manager_8cpp_source.html#l00143">ShaderManager.cpp:143</a></div></div>
 <div class="ttc" id="class_shader_manager_html_a26e8cbc7ef046b886241ea98f3054deb"><div class="ttname"><a href="class_shader_manager.html#a26e8cbc7ef046b886241ea98f3054deb">ShaderManager::m_init</a></div><div class="ttdeci">bool m_init</div><div class="ttdoc">flag for success of shader manager initialisation </div><div class="ttdef"><b>Definition:</b> <a href="_shader_manager_8h_source.html#l00093">ShaderManager.h:93</a></div></div>
 <div class="ttc" id="class_shader_manager_html_ad494cdd36221d819c94db0235771210b"><div class="ttname"><a href="class_shader_manager.html#ad494cdd36221d819c94db0235771210b">ShaderManager::m_compileStatus</a></div><div class="ttdeci">bool m_compileStatus</div><div class="ttdoc">flag for the success of compilation of currently active shader </div><div class="ttdef"><b>Definition:</b> <a href="_shader_manager_8h_source.html#l00097">ShaderManager.h:97</a></div></div>
@@ -364,7 +400,7 @@ $(document).ready(function(){initNavTree('_shader_manager_8cpp_source.html','');
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_75b82e7e4a5feb05200b9ad7adf06257.html">home</a></li><li class="navelem"><a class="el" href="dir_bdc778f2532979b14047db746cff355e.html">jflynn</a></li><li class="navelem"><a class="el" href="dir_2574d9408e4f5346b90b61e8927cd493.html">GitHub</a></li><li class="navelem"><a class="el" href="dir_494011d88441c303ca0df2a05eb3908c.html">0Features-0BugsCVA3</a></li><li class="navelem"><a class="el" href="dir_fcefb6d2fb2367449d4de06b2efb8d92.html">src</a></li><li class="navelem"><a class="el" href="_shader_manager_8cpp.html">ShaderManager.cpp</a></li>
+    <li class="navelem"><a class="el" href="dir_75b82e7e4a5feb05200b9ad7adf06257.html">home</a></li><li class="navelem"><a class="el" href="dir_b8aed5b4d09b18e4dde27e9a9ac1bce0.html">i7241559</a></li><li class="navelem"><a class="el" href="dir_8475a8686ee06e1111e8526e55a23997.html">GitHub</a></li><li class="navelem"><a class="el" href="dir_278fa936a045abd4050a68cc1167277f.html">0Features-0BugsCVA3</a></li><li class="navelem"><a class="el" href="dir_532b20f5e7e8a615eec59a679a46464f.html">src</a></li><li class="navelem"><a class="el" href="_shader_manager_8cpp.html">ShaderManager.cpp</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.5 </li>

@@ -46,7 +46,7 @@ void ShaderManager::createShaderProgram(std::string _name)
 void ShaderManager::use(uint _shaderType)
 {
   //grab an instance of shaderLib
-  ngl::ShaderLib *shaderLib = ngl::ShaderLib::instance(); 
+  ngl::ShaderLib *shaderLib = ngl::ShaderLib::instance();
   enum shader{objectShader=0,objectNormals=1};
   //choose which shader to use
   switch(_shaderType)
@@ -165,7 +165,7 @@ void ShaderManager::compileShader(QString _vertSource, QString _fragSource)
   else
   {
     m_compileStatus = true;
-    m_errorLog.append("No Errors");
+
     // add them to the program
     shaderLib->attachShaderToProgram(m_data.m_name,m_data.m_vert);
     shaderLib->attachShaderToProgram(m_data.m_name,m_data.m_frag);
@@ -175,6 +175,16 @@ void ShaderManager::compileShader(QString _vertSource, QString _fragSource)
 
     // use the shader program
     (*shaderLib)[m_data.m_name]->use();
+    if (!checkLinkError(&m_errorLog))
+    {
+      // output any compile errors to user
+      std::cout << m_errorLog.toUtf8().constData();
+      m_compileStatus = false;
+    }
+    else
+    {
+      m_errorLog.append("No Errors");
+    }
     ngl::Texture texture("textures/rustTexture.jpg");
     m_textureName=texture.setTextureGL();
   }
@@ -184,7 +194,7 @@ void ShaderManager::compileShader(QString _vertSource, QString _fragSource)
 
 bool ShaderManager::checkCompileError(std::string _shaderName, QString *o_log)
 {
-  GLint isCompiled = 0;
+  GLint isCompiled = GL_FALSE;
   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
   GLuint shaderId = shader->getShaderID(_shaderName);
 
@@ -206,9 +216,35 @@ bool ShaderManager::checkCompileError(std::string _shaderName, QString *o_log)
     QString errLog = QString(s.c_str());
 
     *o_log = errLog;
+  }
+  return isCompiled;
+}
 
-    // Provide the infolog in whatever manor you deem best.
-    //throw ceb_error::openGL_list_error(_shaderProgName, errLog);
+bool ShaderManager::checkLinkError( QString *o_log)
+{
+  GLint isCompiled = GL_FALSE;
+  ngl::ShaderLib *shader=ngl::ShaderLib::instance();
+  GLuint progId = shader->getProgramID(m_data.m_name);
+  GLint infologLength = 0;
+
+  glGetProgramiv(progId,GL_INFO_LOG_LENGTH,&infologLength);
+
+  if(infologLength > 0)
+  {
+    GLint charsWritten  = 0;
+    std::vector<GLchar> errorLog(infologLength);
+    glGetProgramInfoLog(progId, infologLength, &charsWritten, &errorLog[0]);
+
+    //  Write error log to an std::string to be output at QString
+    std::string s(errorLog.begin(), errorLog.end());
+    QString errLog = QString(s.c_str());
+
+    glGetProgramiv(progId, GL_LINK_STATUS, &isCompiled);
+    o_log->append(errLog);
+    if( infologLength == GL_FALSE)
+    {
+      std::cerr<<"Program link failed \n";
+    }
   }
   return isCompiled;
 }
@@ -230,7 +266,8 @@ bool ShaderManager::checkAllCompileError(QString *o_log)
       o_log->append(QString("%1:\n").arg(shaderProg.c_str()));
       o_log->append(temp_log);
     }
-    isAllCompiled &= isCompiled;
+    if (isCompiled == GL_FALSE)
+      isAllCompiled = isCompiled;
   }
   return isAllCompiled;
 }

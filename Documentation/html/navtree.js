@@ -44,7 +44,7 @@ var NAVTREEINDEX =
 [
 "_button_8cpp.html",
 "class_float_button.html#ae83f81998a5ad1cff31bdb4a0a9250fd",
-"class_startup_dialog.html#a21e41329a66a0ceb4aae21baba78bd0d"
+"class_startup_dialog.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

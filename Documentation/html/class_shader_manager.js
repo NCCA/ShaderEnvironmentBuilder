@@ -3,6 +3,7 @@ var class_shader_manager =
     [ "ShaderManager", "class_shader_manager.html#aca25f81fd10a02b3e97e9c459b864186", null ],
     [ "checkAllCompileError", "class_shader_manager.html#acf0d69f6515e8438ba04330a04264931", null ],
     [ "checkCompileError", "class_shader_manager.html#aec181009461227ed7ec70fca29111985", null ],
+    [ "checkLinkError", "class_shader_manager.html#a733004d489eea80446ca07b3c11b7ede", null ],
     [ "compileShader", "class_shader_manager.html#a2f344ea91238f6a7a34fe26f5d2bdfd0", null ],
     [ "compileStatus", "class_shader_manager.html#a56ea270f6b8f812ad80dc4ad33c47125", null ],
     [ "createShaderProgram", "class_shader_manager.html#aed13243851b7441a686ca490d08c19a2", null ],

@@ -51,7 +51,7 @@ PROJECT_BRIEF          = "A GLSL IDE for NGL OpenGL Shaders"
 # and the maximum width should not exceed 200 pixels. Doxygen will copy the logo
 # to the output directory.
 
-PROJECT_LOGO           = ./logo.png
+PROJECT_LOGO           = 
 
 # The OUTPUT_DIRECTORY tag is used to specify the (relative or absolute) path
 # into which the generated documentation will be written. If a relative path is
@@ -2334,5 +2334,3 @@ GENERATE_LEGEND        = YES
 
 DOT_CLEANUP            = YES
 
-# Extra style sheet
-HTML_EXTRA_STYLESHEET = ./Documentation/mystyle.css

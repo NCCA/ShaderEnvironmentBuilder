@@ -1,17 +1,18 @@
 <map id="NGLScene::setProject" name="NGLScene::setProject">
-<area shape="rect" id="node2" href="$class_n_g_l_scene.html#a141eaaa05e2637a0f844ba4beefd74e3" title="loads and compiles a shader from Qstrings passed from the text editor " alt="" coords="213,199,390,225"/>
-<area shape="rect" id="node14" href="$class_shader_manager.html#aed13243851b7441a686ca490d08c19a2" title="method to create a new shader program object " alt="" coords="203,318,399,359"/>
+<area shape="rect" id="node2" href="$class_n_g_l_scene.html#a141eaaa05e2637a0f844ba4beefd74e3" title="loads and compiles a shader from Qstrings passed from the text editor " alt="" coords="213,205,390,232"/>
+<area shape="rect" id="node15" href="$class_shader_manager.html#aed13243851b7441a686ca490d08c19a2" title="method to create a new shader program object " alt="" coords="203,325,399,366"/>
 <area shape="rect" id="node3" href="$class_parser_lib.html#a0327fd1d07a49f918cd5ff1ed54d74a2" title="assigns all appropriate values, locations, data types, names " alt="" coords="471,64,631,91"/>
-<area shape="rect" id="node8" href="$class_shader_manager.html#a2f344ea91238f6a7a34fe26f5d2bdfd0" title="method called to compile the currently active shader " alt="" coords="448,123,653,149"/>
-<area shape="rect" id="node11" href="$class_shader_manager.html#a1e32b97729d0eddce1de9b51a8c3d19a" title="method to return the most recent error log " alt="" coords="458,173,643,200"/>
-<area shape="rect" id="node12" href="$class_n_g_l_scene.html#af6e2fbc572f1ec3021f2b73fc87ab430" title="Stores a QString. Used to edit the error log message. " alt="" coords="465,224,636,251"/>
-<area shape="rect" id="node13" href="$class_main_window.html#a1fc3e7c122b246d3cacbaaccfe490724" title="set terminal text " alt="" coords="454,275,647,301"/>
+<area shape="rect" id="node8" href="$class_shader_manager.html#a2f344ea91238f6a7a34fe26f5d2bdfd0" title="method called to compile the currently active shader " alt="" coords="448,129,653,156"/>
+<area shape="rect" id="node12" href="$class_shader_manager.html#a1e32b97729d0eddce1de9b51a8c3d19a" title="method to return the most recent error log " alt="" coords="458,180,643,207"/>
+<area shape="rect" id="node13" href="$class_n_g_l_scene.html#af6e2fbc572f1ec3021f2b73fc87ab430" title="Stores a QString. Used to edit the error log message. " alt="" coords="465,231,636,257"/>
+<area shape="rect" id="node14" href="$class_main_window.html#a1fc3e7c122b246d3cacbaaccfe490724" title="set terminal text " alt="" coords="454,281,647,308"/>
 <area shape="rect" id="node4" href="$class_parser_lib.html#ab82a4570c99e2844e6ffe3bd1b3dbcf2" title="finds number of active uniforms and stores the data in blocks called uniformData. This then stores it..." alt="" coords="709,5,909,32"/>
 <area shape="rect" id="node7" href="$class_parser_lib.html#ae5e796d35c2b62f2099ea0a9b4cde4cc" title="sets default values for the active uniforms " alt="" coords="728,57,891,98"/>
 <area shape="rect" id="node5" href="$class_shader_manager.html#ac7f57e1b3e623ef4693389b009c44089" title="get the current data from the shader manager " alt="" coords="1217,5,1381,32"/>
 <area shape="rect" id="node6" href="$class_parser_lib.html#a748612fadf3a391ead34306bd3f39f77" title="used to translate the data type name from a number into a name. e.g. 35676 &#45;&gt; mat4 The following sect..." alt="" coords="973,31,1160,57"/>
 <area shape="rect" id="node9" href="$class_shader_manager.html#acf0d69f6515e8438ba04330a04264931" title="method to check compiling errors for all shader objects attached " alt="" coords="701,122,917,163"/>
+<area shape="rect" id="node11" href="$class_shader_manager.html#a733004d489eea80446ca07b3c11b7ede" title="method to check link error " alt="" coords="720,187,899,229"/>
 <area shape="rect" id="node10" href="$class_shader_manager.html#aec181009461227ed7ec70fca29111985" title="method to check compiling errors for a single shader object " alt="" coords="966,122,1167,163"/>
-<area shape="rect" id="node15" href="$class_shader_manager.html#aa4ef5235b1be61c38872a6c865d740bc" title="method to set the data for the current shader " alt="" coords="469,325,632,352"/>
-<area shape="rect" id="node16" href="$class_shader_manager.html#a04c9fb67f7fa4995ae678f64f5b4985b" title="method to set OpenGL to use the current shader program " alt="" coords="481,376,620,403"/>
+<area shape="rect" id="node16" href="$class_shader_manager.html#aa4ef5235b1be61c38872a6c865d740bc" title="method to set the data for the current shader " alt="" coords="469,332,632,359"/>
+<area shape="rect" id="node17" href="$class_shader_manager.html#a04c9fb67f7fa4995ae678f64f5b4985b" title="method to set OpenGL to use the current shader program " alt="" coords="481,383,620,409"/>
 </map>
