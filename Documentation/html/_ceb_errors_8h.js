@@ -1,0 +1,38 @@
+var _ceb_errors_8h =
+[
+    [ "unknownError", "class_c_e_b_error_1_1unknown_error.html", "class_c_e_b_error_1_1unknown_error" ],
+    [ "baseError", "class_c_e_b_error_1_1base_error.html", "class_c_e_b_error_1_1base_error" ],
+    [ "fileError", "class_c_e_b_error_1_1file_error.html", "class_c_e_b_error_1_1file_error" ],
+    [ "fileReadError", "class_c_e_b_error_1_1file_read_error.html", "class_c_e_b_error_1_1file_read_error" ],
+    [ "fileWriteError", "class_c_e_b_error_1_1file_write_error.html", "class_c_e_b_error_1_1file_write_error" ],
+    [ "fileFatalError", "class_c_e_b_error_1_1file_fatal_error.html", "class_c_e_b_error_1_1file_fatal_error" ],
+    [ "fileResourceError", "class_c_e_b_error_1_1file_resource_error.html", "class_c_e_b_error_1_1file_resource_error" ],
+    [ "fileOpenError", "class_c_e_b_error_1_1file_open_error.html", "class_c_e_b_error_1_1file_open_error" ],
+    [ "fileAbortError", "class_c_e_b_error_1_1file_abort_error.html", "class_c_e_b_error_1_1file_abort_error" ],
+    [ "fileTimeOutError", "class_c_e_b_error_1_1file_time_out_error.html", "class_c_e_b_error_1_1file_time_out_error" ],
+    [ "fileUnspecifiedError", "class_c_e_b_error_1_1file_unspecified_error.html", "class_c_e_b_error_1_1file_unspecified_error" ],
+    [ "fileRemoveError", "class_c_e_b_error_1_1file_remove_error.html", "class_c_e_b_error_1_1file_remove_error" ],
+    [ "fileRenameError", "class_c_e_b_error_1_1file_rename_error.html", "class_c_e_b_error_1_1file_rename_error" ],
+    [ "filePositionError", "class_c_e_b_error_1_1file_position_error.html", "class_c_e_b_error_1_1file_position_error" ],
+    [ "fileResizeError", "class_c_e_b_error_1_1file_resize_error.html", "class_c_e_b_error_1_1file_resize_error" ],
+    [ "filePermissionsError", "class_c_e_b_error_1_1file_permissions_error.html", "class_c_e_b_error_1_1file_permissions_error" ],
+    [ "fileCopyError", "class_c_e_b_error_1_1file_copy_error.html", "class_c_e_b_error_1_1file_copy_error" ],
+    [ "openGlError", "class_c_e_b_error_1_1open_gl_error.html", "class_c_e_b_error_1_1open_gl_error" ],
+    [ "openGlListError", "class_c_e_b_error_1_1open_gl_list_error.html", "class_c_e_b_error_1_1open_gl_list_error" ],
+    [ "glErrorCodes", "_ceb_errors_8h.html#a2847932b5d61ef44cc6e0cb827004e08", [
+      [ "NoError", "_ceb_errors_8h.html#a2847932b5d61ef44cc6e0cb827004e08aef9104c292609ba6db320509be8fe27f", null ],
+      [ "OutOfMemory", "_ceb_errors_8h.html#a2847932b5d61ef44cc6e0cb827004e08a693a56048c1e1863c980d58364247f7a", null ],
+      [ "InvalidEnum", "_ceb_errors_8h.html#a2847932b5d61ef44cc6e0cb827004e08a193fc75e45418dd6a9668fe593634118", null ],
+      [ "InvalidValue", "_ceb_errors_8h.html#a2847932b5d61ef44cc6e0cb827004e08aa7d5dbb80731c0bd189f7d106c768631", null ],
+      [ "InvalidOperation", "_ceb_errors_8h.html#a2847932b5d61ef44cc6e0cb827004e08a8fafe02ab19b29a26c023c80f5879b16", null ],
+      [ "InvalidFramebufferOperation", "_ceb_errors_8h.html#a2847932b5d61ef44cc6e0cb827004e08a7c7f48aea473155f6b6ad553b5dbcb04", null ],
+      [ "StackOverflow", "_ceb_errors_8h.html#a2847932b5d61ef44cc6e0cb827004e08ac7254105699f6d33bda0d5636498df4e", null ],
+      [ "StackUnderflow", "_ceb_errors_8h.html#a2847932b5d61ef44cc6e0cb827004e08affaee57d5fa29bfc91296d0ea4d204bd", null ],
+      [ "TableTooLarge", "_ceb_errors_8h.html#a2847932b5d61ef44cc6e0cb827004e08a810cbefc87fc294f34a5cb04deb9e10d", null ],
+      [ "ContextLost", "_ceb_errors_8h.html#a2847932b5d61ef44cc6e0cb827004e08a7dc0d57a2e1d5f8a522ba2d1a7b80eac", null ]
+    ] ],
+    [ "clearAllGlErrors", "_ceb_errors_8h.html#a2d18759e56c7ce49d3f1ef046bc49eee", null ],
+    [ "GlError", "_ceb_errors_8h.html#a29498ebf95b2767b59b1a699bfd9d271", null ],
+    [ "glErrorCodeToText", "_ceb_errors_8h.html#a48ec418a65c7d673dd7cc87dfa33f986", null ],
+    [ "QtFileError", "_ceb_errors_8h.html#a664ab19610a5a1b25b082ca8bdf51e7b", null ]
+];

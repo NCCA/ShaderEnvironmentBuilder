@@ -1,0 +1,12 @@
+<map id="NGLScene.h" name="NGLScene.h">
+<area shape="rect" id="node2" href="$_n_g_l_scene_8cpp.html" title="NGLScene.cpp" alt="" coords="5,80,115,107"/>
+<area shape="rect" id="node3" href="$_button_lib_8h.html" title="this class creates a button library to store buttons and set uniform values " alt="" coords="190,80,276,107"/>
+<area shape="rect" id="node7" href="$_main_window_8h.html" title="the MainWindow, GUI for our program " alt="" coords="299,229,404,256"/>
+<area shape="rect" id="node5" href="$_button_8h.html" title="this class creates a button with a pop up widget that can create modifiable attributes ..." alt="" coords="87,155,157,181"/>
+<area shape="rect" id="node4" href="$_button_lib_8cpp.html" title="ButtonLib.cpp" alt="" coords="183,155,284,181"/>
+<area shape="rect" id="node6" href="$_button_8cpp.html" title="Button.cpp" alt="" coords="81,229,164,256"/>
+<area shape="rect" id="node8" href="$main_8cpp.html" title="main.cpp" alt="" coords="124,304,199,331"/>
+<area shape="rect" id="node9" href="$_main_window_8cpp.html" title="MainWindow.cpp" alt="" coords="223,304,341,331"/>
+<area shape="rect" id="node10" href="$_startup_dialog_8h.html" title="StartupDialog.h" alt="" coords="366,304,476,331"/>
+<area shape="rect" id="node11" href="$_startup_dialog_8cpp.html" title="StartupDialog.cpp" alt="" coords="359,379,483,405"/>
+</map>

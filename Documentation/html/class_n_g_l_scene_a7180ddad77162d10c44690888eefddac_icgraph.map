@@ -1,0 +1,5 @@
+<map id="NGLScene::setMeshLocation" name="NGLScene::setMeshLocation">
+<area shape="rect" id="node2" href="$class_n_g_l_scene.html#aa483e1f8441744ddf3eb9b8587a67e84" title="Changes the name of the m_mesh object directory. " alt="" coords="243,5,435,32"/>
+<area shape="rect" id="node3" href="$class_main_window.html#a0ee54d90ea9cd6f8899563e12f1155d7" title="Called when Import Mesh is called to change the render mesh. " alt="" coords="483,5,645,32"/>
+<area shape="rect" id="node4" href="$class_main_window.html#a93cfdcac35db98baf6a7d2c2738a2006" title="Constructor for the MainWindow. " alt="" coords="694,5,869,32"/>
+</map>

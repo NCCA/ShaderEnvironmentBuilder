@@ -1,0 +1,404 @@
+\section{Vec\-Button Class Reference}
+\label{class_vec_button}\index{Vec\-Button@{Vec\-Button}}
+
+
+\doxyref{Button}{p.}{class_button} to set vec3 and positional values.  
+
+
+
+
+{\ttfamily \#include $<$Button.\-h$>$}
+
+
+
+Inheritance diagram for Vec\-Button\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=106pt]{class_vec_button__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Vec\-Button\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_vec_button__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void {\bf set\-Up\-Button} (ngl\-::\-Vec3 \-\_\-vector)
+\begin{DoxyCompactList}\small\item\em runs all the necessary functions for the pop up window \end{DoxyCompactList}\item 
+void {\bf set\-Vec} (ngl\-::\-Vec4 \-\_\-value)
+\begin{DoxyCompactList}\small\item\em sets m\-\_\-value to the input value \end{DoxyCompactList}\item 
+ngl\-::\-Vec4 {\bf get\-Vec} ()
+\begin{DoxyCompactList}\small\item\em returns the vector value \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Slots}
+\begin{DoxyCompactItemize}
+\item 
+void {\bf open\-Box} ()
+\begin{DoxyCompactList}\small\item\em a slot to open vec widget upon button press event \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Q\-Dialog $\ast$ {\bf m\-\_\-vec\-Window}
+\begin{DoxyCompactList}\small\item\em window for the layout to hold float values \end{DoxyCompactList}\item 
+Q\-Grid\-Layout $\ast$ {\bf m\-\_\-vec\-Layout}
+\begin{DoxyCompactList}\small\item\em layout to hold spin boxes and labels for float values \end{DoxyCompactList}\item 
+Q\-Label $\ast$ {\bf m\-\_\-x\-Name}
+\begin{DoxyCompactList}\small\item\em X label for float. \end{DoxyCompactList}\item 
+Q\-Label $\ast$ {\bf m\-\_\-y\-Name}
+\begin{DoxyCompactList}\small\item\em Y label for float. \end{DoxyCompactList}\item 
+Q\-Label $\ast$ {\bf m\-\_\-z\-Name}
+\begin{DoxyCompactList}\small\item\em Z label for float. \end{DoxyCompactList}\item 
+Q\-Double\-Spin\-Box $\ast$ {\bf m\-\_\-x\-Spin\-Box}
+\begin{DoxyCompactList}\small\item\em Spin box for X value. \end{DoxyCompactList}\item 
+Q\-Double\-Spin\-Box $\ast$ {\bf m\-\_\-y\-Spin\-Box}
+\begin{DoxyCompactList}\small\item\em Spin box for Y value. \end{DoxyCompactList}\item 
+Q\-Double\-Spin\-Box $\ast$ {\bf m\-\_\-z\-Spin\-Box}
+\begin{DoxyCompactList}\small\item\em Spin box for Z value. \end{DoxyCompactList}\item 
+Q\-Dialog\-Button\-Box $\ast$ {\bf m\-\_\-button\-Box\-\_\-ok}
+\begin{DoxyCompactList}\small\item\em Buttonbox for standard ok button. \end{DoxyCompactList}\item 
+Q\-Dialog\-Button\-Box $\ast$ {\bf m\-\_\-button\-Box\-\_\-cancel}
+\begin{DoxyCompactList}\small\item\em Buttonbox for standard cancel button. \end{DoxyCompactList}\item 
+ngl\-::\-Vec4 {\bf m\-\_\-value}
+\begin{DoxyCompactList}\small\item\em vec4 value to store attributes \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+\doxyref{Button}{p.}{class_button} to set vec3 and positional values. 
+
+Originally implemented for vec3 values to set custom values. This could be for things like camera position etc. \begin{DoxyRefDesc}{Bug}
+\item[{\bf Bug}]The values open and get set as expected, these are passed off to the parser. Upon printing the values of the uniforms they are the same as what's being held in the button, however do not seem to update within the gl scene. \end{DoxyRefDesc}
+
+
+Definition at line 310 of file Button.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\index{Vec\-Button@{Vec\-Button}!get\-Vec@{get\-Vec}}
+\index{get\-Vec@{get\-Vec}!VecButton@{Vec\-Button}}
+\subsubsection[{get\-Vec}]{\setlength{\rightskip}{0pt plus 5cm}ngl\-::\-Vec4 Vec\-Button\-::get\-Vec (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\label{class_vec_button_a41dbe6736fcc2ff329accae19bd9657f}
+
+
+returns the vector value 
+
+\begin{DoxyReturn}{Returns}
+m\-\_\-value; 
+\end{DoxyReturn}
+
+
+Reimplemented from {\bf Button} \doxyref{}{p.}{class_button_a5d3781edfd3746dcc604737cf6e5cbf2}.
+
+
+
+Definition at line 333 of file Button.\-h.
+
+
+
+References m\-\_\-value.
+
+
+\begin{DoxyCode}
+333 \{\textcolor{keywordflow}{return} m_value;\}
+\end{DoxyCode}
+\index{Vec\-Button@{Vec\-Button}!open\-Box@{open\-Box}}
+\index{open\-Box@{open\-Box}!VecButton@{Vec\-Button}}
+\subsubsection[{open\-Box}]{\setlength{\rightskip}{0pt plus 5cm}void Vec\-Button\-::open\-Box (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}\label{class_vec_button_a3c9d4ed0230713d4b255f0b24d6649b4}
+
+
+a slot to open vec widget upon button press event 
+
+
+
+Definition at line 142 of file Button.\-cpp.
+
+
+
+References Button\-::m\-\_\-lib\-Parent, Button\-::m\-\_\-scene\-Parent, m\-\_\-value, m\-\_\-vec\-Window, m\-\_\-x\-Spin\-Box, m\-\_\-y\-Spin\-Box, m\-\_\-z\-Spin\-Box, and Button\-Lib\-::update\-Shader\-Values().
+
+
+\begin{DoxyCode}
+143 \{
+144   m_xSpinBox->setValue(m_value.m\_x);
+145   m_ySpinBox->setValue(m_value.m\_y);
+146   m_zSpinBox->setValue(m_value.m\_z);
+147   m_vecWindow->exec();
+148   \textcolor{keywordflow}{if} (m_vecWindow->result() == 1)
+149   \{
+150     m_value.set(m_xSpinBox->value(),
+151                 m_ySpinBox->value(),
+152                 m_zSpinBox->value());
+153     m_libParent->updateShaderValues();
+154     m_sceneParent->update();
+155   \}
+156 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=336pt]{class_vec_button_a3c9d4ed0230713d4b255f0b24d6649b4_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{Vec\-Button@{Vec\-Button}!set\-Up\-Button@{set\-Up\-Button}}
+\index{set\-Up\-Button@{set\-Up\-Button}!VecButton@{Vec\-Button}}
+\subsubsection[{set\-Up\-Button}]{\setlength{\rightskip}{0pt plus 5cm}void Vec\-Button\-::set\-Up\-Button (
+\begin{DoxyParamCaption}
+\item[{ngl\-::\-Vec3}]{\-\_\-vector}
+\end{DoxyParamCaption}
+)}\label{class_vec_button_a87d5f8c5a534b5d4823fe323b626c77b}
+
+
+runs all the necessary functions for the pop up window 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-value} & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 96 of file Button.\-cpp.
+
+
+
+References Button\-::m\-\_\-parent, m\-\_\-value, m\-\_\-vec\-Layout, m\-\_\-vec\-Window, m\-\_\-x\-Name, m\-\_\-x\-Spin\-Box, m\-\_\-y\-Name, m\-\_\-y\-Spin\-Box, m\-\_\-z\-Name, and m\-\_\-z\-Spin\-Box.
+
+
+\begin{DoxyCode}
+97 \{
+98   m_value.set(\_vector);
+99   m_value.m\_w=1.0f;
+100 
+101    m_vecWindow = \textcolor{keyword}{new} QDialog(m_parent);
+102    m_vecLayout = \textcolor{keyword}{new} QGridLayout(m_vecWindow);
+103 
+104    m_vecWindow->setWindowTitle(\textcolor{stringliteral}{"Input XYZ values"});
+105    m_vecWindow->setFixedSize(200,200);
+106    m_vecWindow->setModal(1);
+107    m_xName = \textcolor{keyword}{new} QLabel(\textcolor{stringliteral}{"X: "});
+108    m_xSpinBox = \textcolor{keyword}{new} QDoubleSpinBox();
+109    m_xSpinBox->setSingleStep(0.1);
+110    m_xSpinBox->setDecimals(3);
+111    m_xSpinBox->setValue(m_value.m\_x);
+112    m_xSpinBox->setRange(-100000.0f,100000.0f);
+113    m_yName = \textcolor{keyword}{new} QLabel(\textcolor{stringliteral}{"Y: "});
+114    m_ySpinBox = \textcolor{keyword}{new} QDoubleSpinBox();
+115    m_ySpinBox->setSingleStep(0.1);
+116    m_ySpinBox->setDecimals(3);
+117    m_ySpinBox->setValue(m_value.m\_y);
+118    m_ySpinBox->setRange(-100000.0f,100000.0f);
+119    m_zName = \textcolor{keyword}{new} QLabel(\textcolor{stringliteral}{"Z: "});
+120    m_zSpinBox = \textcolor{keyword}{new} QDoubleSpinBox();
+121    m_zSpinBox->setSingleStep(0.1);
+122    m_zSpinBox->setDecimals(3);
+123    m_zSpinBox->setValue(m_value.m\_z);
+124    m_zSpinBox->setRange(-100000.0f,100000.0f);
+125    m_vecLayout->addWidget(m_xName, 0, 0);
+126    m_vecLayout->addWidget(m_xSpinBox, 0, 1);
+127    m_vecLayout->addWidget(m_yName, 1, 0);
+128    m_vecLayout->addWidget(m_ySpinBox, 1, 1);
+129    m_vecLayout->addWidget(m_zName, 2, 0);
+130    m_vecLayout->addWidget(m_zSpinBox,2, 1);
+131 
+132    QDialogButtonBox *buttonBox\_ok = \textcolor{keyword}{new} QDialogButtonBox(QDialogButtonBox::Ok);
+133    QDialogButtonBox *buttonBox\_cancel = \textcolor{keyword}{new} QDialogButtonBox(QDialogButtonBox::Cancel);
+134    connect(buttonBox\_ok, SIGNAL(accepted()), m_vecWindow, SLOT(accept()));
+135    connect(buttonBox\_cancel, SIGNAL(rejected()), m_vecWindow, SLOT(reject()));
+136 
+137    m_vecLayout->addWidget(buttonBox\_cancel, 3, 0);
+138    m_vecLayout->addWidget(buttonBox\_ok, 3, 1);
+139 
+140 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_vec_button_a87d5f8c5a534b5d4823fe323b626c77b_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Vec\-Button@{Vec\-Button}!set\-Vec@{set\-Vec}}
+\index{set\-Vec@{set\-Vec}!VecButton@{Vec\-Button}}
+\subsubsection[{set\-Vec}]{\setlength{\rightskip}{0pt plus 5cm}void Vec\-Button\-::set\-Vec (
+\begin{DoxyParamCaption}
+\item[{ngl\-::\-Vec4}]{\-\_\-value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\label{class_vec_button_ad6031636201b20b40bdab28e90a4f427}
+
+
+sets m\-\_\-value to the input value 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-value} & \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from {\bf Button} \doxyref{}{p.}{class_button_a796b8d995b90901474020afe94db2670}.
+
+
+
+Definition at line 328 of file Button.\-h.
+
+
+
+References m\-\_\-value.
+
+
+\begin{DoxyCode}
+328 \{m_value=\_value;\}
+\end{DoxyCode}
+
+
+\subsection{Member Data Documentation}
+\index{Vec\-Button@{Vec\-Button}!m\-\_\-button\-Box\-\_\-cancel@{m\-\_\-button\-Box\-\_\-cancel}}
+\index{m\-\_\-button\-Box\-\_\-cancel@{m\-\_\-button\-Box\-\_\-cancel}!VecButton@{Vec\-Button}}
+\subsubsection[{m\-\_\-button\-Box\-\_\-cancel}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Dialog\-Button\-Box$\ast$ Vec\-Button\-::m\-\_\-button\-Box\-\_\-cancel\hspace{0.3cm}{\ttfamily [private]}}\label{class_vec_button_a1b1be77d234244c75701b4df9d12e226}
+
+
+Buttonbox for standard cancel button. 
+
+
+
+Definition at line 375 of file Button.\-h.
+
+\index{Vec\-Button@{Vec\-Button}!m\-\_\-button\-Box\-\_\-ok@{m\-\_\-button\-Box\-\_\-ok}}
+\index{m\-\_\-button\-Box\-\_\-ok@{m\-\_\-button\-Box\-\_\-ok}!VecButton@{Vec\-Button}}
+\subsubsection[{m\-\_\-button\-Box\-\_\-ok}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Dialog\-Button\-Box$\ast$ Vec\-Button\-::m\-\_\-button\-Box\-\_\-ok\hspace{0.3cm}{\ttfamily [private]}}\label{class_vec_button_aefede624a9ec4d69b8769341a0c7afb2}
+
+
+Buttonbox for standard ok button. 
+
+
+
+Definition at line 371 of file Button.\-h.
+
+\index{Vec\-Button@{Vec\-Button}!m\-\_\-value@{m\-\_\-value}}
+\index{m\-\_\-value@{m\-\_\-value}!VecButton@{Vec\-Button}}
+\subsubsection[{m\-\_\-value}]{\setlength{\rightskip}{0pt plus 5cm}ngl\-::\-Vec4 Vec\-Button\-::m\-\_\-value\hspace{0.3cm}{\ttfamily [private]}}\label{class_vec_button_abc81697bb1c8ae89efb5a1d9dfa0b699}
+
+
+vec4 value to store attributes 
+
+
+
+Definition at line 379 of file Button.\-h.
+
+\index{Vec\-Button@{Vec\-Button}!m\-\_\-vec\-Layout@{m\-\_\-vec\-Layout}}
+\index{m\-\_\-vec\-Layout@{m\-\_\-vec\-Layout}!VecButton@{Vec\-Button}}
+\subsubsection[{m\-\_\-vec\-Layout}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Grid\-Layout$\ast$ Vec\-Button\-::m\-\_\-vec\-Layout\hspace{0.3cm}{\ttfamily [private]}}\label{class_vec_button_aba76ca1e287cdee7df67a2822663e516}
+
+
+layout to hold spin boxes and labels for float values 
+
+
+
+Definition at line 343 of file Button.\-h.
+
+\index{Vec\-Button@{Vec\-Button}!m\-\_\-vec\-Window@{m\-\_\-vec\-Window}}
+\index{m\-\_\-vec\-Window@{m\-\_\-vec\-Window}!VecButton@{Vec\-Button}}
+\subsubsection[{m\-\_\-vec\-Window}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Dialog$\ast$ Vec\-Button\-::m\-\_\-vec\-Window\hspace{0.3cm}{\ttfamily [private]}}\label{class_vec_button_a8da07ba34d0efc9ee33a69f81eea4100}
+
+
+window for the layout to hold float values 
+
+
+
+Definition at line 339 of file Button.\-h.
+
+\index{Vec\-Button@{Vec\-Button}!m\-\_\-x\-Name@{m\-\_\-x\-Name}}
+\index{m\-\_\-x\-Name@{m\-\_\-x\-Name}!VecButton@{Vec\-Button}}
+\subsubsection[{m\-\_\-x\-Name}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Label$\ast$ Vec\-Button\-::m\-\_\-x\-Name\hspace{0.3cm}{\ttfamily [private]}}\label{class_vec_button_a6f089c74a27983fb545b9a4ca9542098}
+
+
+X label for float. 
+
+
+
+Definition at line 347 of file Button.\-h.
+
+\index{Vec\-Button@{Vec\-Button}!m\-\_\-x\-Spin\-Box@{m\-\_\-x\-Spin\-Box}}
+\index{m\-\_\-x\-Spin\-Box@{m\-\_\-x\-Spin\-Box}!VecButton@{Vec\-Button}}
+\subsubsection[{m\-\_\-x\-Spin\-Box}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Double\-Spin\-Box$\ast$ Vec\-Button\-::m\-\_\-x\-Spin\-Box\hspace{0.3cm}{\ttfamily [private]}}\label{class_vec_button_adeb91fa767c265ca1a4835d5d4e77244}
+
+
+Spin box for X value. 
+
+
+
+Definition at line 359 of file Button.\-h.
+
+\index{Vec\-Button@{Vec\-Button}!m\-\_\-y\-Name@{m\-\_\-y\-Name}}
+\index{m\-\_\-y\-Name@{m\-\_\-y\-Name}!VecButton@{Vec\-Button}}
+\subsubsection[{m\-\_\-y\-Name}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Label$\ast$ Vec\-Button\-::m\-\_\-y\-Name\hspace{0.3cm}{\ttfamily [private]}}\label{class_vec_button_a9282c8defd781814f53f9fbbd53b5704}
+
+
+Y label for float. 
+
+
+
+Definition at line 351 of file Button.\-h.
+
+\index{Vec\-Button@{Vec\-Button}!m\-\_\-y\-Spin\-Box@{m\-\_\-y\-Spin\-Box}}
+\index{m\-\_\-y\-Spin\-Box@{m\-\_\-y\-Spin\-Box}!VecButton@{Vec\-Button}}
+\subsubsection[{m\-\_\-y\-Spin\-Box}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Double\-Spin\-Box$\ast$ Vec\-Button\-::m\-\_\-y\-Spin\-Box\hspace{0.3cm}{\ttfamily [private]}}\label{class_vec_button_a4c117e3800fb0d6e63859434cac48f59}
+
+
+Spin box for Y value. 
+
+
+
+Definition at line 363 of file Button.\-h.
+
+\index{Vec\-Button@{Vec\-Button}!m\-\_\-z\-Name@{m\-\_\-z\-Name}}
+\index{m\-\_\-z\-Name@{m\-\_\-z\-Name}!VecButton@{Vec\-Button}}
+\subsubsection[{m\-\_\-z\-Name}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Label$\ast$ Vec\-Button\-::m\-\_\-z\-Name\hspace{0.3cm}{\ttfamily [private]}}\label{class_vec_button_aa9ca3e181e5c0aa6f873001e2a5ad48c}
+
+
+Z label for float. 
+
+
+
+Definition at line 355 of file Button.\-h.
+
+\index{Vec\-Button@{Vec\-Button}!m\-\_\-z\-Spin\-Box@{m\-\_\-z\-Spin\-Box}}
+\index{m\-\_\-z\-Spin\-Box@{m\-\_\-z\-Spin\-Box}!VecButton@{Vec\-Button}}
+\subsubsection[{m\-\_\-z\-Spin\-Box}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Double\-Spin\-Box$\ast$ Vec\-Button\-::m\-\_\-z\-Spin\-Box\hspace{0.3cm}{\ttfamily [private]}}\label{class_vec_button_ae64b4becadbd9e28f7baf11d4b847d9b}
+
+
+Spin box for Z value. 
+
+
+
+Definition at line 367 of file Button.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+{\bf Button.\-h}\item 
+{\bf Button.\-cpp}\end{DoxyCompactItemize}

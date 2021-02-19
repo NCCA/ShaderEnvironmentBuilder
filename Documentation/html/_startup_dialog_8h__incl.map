@@ -1,0 +1,16 @@
+<map id="StartupDialog.h" name="StartupDialog.h">
+<area shape="rect" id="node3" href="$_main_window_8h.html" title="the MainWindow, GUI for our program " alt="" coords="1430,80,1535,107"/>
+<area shape="rect" id="node7" href="$_button_lib_8h.html" title="this class creates a button library to store buttons and set uniform values " alt="" coords="1147,155,1233,181"/>
+<area shape="rect" id="node19" href="$_button_8h.html" title="this class creates a button with a pop up widget that can create modifiable attributes ..." alt="" coords="906,229,976,256"/>
+<area shape="rect" id="node42" href="$_cebitor_8h.html" title="CEB text editor, implementation of QScintilla. " alt="" coords="1446,155,1519,181"/>
+<area shape="rect" id="node46" href="$_new_project_wizard_8h.html" title="NewProjectWizard.h" alt="" coords="1697,155,1833,181"/>
+<area shape="rect" id="node30" href="$_n_g_l_scene_8h.html" title="a modified Qt GL widget class for " alt="" coords="1493,304,1587,331"/>
+<area shape="rect" id="node9" href="$_parser_lib_8h.html" title="the parsing library, used to manage all the uniform data. " alt="" coords="623,379,709,405"/>
+<area shape="rect" id="node48" href="$_project_8h.html" title="Project.h" alt="" coords="2209,304,2281,331"/>
+<area shape="rect" id="node39" href="$_camera_8h.html" title="Creates the camera used for NGLScene. " alt="" coords="1945,379,2023,405"/>
+<area shape="rect" id="node15" href="$_uniform_data_8h.html" title="the UniformData stores individual uniform data per data type. " alt="" coords="704,453,808,480"/>
+<area shape="rect" id="node16" href="$_shader_manager_8h.html" title="ShaderManager.h" alt="" coords="1033,453,1156,480"/>
+<area shape="rect" id="node40" href="$_io__xml_8h.html" title="Creates xml files to store project data by the user. The data can then be read for futher use..." alt="" coords="2098,379,2168,405"/>
+<area shape="rect" id="node41" href="$_json_8h.html" title="Creates a json file to then load shader data to the shader manager. " alt="" coords="1407,379,1465,405"/>
+<area shape="rect" id="node45" href="$_qsci_lexer_glsl_8h.html" title="Custom QScintilla lexer for GLSL. " alt="" coords="1646,229,1756,256"/>
+</map>

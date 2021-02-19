@@ -1,0 +1,4 @@
+<map id="Button::Button" name="Button::Button">
+<area shape="rect" id="node2" href="$class_button.html#a10293cc4dcea650ad6b858430bb2a488" title="function to create the button box for the pop up " alt="" coords="157,5,320,32"/>
+<area shape="rect" id="node3" href="$class_button.html#a9744bb5db7d847384e243ba5f4bad1d8" title="a slot to open a widget upon button press event " alt="" coords="369,5,485,32"/>
+</map>

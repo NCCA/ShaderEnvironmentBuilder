@@ -1,0 +1,90 @@
+\section{C\-E\-B\-Error\-:\-:file\-Rename\-Error Class Reference}
+\label{class_c_e_b_error_1_1file_rename_error}\index{C\-E\-B\-Error\-::file\-Rename\-Error@{C\-E\-B\-Error\-::file\-Rename\-Error}}
+
+
+raised for file rename errors  
+
+
+
+
+{\ttfamily \#include $<$Ceb\-Errors.\-h$>$}
+
+
+
+Inheritance diagram for C\-E\-B\-Error\-:\-:file\-Rename\-Error\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=172pt]{class_c_e_b_error_1_1file_rename_error__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for C\-E\-B\-Error\-:\-:file\-Rename\-Error\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=172pt]{class_c_e_b_error_1_1file_rename_error__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual const char $\ast$ {\bf what} () const   throw ()
+\begin{DoxyCompactList}\small\item\em returns an explanatory string \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+raised for file rename errors 
+
+Definition at line 307 of file Ceb\-Errors.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\index{C\-E\-B\-Error\-::file\-Rename\-Error@{C\-E\-B\-Error\-::file\-Rename\-Error}!what@{what}}
+\index{what@{what}!CEBError::fileRenameError@{C\-E\-B\-Error\-::file\-Rename\-Error}}
+\subsubsection[{what}]{\setlength{\rightskip}{0pt plus 5cm}virtual const char$\ast$ C\-E\-B\-Error\-::file\-Rename\-Error\-::what (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const throw  ) \hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}, {\ttfamily [virtual]}}\label{class_c_e_b_error_1_1file_rename_error_a8e3e40fe64af2d371292f0b7870b48dc}
+
+
+returns an explanatory string 
+
+
+
+Reimplemented from {\bf C\-E\-B\-Error\-::file\-Error} \doxyref{}{p.}{class_c_e_b_error_1_1file_error_ace162f612f8039db81cfd5f33a581483}.
+
+
+
+Definition at line 313 of file Ceb\-Errors.\-h.
+
+
+
+References C\-E\-B\-Error\-::base\-Error\-::generate\-Msg().
+
+
+\begin{DoxyCode}
+314   \{
+315     \textcolor{keywordflow}{return} generateMsg(\textcolor{stringliteral}{"The file could not be renamed"});
+316   \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=312pt]{class_c_e_b_error_1_1file_rename_error_a8e3e40fe64af2d371292f0b7870b48dc_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+{\bf Ceb\-Errors.\-h}\end{DoxyCompactItemize}

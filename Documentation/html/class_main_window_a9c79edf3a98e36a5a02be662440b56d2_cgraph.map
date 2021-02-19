@@ -1,0 +1,4 @@
+<map id="MainWindow::createQsciWidget" name="MainWindow::createQsciWidget">
+<area shape="rect" id="node2" href="$class_cebitor.html#a395cc168f396df26fd1fa20ae88dd44c" title="stores QLineEdit widget from the searchbar " alt="" coords="256,5,429,32"/>
+<area shape="rect" id="node3" href="$class_cebitor.html#a1b38824f5bba6001688107ae901c14e7" title="stores widget containing the searchbar " alt="" coords="259,56,426,83"/>
+</map>

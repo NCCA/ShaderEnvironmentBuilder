@@ -1,5 +1,6 @@
 #include "NGLScene.h"
 #include "ParserLib.h"
+#include "CebErrors.h"
 #include <iostream>
 #include <ngl/Vec3.h>
 #include <ngl/Camera.h>
@@ -12,11 +13,13 @@
 #include <typeinfo>
 #include <QColorDialog>
 #include <QString>
+#include <QFileDialog>
+#include <ngl/Texture.h>
 
 //----------------------------------------------------------------------------------------------------------------------
 /// @brief the increment for x/y translation with mouse movement
 //----------------------------------------------------------------------------------------------------------------------
-const static float INCREMENT=0.01f;
+const static float INCREMENT=0.005f;
 //----------------------------------------------------------------------------------------------------------------------
 /// @brief the increment for the wheel zoom
 //----------------------------------------------------------------------------------------------------------------------
@@ -24,133 +27,165 @@ const static float ZOOM=0.1f;
 //----------------------------------------------------------------------------------------------------------------------
 
 //----------------------------------------------------------------------------------------------------------------------
-NGLScene::NGLScene( QWidget *_parent, parserLib *_libParent  ) : QOpenGLWidget( _parent )
+NGLScene::NGLScene( QWidget *_parent, ParserLib *_libParent,
+                    ShaderManager *_manager )
+  : QOpenGLWidget( _parent )
 {
   // re-size the widget to that of the parent (in that case the GLFrame passed in on construction)
   m_rotate=false;
   // mouse rotation values set to 0
-  m_spinXFace=0.0f;
-  m_spinYFace=0.0f;
-  m_parser= _libParent;
+  m_spinXFace = 0.0f;
+  m_spinYFace = 0.0f;
+  m_spinZFace = 0.0;
+  m_parser= _libParent; //DONT CHANGE THIS
+  m_shapeType=6;
+  m_toggleObj=false;
+  m_toggleAxis=false;
+  m_meshLoc="./models/Suzanne.obj";
+  m_drawNormals=false;
+  m_drawGrid=false;
+  m_normalSize=0.1;
+  // Store main window to send data from compile errors
+  m_window = dynamic_cast<MainWindow*>(_parent);
   // re-size the widget to that of the parent (in this case the GLFrame passed in on construction)
   this->resize(_parent->size());
   m_wireframe=false;
-  m_fov=65.0;
-  m_newJson= new Json();
+  m_shaderManager = _manager;
+  m_camera = new Camera();
+  m_camera->createCameras();
+  m_cam = m_camera->m_mainCamera;
+
   // set this widget to have the initial keyboard focus
   setFocus();
+  connect(this, SIGNAL(initializeGL()), this, SLOT(initGL()));
 }
 
 //----------------------------------------------------------------------------------------------------------------------
 NGLScene::~NGLScene()
 {
-  delete m_newJson;
   //delete m_readFromXML;
   delete m_parser;
+  delete m_shaderManager;
+
+  //Clear any existing texture maps
+  glDeleteTextures(1,&m_textureName);
 }
+
+//----------------------------------------------------------------------------------------------------------------------
+void NGLScene::setMeshLocation(std::string _meshDirectory)
+{
+  m_meshLoc=_meshDirectory;
+  //std::cout<<"Imported file:  "<<_meshDirectory<<std::endl;
+}
+
+void NGLScene::toggleObj()
+{
+  if(m_toggleObj==true)
+  {
+    m_mesh = std::unique_ptr<ngl::Obj> (new ngl::Obj(m_meshLoc));
+    m_mesh->createVAO();
+    m_toggleObj=false;
+  }
+
+}
+//----------------------------------------------------------------------------------------------------------------------
+
+void NGLScene::importMeshName(const std::string &_name)
+{
+  // If the CANCEL button is clicked, then don't update the shapetype or location
+  std::ifstream shaderSource(_name.c_str());
+  if (!shaderSource.is_open())
+  {
+    if(_name.length()==0)
+    {
+      std::cerr<<"Import Cancelled"<<std::endl;
+      //exit(EXIT_FAILURE);
+    }
+    else
+    {
+      std::cerr<<"File not found"<<_name.c_str()<<std::endl;
+      //exit(EXIT_FAILURE);
+    }
+  }
+  else
+  {
+    setMeshLocation(_name);
+    setShapeType(0);
+    m_toggleObj=true;
+  }
+
+
+}
+
+//----------------------------------------------------------------------------------------------------------------------
+void NGLScene::importTextureMap(const std::string &_name)
+{
+  std::ifstream textureSource(_name.c_str());
+  ngl::Texture texture (_name);
+  m_textureName=texture.setTextureGL();
+  update();
+}
+//----------------------------------------------------------------------------------------------------------------------
 
 //----------------------------------------------------------------------------------------------------------------------
 // This virtual function is called once before the first call to paintGL() or resizeGL(),
 // and then once whenever the widget has been assigned a new QGLContext.
 // This function should set up any required OpenGL context rendering flags, defining display lists, etc.
 //----------------------------------------------------------------------------------------------------------------------
-void NGLScene::initializeGL()
+void NGLScene::initGL()
 {
-
   ngl::NGLInit::instance();
+  clearAllGlErrors();
+
   glClearColor(0.4f, 0.4f, 0.4f, 1.0f);			   // Grey Background
   // enable depth testing for drawing
   glEnable(GL_DEPTH_TEST);
   // enable multisampling for smoother drawing
   glEnable(GL_MULTISAMPLE);
 
-  // create our camera
-  ngl::Vec3 eye(0,1,1);
-  ngl::Vec3 look(0,0,0);
-  ngl::Vec3 up(0,1,0);
-  m_cam.set(eye,look,up);
-  setCamShape();
   // now to load the shader and set the values
   // grab an instance of shader manager
-  ngl::ShaderLib *shader=ngl::ShaderLib::instance();
-  // we are creating a shader called Phong
-  shader->createShaderProgram("Phong"); //RENAME TO INPUT SHADER
-  // now we are going to create empty shaders for Frag and Vert
-  shader->attachShader("PhongVertex",ngl::ShaderType::VERTEX); //INPUTVERTEX
-  shader->attachShader("PhongFragment",ngl::ShaderType::FRAGMENT); //INPUTSHADER
-  // attach the source
-  shader->loadShaderSource("PhongVertex","shaders/PhongVertex.glsl"); //NEEDS TO BE SHADERFROMTSTRING
-  shader->loadShaderSource("PhongFragment","shaders/PhongFragment.glsl"); //NEEDS TO BE SHADERFROMSTRING
-  // compile the shaders
-  shader->compileShader("PhongVertex");
-  shader->compileShader("PhongFragment");
+  m_shaderManager->initialize();
 
-  // add them to the program
-  shader->attachShaderToProgram("Phong","PhongVertex");
-  shader->attachShaderToProgram("Phong","PhongFragment");
-  // now bind the shader attributes for most NGL primitives we use the following
-  // layout attribute 0 is the vertex data (x,y,z)
-  shader->bindAttribute("Phong",0,"inVert");
-  // attribute 1 is the UV data u,v (if present)
-  shader->bindAttribute("Phong",1,"inUV");
-  // attribute 2 are the normals x,y,z
-  shader->bindAttribute("Phong",2,"inNormal");
+  ngl::Texture texture ("textures/metalTexture.jpg");
+  m_textureName=texture.setTextureGL();
 
-  // now we have associated this data we can link the shader
-  shader->linkProgramObject("Phong");
-  // and make it active ready to load values
-  (*shader)["Phong"]->use();
-  shader->setShaderParam1i("Normalize",1);
-  shader->setShaderParam3f("viewerPos",m_cam.getEye().m_x,m_cam.getEye().m_y,m_cam.getEye().m_z);
-  // now pass the modelView and projection values to the shader
-  // the shader will use the currently active material and light0 so set them
-  ngl::Material m(ngl::STDMAT::GOLD );
-  // load our material values to the shader into the structure material (see Vertex shader)
-  m.loadToShader("material");
-  // we need to set a base colour as the material isn't being used for all the params
-  shader->setShaderParam4f("Colour",0.23125f,0.23125f,0.23125f,1);
 
-  // now create our light this is done after the camera so we can pass the
-  // transpose of the projection matrix to the light to do correct eye space
-  // transformations
-  ngl::Light light(ngl::Vec3(2,2,2),ngl::Colour(1,1,1,1),ngl::Colour(1,1,1,1),ngl::LightModes::POINTLIGHT);
+  if(!m_shaderManager->compileStatus())
+  {
+    m_window->setTerminalText(parseErrorLog(m_shaderManager->getErrorLog()));
+  }
+  if(m_shaderManager->isInit())
+  {
+    ngl::Mat4 iv=m_cam.getViewMatrix();
+    iv.transpose();
+    //m_parser->assignAllData();
+  }
 
-  ngl::Mat4 iv=m_cam.getViewMatrix();
-  iv.transpose();
+  // Create mesh VAO
+  m_mesh = std::unique_ptr<ngl::Obj> (new ngl::Obj(m_meshLoc));
+  m_mesh->createVAO();
 
-  light.setTransform(iv);
-  light.setAttenuation(1,0,0);
-  light.enable();
+  // Create some default shapes
+  ngl::VAOPrimitives::instance()->createSphere("sphere",0.7,30);
+  ngl::VAOPrimitives::instance()->createTorus("torus",0.3,0.7,20,20);
+  ngl::VAOPrimitives::instance()->createLineGrid("Grid",10,10,10);
 
-  // load these values to the shader as well
-  light.loadToShader("light");
-
-  m_readFromXML->shaderData("WhyHelloThere", "PhongVertex", "shaders/PhongVertex.glsl", "PhongFragment", "shaders/PhongFragment.glsl");
-  m_parser->assignAllData();
-  std::cerr<<"Find number of active uniforms: "<<m_parser->m_num<<std::endl;
 }
+
 //----------------------------------------------------------------------------------------------------------------------
-void NGLScene::exportUniforms()
+void NGLScene::setShapeType(int _type)
 {
-  std::ofstream fileOut;
-  fileOut.open("./tempFiles/ParsingOutput.txt");
-  if(!fileOut.is_open())    ///If it can be opened
+  if (_type<=7 && _type>=0)
   {
-    std::cerr<<"couldn't' open file\n";
-    exit(EXIT_FAILURE);
+    m_shapeType=_type;
   }
-  for(uint i=0;i<m_parser->m_num;i++)
+  else
   {
-    fileOut<<m_parser->m_uniformList[i]->getName()<<"\n";
-    fileOut<<m_parser->m_uniformList[i]->getLocation()<<"\n";
-    fileOut<<m_parser->m_uniformList[i]->getTypeName()<<"\n";
+    //std::cout<<"Invalid shape type"<<std::endl;
   }
-  fileOut.close();
-  // close files
-  std::cout<<"EXPORTED\n"<<std::endl;
+  update();
 }
-
-
 
 //----------------------------------------------------------------------------------------------------------------------
 //This virtual function is called whenever the widget needs to be painted.
@@ -159,140 +194,217 @@ void NGLScene::exportUniforms()
 void NGLScene::paintGL()
 {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
   if(m_wireframe == true)
   {
     glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
   }
   else
   {
+    //glBindTexture(GL_TEXTURE_2D, m_textureName);
     glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
   }
+  ngl::ShaderLib *shaderLib=ngl::ShaderLib::instance();
 
-  ngl::ShaderLib *shader=ngl::ShaderLib::instance();
-  (*shader)["Phong"]->use();
+  m_shaderManager->use(0);
 
   // Rotation based on the mouse position for our global transform
   ngl::Mat4 rotX;
   ngl::Mat4 rotY;
+  ngl::Mat4 rotZ;
   // create the rotation matrices
   rotX.rotateX(m_spinXFace);
   rotY.rotateY(m_spinYFace);
+  rotZ.rotateZ(m_spinZFace);
   // multiply the rotations
-  m_mouseGlobalTX=rotY*rotX;
+  m_mouseGlobalTX=rotY*rotX*rotZ;
   // add the translations
   m_mouseGlobalTX.m_m[3][0] = m_modelPos.m_x;
   m_mouseGlobalTX.m_m[3][1] = m_modelPos.m_y;
   m_mouseGlobalTX.m_m[3][2] = m_modelPos.m_z;
 
-  m_cam.setShape(m_fov, m_aspect, 0.5f, 150.0f);
+  //draw initial texture map
+  glBindTexture(GL_TEXTURE_2D, m_textureName);
+  m_shaderManager->use(0);
 
-  loadMatricesToShader();
   ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
-  prim->draw("teapot");
+
+  m_camera->m_aspect = (float)width()/height();
+  m_camera->setShapeCam();
+  m_cam = m_camera->m_mainCamera;
+  m_cameraIndex = m_camera->m_cameraIndex;
+
+  m_transform.reset();
+
+  if (m_toggleAxis)
+  {
+    ngl::Vec3 pos={-1,-0.5,-1};
+    drawAxis(pos);
+  }
+  loadMatricesToShader();
+
+  if (m_drawGrid)
+  {
+    // Draw a grid
+    prim->draw("Grid");
+  }
+  if (m_toggleObj)
+  {
+    // Activate Obj
+    toggleObj();
+  }
+
+  // Set object transformation and draw
+  objectTransform(m_shapeType);
+  drawObject(m_shapeType);
+  if(m_drawNormals)
+  {
+    // set the shader to use the normalShader
+    m_shaderManager->use(1);
+    ngl::Mat4 MV;
+    ngl::Mat4 MVP;
+    MV=m_transform.getMatrix()*m_mouseGlobalTX*m_cam.getViewMatrix();
+    MVP=MV*m_cam.getProjectionMatrix();
+    // set the uniform to use the current transformations
+    shaderLib->setUniform("MVP",MVP);
+    // set the normalSize
+    shaderLib->setUniform("normalSize",m_normalSize);
+    //draw the object normals
+    drawObject(m_shapeType);
+  }
+}
+
+//----------------------------------------------------------------------------------------------------------------------
+void NGLScene::objectTransform(uint _type)
+{
+  enum geo {input=0,sphere=1,cube=2,torus=3,teapot=4,troll=5,dragon=6,bunny=7};
+
+  // Transform differently depending on the object being drawn
+  // Used to make all default shapes a similar size
+  switch(_type)
+  {
+  case input : break;
+  case sphere: break;
+  case cube  : break;
+  case torus : break;
+  case teapot: break;
+  case troll :
+  {
+    m_transform.setScale(1.5,1.5,1.5);
+    loadMatricesToShader();
+    break;
+    // Moved the troll to be the same relative shape and position
+  }
+  case dragon:
+  {
+    m_transform.setScale(0.1,0.1,0.1);
+    m_transform.setPosition(0,-0.5,0);
+    m_transform.setRotation(0,90,0);
+    loadMatricesToShader();
+    break;
+    // Moved the dragon to be the same relative shape and position
+  }
+  case bunny:
+  {
+    m_transform.setScale(0.15,0.15,0.15);
+    m_transform.setPosition(0,-0.5,0);
+    loadMatricesToShader();
+    break;
+    // Moved the bunny to be the same relative shape and position
+  }
+  default: std::cerr<<"unrecognised shape type value\n"; break;
+  }
+}
+
+//----------------------------------------------------------------------------------------------------------------------
+void NGLScene::drawObject(uint _type)
+{
+  ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
+  enum geo {input=0,sphere=1,cube=2,torus=3,teapot=4,troll=5,dragon=6,bunny=7};
+
+  // Draw different objects depending on the input value
+  switch(_type)
+  {
+  case input : { m_mesh->draw();      break; }
+  case sphere: { prim->draw("sphere");break; }
+  case cube  : { prim->draw("cube");  break; }
+  case torus : { prim->draw("torus"); break; }
+  case teapot: { prim->draw("teapot");break; }
+  case troll : { prim->draw("troll"); break; }
+  case dragon: { prim->draw("dragon");break; }
+  case bunny : { prim->draw("bunny"); break; }
+  default    : std::cerr<<"unrecognised shape type value\n"; break;
+  }
 }
 
 //----------------------------------------------------------------------------------------------------------------------
 void NGLScene::resizeGL(QResizeEvent *_event)
 {
-  setCamShape();
+  m_camera->m_aspect = (float)width()/height();
 }
 
 //----------------------------------------------------------------------------------------------------------------------
 void NGLScene::resizeGL(int _w, int _h)
 {
-  setCamShape();
+  m_camera->m_aspect = (float)width()/height();
 }
 
 //----------------------------------------------------------------------------------------------------------------------
 void NGLScene::loadMatricesToShader()
 {
-  ngl::ShaderLib *shader=ngl::ShaderLib::instance();
-  (*shader)["Phong"]->use();
+  ngl::ShaderLib *shaderLib=ngl::ShaderLib::instance();
+  m_shaderManager->use(0);
 
   ngl::Mat4 MV;
   ngl::Mat4 MVP;
   ngl::Mat3 normalMatrix;
   ngl::Mat4 M;
 
-  M=m_mouseGlobalTX;
+  M=m_transform.getMatrix()*m_mouseGlobalTX;
   MV=  M*m_cam.getViewMatrix();
   MVP= M*m_cam.getVPMatrix();
   normalMatrix=MV;
   normalMatrix.inverse();
 
-
-  m_parser->sendUniformsToShader(shader);
-  shader->setShaderParamFromMat4("MV",MV);
-  shader->setShaderParamFromMat4("MVP",MVP);
-  shader->setShaderParamFromMat3("normalMatrix",normalMatrix);
-  shader->setShaderParamFromMat4("M",M);
+  m_parser->sendUniformsToShader(shaderLib);
+  shaderLib->setShaderParamFromMat4("MV",MV);
+  shaderLib->setShaderParamFromMat4("MVP",MVP);
+  shaderLib->setShaderParamFromMat3("normalMatrix",normalMatrix);
+  shaderLib->setShaderParamFromMat4("M",M);
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-void NGLScene::setCamShape()
+void NGLScene::toggleWireframe(bool _state)
 {
-  m_aspect=(float)width()/height();
-  m_cam.setShape(m_fov, m_aspect, 0.5f, 150.0f);
+  m_wireframe=_state;
+  update();
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-void NGLScene::keyPressEvent(QKeyEvent *_event)
+void NGLScene::toggleNormals(bool _state)
 {
-  // that method is called every time the main window recives a key event.
-  // we then switch on the key value and set the camera in the GLWindow
-  switch (_event->key())
-  {
-  // escape key to quit
-  //case Qt::Key_Escape : QGuiApplication::exit(EXIT_SUCCESS); break;
-  // turn on wirframe rendering
-  case Qt::Key_W : m_wireframe=true; break;
-  // turn off wire frame
-  case Qt::Key_S : m_wireframe=false; break;
-  // show full screen
-  case Qt::Key_F : showFullScreen(); break;
-  // show windowed
-  case Qt::Key_N : showNormal(); break;
-  case Qt::Key_Space: m_parser->assignUniformValues();
+  m_drawNormals=_state;
+  update();
+}
 
-  /*case Qt::Key_1 : m_parser->m_uniformList[0].m_vec4.m_x+=0.1;
-  std::cout<<m_parser->m_uniformList[0].m_name<<":(x)  "<<m_parser->m_uniformList[0].m_vec4.m_x<<std::endl; break;
+//----------------------------------------------------------------------------------------------------------------------
+void NGLScene::toggleGrid(bool _state)
+{
+  m_drawGrid=_state;
+  update();
+}
 
-  case Qt::Key_2 : m_parser->m_uniformList[0].m_vec4.m_y+=0.1;
-  std::cout<<m_parser->m_uniformList[0].m_name<<":(y)  "<<m_parser->m_uniformList[0].m_vec4.m_y<<std::endl; break;
+//----------------------------------------------------------------------------------------------------------------------
+void NGLScene::toggleAxis(bool _state)
+{
+  m_toggleAxis=_state;
+  update();
+}
 
-  case Qt::Key_3 : m_parser->m_uniformList[0].m_vec4.m_z+=0.1;
-  std::cout<<m_parser->m_uniformList[0].m_name<<":(z)  "<<m_parser->m_uniformList[0].m_vec4.m_z<<std::endl; break;
-
-  case Qt::Key_4 : m_parser->m_uniformList[0].m_vec4.m_x-=0.1;
-  std::cout<<m_parser->m_uniformList[0].m_name<<":(x)  "<<m_parser->m_uniformList[0].m_vec4.m_x<<std::endl; break;
-
-  case Qt::Key_5 : m_parser->m_uniformList[0].m_vec4.m_y-=0.1;
-  std::cout<<m_parser->m_uniformList[0].m_name<<":(y)  "<<m_parser->m_uniformList[0].m_vec4.m_y<<std::endl; break;
-
-  case Qt::Key_6 : m_parser->m_uniformList[0].m_vec4.m_z-=0.1;
-  std::cout<<m_parser->m_uniformList[0].m_name<<":(z)  "<<m_parser->m_uniformList[0].m_vec4.m_z<<std::endl; break;
-
-  case Qt::Key_G : m_parser->m_uniformList[5].m_vec4.m_x+=0.1;
-  std::cout<<m_parser->m_uniformList[5].m_name<<":(z)  "<<m_parser->m_uniformList[5].m_vec4.m_x<<std::endl; break;
-
-  case Qt::Key_B : m_parser->m_uniformList[7].m_vec4.m_x+=0.1;
-  std::cout<<m_parser->m_uniformList[7].m_name<<":(x)  "<<m_parser->m_uniformList[7].m_vec4.m_x<<std::endl; break;
-
-  case Qt::Key_H : m_parser->m_uniformList[12].m_vec4.m_x+=0.1;
-  std::cout<<m_parser->m_uniformList[12].m_name<<":(x)  "<<m_parser->m_uniformList[12].m_vec4.m_x<<std::endl; break;
-
-  case Qt::Key_J : m_parser->m_uniformList[5].m_vec4.m_y+=0.1;
-  std::cout<<m_parser->m_uniformList[5].m_name<<":(y)  "<<m_parser->m_uniformList[5].m_vec4.m_y<<std::endl; break;
-
-  case Qt::Key_K : m_parser->m_uniformList[7].m_vec4.m_y+=0.1;
-  std::cout<<m_parser->m_uniformList[7].m_name<<":(y)  "<<m_parser->m_uniformList[7].m_vec4.m_y<<std::endl; break;
-
-  case Qt::Key_L : m_parser->m_uniformList[12].m_vec4.m_y+=0.1;
-  std::cout<<m_parser->m_uniformList[12].m_name<<":(y)  "<<m_parser->m_uniformList[12].m_vec4.m_y<<std::endl; break;
-  default : break;*/
-  }
-    update();
+//----------------------------------------------------------------------------------------------------------------------
+void NGLScene::setNormalSize(int _size)
+{
+  m_normalSize=_size/100.0f;
+  update();
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -302,36 +414,70 @@ void NGLScene::mouseMoveEvent ( QMouseEvent * _event )
   {
     int diffx=_event->x()-m_origX;
     int diffy=_event->y()-m_origY;
-    m_spinXFace += (float) 0.5f * diffy;
-    m_spinYFace += (float) 0.5f * diffx;
     m_origX = _event->x();
     m_origY = _event->y();
-    update();
 
+    // Changes viewport rotation depending on camera view.
+    switch(m_cameraIndex){
+      case 0:
+        m_spinZFace -= (float) 0.5f * diffy;
+        m_spinXFace += (float) 0.5f * diffy;
+        m_spinYFace += (float) 1.0f * diffx;
+        break;
+      case 1:
+        m_spinXFace -= diffy;
+        m_spinZFace += diffx; break;
+      case 2:
+        m_spinXFace += diffy;
+        m_spinZFace += diffx; break;
+      case 3:
+        m_spinXFace -= diffy;
+        m_spinYFace += diffx; break;
+      case 4:
+        m_spinXFace += diffy;
+        m_spinYFace += diffx; break;
+    }
+    update();
   }
-  // right mouse translate code
   else if(m_translate && _event->buttons() == Qt::RightButton)
   {
     int diffX = (int)(_event->x() - m_origXPos);
     int diffY = (int)(_event->y() - m_origYPos);
     m_origXPos=_event->x();
     m_origYPos=_event->y();
-    m_modelPos.m_x += INCREMENT * diffX;
-    m_modelPos.m_y -= INCREMENT * diffY;
-    update();
 
-   }
+    // Switch used to change how modelPos translates depending on camera.
+    switch(m_cameraIndex){
+    case 0:
+        m_modelPos.m_y -= INCREMENT * diffY;
+        m_modelPos.m_x += INCREMENT * diffY/2;
+        m_modelPos.m_z += INCREMENT * diffY/2;
+
+        m_modelPos.m_x += INCREMENT * diffX/2;
+        m_modelPos.m_z -= INCREMENT * diffX/2; break;
+    case 1:
+        m_modelPos.m_z -= INCREMENT * diffY;
+        m_modelPos.m_x -= INCREMENT * diffX;break;
+    case 2:
+        m_modelPos.m_z -= INCREMENT * diffY;
+        m_modelPos.m_x += INCREMENT * diffX;break;
+    case 3:
+        m_modelPos.m_x -= INCREMENT * diffX;
+        m_modelPos.m_y -= INCREMENT * diffY;break;
+    case 4:
+        m_modelPos.m_x += INCREMENT * diffX;
+        m_modelPos.m_y -= INCREMENT * diffY;break;
+    }
+    update();
+  }
 }
 
 //----------------------------------------------------------------------------------------------------------------------
 void NGLScene::mousePressEvent ( QMouseEvent * _event )
 {
-  // that method is called when the mouse button is pressed in this case we
-  // store the value where the maouse was clicked (x,y) and set the Rotate flag to true
+  // left mouse rotate mode
   if(_event->button() == Qt::LeftButton)
   {
-    ngl::Vec4 _tempVec=m_parser->m_uniformList[12]->getVec4();
-    std::cout<<"\nVal:\nx: "<<_tempVec.m_x<<"\ny: "<<_tempVec.m_y<<"\nz:"<<_tempVec.m_z<<std::endl;
     m_origX = _event->x();
     m_origY = _event->y();
     m_rotate =true;
@@ -341,13 +487,14 @@ void NGLScene::mousePressEvent ( QMouseEvent * _event )
   {
     m_origXPos = _event->x();
     m_origYPos = _event->y();
+
     m_translate=true;
   }
-  setFocus();
+  update();
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-void NGLScene::mouseReleaseEvent ( QMouseEvent * _event )
+void NGLScene::mouseReleaseEvent(QMouseEvent * _event)
 {
   // that event is called when the mouse button is released
   // we then set Rotate to false
@@ -355,7 +502,7 @@ void NGLScene::mouseReleaseEvent ( QMouseEvent * _event )
   {
     m_rotate=false;
   }
-        // right mouse translate mode
+  // right mouse translate mode
   if (_event->button() == Qt::RightButton)
   {
     m_translate=false;
@@ -369,73 +516,206 @@ void NGLScene::wheelEvent ( QWheelEvent * _event )
   // check the diff of the wheel position (0 means no change)
   if(_event->delta() > 0)
   {
-    m_modelPos.m_z+=ZOOM;
+    switch(m_cameraIndex){
+    case 0:
+      m_modelPos.m_z+=ZOOM;
+      m_modelPos.m_x+=ZOOM; break;
+    case 1:
+      m_modelPos.m_y+=ZOOM; break;
+    case 2:
+      m_modelPos.m_y-=ZOOM; break;
+    case 3:
+      m_modelPos.m_z-=ZOOM; break;
+    case 4:
+      m_modelPos.m_z+=ZOOM; break;
+    }
   }
   else if(_event->delta() < 0)
   {
-    m_modelPos.m_z-=ZOOM;
+    switch(m_cameraIndex){
+    case 0:
+      m_modelPos.m_z-=ZOOM;
+      m_modelPos.m_x-=ZOOM; break;
+    case 1:
+      m_modelPos.m_y-=ZOOM; break;
+    case 2:
+      m_modelPos.m_y+=ZOOM; break;
+    case 3:
+      m_modelPos.m_z+=ZOOM; break;
+    case 4:
+      m_modelPos.m_z-=ZOOM; break;
+    }
   }
   update();
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-void NGLScene::loadShader(QString _text, ngl::ShaderType _type)
+void NGLScene::keyPressEvent(QKeyEvent *_event)
 {
-    ngl::ShaderLib *shader=ngl::ShaderLib::instance();
-    switch (_type)
-    {
-      case ngl::ShaderType::VERTEX:
-        shader->loadShaderSourceFromString("PhongVertex", _text.toUtf8().constData());
-        break;
-      case ngl::ShaderType::FRAGMENT:
-        shader->loadShaderSourceFromString("PhongFragment", _text.toUtf8().constData());
-        break;
-      default:
-        std::cout << "Shader type not compatible\n";
-    }
+  switch (_event->key())
+  {
+  default : break ;
+  }
+  update();
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-void NGLScene::compileShader()
+void NGLScene::compileShader(QString _vertSource, QString _fragSource)
 {
-  ngl::ShaderLib *shader=ngl::ShaderLib::instance();
+  m_shaderManager->compileShader(_vertSource, _fragSource);
+  m_window->setTerminalText(parseErrorLog(m_shaderManager->getErrorLog()));
+  update();
+  m_parser->assignAllData();
+}
 
-  // compile shaders
-  shader->compileShader("PhongVertex");
-  shader->compileShader("PhongFragment");
+//------------------------------------------------------------------------------
 
-  // add them to the program
-  shader->attachShaderToProgram("Phong","PhongVertex");
-  shader->attachShaderToProgram("Phong","PhongFragment");
+QString NGLScene::parseErrorLog(QString _string)
+{
+  // Declare a string to output
+  // And a list of integer to be used for line error highlighting
+  QString outputErrors;
 
-  // now we have associated this data we can link the shader
-  shader->linkProgramObject("Phong");
+  QString shaderName;
 
-  // Load stuff. Need to remove this stuff in the next build, just used to set
-  // inital values
-  (*shader)["Phong"]->use();
-  shader->setShaderParam1i("Normalize",1);
-  shader->setShaderParam3f("viewerPos",m_cam.getEye().m_x,m_cam.getEye().m_y,m_cam.getEye().m_z);
-  // now pass the modelView and projection values to the shader
-  // the shader will use the currently active material and light0 so set them
-  ngl::Material m(ngl::STDMAT::GOLD );
-  // load our material values to the shader into the structure material (see Vertex shader)
-  m.loadToShader("material");
-  // we need to set a base colour as the material isn't being used for all the params
-  shader->setShaderParam4f("Colour",0.23125f,0.23125f,0.23125f,1);
+  // Separate the input _string into separate lines.
+  QRegExp separateLines("\n");
+  QStringList lines=_string.split(separateLines);
 
-  ngl::Light light(ngl::Vec3(2,2,2),ngl::Colour(1,1,1,1),ngl::Colour(1,1,1,1),ngl::LightModes::POINTLIGHT);
-  // now create our light this is done after the camera so we can pass the
-  // transpose of the projection matrix to the light to do correct eye space
-  // transformations
-  ngl::Mat4 iv=m_cam.getViewMatrix();
-  iv.transpose();
+  for (int i=0;i<lines.length();i++)
+  {
+    // Split each line using braces; "(" and ")"
+    QRegExp separateNumbers("(\\(|\\))");
+    QStringList pieces=lines.value(i).split(separateNumbers);
 
-  light.setTransform(iv);
-  light.setAttenuation(1,0,0);
-  light.enable();
-  // load these values to the shader as well
-  light.loadToShader("light");
+    for (int j=0;j<pieces.length();j++)
+    {
+      // This is the how to get the Title (Shader file)
+      if (pieces.length()==1 && pieces[j]!="")
+      {
+        // Split the line using the "Remove Colon"
+        if(pieces.value(j).endsWith("Vertex:"))
+        {
+          shaderName=QString("Vertex");
+        }
+        if(pieces.value(j).endsWith("Fragment:"))
+        {
+          shaderName=QString("Fragment");
+        }
+      }
+      // If the first segment of the line is 0...
+      // remove it and replace it with "Line"
+      if(pieces[j].length()==1 && j==0)
+      {
+        outputErrors.append("Line ");
+      }
+
+      // Add the rest of the string to the list
+      else
+      {
+        outputErrors.append(pieces.value(j));
+
+
+        // Add the second part of the line fragment as that is the line error number.
+        // This can be returned as a list of integers
+        if (j==1)
+        {
+          int lineNumber = pieces.value(j).toInt();
+          emit createLineMarker(shaderName,lineNumber-1);
+        }
+      }
+    }
+    // If it is the last line, add a new line to the string
+    int finalLine =lines.length()-1;
+    if (i!=finalLine)
+    {
+      outputErrors.append("\n");
+    }
+  }
+
+  return outputErrors;
+}
+
+//------------------------------------------------------------------------------
+void NGLScene::resetObjPos()
+{
+  //move camera back to default
+  m_modelPos.m_x = 0;
+  m_modelPos.m_y = 0;
+  m_modelPos.m_z = 0;
+  m_spinXFace = 0;
+  m_spinYFace = 0;
+  m_spinZFace = 0;
+
+  m_camera->cameraRoll(0.00);
+  m_camera->cameraYaw(0.00);
+  m_camera->cameraPitch(0.00);
+  m_camera->m_fov = 60.0;
+  m_camera->m_nearClip = 0.5;
+  m_camera->m_farClip = 150.0;
 
   update();
+}
+
+//------------------------------------------------------------------------------
+
+void NGLScene::setProject(std::string _name, QString _vertSource, QString _fragSource)
+{
+  m_shaderManager->createShaderProgram(_name);
+  compileShader(_vertSource, _fragSource);
+}
+
+//------------------------------------------------------------------------------
+void NGLScene::exportUniform()
+{
+  QString fileName = QFileDialog::getSaveFileName(m_window,
+                                                  tr("Export Uniforms"),
+                                                  QDir::homePath(),
+                                                  tr("Text File (*.txt)"));
+  if (fileName != "")
+  {
+    if (m_parser->exportUniforms(fileName))
+    {
+      QMessageBox msgBox;
+      msgBox.setText("Uniforms successfully exported");
+      msgBox.setWindowTitle("Successfully Exported");
+      msgBox.exec();
+    }
+  }
+}
+
+//------------------------------------------------------------------------------
+void NGLScene::drawAxis(ngl::Vec3 _pos)
+{
+  // Instance the Shader
+  ngl::ShaderLib *shaderLib=ngl::ShaderLib::instance();
+  m_shaderManager->use(0);
+  ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
+
+  // Move the Y AXIS geo
+  m_transform.setScale(0.05,0.5,0.05);
+  m_transform.setPosition(0,0.3,0);
+  m_transform.addPosition(_pos);
+  loadMatricesToShader();
+  shaderLib->setShaderParam4f("Colour",0,1,0,1); //Not entirely sure if this is the best way, as the name "Colour" could be changed....
+  prim->draw("cube");
+  m_transform.reset();
+
+  // Move the X AXIS geo
+  m_transform.setScale(0.5,0.05,0.05);
+  m_transform.setPosition(0.3,0,0);
+  m_transform.addPosition(_pos);
+  loadMatricesToShader();
+  shaderLib->setShaderParam4f("Colour",1,0,0,1); //Not entirely sure if this is the best way, as the name "Colour" could be changed....
+  prim->draw("cube");
+  m_transform.reset();
+
+  // Move the Z AXIS geo
+  m_transform.setScale(0.05,0.05,0.5);
+  m_transform.setPosition(0,0,0.3);
+  m_transform.addPosition(_pos);
+  loadMatricesToShader();
+  shaderLib->setShaderParam4f("Colour",0,0,1,1); //Not entirely sure if this is the best way, as the name "Colour" could be changed....
+  prim->draw("cube");
+  m_transform.reset();
 }

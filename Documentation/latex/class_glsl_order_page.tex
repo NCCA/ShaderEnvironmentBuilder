@@ -1,0 +1,294 @@
+\section{Glsl\-Order\-Page Class Reference}
+\label{class_glsl_order_page}\index{Glsl\-Order\-Page@{Glsl\-Order\-Page}}
+
+
+The project wizard page for selecting glsl files in.  
+
+
+
+
+{\ttfamily \#include $<$New\-Project\-Wizard.\-h$>$}
+
+
+
+Inheritance diagram for Glsl\-Order\-Page\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=124pt]{class_glsl_order_page__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Glsl\-Order\-Page\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=258pt]{class_glsl_order_page__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\bf Glsl\-Order\-Page} (Q\-Widget $\ast$parent=0)
+\begin{DoxyCompactList}\small\item\em Constructor, passing a child of parent. \end{DoxyCompactList}\item 
+const Q\-List\-Widget $\ast$ {\bf get\-Vert\-List\-Widget} () const 
+\begin{DoxyCompactList}\small\item\em Gets the vert list widget. \end{DoxyCompactList}\item 
+const Q\-List\-Widget $\ast$ {\bf get\-Frag\-List\-Widget} () const 
+\begin{DoxyCompactList}\small\item\em Gets the frag list widget. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void {\bf initialize\-Page} () Q\-\_\-\-D\-E\-C\-L\-\_\-\-O\-V\-E\-R\-R\-I\-D\-E
+\begin{DoxyCompactList}\small\item\em Used to prepare the Wizard page before it is shown and set default values. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+{\bf New\-Project\-Wizard} $\ast$ {\bf m\-\_\-wizard}
+\begin{DoxyCompactList}\small\item\em The new project wizard that this page is a part of (the parent) \end{DoxyCompactList}\item 
+Q\-Label $\ast$ {\bf m\-\_\-l\-\_\-vertex\-Order}
+\begin{DoxyCompactList}\small\item\em Label showing vertex order. \end{DoxyCompactList}\item 
+Q\-Label $\ast$ {\bf m\-\_\-l\-\_\-fragment\-Order}
+\begin{DoxyCompactList}\small\item\em Label showing fragment order. \end{DoxyCompactList}\item 
+Q\-List\-Widget $\ast$ {\bf m\-\_\-ls\-\_\-vert\-Files\-Order}
+\begin{DoxyCompactList}\small\item\em List widget for re-\/ordering vertex files. \end{DoxyCompactList}\item 
+Q\-List\-Widget $\ast$ {\bf m\-\_\-ls\-\_\-frag\-Files\-Order}
+\begin{DoxyCompactList}\small\item\em List widget for re-\/ordering fragment files. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The project wizard page for selecting glsl files in. 
+
+Definition at line 304 of file New\-Project\-Wizard.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Glsl\-Order\-Page@{Glsl\-Order\-Page}!Glsl\-Order\-Page@{Glsl\-Order\-Page}}
+\index{Glsl\-Order\-Page@{Glsl\-Order\-Page}!GlslOrderPage@{Glsl\-Order\-Page}}
+\subsubsection[{Glsl\-Order\-Page}]{\setlength{\rightskip}{0pt plus 5cm}Glsl\-Order\-Page\-::\-Glsl\-Order\-Page (
+\begin{DoxyParamCaption}
+\item[{Q\-Widget $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}\label{class_glsl_order_page_a291edc93c85b42c474d658554a0cced8}
+
+
+Constructor, passing a child of parent. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em parent} & The parent for which this will be the child of. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 399 of file New\-Project\-Wizard.\-cpp.
+
+
+
+References m\-\_\-l\-\_\-fragment\-Order, m\-\_\-l\-\_\-vertex\-Order, m\-\_\-ls\-\_\-frag\-Files\-Order, m\-\_\-ls\-\_\-vert\-Files\-Order, and m\-\_\-wizard.
+
+
+\begin{DoxyCode}
+400   : QWizardPage(parent)
+401 \{
+402   m_wizard = \textcolor{keyword}{static\_cast<}NewProjectWizard*\textcolor{keyword}{>}(parent);
+403   setTitle(tr(\textcolor{stringliteral}{"GLSL File Order"}));
+404   setSubTitle(tr(\textcolor{stringliteral}{"Specify the order in which the GLSL files will be loaded "}
+405                  \textcolor{stringliteral}{"into the shader program."}));
+406 
+407   m_l_vertexOrder = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"Vertex File Order:"}));
+408   m_l_fragmentOrder = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"Fragment File Order:"}));
+409 
+410   \textcolor{comment}{// create list widgets and allow dragging and dropping}
+411   m_ls_vertFilesOrder = \textcolor{keyword}{new} QListWidget();
+412   m_ls_vertFilesOrder->setDragDropMode(QAbstractItemView::InternalMove);
+413   m_ls_fragFilesOrder = \textcolor{keyword}{new} QListWidget();
+414   m_ls_fragFilesOrder->setDragDropMode(QAbstractItemView::InternalMove);
+415 
+416   QGridLayout *layout = \textcolor{keyword}{new} QGridLayout();
+417   layout->addWidget(m_l_vertexOrder, 0,0);
+418   layout->addWidget(m_l_fragmentOrder, 0,1);
+419   layout->addWidget(m_ls_vertFilesOrder, 1,0);
+420   layout->addWidget(m_ls_fragFilesOrder, 1,1);
+421   setLayout(layout);
+422 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{Glsl\-Order\-Page@{Glsl\-Order\-Page}!get\-Frag\-List\-Widget@{get\-Frag\-List\-Widget}}
+\index{get\-Frag\-List\-Widget@{get\-Frag\-List\-Widget}!GlslOrderPage@{Glsl\-Order\-Page}}
+\subsubsection[{get\-Frag\-List\-Widget}]{\setlength{\rightskip}{0pt plus 5cm}const Q\-List\-Widget$\ast$ Glsl\-Order\-Page\-::get\-Frag\-List\-Widget (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\label{class_glsl_order_page_a221f24dfd9aed5a355a9256f56880ced}
+
+
+Gets the frag list widget. 
+
+\begin{DoxyReturn}{Returns}
+the frag list widget from the page 
+\end{DoxyReturn}
+
+
+Definition at line 324 of file New\-Project\-Wizard.\-h.
+
+
+\begin{DoxyCode}
+324 \{\textcolor{keywordflow}{return} m_ls_fragFilesOrder;\}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=342pt]{class_glsl_order_page_a221f24dfd9aed5a355a9256f56880ced_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Glsl\-Order\-Page@{Glsl\-Order\-Page}!get\-Vert\-List\-Widget@{get\-Vert\-List\-Widget}}
+\index{get\-Vert\-List\-Widget@{get\-Vert\-List\-Widget}!GlslOrderPage@{Glsl\-Order\-Page}}
+\subsubsection[{get\-Vert\-List\-Widget}]{\setlength{\rightskip}{0pt plus 5cm}const Q\-List\-Widget$\ast$ Glsl\-Order\-Page\-::get\-Vert\-List\-Widget (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\label{class_glsl_order_page_ac895ebc0517c40cddc0a78937aee0c6f}
+
+
+Gets the vert list widget. 
+
+\begin{DoxyReturn}{Returns}
+the vert list widget from the page 
+\end{DoxyReturn}
+
+
+Definition at line 319 of file New\-Project\-Wizard.\-h.
+
+
+\begin{DoxyCode}
+319 \{\textcolor{keywordflow}{return} m_ls_vertFilesOrder;\}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=340pt]{class_glsl_order_page_ac895ebc0517c40cddc0a78937aee0c6f_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Glsl\-Order\-Page@{Glsl\-Order\-Page}!initialize\-Page@{initialize\-Page}}
+\index{initialize\-Page@{initialize\-Page}!GlslOrderPage@{Glsl\-Order\-Page}}
+\subsubsection[{initialize\-Page}]{\setlength{\rightskip}{0pt plus 5cm}void Glsl\-Order\-Page\-::initialize\-Page (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\label{class_glsl_order_page_a568acf47d074f51f0c57b8c7cd179951}
+
+
+Used to prepare the Wizard page before it is shown and set default values. 
+
+
+
+Definition at line 425 of file New\-Project\-Wizard.\-cpp.
+
+
+
+References New\-Project\-Wizard\-::m\-\_\-file\-Model, New\-Project\-Wizard\-::m\-\_\-fragment\-Select\-Model, m\-\_\-ls\-\_\-frag\-Files\-Order, m\-\_\-ls\-\_\-vert\-Files\-Order, New\-Project\-Wizard\-::m\-\_\-vertex\-Select\-Model, and m\-\_\-wizard.
+
+
+\begin{DoxyCode}
+426 \{
+427   m_ls_vertFilesOrder->clear();
+428   m_ls_fragFilesOrder->clear();
+429 
+430   \textcolor{comment}{// fill the list widgets with the selected items from the previous pages}
+431   \textcolor{comment}{// QTreeViews}
+432   QModelIndexList indexes = m_wizard->m_vertexSelectModel->selectedRows();
+433   QStringList vertexNames, fragmentNames;
+434   \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i: indexes)
+435   \{
+436     vertexNames.append(m_wizard->m_fileModel->fileInfo(i).fileName());
+437   \}
+438   m_ls_vertFilesOrder->addItems(vertexNames);
+439 
+440   \textcolor{comment}{// fill the list widgets with the selected items from the previous pages}
+441   \textcolor{comment}{// QTreeViews}
+442   indexes = m_wizard->m_fragmentSelectModel->selectedRows();
+443   \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} i: indexes)
+444   \{
+445     fragmentNames.append(m_wizard->m_fileModel->fileInfo(i).fileName());
+446   \}
+447   m_ls_fragFilesOrder->addItems(fragmentNames);
+448 \}
+\end{DoxyCode}
+
+
+\subsection{Member Data Documentation}
+\index{Glsl\-Order\-Page@{Glsl\-Order\-Page}!m\-\_\-l\-\_\-fragment\-Order@{m\-\_\-l\-\_\-fragment\-Order}}
+\index{m\-\_\-l\-\_\-fragment\-Order@{m\-\_\-l\-\_\-fragment\-Order}!GlslOrderPage@{Glsl\-Order\-Page}}
+\subsubsection[{m\-\_\-l\-\_\-fragment\-Order}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Label$\ast$ Glsl\-Order\-Page\-::m\-\_\-l\-\_\-fragment\-Order\hspace{0.3cm}{\ttfamily [private]}}\label{class_glsl_order_page_a6470696df3b64e551fa558b4c421d938}
+
+
+Label showing fragment order. 
+
+
+
+Definition at line 347 of file New\-Project\-Wizard.\-h.
+
+\index{Glsl\-Order\-Page@{Glsl\-Order\-Page}!m\-\_\-l\-\_\-vertex\-Order@{m\-\_\-l\-\_\-vertex\-Order}}
+\index{m\-\_\-l\-\_\-vertex\-Order@{m\-\_\-l\-\_\-vertex\-Order}!GlslOrderPage@{Glsl\-Order\-Page}}
+\subsubsection[{m\-\_\-l\-\_\-vertex\-Order}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Label$\ast$ Glsl\-Order\-Page\-::m\-\_\-l\-\_\-vertex\-Order\hspace{0.3cm}{\ttfamily [private]}}\label{class_glsl_order_page_a3a353d35ca8d4c8009c079fea4edde61}
+
+
+Label showing vertex order. 
+
+
+
+Definition at line 343 of file New\-Project\-Wizard.\-h.
+
+\index{Glsl\-Order\-Page@{Glsl\-Order\-Page}!m\-\_\-ls\-\_\-frag\-Files\-Order@{m\-\_\-ls\-\_\-frag\-Files\-Order}}
+\index{m\-\_\-ls\-\_\-frag\-Files\-Order@{m\-\_\-ls\-\_\-frag\-Files\-Order}!GlslOrderPage@{Glsl\-Order\-Page}}
+\subsubsection[{m\-\_\-ls\-\_\-frag\-Files\-Order}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List\-Widget$\ast$ Glsl\-Order\-Page\-::m\-\_\-ls\-\_\-frag\-Files\-Order\hspace{0.3cm}{\ttfamily [private]}}\label{class_glsl_order_page_a57a4a088cdc8f8512df8a5a31dffea9c}
+
+
+List widget for re-\/ordering fragment files. 
+
+
+
+Definition at line 355 of file New\-Project\-Wizard.\-h.
+
+\index{Glsl\-Order\-Page@{Glsl\-Order\-Page}!m\-\_\-ls\-\_\-vert\-Files\-Order@{m\-\_\-ls\-\_\-vert\-Files\-Order}}
+\index{m\-\_\-ls\-\_\-vert\-Files\-Order@{m\-\_\-ls\-\_\-vert\-Files\-Order}!GlslOrderPage@{Glsl\-Order\-Page}}
+\subsubsection[{m\-\_\-ls\-\_\-vert\-Files\-Order}]{\setlength{\rightskip}{0pt plus 5cm}Q\-List\-Widget$\ast$ Glsl\-Order\-Page\-::m\-\_\-ls\-\_\-vert\-Files\-Order\hspace{0.3cm}{\ttfamily [private]}}\label{class_glsl_order_page_ace890b99329ea9f92a207cf5302049e8}
+
+
+List widget for re-\/ordering vertex files. 
+
+
+
+Definition at line 351 of file New\-Project\-Wizard.\-h.
+
+\index{Glsl\-Order\-Page@{Glsl\-Order\-Page}!m\-\_\-wizard@{m\-\_\-wizard}}
+\index{m\-\_\-wizard@{m\-\_\-wizard}!GlslOrderPage@{Glsl\-Order\-Page}}
+\subsubsection[{m\-\_\-wizard}]{\setlength{\rightskip}{0pt plus 5cm}{\bf New\-Project\-Wizard}$\ast$ Glsl\-Order\-Page\-::m\-\_\-wizard\hspace{0.3cm}{\ttfamily [private]}}\label{class_glsl_order_page_a9ed4eea5777a1130a8ba899ac2a2a368}
+
+
+The new project wizard that this page is a part of (the parent) 
+
+
+
+Definition at line 339 of file New\-Project\-Wizard.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+{\bf New\-Project\-Wizard.\-h}\item 
+{\bf New\-Project\-Wizard.\-cpp}\end{DoxyCompactItemize}

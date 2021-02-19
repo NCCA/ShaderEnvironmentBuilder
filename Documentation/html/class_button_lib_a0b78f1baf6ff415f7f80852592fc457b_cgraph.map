@@ -1,0 +1,6 @@
+<map id="ButtonLib::updateButtons" name="ButtonLib::updateButtons">
+<area shape="rect" id="node2" href="$class_button_lib.html#a88d97d584a95e601067ec420c4380f2d" title="call to a function to create the buttons in the gui " alt="" coords="221,56,384,83"/>
+<area shape="rect" id="node3" href="$class_colour_button.html#a1702284d1cdfe7bff2db19e219132f37" title="sets the picked colour and colour attribute to the colour input " alt="" coords="433,5,591,32"/>
+<area shape="rect" id="node4" href="$class_vec_button.html#a87d5f8c5a534b5d4823fe323b626c77b" title="runs all the necessary functions for the pop up window " alt="" coords="433,56,591,83"/>
+<area shape="rect" id="node5" href="$class_float_button.html#a7878ecb2411a54c76e297f0988bfef6a" title="sets the value of the float " alt="" coords="440,107,584,133"/>
+</map>

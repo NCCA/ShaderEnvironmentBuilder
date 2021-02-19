@@ -1,0 +1,219 @@
+\section{Ceb\-Application Class Reference}
+\label{class_ceb_application}\index{Ceb\-Application@{Ceb\-Application}}
+
+
+used to handle all the gui's application control flow and errors for the program  
+
+
+
+
+{\ttfamily \#include $<$Ceb\-Application.\-h$>$}
+
+
+
+Inheritance diagram for Ceb\-Application\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=126pt]{class_ceb_application__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Ceb\-Application\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=126pt]{class_ceb_application__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool {\bf notify} (Q\-Object $\ast$\-\_\-reciever, Q\-Event $\ast$\-\_\-event)
+\begin{DoxyCompactList}\small\item\em Sends event to receiver and handles errors. Returns the value that is returned from the receiver's event handler or false if error. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Q\-String\-List {\bf m\-\_\-error\-Lvl}
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Q\-Message\-Box $\ast$ {\bf create\-Error\-Msg\-Box} (std\-::exception $\ast$\-\_\-e, Q\-Object $\ast$\-\_\-reciever, Q\-Event $\ast$\-\_\-event, Q\-Message\-Box\-::\-Icon \-\_\-err\-Lvl)
+\begin{DoxyCompactList}\small\item\em creates an error msg created from an exception \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+used to handle all the gui's application control flow and errors for the program 
+
+Definition at line 30 of file Ceb\-Application.\-h.
+
+
+
+\subsection{Member Function Documentation}
+\index{Ceb\-Application@{Ceb\-Application}!create\-Error\-Msg\-Box@{create\-Error\-Msg\-Box}}
+\index{create\-Error\-Msg\-Box@{create\-Error\-Msg\-Box}!CebApplication@{Ceb\-Application}}
+\subsubsection[{create\-Error\-Msg\-Box}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Message\-Box $\ast$ Ceb\-Application\-::create\-Error\-Msg\-Box (
+\begin{DoxyParamCaption}
+\item[{std\-::exception $\ast$}]{\-\_\-e, }
+\item[{Q\-Object $\ast$}]{\-\_\-reciever, }
+\item[{Q\-Event $\ast$}]{\-\_\-event, }
+\item[{Q\-Message\-Box\-::\-Icon}]{\-\_\-err\-Lvl}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}\label{class_ceb_application_aa08c777fa24a5889483312b858477926}
+
+
+creates an error msg created from an exception 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-e} & pointer to the exception raised \\
+\hline
+\mbox{\tt in}  & {\em \-\_\-reciever} & the object that recieves the event \\
+\hline
+\mbox{\tt in}  & {\em \-\_\-event} & the event that is being sent to the reciever \\
+\hline
+\mbox{\tt in}  & {\em \-\_\-err\-Lvl} & the error level for the message \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 50 of file Ceb\-Application.\-cpp.
+
+
+
+References m\-\_\-error\-Lvl.
+
+
+\begin{DoxyCode}
+54 \{
+55   \textcolor{comment}{// Create text and window title message}
+56   QString msg = QString(\textcolor{stringliteral}{"%1 Error"}).arg(m_errorLvl[static\_cast<int>(\_errLvl)]);
+57   \textcolor{comment}{// Create informative text message}
+58   QString iMsg = QString(\_e->what());
+59   \textcolor{comment}{// create de}
+60   QString dMsg = QString(\textcolor{stringliteral}{"Sending event '%1' to object '%2' (%3)"})
+61       .arg(\textcolor{keyword}{typeid}(*\_event).name(),
+62            qPrintable(\_reciever->objectName()),
+63            \textcolor{keyword}{typeid}(*\_reciever).name());
+64 
+65   \textcolor{comment}{// Output to console for extra logging}
+66   std::cerr << msg.toUtf8().constData() << std::endl
+67             << iMsg.toUtf8().constData() << std::endl;
+68 
+69   \textcolor{comment}{// Create the msgbox}
+70   QMessageBox* msgBox = \textcolor{keyword}{new} QMessageBox;
+71   \textcolor{comment}{// Set values}
+72   msgBox->setIcon(\_errLvl);
+73   msgBox->setText(msg);
+74   msgBox->setWindowTitle(msg);
+75   msgBox->setInformativeText(iMsg);
+76   msgBox->setDetailedText(dMsg);
+77 
+78   \textcolor{keywordflow}{return} msgBox;
+79 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=324pt]{class_ceb_application_aa08c777fa24a5889483312b858477926_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Ceb\-Application@{Ceb\-Application}!notify@{notify}}
+\index{notify@{notify}!CebApplication@{Ceb\-Application}}
+\subsubsection[{notify}]{\setlength{\rightskip}{0pt plus 5cm}bool Ceb\-Application\-::notify (
+\begin{DoxyParamCaption}
+\item[{Q\-Object $\ast$}]{\-\_\-reciever, }
+\item[{Q\-Event $\ast$}]{\-\_\-event}
+\end{DoxyParamCaption}
+)}\label{class_ceb_application_ab7e35c7770b6ee5c120429ab96ac6963}
+
+
+Sends event to receiver and handles errors. Returns the value that is returned from the receiver's event handler or false if error. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-reciever} & the object that recieves the event \\
+\hline
+\mbox{\tt in}  & {\em \-\_\-event} & the event that is being sent to the reciever \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the notify was successful else false 
+\end{DoxyReturn}
+
+
+Definition at line 20 of file Ceb\-Application.\-cpp.
+
+
+
+References create\-Error\-Msg\-Box().
+
+
+\begin{DoxyCode}
+21 \{
+22   \textcolor{keywordflow}{try} \textcolor{comment}{// Try to notify but will catch an exception if it fails}
+23   \{
+24     \textcolor{keywordflow}{return} QApplication::notify(\_reciever, \_event);
+25   \}
+26   \textcolor{keywordflow}{catch} (std::exception &e)
+27   \{
+28     \textcolor{comment}{// Create and show messagebox}
+29     QMessageBox* mBox = createErrorMsgBox(&e, \_reciever, \_event,
+30                                           QMessageBox::Critical);
+31     mBox->exec();
+32 
+33     \textcolor{keyword}{delete} mBox;
+34   \}
+35   \textcolor{keywordflow}{catch} (...)
+36   \{
+37     \textcolor{comment}{// Create unknown error message then create and show messagebox}
+38     CEBError::unknownError e = CEBError::unknownError();
+39     QMessageBox* mBox = createErrorMsgBox(&e, \_reciever, \_event,
+40                                           QMessageBox::Critical);
+41     mBox->exec();
+42 
+43     \textcolor{keyword}{delete} mBox;
+44   \}
+45 
+46   \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+47 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=324pt]{class_ceb_application_ab7e35c7770b6ee5c120429ab96ac6963_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsection{Member Data Documentation}
+\index{Ceb\-Application@{Ceb\-Application}!m\-\_\-error\-Lvl@{m\-\_\-error\-Lvl}}
+\index{m\-\_\-error\-Lvl@{m\-\_\-error\-Lvl}!CebApplication@{Ceb\-Application}}
+\subsubsection[{m\-\_\-error\-Lvl}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String\-List Ceb\-Application\-::m\-\_\-error\-Lvl}\label{class_ceb_application_a5e62286266b9bff3fd192095faedd1a7}
+{\bfseries Initial value\-:}
+\begin{DoxyCode}
+= \{\textcolor{stringliteral}{"Message"}, \textcolor{stringliteral}{"Information"}, \textcolor{stringliteral}{"Warning"},
+                              \textcolor{stringliteral}{"Critical"}, \textcolor{stringliteral}{"Question"}\}
+\end{DoxyCode}
+
+
+Definition at line 38 of file Ceb\-Application.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+{\bf Ceb\-Application.\-h}\item 
+{\bf Ceb\-Application.\-cpp}\end{DoxyCompactItemize}

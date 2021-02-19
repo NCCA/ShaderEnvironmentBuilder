@@ -1,0 +1,289 @@
+\section{Ceb\-Errors.\-h File Reference}
+\label{_ceb_errors_8h}\index{Ceb\-Errors.\-h@{Ceb\-Errors.\-h}}
+
+
+Contains all the code for generating and handling errors for C\-E\-B.  
+
+
+{\ttfamily \#include $<$exception$>$}\\*
+{\ttfamily \#include $<$ngl/\-Types.\-h$>$}\\*
+{\ttfamily \#include $<$Q\-File\-Device$>$}\\*
+Include dependency graph for Ceb\-Errors.\-h\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=272pt]{_ceb_errors_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_ceb_errors_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class {\bf C\-E\-B\-Error\-::unknown\-Error}
+\begin{DoxyCompactList}\small\item\em an unknown error which is raised when a throw is not based from a normal exception \end{DoxyCompactList}\item 
+class {\bf C\-E\-B\-Error\-::base\-Error}
+\begin{DoxyCompactList}\small\item\em an unknown error which is raised when a throw is not based from a normal exception \end{DoxyCompactList}\item 
+class {\bf C\-E\-B\-Error\-::file\-Error}
+\begin{DoxyCompactList}\small\item\em base class which is raised for file errors \end{DoxyCompactList}\item 
+class {\bf C\-E\-B\-Error\-::file\-Read\-Error}
+\begin{DoxyCompactList}\small\item\em raised for file read errors \end{DoxyCompactList}\item 
+class {\bf C\-E\-B\-Error\-::file\-Write\-Error}
+\begin{DoxyCompactList}\small\item\em raised for file write errors \end{DoxyCompactList}\item 
+class {\bf C\-E\-B\-Error\-::file\-Fatal\-Error}
+\begin{DoxyCompactList}\small\item\em raised for file fatal errors \end{DoxyCompactList}\item 
+class {\bf C\-E\-B\-Error\-::file\-Resource\-Error}
+\begin{DoxyCompactList}\small\item\em raised for file resource errors \end{DoxyCompactList}\item 
+class {\bf C\-E\-B\-Error\-::file\-Open\-Error}
+\begin{DoxyCompactList}\small\item\em raised for file open errors \end{DoxyCompactList}\item 
+class {\bf C\-E\-B\-Error\-::file\-Abort\-Error}
+\begin{DoxyCompactList}\small\item\em raised for file abort errors \end{DoxyCompactList}\item 
+class {\bf C\-E\-B\-Error\-::file\-Time\-Out\-Error}
+\begin{DoxyCompactList}\small\item\em raised for file timeout errors \end{DoxyCompactList}\item 
+class {\bf C\-E\-B\-Error\-::file\-Unspecified\-Error}
+\begin{DoxyCompactList}\small\item\em raised for file unspecified errors \end{DoxyCompactList}\item 
+class {\bf C\-E\-B\-Error\-::file\-Remove\-Error}
+\begin{DoxyCompactList}\small\item\em raised for file remove errors \end{DoxyCompactList}\item 
+class {\bf C\-E\-B\-Error\-::file\-Rename\-Error}
+\begin{DoxyCompactList}\small\item\em raised for file rename errors \end{DoxyCompactList}\item 
+class {\bf C\-E\-B\-Error\-::file\-Position\-Error}
+\begin{DoxyCompactList}\small\item\em raised for file position errors \end{DoxyCompactList}\item 
+class {\bf C\-E\-B\-Error\-::file\-Resize\-Error}
+\begin{DoxyCompactList}\small\item\em raised for file resize errors \end{DoxyCompactList}\item 
+class {\bf C\-E\-B\-Error\-::file\-Permissions\-Error}
+\begin{DoxyCompactList}\small\item\em raised for file permission errors \end{DoxyCompactList}\item 
+class {\bf C\-E\-B\-Error\-::file\-Copy\-Error}
+\begin{DoxyCompactList}\small\item\em raised for file copy errors \end{DoxyCompactList}\item 
+class {\bf C\-E\-B\-Error\-::open\-Gl\-Error}
+\begin{DoxyCompactList}\small\item\em raised for open\-G\-L errors \end{DoxyCompactList}\item 
+class {\bf C\-E\-B\-Error\-::open\-Gl\-List\-Error}
+\begin{DoxyCompactList}\small\item\em raised for open\-G\-L list errors \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+{\bf C\-E\-B\-Error}
+\begin{DoxyCompactList}\small\item\em Inherited exceptions for errors in the program. \end{DoxyCompactList}\item 
+{\bf C\-E\-B\-Raise}
+\begin{DoxyCompactList}\small\item\em Used to raise errors in the program. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum {\bf gl\-Error\-Codes} \-: G\-Lenum \{ \\*
+{\bf No\-Error} = G\-L\-\_\-\-N\-O\-\_\-\-E\-R\-R\-O\-R, 
+{\bf Out\-Of\-Memory} = G\-L\-\_\-\-O\-U\-T\-\_\-\-O\-F\-\_\-\-M\-E\-M\-O\-R\-Y, 
+{\bf Invalid\-Enum} = G\-L\-\_\-\-I\-N\-V\-A\-L\-I\-D\-\_\-\-E\-N\-U\-M, 
+{\bf Invalid\-Value} = G\-L\-\_\-\-I\-N\-V\-A\-L\-I\-D\-\_\-\-V\-A\-L\-U\-E, 
+\\*
+{\bf Invalid\-Operation} = G\-L\-\_\-\-I\-N\-V\-A\-L\-I\-D\-\_\-\-O\-P\-E\-R\-A\-T\-I\-O\-N, 
+{\bf Invalid\-Framebuffer\-Operation} = G\-L\-\_\-\-I\-N\-V\-A\-L\-I\-D\-\_\-\-F\-R\-A\-M\-E\-B\-U\-F\-F\-E\-R\-\_\-\-O\-P\-E\-R\-A\-T\-I\-O\-N, 
+{\bf Stack\-Overflow} = G\-L\-\_\-\-S\-T\-A\-C\-K\-\_\-\-O\-V\-E\-R\-F\-L\-O\-W, 
+{\bf Stack\-Underflow} = G\-L\-\_\-\-S\-T\-A\-C\-K\-\_\-\-U\-N\-D\-E\-R\-F\-L\-O\-W, 
+\\*
+{\bf Table\-Too\-Large} = G\-L\-\_\-\-T\-A\-B\-L\-E\-\_\-\-T\-O\-O\-\_\-\-L\-A\-R\-G\-E, 
+{\bf Context\-Lost} = G\-L\-\_\-\-C\-O\-N\-T\-E\-X\-T\-\_\-\-L\-O\-S\-T
+ \}
+\begin{DoxyCompactList}\small\item\em All the error codes for open\-Gl in an easy to read enum. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+const char $\ast$ {\bf gl\-Error\-Code\-To\-Text} ({\bf gl\-Error\-Codes} \-\_\-e)
+\item 
+void {\bf clear\-All\-Gl\-Errors} ()
+\begin{DoxyCompactList}\small\item\em Clears all the error messages in the current open\-G\-L context. \end{DoxyCompactList}\item 
+void {\bf C\-E\-B\-Raise\-::\-Qt\-File\-Error} (Q\-File\-Device\-::\-File\-Error \-\_\-e, Q\-String \-\_\-path)
+\item 
+void {\bf C\-E\-B\-Raise\-::\-Gl\-Error} ({\bf gl\-Error\-Codes} \-\_\-e, Q\-String \-\_\-msg)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Contains all the code for generating and handling errors for C\-E\-B. \begin{DoxyAuthor}{Author}
+Jonathan Flynn 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\-0 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+01/03/16 
+\end{DoxyDate}
+
+
+Definition in file {\bf Ceb\-Errors.\-h}.
+
+
+
+\subsection{Enumeration Type Documentation}
+\index{Ceb\-Errors.\-h@{Ceb\-Errors.\-h}!gl\-Error\-Codes@{gl\-Error\-Codes}}
+\index{gl\-Error\-Codes@{gl\-Error\-Codes}!CebErrors.h@{Ceb\-Errors.\-h}}
+\subsubsection[{gl\-Error\-Codes}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf gl\-Error\-Codes} \-: G\-Lenum}\label{_ceb_errors_8h_a2847932b5d61ef44cc6e0cb827004e08}
+
+
+All the error codes for open\-Gl in an easy to read enum. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{No\-Error@{No\-Error}!Ceb\-Errors.\-h@{Ceb\-Errors.\-h}}\index{Ceb\-Errors.\-h@{Ceb\-Errors.\-h}!No\-Error@{No\-Error}}\item[{\em 
+No\-Error\label{_ceb_errors_8h_a2847932b5d61ef44cc6e0cb827004e08aef9104c292609ba6db320509be8fe27f}
+}]\index{Out\-Of\-Memory@{Out\-Of\-Memory}!Ceb\-Errors.\-h@{Ceb\-Errors.\-h}}\index{Ceb\-Errors.\-h@{Ceb\-Errors.\-h}!Out\-Of\-Memory@{Out\-Of\-Memory}}\item[{\em 
+Out\-Of\-Memory\label{_ceb_errors_8h_a2847932b5d61ef44cc6e0cb827004e08a693a56048c1e1863c980d58364247f7a}
+}]\index{Invalid\-Enum@{Invalid\-Enum}!Ceb\-Errors.\-h@{Ceb\-Errors.\-h}}\index{Ceb\-Errors.\-h@{Ceb\-Errors.\-h}!Invalid\-Enum@{Invalid\-Enum}}\item[{\em 
+Invalid\-Enum\label{_ceb_errors_8h_a2847932b5d61ef44cc6e0cb827004e08a193fc75e45418dd6a9668fe593634118}
+}]\index{Invalid\-Value@{Invalid\-Value}!Ceb\-Errors.\-h@{Ceb\-Errors.\-h}}\index{Ceb\-Errors.\-h@{Ceb\-Errors.\-h}!Invalid\-Value@{Invalid\-Value}}\item[{\em 
+Invalid\-Value\label{_ceb_errors_8h_a2847932b5d61ef44cc6e0cb827004e08aa7d5dbb80731c0bd189f7d106c768631}
+}]\index{Invalid\-Operation@{Invalid\-Operation}!Ceb\-Errors.\-h@{Ceb\-Errors.\-h}}\index{Ceb\-Errors.\-h@{Ceb\-Errors.\-h}!Invalid\-Operation@{Invalid\-Operation}}\item[{\em 
+Invalid\-Operation\label{_ceb_errors_8h_a2847932b5d61ef44cc6e0cb827004e08a8fafe02ab19b29a26c023c80f5879b16}
+}]\index{Invalid\-Framebuffer\-Operation@{Invalid\-Framebuffer\-Operation}!Ceb\-Errors.\-h@{Ceb\-Errors.\-h}}\index{Ceb\-Errors.\-h@{Ceb\-Errors.\-h}!Invalid\-Framebuffer\-Operation@{Invalid\-Framebuffer\-Operation}}\item[{\em 
+Invalid\-Framebuffer\-Operation\label{_ceb_errors_8h_a2847932b5d61ef44cc6e0cb827004e08a7c7f48aea473155f6b6ad553b5dbcb04}
+}]\index{Stack\-Overflow@{Stack\-Overflow}!Ceb\-Errors.\-h@{Ceb\-Errors.\-h}}\index{Ceb\-Errors.\-h@{Ceb\-Errors.\-h}!Stack\-Overflow@{Stack\-Overflow}}\item[{\em 
+Stack\-Overflow\label{_ceb_errors_8h_a2847932b5d61ef44cc6e0cb827004e08ac7254105699f6d33bda0d5636498df4e}
+}]\index{Stack\-Underflow@{Stack\-Underflow}!Ceb\-Errors.\-h@{Ceb\-Errors.\-h}}\index{Ceb\-Errors.\-h@{Ceb\-Errors.\-h}!Stack\-Underflow@{Stack\-Underflow}}\item[{\em 
+Stack\-Underflow\label{_ceb_errors_8h_a2847932b5d61ef44cc6e0cb827004e08affaee57d5fa29bfc91296d0ea4d204bd}
+}]\index{Table\-Too\-Large@{Table\-Too\-Large}!Ceb\-Errors.\-h@{Ceb\-Errors.\-h}}\index{Ceb\-Errors.\-h@{Ceb\-Errors.\-h}!Table\-Too\-Large@{Table\-Too\-Large}}\item[{\em 
+Table\-Too\-Large\label{_ceb_errors_8h_a2847932b5d61ef44cc6e0cb827004e08a810cbefc87fc294f34a5cb04deb9e10d}
+}]\index{Context\-Lost@{Context\-Lost}!Ceb\-Errors.\-h@{Ceb\-Errors.\-h}}\index{Ceb\-Errors.\-h@{Ceb\-Errors.\-h}!Context\-Lost@{Context\-Lost}}\item[{\em 
+Context\-Lost\label{_ceb_errors_8h_a2847932b5d61ef44cc6e0cb827004e08a7dc0d57a2e1d5f8a522ba2d1a7b80eac}
+}]\end{description}
+\end{Desc}
+
+
+Definition at line 29 of file Ceb\-Errors.\-h.
+
+
+\begin{DoxyCode}
+29                   : GLenum
+30 \{
+31   NoError                     = GL\_NO\_ERROR,
+32   OutOfMemory                 = GL\_OUT\_OF\_MEMORY,
+33   InvalidEnum                 = GL\_INVALID\_ENUM,
+34   InvalidValue                = GL\_INVALID\_VALUE,
+35   InvalidOperation            = GL\_INVALID\_OPERATION,
+36   InvalidFramebufferOperation = GL\_INVALID\_FRAMEBUFFER\_OPERATION,
+37   StackOverflow               = GL\_STACK\_OVERFLOW,
+38   StackUnderflow              = GL\_STACK\_UNDERFLOW,
+39   TableTooLarge               = GL\_TABLE\_TOO\_LARGE,
+40   ContextLost                 = GL\_CONTEXT\_LOST
+41 \};
+\end{DoxyCode}
+
+
+\subsection{Function Documentation}
+\index{Ceb\-Errors.\-h@{Ceb\-Errors.\-h}!clear\-All\-Gl\-Errors@{clear\-All\-Gl\-Errors}}
+\index{clear\-All\-Gl\-Errors@{clear\-All\-Gl\-Errors}!CebErrors.h@{Ceb\-Errors.\-h}}
+\subsubsection[{clear\-All\-Gl\-Errors}]{\setlength{\rightskip}{0pt plus 5cm}void clear\-All\-Gl\-Errors (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{_ceb_errors_8h_a2d18759e56c7ce49d3f1ef046bc49eee}
+
+
+Clears all the error messages in the current open\-G\-L context. 
+
+
+
+Definition at line 14 of file Ceb\-Errors.\-cpp.
+
+
+\begin{DoxyCode}
+15 \{
+16   GLenum errNo = glGetError();
+17   \textcolor{keywordflow}{while} (errNo != GL\_NO\_ERROR)
+18   \{
+19     errNo = glGetError();
+20   \}
+21 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_ceb_errors_8h_a2d18759e56c7ce49d3f1ef046bc49eee_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Ceb\-Errors.\-h@{Ceb\-Errors.\-h}!gl\-Error\-Code\-To\-Text@{gl\-Error\-Code\-To\-Text}}
+\index{gl\-Error\-Code\-To\-Text@{gl\-Error\-Code\-To\-Text}!CebErrors.h@{Ceb\-Errors.\-h}}
+\subsubsection[{gl\-Error\-Code\-To\-Text}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ gl\-Error\-Code\-To\-Text (
+\begin{DoxyParamCaption}
+\item[{{\bf gl\-Error\-Codes}}]{\-\_\-e}
+\end{DoxyParamCaption}
+)}\label{_ceb_errors_8h_a48ec418a65c7d673dd7cc87dfa33f986}
+
+
+Definition at line 24 of file Ceb\-Errors.\-cpp.
+
+
+
+References Context\-Lost, Invalid\-Enum, Invalid\-Framebuffer\-Operation, Invalid\-Operation, Invalid\-Value, No\-Error, Out\-Of\-Memory, Stack\-Overflow, Stack\-Underflow, and Table\-Too\-Large.
+
+
+\begin{DoxyCode}
+25 \{
+26   \textcolor{keywordflow}{switch}(\_e)
+27   \{
+28     \textcolor{keywordflow}{case} glErrorCodes::NoError:
+29     \{
+30       \textcolor{keywordflow}{return} \textcolor{stringliteral}{"No Memory"};
+31       \textcolor{keywordflow}{break};
+32     \}
+33     \textcolor{keywordflow}{case} glErrorCodes::OutOfMemory:
+34     \{
+35       \textcolor{keywordflow}{return} \textcolor{stringliteral}{"Out of Memory"};
+36       \textcolor{keywordflow}{break};
+37     \}
+38     \textcolor{keywordflow}{case} glErrorCodes::InvalidEnum:
+39     \{
+40       \textcolor{keywordflow}{return} \textcolor{stringliteral}{"Invalid Enum"};
+41       \textcolor{keywordflow}{break};
+42     \}
+43     \textcolor{keywordflow}{case} glErrorCodes::InvalidValue:
+44     \{
+45       \textcolor{keywordflow}{return} \textcolor{stringliteral}{"Invalid Value"};
+46       \textcolor{keywordflow}{break};
+47     \}
+48     \textcolor{keywordflow}{case} glErrorCodes::InvalidOperation:
+49     \{
+50       \textcolor{keywordflow}{return} \textcolor{stringliteral}{"Invalid Operation"};
+51       \textcolor{keywordflow}{break};
+52     \}
+53     \textcolor{keywordflow}{case} glErrorCodes::InvalidFramebufferOperation:
+54     \{
+55       \textcolor{keywordflow}{return} \textcolor{stringliteral}{"Invalid Framebuffer Operation"};
+56       \textcolor{keywordflow}{break};
+57     \}
+58     \textcolor{keywordflow}{case} glErrorCodes::StackOverflow:
+59     \{
+60       \textcolor{keywordflow}{return} \textcolor{stringliteral}{"Stack Overflow"};
+61       \textcolor{keywordflow}{break};
+62     \}
+63     \textcolor{keywordflow}{case} glErrorCodes::StackUnderflow:
+64     \{
+65       \textcolor{keywordflow}{return} \textcolor{stringliteral}{"Stack Underflow"};
+66       \textcolor{keywordflow}{break};
+67     \}
+68     \textcolor{keywordflow}{case} glErrorCodes::TableTooLarge:
+69     \{
+70       \textcolor{keywordflow}{return} \textcolor{stringliteral}{"Table Too Large"};
+71       \textcolor{keywordflow}{break};
+72     \}
+73     \textcolor{keywordflow}{case} glErrorCodes::ContextLost:
+74     \{
+75       \textcolor{keywordflow}{return} \textcolor{stringliteral}{"Context Lost"};
+76       \textcolor{keywordflow}{break};
+77     \}
+78     \textcolor{keywordflow}{default}:
+79     \{
+80       \textcolor{keywordflow}{return} \textcolor{stringliteral}{"Unknown Gl Error Code"};
+81       \textcolor{keywordflow}{break};
+82     \}
+83   \}
+84 \}
+\end{DoxyCode}

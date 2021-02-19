@@ -1,0 +1,5 @@
+<map id="NGLScene::objectTransform" name="NGLScene::objectTransform">
+<area shape="rect" id="node2" href="$class_n_g_l_scene.html#a9149c8d164b007df5bf114c8a896e635" title="method to load transform matrices to the shader " alt="" coords="237,34,416,75"/>
+<area shape="rect" id="node3" href="$class_parser_lib.html#aaec662d54b5dcf376d0a5b9157637047" title="takes the list of uniforms and updates them onto the shader, depending on the data type..." alt="" coords="465,5,639,46"/>
+<area shape="rect" id="node4" href="$class_shader_manager.html#a04c9fb67f7fa4995ae678f64f5b4985b" title="method to set OpenGL to use the current shader program " alt="" coords="483,71,621,97"/>
+</map>

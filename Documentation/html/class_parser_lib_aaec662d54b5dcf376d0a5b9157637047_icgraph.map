@@ -1,0 +1,6 @@
+<map id="ParserLib::sendUniformsToShader" name="ParserLib::sendUniformsToShader">
+<area shape="rect" id="node2" href="$class_n_g_l_scene.html#a9149c8d164b007df5bf114c8a896e635" title="method to load transform matrices to the shader " alt="" coords="229,16,408,58"/>
+<area shape="rect" id="node3" href="$class_n_g_l_scene.html#a37bec65bfba7b7a717d803d369221e2d" title="this is called everytime we want to draw the scene " alt="" coords="688,24,824,50"/>
+<area shape="rect" id="node4" href="$class_n_g_l_scene.html#ae3e8dc1c180d89afa997104c3dd707a0" title="Set object transformations depending on the shape type. " alt="" coords="456,24,640,50"/>
+<area shape="rect" id="node5" href="$class_n_g_l_scene.html#a3fc824ff4a9140812b9ea473cdd9b2c5" title="Draw a xyz axis. " alt="" coords="477,74,619,101"/>
+</map>

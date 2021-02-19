@@ -1,0 +1,85 @@
+\section{main.\-cpp File Reference}
+\label{main_8cpp}\index{main.\-cpp@{main.\-cpp}}
+{\ttfamily \#include $<$Q\-Application$>$}\\*
+{\ttfamily \#include \char`\"{}Ceb\-Application.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Main\-Window.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$qsurfaceformat.\-h$>$}\\*
+Include dependency graph for main.\-cpp\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{main_8cpp__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int {\bf main} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{main.\-cpp@{main.\-cpp}!main@{main}}
+\index{main@{main}!main.cpp@{main.\-cpp}}
+\subsubsection[{main}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$$\ast$}]{argv}
+\end{DoxyParamCaption}
+)}\label{main_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}
+
+
+Definition at line 143 of file main.\-cpp.
+
+
+
+References Main\-Window\-::show\-Start\-Dialog().
+
+
+\begin{DoxyCode}
+144 \{
+145   \textcolor{comment}{// create an OpenGL format specifier}
+146   QSurfaceFormat format;
+147   \textcolor{comment}{// set the number of samples for multisampling}
+148   \textcolor{comment}{// will need to enable glEnable(GL\_MULTISAMPLE); once we have a context}
+149   format.setSamples(4);
+150 \textcolor{preprocessor}{  #if defined( DARWIN)}
+151 \textcolor{preprocessor}{}    \textcolor{comment}{// at present mac osx Mountain Lion only supports GL3.2}
+152     \textcolor{comment}{// the new mavericks will have GL 4.x so can change}
+153     format.setMajorVersion(4);
+154     format.setMinorVersion(2);
+155 \textcolor{preprocessor}{  #else}
+156 \textcolor{preprocessor}{}    \textcolor{comment}{// with luck we have the latest GL version so set to this}
+157     format.setMajorVersion(4);
+158     format.setMinorVersion(3);
+159 \textcolor{preprocessor}{  #endif}
+160 \textcolor{preprocessor}{}  \textcolor{comment}{// now we are going to set to CoreProfile OpenGL so we can't use and old Immediate mode GL}
+161   format.setProfile(QSurfaceFormat::CoreProfile);
+162   \textcolor{comment}{// now set the depth buffer to 24 bits}
+163   format.setDepthBufferSize(24);
+164   \textcolor{comment}{// this will set the format for all widgets}
+165   QSurfaceFormat::setDefaultFormat(format);
+166   \textcolor{comment}{// make an instance of the QApplication}
+167   CebApplication a(argc, argv);
+168   \textcolor{comment}{// Create a new MainWindow}
+169   MainWindow w;
+170   \textcolor{comment}{// show main window}
+171   w.show();
+172   \textcolor{comment}{// show start dialog}
+173   w.showStartDialog();
+174 
+175   \textcolor{comment}{// hand control over to Qt framework}
+176   \textcolor{keywordflow}{return} a.exec();
+177 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=264pt]{main_8cpp_a3c04138a5bfe5d72780bb7e82a18e627_cgraph}
+\end{center}
+\end{figure}
+
+

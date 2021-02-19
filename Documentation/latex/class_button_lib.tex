@@ -1,0 +1,443 @@
+\section{Button\-Lib Class Reference}
+\label{class_button_lib}\index{Button\-Lib@{Button\-Lib}}
+
+
+Stores vector of buttons with values and updates uniforms.  
+
+
+
+
+{\ttfamily \#include $<$Button\-Lib.\-h$>$}
+
+
+
+Collaboration diagram for Button\-Lib\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_button_lib__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\bf Button\-Lib} ({\bf Parser\-Lib} $\ast$\-\_\-parser, Q\-Layout $\ast$\-\_\-layout, {\bf N\-G\-L\-Scene} $\ast$\-\_\-scene, Q\-Widget $\ast$\-\_\-parent=0)
+\begin{DoxyCompactList}\small\item\em constructor to create the button library \end{DoxyCompactList}\item 
+void {\bf create\-Buttons} ()
+\begin{DoxyCompactList}\small\item\em call to a function to create the buttons in the gui \end{DoxyCompactList}\item 
+void {\bf update\-Buttons} ()
+\begin{DoxyCompactList}\small\item\em call to update the buttons \end{DoxyCompactList}\item 
+void {\bf print\-Uniforms} ()
+\begin{DoxyCompactList}\small\item\em prints the uniforms for debugging purposes \end{DoxyCompactList}\item 
+void {\bf update\-Shader\-Values} ()
+\begin{DoxyCompactList}\small\item\em sets the shader values from the button values \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Q\-Layout $\ast$ {\bf m\-\_\-layout}
+\begin{DoxyCompactList}\small\item\em gui layout for the buttons to be stored in \end{DoxyCompactList}\item 
+Q\-Widget $\ast$ {\bf m\-\_\-parent}
+\begin{DoxyCompactList}\small\item\em gui parent for the layout \end{DoxyCompactList}\item 
+{\bf Parser\-Lib} $\ast$ {\bf m\-\_\-parser}
+\begin{DoxyCompactList}\small\item\em pointer to the parser to access and set uniform values \end{DoxyCompactList}\item 
+{\bf N\-G\-L\-Scene} $\ast$ {\bf m\-\_\-scene}
+\begin{DoxyCompactList}\small\item\em pointer to the \doxyref{N\-G\-L\-Scene}{p.}{class_n_g_l_scene}, gl Widget \end{DoxyCompactList}\item 
+std\-::vector$<$ {\bf Button} $\ast$ $>$ {\bf m\-\_\-button\-List}
+\begin{DoxyCompactList}\small\item\em vector of buttons to dynamically and delete different types \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Stores vector of buttons with values and updates uniforms. 
+
+Definition at line 25 of file Button\-Lib.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Button\-Lib@{Button\-Lib}!Button\-Lib@{Button\-Lib}}
+\index{Button\-Lib@{Button\-Lib}!ButtonLib@{Button\-Lib}}
+\subsubsection[{Button\-Lib}]{\setlength{\rightskip}{0pt plus 5cm}Button\-Lib\-::\-Button\-Lib (
+\begin{DoxyParamCaption}
+\item[{{\bf Parser\-Lib} $\ast$}]{\-\_\-parser, }
+\item[{Q\-Layout $\ast$}]{\-\_\-layout, }
+\item[{{\bf N\-G\-L\-Scene} $\ast$}]{\-\_\-scene, }
+\item[{Q\-Widget $\ast$}]{\-\_\-parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}\label{class_button_lib_aac3bfeb47972aa42c950c8bd0d4c69a5}
+
+
+constructor to create the button library 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-parser} & the parser to check and set uniforms \\
+\hline
+\mbox{\tt in}  & {\em \-\_\-layout} & the layout environment for the buttons to be attached to \\
+\hline
+\mbox{\tt in}  & {\em \-\_\-scene} & the \doxyref{N\-G\-L\-Scene}{p.}{class_n_g_l_scene} for the G\-U\-I \\
+\hline
+\mbox{\tt in}  & {\em \-\_\-parent} & the parent window for the buttons \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 3 of file Button\-Lib.\-cpp.
+
+
+
+References create\-Buttons(), m\-\_\-layout, m\-\_\-parent, m\-\_\-parser, m\-\_\-scene, and update\-Shader\-Values().
+
+
+\begin{DoxyCode}
+4 \{
+5   m_parser=\_parser;
+6   m_layout=\_layout;
+7   m_parent=\_parent;
+8   m_scene=\_scene;
+9   createButtons();
+10   updateShaderValues();
+11 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_button_lib_aac3bfeb47972aa42c950c8bd0d4c69a5_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsection{Member Function Documentation}
+\index{Button\-Lib@{Button\-Lib}!create\-Buttons@{create\-Buttons}}
+\index{create\-Buttons@{create\-Buttons}!ButtonLib@{Button\-Lib}}
+\subsubsection[{create\-Buttons}]{\setlength{\rightskip}{0pt plus 5cm}void Button\-Lib\-::create\-Buttons (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_button_lib_a88d97d584a95e601067ec420c4380f2d}
+
+
+call to a function to create the buttons in the gui 
+
+
+
+Definition at line 13 of file Button\-Lib.\-cpp.
+
+
+
+References m\-\_\-button\-List, m\-\_\-layout, m\-\_\-parent, m\-\_\-parser, m\-\_\-scene, Parser\-Lib\-::m\-\_\-uniform\-List, Colour\-Button\-::set\-Colour(), Vec\-Button\-::set\-Up\-Button(), and Float\-Button\-::set\-Value().
+
+
+\begin{DoxyCode}
+14 \{
+15   \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} uniform : m_parser->m_uniformList)
+16   \{
+17     QString \_uniformName = QString::fromStdString(uniform->getName());
+18     GLenum \_uniformType = uniform->getTypeEnum();
+19     \textcolor{keywordflow}{if}(\_uniformType==GL\_FLOAT\_VEC4)
+20     \{
+21       ngl::Vec4 \_uniformVec=uniform->getVec4();
+22       ColourButton *tempButton = \textcolor{keyword}{new} ColourButton(\_uniformName,
+23                                                   \_uniformType,
+24                                                   m_layout,
+25                                                   uniform->getLocation(),
+26                                                   \textcolor{keyword}{this},
+27                                                   m_scene,
+28                                                   m_parent);
+29       tempButton->setColour(\_uniformVec);
+30       m_buttonList.push\_back(tempButton);
+31     \}
+32     \textcolor{keywordflow}{if}(\_uniformType==GL\_FLOAT)
+33     \{
+34       \textcolor{keywordtype}{float} \_uniformFloat=uniform->getFloat();
+35       FloatButton *tempButton = \textcolor{keyword}{new} FloatButton(\_uniformName,
+36                                                 \_uniformType,
+37                                                 m_layout,
+38                                                 uniform->getLocation(),
+39                                                 \textcolor{keyword}{this},
+40                                                 m_scene,
+41                                                 m_parent);
+42       tempButton->setValue(\_uniformFloat);
+43       m_buttonList.push\_back(tempButton);
+44     \}
+45     \textcolor{keywordflow}{if}(\_uniformType==GL\_FLOAT\_VEC3)
+46     \{
+47       ngl::Vec3 \_uniformVec=uniform->getVec3();
+48       VecButton *tempButton = \textcolor{keyword}{new} VecButton(\_uniformName,
+49                                                   \_uniformType,
+50                                                   m_layout,
+51                                                   uniform->getLocation(),
+52                                                   \textcolor{keyword}{this},
+53                                                   m_scene,
+54                                                   m_parent);
+55       tempButton->setUpButton(\_uniformVec);
+56       m_buttonList.push\_back(tempButton);
+57     \}
+58   \}
+59 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=322pt]{class_button_lib_a88d97d584a95e601067ec420c4380f2d_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_button_lib_a88d97d584a95e601067ec420c4380f2d_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Button\-Lib@{Button\-Lib}!print\-Uniforms@{print\-Uniforms}}
+\index{print\-Uniforms@{print\-Uniforms}!ButtonLib@{Button\-Lib}}
+\subsubsection[{print\-Uniforms}]{\setlength{\rightskip}{0pt plus 5cm}void Button\-Lib\-::print\-Uniforms (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_button_lib_af6f685255e4f3c90e00ea1421f5bed42}
+
+
+prints the uniforms for debugging purposes 
+
+\index{Button\-Lib@{Button\-Lib}!update\-Buttons@{update\-Buttons}}
+\index{update\-Buttons@{update\-Buttons}!ButtonLib@{Button\-Lib}}
+\subsubsection[{update\-Buttons}]{\setlength{\rightskip}{0pt plus 5cm}void Button\-Lib\-::update\-Buttons (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_button_lib_a0b78f1baf6ff415f7f80852592fc457b}
+
+
+call to update the buttons 
+
+
+
+Definition at line 61 of file Button\-Lib.\-cpp.
+
+
+
+References create\-Buttons(), and m\-\_\-button\-List.
+
+
+\begin{DoxyCode}
+62 \{
+63   \textcolor{keywordflow}{if}(m_buttonList.size()==0)
+64   \{
+65     createButtons();
+66   \}
+67   \textcolor{keywordflow}{else}
+68   \{
+69     std::vector<Button*> \_buttonDup = m_buttonList;
+70     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} uniform : m_buttonList)
+71     \{
+72       \textcolor{keyword}{delete} uniform->m\_button;
+73     \}
+74     m\_buttonList.resize(0);
+75     createButtons();
+76     \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} uniform: m\_buttonList)
+77     \{
+78       \textcolor{keywordflow}{for}(uint i=0; i<\_buttonDup.size(); ++i)
+79       \{
+80         \textcolor{keywordflow}{if}(uniform->getName()==\_buttonDup[i]->getName() && uniform->getTypeEnum()==\_buttonDup[i]->
+      getTypeEnum())
+81         \{
+82           \textcolor{keywordflow}{if}(uniform->getTypeEnum()==GL\_FLOAT\_VEC4)
+83           \{
+84             uniform->setColour(\_buttonDup[i]->getColourQ());
+85             \_buttonDup.erase(\_buttonDup.begin()+i);
+86             \textcolor{keywordflow}{break};
+87           \}
+88           \textcolor{keywordflow}{if}(uniform->getTypeEnum()==GL\_FLOAT)
+89           \{
+90             uniform->setValue(\_buttonDup[i]->getValue());
+91             \_buttonDup.erase(\_buttonDup.begin()+i);
+92             \textcolor{keywordflow}{break};
+93           \}
+94           \textcolor{keywordflow}{if}(uniform->getTypeEnum()==GL\_FLOAT\_VEC3)
+95           \{
+96             uniform->setVec(\_buttonDup[i]->getVec());
+97             \_buttonDup.erase(\_buttonDup.begin()+i);
+98             \textcolor{keywordflow}{break};
+99           \}
+100         \}
+101       \}
+102     \}
+103   \}
+104 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_button_lib_a0b78f1baf6ff415f7f80852592fc457b_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_button_lib_a0b78f1baf6ff415f7f80852592fc457b_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Button\-Lib@{Button\-Lib}!update\-Shader\-Values@{update\-Shader\-Values}}
+\index{update\-Shader\-Values@{update\-Shader\-Values}!ButtonLib@{Button\-Lib}}
+\subsubsection[{update\-Shader\-Values}]{\setlength{\rightskip}{0pt plus 5cm}void Button\-Lib\-::update\-Shader\-Values (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_button_lib_ae2644c88c1e6846a9f55b4af96dcffb9}
+
+
+sets the shader values from the button values 
+
+
+
+Definition at line 105 of file Button\-Lib.\-cpp.
+
+
+
+References m\-\_\-button\-List, m\-\_\-parser, and Parser\-Lib\-::m\-\_\-uniform\-List.
+
+
+\begin{DoxyCode}
+106 \{
+107   \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} uniform: m_parser->m_uniformList)
+108   \{
+109     \textcolor{keywordflow}{if}(uniform->getTypeEnum()==GL\_FLOAT\_VEC4)
+110     \{
+111       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} button: m_buttonList)
+112       \{
+113         \textcolor{keywordflow}{if}(uniform->getLocation()==button->getID())
+114         \{
+115           ngl::Vec4 temp = button->getColour();
+116           uniform->setVec4(temp);
+117           \textcolor{keywordflow}{break};
+118         \}
+119       \}
+120     \}
+121     \textcolor{keywordflow}{if}(uniform->getTypeEnum()==GL\_FLOAT)
+122     \{
+123       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} button: m\_buttonList)
+124       \{
+125         \textcolor{keywordflow}{if}(uniform->getLocation()==button->getID())
+126         \{
+127           \textcolor{keywordtype}{float} temp = button->getValue();
+128           uniform->setFloat(temp);
+129           \textcolor{keywordflow}{break};
+130         \}
+131       \}
+132     \}
+133     \textcolor{keywordflow}{if}(uniform->getTypeEnum()==GL\_FLOAT\_VEC3)
+134     \{
+135       \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} button: m\_buttonList)
+136       \{
+137         \textcolor{keywordflow}{if}(uniform->getLocation()==button->getID())
+138         \{
+139           ngl::Vec4 temp = button->getVec();
+140           uniform->setVec3(ngl::Vec3(temp.m\_x,
+141                                      temp.m\_y,
+142                                      temp.m\_z));
+143           \textcolor{keywordflow}{break};
+144         \}
+145       \}
+146     \}
+147   \}
+148 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_button_lib_ae2644c88c1e6846a9f55b4af96dcffb9_icgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsection{Member Data Documentation}
+\index{Button\-Lib@{Button\-Lib}!m\-\_\-button\-List@{m\-\_\-button\-List}}
+\index{m\-\_\-button\-List@{m\-\_\-button\-List}!ButtonLib@{Button\-Lib}}
+\subsubsection[{m\-\_\-button\-List}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<${\bf Button}$\ast$$>$ Button\-Lib\-::m\-\_\-button\-List\hspace{0.3cm}{\ttfamily [private]}}\label{class_button_lib_ac5a487a895d200a4a21a3eae35b02073}
+
+
+vector of buttons to dynamically and delete different types 
+
+
+
+Definition at line 74 of file Button\-Lib.\-h.
+
+\index{Button\-Lib@{Button\-Lib}!m\-\_\-layout@{m\-\_\-layout}}
+\index{m\-\_\-layout@{m\-\_\-layout}!ButtonLib@{Button\-Lib}}
+\subsubsection[{m\-\_\-layout}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Layout$\ast$ Button\-Lib\-::m\-\_\-layout\hspace{0.3cm}{\ttfamily [private]}}\label{class_button_lib_ae0dc6d904c084b888aa1038e0ad0b75d}
+
+
+gui layout for the buttons to be stored in 
+
+
+
+Definition at line 58 of file Button\-Lib.\-h.
+
+\index{Button\-Lib@{Button\-Lib}!m\-\_\-parent@{m\-\_\-parent}}
+\index{m\-\_\-parent@{m\-\_\-parent}!ButtonLib@{Button\-Lib}}
+\subsubsection[{m\-\_\-parent}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Widget$\ast$ Button\-Lib\-::m\-\_\-parent\hspace{0.3cm}{\ttfamily [private]}}\label{class_button_lib_a8e60dd2e6cec5f9c3486882aded19f9a}
+
+
+gui parent for the layout 
+
+
+
+Definition at line 62 of file Button\-Lib.\-h.
+
+\index{Button\-Lib@{Button\-Lib}!m\-\_\-parser@{m\-\_\-parser}}
+\index{m\-\_\-parser@{m\-\_\-parser}!ButtonLib@{Button\-Lib}}
+\subsubsection[{m\-\_\-parser}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Parser\-Lib}$\ast$ Button\-Lib\-::m\-\_\-parser\hspace{0.3cm}{\ttfamily [private]}}\label{class_button_lib_a2d9fb2b47450133f35ce44a26930ad68}
+
+
+pointer to the parser to access and set uniform values 
+
+
+
+Definition at line 66 of file Button\-Lib.\-h.
+
+\index{Button\-Lib@{Button\-Lib}!m\-\_\-scene@{m\-\_\-scene}}
+\index{m\-\_\-scene@{m\-\_\-scene}!ButtonLib@{Button\-Lib}}
+\subsubsection[{m\-\_\-scene}]{\setlength{\rightskip}{0pt plus 5cm}{\bf N\-G\-L\-Scene}$\ast$ Button\-Lib\-::m\-\_\-scene\hspace{0.3cm}{\ttfamily [private]}}\label{class_button_lib_a78b78fee74514bc97bbf8f5a6e19fe64}
+
+
+pointer to the \doxyref{N\-G\-L\-Scene}{p.}{class_n_g_l_scene}, gl Widget 
+
+
+
+Definition at line 70 of file Button\-Lib.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+{\bf Button\-Lib.\-h}\item 
+{\bf Button\-Lib.\-cpp}\end{DoxyCompactItemize}

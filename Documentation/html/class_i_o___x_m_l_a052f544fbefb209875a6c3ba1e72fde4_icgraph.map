@@ -1,0 +1,6 @@
+<map id="IO_XML::writeProject" name="IO_XML::writeProject">
+<area shape="rect" id="node2" href="$class_project.html#af285ceb406be688b3c81cdd445a159e6" title="method for saving the current project " alt="" coords="198,41,293,68"/>
+<area shape="rect" id="node3" href="$class_main_window.html#ae388e93dca3e29f2036901982af7e7ac" title="Called when Save Project button is triggered in File Menu bar. " alt="" coords="341,5,528,46"/>
+<area shape="rect" id="node4" href="$class_project.html#a4573371ef661570f74282d62193a01e2" title="method for saving the current project as a new project " alt="" coords="379,71,490,97"/>
+<area shape="rect" id="node5" href="$class_main_window.html#ac2e49056c9ede510e4903848dfcaa2a1" title="Called when Startup Project as button is triggered in File Menu bar. " alt="" coords="576,63,763,105"/>
+</map>

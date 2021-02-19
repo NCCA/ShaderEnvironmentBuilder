@@ -1,0 +1,10 @@
+<map id="NGLScene::paintGL" name="NGLScene::paintGL">
+<area shape="rect" id="node2" href="$class_n_g_l_scene.html#a3fc824ff4a9140812b9ea473cdd9b2c5" title="Draw a xyz axis. " alt="" coords="210,157,353,184"/>
+<area shape="rect" id="node6" href="$class_n_g_l_scene.html#a64725fd4dbe80bbdb67dcc9041486933" title="draw an object based on the m_shapeType; e.g. 0=mesh, 1=sphere, etc " alt="" coords="203,56,359,83"/>
+<area shape="rect" id="node3" href="$class_n_g_l_scene.html#a9149c8d164b007df5bf114c8a896e635" title="method to load transform matrices to the shader " alt="" coords="421,99,600,141"/>
+<area shape="rect" id="node7" href="$class_n_g_l_scene.html#ae3e8dc1c180d89afa997104c3dd707a0" title="Set object transformations depending on the shape type. " alt="" coords="189,5,373,32"/>
+<area shape="rect" id="node8" href="$class_camera.html#af155b670c737578ef6e49f9284a1f382" title="Sets the camera shape and returns the new camera to NGLScene. " alt="" coords="204,208,359,235"/>
+<area shape="rect" id="node9" href="$class_n_g_l_scene.html#adfcc583c9226e008f9ed6e752e412844" title="Activate the m_mesh .obj. " alt="" coords="208,259,355,285"/>
+<area shape="rect" id="node5" href="$class_shader_manager.html#a04c9fb67f7fa4995ae678f64f5b4985b" title="method to set OpenGL to use the current shader program " alt="" coords="667,165,805,192"/>
+<area shape="rect" id="node4" href="$class_parser_lib.html#aaec662d54b5dcf376d0a5b9157637047" title="takes the list of uniforms and updates them onto the shader, depending on the data type..." alt="" coords="649,99,823,141"/>
+</map>

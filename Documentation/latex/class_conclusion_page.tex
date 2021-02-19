@@ -1,0 +1,143 @@
+\section{Conclusion\-Page Class Reference}
+\label{class_conclusion_page}\index{Conclusion\-Page@{Conclusion\-Page}}
+
+
+The final project wizard page that asks for confirmation to generate project.  
+
+
+
+
+{\ttfamily \#include $<$New\-Project\-Wizard.\-h$>$}
+
+
+
+Inheritance diagram for Conclusion\-Page\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=130pt]{class_conclusion_page__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Conclusion\-Page\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=130pt]{class_conclusion_page__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\bf Conclusion\-Page} (Q\-Widget $\ast$parent=0)
+\begin{DoxyCompactList}\small\item\em Constructor, passing a child of parent. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void {\bf initialize\-Page} () Q\-\_\-\-D\-E\-C\-L\-\_\-\-O\-V\-E\-R\-R\-I\-D\-E
+\begin{DoxyCompactList}\small\item\em Used to prepare the Wizard page before it is shown and set default values. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Q\-Label $\ast$ {\bf m\-\_\-label}
+\begin{DoxyCompactList}\small\item\em The text label for the intro. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The final project wizard page that asks for confirmation to generate project. 
+
+Definition at line 365 of file New\-Project\-Wizard.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Conclusion\-Page@{Conclusion\-Page}!Conclusion\-Page@{Conclusion\-Page}}
+\index{Conclusion\-Page@{Conclusion\-Page}!ConclusionPage@{Conclusion\-Page}}
+\subsubsection[{Conclusion\-Page}]{\setlength{\rightskip}{0pt plus 5cm}Conclusion\-Page\-::\-Conclusion\-Page (
+\begin{DoxyParamCaption}
+\item[{Q\-Widget $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}\label{class_conclusion_page_a3deb5ec7cf7d56010dfa34db2108931e}
+
+
+Constructor, passing a child of parent. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em parent} & The parent for which this will be the child of. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 452 of file New\-Project\-Wizard.\-cpp.
+
+
+
+References m\-\_\-label.
+
+
+\begin{DoxyCode}
+453   : QWizardPage(parent)
+454 \{
+455   setTitle(tr(\textcolor{stringliteral}{"Conclusion"}));
+456 
+457   m_label = \textcolor{keyword}{new} QLabel;
+458   m_label->setWordWrap(\textcolor{keyword}{true});
+459 
+460   QVBoxLayout *layout = \textcolor{keyword}{new} QVBoxLayout;
+461   layout->addWidget(m_label);
+462   setLayout(layout);
+463 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{Conclusion\-Page@{Conclusion\-Page}!initialize\-Page@{initialize\-Page}}
+\index{initialize\-Page@{initialize\-Page}!ConclusionPage@{Conclusion\-Page}}
+\subsubsection[{initialize\-Page}]{\setlength{\rightskip}{0pt plus 5cm}void Conclusion\-Page\-::initialize\-Page (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\label{class_conclusion_page_a9124cc661e8367f85cfab5678d94abe4}
+
+
+Used to prepare the Wizard page before it is shown and set default values. 
+
+
+
+Definition at line 466 of file New\-Project\-Wizard.\-cpp.
+
+
+
+References m\-\_\-label.
+
+
+\begin{DoxyCode}
+467 \{
+468   QString finishText = wizard()->buttonText(QWizard::FinishButton);
+469   finishText.remove(\textcolor{charliteral}{'&'});
+470   m_label->setText(tr(\textcolor{stringliteral}{"Click %1 to generate the project."})
+471                    .arg(finishText));
+472 \}
+\end{DoxyCode}
+
+
+\subsection{Member Data Documentation}
+\index{Conclusion\-Page@{Conclusion\-Page}!m\-\_\-label@{m\-\_\-label}}
+\index{m\-\_\-label@{m\-\_\-label}!ConclusionPage@{Conclusion\-Page}}
+\subsubsection[{m\-\_\-label}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Label$\ast$ Conclusion\-Page\-::m\-\_\-label\hspace{0.3cm}{\ttfamily [private]}}\label{class_conclusion_page_a620202ebfe08196b9f0b803562c81447}
+
+
+The text label for the intro. 
+
+
+
+Definition at line 390 of file New\-Project\-Wizard.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+{\bf New\-Project\-Wizard.\-h}\item 
+{\bf New\-Project\-Wizard.\-cpp}\end{DoxyCompactItemize}

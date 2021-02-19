@@ -1,57 +1,179 @@
-﻿#include "Cebitor.h"
-
-#include <iostream>
+﻿#include <iostream>
 #include <QAction>
 #include <QSettings>
 #include <QStringList>
+#include <QTextStream>
+#include <QFile>
+
 #include <Qsci/qscicommand.h>
 #include <Qsci/qscicommandset.h>
 
-//----------------------------------------------------------------------------------------------------------------------
+#include "Cebitor.h"
+#include "CebErrors.h"
+
+//------------------------------------------------------------------------------
 /// @file Cebitor.cpp
 /// @brief implementation of Cebitor class
-//----------------------------------------------------------------------------------------------------------------------
+/// @author Phil Rouse
+/// @version 1.0
+/// @date 07/05/2016
+//------------------------------------------------------------------------------
 
-//----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 Cebitor::Cebitor(QWidget *_parent) : QsciScintilla(_parent)
 {
+  setMinimumHeight(300);
+
   // Create and assign the lexer
   QsciLexer* lex = new QsciLexerGLSL(this);
-  this->setLexer(lex);
+  setLexer(lex);
 
   // Set the margin defaults
-  this->setMarginType(1,QsciScintilla::MarginType::NumberMargin);
-  this->setMarginWidth(1," 012");
-  this->setMarginsForegroundColor(QColor(128, 128, 128));
+  setMarginType(0,MarginType::NumberMargin);
+  setMarginWidth(0," 012");
+  setMarginsForegroundColor(QColor(128, 128, 128));
+  // Set the symbol margin defaults
+  setMarginType(1,MarginType::SymbolMargin);
+  setMarginWidth(1,12);
+  setMarginMarkerMask(1,
+                      1 << MarkerType::ERROR |
+                      1 << MarkerType::WARNING
+                      );
+
   // Set the caret defaults
-  this->setCaretForegroundColor(QColor(247, 247, 241));
-  this->setCaretWidth(2);
+  setCaretForegroundColor(QColor(247, 247, 241));
+  setCaretWidth(2);
   // Set the brace defaults
-  this->setBraceMatching(QsciScintilla::BraceMatch::SloppyBraceMatch);
-  this->setMatchedBraceBackgroundColor(QColor(62, 61, 50));
-  this->setUnmatchedBraceBackgroundColor(QColor(249, 38, 114));
+  //----------------------------------------------------------------------------
+  /// @bug brace matching matches "<" and ">" characters
+  //----------------------------------------------------------------------------
+  setBraceMatching(BraceMatch::SloppyBraceMatch);
+  setMatchedBraceBackgroundColor(QColor(62, 61, 50));
+  setUnmatchedBraceBackgroundColor(QColor(249, 38, 114));
+
+  // Set auto-indent
+  setAutoIndent(true);
+  setIndentationsUseTabs(false);
+  setIndentationWidth(2);
 
   // Enable scroll width tracking and set the scroll width to a low number
   // Scintilla doesn't track line length, so if we wanted automated scrollbar
   // to appear we would need to implement a line length checking
-  this->SendScintilla(QsciScintillaBase::SCI_SETSCROLLWIDTHTRACKING, 1);
-  this->SendScintilla(QsciScintillaBase::SCI_SETSCROLLWIDTH, 5);
+  SendScintilla(QsciScintillaBase::SCI_SETSCROLLWIDTHTRACKING, 1);
+  SendScintilla(QsciScintillaBase::SCI_SETSCROLLWIDTH, 5);
+
+  // set up line markers
+  QIcon errorIcon = QIcon::fromTheme(QString("dialog-error"));
+  QIcon warnIcon = QIcon::fromTheme(QString("dialog-warning"));
+
+  markerDefine(errorIcon.pixmap(10,10), MarkerType::ERROR);
+  markerDefine(warnIcon.pixmap(10,10), MarkerType::WARNING);
 
   // unbind CTRL-/ keyboard shortcut
-  this->standardCommands()->boundTo(Qt::Key_Slash | Qt::CTRL)->setKey(0);
+  standardCommands()->boundTo(Qt::Key_Slash | Qt::CTRL)->setKey(0);
 
   // rebind CTRL-/ to comment function
   QAction *commentAction = new QAction(this);
   commentAction->setShortcut(Qt::Key_Slash | Qt::CTRL);
 
   connect(commentAction, SIGNAL(triggered()), this, SLOT(comment()));
-  this->addAction(commentAction);
+  addAction(commentAction);
 
-  // connect signals and slots
+  // bind CTRL-F to search function
+  QAction *searchAction = new QAction(this);
+  searchAction->setShortcut(Qt::Key_F | Qt::CTRL);
+
+  connect(searchAction, SIGNAL(triggered()), this, SLOT(toggleSearchBox()));
+  addAction(searchAction);
+
+  // define search indicator
+  m_searchIndicator = indicatorDefine(IndicatorStyle::PlainIndicator, -1);
+  setIndicatorDrawUnder(true, m_searchIndicator);
+  setIndicatorForegroundColor(QColor(142,143,137,0));
+  setIndicatorOutlineColor(QColor(142,143,137,255));
+
+  // connect char added signals and slots
   connect(this, SIGNAL(SCN_CHARADDED(int)), this, SLOT(charAdded(int)));
+
+  // work-around since using built-in focusInEvent causes caret to be invisible
+  connect(this, SIGNAL(SCN_FOCUSIN()), this, SLOT(resetHighlightColour()));
 }
 
-//----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+
+void Cebitor::clearErrors()
+{
+  markerDeleteAll(MarkerType::ERROR);
+  markerDeleteAll(MarkerType::WARNING);
+}
+
+void Cebitor::searchNext()
+{
+  QString searchTerm = m_searchLineEdit->text();
+  bool found;
+  found = findFirst(searchTerm, false, false, false, true);
+  if(found)
+  {
+    setSelectionBackgroundColor(QColor(230, 219, 116));
+    setSelectionForegroundColor(QColor(39,40,34));
+  }
+}
+
+//------------------------------------------------------------------------------
+
+void Cebitor::searchPrev()
+{
+  QString searchTerm = m_searchLineEdit->text();
+  bool found;
+  found = findFirst(searchTerm, false, false, false, true, false);
+  if(found)
+  {
+    findNext();
+    setSelectionBackgroundColor(QColor(230, 219, 116));
+    setSelectionForegroundColor(QColor(39,40,34));
+  }
+  findNext();
+}
+
+//------------------------------------------------------------------------------
+
+void Cebitor::highlightAllSearch(const QString &_text)
+{
+  highlightAllSearch();
+}
+
+//------------------------------------------------------------------------------
+void Cebitor::highlightAllSearch()
+{
+  clearIndicatorRange(0,0,lines(),text(lines()).length(),m_searchIndicator);
+  int line;
+  int indexFrom;
+  int indexTo;
+  QString searchTerm = m_searchLineEdit->text();
+  if(searchTerm.length()==0)
+  {
+    return;
+  }
+  int current;
+  current = text().indexOf(
+        searchTerm,
+        0,
+        Qt::CaseSensitivity::CaseInsensitive
+        );
+  while(current!= -1)
+  {
+    lineIndexFromPosition(current,&line,&indexFrom);
+    indexTo = indexFrom + searchTerm.length();
+    fillIndicatorRange(line,indexFrom,line,indexTo,m_searchIndicator);
+    current = text().indexOf(searchTerm,
+                             current+1,
+                             Qt::CaseSensitivity::CaseInsensitive
+                             );
+  }
+}
+
+//------------------------------------------------------------------------------
+
 bool Cebitor::autoClose(const QString _close)
 {
   int cursorIndex;
@@ -60,13 +182,11 @@ bool Cebitor::autoClose(const QString _close)
   getCursorPosition(&cursorLine, &cursorIndex);
   length = lineLength(cursorLine);
 
-  // insert closing character if cursor is at EOL or the next character is a space
-  if(cursorIndex == length-1)
-  {
-    insert(_close);
-    return true;
-  }
-  else if(text(cursorLine).at(cursorIndex).toLatin1() == ' ')
+  // special case for if cursor is on last line since in has no EOL
+  if (cursorLine == lines()-1) { length++; }
+  // insert closing character if cursor is at EOL or the next character is space
+  if(cursorIndex == length-1 ||
+     text(cursorLine).at(cursorIndex).toLatin1() == ' ')
   {
     insert(_close);
     return true;
@@ -74,15 +194,21 @@ bool Cebitor::autoClose(const QString _close)
   return false;
 }
 
-//----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+
 bool Cebitor::closing(const QString _close)
 {
   int cursorIndex;
   int cursorLine;
-  int length;
   getCursorPosition(&cursorLine, &cursorIndex);
-  length = lineLength(cursorLine);
 
+  int length = lineLength(cursorLine);
+
+  // special case for if cursor is last position in file
+  if(cursorLine == lines()-1 && length == cursorIndex)
+  {
+    return false;
+  }
   // remove duplicate if next character is the same as _close
   if(text(cursorLine).at(cursorIndex) == _close.at(0))
   {
@@ -90,24 +216,37 @@ bool Cebitor::closing(const QString _close)
     removeSelectedText();
     return true;
   }
+  // auto unindent "}"
+  if( _close == QString('}') && cursorIndex == indentation(cursorLine)+1 )
+  {
+    int indentSize;
+    indentSize = indentation(cursorLine)-indentationWidth();
+    if( indentSize < 0 )
+    {
+      indentSize = 0;
+    }
+    setIndentation(cursorLine, indentSize);
+  }
   return false;
 }
 
-//----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+
 void Cebitor::comment()
 {
+  beginUndoAction();
   int lineFrom;
   int indexFrom;
   int lineTo;
   int indexTo;
   // get selected lines or current line if no text is selected
-  if(this->hasSelectedText())
+  if(hasSelectedText())
   {
-    this->getSelection(&lineFrom, &indexFrom, &lineTo, &indexTo);
+    getSelection(&lineFrom, &indexFrom, &lineTo, &indexTo);
   }
   else
   {
-    this->getCursorPosition(&lineFrom, &indexFrom);
+    getCursorPosition(&lineFrom, &indexFrom);
     lineTo = lineFrom;
     indexTo = indexFrom;
   }
@@ -116,7 +255,7 @@ void Cebitor::comment()
   bool alreadyCommented = true;
   for(int i=lineFrom; i<=lineTo; i++)
   {
-    QString lineText = this->text(i);
+    QString lineText = text(i);
     if(!lineText.startsWith("//"))
     {
       alreadyCommented = false;
@@ -128,8 +267,8 @@ void Cebitor::comment()
   {
     for(int i=lineFrom; i<=lineTo; i++)
     {
-      this->setSelection(i,0,i,2);
-      this->removeSelectedText();
+      setSelection(i,0,i,2);
+      removeSelectedText();
     }
     //offset original selection for reselecting text
     indexTo -= 2;
@@ -144,7 +283,7 @@ void Cebitor::comment()
   {
     for(int i=lineFrom; i<=lineTo; i++)
     {
-      this->insertAt(QString("//"),i,0);
+      insertAt(QString("//"),i,0);
     }
     //offset original selection for reselecting text
     indexTo += 2;
@@ -155,10 +294,73 @@ void Cebitor::comment()
   }
 
   // reselect to match original selection
-  this->setSelection(lineFrom,indexFrom,lineTo,indexTo);
+  setSelection(lineFrom,indexFrom,lineTo,indexTo);
+  endUndoAction();
 }
 
-//----------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+
+void Cebitor::toggleSearchBox()
+{
+  bool searchFocus = m_searchLineEdit->hasFocus();
+  if(!searchFocus)
+  {
+    connect(this,SIGNAL(textChanged()),this,SLOT(highlightAllSearch()));
+    m_searchWidget->show();
+    m_searchLineEdit->setFocus();
+  }
+  else
+  {
+    disconnect(this,SIGNAL(textChanged()),this,SLOT(highlightAllSearch()));
+    m_searchWidget->hide();
+    setFocus();
+    clearIndicatorRange(0,0,lines(),text(lines()).length(),m_searchIndicator);
+  }
+}
+
+//------------------------------------------------------------------------------
+
+void Cebitor::braceIndent()
+{
+  int cursorIndex;
+  int cursorLine;
+  QString currentLine;
+  QString previousLine;
+  getCursorPosition(&cursorLine, &cursorIndex);
+  currentLine = text(cursorLine);
+  previousLine = text(cursorLine-1);
+
+  // indent if previous line ends with "{"
+  if(previousLine.endsWith("{\n"))
+  {
+    int indentSize;
+    indentSize = indentation(cursorLine-1);
+    setIndentation(cursorLine, indentSize+indentationWidth());
+    cursorIndex = cursorIndex+indentationWidth();
+    setCursorPosition(cursorLine, cursorIndex);
+    currentLine = text(cursorLine);
+    // extra newline to separate "{}"
+    if(currentLine.indexOf("}") == cursorIndex)
+    {
+      insert(QString("\n"));
+    }
+  }
+
+  // unindent if "}" after cursor
+  else if(currentLine.indexOf("}") == cursorIndex)
+  {
+    int indentSize;
+    indentSize = indentation(cursorLine)-indentationWidth();
+    if( indentSize < 0 )
+    {
+      indentSize = 0;
+    }
+    setIndentation(cursorLine, indentSize);
+  }
+}
+
+//------------------------------------------------------------------------------
+
 void Cebitor::charAdded(int _c)
 {
   switch(_c)
@@ -180,5 +382,16 @@ void Cebitor::charAdded(int _c)
       }
       break;
     }
+
+    // auto indent for braces
+    case (int) '\n': { braceIndent(); break; }
   }
+}
+
+//------------------------------------------------------------------------------
+
+void Cebitor::resetHighlightColour()
+{
+  setSelectionBackgroundColor(QColor(61,61,52));
+  resetSelectionForegroundColor();
 }

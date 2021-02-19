@@ -1,0 +1,4 @@
+<map id="MainWindow::newProjectWiz" name="MainWindow::newProjectWiz">
+<area shape="rect" id="node2" href="$class_main_window.html#aed8d4c16aaa87ae02a2de2edd5fc91c7" title="Called when New button is triggered in File Menu bar. " alt="" coords="241,5,423,46"/>
+<area shape="rect" id="node3" href="$class_startup_dialog.html#ac983df992c57b71b8f9207c357601a4e" title="Runs whenever NewProject button is clicked. " alt="" coords="263,70,401,111"/>
+</map>

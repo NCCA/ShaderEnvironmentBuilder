@@ -1,0 +1,3 @@
+<map id="MainWindow::on_m_actionLoad_Tex_triggered" name="MainWindow::on_m_actionLoad_Tex_triggered">
+<area shape="rect" id="node2" href="$class_n_g_l_scene.html#a4c14b592cb935dbc524170d3e9fad5a9" title="loads in a texture map and directly applies it to the OBJ. (Requires UVs) " alt="" coords="256,12,451,39"/>
+</map>

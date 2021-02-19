@@ -1,0 +1,10 @@
+<map id="Project::save" name="Project::save">
+<area shape="rect" id="node2" href="$class_main_window.html#ae388e93dca3e29f2036901982af7e7ac" title="Called when Save Project button is triggered in File Menu bar. " alt="" coords="149,67,336,109"/>
+<area shape="rect" id="node8" href="$class_project.html#a4573371ef661570f74282d62193a01e2" title="method for saving the current project as a new project " alt="" coords="187,133,298,160"/>
+<area shape="rect" id="node3" href="$class_main_window.html#aff24d2c1c190cbeb892e0f74879091f5" title="Check if you want to close or open new file (loose changes) " alt="" coords="385,75,583,101"/>
+<area shape="rect" id="node4" href="$class_main_window.html#a4010b4118e9d4f0deffa97f7072e5018" title="Creates a new project wizard. " alt="" coords="633,45,820,72"/>
+<area shape="rect" id="node7" href="$class_main_window.html#a48ed0a16f674e38e0e2a24274852a9af" title="Called when Open button is triggered in File Menu bar. " alt="" coords="633,97,821,138"/>
+<area shape="rect" id="node5" href="$class_main_window.html#aed8d4c16aaa87ae02a2de2edd5fc91c7" title="Called when New button is triggered in File Menu bar. " alt="" coords="870,5,1053,46"/>
+<area shape="rect" id="node6" href="$class_startup_dialog.html#ac983df992c57b71b8f9207c357601a4e" title="Runs whenever NewProject button is clicked. " alt="" coords="892,70,1031,111"/>
+<area shape="rect" id="node9" href="$class_main_window.html#ac2e49056c9ede510e4903848dfcaa2a1" title="Called when Startup Project as button is triggered in File Menu bar. " alt="" coords="391,126,577,167"/>
+</map>

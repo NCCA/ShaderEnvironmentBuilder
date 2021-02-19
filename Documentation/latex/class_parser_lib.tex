@@ -1,0 +1,986 @@
+\section{Parser\-Lib Class Reference}
+\label{class_parser_lib}\index{Parser\-Lib@{Parser\-Lib}}
+
+
+Parsing library used to manage all the uniform data.  
+
+
+
+
+{\ttfamily \#include $<$Parser\-Lib.\-h$>$}
+
+
+
+Collaboration diagram for Parser\-Lib\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=178pt]{class_parser_lib__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\bf Parser\-Lib} ({\bf Shader\-Manager} $\ast$\-\_\-manager)
+\begin{DoxyCompactList}\small\item\em ctor for our \doxyref{Parser\-Lib}{p.}{class_parser_lib} \end{DoxyCompactList}\item 
+{\bf $\sim$\-Parser\-Lib} ()
+\begin{DoxyCompactList}\small\item\em dtor for our \doxyref{Parser\-Lib}{p.}{class_parser_lib} \end{DoxyCompactList}\item 
+void {\bf initialize\-Uniform\-Data} ()
+\begin{DoxyCompactList}\small\item\em finds number of active uniforms and stores the data in blocks called uniform\-Data. This then stores it in a list m\-\_\-uniform\-List \end{DoxyCompactList}\item 
+void {\bf assign\-Uniform\-Values} ()
+\begin{DoxyCompactList}\small\item\em sets default values for the active uniforms \end{DoxyCompactList}\item 
+void {\bf assign\-All\-Data} ()
+\begin{DoxyCompactList}\small\item\em assigns all appropriate values, locations, data types, names \end{DoxyCompactList}\item 
+void {\bf send\-Uniforms\-To\-Shader} (ngl\-::\-Shader\-Lib $\ast$\-\_\-shader)
+\begin{DoxyCompactList}\small\item\em takes the list of uniforms and updates them onto the shader, depending on the data type. \end{DoxyCompactList}\item 
+void {\bf print\-Uniforms} ()
+\begin{DoxyCompactList}\small\item\em prints the uniform location, data type and names \end{DoxyCompactList}\item 
+void {\bf uniform\-Data\-Types} ()
+\begin{DoxyCompactList}\small\item\em used to translate the data type name from a number into a name. e.\-g. 35676 -\/$>$ mat4 The following section was originally written by Jon Macey\-:-\/ Jon Macey. N\-C\-C\-A library N\-G\-L\-::\-Shader\-Program\-::print\-Registered\-Uniforms [online]. [Accessed 01/10/16]. Available from\-: {\tt https\-://nccastaff.\-bournemouth.\-ac.\-uk/jmacey/\-Graphics\-Lib/index.\-html}.  Adam Ting \end{DoxyCompactList}\item 
+bool {\bf export\-Uniforms} (Q\-String \-\_\-dir)
+\begin{DoxyCompactList}\small\item\em exports the uniform\-Data into a .txt file \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+uint {\bf m\-\_\-num}
+\begin{DoxyCompactList}\small\item\em used to store the number of active uniforms \end{DoxyCompactList}\item 
+std\-::unordered\-\_\-map\\*
+$<$ std\-::string, {\bf Uniform\-Data} $\ast$ $>$ {\bf m\-\_\-registered\-Uniforms}
+\begin{DoxyCompactList}\small\item\em used to store a list of pre-\/registered Uniform data types. \end{DoxyCompactList}\item 
+std\-::vector$<$ {\bf Uniform\-Data} $\ast$ $>$ {\bf m\-\_\-uniform\-List}
+\begin{DoxyCompactList}\small\item\em used to store a list of uniform\-Data \end{DoxyCompactList}\item 
+{\bf Shader\-Manager} $\ast$ {\bf m\-\_\-shader\-Manager}
+\begin{DoxyCompactList}\small\item\em stores the shader manager so that the correct shader id can be queried for its uniforms \end{DoxyCompactList}\item 
+std\-::vector$<$ int $>$ {\bf m\-\_\-ignore\-Uniform\-I\-Ds}
+\begin{DoxyCompactList}\small\item\em List of uniform I\-Ds that are incompatible with the button uniforms we have created. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Parsing library used to manage all the uniform data. 
+
+Definition at line 23 of file Parser\-Lib.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Parser\-Lib@{Parser\-Lib}!Parser\-Lib@{Parser\-Lib}}
+\index{Parser\-Lib@{Parser\-Lib}!ParserLib@{Parser\-Lib}}
+\subsubsection[{Parser\-Lib}]{\setlength{\rightskip}{0pt plus 5cm}Parser\-Lib\-::\-Parser\-Lib (
+\begin{DoxyParamCaption}
+\item[{{\bf Shader\-Manager} $\ast$}]{\-\_\-manager}
+\end{DoxyParamCaption}
+)}\label{class_parser_lib_a1c58bc58ca370e9ecc0f728567a72877}
+
+
+ctor for our \doxyref{Parser\-Lib}{p.}{class_parser_lib} 
+
+
+
+Definition at line 10 of file Parser\-Lib.\-cpp.
+
+
+
+References m\-\_\-num, m\-\_\-shader\-Manager, and m\-\_\-uniform\-List.
+
+
+\begin{DoxyCode}
+11 \{
+12   m_num=0;
+13   m_uniformList.resize(0);
+14   m_shaderManager = \_manager;
+15 \}
+\end{DoxyCode}
+\index{Parser\-Lib@{Parser\-Lib}!$\sim$\-Parser\-Lib@{$\sim$\-Parser\-Lib}}
+\index{$\sim$\-Parser\-Lib@{$\sim$\-Parser\-Lib}!ParserLib@{Parser\-Lib}}
+\subsubsection[{$\sim$\-Parser\-Lib}]{\setlength{\rightskip}{0pt plus 5cm}Parser\-Lib\-::$\sim$\-Parser\-Lib (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_parser_lib_a6f2b031110fe4ad0d0c65d95b9796a5a}
+
+
+dtor for our \doxyref{Parser\-Lib}{p.}{class_parser_lib} 
+
+
+
+Definition at line 18 of file Parser\-Lib.\-cpp.
+
+
+\begin{DoxyCode}
+19 \{
+20   std::cerr<<\textcolor{stringliteral}{"ParserLib destroyed"}<<std::endl;
+21 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{Parser\-Lib@{Parser\-Lib}!assign\-All\-Data@{assign\-All\-Data}}
+\index{assign\-All\-Data@{assign\-All\-Data}!ParserLib@{Parser\-Lib}}
+\subsubsection[{assign\-All\-Data}]{\setlength{\rightskip}{0pt plus 5cm}void Parser\-Lib\-::assign\-All\-Data (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_parser_lib_a0327fd1d07a49f918cd5ff1ed54d74a2}
+
+
+assigns all appropriate values, locations, data types, names 
+
+
+
+Definition at line 142 of file Parser\-Lib.\-cpp.
+
+
+
+References assign\-Uniform\-Values(), and initialize\-Uniform\-Data().
+
+
+\begin{DoxyCode}
+143 \{
+144   initializeUniformData();
+145   assignUniformValues();
+146 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_parser_lib_a0327fd1d07a49f918cd5ff1ed54d74a2_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_parser_lib_a0327fd1d07a49f918cd5ff1ed54d74a2_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Parser\-Lib@{Parser\-Lib}!assign\-Uniform\-Values@{assign\-Uniform\-Values}}
+\index{assign\-Uniform\-Values@{assign\-Uniform\-Values}!ParserLib@{Parser\-Lib}}
+\subsubsection[{assign\-Uniform\-Values}]{\setlength{\rightskip}{0pt plus 5cm}void Parser\-Lib\-::assign\-Uniform\-Values (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_parser_lib_ae5e796d35c2b62f2099ea0a9b4cde4cc}
+
+
+sets default values for the active uniforms 
+
+
+
+Definition at line 455 of file Parser\-Lib.\-cpp.
+
+
+
+References m\-\_\-ignore\-Uniform\-I\-Ds, m\-\_\-num, and m\-\_\-uniform\-List.
+
+
+\begin{DoxyCode}
+456 \{
+457   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
+458 
+459   \textcolor{comment}{// sets default values depending on it's data type}
+460   \textcolor{keywordflow}{for} (uint i=0;i<m_num;i++)
+461   \{
+462     \textcolor{keywordflow}{if} (std::find(m_ignoreUniformIDs.begin(), m_ignoreUniformIDs.end(), i) == 
+      m_ignoreUniformIDs.end() )
+463     \{
+464       \textcolor{keywordflow}{switch}(m_uniformList[i]->getTypeEnum())
+465       \{
+466         \textcolor{keywordflow}{case} GL\_BOOL:
+467         \{
+468           m_uniformList[i]->setBool(0);
+469           \textcolor{keywordflow}{break};
+470         \}
+471         \textcolor{keywordflow}{case} GL\_FLOAT:
+472         \{
+473           m_uniformList[i]->setFloat(0.5);
+474           \textcolor{keywordflow}{break};
+475         \}
+476         \textcolor{keywordflow}{case} GL\_INT:
+477         \{
+478           m_uniformList[i]->setInt(0);
+479           \textcolor{keywordflow}{break};
+480         \}
+481         \textcolor{keywordflow}{case} GL\_FLOAT\_VEC3:
+482         \{
+483           m_uniformList[i]->setVec3(0.5);
+484           \textcolor{keywordflow}{break};
+485         \}
+486         \textcolor{keywordflow}{case} GL\_FLOAT\_VEC4:
+487         \{
+488           m_uniformList[i]->setVec4(0.5);
+489           \textcolor{keywordflow}{break};
+490         \}
+491         \textcolor{keywordflow}{case} GL\_FLOAT\_MAT3:
+492         \{
+493           ngl::Mat3 temp;
+494           temp= shader->getUniformBlockIndex(m_uniformList[i]->getName());
+495           temp.m\_00=1;
+496           temp.m\_11=1;
+497           temp.m\_22=1;
+498           m_uniformList[i]->setMat3(temp);
+499           \textcolor{keywordflow}{break};
+500         \}
+501         \textcolor{keywordflow}{case} GL\_FLOAT\_MAT4:
+502         \{
+503           ngl::Mat4 temp;
+504           temp= shader->getUniformBlockIndex(m_uniformList[i]->getName());
+505           temp.m\_00=1;
+506           temp.m\_11=1;
+507           temp.m\_22=1;
+508           temp.m\_33=1;
+509           m_uniformList[i]->setMat4(temp);
+510           \textcolor{keywordflow}{break};
+511         \}
+512         \textcolor{keywordflow}{default}:
+513         \{
+514           std::cout<<\textcolor{stringliteral}{"unrecognised data type name"}<<std::endl;
+515           \textcolor{keywordflow}{break};
+516         \}
+517       \}
+518     \}
+519   \}
+520 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_parser_lib_ae5e796d35c2b62f2099ea0a9b4cde4cc_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Parser\-Lib@{Parser\-Lib}!export\-Uniforms@{export\-Uniforms}}
+\index{export\-Uniforms@{export\-Uniforms}!ParserLib@{Parser\-Lib}}
+\subsubsection[{export\-Uniforms}]{\setlength{\rightskip}{0pt plus 5cm}bool Parser\-Lib\-::export\-Uniforms (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{\-\_\-dir}
+\end{DoxyParamCaption}
+)}\label{class_parser_lib_a05d190f3e907d1bd437a800a8ca4fa70}
+
+
+exports the uniform\-Data into a .txt file 
+
+end of Citation If it can't be opened 
+
+Definition at line 359 of file Parser\-Lib.\-cpp.
+
+
+
+References m\-\_\-num, and m\-\_\-uniform\-List.
+
+
+\begin{DoxyCode}
+360 \{
+361   std::ofstream fileOut;
+362   fileOut.open(\_dir.toStdString().c\_str());
+363   \textcolor{keywordflow}{if}(!fileOut.is\_open())    
+364   \{
+365     \textcolor{keywordflow}{throw} CEBError::fileError(\_dir);
+366     \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+367   \}
+368   \textcolor{keywordflow}{for}(uint i=0;i<m_num;i++)
+369   \{
+370     \textcolor{comment}{// Input Name, Location and Type}
+371     fileOut<<m_uniformList[i]->getName()<<\textcolor{stringliteral}{"\(\backslash\)n"};
+372     fileOut<<m_uniformList[i]->getLocation()<<\textcolor{stringliteral}{"\(\backslash\)n"};
+373     fileOut<<m_uniformList[i]->getTypeName()<<\textcolor{stringliteral}{"\(\backslash\)n"};
+374     \textcolor{keywordflow}{switch}(m_uniformList[i]->getTypeEnum())
+375     \{
+376       \textcolor{keywordflow}{case} GL\_BOOL:
+377       \{
+378         fileOut<<m_uniformList[i]->getBool()<<\textcolor{stringliteral}{"\(\backslash\)n"};
+379         \textcolor{keywordflow}{break};
+380       \}
+381       \textcolor{keywordflow}{case} GL\_FLOAT:
+382       \{
+383         fileOut<<m_uniformList[i]->getFloat()<<\textcolor{stringliteral}{"\(\backslash\)n"};
+384         \textcolor{keywordflow}{break};
+385       \}
+386       \textcolor{keywordflow}{case} GL\_INT:
+387       \{
+388         fileOut<<m_uniformList[i]->getInt()<<\textcolor{stringliteral}{"\(\backslash\)n"};
+389         \textcolor{keywordflow}{break};
+390       \}
+391       \textcolor{keywordflow}{case} GL\_FLOAT\_VEC3:
+392       \{
+393         fileOut<<m_uniformList[i]->getVec3().m\_x<<\textcolor{stringliteral}{" "};
+394         fileOut<<m_uniformList[i]->getVec3().m\_y<<\textcolor{stringliteral}{" "};
+395         fileOut<<m_uniformList[i]->getVec3().m\_z<<\textcolor{stringliteral}{"\(\backslash\)n"};
+396         \textcolor{keywordflow}{break};
+397       \}
+398       \textcolor{keywordflow}{case} GL\_FLOAT\_VEC4:
+399       \{
+400         fileOut<<m_uniformList[i]->getVec4().m\_x<<\textcolor{stringliteral}{" "};
+401         fileOut<<m_uniformList[i]->getVec4().m\_y<<\textcolor{stringliteral}{" "};
+402         fileOut<<m_uniformList[i]->getVec4().m\_z<<\textcolor{stringliteral}{" "};
+403         fileOut<<m_uniformList[i]->getVec4().m\_w<<\textcolor{stringliteral}{"\(\backslash\)n"};
+404         \textcolor{keywordflow}{break};
+405       \}
+406       \textcolor{keywordflow}{case} GL\_FLOAT\_MAT3:
+407       \{
+408 
+409         fileOut<<m_uniformList[i]->getMat3().m\_00<<\textcolor{stringliteral}{" "};
+410         fileOut<<m_uniformList[i]->getMat3().m\_01<<\textcolor{stringliteral}{" "};
+411         fileOut<<m_uniformList[i]->getMat3().m\_02<<\textcolor{stringliteral}{" "};
+412 
+413         fileOut<<m_uniformList[i]->getMat3().m\_10<<\textcolor{stringliteral}{" "};
+414         fileOut<<m_uniformList[i]->getMat3().m\_11<<\textcolor{stringliteral}{" "};
+415         fileOut<<m_uniformList[i]->getMat3().m\_12<<\textcolor{stringliteral}{" "};
+416 
+417         fileOut<<m_uniformList[i]->getMat3().m\_20<<\textcolor{stringliteral}{" "};
+418         fileOut<<m_uniformList[i]->getMat3().m\_21<<\textcolor{stringliteral}{" "};
+419         fileOut<<m_uniformList[i]->getMat3().m\_22<<\textcolor{stringliteral}{"\(\backslash\)n"};
+420 
+421         \textcolor{keywordflow}{break};
+422       \}
+423       \textcolor{keywordflow}{case} GL\_FLOAT\_MAT4:
+424       \{
+425         fileOut<<m_uniformList[i]->getMat4().m\_00<<\textcolor{stringliteral}{" "};
+426         fileOut<<m_uniformList[i]->getMat4().m\_01<<\textcolor{stringliteral}{" "};
+427         fileOut<<m_uniformList[i]->getMat4().m\_02<<\textcolor{stringliteral}{" "};
+428         fileOut<<m_uniformList[i]->getMat4().m\_03<<\textcolor{stringliteral}{" "};
+429 
+430         fileOut<<m_uniformList[i]->getMat4().m\_10<<\textcolor{stringliteral}{" "};
+431         fileOut<<m_uniformList[i]->getMat4().m\_11<<\textcolor{stringliteral}{" "};
+432         fileOut<<m_uniformList[i]->getMat4().m\_12<<\textcolor{stringliteral}{" "};
+433         fileOut<<m_uniformList[i]->getMat4().m\_13<<\textcolor{stringliteral}{" "};
+434 
+435         fileOut<<m_uniformList[i]->getMat4().m\_20<<\textcolor{stringliteral}{" "};
+436         fileOut<<m_uniformList[i]->getMat4().m\_21<<\textcolor{stringliteral}{" "};
+437         fileOut<<m_uniformList[i]->getMat4().m\_22<<\textcolor{stringliteral}{" "};
+438         fileOut<<m_uniformList[i]->getMat4().m\_23<<\textcolor{stringliteral}{"\(\backslash\)n"};
+439 
+440         \textcolor{keywordflow}{break};
+441       \}
+442       \textcolor{keywordflow}{default}:
+443       \{
+444         std::cerr<<\textcolor{stringliteral}{"unrecognised data type name"}<<std::endl;
+445         \textcolor{keywordflow}{break};
+446       \}
+447     \}
+448   \}
+449   \textcolor{comment}{// close file}
+450   fileOut.close();
+451   \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+452 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=334pt]{class_parser_lib_a05d190f3e907d1bd437a800a8ca4fa70_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Parser\-Lib@{Parser\-Lib}!initialize\-Uniform\-Data@{initialize\-Uniform\-Data}}
+\index{initialize\-Uniform\-Data@{initialize\-Uniform\-Data}!ParserLib@{Parser\-Lib}}
+\subsubsection[{initialize\-Uniform\-Data}]{\setlength{\rightskip}{0pt plus 5cm}void Parser\-Lib\-::initialize\-Uniform\-Data (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_parser_lib_ab82a4570c99e2844e6ffe3bd1b3dbcf2}
+
+
+finds number of active uniforms and stores the data in blocks called uniform\-Data. This then stores it in a list m\-\_\-uniform\-List 
+
+
+
+Definition at line 24 of file Parser\-Lib.\-cpp.
+
+
+
+References Shader\-Manager\-::get\-Data(), m\-\_\-ignore\-Uniform\-I\-Ds, Shader\-Program\-Data\-::m\-\_\-name, m\-\_\-num, m\-\_\-registered\-Uniforms, m\-\_\-shader\-Manager, m\-\_\-uniform\-List, and uniform\-Data\-Types().
+
+
+\begin{DoxyCode}
+25 \{
+26   \textcolor{comment}{//create instance of a shader}
+27   ngl::ShaderLib *shaderLib=ngl::ShaderLib::instance();
+28   GLuint \textcolor{keywordtype}{id}=shaderLib->getProgramID(m_shaderManager->getData().m_name);
+29 
+30   \textcolor{comment}{// extract the number of uniforms active and update class data.}
+31   GLint nUniforms;
+32   glGetProgramInterfaceiv(\textcolor{keywordtype}{id}, GL\_UNIFORM, GL\_ACTIVE\_RESOURCES, &nUniforms);
+33   m_num=nUniforms;
+34   m_uniformList.resize(m_num);
+35   m_registeredUniforms.clear();
+36 
+37   m_ignoreUniformIDs.resize(0);
+38 
+39   \textcolor{comment}{// declare some temp variables}
+40   \textcolor{keywordtype}{char} uniformName[256];
+41   GLsizei length;
+42   GLint size;
+43   GLenum type;
+44 
+45   \textcolor{comment}{// Permanently assign data to the class}
+46   \textcolor{keywordflow}{for} (GLint i=0; i<nUniforms; i++)
+47   \{
+48     \textcolor{comment}{// create local variables to store temp location value.}
+49     GLint tempLoc;
+50     \textcolor{comment}{// get the active uniform data...}
+51     glGetActiveUniform(\textcolor{keywordtype}{id},i, 256, &length, &size , &type , uniformName);
+52     \textcolor{comment}{// ... store the temp data}
+53     tempLoc=glGetUniformLocation(\textcolor{keywordtype}{id},uniformName);
+54 
+55     \textcolor{comment}{// set a different data type depending on typeData}
+56     \textcolor{keywordflow}{switch}(type)
+57     \{
+58       \textcolor{keywordflow}{case} GL\_BOOL:
+59       \{
+60         UniformDataBool* newData= \textcolor{keyword}{new} UniformDataBool(uniformName,
+61                                                       tempLoc,
+62                                                       type);
+63         \textcolor{comment}{// Add UniformData to the currently registeredUniforms}
+64         \textcolor{comment}{// m\_registeredUniforms[uniformName]=newData;}
+65         m_uniformList[i-m_ignoreUniformIDs.size()]=newData;
+66         \textcolor{keywordflow}{break};
+67       \}
+68       \textcolor{keywordflow}{case} GL\_FLOAT:
+69       \{
+70         UniformDataFloat* newData= \textcolor{keyword}{new} UniformDataFloat(uniformName,
+71                                                         tempLoc,
+72                                                         type);
+73         \textcolor{comment}{// Add UniformData to the currently registeredUniforms}
+74         \textcolor{comment}{// m\_registeredUniforms[uniformName]=newData;}
+75         m_uniformList[i-m_ignoreUniformIDs.size()]=newData;
+76         \textcolor{keywordflow}{break};
+77       \}
+78       \textcolor{keywordflow}{case} GL\_INT:
+79       \{
+80         UniformDataInt* newData= \textcolor{keyword}{new} UniformDataInt(uniformName,
+81                                                     tempLoc,
+82                                                     type);
+83         \textcolor{comment}{// Add UniformData to the currently registeredUniforms}
+84         \textcolor{comment}{// m\_registeredUniforms[uniformName]=newData;}
+85         m_uniformList[i-m_ignoreUniformIDs.size()]=newData;
+86         \textcolor{keywordflow}{break};
+87       \}
+88       \textcolor{keywordflow}{case} GL\_FLOAT\_VEC3:
+89       \{
+90         UniformDataV3* newData= \textcolor{keyword}{new} UniformDataV3(uniformName,
+91                                                   tempLoc,
+92                                                   type);
+93         \textcolor{comment}{// Add UniformData to the currently registeredUniforms}
+94         \textcolor{comment}{// m\_registeredUniforms[uniformName]=newData;}
+95         m_uniformList[i-m_ignoreUniformIDs.size()]=newData;
+96         \textcolor{keywordflow}{break};
+97       \}
+98       \textcolor{keywordflow}{case} GL\_FLOAT\_VEC4:
+99       \{
+100         UniformDataV4* newData= \textcolor{keyword}{new} UniformDataV4(uniformName,
+101                                                   tempLoc,
+102                                                   type);
+103         \textcolor{comment}{// Add UniformData to the currently registeredUniforms}
+104         \textcolor{comment}{// m\_registeredUniforms[uniformName]=newData;}
+105         m_uniformList[i-m_ignoreUniformIDs.size()]=newData;
+106         \textcolor{keywordflow}{break};
+107       \}
+108       \textcolor{keywordflow}{case} GL\_FLOAT\_MAT3:
+109       \{
+110         UniformDataM3* newData= \textcolor{keyword}{new} UniformDataM3(uniformName,
+111                                                   tempLoc,
+112                                                   type);
+113         \textcolor{comment}{// Add UniformData to the currently registeredUniforms}
+114         \textcolor{comment}{// m\_registeredUniforms[uniformName]=newData;}
+115         m_uniformList[i-m_ignoreUniformIDs.size()]=newData;
+116         \textcolor{keywordflow}{break};
+117       \}
+118       \textcolor{keywordflow}{case} GL\_FLOAT\_MAT4:
+119       \{
+120         UniformDataM4* newData= \textcolor{keyword}{new} UniformDataM4(uniformName,
+121                                                   tempLoc,
+122                                                   type);
+123         \textcolor{comment}{// Add UniformData to the currently registeredUniforms}
+124         \textcolor{comment}{// m\_registeredUniforms[uniformName]=newData;}
+125         m_uniformList[i-m_ignoreUniformIDs.size()]=newData;
+126         \textcolor{keywordflow}{break};
+127       \}
+128       \textcolor{keywordflow}{default}:
+129       \{
+130         std::cout<<\textcolor{stringliteral}{"unrecognised data type name"}<<std::endl;
+131         m_uniformList.erase(m_uniformList.begin()+(i-m_ignoreUniformIDs.size()));
+132         m_ignoreUniformIDs.push\_back(i);
+133 
+134       \}
+135     \}
+136   \}
+137   m_num -= m_ignoreUniformIDs.size();
+138   uniformDataTypes();
+139 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_parser_lib_ab82a4570c99e2844e6ffe3bd1b3dbcf2_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_parser_lib_ab82a4570c99e2844e6ffe3bd1b3dbcf2_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Parser\-Lib@{Parser\-Lib}!print\-Uniforms@{print\-Uniforms}}
+\index{print\-Uniforms@{print\-Uniforms}!ParserLib@{Parser\-Lib}}
+\subsubsection[{print\-Uniforms}]{\setlength{\rightskip}{0pt plus 5cm}void Parser\-Lib\-::print\-Uniforms (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_parser_lib_a750c665cc1da63f37ba45a03c0c9c67a}
+
+
+prints the uniform location, data type and names 
+
+
+
+Definition at line 149 of file Parser\-Lib.\-cpp.
+
+
+
+References m\-\_\-num, and m\-\_\-uniform\-List.
+
+
+\begin{DoxyCode}
+150 \{
+151   std::cout<<\textcolor{stringliteral}{"\(\backslash\)n******\(\backslash\)nUniform Information: Starts\(\backslash\)n"};
+152   std::cout<<\textcolor{stringliteral}{"There are "}<<m_num<<\textcolor{stringliteral}{" Uniforms\(\backslash\)n"};
+153 
+154   \textcolor{comment}{// print information}
+155   \textcolor{keywordflow}{for} (uint i=0; i<m_num; i++)
+156   \{
+157     std::cout << \textcolor{stringliteral}{"Name: "}<<m_uniformList[i]->getName();
+158     std::cout << \textcolor{stringliteral}{";  Location: "}<<m_uniformList[i]->getName()<<\textcolor{stringliteral}{" ("}<<i<<\textcolor{stringliteral}{")"};
+159     std::cout << \textcolor{stringliteral}{";  Type: "}<<m_uniformList[i]->getTypeEnum()<<\textcolor{stringliteral}{"; "};
+160     std::cout <<m_uniformList[i]->getTypeName()<<std::endl;
+161 
+162 
+163     \textcolor{keywordflow}{switch}(m_uniformList[i]->getTypeEnum())
+164     \{
+165       \textcolor{keywordflow}{case} GL\_BOOL:
+166       \{
+167         std::cout<<\textcolor{stringliteral}{"m\_bool: "}<<m_uniformList[i]->getBool()<<std::endl;
+168         \textcolor{keywordflow}{break};
+169       \}
+170       \textcolor{keywordflow}{case} GL\_FLOAT:
+171       \{
+172         std::cout<<\textcolor{stringliteral}{"m\_float: "}<<m_uniformList[i]->getFloat()<<std::endl;
+173         \textcolor{keywordflow}{break};
+174       \}
+175       \textcolor{keywordflow}{case} GL\_INT:
+176       \{
+177         std::cout<<\textcolor{stringliteral}{"m\_int: "}<<m_uniformList[i]->getInt()<<std::endl;
+178         \textcolor{keywordflow}{break};
+179       \}
+180       \textcolor{keywordflow}{case} GL\_FLOAT\_VEC3:
+181       \{
+182         std::cout<<\textcolor{stringliteral}{"m\_vec3:(x) "}<<m_uniformList[i]->getVec3().m\_x<<std::endl;
+183         std::cout<<\textcolor{stringliteral}{"m\_vec3:(y) "}<<m_uniformList[i]->getVec3().m\_y<<std::endl;
+184         std::cout<<\textcolor{stringliteral}{"m\_vec3:(z) "}<<m_uniformList[i]->getVec3().m\_z<<std::endl;
+185         \textcolor{keywordflow}{break};
+186       \}
+187       \textcolor{keywordflow}{case} GL\_FLOAT\_VEC4:
+188       \{
+189         std::cout<<\textcolor{stringliteral}{"m\_vec4:(x) "}<<m_uniformList[i]->getVec4().m\_x<<std::endl;
+190         std::cout<<\textcolor{stringliteral}{"m\_vec4:(y) "}<<m_uniformList[i]->getVec4().m\_y<<std::endl;
+191         std::cout<<\textcolor{stringliteral}{"m\_vec4:(z) "}<<m_uniformList[i]->getVec4().m\_z<<std::endl;
+192         \textcolor{keywordflow}{break};
+193       \}
+194       \textcolor{keywordflow}{case} GL\_FLOAT\_MAT3:
+195       \{
+196         \textcolor{keywordflow}{break};
+197       \}
+198       \textcolor{keywordflow}{case} GL\_FLOAT\_MAT4:
+199       \{
+200         \textcolor{keywordflow}{break};
+201       \}
+202       \textcolor{keywordflow}{default}:
+203       \{
+204         std::cout<<\textcolor{stringliteral}{"unrecognised data type name"}<<std::endl;
+205       \}
+206     \}
+207   \}
+208   std::cout<<\textcolor{stringliteral}{"\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_Uniform Information: Ends//\(\backslash\)n"};
+209 
+210 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_parser_lib_a750c665cc1da63f37ba45a03c0c9c67a_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Parser\-Lib@{Parser\-Lib}!send\-Uniforms\-To\-Shader@{send\-Uniforms\-To\-Shader}}
+\index{send\-Uniforms\-To\-Shader@{send\-Uniforms\-To\-Shader}!ParserLib@{Parser\-Lib}}
+\subsubsection[{send\-Uniforms\-To\-Shader}]{\setlength{\rightskip}{0pt plus 5cm}void Parser\-Lib\-::send\-Uniforms\-To\-Shader (
+\begin{DoxyParamCaption}
+\item[{ngl\-::\-Shader\-Lib $\ast$}]{\-\_\-shader}
+\end{DoxyParamCaption}
+)}\label{class_parser_lib_aaec662d54b5dcf376d0a5b9157637047}
+
+
+takes the list of uniforms and updates them onto the shader, depending on the data type. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-shader} & an instance of the current shader \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 523 of file Parser\-Lib.\-cpp.
+
+
+
+References m\-\_\-num, and m\-\_\-uniform\-List.
+
+
+\begin{DoxyCode}
+524 \{
+525 
+526   \textcolor{comment}{// set shader values depending on it's data type}
+527   \textcolor{keywordflow}{for} (uint i=0;i<m_num;i++)
+528   \{
+529     \textcolor{keywordflow}{switch}(m_uniformList[i]->getTypeEnum())
+530     \{
+531       \textcolor{keywordflow}{case} GL\_BOOL:
+532       \{
+533         \_shader->setShaderParam1i(m_uniformList[i]->getName(),
+534                                   m_uniformList[i]->getBool());
+535         \textcolor{keywordflow}{break};
+536       \}
+537       \textcolor{keywordflow}{case} GL\_FLOAT:
+538       \{
+539         \_shader->setShaderParam1f(m_uniformList[i]->getName(),
+540                                   m_uniformList[i]->getFloat());
+541         \textcolor{keywordflow}{break};
+542       \}
+543       \textcolor{keywordflow}{case} GL\_INT:
+544       \{
+545         \_shader->setShaderParam1i(m_uniformList[i]->getName(),
+546                                   m_uniformList[i]->getInt());
+547         \textcolor{keywordflow}{break};
+548       \}
+549       \textcolor{keywordflow}{case} GL\_FLOAT\_VEC3:
+550       \{
+551         ngl::Vec4 newVec3;
+552         newVec3.m\_x=m_uniformList[i]->getVec3().m\_x;
+553         newVec3.m\_y=m_uniformList[i]->getVec3().m\_y;
+554         newVec3.m\_z=m_uniformList[i]->getVec3().m\_z;
+555         newVec3.m\_w=1;
+556         \_shader->setShaderParamFromVec4(m_uniformList[i]->getName(),
+557                                         newVec3);
+558         \textcolor{keywordflow}{break};
+559       \}
+560       \textcolor{keywordflow}{case} GL\_FLOAT\_VEC4:
+561       \{
+562         \_shader->setShaderParamFromVec4(m_uniformList[i]->getName(),
+563                                         m_uniformList[i]->getVec4());
+564         \textcolor{keywordflow}{break};
+565       \}
+566       \textcolor{keywordflow}{case} GL\_FLOAT\_MAT3:
+567       \{
+568         \_shader->setShaderParamFromMat3(m_uniformList[i]->getName(),
+569                                         m_uniformList[i]->getMat3());
+570         \textcolor{keywordflow}{break};
+571       \}
+572       \textcolor{keywordflow}{case} GL\_FLOAT\_MAT4:
+573       \{
+574         \_shader->setShaderParamFromMat4(m_uniformList[i]->getName(),
+575                                         m_uniformList[i]->getMat4());
+576         \textcolor{keywordflow}{break};
+577       \}
+578       \textcolor{keywordflow}{default}:
+579       \{
+580         std::cerr<<\textcolor{stringliteral}{"unrecognised data type name"}<<std::endl;
+581       \}
+582     \}
+583 
+584   \}
+585 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_parser_lib_aaec662d54b5dcf376d0a5b9157637047_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Parser\-Lib@{Parser\-Lib}!uniform\-Data\-Types@{uniform\-Data\-Types}}
+\index{uniform\-Data\-Types@{uniform\-Data\-Types}!ParserLib@{Parser\-Lib}}
+\subsubsection[{uniform\-Data\-Types}]{\setlength{\rightskip}{0pt plus 5cm}void Parser\-Lib\-::uniform\-Data\-Types (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_parser_lib_a748612fadf3a391ead34306bd3f39f77}
+
+
+used to translate the data type name from a number into a name. e.\-g. 35676 -\/$>$ mat4 The following section was originally written by Jon Macey\-:-\/ Jon Macey. N\-C\-C\-A library N\-G\-L\-::\-Shader\-Program\-::print\-Registered\-Uniforms [online]. [Accessed 01/10/16]. Available from\-: {\tt https\-://nccastaff.\-bournemouth.\-ac.\-uk/jmacey/\-Graphics\-Lib/index.\-html}.  Adam Ting 
+
+Converts G\-Lenums into const chars Modified from \-:-\/ Jon Macey. N\-C\-C\-A library N\-G\-L\-::\-Shader\-Program\-::print\-Registered\-Uniforms [online]. [Accessed 01/10/16]. Available from\-: {\tt https\-://nccastaff.\-bournemouth.\-ac.\-uk/jmacey/\-Graphics\-Lib/index.\-html}. 
+
+Definition at line 219 of file Parser\-Lib.\-cpp.
+
+
+
+References Shader\-Manager\-::get\-Data(), Shader\-Program\-Data\-::m\-\_\-name, m\-\_\-registered\-Uniforms, m\-\_\-shader\-Manager, and m\-\_\-uniform\-List.
+
+
+\begin{DoxyCode}
+220 \{
+221   \textcolor{comment}{// Uses an unordered map to map the GLenum's into const char's}
+222   \textcolor{keyword}{const} \textcolor{keyword}{static} std::unordered\_map<GLenum,const char *> types=
+223   \{
+224     \{GL\_FLOAT,\textcolor{stringliteral}{"float"}\},
+225     \{GL\_FLOAT\_VEC2,\textcolor{stringliteral}{"vec2"}\},
+226     \{GL\_FLOAT\_VEC3,\textcolor{stringliteral}{"vec3"}\},
+227     \{GL\_FLOAT\_VEC4,\textcolor{stringliteral}{"vec4"}\},
+228     \{GL\_DOUBLE,\textcolor{stringliteral}{"double"}\},
+229     \{GL\_DOUBLE\_VEC2,\textcolor{stringliteral}{"dvec2"}\},
+230     \{GL\_DOUBLE\_VEC3,\textcolor{stringliteral}{"dvec3"}\},
+231     \{GL\_DOUBLE\_VEC4,\textcolor{stringliteral}{"dvec4"}\},
+232     \{GL\_INT,\textcolor{stringliteral}{"int"}\},
+233     \{GL\_INT\_VEC2,\textcolor{stringliteral}{"ivec2"}\},
+234     \{GL\_INT\_VEC3,\textcolor{stringliteral}{"ivec3"}\},
+235     \{GL\_INT\_VEC4,\textcolor{stringliteral}{"ivec4"}\},
+236     \{GL\_UNSIGNED\_INT,\textcolor{stringliteral}{"unsigned int"}\},
+237     \{GL\_UNSIGNED\_INT\_VEC2,\textcolor{stringliteral}{"uvec2"}\},
+238     \{GL\_UNSIGNED\_INT\_VEC3,\textcolor{stringliteral}{"uvec3"}\},
+239     \{GL\_UNSIGNED\_INT\_VEC4,\textcolor{stringliteral}{"uvec4"}\},
+240     \{GL\_BOOL,\textcolor{stringliteral}{"bool"}\},
+241     \{GL\_BOOL\_VEC2,\textcolor{stringliteral}{"bvec2"}\},
+242     \{GL\_BOOL\_VEC3,\textcolor{stringliteral}{"bvec3"}\},
+243     \{GL\_BOOL\_VEC4,\textcolor{stringliteral}{"bvec4"}\},
+244     \{GL\_FLOAT\_MAT2,\textcolor{stringliteral}{"mat2"}\},
+245     \{GL\_FLOAT\_MAT3,\textcolor{stringliteral}{"mat3"}\},
+246     \{GL\_FLOAT\_MAT4,\textcolor{stringliteral}{"mat4"}\},
+247     \{GL\_FLOAT\_MAT2x3,\textcolor{stringliteral}{"mat2x3"}\},
+248     \{GL\_FLOAT\_MAT2x4,\textcolor{stringliteral}{"mat2x4"}\},
+249     \{GL\_FLOAT\_MAT3x2,\textcolor{stringliteral}{"mat3x2"}\},
+250     \{GL\_FLOAT\_MAT3x4,\textcolor{stringliteral}{"mat3x4"}\},
+251     \{GL\_FLOAT\_MAT4x2,\textcolor{stringliteral}{"mat4x2"}\},
+252     \{GL\_FLOAT\_MAT4x3,\textcolor{stringliteral}{"mat4x3"}\},
+253     \{GL\_DOUBLE\_MAT2,\textcolor{stringliteral}{"dmat2"}\},
+254     \{GL\_DOUBLE\_MAT3,\textcolor{stringliteral}{"dmat3"}\},
+255     \{GL\_DOUBLE\_MAT4,\textcolor{stringliteral}{"dmat4"}\},
+256     \{GL\_DOUBLE\_MAT2x3,\textcolor{stringliteral}{"dmat2x3"}\},
+257     \{GL\_DOUBLE\_MAT2x4,\textcolor{stringliteral}{"dmat2x4"}\},
+258     \{GL\_DOUBLE\_MAT3x2,\textcolor{stringliteral}{"dmat3x2"}\},
+259     \{GL\_DOUBLE\_MAT3x4,\textcolor{stringliteral}{"dmat3x4"}\},
+260     \{GL\_DOUBLE\_MAT4x2,\textcolor{stringliteral}{"dmat4x2"}\},
+261     \{GL\_DOUBLE\_MAT4x3,\textcolor{stringliteral}{"dmat4x3"}\},
+262     \{GL\_SAMPLER\_1D,\textcolor{stringliteral}{"sampler1D"}\},
+263     \{GL\_SAMPLER\_2D,\textcolor{stringliteral}{"sampler2D"}\},
+264     \{GL\_SAMPLER\_3D,\textcolor{stringliteral}{"sampler3D"}\},
+265     \{GL\_SAMPLER\_CUBE,\textcolor{stringliteral}{"samplerCube"}\},
+266     \{GL\_SAMPLER\_1D\_SHADOW,\textcolor{stringliteral}{"sampler1DShadow"}\},
+267     \{GL\_SAMPLER\_2D\_SHADOW,\textcolor{stringliteral}{"sampler2DShadow"}\},
+268     \{GL\_SAMPLER\_1D\_ARRAY,\textcolor{stringliteral}{"sampler1DArray"}\},
+269     \{GL\_SAMPLER\_2D\_ARRAY,\textcolor{stringliteral}{"sampler2DArray"}\},
+270     \{GL\_SAMPLER\_1D\_ARRAY\_SHADOW,\textcolor{stringliteral}{"sampler1DArrayShadow"}\},
+271     \{GL\_SAMPLER\_2D\_ARRAY\_SHADOW,\textcolor{stringliteral}{"sampler2DArrayShadow"}\},
+272     \{GL\_SAMPLER\_2D\_MULTISAMPLE,\textcolor{stringliteral}{"sampler2DMS"}\},
+273     \{GL\_SAMPLER\_2D\_MULTISAMPLE\_ARRAY,\textcolor{stringliteral}{"sampler2DMSArray"}\},
+274     \{GL\_SAMPLER\_CUBE\_SHADOW,\textcolor{stringliteral}{"samplerCubeShadow"}\},
+275     \{GL\_SAMPLER\_BUFFER,\textcolor{stringliteral}{"samplerBuffer"}\},
+276     \{GL\_SAMPLER\_2D\_RECT,\textcolor{stringliteral}{"sampler2DRect"}\},
+277     \{GL\_SAMPLER\_2D\_RECT\_SHADOW,\textcolor{stringliteral}{"sampler2DRectShadow"}\},
+278     \{GL\_INT\_SAMPLER\_1D,\textcolor{stringliteral}{"isampler1D"}\},
+279     \{GL\_INT\_SAMPLER\_2D,\textcolor{stringliteral}{"isampler2D"}\},
+280     \{GL\_INT\_SAMPLER\_3D,\textcolor{stringliteral}{"isampler3D"}\},
+281     \{GL\_INT\_SAMPLER\_CUBE,\textcolor{stringliteral}{"isamplerCube"}\},
+282     \{GL\_INT\_SAMPLER\_1D\_ARRAY,\textcolor{stringliteral}{"isampler1DArray"}\},
+283     \{GL\_INT\_SAMPLER\_2D\_ARRAY,\textcolor{stringliteral}{"isampler2DArray"}\},
+284     \{GL\_INT\_SAMPLER\_2D\_MULTISAMPLE,\textcolor{stringliteral}{"isampler2DMS"}\},
+285     \{GL\_INT\_SAMPLER\_2D\_MULTISAMPLE\_ARRAY,\textcolor{stringliteral}{"isampler2DMSArray"}\},
+286     \{GL\_INT\_SAMPLER\_BUFFER,\textcolor{stringliteral}{"isamplerBuffer"}\},
+287     \{GL\_INT\_SAMPLER\_2D\_RECT,\textcolor{stringliteral}{"isampler2DRect"}\},
+288     \{GL\_UNSIGNED\_INT\_SAMPLER\_1D,\textcolor{stringliteral}{"usampler1D"}\},
+289     \{GL\_UNSIGNED\_INT\_SAMPLER\_2D,\textcolor{stringliteral}{"usampler2D"}\},
+290     \{GL\_UNSIGNED\_INT\_SAMPLER\_3D,\textcolor{stringliteral}{"usampler3D"}\},
+291     \{GL\_UNSIGNED\_INT\_SAMPLER\_CUBE,\textcolor{stringliteral}{"usamplerCube"}\},
+292     \{GL\_UNSIGNED\_INT\_SAMPLER\_1D\_ARRAY,\textcolor{stringliteral}{"usampler2DArray"}\},
+293     \{GL\_UNSIGNED\_INT\_SAMPLER\_2D\_ARRAY,\textcolor{stringliteral}{"usampler2DArray"}\},
+294     \{GL\_UNSIGNED\_INT\_SAMPLER\_2D\_MULTISAMPLE,\textcolor{stringliteral}{"usampler2DMS"}\},
+295     \{GL\_UNSIGNED\_INT\_SAMPLER\_2D\_MULTISAMPLE\_ARRAY,\textcolor{stringliteral}{"usampler2DMSArray"}\},
+296     \{GL\_UNSIGNED\_INT\_SAMPLER\_BUFFER,\textcolor{stringliteral}{"usamplerBuffer"}\},
+297     \{GL\_UNSIGNED\_INT\_SAMPLER\_2D\_RECT,\textcolor{stringliteral}{"usampler2DRect"}\},
+298     \{GL\_IMAGE\_1D,\textcolor{stringliteral}{"image1D"}\},
+299     \{GL\_IMAGE\_2D,\textcolor{stringliteral}{"image2D"}\},
+300     \{GL\_IMAGE\_3D,\textcolor{stringliteral}{"image3D"}\},
+301     \{GL\_IMAGE\_2D\_RECT,\textcolor{stringliteral}{"image2DRect"}\},
+302     \{GL\_IMAGE\_CUBE,\textcolor{stringliteral}{"imageCube"}\},
+303     \{GL\_IMAGE\_BUFFER,\textcolor{stringliteral}{"imageBuffer"}\},
+304     \{GL\_IMAGE\_1D\_ARRAY,\textcolor{stringliteral}{"image1DArray"}\},
+305     \{GL\_IMAGE\_2D\_ARRAY,\textcolor{stringliteral}{"image2DArray"}\},
+306     \{GL\_IMAGE\_2D\_MULTISAMPLE,\textcolor{stringliteral}{"image2DMS"}\},
+307     \{GL\_IMAGE\_2D\_MULTISAMPLE\_ARRAY,\textcolor{stringliteral}{"image2DMSArray"}\},
+308     \{GL\_INT\_IMAGE\_1D,\textcolor{stringliteral}{"iimage1D"}\},
+309     \{GL\_INT\_IMAGE\_2D,\textcolor{stringliteral}{"iimage2D"}\},
+310     \{GL\_INT\_IMAGE\_3D,\textcolor{stringliteral}{"iimage3D"}\},
+311     \{GL\_INT\_IMAGE\_2D\_RECT,\textcolor{stringliteral}{"iimage2DRect"}\},
+312     \{GL\_INT\_IMAGE\_CUBE,\textcolor{stringliteral}{"iimageCube"}\},
+313     \{GL\_INT\_IMAGE\_BUFFER,\textcolor{stringliteral}{"iimageBuffer"}\},
+314     \{GL\_INT\_IMAGE\_1D\_ARRAY,\textcolor{stringliteral}{"iimage1DArray"}\},
+315     \{GL\_INT\_IMAGE\_2D\_ARRAY,\textcolor{stringliteral}{"iimage2DArray"}\},
+316     \{GL\_INT\_IMAGE\_2D\_MULTISAMPLE,\textcolor{stringliteral}{"iimage2DMS"}\},
+317     \{GL\_INT\_IMAGE\_2D\_MULTISAMPLE\_ARRAY,\textcolor{stringliteral}{"iimage2DMSArray"}\},
+318     \{GL\_UNSIGNED\_INT\_IMAGE\_1D,\textcolor{stringliteral}{"uimage1D"}\},
+319     \{GL\_UNSIGNED\_INT\_IMAGE\_2D,\textcolor{stringliteral}{"uimage2D"}\},
+320     \{GL\_UNSIGNED\_INT\_IMAGE\_3D,\textcolor{stringliteral}{"uimage3D"}\},
+321     \{GL\_UNSIGNED\_INT\_IMAGE\_2D\_RECT,\textcolor{stringliteral}{"uimage2DRect"}\},
+322     \{GL\_UNSIGNED\_INT\_IMAGE\_CUBE,\textcolor{stringliteral}{"uimageCube"}\},
+323     \{GL\_UNSIGNED\_INT\_IMAGE\_BUFFER,\textcolor{stringliteral}{"uimageBuffer"}\},
+324     \{GL\_UNSIGNED\_INT\_IMAGE\_1D\_ARRAY,\textcolor{stringliteral}{"uimage1DArray"}\},
+325     \{GL\_UNSIGNED\_INT\_IMAGE\_2D\_ARRAY,\textcolor{stringliteral}{"uimage2DArray"}\},
+326     \{GL\_UNSIGNED\_INT\_IMAGE\_2D\_MULTISAMPLE,\textcolor{stringliteral}{"uimage2DMS"}\},
+327     \{GL\_UNSIGNED\_INT\_IMAGE\_2D\_MULTISAMPLE\_ARRAY,\textcolor{stringliteral}{"uimage2DMSArray"}\},
+328     \{GL\_UNSIGNED\_INT\_ATOMIC\_COUNTER,\textcolor{stringliteral}{"atomic\_uint"}\}
+329   \};
+330 
+331   ngl::ShaderLib *shaderLib=ngl::ShaderLib::instance();
+332   GLuint \textcolor{keywordtype}{id}=shaderLib->getProgramID(m_shaderManager->getData().m_name);
+333 
+334   GLint nUniforms;
+335   glGetProgramInterfaceiv(\textcolor{keywordtype}{id}, GL\_UNIFORM, GL\_ACTIVE\_RESOURCES, &nUniforms);
+336 
+337 
+338   std::cout<<\textcolor{stringliteral}{"Registered Uniforms for shader "}<< \textcolor{keywordtype}{id} <<\textcolor{stringliteral}{"\(\backslash\)n"};
+339 
+340   \textcolor{keywordflow}{for}(\textcolor{keyword}{auto} d : m_uniformList)
+341   \{
+342     std::string type;
+343     \textcolor{keyword}{auto} value=types.find(d->getTypeEnum());
+344     \textcolor{keywordflow}{if}(value !=types.end())
+345     \{
+346       d->setTypeName(value->second);
+347     \}
+348     \textcolor{keywordflow}{else}
+349     \{
+350       type=\textcolor{stringliteral}{"unknown type"};
+351     \}
+352     m_registeredUniforms[d->getName()] = d;
+353   \}
+354   std::cout<<\textcolor{stringliteral}{"End Uniforms"}<<\textcolor{stringliteral}{"\(\backslash\)n"};
+355 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=344pt]{class_parser_lib_a748612fadf3a391ead34306bd3f39f77_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_parser_lib_a748612fadf3a391ead34306bd3f39f77_icgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsection{Member Data Documentation}
+\index{Parser\-Lib@{Parser\-Lib}!m\-\_\-ignore\-Uniform\-I\-Ds@{m\-\_\-ignore\-Uniform\-I\-Ds}}
+\index{m\-\_\-ignore\-Uniform\-I\-Ds@{m\-\_\-ignore\-Uniform\-I\-Ds}!ParserLib@{Parser\-Lib}}
+\subsubsection[{m\-\_\-ignore\-Uniform\-I\-Ds}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$int$>$ Parser\-Lib\-::m\-\_\-ignore\-Uniform\-I\-Ds}\label{class_parser_lib_a26575daf278fac945d73d6b8cf7f795f}
+
+
+List of uniform I\-Ds that are incompatible with the button uniforms we have created. 
+
+
+
+Definition at line 93 of file Parser\-Lib.\-h.
+
+\index{Parser\-Lib@{Parser\-Lib}!m\-\_\-num@{m\-\_\-num}}
+\index{m\-\_\-num@{m\-\_\-num}!ParserLib@{Parser\-Lib}}
+\subsubsection[{m\-\_\-num}]{\setlength{\rightskip}{0pt plus 5cm}uint Parser\-Lib\-::m\-\_\-num}\label{class_parser_lib_a6e721c0d634e55907628b4e503af5437}
+
+
+used to store the number of active uniforms 
+
+
+
+Definition at line 75 of file Parser\-Lib.\-h.
+
+\index{Parser\-Lib@{Parser\-Lib}!m\-\_\-registered\-Uniforms@{m\-\_\-registered\-Uniforms}}
+\index{m\-\_\-registered\-Uniforms@{m\-\_\-registered\-Uniforms}!ParserLib@{Parser\-Lib}}
+\subsubsection[{m\-\_\-registered\-Uniforms}]{\setlength{\rightskip}{0pt plus 5cm}std\-::unordered\-\_\-map$<$std\-::string, {\bf Uniform\-Data}$\ast$$>$ Parser\-Lib\-::m\-\_\-registered\-Uniforms}\label{class_parser_lib_a3c1d8ebc8f8cddd2993f9e2aa4a3852d}
+
+
+used to store a list of pre-\/registered Uniform data types. 
+
+
+
+Definition at line 79 of file Parser\-Lib.\-h.
+
+\index{Parser\-Lib@{Parser\-Lib}!m\-\_\-shader\-Manager@{m\-\_\-shader\-Manager}}
+\index{m\-\_\-shader\-Manager@{m\-\_\-shader\-Manager}!ParserLib@{Parser\-Lib}}
+\subsubsection[{m\-\_\-shader\-Manager}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Shader\-Manager}$\ast$ Parser\-Lib\-::m\-\_\-shader\-Manager}\label{class_parser_lib_a2f0327de17f7fe9bda6b2dd146f7bef2}
+
+
+stores the shader manager so that the correct shader id can be queried for its uniforms 
+
+
+
+Definition at line 88 of file Parser\-Lib.\-h.
+
+\index{Parser\-Lib@{Parser\-Lib}!m\-\_\-uniform\-List@{m\-\_\-uniform\-List}}
+\index{m\-\_\-uniform\-List@{m\-\_\-uniform\-List}!ParserLib@{Parser\-Lib}}
+\subsubsection[{m\-\_\-uniform\-List}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<${\bf Uniform\-Data}$\ast$$>$ Parser\-Lib\-::m\-\_\-uniform\-List}\label{class_parser_lib_aa08bcca3c7f09ecfc5f2077f739f359b}
+
+
+used to store a list of uniform\-Data 
+
+
+
+Definition at line 83 of file Parser\-Lib.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+{\bf Parser\-Lib.\-h}\item 
+{\bf Parser\-Lib.\-cpp}\end{DoxyCompactItemize}

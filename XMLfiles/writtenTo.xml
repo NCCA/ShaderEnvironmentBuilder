@@ -1,8 +1,6 @@
-<root name="Root node says hi">
-	<dataSets name="data sets!" NewName="Henry" Version="5000">
-		<a name="M" type="mat4" value="5"/>
-		<b name="MV" type="mat4" value="3"/>
-		<c name="Normalize" type="mat4" value="2"/>
-	</dataSets>
-</root>
+<?xml version="1.0" encoding="utf-8"?>
+<Shader_Data Name="f" Dir="/home/i7685565/0Features-0BugsCVA3">
+	<Vertex VtxData=""/>
+	<Fragment FragData=""/>
+</Shader_Data>
 

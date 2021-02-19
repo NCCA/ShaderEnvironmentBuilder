@@ -1,0 +1,342 @@
+\section{New\-Project\-Wizard Class Reference}
+\label{class_new_project_wizard}\index{New\-Project\-Wizard@{New\-Project\-Wizard}}
+
+
+The main Wizard that contains all the pages for the new project.  
+
+
+
+
+{\ttfamily \#include $<$New\-Project\-Wizard.\-h$>$}
+
+
+
+Inheritance diagram for New\-Project\-Wizard\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=138pt]{class_new_project_wizard__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for New\-Project\-Wizard\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=181pt]{class_new_project_wizard__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\bf New\-Project\-Wizard} (Q\-Widget $\ast$parent=0)
+\begin{DoxyCompactList}\small\item\em Constructor, passing a child of parent. \end{DoxyCompactList}\item 
+void {\bf accept} () Q\-\_\-\-D\-E\-C\-L\-\_\-\-O\-V\-E\-R\-R\-I\-D\-E
+\begin{DoxyCompactList}\small\item\em This is run when the dialog has been accepted. \end{DoxyCompactList}\item 
+const {\bf Output\-Data} $\ast$ {\bf get\-Output} () const 
+\begin{DoxyCompactList}\small\item\em Gets the output of the wizard when it has been completed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Q\-Item\-Selection\-Model $\ast$ {\bf m\-\_\-vertex\-Select\-Model}
+\begin{DoxyCompactList}\small\item\em The vertex selection model for the vertex treeview. \end{DoxyCompactList}\item 
+Q\-Item\-Selection\-Model $\ast$ {\bf m\-\_\-fragment\-Select\-Model}
+\begin{DoxyCompactList}\small\item\em The fragment selection model for the fragment treeview. \end{DoxyCompactList}\item 
+Q\-File\-System\-Model $\ast$ {\bf m\-\_\-file\-Model}
+\begin{DoxyCompactList}\small\item\em The file model used for both of the vertex and fragment treeviews. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+{\bf Output\-Data} $\ast$ {\bf m\-\_\-output}
+\begin{DoxyCompactList}\small\item\em The output data stored on completion of the wizard. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The main Wizard that contains all the pages for the new project. 
+
+Definition at line 58 of file New\-Project\-Wizard.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{New\-Project\-Wizard@{New\-Project\-Wizard}!New\-Project\-Wizard@{New\-Project\-Wizard}}
+\index{New\-Project\-Wizard@{New\-Project\-Wizard}!NewProjectWizard@{New\-Project\-Wizard}}
+\subsubsection[{New\-Project\-Wizard}]{\setlength{\rightskip}{0pt plus 5cm}New\-Project\-Wizard\-::\-New\-Project\-Wizard (
+\begin{DoxyParamCaption}
+\item[{Q\-Widget $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}\label{class_new_project_wizard_ab0c4fb632a79c9371795163aad718a1f}
+
+
+Constructor, passing a child of parent. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em parent} & The parent for which this will be the child of. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 31 of file New\-Project\-Wizard.\-cpp.
+
+
+
+References m\-\_\-file\-Model, and m\-\_\-output.
+
+
+\begin{DoxyCode}
+31                                                  : QWizard(parent)
+32 \{
+33   \textcolor{comment}{// Setup file model}
+34   m_fileModel = \textcolor{keyword}{new} QFileSystemModel;
+35   m_fileModel->setRootPath(QDir::currentPath() + \textcolor{stringliteral}{"/shaders/files"});
+36   m_fileModel->removeColumns(1,3);
+37   \textcolor{comment}{// Create the structr for storing output data}
+38   m_output = \textcolor{keyword}{new} OutputData;
+39 
+40   \textcolor{comment}{// Add the pages to the wizard}
+41   addPage(\textcolor{keyword}{new} IntroPage(\textcolor{keyword}{this}));
+42   addPage(\textcolor{keyword}{new} ProjectInfoPage(\textcolor{keyword}{this}));
+43   addPage(\textcolor{keyword}{new} GlslFilesPage(\textcolor{keyword}{this}));
+44   addPage(\textcolor{keyword}{new} GlslOrderPage(\textcolor{keyword}{this}));
+45   addPage(\textcolor{keyword}{new} ConclusionPage(\textcolor{keyword}{this}));
+46 
+47   setWindowTitle(tr(\textcolor{stringliteral}{"New Project Wizard"}));
+48 
+49 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{New\-Project\-Wizard@{New\-Project\-Wizard}!accept@{accept}}
+\index{accept@{accept}!NewProjectWizard@{New\-Project\-Wizard}}
+\subsubsection[{accept}]{\setlength{\rightskip}{0pt plus 5cm}void New\-Project\-Wizard\-::accept (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_new_project_wizard_a916e5fa00a48e575eb9126e177be4ff9}
+
+
+This is run when the dialog has been accepted. 
+
+
+
+Definition at line 52 of file New\-Project\-Wizard.\-cpp.
+
+
+
+References Glsl\-Order\-Page\-::get\-Frag\-List\-Widget(), Glsl\-Order\-Page\-::get\-Vert\-List\-Widget(), m\-\_\-file\-Model, m\-\_\-fragment\-Select\-Model, Output\-Data\-::m\-\_\-frag\-Source, m\-\_\-output, Output\-Data\-::m\-\_\-project\-Dir, Output\-Data\-::m\-\_\-project\-Name, m\-\_\-vertex\-Select\-Model, Output\-Data\-::m\-\_\-vert\-Source, and C\-E\-B\-Raise\-::\-Qt\-File\-Error().
+
+
+\begin{DoxyCode}
+53 \{
+54   \textcolor{comment}{// get project name and directory}
+55   m_output->m_projectName = field(\textcolor{stringliteral}{"projectName"}).toString().toStdString();
+56   m_output->m_projectDir = field(\textcolor{stringliteral}{"projectDirectory"}).toString().toStdString();
+57 
+58   \textcolor{comment}{// create glsl version string}
+59   QString ver = QString(\textcolor{stringliteral}{"#version %1 %2\(\backslash\)n\(\backslash\)n"})
+60                 .arg(field(\textcolor{stringliteral}{"glslVersion"}).toString(),
+61                      field(\textcolor{stringliteral}{"glslProfile"}).toString());
+62 
+63   \textcolor{comment}{// get the selected rows from the vertex and fragment selection models used}
+64   \textcolor{comment}{// with the treeviews}
+65   QModelIndexList vertFiles = m_vertexSelectModel->selectedRows();
+66   QModelIndexList fragFiles = m_fragmentSelectModel->selectedRows();
+67 
+68   \textcolor{comment}{// Get the glsl order page}
+69   GlslOrderPage* glslOrderPg = \textcolor{keyword}{static\_cast<}GlslOrderPage*\textcolor{keyword}{>}(page(3));
+70 
+71   \textcolor{comment}{// Setup variables for getting the correct order of the files}
+72   \textcolor{comment}{// ordered filenames (from the qlistwidgets)}
+73   QStringList vertexOrderFileNames, fragmentOrderFileNames;
+74   \textcolor{comment}{// unordered filenames (from the qtreeviews)}
+75   QStringList vertFileNames, fragFileNames;
+76 
+77   \textcolor{comment}{// get the list of ordered files from the list widgets}
+78   \textcolor{keyword}{const} QListWidget* vertFilesOrder = glslOrderPg->getVertListWidget();
+79   \textcolor{keyword}{const} QListWidget* fragFilesOrder = glslOrderPg->getFragListWidget();
+80 
+81   \textcolor{comment}{// create the unordered and ordered file name lists for vertex}
+82   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i=0; i<vertFilesOrder->count(); ++i)
+83   \{
+84     vertFileNames.append(m_fileModel->fileInfo(vertFiles.at(i)).fileName());
+85     vertexOrderFileNames.append(vertFilesOrder->item(i)->text());
+86   \}
+87 
+88   \textcolor{comment}{// create the unordered and ordered file name lists for fragment}
+89   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i=0; i<fragFilesOrder->count(); ++i)
+90   \{
+91     fragFileNames.append(m_fileModel->fileInfo(fragFiles.at(i)).fileName());
+92     fragmentOrderFileNames.append(fragFilesOrder->item(i)->text());
+93   \}
+94 
+95   \textcolor{comment}{// the final vertex and fragment strings}
+96   QString vertexFilesString, fragmentFilesString;
+97 
+98   \textcolor{comment}{// Now find the correct index from the ordered list using the ordered and}
+99   \textcolor{comment}{// un-ordered file name lists and get the file value from the file model}
+100   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i=0; i<vertFileNames.length(); ++i)
+101   \{
+102     \textcolor{comment}{// getting the correct index from the ordered file list}
+103     \textcolor{keywordtype}{int} index = vertFileNames.indexOf(vertexOrderFileNames[i]);
+104     \textcolor{comment}{// get the file at the correct index from the selected rows in the QTreeView}
+105     QFile vFile(m_fileModel->fileInfo(vertFiles.at(index)).absoluteFilePath());
+106     \textcolor{comment}{// open the file}
+107     \textcolor{keywordflow}{if} (!vFile.open(QIODevice::ReadOnly | QIODevice::Text))
+108     \{
+109       \textcolor{comment}{// Raise an error if failed}
+110       CEBRaise::QtFileError(vFile.error(),
+111                             m_fileModel->fileInfo(vertFiles.at(index))
+112                                                            .absoluteFilePath());
+113     \}
+114     \textcolor{comment}{// append the file to a single string}
+115     QTextStream in(&vFile);
+116     vertexFilesString.append(in.readAll());
+117     vertexFilesString.append(\textcolor{stringliteral}{"\(\backslash\)n"});
+118   \}
+119 
+120   \textcolor{comment}{// REPEAT above again}
+121   \textcolor{comment}{// Now find the correct index from the ordered list using the ordered and}
+122   \textcolor{comment}{// un-ordered file name lists and get the file value from the file model}
+123   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i=0; i<fragFileNames.length(); ++i)
+124   \{
+125     \textcolor{comment}{// getting the correct index from the ordered file list}
+126     \textcolor{keywordtype}{int} index = fragFileNames.indexOf(fragmentOrderFileNames[i]);
+127     \textcolor{comment}{// get the file at the correct index from the selected rows in the QTreeView}
+128     QFile fFile(m_fileModel->fileInfo(fragFiles.at(index)).absoluteFilePath());
+129     \textcolor{comment}{// open the file}
+130     \textcolor{keywordflow}{if} (!fFile.open(QIODevice::ReadOnly | QIODevice::Text))
+131     \{
+132       \textcolor{comment}{// Raise an error if failed}
+133       CEBRaise::QtFileError(fFile.error(),
+134                             m_fileModel->fileInfo(fragFiles.at(index))
+135                                                            .absoluteFilePath());
+136     \}
+137     \textcolor{comment}{// append the file to a single string}
+138     QTextStream in(&fFile);
+139     fragmentFilesString.append(in.readAll());
+140     fragmentFilesString.append(\textcolor{stringliteral}{"\(\backslash\)n"});
+141   \}
+142 
+143   \textcolor{comment}{// check if each of the file strings already contains a version. If it doesn't}
+144   \textcolor{comment}{// then push to front}
+145   \textcolor{keywordflow}{if}(!vertexFilesString.contains(\textcolor{stringliteral}{"#version"}))
+146   \{
+147     vertexFilesString.push\_front(ver+\textcolor{stringliteral}{"\(\backslash\)n"});
+148   \}
+149   \textcolor{comment}{// same as above}
+150   \textcolor{keywordflow}{if}(!fragmentFilesString.contains(\textcolor{stringliteral}{"#version"}))
+151   \{
+152     fragmentFilesString.push\_front(ver+\textcolor{stringliteral}{"\(\backslash\)n"});
+153   \}
+154   \textcolor{comment}{// store in output}
+155   m_output->m_vertSource = vertexFilesString;
+156   m_output->m_fragSource = fragmentFilesString;
+157 
+158   \textcolor{comment}{// accept the dialog}
+159   QDialog::accept();
+160 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=342pt]{class_new_project_wizard_a916e5fa00a48e575eb9126e177be4ff9_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{New\-Project\-Wizard@{New\-Project\-Wizard}!get\-Output@{get\-Output}}
+\index{get\-Output@{get\-Output}!NewProjectWizard@{New\-Project\-Wizard}}
+\subsubsection[{get\-Output}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Output\-Data}$\ast$ New\-Project\-Wizard\-::get\-Output (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\label{class_new_project_wizard_a8509f28c39e33090710fcfa7452fee35}
+
+
+Gets the output of the wizard when it has been completed. 
+
+\begin{DoxyReturn}{Returns}
+the output 
+\end{DoxyReturn}
+
+
+Definition at line 90 of file New\-Project\-Wizard.\-h.
+
+
+
+References m\-\_\-output.
+
+
+\begin{DoxyCode}
+90 \{\textcolor{keywordflow}{return} m_output;\}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_new_project_wizard_a8509f28c39e33090710fcfa7452fee35_icgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsection{Member Data Documentation}
+\index{New\-Project\-Wizard@{New\-Project\-Wizard}!m\-\_\-file\-Model@{m\-\_\-file\-Model}}
+\index{m\-\_\-file\-Model@{m\-\_\-file\-Model}!NewProjectWizard@{New\-Project\-Wizard}}
+\subsubsection[{m\-\_\-file\-Model}]{\setlength{\rightskip}{0pt plus 5cm}Q\-File\-System\-Model$\ast$ New\-Project\-Wizard\-::m\-\_\-file\-Model}\label{class_new_project_wizard_a1a7a96c9f8dfc69602c45ce8ec4ac750}
+
+
+The file model used for both of the vertex and fragment treeviews. 
+
+
+
+Definition at line 75 of file New\-Project\-Wizard.\-h.
+
+\index{New\-Project\-Wizard@{New\-Project\-Wizard}!m\-\_\-fragment\-Select\-Model@{m\-\_\-fragment\-Select\-Model}}
+\index{m\-\_\-fragment\-Select\-Model@{m\-\_\-fragment\-Select\-Model}!NewProjectWizard@{New\-Project\-Wizard}}
+\subsubsection[{m\-\_\-fragment\-Select\-Model}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Item\-Selection\-Model$\ast$ New\-Project\-Wizard\-::m\-\_\-fragment\-Select\-Model}\label{class_new_project_wizard_aa065668ee318d83657fceeb95bc67522}
+
+
+The fragment selection model for the fragment treeview. 
+
+
+
+Definition at line 71 of file New\-Project\-Wizard.\-h.
+
+\index{New\-Project\-Wizard@{New\-Project\-Wizard}!m\-\_\-output@{m\-\_\-output}}
+\index{m\-\_\-output@{m\-\_\-output}!NewProjectWizard@{New\-Project\-Wizard}}
+\subsubsection[{m\-\_\-output}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Output\-Data}$\ast$ New\-Project\-Wizard\-::m\-\_\-output\hspace{0.3cm}{\ttfamily [private]}}\label{class_new_project_wizard_a8610be87786026af865ab432c021007c}
+
+
+The output data stored on completion of the wizard. 
+
+
+
+Definition at line 97 of file New\-Project\-Wizard.\-h.
+
+\index{New\-Project\-Wizard@{New\-Project\-Wizard}!m\-\_\-vertex\-Select\-Model@{m\-\_\-vertex\-Select\-Model}}
+\index{m\-\_\-vertex\-Select\-Model@{m\-\_\-vertex\-Select\-Model}!NewProjectWizard@{New\-Project\-Wizard}}
+\subsubsection[{m\-\_\-vertex\-Select\-Model}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Item\-Selection\-Model$\ast$ New\-Project\-Wizard\-::m\-\_\-vertex\-Select\-Model}\label{class_new_project_wizard_ac544a8f59b0e5554ee4d18fa8f05b3ff}
+
+
+The vertex selection model for the vertex treeview. 
+
+
+
+Definition at line 67 of file New\-Project\-Wizard.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+{\bf New\-Project\-Wizard.\-h}\item 
+{\bf New\-Project\-Wizard.\-cpp}\end{DoxyCompactItemize}

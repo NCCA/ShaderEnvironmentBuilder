@@ -1,0 +1,14 @@
+<map id="NGLScene::NGLScene" name="NGLScene::NGLScene">
+<area shape="rect" id="node2" href="$class_camera.html#a0b2c173335886d0f85085dae91e7305c" title="Creates a vector of ngl cameras and sets their shapes. " alt="" coords="208,107,368,133"/>
+<area shape="rect" id="node3" href="$class_n_g_l_scene.html#a40efee086fe1c2c956e6d66774d9d18f" title="the initialize class is called once when the window is created and we have a valid GL context use thi..." alt="" coords="225,157,351,184"/>
+<area shape="rect" id="node4" href="$_ceb_errors_8cpp.html#a7f539a3701e24afbe6c9c8ec65f48d78" title="Clears all the error messages in the current openGL context. " alt="" coords="462,5,573,32"/>
+<area shape="rect" id="node5" href="$class_shader_manager.html#a476be257abd4b3057ce3be7acb05e178" title="method called when 1st opening program to initialise the default phong shader " alt="" coords="435,56,600,83"/>
+<area shape="rect" id="node9" href="$class_shader_manager.html#a56ea270f6b8f812ad80dc4ad33c47125" title="method to return whether the current shader successfully compiled " alt="" coords="417,107,618,133"/>
+<area shape="rect" id="node10" href="$class_main_window.html#a1fc3e7c122b246d3cacbaaccfe490724" title="set terminal text " alt="" coords="421,157,614,184"/>
+<area shape="rect" id="node11" href="$class_n_g_l_scene.html#af6e2fbc572f1ec3021f2b73fc87ab430" title="Stores a QString. Used to edit the error log message. " alt="" coords="432,208,603,235"/>
+<area shape="rect" id="node12" href="$class_shader_manager.html#a1e32b97729d0eddce1de9b51a8c3d19a" title="method to return the most recent error log " alt="" coords="425,259,610,285"/>
+<area shape="rect" id="node13" href="$class_shader_manager.html#aacfb02025cb97795c21e09e3bf8e3c52" title="method to return whether the shader manager successfully initialised " alt="" coords="444,309,591,336"/>
+<area shape="rect" id="node6" href="$class_shader_manager.html#aa4ef5235b1be61c38872a6c865d740bc" title="method to set the data for the current shader " alt="" coords="693,27,856,53"/>
+<area shape="rect" id="node7" href="$class_shader_manager.html#acf0d69f6515e8438ba04330a04264931" title="method to check compiling errors for all shader objects attached " alt="" coords="667,78,883,119"/>
+<area shape="rect" id="node8" href="$class_shader_manager.html#aec181009461227ed7ec70fca29111985" title="method to check compiling errors for a single shader object " alt="" coords="931,78,1133,119"/>
+</map>

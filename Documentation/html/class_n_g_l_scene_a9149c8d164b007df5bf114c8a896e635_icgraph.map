@@ -1,0 +1,5 @@
+<map id="NGLScene::loadMatricesToShader" name="NGLScene::loadMatricesToShader">
+<area shape="rect" id="node2" href="$class_n_g_l_scene.html#a37bec65bfba7b7a717d803d369221e2d" title="this is called everytime we want to draw the scene " alt="" coords="464,24,600,50"/>
+<area shape="rect" id="node3" href="$class_n_g_l_scene.html#ae3e8dc1c180d89afa997104c3dd707a0" title="Set object transformations depending on the shape type. " alt="" coords="232,24,416,50"/>
+<area shape="rect" id="node4" href="$class_n_g_l_scene.html#a3fc824ff4a9140812b9ea473cdd9b2c5" title="Draw a xyz axis. " alt="" coords="253,74,395,101"/>
+</map>

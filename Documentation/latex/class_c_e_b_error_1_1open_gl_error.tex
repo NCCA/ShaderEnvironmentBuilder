@@ -1,0 +1,189 @@
+\section{C\-E\-B\-Error\-:\-:open\-Gl\-Error Class Reference}
+\label{class_c_e_b_error_1_1open_gl_error}\index{C\-E\-B\-Error\-::open\-Gl\-Error@{C\-E\-B\-Error\-::open\-Gl\-Error}}
+
+
+raised for open\-G\-L errors  
+
+
+
+
+{\ttfamily \#include $<$Ceb\-Errors.\-h$>$}
+
+
+
+Inheritance diagram for C\-E\-B\-Error\-:\-:open\-Gl\-Error\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=156pt]{class_c_e_b_error_1_1open_gl_error__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for C\-E\-B\-Error\-:\-:open\-Gl\-Error\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=156pt]{class_c_e_b_error_1_1open_gl_error__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\bf open\-Gl\-Error} (Q\-String \-\_\-type, Q\-String \-\_\-msg)
+\begin{DoxyCompactList}\small\item\em Constructor for file error. \end{DoxyCompactList}\item 
+virtual const char $\ast$ {\bf what} () const   throw ()
+\begin{DoxyCompactList}\small\item\em returns an explanatory string \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+const char $\ast$ {\bf generate\-Msg} (std\-::string \-\_\-msg) const 
+\begin{DoxyCompactList}\small\item\em generates the error message for files \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Q\-String {\bf m\-\_\-type}
+\begin{DoxyCompactList}\small\item\em the file path location where the file exists \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+raised for open\-G\-L errors 
+
+Definition at line 392 of file Ceb\-Errors.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{C\-E\-B\-Error\-::open\-Gl\-Error@{C\-E\-B\-Error\-::open\-Gl\-Error}!open\-Gl\-Error@{open\-Gl\-Error}}
+\index{open\-Gl\-Error@{open\-Gl\-Error}!CEBError::openGlError@{C\-E\-B\-Error\-::open\-Gl\-Error}}
+\subsubsection[{open\-Gl\-Error}]{\setlength{\rightskip}{0pt plus 5cm}C\-E\-B\-Error\-::open\-Gl\-Error\-::open\-Gl\-Error (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{\-\_\-type, }
+\item[{Q\-String}]{\-\_\-msg}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_c_e_b_error_1_1open_gl_error_ad8ebca46e2a6981d90ca1db005420391}
+
+
+Constructor for file error. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-path} & the location of the file \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 401 of file Ceb\-Errors.\-h.
+
+
+
+References C\-E\-B\-Error\-::base\-Error\-::m\-\_\-txt, and m\-\_\-type.
+
+
+\begin{DoxyCode}
+401 \{m_type = \_type; m_txt = \_msg;\}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{C\-E\-B\-Error\-::open\-Gl\-Error@{C\-E\-B\-Error\-::open\-Gl\-Error}!generate\-Msg@{generate\-Msg}}
+\index{generate\-Msg@{generate\-Msg}!CEBError::openGlError@{C\-E\-B\-Error\-::open\-Gl\-Error}}
+\subsubsection[{generate\-Msg}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ C\-E\-B\-Error\-::open\-Gl\-Error\-::generate\-Msg (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{\-\_\-msg}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\label{class_c_e_b_error_1_1open_gl_error_a57c550b4dfeb397d481daf5d0614d6e8}
+
+
+generates the error message for files 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-msg} & the reason the error has been raised \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 420 of file Ceb\-Errors.\-h.
+
+
+
+References C\-E\-B\-Error\-::base\-Error\-::m\-\_\-txt, and m\-\_\-type.
+
+
+\begin{DoxyCode}
+421   \{
+422     \textcolor{keywordflow}{return} (\_msg + \textcolor{stringliteral}{" '"} + m_type.toUtf8().constData() + \textcolor{stringliteral}{" : "} +
+423             m_txt.toUtf8().constData() + \textcolor{stringliteral}{"'"}).c\_str();
+424   \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=304pt]{class_c_e_b_error_1_1open_gl_error_a57c550b4dfeb397d481daf5d0614d6e8_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{C\-E\-B\-Error\-::open\-Gl\-Error@{C\-E\-B\-Error\-::open\-Gl\-Error}!what@{what}}
+\index{what@{what}!CEBError::openGlError@{C\-E\-B\-Error\-::open\-Gl\-Error}}
+\subsubsection[{what}]{\setlength{\rightskip}{0pt plus 5cm}virtual const char$\ast$ C\-E\-B\-Error\-::open\-Gl\-Error\-::what (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const throw  ) \hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\label{class_c_e_b_error_1_1open_gl_error_a63d2ba5d470312311ee2fb05ac40169c}
+
+
+returns an explanatory string 
+
+
+
+Reimplemented from {\bf C\-E\-B\-Error\-::base\-Error} \doxyref{}{p.}{class_c_e_b_error_1_1base_error_aaebf355e6b7b5c89d333fd258eefdaa8}.
+
+
+
+Definition at line 405 of file Ceb\-Errors.\-h.
+
+
+
+References generate\-Msg().
+
+
+\begin{DoxyCode}
+406   \{
+407     \textcolor{keywordflow}{return} generateMsg(\textcolor{stringliteral}{"An error occured with OpenGL"});
+408   \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=304pt]{class_c_e_b_error_1_1open_gl_error_a63d2ba5d470312311ee2fb05ac40169c_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsection{Member Data Documentation}
+\index{C\-E\-B\-Error\-::open\-Gl\-Error@{C\-E\-B\-Error\-::open\-Gl\-Error}!m\-\_\-type@{m\-\_\-type}}
+\index{m\-\_\-type@{m\-\_\-type}!CEBError::openGlError@{C\-E\-B\-Error\-::open\-Gl\-Error}}
+\subsubsection[{m\-\_\-type}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String C\-E\-B\-Error\-::open\-Gl\-Error\-::m\-\_\-type\hspace{0.3cm}{\ttfamily [protected]}}\label{class_c_e_b_error_1_1open_gl_error_a30763338dc80a27377a7e4ad74f92237}
+
+
+the file path location where the file exists 
+
+
+
+Definition at line 415 of file Ceb\-Errors.\-h.
+
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+{\bf Ceb\-Errors.\-h}\end{DoxyCompactItemize}

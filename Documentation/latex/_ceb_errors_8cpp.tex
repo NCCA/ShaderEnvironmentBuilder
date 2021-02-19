@@ -1,0 +1,141 @@
+\section{Ceb\-Errors.\-cpp File Reference}
+\label{_ceb_errors_8cpp}\index{Ceb\-Errors.\-cpp@{Ceb\-Errors.\-cpp}}
+{\ttfamily \#include \char`\"{}Ceb\-Errors.\-h\char`\"{}}\\*
+Include dependency graph for Ceb\-Errors.\-cpp\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=272pt]{_ceb_errors_8cpp__incl}
+\end{center}
+\end{figure}
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+{\bf C\-E\-B\-Raise}
+\begin{DoxyCompactList}\small\item\em Used to raise errors in the program. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void {\bf clear\-All\-Gl\-Errors} ()
+\begin{DoxyCompactList}\small\item\em Clears all the error messages in the current open\-G\-L context. \end{DoxyCompactList}\item 
+const char $\ast$ {\bf gl\-Error\-Code\-To\-Text} ({\bf gl\-Error\-Codes} \-\_\-e)
+\item 
+void {\bf C\-E\-B\-Raise\-::\-Qt\-File\-Error} (Q\-File\-Device\-::\-File\-Error \-\_\-e, Q\-String \-\_\-path)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{Ceb\-Errors.\-cpp@{Ceb\-Errors.\-cpp}!clear\-All\-Gl\-Errors@{clear\-All\-Gl\-Errors}}
+\index{clear\-All\-Gl\-Errors@{clear\-All\-Gl\-Errors}!CebErrors.cpp@{Ceb\-Errors.\-cpp}}
+\subsubsection[{clear\-All\-Gl\-Errors}]{\setlength{\rightskip}{0pt plus 5cm}clear\-All\-Gl\-Errors (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{_ceb_errors_8cpp_a7f539a3701e24afbe6c9c8ec65f48d78}
+
+
+Clears all the error messages in the current open\-G\-L context. 
+
+
+
+Definition at line 14 of file Ceb\-Errors.\-cpp.
+
+
+\begin{DoxyCode}
+15 \{
+16   GLenum errNo = glGetError();
+17   \textcolor{keywordflow}{while} (errNo != GL\_NO\_ERROR)
+18   \{
+19     errNo = glGetError();
+20   \}
+21 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_ceb_errors_8cpp_a7f539a3701e24afbe6c9c8ec65f48d78_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Ceb\-Errors.\-cpp@{Ceb\-Errors.\-cpp}!gl\-Error\-Code\-To\-Text@{gl\-Error\-Code\-To\-Text}}
+\index{gl\-Error\-Code\-To\-Text@{gl\-Error\-Code\-To\-Text}!CebErrors.cpp@{Ceb\-Errors.\-cpp}}
+\subsubsection[{gl\-Error\-Code\-To\-Text}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ gl\-Error\-Code\-To\-Text (
+\begin{DoxyParamCaption}
+\item[{{\bf gl\-Error\-Codes}}]{\-\_\-e}
+\end{DoxyParamCaption}
+)}\label{_ceb_errors_8cpp_a48ec418a65c7d673dd7cc87dfa33f986}
+
+
+Definition at line 24 of file Ceb\-Errors.\-cpp.
+
+
+
+References Context\-Lost, Invalid\-Enum, Invalid\-Framebuffer\-Operation, Invalid\-Operation, Invalid\-Value, No\-Error, Out\-Of\-Memory, Stack\-Overflow, Stack\-Underflow, and Table\-Too\-Large.
+
+
+\begin{DoxyCode}
+25 \{
+26   \textcolor{keywordflow}{switch}(\_e)
+27   \{
+28     \textcolor{keywordflow}{case} glErrorCodes::NoError:
+29     \{
+30       \textcolor{keywordflow}{return} \textcolor{stringliteral}{"No Memory"};
+31       \textcolor{keywordflow}{break};
+32     \}
+33     \textcolor{keywordflow}{case} glErrorCodes::OutOfMemory:
+34     \{
+35       \textcolor{keywordflow}{return} \textcolor{stringliteral}{"Out of Memory"};
+36       \textcolor{keywordflow}{break};
+37     \}
+38     \textcolor{keywordflow}{case} glErrorCodes::InvalidEnum:
+39     \{
+40       \textcolor{keywordflow}{return} \textcolor{stringliteral}{"Invalid Enum"};
+41       \textcolor{keywordflow}{break};
+42     \}
+43     \textcolor{keywordflow}{case} glErrorCodes::InvalidValue:
+44     \{
+45       \textcolor{keywordflow}{return} \textcolor{stringliteral}{"Invalid Value"};
+46       \textcolor{keywordflow}{break};
+47     \}
+48     \textcolor{keywordflow}{case} glErrorCodes::InvalidOperation:
+49     \{
+50       \textcolor{keywordflow}{return} \textcolor{stringliteral}{"Invalid Operation"};
+51       \textcolor{keywordflow}{break};
+52     \}
+53     \textcolor{keywordflow}{case} glErrorCodes::InvalidFramebufferOperation:
+54     \{
+55       \textcolor{keywordflow}{return} \textcolor{stringliteral}{"Invalid Framebuffer Operation"};
+56       \textcolor{keywordflow}{break};
+57     \}
+58     \textcolor{keywordflow}{case} glErrorCodes::StackOverflow:
+59     \{
+60       \textcolor{keywordflow}{return} \textcolor{stringliteral}{"Stack Overflow"};
+61       \textcolor{keywordflow}{break};
+62     \}
+63     \textcolor{keywordflow}{case} glErrorCodes::StackUnderflow:
+64     \{
+65       \textcolor{keywordflow}{return} \textcolor{stringliteral}{"Stack Underflow"};
+66       \textcolor{keywordflow}{break};
+67     \}
+68     \textcolor{keywordflow}{case} glErrorCodes::TableTooLarge:
+69     \{
+70       \textcolor{keywordflow}{return} \textcolor{stringliteral}{"Table Too Large"};
+71       \textcolor{keywordflow}{break};
+72     \}
+73     \textcolor{keywordflow}{case} glErrorCodes::ContextLost:
+74     \{
+75       \textcolor{keywordflow}{return} \textcolor{stringliteral}{"Context Lost"};
+76       \textcolor{keywordflow}{break};
+77     \}
+78     \textcolor{keywordflow}{default}:
+79     \{
+80       \textcolor{keywordflow}{return} \textcolor{stringliteral}{"Unknown Gl Error Code"};
+81       \textcolor{keywordflow}{break};
+82     \}
+83   \}
+84 \}
+\end{DoxyCode}

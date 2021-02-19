@@ -1,0 +1,658 @@
+\section{Camera Class Reference}
+\label{class_camera}\index{Camera@{Camera}}
+
+
+Manages using multiple cameras in \doxyref{N\-G\-L\-Scene}{p.}{class_n_g_l_scene}.  
+
+
+
+
+{\ttfamily \#include $<$Camera.\-h$>$}
+
+
+
+Inheritance diagram for Camera\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=96pt]{class_camera__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Camera\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=96pt]{class_camera__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void {\bf set\-Camera\-Focal\-Length} (int \-\_\-focal\-Length)
+\begin{DoxyCompactList}\small\item\em Function to set camera F\-O\-V. \end{DoxyCompactList}\item 
+void {\bf set\-Camera\-Shape} (Q\-String \-\_\-view)
+\begin{DoxyCompactList}\small\item\em Sets the new camera shape. \end{DoxyCompactList}\item 
+void {\bf camera\-Roll} (double \-\_\-camera\-Roll)
+\begin{DoxyCompactList}\small\item\em Sets camera roll. \end{DoxyCompactList}\item 
+void {\bf camera\-Pitch} (double \-\_\-camera\-Pitch)
+\begin{DoxyCompactList}\small\item\em Sets camera Pitch. \end{DoxyCompactList}\item 
+void {\bf camera\-Yaw} (double \-\_\-camera\-Yaw)
+\begin{DoxyCompactList}\small\item\em Sets camera Yaw. \end{DoxyCompactList}\item 
+void {\bf set\-Cam\-Near\-Clip} (double \-\_\-near\-Clip)
+\begin{DoxyCompactList}\small\item\em Sets near clipping frame. \end{DoxyCompactList}\item 
+void {\bf set\-Cam\-Far\-Clip} (double \-\_\-far\-Clip)
+\begin{DoxyCompactList}\small\item\em Sets far clipping frame. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+void {\bf update\-Signal} ()
+\begin{DoxyCompactList}\small\item\em Signal sent to \doxyref{N\-G\-L\-Scene}{p.}{class_n_g_l_scene} update() function to update the scene with the new camera. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\bf Camera} ()
+\begin{DoxyCompactList}\small\item\em \-\_\-\-Cstor class \end{DoxyCompactList}\item 
+void {\bf create\-Cameras} ()
+\begin{DoxyCompactList}\small\item\em Creates a vector of ngl cameras and sets their shapes. \end{DoxyCompactList}\item 
+ngl\-::\-Camera {\bf set\-Shape\-Cam} ()
+\begin{DoxyCompactList}\small\item\em Sets the camera shape and returns the new camera to \doxyref{N\-G\-L\-Scene}{p.}{class_n_g_l_scene}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\-::vector$<$ ngl\-::\-Camera $>$ {\bf m\-\_\-cameras}
+\begin{DoxyCompactList}\small\item\em A vector containing the ngl cameras. \end{DoxyCompactList}\item 
+int {\bf m\-\_\-camera\-Index}
+\begin{DoxyCompactList}\small\item\em An index to access the cameras. \end{DoxyCompactList}\item 
+int {\bf m\-\_\-fov}
+\begin{DoxyCompactList}\small\item\em fov value for the camera \end{DoxyCompactList}\item 
+float {\bf m\-\_\-aspect}
+\begin{DoxyCompactList}\small\item\em aspect ratio of the camera \end{DoxyCompactList}\item 
+float {\bf m\-\_\-near\-Clip}
+\begin{DoxyCompactList}\small\item\em Near clipping plane of the camera. \end{DoxyCompactList}\item 
+float {\bf m\-\_\-far\-Clip}
+\begin{DoxyCompactList}\small\item\em Far clipping plane of the camera. \end{DoxyCompactList}\item 
+double {\bf m\-\_\-camera\-Yaw}
+\begin{DoxyCompactList}\small\item\em camera yaw value \end{DoxyCompactList}\item 
+double {\bf m\-\_\-camera\-Roll}
+\begin{DoxyCompactList}\small\item\em camera roll value \end{DoxyCompactList}\item 
+double {\bf m\-\_\-camera\-Pitch}
+\begin{DoxyCompactList}\small\item\em camera pitch value \end{DoxyCompactList}\item 
+ngl\-::\-Camera {\bf m\-\_\-main\-Camera}
+\begin{DoxyCompactList}\small\item\em Active camera used by \doxyref{N\-G\-L\-Scene}{p.}{class_n_g_l_scene}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Manages using multiple cameras in \doxyref{N\-G\-L\-Scene}{p.}{class_n_g_l_scene}. 
+
+Definition at line 26 of file Camera.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Camera@{Camera}!Camera@{Camera}}
+\index{Camera@{Camera}!Camera@{Camera}}
+\subsubsection[{Camera}]{\setlength{\rightskip}{0pt plus 5cm}Camera\-::\-Camera (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_camera_a01f94c3543f56ede7af49dc778f19331}
+
+
+\-\_\-\-Cstor class 
+
+
+
+Definition at line 5 of file Camera.\-cpp.
+
+
+
+References m\-\_\-camera\-Index, m\-\_\-camera\-Roll, m\-\_\-camera\-Yaw, m\-\_\-far\-Clip, m\-\_\-fov, and m\-\_\-near\-Clip.
+
+
+\begin{DoxyCode}
+6 \{
+7     m_fov=60.0;
+8     m_cameraIndex = 0;
+9     m_cameraRoll = 0.00;
+10     m_cameraYaw = 0.00;
+11     m_nearClip = 0.5f;
+12     m_farClip = 150.0f;
+13 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{Camera@{Camera}!camera\-Pitch@{camera\-Pitch}}
+\index{camera\-Pitch@{camera\-Pitch}!Camera@{Camera}}
+\subsubsection[{camera\-Pitch}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\-::camera\-Pitch (
+\begin{DoxyParamCaption}
+\item[{double}]{\-\_\-camera\-Pitch}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}\label{class_camera_a0c0d93f08f72642a944eb7514d81c0d8}
+
+
+Sets camera Pitch. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-camera\-Pitch} & the new pitch value \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 93 of file Camera.\-cpp.
+
+
+
+References m\-\_\-camera\-Pitch, m\-\_\-main\-Camera, and update\-Signal().
+
+
+\begin{DoxyCode}
+94 \{
+95     m_mainCamera.pitch(-m_cameraPitch);
+96     m_cameraPitch = \_cameraPitch;
+97     m_mainCamera.pitch(\_cameraPitch);
+98     emit updateSignal();
+99 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_camera_a0c0d93f08f72642a944eb7514d81c0d8_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Camera@{Camera}!camera\-Roll@{camera\-Roll}}
+\index{camera\-Roll@{camera\-Roll}!Camera@{Camera}}
+\subsubsection[{camera\-Roll}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\-::camera\-Roll (
+\begin{DoxyParamCaption}
+\item[{double}]{\-\_\-camera\-Roll}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}\label{class_camera_ab78d1a3c0f1d2260fcf962cc5589f8b4}
+
+
+Sets camera roll. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-camera\-Roll} & the new roll value \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 104 of file Camera.\-cpp.
+
+
+
+References m\-\_\-camera\-Roll, m\-\_\-main\-Camera, and update\-Signal().
+
+
+\begin{DoxyCode}
+105 \{
+106     m_mainCamera.roll(-m_cameraRoll);
+107     m_cameraRoll = \_cameraRoll;
+108     m_mainCamera.roll(\_cameraRoll);
+109     emit updateSignal();
+110 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_camera_ab78d1a3c0f1d2260fcf962cc5589f8b4_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Camera@{Camera}!camera\-Yaw@{camera\-Yaw}}
+\index{camera\-Yaw@{camera\-Yaw}!Camera@{Camera}}
+\subsubsection[{camera\-Yaw}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\-::camera\-Yaw (
+\begin{DoxyParamCaption}
+\item[{double}]{\-\_\-camera\-Yaw}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}\label{class_camera_a5f14cfea1ff576e947bddae2139ca078}
+
+
+Sets camera Yaw. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-camera\-Yaw} & the new yaw value \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 82 of file Camera.\-cpp.
+
+
+
+References m\-\_\-camera\-Yaw, m\-\_\-main\-Camera, and update\-Signal().
+
+
+\begin{DoxyCode}
+83 \{
+84     m_mainCamera.yaw(-m_cameraYaw);
+85     m_cameraYaw = \_cameraYaw;
+86     m_mainCamera.yaw(\_cameraYaw);
+87     emit updateSignal();
+88 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_camera_a5f14cfea1ff576e947bddae2139ca078_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Camera@{Camera}!create\-Cameras@{create\-Cameras}}
+\index{create\-Cameras@{create\-Cameras}!Camera@{Camera}}
+\subsubsection[{create\-Cameras}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\-::create\-Cameras (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_camera_a0b2c173335886d0f85085dae91e7305c}
+
+
+Creates a vector of ngl cameras and sets their shapes. 
+
+
+
+Definition at line 17 of file Camera.\-cpp.
+
+
+
+References m\-\_\-aspect, m\-\_\-camera\-Index, m\-\_\-cameras, m\-\_\-fov, and m\-\_\-main\-Camera.
+
+
+\begin{DoxyCode}
+18 \{
+19     \textcolor{comment}{// Initialises ngl cameras.}
+20     ngl::Camera Pcam;
+21     ngl::Camera Tcam;
+22     ngl::Camera Bcam;
+23     ngl::Camera Lcam;
+24     ngl::Camera Rcam;
+25 
+26     \textcolor{comment}{// Sets the eye, look, up position vectors of the cameras.}
+27     ngl::Vec3 perspEye(1.0f, 1.0f,1.0f);
+28     ngl::Vec3 perspLook(0,0,0);
+29     ngl::Vec3 perspUp(0.0f,1.0f,0.0f);
+30 
+31     ngl::Vec3 topEye(0.0f,1.0f,0.0f);
+32     ngl::Vec3 topLook(0,0,0);
+33     ngl::Vec3 topUp(0.0f,0.0f,1.0f);
+34 
+35     ngl::Vec3 bottomEye(0.0f,-1.0f,0.0f);
+36     ngl::Vec3 bottomLook(0,0,0);
+37     ngl::Vec3 bottomUp(0.0f,0.0f,1.0f);
+38 
+39     ngl::Vec3 leftEye(0.0f,0.0f,-1.0f);
+40     ngl::Vec3 leftLook(0,0,0);
+41     ngl::Vec3 leftUp(0.0f,1.0f,0.0f);
+42 
+43     ngl::Vec3 rightEye(0.0f,0.0f,1.0f);
+44     ngl::Vec3 rightLook(0,0,0);
+45     ngl::Vec3 rightUp(0.0f,1.0f,0.0f);
+46 
+47     \textcolor{comment}{// Applies the camera positions and sets their shapes, then pushes to the vector of cameras.}
+48     Pcam.set(perspEye,perspLook, perspUp);
+49     Pcam.setShape(m_fov,m_aspect, 0.5f,150.0f);
+50     m_cameras.push\_back(Pcam);
+51 
+52     Tcam.set(topEye,topLook,topUp);
+53     Tcam.setShape(m_fov,m_aspect, 0.5f,150.0f);
+54     m_cameras.push\_back(Tcam);
+55 
+56     Bcam.set(bottomEye,bottomLook,bottomUp);
+57     Bcam.setShape(m_fov,m_aspect, 0.5f,150.0f);
+58     m_cameras.push\_back(Bcam);
+59 
+60     Lcam.set(leftEye,leftLook,leftUp);
+61     Lcam.setShape(m_fov,m_aspect, 0.5f,150.0f);
+62     m_cameras.push\_back(Lcam);
+63 
+64     Rcam.set(rightEye,rightLook,rightUp);
+65     Rcam.setShape(m_fov,m_aspect, 0.5f,150.0f);
+66     m_cameras.push\_back(Rcam);
+67 
+68     \textcolor{comment}{// Active camera used by NGLScene.}
+69     m_mainCamera = m_cameras[m_cameraIndex];
+70 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=316pt]{class_camera_a0b2c173335886d0f85085dae91e7305c_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Camera@{Camera}!set\-Camera\-Focal\-Length@{set\-Camera\-Focal\-Length}}
+\index{set\-Camera\-Focal\-Length@{set\-Camera\-Focal\-Length}!Camera@{Camera}}
+\subsubsection[{set\-Camera\-Focal\-Length}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\-::set\-Camera\-Focal\-Length (
+\begin{DoxyParamCaption}
+\item[{int}]{\-\_\-focal\-Length}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}\label{class_camera_aa4296a894d5a5b2dd4031efbed9d83f8}
+
+
+Function to set camera F\-O\-V. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-focal\-Length} & the F\-O\-V value to set \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 114 of file Camera.\-cpp.
+
+
+
+References m\-\_\-aspect, m\-\_\-fov, m\-\_\-main\-Camera, and update\-Signal().
+
+
+\begin{DoxyCode}
+115 \{
+116     m_fov= \_focalLength;
+117     m_mainCamera.setShape(m_fov, m_aspect, 0.5f, 150.0f);
+118     emit updateSignal();
+119 \}
+\end{DoxyCode}
+\index{Camera@{Camera}!set\-Camera\-Shape@{set\-Camera\-Shape}}
+\index{set\-Camera\-Shape@{set\-Camera\-Shape}!Camera@{Camera}}
+\subsubsection[{set\-Camera\-Shape}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\-::set\-Camera\-Shape (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{\-\_\-view}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}\label{class_camera_a3a809a3fa14f21bfd71867a680311192}
+
+
+Sets the new camera shape. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-view} & The camera view set (persp, top, bottom, left, right). \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 124 of file Camera.\-cpp.
+
+
+
+References m\-\_\-camera\-Index, m\-\_\-cameras, m\-\_\-main\-Camera, and update\-Signal().
+
+
+\begin{DoxyCode}
+125 \{
+126   std::string view = \_view.toStdString();
+127 
+128   std::map<std::string, int> camViewMap;
+129   camViewMap[\textcolor{stringliteral}{"Persp"}]=0;
+130   camViewMap[\textcolor{stringliteral}{"Top"}]=1;
+131   camViewMap[\textcolor{stringliteral}{"Bottom"}]=2;
+132   camViewMap[\textcolor{stringliteral}{"Left"}]=3;
+133   camViewMap[\textcolor{stringliteral}{"Right"}]=4;
+134 
+135   m_cameraIndex = camViewMap[view];
+136   m_mainCamera = m_cameras[m_cameraIndex];
+137 
+138   emit updateSignal();
+139 \}
+\end{DoxyCode}
+\index{Camera@{Camera}!set\-Cam\-Far\-Clip@{set\-Cam\-Far\-Clip}}
+\index{set\-Cam\-Far\-Clip@{set\-Cam\-Far\-Clip}!Camera@{Camera}}
+\subsubsection[{set\-Cam\-Far\-Clip}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\-::set\-Cam\-Far\-Clip (
+\begin{DoxyParamCaption}
+\item[{double}]{\-\_\-far\-Clip}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}\label{class_camera_a6ebda712bd672e403b2fea35f46425c2}
+
+
+Sets far clipping frame. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-far\-Clip} & the far clipping plane value \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 152 of file Camera.\-cpp.
+
+
+
+References m\-\_\-far\-Clip, and update\-Signal().
+
+
+\begin{DoxyCode}
+153 \{
+154     m_farClip= \_farClip;
+155     emit updateSignal();
+156 \}
+\end{DoxyCode}
+\index{Camera@{Camera}!set\-Cam\-Near\-Clip@{set\-Cam\-Near\-Clip}}
+\index{set\-Cam\-Near\-Clip@{set\-Cam\-Near\-Clip}!Camera@{Camera}}
+\subsubsection[{set\-Cam\-Near\-Clip}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\-::set\-Cam\-Near\-Clip (
+\begin{DoxyParamCaption}
+\item[{double}]{\-\_\-near\-Clip}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}\label{class_camera_ab3a4cd00d0cb6ea69faafa454cfb74e7}
+
+
+Sets near clipping frame. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \-\_\-near\-Clip} & the near clipping plane value \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 144 of file Camera.\-cpp.
+
+
+
+References m\-\_\-near\-Clip, and update\-Signal().
+
+
+\begin{DoxyCode}
+145 \{
+146     m_nearClip= \_nearClip;
+147     emit updateSignal();
+148 \}
+\end{DoxyCode}
+\index{Camera@{Camera}!set\-Shape\-Cam@{set\-Shape\-Cam}}
+\index{set\-Shape\-Cam@{set\-Shape\-Cam}!Camera@{Camera}}
+\subsubsection[{set\-Shape\-Cam}]{\setlength{\rightskip}{0pt plus 5cm}ngl\-::\-Camera Camera\-::set\-Shape\-Cam (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_camera_af155b670c737578ef6e49f9284a1f382}
+
+
+Sets the camera shape and returns the new camera to \doxyref{N\-G\-L\-Scene}{p.}{class_n_g_l_scene}. 
+
+
+
+Definition at line 74 of file Camera.\-cpp.
+
+
+
+References m\-\_\-aspect, m\-\_\-far\-Clip, m\-\_\-fov, m\-\_\-main\-Camera, and m\-\_\-near\-Clip.
+
+
+\begin{DoxyCode}
+75 \{
+76   m_mainCamera.setShape(m_fov, m_aspect, m_nearClip, m_farClip);
+77   \textcolor{keywordflow}{return} m_mainCamera;
+78 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=298pt]{class_camera_af155b670c737578ef6e49f9284a1f382_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Camera@{Camera}!update\-Signal@{update\-Signal}}
+\index{update\-Signal@{update\-Signal}!Camera@{Camera}}
+\subsubsection[{update\-Signal}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\-::update\-Signal (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}\label{class_camera_a5274db5a5d8ec834658d5ae5545175b6}
+
+
+Signal sent to \doxyref{N\-G\-L\-Scene}{p.}{class_n_g_l_scene} update() function to update the scene with the new camera. 
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_camera_a5274db5a5d8ec834658d5ae5545175b6_icgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsection{Member Data Documentation}
+\index{Camera@{Camera}!m\-\_\-aspect@{m\-\_\-aspect}}
+\index{m\-\_\-aspect@{m\-\_\-aspect}!Camera@{Camera}}
+\subsubsection[{m\-\_\-aspect}]{\setlength{\rightskip}{0pt plus 5cm}float Camera\-::m\-\_\-aspect}\label{class_camera_abf58e1558e08e785c929f41b25615c30}
+
+
+aspect ratio of the camera 
+
+
+
+Definition at line 49 of file Camera.\-h.
+
+\index{Camera@{Camera}!m\-\_\-camera\-Index@{m\-\_\-camera\-Index}}
+\index{m\-\_\-camera\-Index@{m\-\_\-camera\-Index}!Camera@{Camera}}
+\subsubsection[{m\-\_\-camera\-Index}]{\setlength{\rightskip}{0pt plus 5cm}int Camera\-::m\-\_\-camera\-Index}\label{class_camera_a6b78f4f27d16a6f97e9d1af12dd52408}
+
+
+An index to access the cameras. 
+
+
+
+Definition at line 41 of file Camera.\-h.
+
+\index{Camera@{Camera}!m\-\_\-camera\-Pitch@{m\-\_\-camera\-Pitch}}
+\index{m\-\_\-camera\-Pitch@{m\-\_\-camera\-Pitch}!Camera@{Camera}}
+\subsubsection[{m\-\_\-camera\-Pitch}]{\setlength{\rightskip}{0pt plus 5cm}double Camera\-::m\-\_\-camera\-Pitch}\label{class_camera_a2e2a1cbcdc877078e33cab77b032ecd0}
+
+
+camera pitch value 
+
+
+
+Definition at line 69 of file Camera.\-h.
+
+\index{Camera@{Camera}!m\-\_\-camera\-Roll@{m\-\_\-camera\-Roll}}
+\index{m\-\_\-camera\-Roll@{m\-\_\-camera\-Roll}!Camera@{Camera}}
+\subsubsection[{m\-\_\-camera\-Roll}]{\setlength{\rightskip}{0pt plus 5cm}double Camera\-::m\-\_\-camera\-Roll}\label{class_camera_a84896bffdc7f6657e36cea29f50326d9}
+
+
+camera roll value 
+
+
+
+Definition at line 65 of file Camera.\-h.
+
+\index{Camera@{Camera}!m\-\_\-cameras@{m\-\_\-cameras}}
+\index{m\-\_\-cameras@{m\-\_\-cameras}!Camera@{Camera}}
+\subsubsection[{m\-\_\-cameras}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$ngl\-::\-Camera $>$ Camera\-::m\-\_\-cameras}\label{class_camera_a81c3649852e1e6e003fcb6a098b9380b}
+
+
+A vector containing the ngl cameras. 
+
+
+
+Definition at line 37 of file Camera.\-h.
+
+\index{Camera@{Camera}!m\-\_\-camera\-Yaw@{m\-\_\-camera\-Yaw}}
+\index{m\-\_\-camera\-Yaw@{m\-\_\-camera\-Yaw}!Camera@{Camera}}
+\subsubsection[{m\-\_\-camera\-Yaw}]{\setlength{\rightskip}{0pt plus 5cm}double Camera\-::m\-\_\-camera\-Yaw}\label{class_camera_a84f178ff122318d5f5b3eedfe7a44820}
+
+
+camera yaw value 
+
+
+
+Definition at line 61 of file Camera.\-h.
+
+\index{Camera@{Camera}!m\-\_\-far\-Clip@{m\-\_\-far\-Clip}}
+\index{m\-\_\-far\-Clip@{m\-\_\-far\-Clip}!Camera@{Camera}}
+\subsubsection[{m\-\_\-far\-Clip}]{\setlength{\rightskip}{0pt plus 5cm}float Camera\-::m\-\_\-far\-Clip}\label{class_camera_ad74bb952b7fc87a3a9e92069ac58cce7}
+
+
+Far clipping plane of the camera. 
+
+
+
+Definition at line 57 of file Camera.\-h.
+
+\index{Camera@{Camera}!m\-\_\-fov@{m\-\_\-fov}}
+\index{m\-\_\-fov@{m\-\_\-fov}!Camera@{Camera}}
+\subsubsection[{m\-\_\-fov}]{\setlength{\rightskip}{0pt plus 5cm}int Camera\-::m\-\_\-fov}\label{class_camera_aa184f4c3a950d83690a3f2278b64f39e}
+
+
+fov value for the camera 
+
+
+
+Definition at line 45 of file Camera.\-h.
+
+\index{Camera@{Camera}!m\-\_\-main\-Camera@{m\-\_\-main\-Camera}}
+\index{m\-\_\-main\-Camera@{m\-\_\-main\-Camera}!Camera@{Camera}}
+\subsubsection[{m\-\_\-main\-Camera}]{\setlength{\rightskip}{0pt plus 5cm}ngl\-::\-Camera Camera\-::m\-\_\-main\-Camera}\label{class_camera_a79622becea7694b0f1816789a9c03465}
+
+
+Active camera used by \doxyref{N\-G\-L\-Scene}{p.}{class_n_g_l_scene}. 
+
+
+
+Definition at line 73 of file Camera.\-h.
+
+\index{Camera@{Camera}!m\-\_\-near\-Clip@{m\-\_\-near\-Clip}}
+\index{m\-\_\-near\-Clip@{m\-\_\-near\-Clip}!Camera@{Camera}}
+\subsubsection[{m\-\_\-near\-Clip}]{\setlength{\rightskip}{0pt plus 5cm}float Camera\-::m\-\_\-near\-Clip}\label{class_camera_adad400a801f8ce12d0e4fed46976e0cd}
+
+
+Near clipping plane of the camera. 
+
+
+
+Definition at line 53 of file Camera.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+{\bf Camera.\-h}\item 
+{\bf Camera.\-cpp}\end{DoxyCompactItemize}

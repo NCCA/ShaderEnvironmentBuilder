@@ -1,0 +1,6 @@
+<map id="Project::saveAs" name="Project::saveAs">
+<area shape="rect" id="node2" href="$class_project.html#af285ceb406be688b3c81cdd445a159e6" title="method for saving the current project " alt="" coords="166,31,261,57"/>
+<area shape="rect" id="node3" href="$class_project.html#ace11706afa0348c2e6cb0151285167e9" title="method to set the data for the project " alt="" coords="338,5,425,32"/>
+<area shape="rect" id="node4" href="$class_i_o___x_m_l.html#a4f26762e4ee76461a097ce109127be21" title="Saves the project name, vertex and fragment data in set directory. " alt="" coords="309,56,453,83"/>
+<area shape="rect" id="node5" href="$class_i_o___x_m_l.html#a6e72454ab3699ff26cfefe078ebe8890" title="method to confirm overwriting exported files " alt="" coords="502,56,674,83"/>
+</map>

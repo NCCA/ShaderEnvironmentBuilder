@@ -1,0 +1,6 @@
+<map id="NGLScene::setShapeType" name="NGLScene::setShapeType">
+<area shape="rect" id="node2" href="$class_main_window.html#a1ee3c30d4bdbcff576458d97931495e2" title="Called when a shape action has been triggered to change the render mesh. " alt="" coords="467,5,656,32"/>
+<area shape="rect" id="node4" href="$class_n_g_l_scene.html#aa483e1f8441744ddf3eb9b8587a67e84" title="Changes the name of the m_mesh object directory. " alt="" coords="227,56,419,83"/>
+<area shape="rect" id="node3" href="$class_main_window.html#a93cfdcac35db98baf6a7d2c2738a2006" title="Constructor for the MainWindow. " alt="" coords="705,31,879,57"/>
+<area shape="rect" id="node5" href="$class_main_window.html#a0ee54d90ea9cd6f8899563e12f1155d7" title="Called when Import Mesh is called to change the render mesh. " alt="" coords="480,56,643,83"/>
+</map>

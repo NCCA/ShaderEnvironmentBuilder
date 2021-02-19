@@ -1,0 +1,4 @@
+<map id="NGLScene::loadMatricesToShader" name="NGLScene::loadMatricesToShader">
+<area shape="rect" id="node2" href="$class_parser_lib.html#aaec662d54b5dcf376d0a5b9157637047" title="takes the list of uniforms and updates them onto the shader, depending on the data type..." alt="" coords="233,5,407,46"/>
+<area shape="rect" id="node3" href="$class_shader_manager.html#a04c9fb67f7fa4995ae678f64f5b4985b" title="method to set OpenGL to use the current shader program " alt="" coords="251,71,389,97"/>
+</map>

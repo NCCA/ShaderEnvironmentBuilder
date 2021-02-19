@@ -1,0 +1,6 @@
+<map id="MainWindow::keyPressEvent" name="MainWindow::keyPressEvent">
+<area shape="rect" id="node2" href="$class_n_g_l_scene.html#ab6ce5125254ab7fecf2e6d1c87a73a97" title="resets the position of the active OBJ in the OpenGL context " alt="" coords="241,56,402,83"/>
+<area shape="rect" id="node3" href="$class_camera.html#ab78d1a3c0f1d2260fcf962cc5589f8b4" title="Sets camera roll. " alt="" coords="455,5,593,32"/>
+<area shape="rect" id="node4" href="$class_camera.html#a5f14cfea1ff576e947bddae2139ca078" title="Sets camera Yaw. " alt="" coords="453,56,595,83"/>
+<area shape="rect" id="node5" href="$class_camera.html#a0c0d93f08f72642a944eb7514d81c0d8" title="Sets camera Pitch. " alt="" coords="451,107,597,133"/>
+</map>

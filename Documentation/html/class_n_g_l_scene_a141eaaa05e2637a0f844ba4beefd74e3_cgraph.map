@@ -1,0 +1,14 @@
+<map id="NGLScene::compileShader" name="NGLScene::compileShader">
+<area shape="rect" id="node2" href="$class_parser_lib.html#a0327fd1d07a49f918cd5ff1ed54d74a2" title="assigns all appropriate values, locations, data types, names " alt="" coords="255,64,415,91"/>
+<area shape="rect" id="node7" href="$class_shader_manager.html#a2f344ea91238f6a7a34fe26f5d2bdfd0" title="method called to compile the currently active shader " alt="" coords="232,129,437,156"/>
+<area shape="rect" id="node11" href="$class_shader_manager.html#a1e32b97729d0eddce1de9b51a8c3d19a" title="method to return the most recent error log " alt="" coords="242,180,427,207"/>
+<area shape="rect" id="node12" href="$class_n_g_l_scene.html#af6e2fbc572f1ec3021f2b73fc87ab430" title="Stores a QString. Used to edit the error log message. " alt="" coords="249,231,420,257"/>
+<area shape="rect" id="node13" href="$class_main_window.html#a1fc3e7c122b246d3cacbaaccfe490724" title="set terminal text " alt="" coords="238,281,431,308"/>
+<area shape="rect" id="node3" href="$class_parser_lib.html#ab82a4570c99e2844e6ffe3bd1b3dbcf2" title="finds number of active uniforms and stores the data in blocks called uniformData. This then stores it..." alt="" coords="493,5,693,32"/>
+<area shape="rect" id="node6" href="$class_parser_lib.html#ae5e796d35c2b62f2099ea0a9b4cde4cc" title="sets default values for the active uniforms " alt="" coords="512,57,675,98"/>
+<area shape="rect" id="node4" href="$class_shader_manager.html#ac7f57e1b3e623ef4693389b009c44089" title="get the current data from the shader manager " alt="" coords="1001,5,1165,32"/>
+<area shape="rect" id="node5" href="$class_parser_lib.html#a748612fadf3a391ead34306bd3f39f77" title="used to translate the data type name from a number into a name. e.g. 35676 &#45;&gt; mat4 The following sect..." alt="" coords="757,31,944,57"/>
+<area shape="rect" id="node8" href="$class_shader_manager.html#acf0d69f6515e8438ba04330a04264931" title="method to check compiling errors for all shader objects attached " alt="" coords="485,122,701,163"/>
+<area shape="rect" id="node10" href="$class_shader_manager.html#a733004d489eea80446ca07b3c11b7ede" title="method to check link error " alt="" coords="504,187,683,229"/>
+<area shape="rect" id="node9" href="$class_shader_manager.html#aec181009461227ed7ec70fca29111985" title="method to check compiling errors for a single shader object " alt="" coords="750,122,951,163"/>
+</map>

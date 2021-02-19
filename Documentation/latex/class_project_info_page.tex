@@ -1,0 +1,363 @@
+\section{Project\-Info\-Page Class Reference}
+\label{class_project_info_page}\index{Project\-Info\-Page@{Project\-Info\-Page}}
+
+
+The project wizard page with info on the project name, version, directory etc.  
+
+
+
+
+{\ttfamily \#include $<$New\-Project\-Wizard.\-h$>$}
+
+
+
+Inheritance diagram for Project\-Info\-Page\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=130pt]{class_project_info_page__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Project\-Info\-Page\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=130pt]{class_project_info_page__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\bf Project\-Info\-Page} (Q\-Widget $\ast$parent=0)
+\begin{DoxyCompactList}\small\item\em Constructor, passing a child of parent. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void {\bf initialize\-Page} () Q\-\_\-\-D\-E\-C\-L\-\_\-\-O\-V\-E\-R\-R\-I\-D\-E
+\begin{DoxyCompactList}\small\item\em Used to prepare the Wizard page before it is shown and set default values. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Slots}
+\begin{DoxyCompactItemize}
+\item 
+void {\bf set\-Project\-Directory} ()
+\begin{DoxyCompactList}\small\item\em Used to fill the project directory line edit by opening a file dialog. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Q\-Combo\-Box $\ast$ {\bf m\-\_\-cb\-\_\-glsl\-Version}
+\begin{DoxyCompactList}\small\item\em Glsl file version combo box. \end{DoxyCompactList}\item 
+Q\-Combo\-Box $\ast$ {\bf m\-\_\-cb\-\_\-glsl\-Profile}
+\begin{DoxyCompactList}\small\item\em Glsl profile version combo box. \end{DoxyCompactList}\item 
+Q\-Label $\ast$ {\bf m\-\_\-l\-\_\-project\-Name}
+\begin{DoxyCompactList}\small\item\em \doxyref{Project}{p.}{class_project} name label. \end{DoxyCompactList}\item 
+Q\-Label $\ast$ {\bf m\-\_\-l\-\_\-project\-Directory}
+\begin{DoxyCompactList}\small\item\em \doxyref{Project}{p.}{class_project} directory label. \end{DoxyCompactList}\item 
+Q\-Label $\ast$ {\bf m\-\_\-l\-\_\-glsl\-Version}
+\begin{DoxyCompactList}\small\item\em Glsl version label. \end{DoxyCompactList}\item 
+Q\-Label $\ast$ {\bf m\-\_\-l\-\_\-glsl\-Profile}
+\begin{DoxyCompactList}\small\item\em Glsl profile label. \end{DoxyCompactList}\item 
+Q\-Line\-Edit $\ast$ {\bf m\-\_\-le\-\_\-project\-Directory}
+\begin{DoxyCompactList}\small\item\em \doxyref{Project}{p.}{class_project} directory entry box. \end{DoxyCompactList}\item 
+Q\-Line\-Edit $\ast$ {\bf m\-\_\-le\-\_\-project\-Name}
+\begin{DoxyCompactList}\small\item\em \doxyref{Project}{p.}{class_project} name entry box. \end{DoxyCompactList}\item 
+Q\-Push\-Button $\ast$ {\bf m\-\_\-b\-\_\-browse\-Directory}
+\begin{DoxyCompactList}\small\item\em Browse directory button which opens a file dialog. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The project wizard page with info on the project name, version, directory etc. 
+
+Definition at line 131 of file New\-Project\-Wizard.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Project\-Info\-Page@{Project\-Info\-Page}!Project\-Info\-Page@{Project\-Info\-Page}}
+\index{Project\-Info\-Page@{Project\-Info\-Page}!ProjectInfoPage@{Project\-Info\-Page}}
+\subsubsection[{Project\-Info\-Page}]{\setlength{\rightskip}{0pt plus 5cm}Project\-Info\-Page\-::\-Project\-Info\-Page (
+\begin{DoxyParamCaption}
+\item[{Q\-Widget $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}\label{class_project_info_page_a10ff5f1c39bb9235bb862740d2c33967}
+
+
+Constructor, passing a child of parent. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em parent} & The parent for which this will be the child of. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 183 of file New\-Project\-Wizard.\-cpp.
+
+
+
+References m\-\_\-b\-\_\-browse\-Directory, m\-\_\-cb\-\_\-glsl\-Profile, m\-\_\-cb\-\_\-glsl\-Version, m\-\_\-l\-\_\-glsl\-Profile, m\-\_\-l\-\_\-glsl\-Version, m\-\_\-l\-\_\-project\-Directory, m\-\_\-l\-\_\-project\-Name, m\-\_\-le\-\_\-project\-Directory, m\-\_\-le\-\_\-project\-Name, and set\-Project\-Directory().
+
+
+\begin{DoxyCode}
+184   : QWizardPage(parent)
+185 \{
+186   setTitle(tr(\textcolor{stringliteral}{"Project Information"}));
+187   setSubTitle(tr(\textcolor{stringliteral}{"Specify basic information about the project for which you "}
+188                  \textcolor{stringliteral}{"want to generate."}));
+189   \textcolor{comment}{// project name}
+190   m_l_projectName = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"Project name:"}));
+191   m_le_projectName = \textcolor{keyword}{new} QLineEdit();
+192   m_l_projectName->setBuddy(m_le_projectName);
+193 
+194   m_l_projectDirectory = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"Project Directory:"}));
+195   m_b_browseDirectory = \textcolor{keyword}{new} QPushButton(tr(\textcolor{stringliteral}{"Browse..."}));
+196   m_le_projectDirectory = \textcolor{keyword}{new} QLineEdit();
+197   m_l_projectDirectory->setBuddy(m_le_projectDirectory);
+198 
+199   \textcolor{comment}{// create a sperator}
+200   QFrame *line = \textcolor{keyword}{new} QFrame();
+201   line->setObjectName(QString::fromUtf8(\textcolor{stringliteral}{"line"}));
+202   line->setFrameShape(QFrame::HLine);
+203   line->setFrameShadow(QFrame::Sunken);
+204 
+205   m_l_glslVersion = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"GLSL Version:"}));
+206   m_cb_glslVersion = \textcolor{keyword}{new} QComboBox();
+207   QStringList glslVer = \{\textcolor{stringliteral}{"110"}, \textcolor{stringliteral}{"120"}, \textcolor{stringliteral}{"130"}, \textcolor{stringliteral}{"140"}, \textcolor{stringliteral}{"150"}, \textcolor{stringliteral}{"330"}, \textcolor{stringliteral}{"400"},
+208                          \textcolor{stringliteral}{"410"}, \textcolor{stringliteral}{"420"}, \textcolor{stringliteral}{"430"}, \textcolor{stringliteral}{"430"}, \textcolor{stringliteral}{"440"}, \textcolor{stringliteral}{"450"}\};
+209   std::reverse(glslVer.begin(), glslVer.end());
+210   m_cb_glslVersion->addItems(glslVer);
+211   m_cb_glslVersion->setEditable(\textcolor{keyword}{true});
+212   m_cb_glslVersion->setInsertPolicy(QComboBox::InsertAtTop);
+213 
+214   m_l_glslProfile = \textcolor{keyword}{new} QLabel(tr(\textcolor{stringliteral}{"GLSL Profile:"}));
+215   m_cb_glslProfile = \textcolor{keyword}{new} QComboBox();
+216   m_cb_glslProfile->addItems(\{\textcolor{stringliteral}{"core"}, \textcolor{stringliteral}{"compatibility"}\});
+217 
+218   \textcolor{comment}{// register the fields so that the wizard can read the values at the end}
+219   registerField(\textcolor{stringliteral}{"projectName*"}, m_le_projectName);
+220   registerField(\textcolor{stringliteral}{"projectDirectory*"}, m_le_projectDirectory);
+221   registerField(\textcolor{stringliteral}{"glslVersion"}, m_cb_glslVersion, \textcolor{stringliteral}{"currentText"},
+222                 \textcolor{stringliteral}{"currentIndexChanged"});
+223   registerField(\textcolor{stringliteral}{"glslProfile"}, m_cb_glslProfile,\textcolor{stringliteral}{"currentText"},
+224                 \textcolor{stringliteral}{"currentIndexChanged"});
+225 
+226   \textcolor{comment}{// add all the widgets to the layout}
+227   QGridLayout *layout = \textcolor{keyword}{new} QGridLayout;
+228   layout->addWidget(m_l_projectName, 0, 0);
+229   layout->addWidget(m_le_projectName, 0, 1, 1, 2);
+230   layout->addWidget(m_l_projectDirectory, 1, 0);
+231   layout->addWidget(m_le_projectDirectory, 1, 1);
+232   layout->addWidget(m_b_browseDirectory, 1, 2);
+233   layout->addWidget(line, 2,0,1,3);
+234   layout->addWidget(m_l_glslVersion, 3,0);
+235   layout->addWidget(m_cb_glslVersion, 3,1,1,2);
+236   layout->addWidget(m_l_glslProfile, 4,0);
+237   layout->addWidget(m_cb_glslProfile, 4,1,1,2);
+238   setLayout(layout);
+239 
+240   \textcolor{comment}{// connect the browse button to open file dialog}
+241   connect(m_b_browseDirectory, SIGNAL (clicked()),\textcolor{keyword}{this},
+242           SLOT(setProjectDirectory()));
+243 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=336pt]{class_project_info_page_a10ff5f1c39bb9235bb862740d2c33967_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsection{Member Function Documentation}
+\index{Project\-Info\-Page@{Project\-Info\-Page}!initialize\-Page@{initialize\-Page}}
+\index{initialize\-Page@{initialize\-Page}!ProjectInfoPage@{Project\-Info\-Page}}
+\subsubsection[{initialize\-Page}]{\setlength{\rightskip}{0pt plus 5cm}void Project\-Info\-Page\-::initialize\-Page (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\label{class_project_info_page_a1acfe5f0d87ff77485e173080064becc}
+
+
+Used to prepare the Wizard page before it is shown and set default values. 
+
+
+
+Definition at line 246 of file New\-Project\-Wizard.\-cpp.
+
+
+
+References m\-\_\-cb\-\_\-glsl\-Profile, m\-\_\-cb\-\_\-glsl\-Version, m\-\_\-le\-\_\-project\-Directory, and m\-\_\-le\-\_\-project\-Name.
+
+
+\begin{DoxyCode}
+247 \{
+248   m_le_projectName->setText(\textcolor{stringliteral}{"Phong"});
+249   m_le_projectDirectory->setText(QDir::homePath());
+250 
+251   \textcolor{comment}{// get the shader version and set the combobox to the highest compatible}
+252   \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}* glv = glGetString(GL\_SHADING\_LANGUAGE\_VERSION);
+253   QString glVerStrConvert = QString((\textcolor{keyword}{const} \textcolor{keywordtype}{char}* ) glv);
+254   QString glVerStr = glVerStrConvert.left(1) + glVerStrConvert.mid(2,2);
+255 
+256   m_cb_glslVersion->setCurrentText(glVerStr);
+257   m_cb_glslProfile->setCurrentIndex(0);
+258 \}
+\end{DoxyCode}
+\index{Project\-Info\-Page@{Project\-Info\-Page}!set\-Project\-Directory@{set\-Project\-Directory}}
+\index{set\-Project\-Directory@{set\-Project\-Directory}!ProjectInfoPage@{Project\-Info\-Page}}
+\subsubsection[{set\-Project\-Directory}]{\setlength{\rightskip}{0pt plus 5cm}void Project\-Info\-Page\-::set\-Project\-Directory (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}\label{class_project_info_page_a93d2769812d67232e3e2946e496bb22c}
+
+
+Used to fill the project directory line edit by opening a file dialog. 
+
+
+
+Definition at line 261 of file New\-Project\-Wizard.\-cpp.
+
+
+
+References m\-\_\-le\-\_\-project\-Directory.
+
+
+\begin{DoxyCode}
+262 \{
+263   QFileDialog dialog(\textcolor{keyword}{this});
+264   dialog.setFileMode(QFileDialog::Directory);
+265   dialog.setOption(QFileDialog::ShowDirsOnly, \textcolor{keyword}{true});
+266   QStringList folderNames;
+267   \textcolor{keywordflow}{if} (dialog.exec())
+268   \{
+269     folderNames = dialog.selectedFiles();
+270     qDebug() << folderNames;
+271   \}
+272   m_le_projectDirectory->setText(folderNames.first());
+273 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=336pt]{class_project_info_page_a93d2769812d67232e3e2946e496bb22c_icgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsection{Member Data Documentation}
+\index{Project\-Info\-Page@{Project\-Info\-Page}!m\-\_\-b\-\_\-browse\-Directory@{m\-\_\-b\-\_\-browse\-Directory}}
+\index{m\-\_\-b\-\_\-browse\-Directory@{m\-\_\-b\-\_\-browse\-Directory}!ProjectInfoPage@{Project\-Info\-Page}}
+\subsubsection[{m\-\_\-b\-\_\-browse\-Directory}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Push\-Button$\ast$ Project\-Info\-Page\-::m\-\_\-b\-\_\-browse\-Directory\hspace{0.3cm}{\ttfamily [private]}}\label{class_project_info_page_ade3695cf00bace1880f52c5e13c6af6c}
+
+
+Browse directory button which opens a file dialog. 
+
+
+
+Definition at line 180 of file New\-Project\-Wizard.\-h.
+
+\index{Project\-Info\-Page@{Project\-Info\-Page}!m\-\_\-cb\-\_\-glsl\-Profile@{m\-\_\-cb\-\_\-glsl\-Profile}}
+\index{m\-\_\-cb\-\_\-glsl\-Profile@{m\-\_\-cb\-\_\-glsl\-Profile}!ProjectInfoPage@{Project\-Info\-Page}}
+\subsubsection[{m\-\_\-cb\-\_\-glsl\-Profile}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Combo\-Box$\ast$ Project\-Info\-Page\-::m\-\_\-cb\-\_\-glsl\-Profile\hspace{0.3cm}{\ttfamily [private]}}\label{class_project_info_page_a43d00c2c4f79f2559ef60b4ddec96508}
+
+
+Glsl profile version combo box. 
+
+
+
+Definition at line 152 of file New\-Project\-Wizard.\-h.
+
+\index{Project\-Info\-Page@{Project\-Info\-Page}!m\-\_\-cb\-\_\-glsl\-Version@{m\-\_\-cb\-\_\-glsl\-Version}}
+\index{m\-\_\-cb\-\_\-glsl\-Version@{m\-\_\-cb\-\_\-glsl\-Version}!ProjectInfoPage@{Project\-Info\-Page}}
+\subsubsection[{m\-\_\-cb\-\_\-glsl\-Version}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Combo\-Box$\ast$ Project\-Info\-Page\-::m\-\_\-cb\-\_\-glsl\-Version\hspace{0.3cm}{\ttfamily [private]}}\label{class_project_info_page_a953ea9b3d3feec94a101c02f5fa498ea}
+
+
+Glsl file version combo box. 
+
+
+
+Definition at line 148 of file New\-Project\-Wizard.\-h.
+
+\index{Project\-Info\-Page@{Project\-Info\-Page}!m\-\_\-l\-\_\-glsl\-Profile@{m\-\_\-l\-\_\-glsl\-Profile}}
+\index{m\-\_\-l\-\_\-glsl\-Profile@{m\-\_\-l\-\_\-glsl\-Profile}!ProjectInfoPage@{Project\-Info\-Page}}
+\subsubsection[{m\-\_\-l\-\_\-glsl\-Profile}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Label$\ast$ Project\-Info\-Page\-::m\-\_\-l\-\_\-glsl\-Profile\hspace{0.3cm}{\ttfamily [private]}}\label{class_project_info_page_a11590ba9aa35ddc537a8af48c1a3a92c}
+
+
+Glsl profile label. 
+
+
+
+Definition at line 168 of file New\-Project\-Wizard.\-h.
+
+\index{Project\-Info\-Page@{Project\-Info\-Page}!m\-\_\-l\-\_\-glsl\-Version@{m\-\_\-l\-\_\-glsl\-Version}}
+\index{m\-\_\-l\-\_\-glsl\-Version@{m\-\_\-l\-\_\-glsl\-Version}!ProjectInfoPage@{Project\-Info\-Page}}
+\subsubsection[{m\-\_\-l\-\_\-glsl\-Version}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Label$\ast$ Project\-Info\-Page\-::m\-\_\-l\-\_\-glsl\-Version\hspace{0.3cm}{\ttfamily [private]}}\label{class_project_info_page_a1f4184546c50f902b0f9f61e9a794a55}
+
+
+Glsl version label. 
+
+
+
+Definition at line 164 of file New\-Project\-Wizard.\-h.
+
+\index{Project\-Info\-Page@{Project\-Info\-Page}!m\-\_\-l\-\_\-project\-Directory@{m\-\_\-l\-\_\-project\-Directory}}
+\index{m\-\_\-l\-\_\-project\-Directory@{m\-\_\-l\-\_\-project\-Directory}!ProjectInfoPage@{Project\-Info\-Page}}
+\subsubsection[{m\-\_\-l\-\_\-project\-Directory}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Label$\ast$ Project\-Info\-Page\-::m\-\_\-l\-\_\-project\-Directory\hspace{0.3cm}{\ttfamily [private]}}\label{class_project_info_page_abce6f626d71d1846b8d50f2768a601c7}
+
+
+\doxyref{Project}{p.}{class_project} directory label. 
+
+
+
+Definition at line 160 of file New\-Project\-Wizard.\-h.
+
+\index{Project\-Info\-Page@{Project\-Info\-Page}!m\-\_\-l\-\_\-project\-Name@{m\-\_\-l\-\_\-project\-Name}}
+\index{m\-\_\-l\-\_\-project\-Name@{m\-\_\-l\-\_\-project\-Name}!ProjectInfoPage@{Project\-Info\-Page}}
+\subsubsection[{m\-\_\-l\-\_\-project\-Name}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Label$\ast$ Project\-Info\-Page\-::m\-\_\-l\-\_\-project\-Name\hspace{0.3cm}{\ttfamily [private]}}\label{class_project_info_page_a7cc0262b4eb38a62a59e055b4053d4b3}
+
+
+\doxyref{Project}{p.}{class_project} name label. 
+
+
+
+Definition at line 156 of file New\-Project\-Wizard.\-h.
+
+\index{Project\-Info\-Page@{Project\-Info\-Page}!m\-\_\-le\-\_\-project\-Directory@{m\-\_\-le\-\_\-project\-Directory}}
+\index{m\-\_\-le\-\_\-project\-Directory@{m\-\_\-le\-\_\-project\-Directory}!ProjectInfoPage@{Project\-Info\-Page}}
+\subsubsection[{m\-\_\-le\-\_\-project\-Directory}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Line\-Edit$\ast$ Project\-Info\-Page\-::m\-\_\-le\-\_\-project\-Directory\hspace{0.3cm}{\ttfamily [private]}}\label{class_project_info_page_a28f258a175046e9f2dbfcb4f4ef76832}
+
+
+\doxyref{Project}{p.}{class_project} directory entry box. 
+
+
+
+Definition at line 172 of file New\-Project\-Wizard.\-h.
+
+\index{Project\-Info\-Page@{Project\-Info\-Page}!m\-\_\-le\-\_\-project\-Name@{m\-\_\-le\-\_\-project\-Name}}
+\index{m\-\_\-le\-\_\-project\-Name@{m\-\_\-le\-\_\-project\-Name}!ProjectInfoPage@{Project\-Info\-Page}}
+\subsubsection[{m\-\_\-le\-\_\-project\-Name}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Line\-Edit$\ast$ Project\-Info\-Page\-::m\-\_\-le\-\_\-project\-Name\hspace{0.3cm}{\ttfamily [private]}}\label{class_project_info_page_af4305bcdb71ef249a1a71a4f5e7e8a3f}
+
+
+\doxyref{Project}{p.}{class_project} name entry box. 
+
+
+
+Definition at line 176 of file New\-Project\-Wizard.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+{\bf New\-Project\-Wizard.\-h}\item 
+{\bf New\-Project\-Wizard.\-cpp}\end{DoxyCompactItemize}

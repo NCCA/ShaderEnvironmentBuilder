@@ -1,0 +1,4 @@
+<map id="ParserLib::initializeUniformData" name="ParserLib::initializeUniformData">
+<area shape="rect" id="node2" href="$class_shader_manager.html#ac7f57e1b3e623ef4693389b009c44089" title="get the current data from the shader manager " alt="" coords="489,5,653,32"/>
+<area shape="rect" id="node3" href="$class_parser_lib.html#a748612fadf3a391ead34306bd3f39f77" title="used to translate the data type name from a number into a name. e.g. 35676 &#45;&gt; mat4 The following sect..." alt="" coords="253,31,440,57"/>
+</map>

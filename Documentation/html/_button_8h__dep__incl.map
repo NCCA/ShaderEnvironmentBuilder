@@ -1,0 +1,12 @@
+<map id="Button.h" name="Button.h">
+<area shape="rect" id="node2" href="$_button_8cpp.html" title="Button.cpp" alt="" coords="5,80,88,107"/>
+<area shape="rect" id="node3" href="$_button_lib_8h.html" title="this class creates a button library to store buttons and set uniform values " alt="" coords="113,80,199,107"/>
+<area shape="rect" id="node5" href="$_main_window_8h.html" title="the MainWindow, GUI for our program " alt="" coords="275,155,380,181"/>
+<area shape="rect" id="node4" href="$_button_lib_8cpp.html" title="ButtonLib.cpp" alt="" coords="48,155,149,181"/>
+<area shape="rect" id="node6" href="$main_8cpp.html" title="main.cpp" alt="" coords="408,229,483,256"/>
+<area shape="rect" id="node7" href="$_main_window_8cpp.html" title="MainWindow.cpp" alt="" coords="507,229,625,256"/>
+<area shape="rect" id="node8" href="$_n_g_l_scene_8h.html" title="a modified Qt GL widget class for " alt="" coords="154,229,248,256"/>
+<area shape="rect" id="node10" href="$_startup_dialog_8h.html" title="StartupDialog.h" alt="" coords="273,229,383,256"/>
+<area shape="rect" id="node9" href="$_n_g_l_scene_8cpp.html" title="NGLScene.cpp" alt="" coords="140,304,249,331"/>
+<area shape="rect" id="node11" href="$_startup_dialog_8cpp.html" title="StartupDialog.cpp" alt="" coords="274,304,397,331"/>
+</map>

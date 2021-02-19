@@ -1,0 +1,12 @@
+<map id="NGLScene::initGL" name="NGLScene::initGL">
+<area shape="rect" id="node2" href="$_ceb_errors_8cpp.html#a7f539a3701e24afbe6c9c8ec65f48d78" title="Clears all the error messages in the current openGL context. " alt="" coords="225,5,335,32"/>
+<area shape="rect" id="node3" href="$class_shader_manager.html#a56ea270f6b8f812ad80dc4ad33c47125" title="method to return whether the current shader successfully compiled " alt="" coords="179,56,381,83"/>
+<area shape="rect" id="node4" href="$class_shader_manager.html#a1e32b97729d0eddce1de9b51a8c3d19a" title="method to return the most recent error log " alt="" coords="187,107,373,133"/>
+<area shape="rect" id="node5" href="$class_shader_manager.html#a476be257abd4b3057ce3be7acb05e178" title="method called when 1st opening program to initialise the default phong shader " alt="" coords="197,157,363,184"/>
+<area shape="rect" id="node9" href="$class_shader_manager.html#aacfb02025cb97795c21e09e3bf8e3c52" title="method to return whether the shader manager successfully initialised " alt="" coords="207,208,353,235"/>
+<area shape="rect" id="node10" href="$class_n_g_l_scene.html#af6e2fbc572f1ec3021f2b73fc87ab430" title="Stores a QString. Used to edit the error log message. " alt="" coords="195,259,365,285"/>
+<area shape="rect" id="node11" href="$class_main_window.html#a1fc3e7c122b246d3cacbaaccfe490724" title="set terminal text " alt="" coords="183,309,377,336"/>
+<area shape="rect" id="node6" href="$class_shader_manager.html#aa4ef5235b1be61c38872a6c865d740bc" title="method to set the data for the current shader " alt="" coords="456,128,619,155"/>
+<area shape="rect" id="node7" href="$class_shader_manager.html#acf0d69f6515e8438ba04330a04264931" title="method to check compiling errors for all shader objects attached " alt="" coords="429,179,645,221"/>
+<area shape="rect" id="node8" href="$class_shader_manager.html#aec181009461227ed7ec70fca29111985" title="method to check compiling errors for a single shader object " alt="" coords="694,179,895,221"/>
+</map>

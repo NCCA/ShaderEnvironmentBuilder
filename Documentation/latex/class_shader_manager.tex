@@ -1,0 +1,896 @@
+\section{Shader\-Manager Class Reference}
+\label{class_shader_manager}\index{Shader\-Manager@{Shader\-Manager}}
+
+
+Handles creation and compilation of shaders via modified N\-G\-L Shader\-Lib.  
+
+
+
+
+{\ttfamily \#include $<$Shader\-Manager.\-h$>$}
+
+
+
+Collaboration diagram for Shader\-Manager\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=148pt]{class_shader_manager__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\bf Shader\-Manager} ()
+\begin{DoxyCompactList}\small\item\em default constructor for \doxyref{Shader\-Manager}{p.}{class_shader_manager} class \end{DoxyCompactList}\item 
+void {\bf create\-Shader\-Program} (std\-::string \-\_\-name)
+\begin{DoxyCompactList}\small\item\em method to create a new shader program object \end{DoxyCompactList}\item 
+void {\bf use} (uint \-\_\-shader\-Type)
+\begin{DoxyCompactList}\small\item\em method to set Open\-G\-L to use the current shader program \end{DoxyCompactList}\item 
+void {\bf initialize} ()
+\begin{DoxyCompactList}\small\item\em method called when 1st opening program to initialise the default phong shader \end{DoxyCompactList}\item 
+void {\bf compile\-Shader} (Q\-String \-\_\-vert\-Source, Q\-String \-\_\-frag\-Source)
+\begin{DoxyCompactList}\small\item\em method called to compile the currently active shader \end{DoxyCompactList}\item 
+bool {\bf is\-Init} ()
+\begin{DoxyCompactList}\small\item\em method to return whether the shader manager successfully initialised \end{DoxyCompactList}\item 
+bool {\bf compile\-Status} ()
+\begin{DoxyCompactList}\small\item\em method to return whether the current shader successfully compiled \end{DoxyCompactList}\item 
+Q\-String {\bf get\-Error\-Log} ()
+\begin{DoxyCompactList}\small\item\em method to return the most recent error log \end{DoxyCompactList}\item 
+void {\bf set\-Data} (std\-::string \-\_\-name, std\-::string \-\_\-vert, std\-::string \-\_\-frag)
+\begin{DoxyCompactList}\small\item\em method to set the data for the current shader \end{DoxyCompactList}\item 
+{\bf Shader\-Program\-Data} {\bf get\-Data} ()
+\begin{DoxyCompactList}\small\item\em get the current data from the shader manager \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool {\bf check\-Compile\-Error} (std\-::string \-\_\-shader\-Name, Q\-String $\ast$o\-\_\-log)
+\begin{DoxyCompactList}\small\item\em method to check compiling errors for a single shader object \end{DoxyCompactList}\item 
+bool {\bf check\-All\-Compile\-Error} (Q\-String $\ast$o\-\_\-log)
+\begin{DoxyCompactList}\small\item\em method to check compiling errors for all shader objects attached \end{DoxyCompactList}\item 
+bool {\bf check\-Link\-Error} (Q\-String $\ast$o\-\_\-log)
+\begin{DoxyCompactList}\small\item\em method to check link error \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool {\bf m\-\_\-init}
+\begin{DoxyCompactList}\small\item\em flag for success of shader manager initialisation \end{DoxyCompactList}\item 
+bool {\bf m\-\_\-compile\-Status}
+\begin{DoxyCompactList}\small\item\em flag for the success of compilation of currently active shader \end{DoxyCompactList}\item 
+Q\-String {\bf m\-\_\-error\-Log}
+\begin{DoxyCompactList}\small\item\em error log for storing compiling errors \end{DoxyCompactList}\item 
+{\bf Shader\-Program\-Data} {\bf m\-\_\-data}
+\begin{DoxyCompactList}\small\item\em structure containing names for currently actuve shader program \end{DoxyCompactList}\item 
+G\-Luint {\bf m\-\_\-texture\-Name}
+\begin{DoxyCompactList}\small\item\em variable holding the identity of the bound texture map \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Handles creation and compilation of shaders via modified N\-G\-L Shader\-Lib. 
+
+will check and return compile status to user whether successful or unsuccessful. 
+
+Definition at line 34 of file Shader\-Manager.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Shader\-Manager@{Shader\-Manager}!Shader\-Manager@{Shader\-Manager}}
+\index{Shader\-Manager@{Shader\-Manager}!ShaderManager@{Shader\-Manager}}
+\subsubsection[{Shader\-Manager}]{\setlength{\rightskip}{0pt plus 5cm}Shader\-Manager\-::\-Shader\-Manager (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_shader_manager_aca25f81fd10a02b3e97e9c459b864186}
+
+
+default constructor for \doxyref{Shader\-Manager}{p.}{class_shader_manager} class 
+
+
+
+Definition at line 10 of file Shader\-Manager.\-cpp.
+
+
+
+References m\-\_\-data, Shader\-Program\-Data\-::m\-\_\-frag, m\-\_\-init, Shader\-Program\-Data\-::m\-\_\-name, and Shader\-Program\-Data\-::m\-\_\-vert.
+
+
+\begin{DoxyCode}
+11 \{
+12   m_data.m_name = \textcolor{stringliteral}{"untitled"};
+13   m_data.m_vert = \textcolor{stringliteral}{""};
+14   m_data.m_frag = \textcolor{stringliteral}{""};
+15   m_init = \textcolor{keyword}{false};
+16 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{Shader\-Manager@{Shader\-Manager}!check\-All\-Compile\-Error@{check\-All\-Compile\-Error}}
+\index{check\-All\-Compile\-Error@{check\-All\-Compile\-Error}!ShaderManager@{Shader\-Manager}}
+\subsubsection[{check\-All\-Compile\-Error}]{\setlength{\rightskip}{0pt plus 5cm}bool Shader\-Manager\-::check\-All\-Compile\-Error (
+\begin{DoxyParamCaption}
+\item[{Q\-String $\ast$}]{o\-\_\-log}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}\label{class_shader_manager_acf0d69f6515e8438ba04330a04264931}
+
+
+method to check compiling errors for all shader objects attached 
+
+to currently active shader program 
+\begin{DoxyParams}{Parameters}
+{\em o\-\_\-log} & the output error log \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 254 of file Shader\-Manager.\-cpp.
+
+
+
+References check\-Compile\-Error(), m\-\_\-data, Shader\-Program\-Data\-::m\-\_\-frag, and Shader\-Program\-Data\-::m\-\_\-vert.
+
+
+\begin{DoxyCode}
+255 \{
+256   GLint isAllCompiled = GL\_TRUE;
+257   QString temp\_log;
+258   std::vector <std::string> shaderPrograms = \{m_data.m_vert, m_data.m_frag\};
+259 
+260   \textcolor{comment}{// Iterate between vertex and fragment shaders to check compile errors}
+261   \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} shaderProg: shaderPrograms)
+262   \{
+263     GLint isCompiled = checkCompileError(shaderProg, &temp\_log);
+264     \textcolor{keywordflow}{if} (!isCompiled)
+265     \{
+266       o\_log->append(QString(\textcolor{stringliteral}{"%1:\(\backslash\)n"}).arg(shaderProg.c\_str()));
+267       o\_log->append(temp\_log);
+268     \}
+269     \textcolor{keywordflow}{if} (isCompiled == GL\_FALSE)
+270       isAllCompiled = isCompiled;
+271   \}
+272   \textcolor{keywordflow}{return} isAllCompiled;
+273 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_shader_manager_acf0d69f6515e8438ba04330a04264931_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_shader_manager_acf0d69f6515e8438ba04330a04264931_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Shader\-Manager@{Shader\-Manager}!check\-Compile\-Error@{check\-Compile\-Error}}
+\index{check\-Compile\-Error@{check\-Compile\-Error}!ShaderManager@{Shader\-Manager}}
+\subsubsection[{check\-Compile\-Error}]{\setlength{\rightskip}{0pt plus 5cm}bool Shader\-Manager\-::check\-Compile\-Error (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{\-\_\-shader\-Name, }
+\item[{Q\-String $\ast$}]{o\-\_\-log}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}\label{class_shader_manager_aec181009461227ed7ec70fca29111985}
+
+
+method to check compiling errors for a single shader object 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \-\_\-shade\-Name} & the name of the shader object to check \\
+\hline
+{\em o\-\_\-log} & the output error log \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 195 of file Shader\-Manager.\-cpp.
+
+
+\begin{DoxyCode}
+196 \{
+197   GLint isCompiled = GL\_FALSE;
+198   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
+199   GLuint shaderId = shader->getShaderID(\_shaderName);
+200 
+201   \textcolor{comment}{// Get compile status of shader}
+202   glGetShaderiv(shaderId, GL\_COMPILE\_STATUS, &isCompiled);
+203   \textcolor{keywordflow}{if}(isCompiled == GL\_FALSE)
+204   \{
+205     \textcolor{comment}{// Receive info log}
+206     GLint maxLength = 0;
+207     glGetShaderiv(shaderId, GL\_INFO\_LOG\_LENGTH, &maxLength);
+208 
+209     \textcolor{comment}{// The maxLength includes the NULL character}
+210     std::vector<GLchar> errorLog(maxLength);
+211     glGetShaderInfoLog(shaderId, maxLength, &maxLength, &errorLog[0]);
+212 
+213     \textcolor{comment}{//  Write error log to an std::string to be output at QString}
+214     std::string s(errorLog.begin(), errorLog.end());
+215 
+216     QString errLog = QString(s.c\_str());
+217 
+218     *o\_log = errLog;
+219   \}
+220   \textcolor{keywordflow}{return} isCompiled;
+221 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_shader_manager_aec181009461227ed7ec70fca29111985_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Shader\-Manager@{Shader\-Manager}!check\-Link\-Error@{check\-Link\-Error}}
+\index{check\-Link\-Error@{check\-Link\-Error}!ShaderManager@{Shader\-Manager}}
+\subsubsection[{check\-Link\-Error}]{\setlength{\rightskip}{0pt plus 5cm}bool Shader\-Manager\-::check\-Link\-Error (
+\begin{DoxyParamCaption}
+\item[{Q\-String $\ast$}]{o\-\_\-log}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}\label{class_shader_manager_a733004d489eea80446ca07b3c11b7ede}
+
+
+method to check link error 
+
+
+\begin{DoxyParams}{Parameters}
+{\em o\-\_\-log} & the output error log \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 223 of file Shader\-Manager.\-cpp.
+
+
+
+References m\-\_\-data, and Shader\-Program\-Data\-::m\-\_\-name.
+
+
+\begin{DoxyCode}
+224 \{
+225   GLint isCompiled = GL\_FALSE;
+226   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
+227   GLuint progId = shader->getProgramID(m_data.m_name);
+228   GLint infologLength = 0;
+229 
+230   glGetProgramiv(progId,GL\_INFO\_LOG\_LENGTH,&infologLength);
+231 
+232   \textcolor{keywordflow}{if}(infologLength > 0)
+233   \{
+234     GLint charsWritten  = 0;
+235     std::vector<GLchar> errorLog(infologLength);
+236     glGetProgramInfoLog(progId, infologLength, &charsWritten, &errorLog[0]);
+237 
+238     \textcolor{comment}{//  Write error log to an std::string to be output at QString}
+239     std::string s(errorLog.begin(), errorLog.end());
+240     QString errLog = QString(s.c\_str());
+241 
+242     glGetProgramiv(progId, GL\_LINK\_STATUS, &isCompiled);
+243     o\_log->append(errLog);
+244     \textcolor{keywordflow}{if}( infologLength == GL\_FALSE)
+245     \{
+246       std::cerr<<\textcolor{stringliteral}{"Program link failed \(\backslash\)n"};
+247     \}
+248   \}
+249   \textcolor{keywordflow}{return} isCompiled;
+250 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_shader_manager_a733004d489eea80446ca07b3c11b7ede_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Shader\-Manager@{Shader\-Manager}!compile\-Shader@{compile\-Shader}}
+\index{compile\-Shader@{compile\-Shader}!ShaderManager@{Shader\-Manager}}
+\subsubsection[{compile\-Shader}]{\setlength{\rightskip}{0pt plus 5cm}void Shader\-Manager\-::compile\-Shader (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{\-\_\-vert\-Source, }
+\item[{Q\-String}]{\-\_\-frag\-Source}
+\end{DoxyParamCaption}
+)}\label{class_shader_manager_a2f344ea91238f6a7a34fe26f5d2bdfd0}
+
+
+method called to compile the currently active shader 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \-\_\-vert\-Source} & the source code for the vertex shader \\
+\hline
+{\em \-\_\-frag\-Source} & the source code for the fragment shader \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 143 of file Shader\-Manager.\-cpp.
+
+
+
+References check\-All\-Compile\-Error(), check\-Link\-Error(), m\-\_\-compile\-Status, m\-\_\-data, m\-\_\-error\-Log, Shader\-Program\-Data\-::m\-\_\-frag, Shader\-Program\-Data\-::m\-\_\-name, m\-\_\-texture\-Name, and Shader\-Program\-Data\-::m\-\_\-vert.
+
+
+\begin{DoxyCode}
+144 \{
+145   \textcolor{comment}{//clear the error log}
+146   m_errorLog.clear();
+147   \textcolor{comment}{//grab an instance of the shader lib}
+148   ngl::ShaderLib *shaderLib=ngl::ShaderLib::instance();
+149 
+150   \textcolor{comment}{// convert from QString to std::string for compiling}
+151   shaderLib->loadShaderSourceFromString(m_data.m_vert, \_vertSource.toStdString());
+152   shaderLib->loadShaderSourceFromString(m_data.m_frag, \_fragSource.toStdString());
+153 
+154   \textcolor{comment}{// compile shaders}
+155   shaderLib->compileShader(m_data.m_vert);
+156   shaderLib->compileShader(m_data.m_frag);
+157 
+158   \textcolor{comment}{//check for compile errors}
+159   \textcolor{keywordflow}{if} (!checkAllCompileError(&m_errorLog))
+160   \{
+161     \textcolor{comment}{// output any compile errors to user}
+162     std::cout << m_errorLog.toUtf8().constData();
+163     m_compileStatus = \textcolor{keyword}{false};
+164   \}
+165   \textcolor{keywordflow}{else}
+166   \{
+167     m_compileStatus = \textcolor{keyword}{true};
+168 
+169     \textcolor{comment}{// add them to the program}
+170     shaderLib->attachShaderToProgram(m_data.m_name,m_data.m_vert);
+171     shaderLib->attachShaderToProgram(m_data.m_name,m_data.m_frag);
+172 
+173     \textcolor{comment}{// now we have associated this data we can link the shader}
+174     shaderLib->linkProgramObject(m_data.m_name);
+175 
+176     \textcolor{comment}{// use the shader program}
+177     (*shaderLib)[m_data.m_name]->use();
+178     \textcolor{keywordflow}{if} (!checkLinkError(&m_errorLog))
+179     \{
+180       \textcolor{comment}{// output any compile errors to user}
+181       std::cout << m_errorLog.toUtf8().constData();
+182       m_compileStatus = \textcolor{keyword}{false};
+183     \}
+184     \textcolor{keywordflow}{else}
+185     \{
+186       m_errorLog.append(\textcolor{stringliteral}{"No Errors"});
+187     \}
+188     ngl::Texture texture(\textcolor{stringliteral}{"textures/rustTexture.jpg"});
+189     m_textureName=texture.setTextureGL();
+190   \}
+191 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_shader_manager_a2f344ea91238f6a7a34fe26f5d2bdfd0_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_shader_manager_a2f344ea91238f6a7a34fe26f5d2bdfd0_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Shader\-Manager@{Shader\-Manager}!compile\-Status@{compile\-Status}}
+\index{compile\-Status@{compile\-Status}!ShaderManager@{Shader\-Manager}}
+\subsubsection[{compile\-Status}]{\setlength{\rightskip}{0pt plus 5cm}bool Shader\-Manager\-::compile\-Status (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_shader_manager_a56ea270f6b8f812ad80dc4ad33c47125}
+
+
+method to return whether the current shader successfully compiled 
+
+
+
+Definition at line 68 of file Shader\-Manager.\-h.
+
+
+
+References m\-\_\-compile\-Status.
+
+
+\begin{DoxyCode}
+68 \{\textcolor{keywordflow}{return} m_compileStatus;\}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_shader_manager_a56ea270f6b8f812ad80dc4ad33c47125_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Shader\-Manager@{Shader\-Manager}!create\-Shader\-Program@{create\-Shader\-Program}}
+\index{create\-Shader\-Program@{create\-Shader\-Program}!ShaderManager@{Shader\-Manager}}
+\subsubsection[{create\-Shader\-Program}]{\setlength{\rightskip}{0pt plus 5cm}void Shader\-Manager\-::create\-Shader\-Program (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{\-\_\-name}
+\end{DoxyParamCaption}
+)}\label{class_shader_manager_aed13243851b7441a686ca490d08c19a2}
+
+
+method to create a new shader program object 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \-\_\-name} & the name of the shader program to create \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 20 of file Shader\-Manager.\-cpp.
+
+
+
+References m\-\_\-data, Shader\-Program\-Data\-::m\-\_\-frag, Shader\-Program\-Data\-::m\-\_\-name, Shader\-Program\-Data\-::m\-\_\-vert, set\-Data(), and use().
+
+
+\begin{DoxyCode}
+21 \{
+22   \textcolor{comment}{//set our data}
+23   setData(\_name, \_name+\textcolor{stringliteral}{"Vertex"}, \_name+\textcolor{stringliteral}{"Fragment"});
+24   \textcolor{comment}{//grab an instance of the shader lib}
+25   ngl::ShaderLib *shaderLib = ngl::ShaderLib::instance();
+26   \textcolor{comment}{//create an empty shader program}
+27   shaderLib->createShaderProgram(\_name);
+28   \textcolor{comment}{//create empty shader objects for vertex and fragment shaders}
+29   shaderLib->attachShader(m_data.m_vert, ngl::ShaderType::VERTEX);
+30   shaderLib->attachShader(m_data.m_frag, ngl::ShaderType::FRAGMENT);
+31   \textcolor{comment}{//attach empty shader objects to the shader program}
+32   shaderLib->attachShaderToProgram(m_data.m_name, m_data.m_vert);
+33   shaderLib->attachShaderToProgram(m_data.m_name, m_data.m_frag);
+34 
+35   shaderLib->bindAttribute(m_data.m_name,0,\textcolor{stringliteral}{"inVert"});
+36   \textcolor{comment}{// attribute 1 is the UV data u,v (if present)}
+37   shaderLib->bindAttribute(m_data.m_name,1,\textcolor{stringliteral}{"inUV"});
+38   \textcolor{comment}{// attribute 2 are the normals x,y,z}
+39   shaderLib->bindAttribute(m_data.m_name,2,\textcolor{stringliteral}{"inNormal"});
+40 
+41   use(0);
+42 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_shader_manager_aed13243851b7441a686ca490d08c19a2_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_shader_manager_aed13243851b7441a686ca490d08c19a2_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Shader\-Manager@{Shader\-Manager}!get\-Data@{get\-Data}}
+\index{get\-Data@{get\-Data}!ShaderManager@{Shader\-Manager}}
+\subsubsection[{get\-Data}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Shader\-Program\-Data} Shader\-Manager\-::get\-Data (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_shader_manager_ac7f57e1b3e623ef4693389b009c44089}
+
+
+get the current data from the shader manager 
+
+\begin{DoxyReturn}{Returns}
+the shader data 
+\end{DoxyReturn}
+
+
+Definition at line 87 of file Shader\-Manager.\-h.
+
+
+
+References m\-\_\-data.
+
+
+\begin{DoxyCode}
+87 \{\textcolor{keywordflow}{return} m_data;\}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_shader_manager_ac7f57e1b3e623ef4693389b009c44089_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Shader\-Manager@{Shader\-Manager}!get\-Error\-Log@{get\-Error\-Log}}
+\index{get\-Error\-Log@{get\-Error\-Log}!ShaderManager@{Shader\-Manager}}
+\subsubsection[{get\-Error\-Log}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Shader\-Manager\-::get\-Error\-Log (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_shader_manager_a1e32b97729d0eddce1de9b51a8c3d19a}
+
+
+method to return the most recent error log 
+
+
+
+Definition at line 72 of file Shader\-Manager.\-h.
+
+
+
+References m\-\_\-error\-Log.
+
+
+\begin{DoxyCode}
+72 \{\textcolor{keywordflow}{return} m_errorLog;\}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_shader_manager_a1e32b97729d0eddce1de9b51a8c3d19a_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Shader\-Manager@{Shader\-Manager}!initialize@{initialize}}
+\index{initialize@{initialize}!ShaderManager@{Shader\-Manager}}
+\subsubsection[{initialize}]{\setlength{\rightskip}{0pt plus 5cm}void Shader\-Manager\-::initialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_shader_manager_a476be257abd4b3057ce3be7acb05e178}
+
+
+method called when 1st opening program to initialise the default phong shader 
+
+The following section is from \-:-\/ Jon Macey (2016) Affine\-Transforms [online]. [Accessed 2016]. Available from\-: {\tt https\-://github.\-com/\-N\-C\-C\-A/\-Affine\-Transforms}.
+
+End of Citation 
+
+Definition at line 62 of file Shader\-Manager.\-cpp.
+
+
+
+References check\-All\-Compile\-Error(), m\-\_\-compile\-Status, m\-\_\-data, m\-\_\-error\-Log, m\-\_\-init, Shader\-Program\-Data\-::m\-\_\-name, and set\-Data().
+
+
+\begin{DoxyCode}
+63 \{
+64   \textcolor{comment}{//set our data}
+65   setData(\textcolor{stringliteral}{"Phong"}, \textcolor{stringliteral}{"PhongVertex"}, \textcolor{stringliteral}{"PhongFragment"});
+66   \textcolor{comment}{//grab an instance of shader manager}
+67   ngl::ShaderLib *shaderLib=ngl::ShaderLib::instance();
+68   \textcolor{comment}{//create an empty shader program called Phong}
+69   shaderLib->createShaderProgram(\textcolor{stringliteral}{"Phong"});
+70   \textcolor{comment}{// create and empty shader objects from fragment and vertex shaders}
+71   shaderLib->attachShader(\textcolor{stringliteral}{"PhongVertex"},ngl::ShaderType::VERTEX);
+72   shaderLib->attachShader(\textcolor{stringliteral}{"PhongFragment"},ngl::ShaderType::FRAGMENT);
+73   \textcolor{comment}{// load the source code to the shader objects}
+74   shaderLib->loadShaderSource(\textcolor{stringliteral}{"PhongVertex"},\textcolor{stringliteral}{"shaders/PhongVertex.glsl"});
+75   shaderLib->loadShaderSource(\textcolor{stringliteral}{"PhongFragment"},\textcolor{stringliteral}{"shaders/PhongFragment.glsl"});
+76   \textcolor{comment}{// compile the shaders}
+77   shaderLib->compileShader(\textcolor{stringliteral}{"PhongFragment"});
+78   shaderLib->compileShader(\textcolor{stringliteral}{"PhongVertex"});
+79 
+80   \textcolor{comment}{// check if the shader compiled successfully}
+81   \textcolor{keywordflow}{if} (!checkAllCompileError(&m_errorLog))
+82   \{
+83     \textcolor{comment}{// output code errors to user}
+84     std::cout << m_errorLog.toUtf8().constData();
+85     m_compileStatus = \textcolor{keyword}{false};
+86     std::cout<<\textcolor{stringliteral}{"Initial Program compilation fail"}<<std::endl;
+87   \}
+88   \textcolor{keywordflow}{else}
+89   \{
+90     \textcolor{comment}{// user's code has no errors, will now be attached to program}
+91     m_compileStatus = \textcolor{keyword}{true};
+92     shaderLib->attachShaderToProgram(\textcolor{stringliteral}{"Phong"},\textcolor{stringliteral}{"PhongVertex"});
+93     shaderLib->attachShaderToProgram(\textcolor{stringliteral}{"Phong"},\textcolor{stringliteral}{"PhongFragment"});
+94     \textcolor{comment}{// now bind the shader attributes for most NGL primitives we use the following}
+95     \textcolor{comment}{// layout attribute 0 is the vertex data (x,y,z)}
+96     shaderLib->bindAttribute(\textcolor{stringliteral}{"Phong"},0,\textcolor{stringliteral}{"inVert"});
+97     \textcolor{comment}{// attribute 1 is the UV data u,v (if present)}
+98     shaderLib->bindAttribute(\textcolor{stringliteral}{"Phong"},1,\textcolor{stringliteral}{"inUV"});
+99     \textcolor{comment}{// attribute 2 are the normals x,y,z}
+100     shaderLib->bindAttribute(\textcolor{stringliteral}{"Phong"},2,\textcolor{stringliteral}{"inNormal"});
+101     \textcolor{comment}{// now we have associated this data we can link the shader}
+102     shaderLib->linkProgramObject(\textcolor{stringliteral}{"Phong"});
+103     \textcolor{comment}{// and make it active ready to load values}
+104     shaderLib->use(m_data.m_name);
+105 
+109     shaderLib->createShaderProgram(\textcolor{stringliteral}{"normalShader"});
+110     constexpr \textcolor{keyword}{auto} normalVert=\textcolor{stringliteral}{"normalVertex"};
+111     constexpr \textcolor{keyword}{auto} normalGeo=\textcolor{stringliteral}{"normalGeo"};
+112     constexpr \textcolor{keyword}{auto} normalFrag=\textcolor{stringliteral}{"normalFrag"};
+113     shaderLib->attachShader(normalVert,ngl::ShaderType::VERTEX);
+114     shaderLib->attachShader(normalFrag,ngl::ShaderType::FRAGMENT);
+115     shaderLib->loadShaderSource(normalVert,\textcolor{stringliteral}{"shaders/normalVertex.glsl"});
+116     shaderLib->loadShaderSource(normalFrag,\textcolor{stringliteral}{"shaders/normalFragment.glsl"});
+117     shaderLib->compileShader(normalVert);
+118     shaderLib->compileShader(normalFrag);
+119     shaderLib->attachShaderToProgram(\textcolor{stringliteral}{"normalShader"},normalVert);
+120     shaderLib->attachShaderToProgram(\textcolor{stringliteral}{"normalShader"},normalFrag);
+121     shaderLib->attachShader(normalGeo,ngl::ShaderType::GEOMETRY);
+122     shaderLib->loadShaderSource(normalGeo,\textcolor{stringliteral}{"shaders/normalGeo.glsl"});
+123     shaderLib->compileShader(normalGeo);
+124     shaderLib->attachShaderToProgram(\textcolor{stringliteral}{"normalShader"},normalGeo);
+125     shaderLib->linkProgramObject(\textcolor{stringliteral}{"normalShader"});
+126     shaderLib->use(\textcolor{stringliteral}{"normalShader"});
+127     \textcolor{comment}{// now pass the modelView and projection values to the shader}
+128     shaderLib->setUniform(\textcolor{stringliteral}{"normalSize"},0.1f);
+129     shaderLib->setUniform(\textcolor{stringliteral}{"vertNormalColour"},1.0f,1.0f,0.0f,1.0f);
+130     shaderLib->setUniform(\textcolor{stringliteral}{"faceNormalColour"},.0f,1.0f,0.0f,1.0f);
+131     shaderLib->setShaderParam1i(\textcolor{stringliteral}{"drawFaceNormals"},\textcolor{keyword}{true});
+132     shaderLib->setShaderParam1i(\textcolor{stringliteral}{"drawVertexNormals"},\textcolor{keyword}{true});
+134 
+135 
+136     \textcolor{comment}{// set initialise flag to true}
+137     m_init = \textcolor{keyword}{true};
+138   \}
+139 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_shader_manager_a476be257abd4b3057ce3be7acb05e178_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_shader_manager_a476be257abd4b3057ce3be7acb05e178_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Shader\-Manager@{Shader\-Manager}!is\-Init@{is\-Init}}
+\index{is\-Init@{is\-Init}!ShaderManager@{Shader\-Manager}}
+\subsubsection[{is\-Init}]{\setlength{\rightskip}{0pt plus 5cm}bool Shader\-Manager\-::is\-Init (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_shader_manager_aacfb02025cb97795c21e09e3bf8e3c52}
+
+
+method to return whether the shader manager successfully initialised 
+
+
+
+Definition at line 64 of file Shader\-Manager.\-h.
+
+
+
+References m\-\_\-init.
+
+
+\begin{DoxyCode}
+64 \{\textcolor{keywordflow}{return} m_init;\}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_shader_manager_aacfb02025cb97795c21e09e3bf8e3c52_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Shader\-Manager@{Shader\-Manager}!set\-Data@{set\-Data}}
+\index{set\-Data@{set\-Data}!ShaderManager@{Shader\-Manager}}
+\subsubsection[{set\-Data}]{\setlength{\rightskip}{0pt plus 5cm}void Shader\-Manager\-::set\-Data (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{\-\_\-name, }
+\item[{std\-::string}]{\-\_\-vert, }
+\item[{std\-::string}]{\-\_\-frag}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_shader_manager_aa4ef5235b1be61c38872a6c865d740bc}
+
+
+method to set the data for the current shader 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \-\_\-name} & the name of the the shader \\
+\hline
+{\em \-\_\-vert} & the name of the vertex shader object \\
+\hline
+{\em \-\_\-frag} & the name of the fragment shader object \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 79 of file Shader\-Manager.\-h.
+
+
+
+References m\-\_\-data, Shader\-Program\-Data\-::m\-\_\-frag, Shader\-Program\-Data\-::m\-\_\-name, and Shader\-Program\-Data\-::m\-\_\-vert.
+
+
+\begin{DoxyCode}
+80     \{m_data.m_name = \_name;
+81      m_data.m_vert = \_vert;
+82      m_data.m_frag = \_frag;\}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_shader_manager_aa4ef5235b1be61c38872a6c865d740bc_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Shader\-Manager@{Shader\-Manager}!use@{use}}
+\index{use@{use}!ShaderManager@{Shader\-Manager}}
+\subsubsection[{use}]{\setlength{\rightskip}{0pt plus 5cm}void Shader\-Manager\-::use (
+\begin{DoxyParamCaption}
+\item[{uint}]{\-\_\-shader\-Type}
+\end{DoxyParamCaption}
+)}\label{class_shader_manager_a04c9fb67f7fa4995ae678f64f5b4985b}
+
+
+method to set Open\-G\-L to use the current shader program 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \-\_\-shader\-Type} & int to switch to normals shader \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 46 of file Shader\-Manager.\-cpp.
+
+
+
+References m\-\_\-data, and Shader\-Program\-Data\-::m\-\_\-name.
+
+
+\begin{DoxyCode}
+47 \{
+48   \textcolor{comment}{//grab an instance of shaderLib}
+49   ngl::ShaderLib *shaderLib = ngl::ShaderLib::instance();
+50   \textcolor{keyword}{enum} shader\{objectShader=0,objectNormals=1\};
+51   \textcolor{comment}{//choose which shader to use}
+52   \textcolor{keywordflow}{switch}(\_shaderType)
+53   \{
+54     \textcolor{keywordflow}{case} objectShader :  \{  shaderLib->use(m_data.m_name); \textcolor{keywordflow}{break};  \}
+55     \textcolor{keywordflow}{case} objectNormals:  \{  (*shaderLib)[\textcolor{stringliteral}{"normalShader"}]->use();\textcolor{keywordflow}{break};  \}
+56     \textcolor{keywordflow}{default}:               std::cerr<<\textcolor{stringliteral}{"Invalid shaderType"}<<std::endl; \textcolor{keywordflow}{break};
+57   \}
+58 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_shader_manager_a04c9fb67f7fa4995ae678f64f5b4985b_icgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsection{Member Data Documentation}
+\index{Shader\-Manager@{Shader\-Manager}!m\-\_\-compile\-Status@{m\-\_\-compile\-Status}}
+\index{m\-\_\-compile\-Status@{m\-\_\-compile\-Status}!ShaderManager@{Shader\-Manager}}
+\subsubsection[{m\-\_\-compile\-Status}]{\setlength{\rightskip}{0pt plus 5cm}bool Shader\-Manager\-::m\-\_\-compile\-Status\hspace{0.3cm}{\ttfamily [private]}}\label{class_shader_manager_ad494cdd36221d819c94db0235771210b}
+
+
+flag for the success of compilation of currently active shader 
+
+
+
+Definition at line 97 of file Shader\-Manager.\-h.
+
+\index{Shader\-Manager@{Shader\-Manager}!m\-\_\-data@{m\-\_\-data}}
+\index{m\-\_\-data@{m\-\_\-data}!ShaderManager@{Shader\-Manager}}
+\subsubsection[{m\-\_\-data}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Shader\-Program\-Data} Shader\-Manager\-::m\-\_\-data\hspace{0.3cm}{\ttfamily [private]}}\label{class_shader_manager_a05efb41429a70f6456ff5dc54d4eb4a2}
+
+
+structure containing names for currently actuve shader program 
+
+
+
+Definition at line 122 of file Shader\-Manager.\-h.
+
+\index{Shader\-Manager@{Shader\-Manager}!m\-\_\-error\-Log@{m\-\_\-error\-Log}}
+\index{m\-\_\-error\-Log@{m\-\_\-error\-Log}!ShaderManager@{Shader\-Manager}}
+\subsubsection[{m\-\_\-error\-Log}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Shader\-Manager\-::m\-\_\-error\-Log\hspace{0.3cm}{\ttfamily [private]}}\label{class_shader_manager_a61a8df66700598d467666cfe871a6aaf}
+
+
+error log for storing compiling errors 
+
+
+
+Definition at line 101 of file Shader\-Manager.\-h.
+
+\index{Shader\-Manager@{Shader\-Manager}!m\-\_\-init@{m\-\_\-init}}
+\index{m\-\_\-init@{m\-\_\-init}!ShaderManager@{Shader\-Manager}}
+\subsubsection[{m\-\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}bool Shader\-Manager\-::m\-\_\-init\hspace{0.3cm}{\ttfamily [private]}}\label{class_shader_manager_a26e8cbc7ef046b886241ea98f3054deb}
+
+
+flag for success of shader manager initialisation 
+
+
+
+Definition at line 93 of file Shader\-Manager.\-h.
+
+\index{Shader\-Manager@{Shader\-Manager}!m\-\_\-texture\-Name@{m\-\_\-texture\-Name}}
+\index{m\-\_\-texture\-Name@{m\-\_\-texture\-Name}!ShaderManager@{Shader\-Manager}}
+\subsubsection[{m\-\_\-texture\-Name}]{\setlength{\rightskip}{0pt plus 5cm}G\-Luint Shader\-Manager\-::m\-\_\-texture\-Name\hspace{0.3cm}{\ttfamily [private]}}\label{class_shader_manager_aef4d678011050d86703985eb51a8986d}
+
+
+variable holding the identity of the bound texture map 
+
+
+
+Definition at line 126 of file Shader\-Manager.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+{\bf Shader\-Manager.\-h}\item 
+{\bf Shader\-Manager.\-cpp}\end{DoxyCompactItemize}

@@ -1,0 +1,11 @@
+<map id="Camera::updateSignal" name="Camera::updateSignal">
+<area shape="rect" id="node2" href="$class_camera.html#a5f14cfea1ff576e947bddae2139ca078" title="Sets camera Yaw. " alt="" coords="236,5,377,32"/>
+<area shape="rect" id="node5" href="$class_camera.html#a0c0d93f08f72642a944eb7514d81c0d8" title="Sets camera Pitch. " alt="" coords="233,56,380,83"/>
+<area shape="rect" id="node6" href="$class_camera.html#ab78d1a3c0f1d2260fcf962cc5589f8b4" title="Sets camera roll. " alt="" coords="237,107,376,133"/>
+<area shape="rect" id="node7" href="$class_camera.html#aa4296a894d5a5b2dd4031efbed9d83f8" title="Function to set camera FOV. " alt="" coords="203,157,410,184"/>
+<area shape="rect" id="node8" href="$class_camera.html#a3a809a3fa14f21bfd71867a680311192" title="Sets the new camera shape. " alt="" coords="221,208,393,235"/>
+<area shape="rect" id="node9" href="$class_camera.html#ab3a4cd00d0cb6ea69faafa454cfb74e7" title="Sets near clipping frame. " alt="" coords="223,259,390,285"/>
+<area shape="rect" id="node10" href="$class_camera.html#a6ebda712bd672e403b2fea35f46425c2" title="Sets far clipping frame. " alt="" coords="227,309,386,336"/>
+<area shape="rect" id="node3" href="$class_n_g_l_scene.html#ab6ce5125254ab7fecf2e6d1c87a73a97" title="resets the position of the active OBJ in the OpenGL context " alt="" coords="459,56,621,83"/>
+<area shape="rect" id="node4" href="$class_main_window.html#a3c2e352934c6318d405c3d2b0e07729c" title="Qt Event called when a key is pressed. " alt="" coords="670,56,855,83"/>
+</map>

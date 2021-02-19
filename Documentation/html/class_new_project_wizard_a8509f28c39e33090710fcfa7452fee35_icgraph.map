@@ -1,0 +1,5 @@
+<map id="NewProjectWizard::getOutput" name="NewProjectWizard::getOutput">
+<area shape="rect" id="node2" href="$class_main_window.html#a4010b4118e9d4f0deffa97f7072e5018" title="Creates a new project wizard. " alt="" coords="245,45,432,72"/>
+<area shape="rect" id="node3" href="$class_main_window.html#aed8d4c16aaa87ae02a2de2edd5fc91c7" title="Called when New button is triggered in File Menu bar. " alt="" coords="481,5,663,46"/>
+<area shape="rect" id="node4" href="$class_startup_dialog.html#ac983df992c57b71b8f9207c357601a4e" title="Runs whenever NewProject button is clicked. " alt="" coords="503,70,641,111"/>
+</map>
