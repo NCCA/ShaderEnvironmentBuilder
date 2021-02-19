@@ -55,7 +55,8 @@ LIBS += $$PWD/lib/libfl.a
 
 # Set up Flex to run on build
 # Test if Flex is installed
-FLEX_BIN = $$system(which flex)
+!win32:FLEX_BIN = $$system(which flex)
+win32:FLEX_BIN = $$system(flex -h)
 isEmpty(FLEX_BIN) {
     error("Flex not found")
 } else {
